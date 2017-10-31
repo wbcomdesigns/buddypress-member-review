@@ -19,7 +19,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		* @author   Wbcom Designs
 		*/
 		public function __construct() {
-			
+
 			add_action( 'bp_setup_nav', array($this, 'bupr_member_profile_reviews_tab' ) );
 			add_action( 'bp_before_member_header_meta', array( $this, 'bupr_member_average_rating') );
 
@@ -143,7 +143,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if(!empty($bupr_admin_settings) && !empty($bupr_admin_settings['profile_rating_fields'])){
 				$bupr_review_rating_fields 	= $bupr_admin_settings['profile_rating_fields'];
 			}
-			
+
 			$bupr_total_rating  		= 0;
 			$bupr_reviews_count 		= count( $reviews );
 			$bupr_total_review_count	= '';
@@ -154,33 +154,33 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_ratings       = get_post_meta( $review->ID, 'profile_star_rating', false );
 					if(!empty($review_ratings[0])){
 						//$reviews_field_count  = count( $bupr_review_rating_fields );
-						if(!empty($bupr_review_rating_fields) && !empty($review_ratings[0])): 
+						if(!empty($bupr_review_rating_fields) && !empty($review_ratings[0])):
 							foreach($review_ratings[0] as $field => $value){
 								if(array_key_exists($field,$bupr_review_rating_fields)){
 									$rate += $value;
-									$reviews_field_count++;	
+									$reviews_field_count++;
 								}
 							}
 							if($reviews_field_count != 0){
 								$bupr_total_rating += (int)$rate/$reviews_field_count;
 								$bupr_total_review_count ++;
 							}
-						endif; 
-					}                               
+						endif;
+					}
 				}
 
 				if($bupr_total_review_count != 0){
 					$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
-					$bupr_type = gettype( $bupr_avg_rating );	
+					$bupr_type = gettype( $bupr_avg_rating );
 				}
-				
+
 				$bupr_stars_on 	 = $stars_off = $stars_half = '';
-				$bupr_half_squar = '';				
+				$bupr_half_squar = '';
 				$remaining = $bupr_avg_rating - (int) $bupr_avg_rating;
 				if( $remaining > 0 ) {
-						$stars_on = intval( $bupr_avg_rating );					
+						$stars_on = intval( $bupr_avg_rating );
 						$stars_half = 1;
-						$bupr_half_squar = 1;						
+						$bupr_half_squar = 1;
 						$stars_off = 5 - ( $stars_on + $stars_half );
 				} else {
 						$stars_on = $bupr_avg_rating;
@@ -202,7 +202,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}else if(!empty($bupr_star_type) && $bupr_star_type == 'Numbers Rating'){
 				    echo '<select class="display-square-rating-value" name="rating" autocomplete="off">';
 				    echo '<option value=""></option>';
-				    
+
 				    $rate_display_count = 1;
 					for( $i = 1; $i <= $stars_on; $i++ ) {
 						echo '<option rate="selected" value="'.$i.'">'.$rate_display_count.'</option>';
@@ -219,23 +219,23 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 						$rate_display_count++;
 					}
 				    echo '</select>';
-				}else if(!empty($bupr_star_type) && $bupr_star_type == 'Bar Rating'){ 
+				}else if(!empty($bupr_star_type) && $bupr_star_type == 'Bar Rating'){
 					//echo $bupr_stars_on;
 					echo '<select class="bupr-display-pill-header bupr-display-pill-header-class"  name="rating" autocomplete="off">';
 					echo '<option value=""></option>';
 				    $rate_display_count = 1;
 					for( $i = 1; $i <= $stars_on; $i++ ) {
-						echo '<option rate="selected" value="'.$i.'">'.$rate_display_count.'</option>';
+						echo '<option rate="selected" value="'.$i.'"></option>';
 						$rate_display_count++;
 					}
 
 					for( $i = 1; $i <= $stars_half; $i++ ) {
-						echo '<option rate="selected" value="half">'.$rate_display_count.'</option>';
+						echo '<option rate="selected" value="half"></option>';
 						$rate_display_count++;
 					}
 
 					for( $i = 1; $i <= $stars_off; $i++ ) {
-						echo '<option rate="unselected" value="0">'.$rate_display_count.'</option>';
+						echo '<option rate="unselected" value="0"></option>';
 						$rate_display_count++;
 					}
 					echo '</select>';
@@ -306,7 +306,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 					//Add a link to view the review
 					$review_title = $post->post_title;
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
-					
+
 					$review_url = bp_core_get_userlink( $linked_bp_member, false, true ).'reviews/view/'.$post->ID;
 					$actions['view_review'] = '<a href="'.$review_url.'" title="'.$review_title.'">View Review</a>';
 
@@ -348,7 +348,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			    $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
 			    $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
 			    $bupr_star_type     = $bupr_display_settings['bupr_star_type'];
-			} 
+			}
 			if(empty($bupr_review_title)){
 				$bupr_review_title = 'Reviews';
 			}
@@ -357,15 +357,15 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if( !empty( $bupr_admin_settings ) ) {
 				$bupr_exc_member 	= $bupr_admin_settings['bupr_exc_member'];
 			}
-			if(!empty($bupr_exc_member) && array_key_exists(bp_displayed_user_id(),$bupr_exc_member)){ 
-				
+			if(!empty($bupr_exc_member) && array_key_exists(bp_displayed_user_id(),$bupr_exc_member)){
+
             }else{
 				global $bp;
 				/* count member's review */
 				$bupr_args = array(
 					'post_type' => 'review',
 					'posts_per_page' => -1,
-					'post_status' => 'publish', 
+					'post_status' => 'publish',
 					'category' => 'bp-member',
 					'meta_query' => array(
 							array(
@@ -387,7 +387,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}else{
 					$bupr_notification = '<span class="no-count">'. 0 .'</span>';
 				}
-				
+
 				$name = bp_get_displayed_user_username();
 				$tab_args = array(
 					'name' => __( $bupr_review_title .' '. $bupr_notification , BUPR_TEXT_DOMAIN ),
@@ -414,7 +414,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 					)
 				);
 			}
-		}  
+		}
 
 		/**
 		* Actions performed to hide row actions
