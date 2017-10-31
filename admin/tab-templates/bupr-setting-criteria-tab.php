@@ -53,7 +53,7 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
                         <div class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
                         	<div class="bupr-admin-col-6">
                                 <span>&equiv;</span>
-                            	<input name = "buprDynamicTextBox"   type="text" value = "<?php _e($profile_rating_field,BUPR_TEXT_DOMAIN); ?>" />
+                            	<input name = "buprDynamicTextBox"   type="text" value = "<?php _e($profile_rating_field, BUPR_TEXT_DOMAIN); ?>" />
                             </div>
 
                             <div class="bupr-admin-col-6 buprcriteria">
