@@ -46,8 +46,8 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
             <label for="bupr_allow_multiple_criteria">
                 <?php _e( 'Allow Multiple Criteria(s)? ', BUPR_TEXT_DOMAIN );?>
              </label>
-        </div> 
-        <div class="bupr-admin-col-6 ">   
+        </div>
+        <div class="bupr-admin-col-6 ">
             <label class="bupr-switch">
                 <input type="checkbox" id="bupr_allow_multiple_criteria" <?php _e($bupr_multi_criteria_allowed == 1 ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
                 <div class="bupr-slider bupr-round"></div>
@@ -60,15 +60,15 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
 	    <div id="bupr-settings-tbl" class="bupr-table bupr-criteria-settings-tbl">
 
 	    	<div id="buprTextBoxContainer" class="<?php echo $bupr_multi_rating_allowed_class;?>">
-	    		<?php 
-                if(!empty($profile_rating_fields)){ 
+	    		<?php
+                if(!empty($profile_rating_fields)){
                     foreach($profile_rating_fields as $profile_rating_field => $bupr_criteria_setting ): ?>
                         <div class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
                         	<div class="bupr-admin-col-6">
                                 <span>&equiv;</span>
                             	<input name = "buprDynamicTextBox"   type="text" value = "<?php _e($profile_rating_field,BUPR_TEXT_DOMAIN); ?>" />
                             </div>
-                            
+
                             <div class="bupr-admin-col-6 buprcriteria">
                             	<p class="bupr-delete-tag">
                                 <input type="button" value="Delete" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
@@ -85,7 +85,7 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
                                 </span>
                             </div>
                         </div><?php
-                    endforeach; 
+                    endforeach;
                 } ?>
             </div>
             <div id="bupr-add-criteria-action" class="bupr-admin-row border <?php echo $bupr_multi_rating_allowed_class;?>">

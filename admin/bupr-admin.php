@@ -46,30 +46,43 @@ if( !class_exists( 'BUPR_Admin' ) ) {
 
 
 		function bupr_admin_options_page($current = 'general') {?>
-        
-	        <div class="bupr-admin-settings-header">
-	            <p>
-	                <?php _e( 'BP Member Reviews Settings', BUPR_TEXT_DOMAIN );?>
-	            </p>
-	        </div><?php
-        
-            $bupr_tabs = array(
-	            'general'   	=> __("General" , BUPR_TEXT_DOMAIN), 
-	            'criteria'  	=> __("Criteria" , BUPR_TEXT_DOMAIN),
-	            'shortcode'   	=> __("Shortcode", BUPR_TEXT_DOMAIN),
-	            'display'   	=> __("Display" , BUPR_TEXT_DOMAIN), 
-	            'support'  		=> __("Support" , BUPR_TEXT_DOMAIN)    
-            );
+			<div id="wpbody-content" class="bupr-setting-page" aria-label="Main content" tabindex="0">
+				<div class="wrap">
+		        	<div class="bupr-header">
+						<div class="bupr-extra-actions">
+							<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/contact/', '_blank');"><i class="fa fa-envelope" aria-hidden="true"></i> <?php _e( 'Email Support', BUPR_TEXT_DOMAIN ); ?></button>
+							<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/', '_blank');"><i class="fa fa-file" aria-hidden="true"></i> <?php _e( 'User Manual', BUPR_TEXT_DOMAIN ); ?></button>
+							<button type="button" class="button button-secondary" onclick="window.open('https://wordpress.org/support/plugin/bp-user-profile-reviews/reviews/', '_blank');"><i class="fa fa-star" aria-hidden="true"></i> <?php _e( 'Rate Us on WordPress.org', BUPR_TEXT_DOMAIN ); ?></button>
+						</div>
+					</div>
+			        <div class="bupr-admin-settings-header">
+			            <p>
+			                <?php _e( 'BP Member Reviews Settings', BUPR_TEXT_DOMAIN ); ?>
+			            </p>
+			        </div>
 
-            $bupr_tab_html 		=  '<h2 class="nav-tab-wrapper">';
-	        	foreach( $bupr_tabs as $bupr_tab => $bupr_name ){
-	        		$class = ($bupr_tab == $current) ? 'nav-tab-active' : '';
-	        		$bupr_tab_html .=  '<a class="nav-tab ' . $bupr_tab . ''. $class . '" href="admin.php?page=bp-member-review-settings&tab=' . $bupr_tab . '">' . $bupr_name . '</a>';
-	        	}
-            $bupr_tab_html .= '</h2>';
-            _e($bupr_tab_html , BUPR_TEXT_DOMAIN );
-            include 'review-admin-options-page.php';
-        }
+			        <?php
+
+		            $bupr_tabs = array(
+			            'general'   	=> __("General" , BUPR_TEXT_DOMAIN),
+			            'criteria'  	=> __("Criteria" , BUPR_TEXT_DOMAIN),
+			            'shortcode'   	=> __("Shortcode", BUPR_TEXT_DOMAIN),
+			            'display'   	=> __("Display" , BUPR_TEXT_DOMAIN),
+			            'support'  		=> __("Support" , BUPR_TEXT_DOMAIN)
+		            );
+
+		            $bupr_tab_html 		=  '<h2 class="nav-tab-wrapper">';
+			        	foreach( $bupr_tabs as $bupr_tab => $bupr_name ){
+			        		$class = ($bupr_tab == $current) ? 'nav-tab-active' : '';
+			        		$bupr_tab_html .=  '<a class="nav-tab ' . $bupr_tab . ''. $class . '" href="admin.php?page=bp-member-review-settings&tab=' . $bupr_tab . '">' . $bupr_name . '</a>';
+			        	}
+		            $bupr_tab_html .= '</h2>';
+		            _e( $bupr_tab_html , BUPR_TEXT_DOMAIN );
+		            include 'review-admin-options-page.php';
+	             ?>
+	            </div>
+            </div>
+        <?php }
 
 		/**
 		* Actions performed to create Review cpt

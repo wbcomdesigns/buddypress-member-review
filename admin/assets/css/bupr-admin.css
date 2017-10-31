@@ -123,7 +123,7 @@ input:checked + .bupr-slider:before {
 }
 .bupr-admin-row{
   clear: both;
-  border-top: 1px solid #ddd;    
+  border-top: 1px solid #ddd;
   overflow: hidden;
   padding-bottom: 5px;
 }
@@ -232,4 +232,7 @@ color:white;
 }
 .bupr-approve-review{
   color: green;
+}
+.bupr-extra-actions {
+  float: right;
 }
