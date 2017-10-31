@@ -11,10 +11,9 @@
     color: #66c6e4 !important;
 }
 #bupr_settings_updated{
-	display: none;
-	margin-left: 0;
-    width: 80%;
-    margin-bottom: 15px;
+  display: none;
+  margin-left: 0;
+  margin-bottom: 15px;
 }
 .bupr-review-fields input{
 	width:100%;

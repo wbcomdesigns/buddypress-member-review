@@ -47,18 +47,6 @@ foreach( get_users() as $user ){
     </div>
 
     <div class="bupr-admin-settings-block">
-        <div id="bupr_settings_updated" class="updated settings-error notice is-dismissible">
-            <p>
-                <strong>
-                    <?php _e( 'BP Member Reviews Settings Saved.', BUPR_TEXT_DOMAIN ); ?>
-                </strong>
-            </p>
-            <button type="button" class="notice-dismiss">
-                <span class="screen-reader-text">
-                    <?php _e( 'BP Member Reviews Settings Saved.', BUPR_TEXT_DOMAIN ); ?>
-                </span>
-            </button>
-        </div>
 
         <div id="bupr-settings-tbl" class="bupr-table">
             <div class="bupr-admin-row border">

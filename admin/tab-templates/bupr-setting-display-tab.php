@@ -27,19 +27,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 <div class="bupr-adming-setting ">
-    <div id="bupr_settings_updated" class="updated settings-error notice is-dismissible">
-        <p>
-            <strong>
-                <?php _e( 'BP Member Reviews Settings Saved.', BUPR_TEXT_DOMAIN );?>
-            </strong>
-        </p>
-        <button type="button" class="notice-dismiss">
-            <span class="screen-reader-text">
-                <?php _e( 'BP Member Reviews Settings Saved.', BUPR_TEXT_DOMAIN );?>
-            </span>
-        </button>
-    </div>
-
     <div class="bupr-tab-header">
         <h3>
             <?php _e( 'Labels', BUPR_TEXT_DOMAIN );?>

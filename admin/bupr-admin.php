@@ -55,10 +55,20 @@ if( !class_exists( 'BUPR_Admin' ) ) {
 							<button type="button" class="button button-secondary" onclick="window.open('https://wordpress.org/support/plugin/bp-user-profile-reviews/reviews/', '_blank');"><i class="fa fa-star" aria-hidden="true"></i> <?php _e( 'Rate Us on WordPress.org', BUPR_TEXT_DOMAIN ); ?></button>
 						</div>
 					</div>
-			        <div class="bupr-admin-settings-header">
+			        <h1>
+			            <?php _e( 'BP Member Reviews Settings', BUPR_TEXT_DOMAIN ); ?>
+			        </h1>
+			        <div id="bupr_settings_updated" class="updated settings-error notice is-dismissible">
 			            <p>
-			                <?php _e( 'BP Member Reviews Settings', BUPR_TEXT_DOMAIN ); ?>
+			                <strong>
+			                    <?php _e( 'BP Member Reviews Settings Saved.', BUPR_TEXT_DOMAIN ); ?>
+			                </strong>
 			            </p>
+			            <button type="button" class="notice-dismiss">
+			                <span class="screen-reader-text">
+			                    <?php _e( 'BP Member Reviews Settings Saved.', BUPR_TEXT_DOMAIN ); ?>
+			                </span>
+			            </button>
 			        </div>
 
 			        <?php
