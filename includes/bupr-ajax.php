@@ -281,7 +281,7 @@ if( !class_exists( 'BUPR_AJAX' ) ) {
 			            update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
 			        endif;
 			    }else{
-			    	_e( '<p class="bupr-error"><b>Sorry! </b> Please select a member.</p>', BUPR_TEXT_DOMAIN );
+			    	_e( '<p class="bupr-error">Please select a member.</p>', BUPR_TEXT_DOMAIN );
 			    }
 			    die;
 			}

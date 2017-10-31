@@ -49,15 +49,15 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 			$login_user = get_current_user_id();
 			$bupr_spinner_src 		= includes_url().'images/spinner.gif';
             $bupr_admin_settings 	= get_option( 'bupr_admin_settings' );
-            $bupr_general_tab		= get_option(BUPR_GENERAL_OPTIONS);   
+            $bupr_general_tab		= get_option(BUPR_GENERAL_OPTIONS);
 
             if(!empty($bupr_general_tab)){
             	$bupr_allow_popup   = $bupr_general_tab['add_review_allow_popup'];
             }
 
             if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['profile_rating_fields'])) {
-                $profile_rating_fields 		= $bupr_admin_settings['profile_rating_fields']; 
-            } 
+                $profile_rating_fields 		= $bupr_admin_settings['profile_rating_fields'];
+            }
             $bupr_review_succes = false;
             $bupr_flag = false;
             $bupr_member = array();
@@ -92,31 +92,31 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 						 	}
 						}
 						?>
-					</select>
-					<span class="bupr-fields">*</span>
+					</select><br/>
+					<span class="bupr-fields">*<?php _e('This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
 				</p>
 				<?php }?>
 				<input type="hidden" id="bupr_member_review_id" value="<?php echo bp_displayed_user_id();?>">
 				<p class="bupr-hide-subject">
-					<input name="review-subject" id="review_subject"  type="text" placeholder="<?php _e('Review Subject', BUPR_TEXT_DOMAIN); ?>" ><span class="bupr-fields">*</span>
+					<input name="review-subject" id="review_subject" type="text" placeholder="<?php _e('Review Subject', BUPR_TEXT_DOMAIN ); ?>" ><br/><span class="bupr-fields">*<?php _e('This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
 				</p>
 				<p>
-					<textarea name="review-desc" id="review_desc" placeholder="<?php _e('Review Description', BUPR_TEXT_DOMAIN ); ?>" rows="3" cols="50"></textarea><span class="bupr-fields">*</span>
+					<textarea name="review-desc" id="review_desc" placeholder="<?php _e('Review Description', BUPR_TEXT_DOMAIN ); ?>" rows="3" cols="50"></textarea><br/><span class="bupr-fields">*<?php _e('This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
 				</p>
-				<?php   
+				<?php
 				if(!empty($profile_rating_fields)){
 					$field_counter = 1;
 					$flage = true;
-					foreach($profile_rating_fields as $bupr_rating_fileds => $bupr_criteria_setting): 
+					foreach($profile_rating_fields as $bupr_rating_fileds => $bupr_criteria_setting):
 						if($bupr_criteria_setting == 'yes'){?>
-							<p id="member_review<?php echo $field_counter;?>" class="bupr-criteria-label"> 
+							<p id="member_review<?php echo $field_counter;?>" class="bupr-criteria-label">
 								<span>
 									<?php _e(html_entity_decode($bupr_rating_fileds),'bp-group-reviews'); ?>
 								</span>
 								<?php
 								if(!empty($bupr_star_type) && $bupr_star_type == 'Numbers Rating'){ ?>
 									<span class="box-body">
-										<select class="bupr-get-square-rating " id="bupr-get-square-rating-id"name="rating" autocomplete="off">
+										<select class="bupr-get-square-rating " id="bupr-get-square-rating-id" name="rating" autocomplete="off">
 											<option value=""></option>
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -141,26 +141,24 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 								 }else if(!empty($bupr_star_type) && $bupr_star_type == 'Stars Rating'){ ?>
 								 	<input type="hidden" id="<?php _e('clicked'.$field_counter,BUPR_TEXT_DOMAIN); ?>" value="<?php _e('not_clicked',BUPR_TEXT_DOMAIN); ?>">
 									<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars'.$field_counter; ?>" value="0">
-									<?php 
-									for( $i = 1; $i <= 5; $i++ ) { 
+									<?php
+									for( $i = 1; $i <= 5; $i++ ) {
 										$star_img = BUPR_PLUGIN_URL.'assets/images/star_off.png';?>
 										<img class="member_stars <?php echo $i;?>" alt="star" id="<?php echo $field_counter.$i;?>" src="<?php echo $star_img;?>" data-attr="<?php echo $i;?>"><?php
-									} 
+									}
 								 }else{ ?>
 								 	<input type="hidden" id="<?php _e('clicked'.$field_counter,BUPR_TEXT_DOMAIN); ?>" value="<?php _e('not_clicked',BUPR_TEXT_DOMAIN); ?>">
 									<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars'.$field_counter; ?>" value="0">
-									<?php 
-									for( $i = 1; $i <= 5; $i++ ) { 
+									<?php
+									for( $i = 1; $i <= 5; $i++ ) {
 										$star_img = BUPR_PLUGIN_URL.'assets/images/star_off.png';?>
 										<img class="member_stars <?php echo $i;?>" alt="star" id="<?php echo $field_counter.$i;?>" src="<?php echo $star_img;?>" data-attr="<?php echo $i;?>"><?php
-									} 
-								 
-								 } ?>
+									}
 
-								
-							</p><?php 
+								 } ?>
+							</p><?php
 							$field_counter++;
-						}  
+						}
 					endforeach; ?>
 					<input type="hidden" id="member_rating_field_counter" value="<?php echo --$field_counter; ?>">
 					<?php } ?>
@@ -177,7 +175,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 			</form>
 			<?php
         }
-        
+
         /**
 		* Create shortcode for review form.
 		*
@@ -187,9 +185,9 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
         function bupr_shortcode_review_form(){
         	ob_start();
         	$this->bupr_display_review_form();
-        	
+
 		}
-          
+
 	}
 	new BUPR_Shortcodes();
 }
