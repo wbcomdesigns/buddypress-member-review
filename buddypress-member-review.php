@@ -3,7 +3,7 @@
  * Plugin Name: BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/contact/
  * Description: This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review himself/herself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria..
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Wbcom Designs
  * Author URI: http://wbcomdesigns.com
  * License: GPLv2+
@@ -12,25 +12,6 @@
  */
 
 	if (!defined('ABSPATH')) exit; // Exit if accessed directly
-
-
-	if ( !function_exists( 'bupr_load_textdomain' ) ) {
-		
-		/**
-		* Load plugin textdomain.
-		*
-		* @author 	Wbcom Designs
-		* @since    1.0.0
-		*/
-		add_action('init', 'bupr_load_textdomain');
-		function bupr_load_textdomain()
-		{
-			$domain = "buddypress-member-review";
-			$locale = apply_filters('plugin_locale', get_locale() , $domain);
-			load_textdomain($domain, 'languages/' . $domain . '-' . $locale . '.mo');
-			load_plugin_textdomain($domain, false, plugin_basename(dirname(__FILE__)) . '/languages');
-		}
-	}
 
 	/**
 	* Constants used in the plugin
@@ -45,7 +26,26 @@
 	define('BUPR_SHORTCODE_OPTIONS', 'bupr_admin_shortcode_options');
 	define('BUPR_DISPLAY_OPTIONS', 'bupr_admin_display_options');
 
-	
+	if ( !function_exists( 'bupr_load_textdomain' ) ) {
+
+		/**
+		* Load plugin textdomain.
+		*
+		* @author 	Wbcom Designs
+		* @since    1.0.0
+		*/
+		add_action('init', 'bupr_load_textdomain');
+		function bupr_load_textdomain()
+		{
+			$domain = "bp-member-reviews";
+			$locale = apply_filters('plugin_locale', get_locale() , $domain);
+			load_textdomain($domain, 'languages/' . $domain . '-' . $locale . '.mo');
+			load_plugin_textdomain($domain, false, plugin_basename(dirname(__FILE__)) . '/languages');
+		}
+	}
+
+
+
 	if ( !function_exists( 'bupr_plugins_files' ) ) {
 
 		add_action( 'plugins_loaded', 'bupr_plugins_files' );
@@ -62,7 +62,7 @@
 			}else{
 				add_filter('plugin_action_links_' . plugin_basename(__FILE__) , 'bupr_admin_page_link');
 				/**
-				* Include needed files on init 
+				* Include needed files on init
 				*/
 				$include_files = array(
 					'includes/bupr-scripts.php',
@@ -72,10 +72,10 @@
 					'includes/widgets/display-review.php',
 					'includes/bupr-ajax.php',
 					'includes/bupr-rating/rating-script.php'
-					
+
 				);
 				foreach($include_files as $include_file) include $include_file;
-                                
+
 			}
 		}
 	}
@@ -95,16 +95,16 @@
 			if (isset($_GET['activate'])) unset($_GET['activate']);
 		}
 	}
-	
+
         add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
-        
+
 	function bupr_bp_notifications_for_review(){
-		include 'includes/bupr-notification.php';		
+		include 'includes/bupr-notification.php';
 		buddypress()->bupr_bp_review = new BUPR_Notifications();
-                buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications'; 
+                buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
 	}
-	
-	
+
+
 
 	/**
 	* Settings link for this plugin.
