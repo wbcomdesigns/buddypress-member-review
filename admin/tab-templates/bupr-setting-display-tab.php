@@ -27,9 +27,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 <div class="bupr-adming-setting ">
+    <p class="description">
+        <b><?php _e( 'Note: ', BUPR_TEXT_DOMAIN ); ?></b>
+        <?php _e( 'Rating will be displayed in Review form, if and only if you added criteria for review.', BUPR_TEXT_DOMAIN );?>
+    </p>
     <div class="bupr-tab-header">
         <h3>
-            <?php _e( 'Labels', BUPR_TEXT_DOMAIN );?>
+            <?php _e( 'Labels', BUPR_TEXT_DOMAIN ); ?>
         </h3>
         <input type="hidden" class="bupr-tab-active" value="display"/>
     </div>
@@ -38,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         <div id="bupr-settings-tbl" class="bupr-table">
             <div class="bupr-admin-row border">
                 <div class="bupr-admin-col-4 bupr-label">
-                    <?php _e( 'Reviews', BUPR_TEXT_DOMAIN );?>
+                    <?php _e( 'Reviews', BUPR_TEXT_DOMAIN ); ?>
                 </div>
                 <div class="bupr-admin-col-8">
                     <input type="text" name="bupr_member_tab_title" id="bupr_member_tab_title" placeholder="Enter Tab title for fron-end." value="<?php _e(!empty($bupr_review_title) ? $bupr_review_title : 'Reviews' , BUPR_TEXT_DOMAIN); ?>">
