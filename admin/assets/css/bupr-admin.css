@@ -106,7 +106,8 @@ input:checked + .bupr-slider:before {
 }
 
 .bupr-label{
-	font-size:17px;
+  font-size: 15px;
+  font-weight: 600;
 }
 /* setting page criteria tab */
 .bupr-criteria input[type=text]{

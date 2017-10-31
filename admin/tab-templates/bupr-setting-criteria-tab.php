@@ -45,14 +45,14 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
         <div class="bupr-admin-col-6 bupr-label">
             <label for="bupr_allow_multiple_criteria">
                 <?php _e( 'Allow Multiple Criteria(s)? ', BUPR_TEXT_DOMAIN );?>
-             </label>
+            </label>
         </div>
         <div class="bupr-admin-col-6 ">
             <label class="bupr-switch">
                 <input type="checkbox" id="bupr_allow_multiple_criteria" <?php _e($bupr_multi_criteria_allowed == 1 ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
                 <div class="bupr-slider bupr-round"></div>
             </label>
-            <p><?php _e("Enable this option,if you want to allow members to be rated by <b>Criteria(s)</b>." , BUPR_TEXT_DOMAIN); ?></p>
+            <p class="description"><?php _e("Enable this option,if you want to allow members to be rated by <b>Criteria(s)</b>." , BUPR_TEXT_DOMAIN); ?></p>
         </div>
     </div>
 
@@ -91,7 +91,7 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
             <div id="bupr-add-criteria-action" class="bupr-admin-row border <?php echo $bupr_multi_rating_allowed_class;?>">
                 <div class="bupr-admin-col-12 bupr-label">
                     <input id="bupr-btnAdd" type="button" value="Add Criteria" class="button button-secondary"/>
-                    <p><?php _e("This option provide you to add multiple rating criteria. By default, no criteria will be shown until you active it." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("This option provide you to add multiple rating criteria. By default, no criteria will be shown until you active it." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
             <div class="bupr-admin-row border">

@@ -1,6 +1,6 @@
 <?php
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit; 
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 $bupr_spinner_src = includes_url().'/images/spinner.gif';
 
@@ -35,7 +35,7 @@ $bupr_member_data   = array();
 foreach( get_users() as $user ){
     $bupr_key       = $user->data->ID;
     $bupr_member_data[$bupr_key] = $user->data->display_name;
-} 
+}
 ?>
 
 <div class="bupr-adming-setting">
@@ -66,13 +66,13 @@ foreach( get_users() as $user ){
                     <label for="bupr-allow-popup">
                         <?php _e( 'Add Review Popup', BUPR_TEXT_DOMAIN );?>
                      </label>
-                </div> 
-                <div class="bupr-admin-col-6 ">   
+                </div>
+                <div class="bupr-admin-col-6 ">
                     <label class="bupr-switch">
                         <input type="checkbox" id="bupr-allow-popup" <?php _e($bupr_allow_popup == 'yes' ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p><?php _e("Enable this option, if you want to show <b>Add Review</b> in modal box." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want to show <b>Add Review</b> in modal box." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 
@@ -81,13 +81,13 @@ foreach( get_users() as $user ){
                     <label for="bupr_review_auto_approval">
                         <?php _e( 'Auto approve reviews ', BUPR_TEXT_DOMAIN );?>
                      </label>
-                </div> 
-                <div class="bupr-admin-col-6 ">   
+                </div>
+                <div class="bupr-admin-col-6 ">
                     <label class="bupr-switch">
                         <input type="checkbox" id="bupr_review_auto_approval" <?php _e($bupr_auto_approve_reviews == 'yes' ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p><?php _e("Enable this option, if you want reviews to be automatically approved, else manual approval will be required." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want reviews to be automatically approved, else manual approval will be required." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 
@@ -96,13 +96,13 @@ foreach( get_users() as $user ){
                     <label for="bupr_review_email">
                         <?php _e( 'Emails ', BUPR_TEXT_DOMAIN );?>
                      </label>
-                </div> 
-                <div class="bupr-admin-col-6 ">   
+                </div>
+                <div class="bupr-admin-col-6 ">
                     <label class="bupr-switch">
                         <input type="checkbox" id="bupr_review_email" <?php _e($bupr_allow_email == 'yes' ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p><?php _e("Enable this option, if you want to member receive an email when adding the review in own profile." , BUPR_TEXT_DOMAIN ); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want to member receive an email when adding the review in own profile." , BUPR_TEXT_DOMAIN ); ?></p>
                 </div>
             </div>
 
@@ -111,13 +111,13 @@ foreach( get_users() as $user ){
                     <label for="bupr_review_notification">
                         <?php _e( 'Notifications ', BUPR_TEXT_DOMAIN );?>
                      </label>
-                </div> 
-                <div class="bupr-admin-col-6 ">   
+                </div>
+                <div class="bupr-admin-col-6 ">
                     <label class="bupr-switch">
                         <input type="checkbox" id="bupr_review_notification" <?php _e($bupr_allow_notification == 'yes' ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p><?php _e("Enable this option, if you want to member receive <b>BuddyPress Notification</b> when adding the review in own profile." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want to member receive <b>BuddyPress Notification</b> when adding the review in own profile." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@ foreach( get_users() as $user ){
                 <div class="bupr-admin-col-6">
                     <input id="profile_reviews_per_page" class="small-text" name="profile_reviews_per_page" step="1" min="1" value="<?php if( !empty($profile_reviews_per_page) ){  _e( $profile_reviews_per_page, BUPR_TEXT_DOMAIN ); }else{ _e( "3", BUPR_TEXT_DOMAIN );  }?>" type="number">
                     <?php _e( 'Reviews', BUPR_TEXT_DOMAIN ); ?>
-                    <p><?php _e("This option lets you limit number of reviews in Member Reviews page." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("This option lets you limit number of reviews in Member Reviews page." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 
@@ -139,8 +139,8 @@ foreach( get_users() as $user ){
                     <label for="bupr_excluding_box">
                         <?php _e( 'Exclude Members for review', BUPR_TEXT_DOMAIN );?>
                      </label>
-                </div> 
-                <div class="bupr-admin-col-6 ">   
+                </div>
+                <div class="bupr-admin-col-6 ">
                     <select name="bupr_excluding_box[]" id="bupr_excluding_box" multiple class="bupr_excluding_member">
                     <?php
                     $counter = 0;
@@ -151,7 +151,7 @@ foreach( get_users() as $user ){
                     }
                     ?>
                     </select>
-                    <p><?php _e("This option lets you choose those members that you don't want to provide review functionality." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("This option lets you choose those members that you don't want to provide review functionality." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 
