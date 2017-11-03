@@ -25,7 +25,7 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 			$curr_url = $_SERVER['REQUEST_URI'];
 			add_action( 'wp_enqueue_scripts', array( $this, 'bupr_custom_variables' ) );
 			add_action( 'wp_enqueue_scripts', array( $this,'wpdocs_styles_method') );
-			
+
 			if( strpos( $curr_url, 'review' ) !== false ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'bupr_admin_custom_variables' ) );
 			}
@@ -55,15 +55,15 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 			$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 			if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_color'])) {
 			    $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
-			} 
+			}
 			if(empty($bupr_star_color)){
-				$bupr_star_color = '#eeee22'; 
+				$bupr_star_color = '#eeee22';
 			}
 			wp_enqueue_style('bupr-rating-css', BUPR_PLUGIN_URL. 'assets/css/bupr-front.css');
 
-			$custom_css = "	
-				.br-widget .br-selected , 
-				.br-widget .br-current , 
+			$custom_css = "
+				.br-widget .br-selected ,
+				.br-widget .br-current ,
 				.br-widget .br-active , .bupr-pill-selected{
                 	background-color: {$bupr_star_color}!important;
                 	color:white!important;
@@ -109,8 +109,9 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 		public function bupr_admin_custom_variables() {
 			wp_enqueue_script('jquery');
 			wp_enqueue_script('jquery-ui-sortable');
+			wp_enqueue_style('bupr-font-awesome', BUPR_PLUGIN_URL.'admin/assets/css/font-awesome.min.css');
 			wp_enqueue_script('bupr-js-admin',BUPR_PLUGIN_URL.'admin/assets/js/bupr-admin.js', array('jquery'));
-			
+
 			wp_localize_script(
 				'bupr-js-admin',
 				'bupr_admin_ajax_object',
@@ -118,7 +119,6 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 					'ajaxurl' => admin_url('admin-ajax.php')
 				)
 			);
-			
 			wp_enqueue_style('bupr-css-admin', BUPR_PLUGIN_URL.'admin/assets/css/bupr-admin.css');
 			/* add wp color picker */
 			wp_enqueue_style( 'wp-color-picker' );

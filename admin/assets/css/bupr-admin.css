@@ -1,4 +1,10 @@
 @CHARSET "ISO-8859-1";
+
+@font-face {
+    font-family: FontAwesome;
+    src: url('../fonts/FontAwesome.otf');
+}
+
 .bupr-admin-settings-header p{
 	font-size: 24px;
 	border-bottom:;

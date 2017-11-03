@@ -114,7 +114,8 @@ jQuery(document).ready(function(){
             if( bupr_member_id == '' ) {
                 jQuery('#bupr_member_review_id').siblings('.bupr-fields').show();
                 event.preventDefault();
-            }   else {
+            }
+            else {
                 jQuery('.bupr-save-reivew-spinner').show();
                     jQuery.post(
                         ajaxurl,
@@ -171,11 +172,7 @@ jQuery(document).ready(function(){
                         }
                 );
             }
-
-
         }
-
-
         //}
     });
 
