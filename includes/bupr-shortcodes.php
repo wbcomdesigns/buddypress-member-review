@@ -30,7 +30,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 		* @author   Wbcom Designs
 		*/
 		function bupr_display_review_form(){
-
+			global $bp;
 			/* get display tab setting from db */
 			$bupr_star_color 	= '#eeee22';
 			$bupr_star_type 	= 'Stars Rating';
@@ -55,7 +55,11 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
             	$bupr_allow_popup   = $bupr_general_tab['add_review_allow_popup'];
             }
 
-            if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['profile_rating_fields'])) {
+            if(!empty($bupr_general_tab) && array_key_exists('bupr_multi_reviews', $bupr_general_tab ) ){
+            	$bupr_multi_reviews   = $bupr_general_tab['bupr_multi_reviews'];
+            }
+
+            if( !empty( $bupr_admin_settings ) && array_key_exists('profile_rating_fields', $bupr_admin_settings)) {
                 $profile_rating_fields 		= $bupr_admin_settings['profile_rating_fields'];
             }
             $bupr_review_succes = false;
@@ -69,10 +73,52 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 					);
             	}
 			}
+
+			$member_args = array(
+				'post_type' 		=> 'review',
+				'posts_per_page' 	=> -1,
+				'post_status' 		=> array(
+									        'draft',
+									        'publish'
+									    ),
+				'author' 			=> $login_user,
+				'category' 			=> 'bp-member',
+				'meta_query' 		=> array(
+						array(
+							'key'		=>	'linked_bp_member',
+							'value'		=>	bp_displayed_user_id(),
+							'compare'	=>	'=',
+						),
+				),
+			);
+
+			$reviews_args = new WP_Query($member_args);
+
+
             if( !bp_is_members_component() && !bp_is_user() ) { ?>
             	<div id="message" class="success add_review_msg success_review_msg"><p></p></div>
-            <?php } ?>
-			<form action="" method="POST">
+            <?php }
+
+          	if( 0 === bp_displayed_user_id() ) {
+            	$this->bupr_review_form( $bupr_review_title, $bupr_star_color, $bupr_star_type, $login_user, $bupr_spinner_src, $bupr_admin_settings, $bupr_allow_popup, $bupr_multi_reviews, $profile_rating_fields, $bupr_review_succes, $bupr_flag, $bupr_member );
+            } else {
+            	if( $bupr_multi_reviews == 'no' ) {
+                	$user_post_count = $reviews_args->post_count;
+                } else {
+                	$user_post_count = 0;
+                }
+                if( $user_post_count == 0 ) {
+                	$this->bupr_review_form( $bupr_review_title, $bupr_star_color, $bupr_star_type, $login_user, $bupr_spinner_src, $bupr_admin_settings, $bupr_allow_popup, $bupr_multi_reviews, $profile_rating_fields, $bupr_review_succes, $bupr_flag, $bupr_member );
+                } else { ?>
+                	<div id="message" class="error">
+	                   <p><?php _e("You already posted a review for this member.", BUPR_TEXT_DOMAIN ); ?> </p>
+	                </div>
+                <?php }
+            }
+        }
+
+        public function bupr_review_form( $bupr_review_title, $bupr_star_color, $bupr_star_type, $login_user, $bupr_spinner_src, $bupr_admin_settings, $bupr_allow_popup, $bupr_multi_reviews, $profile_rating_fields, $bupr_review_succes, $bupr_flag, $bupr_member ) { ?>
+        	<form action="" method="POST">
 				<input type="hidden" value="<?php _e(!empty($bupr_star_color) ? $bupr_star_color : '#1fd9e0' , BUPR_TEXT_DOMAIN); ?>" class="bupr-display-rating-color">
 				<input type="hidden" id="reviews_pluginurl" value="<?php echo BUPR_PLUGIN_URL;?>">
 				<div class="bp-member-add-form">
@@ -172,8 +218,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 						<img src="<?php echo $bupr_spinner_src;?>" class="bupr-save-reivew-spinner" />
 					</p>
 				</div>
-			</form>
-			<?php
+			</form><?php
         }
 
         /**

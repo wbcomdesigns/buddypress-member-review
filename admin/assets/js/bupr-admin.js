@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
 
 	/*----------------------------------------
     * Make Draggable admin criteria input fields
-    *-----------------------------------------*/        
+    *-----------------------------------------*/
     jQuery( "#buprTextBoxContainer" ).sortable();
     jQuery( "#buprTextBoxContainer" ).disableSelection();
 
@@ -20,14 +20,14 @@ jQuery(document).ready(function(){
 	      panel.style.maxHeight = null;
 	    } else {
 	      panel.style.maxHeight = panel.scrollHeight + "px";
-	    } 
+	    }
 	  }
 	}
 
 
     /*----------------------------------------
     * Add active class in admin setting tab
-    *-----------------------------------------*/  
+    *-----------------------------------------*/
     var bupr_current_tab = jQuery('.bupr-tab-active').val();
     jQuery('.'+bupr_current_tab).addClass('nav-tab-active');
 
@@ -48,6 +48,14 @@ jQuery(document).ready(function(){
 			bupr_allow_popup = 'yes';
 		} else {
 			bupr_allow_popup = 'no';
+		}
+
+		/* Multiple Reviews options value */
+		var bupr_multi_reviews = '';
+		if( jQuery( '#bupr-multi-review' ).is( ':checked' ) ) {
+			bupr_multi_reviews = 'yes';
+		} else {
+			bupr_multi_reviews = 'no';
 		}
 
 		/* Email notification options value */
@@ -79,12 +87,13 @@ jQuery(document).ready(function(){
 			{
 				'action' 					: 'bupr_admin_tab_generals',
 				'bupr_allow_popup' 			: bupr_allow_popup,
+				'bupr_multi_reviews'		: bupr_multi_reviews,
 				'bupr_allow_email' 			: bupr_allow_email,
 				'bupr_allow_notification' 	: bupr_allow_notification,
 				'bupr_reviews_per_page' 	: bupr_reviews_per_page,
 				'bupr_exc_member' 			: bupr_exc_member,
-				'bupr_auto_approve_reviews'	: bupr_auto_approve_reviews, 
-			}, 
+				'bupr_auto_approve_reviews'	: bupr_auto_approve_reviews,
+			},
 			function ( response ) {
 				if( response === 'admin-settings-saved' ) {
 					jQuery( '#bupr_settings_updated' ).show();
@@ -93,7 +102,7 @@ jQuery(document).ready(function(){
 				}
 			}
 		);
-    });  
+    });
 
     /*--------------------------------------------------------------
     * Add checkbox value of enbale/desable in criteria tab
@@ -135,14 +144,14 @@ jQuery(document).ready(function(){
     	if( jQuery('#bupr_allow_multiple_criteria').is( ':checked' ) ) {
     		bupr_multiple_criteria_allowed = 1;
     		/* wbcom get all options value */
-	        
+
 	        jQuery("input[name=buprDynamicTextBox]").each(function () {
 	        	var criteria = jQuery(this).closest('.bupr-admin-col-6').children('input[name=buprDynamicTextBox]').val();
-	            if(criteria != '') {    
+	            if(criteria != '') {
 	                bupr_review_criteria.push(htmlEncode(criteria));
 	            }
 	        });
-	        
+
 	        jQuery(".bupr_enable_criteria").each(function () {
 	        	var setting = jQuery(this).val();
 	            bupr_criteria_setting.push(setting);
@@ -170,13 +179,13 @@ jQuery(document).ready(function(){
 	function htmlEncode(value){
   		return jQuery('<div/>').text(value).html();
 	}
-    /* Add extra criteria fields */  
+    /* Add extra criteria fields */
 	jQuery("#bupr-btnAdd").bind("click", function () {
 		var div = jQuery("<div />");
 		div.html(GetDynamicTextBox(""));
 		jQuery("#buprTextBoxContainer").append(div);
-	}); 
-    /* Remove extra criteria fields */       
+	});
+    /* Remove extra criteria fields */
 	jQuery("body").on("click", ".bupr-remove", function () {
 	  	jQuery(this).parent().parent().parent("div").remove();
 	});
@@ -235,7 +244,7 @@ jQuery(document).ready(function(){
 * Add extra criteria fields
 *-----------------------------------------*/
 function GetDynamicTextBox(value) {
-    return '<div class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " /></div>' + 
+    return '<div class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " /></div>' +
            '<div class="bupr-admin-col-6"><input type="button" value="Remove" class="bupr-remove button button-secondary" /><label class="bupr-switch bupr-switch-custom"><input type="checkbox" class="bupr_enable_criteria" value="yes" checked><div class="bupr-slider bupr-round"></div></label></div></div>'
 }
 
