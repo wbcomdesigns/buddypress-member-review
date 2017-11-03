@@ -79,7 +79,7 @@ foreach( get_users() as $user ){
                         <input type="checkbox" id="bupr-multi-review" <?php _e($bupr_multi_reviews == 'yes' ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p class="description"><?php _e("Enable this option, if you want to show <b>Add Review</b> in modal box." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want to add functionality to user can send multiple review to same user." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 

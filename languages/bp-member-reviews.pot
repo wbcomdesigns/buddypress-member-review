@@ -1,7 +1,8 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Member Reviews 1.0.2\n"
-"POT-Creation-Date: 2017-10-31 18:49+0530\n"
+"POT-Creation-Date: 2017-11-03 15:43+0530\n"
 "PO-Revision-Date: 2017-10-31 18:53+0530\n"
 "Last-Translator: \n"
 "Language-Team: wbcomdesigns\n"
@@ -67,7 +68,7 @@ msgstr ""
 #: admin/bupr-admin.php:106 admin/bupr-admin.php:108 admin/bupr-admin.php:109
 #: admin/tab-templates/bupr-setting-display-tab.php:45
 #: admin/tab-templates/bupr-setting-display-tab.php:48
-#: admin/tab-templates/bupr-setting-general-tab.php:120
+#: admin/tab-templates/bupr-setting-general-tab.php:139
 msgid "Reviews"
 msgstr ""
 
@@ -174,10 +175,11 @@ msgid "Remove criteria fields permanently."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:67
-#: admin/tab-templates/bupr-setting-general-tab.php:60
-#: admin/tab-templates/bupr-setting-general-tab.php:75
-#: admin/tab-templates/bupr-setting-general-tab.php:90
-#: admin/tab-templates/bupr-setting-general-tab.php:105
+#: admin/tab-templates/bupr-setting-general-tab.php:64
+#: admin/tab-templates/bupr-setting-general-tab.php:79
+#: admin/tab-templates/bupr-setting-general-tab.php:94
+#: admin/tab-templates/bupr-setting-general-tab.php:109
+#: admin/tab-templates/bupr-setting-general-tab.php:124
 msgid "yes"
 msgstr ""
 
@@ -193,7 +195,7 @@ msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:87
 #: admin/tab-templates/bupr-setting-display-tab.php:114
-#: admin/tab-templates/bupr-setting-general-tab.php:148
+#: admin/tab-templates/bupr-setting-general-tab.php:167
 msgid "Save Settings"
 msgstr ""
 
@@ -224,7 +226,7 @@ msgid "Rating color"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:70
-#: includes/bupr-shortcodes.php:76 includes/widgets/display-review.php:139
+#: includes/bupr-shortcodes.php:122 includes/widgets/display-review.php:139
 msgid "#1fd9e0"
 msgstr ""
 
@@ -242,65 +244,75 @@ msgid ""
 "will be shown."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:44
+#: admin/tab-templates/bupr-setting-general-tab.php:48
 msgid "General Settings"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:55
+#: admin/tab-templates/bupr-setting-general-tab.php:59
 msgid "Add Review Popup"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:63
+#: admin/tab-templates/bupr-setting-general-tab.php:67
 msgid "Enable this option, if you want to show <b>Add Review</b> in modal box."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:70
+#: admin/tab-templates/bupr-setting-general-tab.php:74
+msgid "Multiple Review"
+msgstr ""
+
+#: admin/tab-templates/bupr-setting-general-tab.php:82
+msgid ""
+"Enable this option, if you want to add functionality to user can send "
+"multiple review to same user."
+msgstr ""
+
+#: admin/tab-templates/bupr-setting-general-tab.php:89
 msgid "Auto approve reviews "
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:78
+#: admin/tab-templates/bupr-setting-general-tab.php:97
 msgid ""
 "Enable this option, if you want reviews to be automatically approved, else "
 "manual approval will be required."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:85
+#: admin/tab-templates/bupr-setting-general-tab.php:104
 msgid "Emails "
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:93
+#: admin/tab-templates/bupr-setting-general-tab.php:112
 msgid ""
 "Enable this option, if you want to member receive an email when adding the "
 "review in own profile."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:100
+#: admin/tab-templates/bupr-setting-general-tab.php:119
 msgid "Notifications "
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:108
+#: admin/tab-templates/bupr-setting-general-tab.php:127
 msgid ""
 "Enable this option, if you want to member receive <b>BuddyPress "
 "Notification</b> when adding the review in own profile."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:115
+#: admin/tab-templates/bupr-setting-general-tab.php:134
 msgid "Reviews pages show at most"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:119
+#: admin/tab-templates/bupr-setting-general-tab.php:138
 msgid "3"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:121
+#: admin/tab-templates/bupr-setting-general-tab.php:140
 msgid "This option lets you limit number of reviews in Member Reviews page."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:128
+#: admin/tab-templates/bupr-setting-general-tab.php:147
 msgid "Exclude Members for review"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:142
+#: admin/tab-templates/bupr-setting-general-tab.php:161
 msgid ""
 "This option lets you choose those members that you don't want to provide "
 "review functionality."
@@ -323,7 +335,7 @@ msgid "FAQ(s) "
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:17
-msgid "How can we sumit review to a member profile by using this plugin?"
+msgid "How can we submit the review to a member profile by using this plugin?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:21
@@ -381,22 +393,26 @@ msgstr ""
 msgid "%1$s is ineffective now as it requires %2$s to function correctly."
 msgstr ""
 
-#: includes/bupr-ajax.php:269
+#: includes/bupr-ajax.php:300
 msgid ""
 " Thank you for taking the time to write this wonderful review. Your review "
 "will display on member profile after moderator approval."
 msgstr ""
 
-#: includes/bupr-ajax.php:271
+#: includes/bupr-ajax.php:302
 msgid " Thank you for taking the time to write this wonderful review!"
 msgstr ""
 
-#: includes/bupr-ajax.php:274
+#: includes/bupr-ajax.php:305
 msgid "<p class=\"bupr-error\"><b>Unsuccessfully! </b> Review added.</p>"
 msgstr ""
 
-#: includes/bupr-ajax.php:284
+#: includes/bupr-ajax.php:315
 msgid "<p class=\"bupr-error\">Please select a member.</p>"
+msgstr ""
+
+#: includes/bupr-ajax.php:318 includes/bupr-shortcodes.php:114
+msgid "You already posted a review for this member."
 msgstr ""
 
 #: includes/bupr-filters.php:50
@@ -423,28 +439,28 @@ msgstr ""
 msgid "Member Reviews"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:87
+#: includes/bupr-shortcodes.php:133
 msgid "--Select--"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:96 includes/bupr-shortcodes.php:101
-#: includes/bupr-shortcodes.php:104
+#: includes/bupr-shortcodes.php:142 includes/bupr-shortcodes.php:147
+#: includes/bupr-shortcodes.php:150
 msgid "This field is required."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:101
+#: includes/bupr-shortcodes.php:147
 msgid "Review Subject"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:104
+#: includes/bupr-shortcodes.php:150
 msgid "Review Description"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:142 includes/bupr-shortcodes.php:150
+#: includes/bupr-shortcodes.php:188 includes/bupr-shortcodes.php:196
 msgid "clicked"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:142 includes/bupr-shortcodes.php:150
+#: includes/bupr-shortcodes.php:188 includes/bupr-shortcodes.php:196
 msgid "not_clicked"
 msgstr ""
 
