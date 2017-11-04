@@ -16,10 +16,10 @@ if(empty($bupr_review_title)){
 
 $bupr_review_succes = false;
 $current_user   = wp_get_current_user();
-$member_id      = $current_user->ID; 
+$member_id      = $current_user->ID;
 
 /* admin general tab setting value */
-$bupr_general_tab       = get_option(BUPR_GENERAL_OPTIONS);   
+$bupr_general_tab       = get_option(BUPR_GENERAL_OPTIONS);
 $bupr_allow_popup       = 'no';
 
 if(!empty($bupr_general_tab)){
@@ -31,7 +31,7 @@ if(!empty($bupr_general_tab)){
 $bupr_admin_settings    = get_option( 'bupr_admin_settings' );
 
 if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['profile_rating_fields'])) {
-    $profile_rating_fields    = $bupr_admin_settings['profile_rating_fields']; 
+    $profile_rating_fields    = $bupr_admin_settings['profile_rating_fields'];
 }
 
 if(empty($profile_reviews_per_page)){
@@ -42,7 +42,7 @@ $args = array(
     'post_type'         => 'review',
     'post_status'       => 'publish',
     'posts_per_page'    => $profile_reviews_per_page,
-    'paged'             => get_query_var('page',1), 
+    'paged'             => get_query_var('page',1),
     'category'          => 'bp-member',
     'meta_query'        => array(
         array(
@@ -57,19 +57,19 @@ $reviews = new WP_Query($args); ?>
 
 <div class="bupr-bp-member-reviews-block">
     <div class="reviews-header" id="add_more_review">
-        <p>           
+        <p>
             <?php if( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
                 _e("$bupr_review_title" , BUPR_PLUGIN_URL);
                 if( $bupr_allow_popup == 'yes' ) { ?>
                     <span class="bupr-add-review">
                         <a href="javascript:void(0)" id="bupr-add-review">
-                            <?php _e('+Add' , BUPR_PLUGIN_URL); ?>
+                            <?php _e('Add Review' , BUPR_PLUGIN_URL); ?>
                         </a>
                     </span><?php
                 } else { ?>
                     <span class="bupr-add-review">
                         <a href="javascript:void(0)" id="bupr-add-review-no-popup">
-                            <?php _e('+Add' , BUPR_PLUGIN_URL ); ?>
+                            <?php _e('Add Review' , BUPR_PLUGIN_URL ); ?>
                         </a>
                     </span><?php
                 }?>
@@ -77,11 +77,11 @@ $reviews = new WP_Query($args); ?>
         </p>
         <div id="message" class="success add_review_msg"><p></p></div>
     </div>
-    <?php 
+    <?php
     if( $bupr_allow_popup == 'no' ) { ?>
         <!-- ADD REVIEW IF NO POPUP -->
         <div class="bupr-bp-member-review-no-popup-add-block">
-            <?php 
+            <?php
             if( is_user_logged_in() ) {
                 do_shortcode('[add_profile_review_form]');
             } else { ?>
@@ -105,14 +105,14 @@ $reviews = new WP_Query($args); ?>
             </div>
             <div class="modal-body">
                 <div class="bupr-bp-member-review-add-block">
-                    <?php 
+                    <?php
                     if( is_user_logged_in() ) {
                         do_shortcode('[add_profile_review_form]');
                     }else{
                         echo "<h3>";
                         _e(' You must login !' , BUPR_PLUGIN_URL);
                         echo "</h3>";
-                    } 
+                    }
                     ?>
                 </div>
             </div>
@@ -122,15 +122,15 @@ $reviews = new WP_Query($args); ?>
     <div class="bp-member-reviews">
         <div id="bp-member-reviews-list" cellspacing="0">
             <div id="request-review-list" class="item-list">
-            <?php 
+            <?php
                 if ($reviews->have_posts()){
                     while ($reviews->have_posts()): $reviews->the_post(); ?>
-                        <div class="bupr-row"> 
-                            <div class="bupr-col-2 bupr-members-profiles">  
-                                <div class="item-avatar"> 
-                                    <?php 
+                        <div class="bupr-row">
+                            <div class="bupr-col-2 bupr-members-profiles">
+                                <div class="item-avatar">
+                                    <?php
                                     $author = $reviews->post->post_author;
-                                    bp_displayed_user_avatar( array( 'item_id' =>  $author , 'height' => 96 , 'width' => 96)); ?> 
+                                    bp_displayed_user_avatar( array( 'item_id' =>  $author , 'height' => 96 , 'width' => 96)); ?>
                                 </div>
                                 <div class="reviewer">
                                     <h4>
@@ -139,28 +139,28 @@ $reviews = new WP_Query($args); ?>
                                 </div>
                             </div>
 
-                            <div class="bupr-col-9 bupr-members-content"> 
-                                <?php $url = 'view/'.get_the_id();?>                                                              
+                            <div class="bupr-col-9 bupr-members-content">
+                                <?php $url = 'view/'.get_the_id();?>
                                 <div class="bupr-review-description">
-                                    <?php   $trimcontent  = get_the_content(); 
+                                    <?php   $trimcontent  = get_the_content();
                                             if( !empty( $trimcontent ) ) {
-                                                $len = strlen( $trimcontent );  
+                                                $len = strlen( $trimcontent );
                                                 if( $len > 150 ) {
-                                                    $shortexcerpt = substr( $trimcontent, 0, 150 );  
-                                                    echo $shortexcerpt;    ?>    
+                                                    $shortexcerpt = substr( $trimcontent, 0, 150 );
+                                                    echo $shortexcerpt;    ?>
                                                     <a href="<?php echo $url; ?>"><i><?php _e('read more...', BUPR_TEXT_DOMAIN); ?></i></a>
                                                 <?php } else {
                                                     echo $trimcontent;
-                                                } 
-                                            } 
-                                    
+                                                }
+                                            }
+
                                      ?>
                                     <div class="bupr-full-description">
-                                    <?php  
+                                    <?php
                                     $bupr_admin_settings  = get_option( 'bupr_admin_settings' );
 
                                     if(!empty($bupr_admin_settings['profile_rating_fields'])){
-                                       $member_review_rating_fields = $bupr_admin_settings['profile_rating_fields']; 
+                                       $member_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
                                     }
                                     $bupr_rating_criteria = array();
                                     if(!empty($member_review_rating_fields)){
@@ -169,16 +169,16 @@ $reviews = new WP_Query($args); ?>
                                         }
                                     }
                                     $member_review_ratings       = get_post_meta( $post->ID, 'profile_star_rating',false);
-                                    if(!empty($member_review_rating_fields) && !empty($member_review_ratings[0])):                                           
+                                    if(!empty($member_review_rating_fields) && !empty($member_review_ratings[0])):
                                         foreach($member_review_ratings[0] as $field => $bupr_value){
 
                                             if(in_array($field,$bupr_rating_criteria)){
-                                                
-                                                _e('<div class="bupr-col-4 multi-review">'.$field.' <br> ',BUPR_TEXT_DOMAIN);
+
+                                                echo '<div class="bupr-col-4 multi-review">'.$field.' <br> ';
                                                 if(!empty($bupr_star_type) && $bupr_star_type == 'Stars Rating'){
                                                     /*** star rating Ratings *****/
                                                     $stars_on  = $bupr_value;
-                                                    $stars_off = 5 - $stars_on; 
+                                                    $stars_off = 5 - $stars_on;
                                                     for( $i = 1; $i <= $stars_on; $i++ ){
                                                         ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
                                                     }
@@ -216,7 +216,7 @@ $reviews = new WP_Query($args); ?>
                                                 }else{
                                                     /*** star rating Ratings *****/
                                                     $stars_on  = $bupr_value;
-                                                    $stars_off = 5 - $stars_on; 
+                                                    $stars_off = 5 - $stars_on;
                                                     for( $i = 1; $i <= $stars_on; $i++ ){
                                                         ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
                                                     }
@@ -226,30 +226,30 @@ $reviews = new WP_Query($args); ?>
                                                     }
                                                     /*star rating end */
                                                 }
-                                                
-                                                _e('</div>',BUPR_TEXT_DOMAIN);
+
+                                                echo '</div>';
                                             }
                                         }
                                     endif; ?>
                                     </div>
-                                </div>                            
+                                </div>
                             </div>
                         </div>
-                    <?php endwhile; 
+                    <?php endwhile;
 
                     $total_pages = $reviews->max_num_pages;
                     if ($total_pages > 1) { ?>
                     <div class="bupr-row bupr-pagination">
                         <?php
-                        /*** Posts pagination ***/ 
-                        _e("<div class='bupr-posts-pagination'>",BUPR_TEXT_DOMAIN);
-                            echo paginate_links( 
+                        /*** Posts pagination ***/
+                        echo "<div class='bupr-posts-pagination'>";
+                            echo paginate_links(
                                 array(
                                     'base'   => add_query_arg('page','%#%'),
                                     'format' => '',
                                     'current'=> max( 1, get_query_var('page') ),
                                     'total'  => $reviews->max_num_pages
-                                ) 
+                                )
                             );
                         echo "</div>";
                         ?>
@@ -260,9 +260,9 @@ $reviews = new WP_Query($args); ?>
                         <div id="message" class="info">
                             <p><?php _e( "Sorry, no reviews were found.", 'buddypress' ); ?></p>
                         </div>
-                    <?php 
+                    <?php
                     } ?>
-                </div>        
+                </div>
             </div>
         </div>
     </div>

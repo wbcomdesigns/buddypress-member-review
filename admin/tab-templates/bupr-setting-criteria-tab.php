@@ -36,10 +36,10 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
         </div>
         <div class="bupr-admin-col-6 ">
             <label class="bupr-switch">
-                <input type="checkbox" id="bupr_allow_multiple_criteria" <?php _e($bupr_multi_criteria_allowed == 1 ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
+                <input type="checkbox" id="bupr_allow_multiple_criteria" <?php checked( $bupr_multi_criteria_allowed, 'checked'); ?>>
                 <div class="bupr-slider bupr-round"></div>
             </label>
-            <p class="description"><?php _e("Enable this option,if you want to allow members to be rated by <b>Criteria(s)</b>." , BUPR_TEXT_DOMAIN); ?></p>
+            <p class="description"><?php _e("Enable this option,if you want to allow members to be rated by 'Criteria(s)'." , BUPR_TEXT_DOMAIN); ?></p>
         </div>
     </div>
 
@@ -64,7 +64,7 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
                                 </span>
                                 </p>
                                 <label class="bupr-switch">
-                                    <input type="checkbox" class="bupr_enable_criteria" value="<?php _e($bupr_criteria_setting == 'yes' ? 'yes' : 'no' , BUPR_TEXT_DOMAIN); ?>" <?php _e($bupr_criteria_setting == 'yes' ? 'checked' : '' , BUPR_TEXT_DOMAIN); ?>>
+                                    <input type="checkbox" class="bupr_enable_criteria" value="<?php echo $bupr_criteria_setting == 'yes' ? 'yes' : 'no'; ?>" <?php checked($bupr_criteria_setting ,'yes'); ?>>
                                     <div class="bupr-slider bupr-round"></div>
                                 </label>
                                 <span>

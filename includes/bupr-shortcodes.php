@@ -119,7 +119,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 
         public function bupr_review_form( $bupr_review_title, $bupr_star_color, $bupr_star_type, $login_user, $bupr_spinner_src, $bupr_admin_settings, $bupr_allow_popup, $bupr_multi_reviews, $profile_rating_fields, $bupr_review_succes, $bupr_flag, $bupr_member ) { ?>
         	<form action="" method="POST">
-				<input type="hidden" value="<?php _e(!empty($bupr_star_color) ? $bupr_star_color : '#1fd9e0' , BUPR_TEXT_DOMAIN); ?>" class="bupr-display-rating-color">
+				<input type="hidden" value="<?php echo !empty($bupr_star_color) ? $bupr_star_color : '#1fd9e0'; ?>" class="bupr-display-rating-color">
 				<input type="hidden" id="reviews_pluginurl" value="<?php echo BUPR_PLUGIN_URL;?>">
 				<div class="bp-member-add-form">
 
@@ -185,7 +185,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 											<input type="hidden" name="member_rated_stars[]" class="bupr-pill-rating bupr-star-member-rating member_rated_stars" value="0">
 										</span><?php
 								 }else if(!empty($bupr_star_type) && $bupr_star_type == 'Stars Rating'){ ?>
-								 	<input type="hidden" id="<?php _e('clicked'.$field_counter,BUPR_TEXT_DOMAIN); ?>" value="<?php _e('not_clicked',BUPR_TEXT_DOMAIN); ?>">
+								 	<input type="hidden" id="<?php echo 'clicked'.$field_counter; ?>" value="<?php echo 'not_clicked'; ?>">
 									<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars'.$field_counter; ?>" value="0">
 									<?php
 									for( $i = 1; $i <= 5; $i++ ) {
@@ -193,7 +193,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 										<img class="member_stars <?php echo $i;?>" alt="star" id="<?php echo $field_counter.$i;?>" src="<?php echo $star_img;?>" data-attr="<?php echo $i;?>"><?php
 									}
 								 }else{ ?>
-								 	<input type="hidden" id="<?php _e('clicked'.$field_counter,BUPR_TEXT_DOMAIN); ?>" value="<?php _e('not_clicked',BUPR_TEXT_DOMAIN); ?>">
+								 	<input type="hidden" id="<?php echo 'clicked'.$field_counter; ?>" value="<?php echo 'not_clicked'; ?>">
 									<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars'.$field_counter; ?>" value="0">
 									<?php
 									for( $i = 1; $i <= 5; $i++ ) {

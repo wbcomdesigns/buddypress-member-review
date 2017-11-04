@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
     }
 	$url 			= $_SERVER['REQUEST_URI'];
 	preg_match_all('!\d+!', $url, $matches);
-    $review_id      = basename($url); 
+    $review_id      = basename($url);
 	$review 		= get_post( $review_id );
 
 	$review_title 	= $review->post_title;
@@ -44,7 +44,7 @@ defined( 'ABSPATH' ) || exit;
 	<!-- wbcom Display members review on review tab -->
 	<div class="bgr-single-review">
 		<article id="post-<?php echo $review_id;?>" class="post-<?php echo $review_id;?> post type-review status-publish format-standard hentry bupr-single-reivew">
-			<div class="bupr-col-3 bupr-members-profiles"> 
+			<div class="bupr-col-3 bupr-members-profiles">
 				<div class="author">
 					<img src="<?php echo $avatar;?>" class="avatar user-<?php echo $author;?>-avatar avatar-128 photo" alt="Profile photo of <?php echo $review_author;?>" width="128" height="128">
 					<div class="reviewer">
@@ -54,17 +54,17 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 				</div>
 			</div>
-			<div class="bupr-col-8"> 
+			<div class="bupr-col-8">
 				<!-- <h2 class="alpha entry-title">
 					<?php //_e($review_title , BUPR_TEXT_DOMAIN ); ?>
 				</h2> -->
 				<span class="posted-on">
-					<?php _e('Posted on' , BUPR_TEXT_DOMAIN); ?> 
+					<?php _e('Posted on' , BUPR_TEXT_DOMAIN); ?>
 						<time class="entry-date published updated">
 							<?php echo date_format( date_create( $review_date ), 'F d, Y' );?>
 						</time>
 				</span>
-				<p><?php  _e($review->post_content , BUPR_TEXT_DOMAIN); ?></p>
+				<p><?php echo $review->post_content; ?></p>
 				<?php
 				$bupr_admin_settings  = get_option( 'bupr_admin_settings' );
 
@@ -77,16 +77,16 @@ defined( 'ABSPATH' ) || exit;
                 }
 
 				$member_review_ratings       = get_post_meta( $review->ID, 'profile_star_rating',false);
-                if(!empty($member_review_rating_fields) && !empty($member_review_ratings[0])):                                           
+                if(!empty($member_review_rating_fields) && !empty($member_review_ratings[0])):
                     foreach($member_review_ratings[0] as $field => $bupr_value){
 
                         if(in_array($field,$bupr_rating_criteria)){
-                            
-                            _e('<div class="bupr-col-6 multi-review">'.$field.' <br> ',BUPR_TEXT_DOMAIN);
+
+                            echo '<div class="bupr-col-6 multi-review">'.$field.' <br> ';
                             if(!empty($bupr_star_type) && $bupr_star_type == 'Stars Rating'){
                                 /*** star rating Ratings *****/
                                 $stars_on  = $bupr_value;
-                                $stars_off = 5 - $stars_on; 
+                                $stars_off = 5 - $stars_on;
                                 for( $i = 1; $i <= $stars_on; $i++ ){
                                     ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
                                 }
@@ -124,7 +124,7 @@ defined( 'ABSPATH' ) || exit;
                             }else{
                                 /*** star rating Ratings *****/
                                 $stars_on  = $bupr_value;
-                                $stars_off = 5 - $stars_on; 
+                                $stars_off = 5 - $stars_on;
                                 for( $i = 1; $i <= $stars_on; $i++ ){
                                     ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
                                 }
@@ -134,8 +134,8 @@ defined( 'ABSPATH' ) || exit;
                                 }
                                 /*star rating end */
                             }
-                            
-                            _e('</div>',BUPR_TEXT_DOMAIN);
+
+                            echo '</div>';
                         }
                     }
                 endif; ?>

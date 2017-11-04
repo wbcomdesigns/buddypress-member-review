@@ -302,7 +302,9 @@ if( !class_exists( 'BUPR_AJAX' ) ) {
 				       			_e( ' Thank you for taking the time to write this wonderful review!', BUPR_TEXT_DOMAIN );
 				       		}
 				        }else{
-				        	_e( '<p class="bupr-error"><b>Unsuccessfully! </b> Review added.</p>', BUPR_TEXT_DOMAIN );
+					    	echo '<p class="bupr-error">';
+					    	_e( 'Please try again!', BUPR_TEXT_DOMAIN );
+					    	echo '</p>';
 				        }
 
 				        wp_set_object_terms( $review_id, 'BP Member', 'review_category' );
@@ -312,7 +314,9 @@ if( !class_exists( 'BUPR_AJAX' ) ) {
 				            update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
 				        endif;
 				    }else{
-				    	_e( '<p class="bupr-error">Please select a member.</p>', BUPR_TEXT_DOMAIN );
+				    	echo '<p class="bupr-error">';
+				    	_e( 'Please select a member.', BUPR_TEXT_DOMAIN );
+				    	echo '</p>';
 				    }
 			    } else {
 			    	_e( 'You already posted a review for this member.', BUPR_TEXT_DOMAIN );

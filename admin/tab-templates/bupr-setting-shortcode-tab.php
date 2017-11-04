@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             <div class="bupr-admin-row border">
                 <div class="bupr-admin-col-6 bupr-label">
                     <strong>
-                        <?php _e( '[add_profile_review_form]', BUPR_TEXT_DOMAIN );?>
+                        <?php echo '[add_profile_review_form]'; ?>
                     </strong>
                 </div>
                 <div class="bupr-admin-col-6">

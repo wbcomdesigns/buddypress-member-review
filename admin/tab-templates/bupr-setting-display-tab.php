@@ -28,8 +28,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 ?>
 <div class="bupr-adming-setting ">
     <p class="description">
-        <b><?php _e( 'Note: ', BUPR_TEXT_DOMAIN ); ?></b>
-        <?php _e( 'Rating will be displayed in Review form, if and only if you added criteria for review.', BUPR_TEXT_DOMAIN );?>
+        <b><?php _e( 'Note', BUPR_TEXT_DOMAIN ); ?>:</b>
+        <?php _e( ' Rating will be displayed in Review form, if and only if you added criteria for review.', BUPR_TEXT_DOMAIN );?>
     </p>
     <div class="bupr-tab-header">
         <h3>
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                     <?php _e( 'Reviews', BUPR_TEXT_DOMAIN ); ?>
                 </div>
                 <div class="bupr-admin-col-8">
-                    <input type="text" name="bupr_member_tab_title" id="bupr_member_tab_title" placeholder="Enter Tab title for fron-end." value="<?php _e(!empty($bupr_review_title) ? $bupr_review_title : 'Reviews' , BUPR_TEXT_DOMAIN); ?>">
+                    <input type="text" name="bupr_member_tab_title" id="bupr_member_tab_title" placeholder="Enter Tab title for fron-end." value="<?php echo !empty($bupr_review_title) ? $bupr_review_title : 'Review'; ?>">
                     <p class="description">
                         <?php _e("Change Labels from BuddyPress tab and review form." , BUPR_TEXT_DOMAIN); ?>
                     </p>
@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                     <?php _e( 'Rating color', BUPR_TEXT_DOMAIN ); ?>
                 </div>
                 <div class="bupr-admin-col-8 bupr-label">
-                   <input type="text" id="bupr_display_color" class="bupr-admin-color-picker" value="<?php _e(!empty($bupr_star_color) ? $bupr_star_color : '#1fd9e0' , BUPR_TEXT_DOMAIN); ?>">
+                   <input type="text" id="bupr_display_color" class="bupr-admin-color-picker" value="<?php echo !empty($bupr_star_color) ? $bupr_star_color : '#1fd9e0'; ?>">
                 </div>
             </div>
         </div>

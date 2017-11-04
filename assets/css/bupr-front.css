@@ -8,7 +8,7 @@
  }
 .bupr-row{
     clear: both;
-    border-bottom: 1px solid #ddd;    
+    border-bottom: 1px solid #ddd;
     overflow: hidden;
     padding-bottom: 5px;
 }
@@ -23,7 +23,7 @@
 .bupr-col-9 {width: 75%;}
 .bupr-col-10 {width: 83.33%;}
 .bupr-col-11 {width: 91.66%;}
-.bupr-col-12 {width: 100%;}  
+.bupr-col-12 {width: 100%;}
 
 .bupr-review-full-description{
     display: none;
@@ -227,4 +227,8 @@
     #bupr-add-review-modal .modal-content {
       min-width: 380px;
     }
+}
+
+.bp-member-add-form .bupr-criteria-label {
+  margin: 0 0 1.5em;
 }

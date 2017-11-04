@@ -1,4 +1,4 @@
-=== Buddypress Member Review ===
+=== BuddyPress Member Reviews ===
 Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members

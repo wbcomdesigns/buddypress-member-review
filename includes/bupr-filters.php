@@ -90,7 +90,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'my-account-buddypress',
 					'id' => 'my-account-'.$profile_menu_slug,
-					'title' => __( $bupr_review_title.' <span class="count">'.$reviews_count.'</span>', BUPR_TEXT_DOMAIN ),
+					'title' => $bupr_review_title.' <span class="count">'.$reviews_count.'</span>',
 					'href' => trailingslashit( $base_url )
 				) );
 			}
@@ -390,7 +390,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				$name = bp_get_displayed_user_username();
 				$tab_args = array(
-					'name' => __( $bupr_review_title .' '. $bupr_notification , BUPR_TEXT_DOMAIN ),
+					'name' => $bupr_review_title .' '. $bupr_notification,
 					'slug' => 'reviews',
 					'screen_function' => array($this, 'bupr_reviews_tab_function_to_show_screen'),
 					'position' => 75,
