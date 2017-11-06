@@ -2,6 +2,10 @@
 jQuery(document).ready(function(){
 
     jQuery('.add_review_msg').hide();
+    jQuery(document).on('click', '#bupr-add-review-btn a', function(e){
+        var show_content = jQuery( this ).attr('show');
+        localStorage.setItem("bupr_show_form", show_content );
+    });
     /*----------------------------------------
     * Add Placeholder in search box
     *-----------------------------------------*/
@@ -188,5 +192,19 @@ jQuery( function () {
         jQuery.cookie('response' , "" , -1);
         jQuery('#review_subject').val('');
         jQuery('#review_desc').val('');
+    }
+} );
+
+jQuery( function () {
+    var show_last_form;
+    show_last_form = localStorage.getItem("bupr_show_form");
+    if ( show_last_form != null ) {
+        if( show_last_form == 'form-modal' ) {
+            jQuery('#bupr-add-review').click();
+            localStorage.setItem("bupr_show_form", null );
+        }  else if( show_last_form == 'form' ) {
+            jQuery('.bupr-bp-member-review-no-popup-add-block').show();
+            localStorage.setItem("bgr_show_form", null );
+        }
     }
 } );

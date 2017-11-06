@@ -40,14 +40,32 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		function bupr_add_review_button_on_member_header() {
 			$bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS , true );
+			if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['add_review_allow_popup'])) {
+			    if( $bupr_admin_settings['add_review_allow_popup'] == 'no' ) {
+					$review_div = 'form';
+				} else {
+					$review_div = 'form-modal';
+				}
+			} else {
+				$review_div = '';
+			}
 			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
 
-			if( !empty( $bupr_exc_member ) && !in_array( bp_displayed_user_id(), $bupr_exc_member ) ) {
+			if( !empty( $bupr_exc_member )) {
+				if( ( bp_displayed_user_id() != bp_loggedin_user_id() ) && !in_array( bp_displayed_user_id(), $bupr_exc_member ) ) {
+					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'reviews';
+					?>
+					<div id="bupr-add-review-btn" class="generic-button">
+						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
+					</div>
+					<?php
+				}
+			} else {
 				if( bp_displayed_user_id() != bp_loggedin_user_id() ) {
 					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'reviews';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
-					<a href="<?php echo $review_url;?>" class="add-review"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
+					<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
 					</div>
 					<?php
 				}
