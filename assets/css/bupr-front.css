@@ -232,3 +232,6 @@
 .bp-member-add-form .bupr-criteria-label {
   margin: 0 0 1.5em;
 }
+#bupr-add-review-modal .bupr-criteria-label span {
+   height: 35px;
+}
