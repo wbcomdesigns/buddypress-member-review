@@ -36,11 +36,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		function bupr_add_review_button_on_member_header() {
 			$bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS , true );
-			if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['add_review_allow_popup'])) {
-				$review_div = 'form';
-			} else {
-				$review_div = '';
-			}
+			$review_div = 'form';
 			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
 
 			if( !empty( $bupr_exc_member )) {
@@ -57,7 +53,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'reviews';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
-					<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
+						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
 					</div>
 					<?php
 				}
@@ -193,31 +189,37 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 						$stars_off = 5 - $bupr_avg_rating;
 						$stars_half = 0;
 				}
-				echo "<div>";
-				for( $i = 1; $i <= $stars_on; $i++ ){ ?>
-					<span class="fa fa-star bupr-star-rate"></span>
-				<?php }
+				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
+				if( $bupr_avg_rating > 0) {
+					echo "<div>";
+					for( $i = 1; $i <= $stars_on; $i++ ){ ?>
+						<span class="fa fa-star bupr-star-rate"></span>
+					<?php }
 
-				for( $i = 1; $i <= $stars_half; $i++ ){ ?>
-					<span class="fa fa-star-half-o bupr-star-rate"></span><?php
-				}
+					for( $i = 1; $i <= $stars_half; $i++ ){ ?>
+						<span class="fa fa-star-half-o bupr-star-rate"></span><?php
+					}
 
-				for( $i = 1; $i <= $stars_off; $i++ ){ ?>
-					<span class="fa fa-star-o bupr-star-rate"></span><?php
-				}
-				echo "</div><div>";
-				$bupr_avg_rating = round( $bupr_avg_rating, 2 ); ?>
-				<span>
-					<?php _e("Rating ", BUPR_TEXT_DOMAIN);
-							echo " : (". $bupr_avg_rating.")";
-					?>
-				</span>
-				<p>
-					<?php _e("Total ", BUPR_TEXT_DOMAIN);
-						echo $bupr_review_title.' : '.$bupr_reviews_count;
-					?>
-				</p>
-				</div>
+					for( $i = 1; $i <= $stars_off; $i++ ){ ?>
+						<span class="fa fa-star-o bupr-star-rate"></span><?php
+					}
+					echo "</div>";
+					echo "<div>";
+				?>
+						<span>
+							<?php _e("Rating ", BUPR_TEXT_DOMAIN);
+									echo " : (". $bupr_avg_rating.")";
+							?>
+						</span>
+					</div>
+				<?php } ?>
+					<div>
+						<p>
+							<?php _e("Total ", BUPR_TEXT_DOMAIN);
+								echo $bupr_review_title.' : '.$bupr_reviews_count;
+							?>
+						</p>
+					</div>
 			<?php
 			}
 		}
