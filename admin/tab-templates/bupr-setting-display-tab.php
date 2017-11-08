@@ -54,8 +54,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                 <div class="bupr-admin-col-4 bupr-label">
                     <?php _e( 'Rating color', BUPR_TEXT_DOMAIN ); ?>
                 </div>
-                <div class="bupr-admin-col-8 bupr-label">
-                   <input type="text" id="bupr_display_color" class="bupr-admin-color-picker" value="<?php echo !empty($bupr_star_color) ? $bupr_star_color : '#FFC400'; ?>">
+                <div class="bupr-admin-col-8">
+                    <input type="text" id="bupr_display_color" class="bupr-admin-color-picker" value="<?php echo !empty($bupr_star_color) ? $bupr_star_color : '#FFC400'; ?>">
+                    <p class="description">
+                        <?php _e("This option lets you to change star rating color." , BUPR_TEXT_DOMAIN); ?>
+                    </p>
                 </div>
             </div>
         </div>

@@ -88,7 +88,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 
 
             if( !bp_is_members_component() && !bp_is_user() ) { ?>
-            	<div id="message" class="success add_review_msg success_review_msg"><p></p></div>
+            	<div id="message" class="success success_review_msg"><p></p></div>
             <?php }
 
           	if( 0 === bp_displayed_user_id() ) {

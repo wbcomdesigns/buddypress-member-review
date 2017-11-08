@@ -169,25 +169,12 @@ jQuery(document).ready(function(){
 * Display message after review submit
 *-----------------------------------------*/
 jQuery( function () {
-    if ( jQuery.cookie('response')) {
+    if ( jQuery.cookie('response') && jQuery.cookie('response')!== '') {
         jQuery('.add_review_msg p').html(jQuery.cookie('response'));
         jQuery('.add_review_msg').show();
+        alert(jQuery.cookie('response'));
         jQuery.cookie('response' , "" , -1);
         jQuery('#review_subject').val('');
         jQuery('#review_desc').val('');
-    }
-} );
-
-jQuery( function () {
-    var show_last_form;
-    show_last_form = localStorage.getItem("bupr_show_form");
-    if ( show_last_form != null ) {
-        if( show_last_form == 'form-modal' ) {
-            jQuery('#bupr-add-review').click();
-            localStorage.setItem("bupr_show_form", null );
-        }  else if( show_last_form == 'form' ) {
-            jQuery('.bupr-bp-member-review-no-popup-add-block').show();
-            localStorage.setItem("bgr_show_form", null );
-        }
     }
 } );

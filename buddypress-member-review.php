@@ -70,8 +70,7 @@
 					'includes/bupr-filters.php',
 					'includes/bupr-shortcodes.php',
 					'includes/widgets/display-review.php',
-					'includes/bupr-ajax.php',
-					'includes/bupr-rating/rating-script.php'
+					'includes/bupr-ajax.php'
 
 				);
 				foreach($include_files as $include_file) include $include_file;

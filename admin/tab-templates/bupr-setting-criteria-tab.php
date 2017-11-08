@@ -59,7 +59,7 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
                             <div class="bupr-admin-col-6 buprcriteria">
                             	<p class="bupr-delete-tag">
                                 <input type="button" value="Delete" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
-                                <span>
+                                <span class="description">
                                 <?php _e("Remove criteria fields permanently." , BUPR_TEXT_DOMAIN); ?>
                                 </span>
                                 </p>
@@ -67,7 +67,7 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
                                     <input type="checkbox" class="bupr_enable_criteria" value="<?php echo $bupr_criteria_setting == 'yes' ? 'yes' : 'no'; ?>" <?php checked($bupr_criteria_setting ,'yes'); ?>>
                                     <div class="bupr-slider bupr-round"></div>
                                 </label>
-                                <span>
+                                <span class="description">
                                 <?php _e("Enable/Disable criteria fields from review form." , BUPR_TEXT_DOMAIN); ?>
                                 </span>
                             </div>

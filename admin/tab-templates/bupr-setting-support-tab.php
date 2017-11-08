@@ -69,6 +69,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                     </div>
                 </div>
             </div>
+            <div class="bupr-admin-row border">
+                <div class="bupr-admin-col-12">
+                    <button class="bupr-accordion">
+                        <?php _e( 'Where do I ask for support?', BUPR_TEXT_DOMAIN );?>
+                    </button>
+                    <div class="panel">
+                        <p><?php echo sprintf(__('Please visit %1$s for any query related to plugin and BuddyPress.', BUPR_TEXT_DOMAIN ), '<a href="http://wbcomdesigns.com/contact" rel="nofollow" target="_blank"> Wbcom Designs </a>'); ?></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
