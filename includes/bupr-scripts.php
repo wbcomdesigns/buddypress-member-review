@@ -44,10 +44,10 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 			if( strpos($curr_url, 'reviews') !== false ) {
 				wp_enqueue_style('bupr-reviews-css', BUPR_PLUGIN_URL.'assets/css/bupr-reviews.css');
 				wp_enqueue_style('bupr-front-css', BUPR_PLUGIN_URL.'assets/css/bupr-front.css');
+				wp_enqueue_style('bupr-font-awesome', BUPR_PLUGIN_URL.'admin/assets/css/font-awesome.min.css');
+	            wp_enqueue_script('bupr-front-js', BUPR_PLUGIN_URL.'assets/js/bupr-front.js', array('jquery'));
+				wp_enqueue_style('bupr-front-css', BUPR_PLUGIN_URL.'assets/css/bupr-front.css');
 			}
-			wp_enqueue_style('bupr-font-awesome', BUPR_PLUGIN_URL.'admin/assets/css/font-awesome.min.css');
-            wp_enqueue_script('bupr-front-js', BUPR_PLUGIN_URL.'assets/js/bupr-front.js', array('jquery'));
-			wp_enqueue_style('bupr-front-css', BUPR_PLUGIN_URL.'assets/css/bupr-front.css');
 		}
 
 		function wpdocs_styles_method() {
@@ -79,6 +79,12 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 			wp_enqueue_script('jquery');
 			wp_enqueue_script('jquery-ui-sortable');
 			wp_enqueue_style('bupr-font-awesome', BUPR_PLUGIN_URL.'admin/assets/css/font-awesome.min.css');
+			if ( !wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
+				wp_enqueue_style( 'wbcom-selectize-css', BUPR_PLUGIN_URL.'admin/assets/css/selectize.css' );
+			}
+			if ( !wp_script_is( 'wbcom-selectize-js', 'enqueued' ) ) {
+				wp_enqueue_script( 'wbcom-selectize-js', BUPR_PLUGIN_URL.'admin/assets/js/selectize.min.js', array('jquery') );
+			}
 			wp_enqueue_script('bupr-js-admin',BUPR_PLUGIN_URL.'admin/assets/js/bupr-admin.js', array('jquery'));
 
 			wp_localize_script(
@@ -89,8 +95,10 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 				)
 			);
 			wp_enqueue_style('bupr-css-admin', BUPR_PLUGIN_URL.'admin/assets/css/bupr-admin.css');
+			if ( !wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
+				wp_enqueue_style( 'wp-color-picker' );
+			}
 			/* add wp color picker */
-			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL.'admin/assets/js/bupr-color-picker.js', array( 'wp-color-picker' ), false, true );
 		}
 	}

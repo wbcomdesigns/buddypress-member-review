@@ -6,6 +6,7 @@ jQuery(document).ready(function(){
     *-----------------------------------------*/
     jQuery( "#buprTextBoxContainer" ).sortable();
     jQuery( "#buprTextBoxContainer" ).disableSelection();
+    jQuery('#bupr_excluding_box').selectize();
 
 	/*----------------------------------------
     * Support tab accordian js

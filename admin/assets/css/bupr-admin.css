@@ -131,7 +131,6 @@ input:checked + .bupr-slider:before {
 .bupr-admin-row{
   clear: both;
   border-top: 1px solid #ddd;
-  overflow: hidden;
   padding-bottom: 5px;
 }
 .bupr-admin-col-1 {width: 8.33%;}
