@@ -2,14 +2,8 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
     $bupr_spinner_src = includes_url().'/images/spinner.gif';
-	$bupr_rating_template = array(
-		'bupr_star' 	=> 'Stars Rating',
-		'bupr_square' 	=> 'Numbers Rating',
-		'bupr_pill' 	=> 'Bar Rating'
-	);
     /* get display tab setting from db */
-    $bupr_star_color    = '#eeee22';
-    $bupr_star_type     = 'Stars Rating';
+    $bupr_star_color    = '#FFC400';
     $bupr_review_title  = 'Reviews';
     $bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
     if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_review_title'])) {
@@ -17,12 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     }
     if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_color'])) {
         $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
-    }
-    if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_type'])) {
-        $bupr_star_type     = $bupr_display_settings['bupr_star_type'];
-    }
-    if (($bupr_del = array_search($bupr_star_type, $bupr_rating_template)) !== false) {
-        unset($bupr_rating_template[$bupr_del]);
     }
 
 ?>
@@ -67,48 +55,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                     <?php _e( 'Rating color', BUPR_TEXT_DOMAIN ); ?>
                 </div>
                 <div class="bupr-admin-col-8 bupr-label">
-                   <input type="text" id="bupr_display_color" class="bupr-admin-color-picker" value="<?php echo !empty($bupr_star_color) ? $bupr_star_color : '#1fd9e0'; ?>">
+                   <input type="text" id="bupr_display_color" class="bupr-admin-color-picker" value="<?php echo !empty($bupr_star_color) ? $bupr_star_color : '#FFC400'; ?>">
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="bupr-tab-header">
-        <h3>
-            <?php _e( 'Rating Type', BUPR_TEXT_DOMAIN );?>
-        </h3>
-    </div>
-
-    <div class="bupr-admin-settings-block">
-        <div id="bupr-settings-tbl" class="bupr-table">
-            <div class="bupr-admin-row border">
-                <div class="bupr-admin-col-4 bupr-label">
-                    <?php _e( 'Select Rating Template', BUPR_TEXT_DOMAIN );?>
-                </div>
-                <div class="bupr-admin-col-8">
-                    <select name="bupr_member_id" id="bupr_rating_template_type" >
-                        <?php
-                        echo '<option value="'. $bupr_star_type .'" selected>'. $bupr_star_type .'</option>';
-                        if(!empty($bupr_rating_template)){
-
-                            foreach($bupr_rating_template as $rating_template){
-                                if($bupr_star_type == $bupr_rating_template){
-                                    continue;
-                                }else{
-                                    echo '<option value="'. $rating_template .'">'. $rating_template .'</option>';
-                                }
-                            }
-                        }
-                        ?>
-                    </select>
-                    <p class="description">
-                    <?php _e("This option lets you to choose display of ratings. By default Star Rating will be shown." , BUPR_TEXT_DOMAIN); ?>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="bupr-admin-row">
         <div class="bupr-admin-col-6">
             <input type="button" class="button button-primary" id="bupr-save-display-settings" value="<?php _e( 'Save Settings', BUPR_TEXT_DOMAIN );?>">

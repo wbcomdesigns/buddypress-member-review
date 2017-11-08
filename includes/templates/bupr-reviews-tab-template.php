@@ -8,7 +8,6 @@ $bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 if( !empty( $bupr_display_settings ) ) {
     $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
     $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
-    $bupr_star_type     = $bupr_display_settings['bupr_star_type'];
 }
 if(empty($bupr_review_title)){
     $bupr_review_title = 'Reviews';
@@ -20,10 +19,8 @@ $member_id      = $current_user->ID;
 
 /* admin general tab setting value */
 $bupr_general_tab       = get_option(BUPR_GENERAL_OPTIONS);
-$bupr_allow_popup       = 'no';
 
 if(!empty($bupr_general_tab)){
-    $bupr_allow_popup           = $bupr_general_tab['add_review_allow_popup'];
     $profile_reviews_per_page   = $bupr_general_tab['profile_reviews_per_page'];
 }
 
@@ -56,68 +53,9 @@ $args = array(
 $reviews = new WP_Query($args); ?>
 
 <div class="bupr-bp-member-reviews-block">
-    <div class="reviews-header" id="add_more_review">
-        <p>
-            <?php if( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
-                _e("$bupr_review_title" , BUPR_PLUGIN_URL);
-                if( $bupr_allow_popup == 'yes' ) { ?>
-                    <span class="bupr-add-review">
-                        <a href="javascript:void(0)" id="bupr-add-review">
-                            <?php _e('Add Review' , BUPR_PLUGIN_URL); ?>
-                        </a>
-                    </span><?php
-                } else { ?>
-                    <span class="bupr-add-review">
-                        <a href="javascript:void(0)" id="bupr-add-review-no-popup">
-                            <?php _e('Add Review' , BUPR_PLUGIN_URL ); ?>
-                        </a>
-                    </span><?php
-                }?>
-            <?php }?>
-        </p>
-        <div id="message" class="success add_review_msg"><p></p></div>
-    </div>
-    <?php
-    if( $bupr_allow_popup == 'no' ) { ?>
-        <!-- ADD REVIEW IF NO POPUP -->
-        <div class="bupr-bp-member-review-no-popup-add-block">
-            <?php
-            if( is_user_logged_in() ) {
-                do_shortcode('[add_profile_review_form]');
-            } else { ?>
-                <div id="message" class="info">
-                    <p>
-                        <?php _e('You must login !.' , BUPR_PLUGIN_URL); ?>
-                    </p>
-                </div>
-            <?php }?>
-        </div>
-    <?php }?>
 
     <!-- MODAL FOR USER LOGIN -->
     <input type="hidden" id="reviews_pluginurl" value="<?php echo BUPR_PLUGIN_URL;?>">
-    <div id="bupr-add-review-modal" class="modal">
-    <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close close-modal">&times;</span>
-                    <h2><?php _e("Add " , BUPR_PLUGIN_URL); echo "$bupr_review_title"; ?></h2>
-            </div>
-            <div class="modal-body">
-                <div class="bupr-bp-member-review-add-block">
-                    <?php
-                    if( is_user_logged_in() ) {
-                        do_shortcode('[add_profile_review_form]');
-                    }else{
-                        echo "<h3>";
-                        _e(' You must login !' , BUPR_PLUGIN_URL);
-                        echo "</h3>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="bp-member-reviews">
         <div id="bp-member-reviews-list" cellspacing="0">
@@ -130,11 +68,11 @@ $reviews = new WP_Query($args); ?>
                                 <div class="item-avatar">
                                     <?php
                                     $author = $reviews->post->post_author;
-                                    bp_displayed_user_avatar( array( 'item_id' =>  $author , 'height' => 96 , 'width' => 96)); ?>
+                                    bp_displayed_user_avatar( array( 'item_id' =>  $author , 'height' => 96 , 'width' => 96 ) ); ?>
                                 </div>
                                 <div class="reviewer">
                                     <h4>
-                                        <?php echo bp_core_get_userlink($author); ?>
+                                        <?php echo bp_core_get_userlink( $author ); ?>
                                     </h4>
                                 </div>
                             </div>
@@ -175,57 +113,18 @@ $reviews = new WP_Query($args); ?>
                                             if(in_array($field,$bupr_rating_criteria)){
 
                                                 echo '<div class="bupr-col-4 multi-review">'.$field.' <br> ';
-                                                if(!empty($bupr_star_type) && $bupr_star_type == 'Stars Rating'){
-                                                    /*** star rating Ratings *****/
-                                                    $stars_on  = $bupr_value;
-                                                    $stars_off = 5 - $stars_on;
-                                                    for( $i = 1; $i <= $stars_on; $i++ ){
-                                                        ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
-                                                    }
 
-                                                    for( $i = 1; $i <= $stars_off; $i++ ){
-                                                        ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_off.png";?>" alt="star"><?php
-                                                    }
-                                                    /*star rating end */
-                                                }else if(!empty($bupr_star_type) && $bupr_star_type == 'Numbers Rating'){
-                                                    /* square rating start */
-                                                    echo '<select class="display-square-rating-value" name="rating" autocomplete="off">';
-                                                    echo '<option value=""></option>';
-                                                    for($i = 1; $i <= 5 ; $i++){
-                                                        if($i <= $bupr_value){
-                                                            echo '<option rate="selected" value="'.$i.'">'.$i.'</option>';
-                                                        }else{
-                                                            echo '<option rate="unselected" value="0">'.$i.'</option>';
-                                                        }
-                                                    }
-                                                    echo '</select>';
-                                                    /* square rating end */
-                                                }else if(!empty($bupr_star_type) && $bupr_star_type == 'Bar Rating'){
-                                                    /* square rating start */
-                                                    echo '<select class="bupr-display-pill-header bupr-display-pill-header-class" name="rating" autocomplete="off">';
-                                                    echo '<option value=""></option>';
-                                                    for($i = 1; $i <= 5 ; $i++){
-                                                        if($i <= $bupr_value){
-                                                            echo '<option rate="selected" value="'.$i.'"></option>';
-                                                        }else{
-                                                            echo '<option rate="unselected" value="0"></option>';
-                                                        }
-                                                    }
-                                                    echo '</select>';
-                                                    /* square rating end */
-                                                }else{
-                                                    /*** star rating Ratings *****/
-                                                    $stars_on  = $bupr_value;
-                                                    $stars_off = 5 - $stars_on;
-                                                    for( $i = 1; $i <= $stars_on; $i++ ){
-                                                        ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
-                                                    }
-
-                                                    for( $i = 1; $i <= $stars_off; $i++ ){
-                                                        ?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_off.png";?>" alt="star"><?php
-                                                    }
-                                                    /*star rating end */
+                                                /*** star rating Ratings *****/
+                                                $stars_on  = $bupr_value;
+                                                $stars_off = 5 - $stars_on;
+                                                for( $i = 1; $i <= $stars_on; $i++ ){
+                                                    ?><span class="fa fa-star bupr-star-rate"></span><?php
                                                 }
+
+                                                for( $i = 1; $i <= $stars_off; $i++ ){
+                                                    ?><span class="fa fa-star-o stars bupr-star-rate"></span><?php
+                                                }
+                                                /*star rating end */
 
                                                 echo '</div>';
                                             }

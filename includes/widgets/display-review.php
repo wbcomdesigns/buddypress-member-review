@@ -23,7 +23,6 @@ class bupr_members_review_setting extends WP_Widget {
 		$bupr_avg_rating = 0;
 		/* get display tab setting from db */
 		$bupr_star_color 	= '#eeee22';
-		$bupr_star_type 	= 'Stars Rating';
 		$bupr_review_title 	= 'Reviews';
 			$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 		if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_review_title'])) {
@@ -31,9 +30,6 @@ class bupr_members_review_setting extends WP_Widget {
 		}
 		if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_color'])) {
 		    $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
-		}
-		if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_type'])) {
-		    $bupr_star_type     = $bupr_display_settings['bupr_star_type'];
 		}
 
 		$user_id      = get_current_user_id();
@@ -176,66 +172,16 @@ class bupr_members_review_setting extends WP_Widget {
 							$stars_half = 0;
 					}
 
-					if(!empty($bupr_star_type) && $bupr_star_type == 'Stars Rating'){
-						for( $i = 1; $i <= $stars_on; $i++ ){
-							?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
-						}
+					for( $i = 1; $i <= $stars_on; $i++ ){
+						?><span class="fa fa-star bupr-star-rate"></span><?php
+					}
 
-						for( $i = 1; $i <= $stars_half; $i++ ){
-							?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_half.png";?>" alt="star"><?php
-						}
+					for( $i = 1; $i <= $stars_half; $i++ ){
+						?><span class="fa fa-star-half-o bupr-star-rate"></span><?php
+					}
 
-						for( $i = 1; $i <= $stars_off; $i++ ){
-							?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_off.png";?>" alt="star"><?php
-						}
-					}else if(!empty($bupr_star_type) && $bupr_star_type == 'Numbers Rating'){
-						echo '<select class="display-square-rating-value" name="rating" autocomplete="off">';
-						echo '<option value=""></option>';
-						$rate_display_count = 1;
-							for( $i = 1; $i <= $stars_on; $i++ ) {
-								echo '<option rate="selected" value="'.$i.'">'.$rate_display_count.'</option>';
-								$rate_display_count++;
-							}
-
-							for( $i = 1; $i <= $stars_half; $i++ ) {
-								echo '<option rate="selected" value="half">'.$rate_display_count.'</option>';
-								$rate_display_count++;
-							}
-
-							for( $i = 1; $i <= $stars_off; $i++ ) {
-								echo '<option rate="unselected" value="0">'.$rate_display_count.'</option>';
-								$rate_display_count++;
-							}
-						echo '</select>';
-					}else if(!empty($bupr_star_type) && $bupr_star_type == 'Bar Rating'){
-
-						echo '<select class="bupr-display-pill-header bupr-display-pill-header-class"  name="rating" autocomplete="off">';
-						echo '<option value=""></option>';
-						for( $i = 1; $i <= $stars_on; $i++ ) {
-								echo '<option rate="selected" value="'.$i.'"></option>';
-							}
-
-							for( $i = 1; $i <= $stars_half; $i++ ) {
-								echo '<option rate="selected" value="half"></option>';
-							}
-
-							for( $i = 1; $i <= $stars_off; $i++ ) {
-								echo '<option rate="unselected" value="0"></option>';
-							}
-						echo '</select>';
-
-					}else{
-						for( $i = 1; $i <= $stars_on; $i++ ){
-							?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
-						}
-
-						for( $i = 1; $i <= $stars_half; $i++ ){
-							?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_half.png";?>" alt="star"><?php
-						}
-
-						for( $i = 1; $i <= $stars_off; $i++ ){
-							?><img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_off.png";?>" alt="star"><?php
-						}
+					for( $i = 1; $i <= $stars_off; $i++ ){
+						?><span class="fa fa-star-o bupr-star-rate"></span><?php
 					}
 
 					$bupr_avg_rating = round( $bupr_avg_rating, 2 );
@@ -259,7 +205,7 @@ class bupr_members_review_setting extends WP_Widget {
 		/* wbcom sort member list acording to max review */
 		function bupr_sort_max_review($bupr_rating1, $bupr_rating2)
 		{
-				return strcmp($bupr_rating2['max_review'] , $bupr_rating1['max_review']);
+			return strcmp($bupr_rating2['max_review'] , $bupr_rating1['max_review']);
 		}
 
 		/* wbcom sort member list according to max star */

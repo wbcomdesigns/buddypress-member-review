@@ -23,14 +23,10 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'bp_setup_nav', array($this, 'bupr_member_profile_reviews_tab' ) );
 			add_action( 'bp_before_member_header_meta', array( $this, 'bupr_member_average_rating') );
 
-			/* wbcom add new tab manage */
-			//add_action( 'bp_setup_nav', array($this, 'bupr_member_profile_manage_tab' ) );
-
 			add_action( 'bp_setup_admin_bar', array( $this, 'bupr_setup_admin_bar' ), 80 );
 
 			add_action( 'init', array( $this, 'bupr_add_bp_member_reviews_taxonomy_term' ) );
 			add_filter( 'post_row_actions', array( $this, 'bupr_bp_member_reviews_row_actions' ), 10, 2 );
-			add_action( 'admin_footer-edit.php', array( $this, 'bupr_disable_review_title_edit_link' ) );
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_remove_edit_bulk_actions' ), 10, 1 );
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 		}
@@ -41,11 +37,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		function bupr_add_review_button_on_member_header() {
 			$bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS , true );
 			if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['add_review_allow_popup'])) {
-			    if( $bupr_admin_settings['add_review_allow_popup'] == 'no' ) {
-					$review_div = 'form';
-				} else {
-					$review_div = 'form-modal';
-				}
+				$review_div = 'form';
 			} else {
 				$review_div = '';
 			}
@@ -125,8 +117,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			<br>
 			<?php
 			/* get display tab setting from db */
-			$bupr_star_color 	= '#eeee22';
-			$bupr_star_type 	= 'Stars Rating';
+			$bupr_star_color 	= '#FFC400';
 			$bupr_review_title 	= 'Reviews';
 	   		$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 		    if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_review_title'])) {
@@ -134,9 +125,6 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		    }
 		    if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_color'])) {
 		        $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
-		    }
-		    if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_type'])) {
-		        $bupr_star_type     = $bupr_display_settings['bupr_star_type'];
 		    }
 
 			$bupr_type = 'integer';
@@ -205,76 +193,32 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 						$stars_off = 5 - $bupr_avg_rating;
 						$stars_half = 0;
 				}
-				if(!empty($bupr_star_type) && $bupr_star_type == 'Stars Rating'){
-					for( $i = 1; $i <= $stars_on; $i++ ){ ?>
-						<img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
-					}
+				echo "<div>";
+				for( $i = 1; $i <= $stars_on; $i++ ){ ?>
+					<span class="fa fa-star bupr-star-rate"></span>
+				<?php }
 
-					for( $i = 1; $i <= $stars_half; $i++ ){ ?>
-						<img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_half.png";?>" alt="star"><?php
-					}
-
-					for( $i = 1; $i <= $stars_off; $i++ ){ ?>
-						<img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_off.png";?>" alt="star"><?php
-					}
-				}else if(!empty($bupr_star_type) && $bupr_star_type == 'Numbers Rating'){
-				    echo '<select class="display-square-rating-value" name="rating" autocomplete="off">';
-				    echo '<option value=""></option>';
-
-				    $rate_display_count = 1;
-					for( $i = 1; $i <= $stars_on; $i++ ) {
-						echo '<option rate="selected" value="'.$i.'">'.$rate_display_count.'</option>';
-						$rate_display_count++;
-					}
-
-					for( $i = 1; $i <= $stars_half; $i++ ) {
-						echo '<option rate="selected" value="half">'.$rate_display_count.'</option>';
-						$rate_display_count++;
-					}
-
-					for( $i = 1; $i <= $stars_off; $i++ ) {
-						echo '<option rate="unselected" value="0">'.$rate_display_count.'</option>';
-						$rate_display_count++;
-					}
-				    echo '</select>';
-				}else if(!empty($bupr_star_type) && $bupr_star_type == 'Bar Rating'){
-					//echo $bupr_stars_on;
-					echo '<select class="bupr-display-pill-header bupr-display-pill-header-class"  name="rating" autocomplete="off">';
-					echo '<option value=""></option>';
-				    $rate_display_count = 1;
-					for( $i = 1; $i <= $stars_on; $i++ ) {
-						echo '<option rate="selected" value="'.$i.'"></option>';
-						$rate_display_count++;
-					}
-
-					for( $i = 1; $i <= $stars_half; $i++ ) {
-						echo '<option rate="selected" value="half"></option>';
-						$rate_display_count++;
-					}
-
-					for( $i = 1; $i <= $stars_off; $i++ ) {
-						echo '<option rate="unselected" value="0"></option>';
-						$rate_display_count++;
-					}
-					echo '</select>';
-				}else{
-					for( $i = 1; $i <= $bupr_stars_on; $i++ ){ ?>
-						<img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star.png";?>" alt="star"><?php
-					}
-
-					for( $i = 1; $i <= $stars_half; $i++ ){ ?>
-						<img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_half.png";?>" alt="star"><?php
-					}
-
-					for( $i = 1; $i <= $stars_off; $i++ ){ ?>
-						<img class="stars" src="<?php echo BUPR_PLUGIN_URL."assets/images/star_off.png";?>" alt="star"><?php
-					}
+				for( $i = 1; $i <= $stars_half; $i++ ){ ?>
+					<span class="fa fa-star-half-o bupr-star-rate"></span><?php
 				}
-				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-				_e("<span>Rating: ( $bupr_avg_rating)</span>", BUPR_TEXT_DOMAIN);
-				_e("<p>Total $bupr_review_title: $bupr_reviews_count </p>" , BUPR_TEXT_DOMAIN);
-			} else {
-				_e('No Rating Available!' , BUPR_TEXT_DOMAIN);
+
+				for( $i = 1; $i <= $stars_off; $i++ ){ ?>
+					<span class="fa fa-star-o bupr-star-rate"></span><?php
+				}
+				echo "</div><div>";
+				$bupr_avg_rating = round( $bupr_avg_rating, 2 ); ?>
+				<span>
+					<?php _e("Rating ", BUPR_TEXT_DOMAIN);
+							echo " : (". $bupr_avg_rating.")";
+					?>
+				</span>
+				<p>
+					<?php _e("Total ", BUPR_TEXT_DOMAIN);
+						echo $bupr_review_title.' : '.$bupr_reviews_count;
+					?>
+				</p>
+				</div>
+			<?php
 			}
 		}
 
@@ -288,22 +232,6 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_remove_edit_bulk_actions( $actions ) {
 			unset( $actions['edit'] );
 			return $actions;
-		}
-
-		/**
-		* Actions performed to disallow admin to edit review from review title
-		*
-		* @since    1.0.0
-		* @access   public
-		* @author   Wbcom Designs
-		*/
-		public function bupr_disable_review_title_edit_link() {
-			$bupr_post_type = sanitize_text_field( $_GET['post_type'] );
-			if( $bupr_post_type === 'review' ) { ?>
-				<script type="text/javascript">
-					jQuery('table.wp-list-table a.row-title').contents().unwrap();
-				</script><?php
-			}
 		}
 
 		/**
@@ -365,7 +293,6 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if( !empty( $bupr_display_settings ) ) {
 			    $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
 			    $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
-			    $bupr_star_type     = $bupr_display_settings['bupr_star_type'];
 			}
 			if(empty($bupr_review_title)){
 				$bupr_review_title = 'Reviews';
@@ -417,6 +344,18 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				);
 				bp_core_new_nav_item($tab_args);
 
+				if( bp_displayed_user_id() !== get_current_user_id() ) {
+					$add_rev_tab_args = array(
+						'name' => __('Add ', BUPR_TEXT_DOMAIN).$bupr_review_title,
+						'slug' => 'add-review',
+						'screen_function' => array($this, 'bupr_reviews_form_tab_function_to_show_screen'),
+						'position' => 70,
+						'default_subnav_slug' => 'reviews_sub',
+						'show_for_displayed_user' => true,
+					);
+					bp_core_new_nav_item($add_rev_tab_args);
+				}
+
 				$parent_slug = 'reviews';
 
 				//Add subnav to view a review
@@ -447,6 +386,11 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
 		}
 
+		public function bupr_reviews_form_tab_function_to_show_screen() {
+			add_action('bp_template_content', array($this, 'bupr_reviews_form_to_show_content'));
+        	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
+		}
+
 		/**
 		* Actions performed to hide row actions
 		*
@@ -458,6 +402,29 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_reviews_tab_function_to_show_content() {
 			include 'templates/bupr-reviews-tab-template.php';
 		}
+
+		/**
+		*
+		* @since    1.0.0
+		* @access   public
+		* @author   Wbcom Designs
+		*/
+		//Action performed to show the content of add review tab
+		public function bupr_reviews_form_to_show_content() { ?>
+		    <div id="message" class="success add_review_msg"><p></p></div>
+		    <div class="bupr-bp-member-review-no-popup-add-block">
+		        <?php
+		        if( is_user_logged_in() ) {
+		            do_shortcode('[add_profile_review_form]');
+		        } else { ?>
+		            <div id="message" class="info">
+		                <p>
+		                    <?php _e('You must login !.' , BUPR_PLUGIN_URL); ?>
+		                </p>
+		            </div>
+		        <?php } ?>
+		    </div>
+		<?php }
 
 		/**
 		* Actions performed to hide row actions

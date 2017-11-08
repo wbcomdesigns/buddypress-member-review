@@ -42,14 +42,6 @@ jQuery(document).ready(function(){
     	var bupr_reviews_per_page = jQuery('#profile_reviews_per_page').val();
     	var bupr_exc_member = jQuery("#bupr_excluding_box").val();
 
-    	/* Review popup value */
-    	var bupr_allow_popup = '';
-		if( jQuery( '#bupr-allow-popup' ).is( ':checked' ) ) {
-			bupr_allow_popup = 'yes';
-		} else {
-			bupr_allow_popup = 'no';
-		}
-
 		/* Multiple Reviews options value */
 		var bupr_multi_reviews = '';
 		if( jQuery( '#bupr-multi-review' ).is( ':checked' ) ) {
@@ -86,7 +78,6 @@ jQuery(document).ready(function(){
 			bupr_admin_ajax_object.ajaxurl,
 			{
 				'action' 					: 'bupr_admin_tab_generals',
-				'bupr_allow_popup' 			: bupr_allow_popup,
 				'bupr_multi_reviews'		: bupr_multi_reviews,
 				'bupr_allow_email' 			: bupr_allow_email,
 				'bupr_allow_notification' 	: bupr_allow_notification,
@@ -206,8 +197,7 @@ jQuery(document).ready(function(){
 			{
 				'action' 				: 'bupr_admin_tab_display',
 				'bupr_review_title' 	: bupr_review_title,
-				'bupr_review_color' 	: bupr_review_color,
-				'bupr_rating_type' 		: bupr_rating_type
+				'bupr_review_color' 	: bupr_review_color
 			},
 			function ( response ) {
 				if( response === 'admin-settings-saved' ) {

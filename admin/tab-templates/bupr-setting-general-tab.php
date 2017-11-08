@@ -6,12 +6,9 @@ $bupr_spinner_src = includes_url().'/images/spinner.gif';
 
 /* admin setting on dashboard */
 $bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS , true );
-$bupr_allow_popup = $bupr_multi_reviews = $bupr_auto_approve_reviews = $bupr_allow_email = $bupr_allow_notification ='' ;
+$bupr_multi_reviews = $bupr_auto_approve_reviews = $bupr_allow_email = $bupr_allow_notification ='' ;
 $bupr_exc_member = array();
 $profile_reviews_per_page = 3;
-if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['add_review_allow_popup'])) {
-    $bupr_allow_popup    = $bupr_admin_settings['add_review_allow_popup'];
-}
 
 if( !empty( $bupr_admin_settings ) && !empty($bupr_admin_settings['bupr_multi_reviews'])) {
     $bupr_multi_reviews    = $bupr_admin_settings['bupr_multi_reviews'];
@@ -53,20 +50,6 @@ foreach( get_users() as $user ){
     <div class="bupr-admin-settings-block">
 
         <div id="bupr-settings-tbl" class="bupr-table">
-            <div class="bupr-admin-row border">
-                <div class="bupr-admin-col-6 bupr-label">
-                    <label for="bupr-allow-popup">
-                        <?php _e( 'Add Review Popup', BUPR_TEXT_DOMAIN );?>
-                     </label>
-                </div>
-                <div class="bupr-admin-col-6 ">
-                    <label class="bupr-switch">
-                        <input type="checkbox" id="bupr-allow-popup" <?php checked($bupr_allow_popup, 'yes' ); ?>>
-                        <div class="bupr-slider bupr-round"></div>
-                    </label>
-                    <p class="description"><?php _e("Enable this option, if you want to show 'Add Review' in modal box." , BUPR_TEXT_DOMAIN); ?></p>
-                </div>
-            </div>
 
             <div class="bupr-admin-row border">
                 <div class="bupr-admin-col-6 bupr-label">

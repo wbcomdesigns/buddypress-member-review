@@ -67,7 +67,6 @@ if( !class_exists( 'BUPR_AJAX' ) ) {
 		function bupr_admin_tab_general_settings() {
 			if( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_admin_tab_generals' ) {
 
-				$bupr_allow_popup				= sanitize_text_field($_POST['bupr_allow_popup']);
 				$bupr_multi_reviews				= sanitize_text_field($_POST['bupr_multi_reviews']);
 				$bupr_auto_approve_reviews		= sanitize_text_field($_POST['bupr_auto_approve_reviews']);
 				$bupr_allow_email				= sanitize_text_field($_POST['bupr_allow_email']);
@@ -82,7 +81,6 @@ if( !class_exists( 'BUPR_AJAX' ) ) {
 				}
 
 				$bupr_general_options 	= array(
-						'add_review_allow_popup'  		=> $bupr_allow_popup,
 						'bupr_multi_reviews'			=> $bupr_multi_reviews,
 						'bupr_auto_approve_reviews'  	=> $bupr_auto_approve_reviews,
 						'profile_reviews_per_page'		=> $bupr_reviews_per_page,
@@ -144,14 +142,12 @@ if( !class_exists( 'BUPR_AJAX' ) ) {
 
 				$bupr_review_title		= sanitize_text_field($_POST['bupr_review_title']);
 				$bupr_review_color		= sanitize_text_field($_POST['bupr_review_color']);
-				$bupr_rating_type		= sanitize_text_field($_POST['bupr_rating_type']);
 				if(empty($bupr_review_title)){
 					$bupr_review_title 		= 'Review';
 				}
 				$bupr_display_setting 		= array(
 				    'bupr_review_title'   	=> $bupr_review_title,
-				    'bupr_star_color'   	=> $bupr_review_color,
-				    'bupr_star_type'	   	=> $bupr_rating_type,
+				    'bupr_star_color'   	=> $bupr_review_color
 				);
 				update_option( BUPR_DISPLAY_OPTIONS, $bupr_display_setting );
 				echo 'admin-settings-saved';

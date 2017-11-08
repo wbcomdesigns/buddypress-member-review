@@ -45,10 +45,10 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 				wp_enqueue_style('bupr-reviews-css', BUPR_PLUGIN_URL.'assets/css/bupr-reviews.css');
 				wp_enqueue_style('bupr-front-css', BUPR_PLUGIN_URL.'assets/css/bupr-front.css');
 			}
+			wp_enqueue_style('bupr-font-awesome', BUPR_PLUGIN_URL.'admin/assets/css/font-awesome.min.css');
             wp_enqueue_script('bupr-front-js', BUPR_PLUGIN_URL.'assets/js/bupr-front.js', array('jquery'));
 			wp_enqueue_style('bupr-front-css', BUPR_PLUGIN_URL.'assets/css/bupr-front.css');
 		}
-
 
 		function wpdocs_styles_method() {
 			/* get display tab setting from db */
@@ -57,45 +57,14 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 			    $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
 			}
 			if(empty($bupr_star_color)){
-				$bupr_star_color = '#eeee22';
+				$bupr_star_color = '#FFC400';
 			}
 			wp_enqueue_style('bupr-rating-css', BUPR_PLUGIN_URL. 'assets/css/bupr-front.css');
 
-			$custom_css = "
-				.br-widget .br-selected ,
-				.br-widget .br-current ,
-				.br-widget .br-active , .bupr-pill-selected{
-                	background-color: {$bupr_star_color}!important;
-                	color:white!important;
-
-        		}
-        		.br-widget a , .bupr-pill-half , .bupr-pill-unselected{
-					border: 1px solid {$bupr_star_color}!important;
-					background-color:white!important;
-					color:{$bupr_star_color}!important;
-				}
-				.bupr-pill-half{
-					box-shadow:18px 0 0 0 {$bupr_star_color} inset !important;
-				}
-				.bupr-rating-widget .bupr-square-selected{
-					background-color: {$bupr_star_color}!important;
-                	color:white!important;
-                	border-color:{$bupr_star_color}!important;
-				}
-				.bupr-rating-widget .bupr-square-unselected{
-					border: 2px solid {$bupr_star_color}!important;
-					background-color:white!important;
-					color:{$bupr_star_color}!important;
-				}
-				.bupr-square-half{
-					border: 2px solid {$bupr_star_color}!important;
-					box-shadow: 14px 0 0 0 {$bupr_star_color} inset !important;
-					color: #fff!important;
-                    text-shadow: -1px 0 {$bupr_star_color}, 0 1px {$bupr_star_color}, 1px 0 {$bupr_star_color}, 0 -1px {$bupr_star_color};
-				}
-				.bupr-pill-selected{
-					border:1px solid {$bupr_star_color}!important;
-				}";
+			$custom_css = ".bupr-star-rate {
+			        			color: {$bupr_star_color};
+			        		}
+				";
 			wp_add_inline_style( 'bupr-rating-css', $custom_css );
 		}
 

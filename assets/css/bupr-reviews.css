@@ -44,7 +44,7 @@
 }
 
 .bupr-bp-member-review-no-popup-add-block{
-    display: none;
+    display: block;
 }
 #subnav{
     display: none;
@@ -87,7 +87,7 @@
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
+    from {top:-300px; opacity:0}
     to {top:0; opacity:1}
 }
 
@@ -121,7 +121,7 @@
     position: relative;
 }
 
-.modal-body {padding: 2px 16px;} 
+.modal-body {padding: 2px 16px;}
 .bupr-save-reivew-spinner{
     display:none;
 }
@@ -158,8 +158,8 @@
     background-color: #f0f0f0;
 }
 #bupr_review_success_msg p {
-    font-weight: 600; 
-    padding-top: 8%;   
+    font-weight: 600;
+    padding-top: 8%;
 }
 #bupr_review_success_msg .close {
     color: #000;

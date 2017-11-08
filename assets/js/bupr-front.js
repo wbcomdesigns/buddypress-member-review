@@ -12,33 +12,16 @@ jQuery(document).ready(function(){
     jQuery('.dataTables_filter input[type="search"]').attr('placeholder','Enter Keywords....');
 
     /*----------------------------------------
-    * Open Add Review Form
-    *-----------------------------------------*/
-    jQuery(document).on('click', '#bupr-add-review', function(){
-        jQuery( '#bupr-add-review-modal' ).css( 'display', 'block' );
-    });
-
-    /*-----------------------------------------------------------
-    * When the user clicks anywhere outside of the modal, close it
-    *------------------------------------------------------------*/
-    jQuery(document.body).click(function(event){
-        var modal = document.getElementById('bupr-add-review-modal');
-        if( event.target == modal ) {
-            jQuery( '#bupr-add-review-modal' ).css( 'display', 'none' );
-        }
-    });
-
-    /*----------------------------------------
     * Select star on mouse enter
     *-----------------------------------------*/
     var reviews_pluginurl = jQuery( '#reviews_pluginurl' ).val();
 
         jQuery('.member_stars').mouseenter(function(){
-        jQuery(this).parent().children().eq(1).val( 'not_clicked' );
+        jQuery(this).parent().children().eq(0).val( 'not_clicked' );
         var id = jQuery(this).attr('data-attr');
-                var parent_id = jQuery(this).parent().attr('id');
+        var parent_id = jQuery(this).parent().attr('id');
         for( i = 1; i <= id; i++ ) {
-            jQuery('#'+ parent_id).children('.'+ i).attr( 'src', reviews_pluginurl+'assets/images/star.png' );
+            jQuery('#'+ parent_id).children('.'+ i).addClass('fa-star').removeClass('fa-star-o');;
         }
     });
 
@@ -46,13 +29,13 @@ jQuery(document).ready(function(){
     * Remove Color on stars
     *-----------------------------------------*/
     jQuery('.member_stars').mouseleave(function(){
-        var clicked_id = jQuery(this).parent().children().eq(2).val();
+        var clicked_id = jQuery(this).parent().children().eq(1).val();
         var id        = jQuery(this).attr('data-attr');
         var parent_id = jQuery(this).parent().attr('id');
-        if( jQuery(this).parent().children().eq(1).val() !== 'clicked' ) {
+        if( jQuery(this).parent().children().eq(0).val() !== 'clicked' ) {
             var j = parseInt ( clicked_id ) + 1;
             for( i = j; i <= 5; i++ ) {
-                jQuery('#'+ parent_id).children('.'+ i).attr( 'src', reviews_pluginurl+'assets/images/star_off.png' );
+                jQuery('#'+ parent_id).children('.'+ i).addClass('fa-star-o').removeClass('fa-star');
             }
         }
     });
@@ -64,15 +47,15 @@ jQuery(document).ready(function(){
         attr          = jQuery(this).attr('data-attr');
         clicked_id    = attr;
         var parent_id = jQuery(this).parent().attr('id');
-        jQuery(this).parent().children().eq(2).val( attr );
-        jQuery(this).parent().children().eq(1).val('clicked');
+        jQuery(this).parent().children().eq(1).val( attr );
+        jQuery(this).parent().children().eq(0).val('clicked');
         for( i = 1; i <= attr; i++ ) {
-            jQuery('#'+ parent_id).children('.'+ i).attr( 'src', reviews_pluginurl+'assets/images/star.png' );
+            jQuery('#'+ parent_id).children('.'+ i).addClass( 'fa-star' ).removeClass('fa-star-o');
         }
 
         var k = parseInt( attr ) + 1;
         for( j = k; j <= 5; j++ ) {
-            jQuery('#'+ parent_id).children('.'+ j).attr( 'src', reviews_pluginurl+'assets/images/star_off.png' );
+            jQuery('#'+ parent_id).children('.'+ j).addClass( 'fa-star-o').removeClass('fa-star');
         }
     });
 

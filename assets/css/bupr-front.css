@@ -1,6 +1,7 @@
 .stars{
     display: inline-block;
 }
+
 /*** css classes for reviews ***/
 [class*="bupr-col-"] {
     float: left;
@@ -222,16 +223,27 @@
   margin: 0;
 }
 
-
 @media( min-width: 768px ) and ( max-width: 1068px ){
     #bupr-add-review-modal .modal-content {
       min-width: 380px;
     }
 }
 
-.bp-member-add-form .bupr-criteria-label {
-  margin: 0 0 1.5em;
-}
 #bupr-add-review-modal .bupr-criteria-label span {
-   height: 35px;
+  height: 35px;
 }
+
+.bupr-star-rate {
+  margin-right: 4px;
+}
+
+.bupr-bp-member-review-no-popup-add-block #review_desc {
+  width : 100%;
+}
+
+.bupr-bp-member-review-no-popup-add-block #bupr_save_review {
+  width: 100%;
+}
+/*.bp-member-add-form .bupr-col-12 {
+  padding: 0;
+}*/
