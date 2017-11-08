@@ -244,6 +244,7 @@
 .bupr-bp-member-review-no-popup-add-block #bupr_save_review {
   width: 100%;
 }
-/*.bp-member-add-form .bupr-col-12 {
-  padding: 0;
-}*/
+
+.add_review_msg {
+  display: none;
+}
