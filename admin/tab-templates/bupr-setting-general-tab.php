@@ -77,7 +77,7 @@ foreach( get_users() as $user ){
                         <input type="checkbox" id="bupr_review_auto_approval" <?php checked($bupr_auto_approve_reviews, 'yes'); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p class="description"><?php _e("Enable this option, if you want reviews to be automatically approved, else manual approval will be required." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want to have the reviews automatically approved, else manual approval will be required." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 
@@ -92,22 +92,22 @@ foreach( get_users() as $user ){
                         <input type="checkbox" id="bupr_review_email" <?php checked( $bupr_allow_email, 'yes' ); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p class="description"><?php _e("Enable this option, if you want to member receive an email when adding the review in own profile." , BUPR_TEXT_DOMAIN ); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want that member receive an email when someone add review in its profile." , BUPR_TEXT_DOMAIN ); ?></p>
                 </div>
             </div>
 
-             <div class="bupr-admin-row border">
+            <div class="bupr-admin-row border">
                 <div class="bupr-admin-col-6 bupr-label">
                     <label for="bupr_review_notification">
-                        <?php _e( 'Notifications ', BUPR_TEXT_DOMAIN );?>
-                     </label>
+                        <?php _e( 'BuddyPress notifications ', BUPR_TEXT_DOMAIN );?>
+                    </label>
                 </div>
                 <div class="bupr-admin-col-6 ">
                     <label class="bupr-switch">
                         <input type="checkbox" id="bupr_review_notification" <?php checked( $bupr_allow_notification, 'yes'); ?>>
                         <div class="bupr-slider bupr-round"></div>
                     </label>
-                    <p class="description"><?php _e("Enable this option, if you want to member receive 'BuddyPress Notification' when adding the review in own profile." , BUPR_TEXT_DOMAIN); ?></p>
+                    <p class="description"><?php _e("Enable this option, if you want that member receive email when someone add review in its profile." , BUPR_TEXT_DOMAIN); ?></p>
                 </div>
             </div>
 

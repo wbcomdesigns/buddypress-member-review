@@ -36,7 +36,7 @@ if( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
         </div>
         <div class="bupr-admin-col-6 ">
             <label class="bupr-switch">
-                <input type="checkbox" id="bupr_allow_multiple_criteria" <?php checked( $bupr_multi_criteria_allowed, 'checked'); ?>>
+                <input type="checkbox" id="bupr_allow_multiple_criteria" <?php checked( $bupr_multi_criteria_allowed, '1'); ?>>
                 <div class="bupr-slider bupr-round"></div>
             </label>
             <p class="description"><?php _e("Enable this option,if you want to allow members to be rated by 'Criteria(s)'." , BUPR_TEXT_DOMAIN); ?></p>
