@@ -35,7 +35,14 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * Actions performed to add a review button on member header
 		 */
 		function bupr_add_review_button_on_member_header() {
+			global $bp;
 			$bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS , true );
+			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS , true );
+			if( !empty( $bupr_display_settings ) && isset($bupr_display_settings['bupr_review_title'])) {
+		        $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
+		    } else {
+		    	$bupr_review_title  = __('Reviews', BUPR_TEXT_DOMAIN );
+		    }
 			$review_div = 'form';
 			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
 
@@ -44,7 +51,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
+						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add ', BUPR_TEXT_DOMAIN ); echo $bupr_review_title; ?></a>
 					</div>
 					<?php
 				}
@@ -53,7 +60,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
+						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add ', BUPR_TEXT_DOMAIN ); echo $bupr_review_title; ?></a>
 					</div>
 					<?php
 				}
@@ -65,8 +72,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
-
-			$bupr_review_title 	= 'Reviews';
+			$bupr_review_title 	= __('Reviews', BUPR_TEXT_DOMAIN );
 	   		$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 		    if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_review_title'])) {
 		        $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
@@ -114,7 +120,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			<?php
 			/* get display tab setting from db */
 			$bupr_star_color 	= '#FFC400';
-			$bupr_review_title 	= 'Reviews';
+			$bupr_review_title 	= __('Reviews', BUPR_TEXT_DOMAIN );
 	   		$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 		    if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_review_title'])) {
 		        $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
@@ -297,7 +303,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			    $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
 			}
 			if(empty($bupr_review_title)){
-				$bupr_review_title = 'Reviews';
+				$bupr_review_title = __('Reviews', BUPR_TEXT_DOMAIN );
 			}
 
 			$bupr_admin_settings 	= get_option( BUPR_GENERAL_OPTIONS , true );

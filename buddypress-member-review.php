@@ -7,7 +7,7 @@
  * Author: Wbcom Designs
  * Author URI: http://wbcomdesigns.com
  * License: GPLv2+
- * Text Domain: buddypress-member-review
+ * Text Domain: bp-member-reviews
  * Domain Path: /languages
  */
 
