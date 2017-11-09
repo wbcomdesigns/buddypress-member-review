@@ -253,3 +253,13 @@
 .success_review_msg {
   display: none;
 }
+
+.bupr-row.multi-review.inline-content {
+  border-bottom: none;
+  padding: 0px;
+  margin: 0px 0px 0px 10px;
+}
+
+.bupr-full-description {
+  padding: 10px 0 5px;
+}

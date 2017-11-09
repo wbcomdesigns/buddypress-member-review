@@ -80,20 +80,20 @@ $reviews = new WP_Query($args); ?>
                             <div class="bupr-col-9 bupr-members-content">
                                 <?php $url = 'view/'.get_the_id();?>
                                 <div class="bupr-review-description">
+                                    <div class="bupr-full-description">
                                     <?php   $trimcontent  = get_the_content();
                                             if( !empty( $trimcontent ) ) {
                                                 $len = strlen( $trimcontent );
                                                 if( $len > 150 ) {
                                                     $shortexcerpt = substr( $trimcontent, 0, 150 );
-                                                    echo $shortexcerpt;    ?>
+                                                    echo "<p>".$shortexcerpt."</p>"; ?>
                                                     <a href="<?php echo $url; ?>"><i><?php _e('read more...', BUPR_TEXT_DOMAIN); ?></i></a>
                                                 <?php } else {
-                                                    echo $trimcontent;
+                                                    echo "<p>".$trimcontent."</p>";
                                                 }
                                             }
 
                                      ?>
-                                    <div class="bupr-full-description">
                                     <?php
                                     $bupr_admin_settings  = get_option( 'bupr_admin_settings' );
 
@@ -112,11 +112,12 @@ $reviews = new WP_Query($args); ?>
 
                                             if(in_array($field,$bupr_rating_criteria)){
 
-                                                echo '<div class="bupr-col-4 multi-review">'.$field.' <br> ';
+                                                echo '<div class="bupr-row multi-review inline-content">'.'<div class="bupr-col-6 ">'.$field.'</div>';
 
                                                 /*** star rating Ratings *****/
                                                 $stars_on  = $bupr_value;
                                                 $stars_off = 5 - $stars_on;
+                                                echo '<div class="bupr-col-6 ">';
                                                 for( $i = 1; $i <= $stars_on; $i++ ){
                                                     ?><span class="fa fa-star bupr-star-rate"></span><?php
                                                 }
@@ -126,7 +127,7 @@ $reviews = new WP_Query($args); ?>
                                                 }
                                                 /*star rating end */
 
-                                                echo '</div>';
+                                                echo '</div>'.'</div>';
                                             }
                                         }
                                     endif; ?>

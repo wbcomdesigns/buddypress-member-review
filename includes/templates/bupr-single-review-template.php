@@ -59,12 +59,14 @@ defined( 'ABSPATH' ) || exit;
 					<?php //_e($review_title , BUPR_TEXT_DOMAIN ); ?>
 				</h2> -->
 				<span class="posted-on">
+					<b>
 					<?php _e('Posted on' , BUPR_TEXT_DOMAIN); ?>
 						<time class="entry-date published updated">
 							<?php echo date_format( date_create( $review_date ), 'F d, Y' );?>
 						</time>
+					</b>
 				</span>
-				<p><?php echo $review->post_content; ?></p>
+				<div class="bupr-col-12"><?php echo $review->post_content; ?></div>
 				<?php
 				$bupr_admin_settings  = get_option( 'bupr_admin_settings' );
 
@@ -82,10 +84,11 @@ defined( 'ABSPATH' ) || exit;
 
                         if(in_array($field,$bupr_rating_criteria)){
 
-                            echo '<div class="bupr-col-6 multi-review">'.$field.' <br> ';
+                            echo '<div class="bupr-row multi-review inline-content">'.'<div class="bupr-col-6 ">'.$field.'</div>';
                                 /*** star rating Ratings *****/
                                 $stars_on  = $bupr_value;
                                 $stars_off = 5 - $stars_on;
+                                echo '<div class="bupr-col-6 ">';
                                 for( $i = 1; $i <= $stars_on; $i++ ){
                                     ?><span class="fa fa-star bupr-star-rate"></span><?php
                                 }
@@ -94,7 +97,7 @@ defined( 'ABSPATH' ) || exit;
                                     ?><span class="fa fa-star-o stars bupr-star-rate"></span><?php
                                 }
                                 /*star rating end */
-                            echo '</div>';
+                            echo '</div>'.'</div>';
                         }
                     }
                 endif; ?>
