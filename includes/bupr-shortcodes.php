@@ -33,7 +33,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 			global $bp;
 			/* get display tab setting from db */
 			$bupr_star_color 	= '#FFC400';
-			$bupr_review_title 	= 'Reviews';
+			$bupr_review_title 	= __('Reviews', BUPR_TEXT_DOMAIN );
 	   		$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 		    if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_review_title'])) {
 		        $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
@@ -107,7 +107,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 		          	$this->bupr_review_form( $bupr_review_title, $bupr_star_color, $login_user, $bupr_spinner_src, $bupr_admin_settings, $bupr_multi_reviews, $profile_rating_fields, $bupr_review_succes, $bupr_flag, $bupr_member );
 		          } else { ?>
 		          	<div id="message" class="error">
-		               <p><?php _e("You already posted a review for this member.", BUPR_TEXT_DOMAIN ); ?> </p>
+		               <p><?php _e("You already posted a $bupr_review_title for this member.", BUPR_TEXT_DOMAIN ); ?> </p>
 		            </div>
 		          <?php }
 		      }
