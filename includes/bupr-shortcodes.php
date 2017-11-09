@@ -49,11 +49,16 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 
 	      	if(!empty($bupr_general_tab) && array_key_exists('bupr_multi_reviews', $bupr_general_tab ) ){
 	      		$bupr_multi_reviews   = $bupr_general_tab['bupr_multi_reviews'];
+	      	} else {
+	      		$bupr_multi_reviews = 'no';
 	      	}
 
 	      	if( !empty( $bupr_admin_settings ) && array_key_exists('profile_rating_fields', $bupr_admin_settings)) {
-	          $profile_rating_fields 		= $bupr_admin_settings['profile_rating_fields'];
+	        	$profile_rating_fields 		= $bupr_admin_settings['profile_rating_fields'];
+	      	}else {
+	      		$profile_rating_fields = array();
 	      	}
+
 			$bupr_review_succes = false;
 			$bupr_flag = false;
 			$bupr_member = array();
