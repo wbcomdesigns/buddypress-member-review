@@ -41,7 +41,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			if( !empty( $bupr_exc_member )) {
 				if( ( bp_displayed_user_id() != bp_loggedin_user_id() ) && !in_array( bp_displayed_user_id(), $bupr_exc_member ) ) {
-					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'reviews';
+					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
@@ -50,7 +50,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 			} else {
 				if( bp_displayed_user_id() != bp_loggedin_user_id() ) {
-					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'reviews';
+					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add Review', BUPR_TEXT_DOMAIN );?></a>
