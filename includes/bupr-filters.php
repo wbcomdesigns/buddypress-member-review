@@ -413,7 +413,6 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 		*/
 		//Action performed to show the content of add review tab
 		public function bupr_reviews_form_to_show_content() { ?>
-		    <div id="message" class="success add_review_msg"><p></p></div>
 		    <div class="bupr-bp-member-review-no-popup-add-block">
 		        <?php
 		        if( is_user_logged_in() ) {

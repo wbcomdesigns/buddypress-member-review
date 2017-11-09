@@ -121,7 +121,7 @@
     display:none;
 }
 
-.bupr-fields{
+.bupr-error-fields{
     display:none;
     color:red;
 }
@@ -247,5 +247,9 @@
 }
 
 .add_review_msg {
+  display: none;
+}
+
+.success_review_msg {
   display: none;
 }
