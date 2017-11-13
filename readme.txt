@@ -48,7 +48,7 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 3. The screenshot shows show shortcodes and corresponds to screenshot-3.(png|jpg|jpeg|gif).
 4. The screenshot shows display settings tab of admin settings and corresponds to screenshot-4.(png|jpg|jpeg|gif).
 5. The screenshot shows FAQ(s) and corresponds to screenshot-5.(png|jpg|jpeg|gif).
-6. The screenshot shows the add review form when the popup is allowed and corresponds to screenshot-6.(png|jpg|jpeg|gif).
+6. The screenshot shows the add review form and corresponds to screenshot-6.(png|jpg|jpeg|gif).
 7. The screenshot shows the reviews listing and multi-rating on member review page and corresponds to screenshot-7.(png|jpg|jpeg|gif).
 8. The screenshot shows the reviews average in single member page and multi-rating on member review page and corresponds to screenshot-8.(png|jpg|jpeg|gif).
 9. The screenshot shows review form by shortcode and corresponds to screenshot-9.(png|jpg|jpeg|gif).
