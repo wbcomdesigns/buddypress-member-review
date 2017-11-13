@@ -39,7 +39,6 @@ if( !class_exists( 'BUPRScriptsStyles' ) ) {
 		* @author   Wbcom Designs
 		*/
 		public function bupr_custom_variables() {
-			wp_enqueue_script('jquery');
 			wp_enqueue_style('bupr-reviews-css', BUPR_PLUGIN_URL.'assets/css/bupr-reviews.css');
 			wp_enqueue_style('bupr-font-awesome', BUPR_PLUGIN_URL.'admin/assets/css/font-awesome.min.css');
 			wp_enqueue_style('bupr-front-css', BUPR_PLUGIN_URL.'assets/css/bupr-front.css');
