@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
 Tested up to: 4.8.3
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,9 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 11. The screenshot shows the review widget in front-end and corresponds to screenshot-11.(png|jpg|jpeg|gif).
 
 == Changelog ==
+
+= 1.0.3 =
+* Review header cleanup
 
 = 1.0.2 =
 * Fix - Added validation for shortcode review form and member review form for both condition with & without criteria fields.
