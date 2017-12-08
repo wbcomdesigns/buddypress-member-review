@@ -121,7 +121,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 				<div class="bp-member-add-form">
 
 				<p>
-					<?php _e( "Fill In Details To Submit $bupr_review_title", BUPR_TEXT_DOMAIN );?>
+					<?php _e( "Fill in details to submit $bupr_review_title", BUPR_TEXT_DOMAIN );?>
 				</p>
 
 				<?php if ( 0 === bp_displayed_user_id() ) { ?>
@@ -144,7 +144,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 					<input name="review-subject" id="review_subject" type="text" placeholder="<?php _e('Review Subject', BUPR_TEXT_DOMAIN ); ?>" ><br/><span class="bupr-error-fields">*<?php _e('This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
 				</p>
 				<p>
-					<textarea name="review-desc" id="review_desc" placeholder="<?php _e('Review Description', BUPR_TEXT_DOMAIN ); ?>" rows="3" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php _e('This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
+					<textarea name="review-desc" id="review_desc" placeholder="<?php _e('Review Description', BUPR_TEXT_DOMAIN ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php _e('This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
 				</p>
 				<?php
 				if(!empty($profile_rating_fields)){
