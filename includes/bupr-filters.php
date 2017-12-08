@@ -215,8 +215,8 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<span>
 	
 							<?php _e("Rating ", BUPR_TEXT_DOMAIN);
-									echo " : (". $bupr_avg_rating.")/5";
-					                                echo $bupr_review_title.' - '.$bupr_reviews_count;
+									echo " : (". $bupr_avg_rating.")";
+					                                echo $bupr_review_title.'/5 - '.$bupr_reviews_count;
 							?>
 						</span>
 					</div>
