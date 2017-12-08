@@ -213,19 +213,15 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 					echo "<div>";
 				?>
 						<span>
+	
 							<?php _e("Rating ", BUPR_TEXT_DOMAIN);
-									echo " : (". $bupr_avg_rating.")";
+									echo " : (". $bupr_avg_rating.")/5";
+					                                echo $bupr_review_title.' - '.$bupr_reviews_count;
 							?>
 						</span>
 					</div>
 				<?php } ?>
-					<div>
-						<p>
-							<?php _e("Total ", BUPR_TEXT_DOMAIN);
-								echo $bupr_review_title.' : '.$bupr_reviews_count;
-							?>
-						</p>
-					</div>
+				
 			<?php
 			}
 		}
