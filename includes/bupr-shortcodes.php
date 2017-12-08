@@ -153,7 +153,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 					foreach($profile_rating_fields as $bupr_rating_fileds => $bupr_criteria_setting):
 						if($bupr_criteria_setting == 'yes'){?>
 							<div class="bupr-col-12">
-								<div class="bupr-col-6 bupr-criteria-label">
+								<div class="bupr-col-3 bupr-criteria-label">
 									<?php _e(html_entity_decode($bupr_rating_fileds), BUPR_TEXT_DOMAIN ); ?>
 								</div>
 								<div class="bupr-col-6 bupr-criteria-content" id="member_review<?php echo $field_counter;?>">
