@@ -197,7 +197,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 				if( $bupr_avg_rating > 0) {
-					echo "<div>";
+					echo "<div class='member-review-stars'>";
 					for( $i = 1; $i <= $stars_on; $i++ ){ ?>
 						<span class="fa fa-star bupr-star-rate"></span>
 					<?php }
@@ -210,13 +210,14 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<span class="fa fa-star-o bupr-star-rate"></span><?php
 					}
 					echo "</div>";
-					echo "<div>";
+					echo "<div class='member-review-stats'>";
 				?>
 						<span>
 	
 							<?php _e("Rating ", BUPR_TEXT_DOMAIN);
-									echo " : (". $bupr_avg_rating.")";
-					                                echo $bupr_review_title.'/5 - '.$bupr_reviews_count;
+									echo " : ". $bupr_avg_rating."/5 - ";
+					       				echo $bupr_reviews_count.' '. $bupr_review_title;
+					      
 							?>
 						</span>
 					</div>
