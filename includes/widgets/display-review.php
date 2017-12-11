@@ -3,7 +3,7 @@
 add_action( 'widgets_init', 'bupr_members_review_widget' );
 
 function bupr_members_review_widget() {
-		register_widget('bupr_members_review_setting');
+	register_widget('bupr_members_review_setting');
 }
 
 class bupr_members_review_setting extends WP_Widget {
@@ -24,12 +24,12 @@ class bupr_members_review_setting extends WP_Widget {
 		/* get display tab setting from db */
 		$bupr_star_color 	= '#eeee22';
 		$bupr_review_title 	= 'Reviews';
-			$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
+		$bupr_display_settings  = get_option( BUPR_DISPLAY_OPTIONS , true );
 		if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_review_title'])) {
-		    $bupr_review_title  = $bupr_display_settings['bupr_review_title'];
+			$bupr_review_title  = $bupr_display_settings['bupr_review_title'];
 		}
 		if( !empty( $bupr_display_settings ) && !empty($bupr_display_settings['bupr_star_color'])) {
-		    $bupr_star_color    = $bupr_display_settings['bupr_star_color'];
+			$bupr_star_color    = $bupr_display_settings['bupr_star_color'];
 		}
 
 		$user_id      = get_current_user_id();
@@ -55,11 +55,11 @@ class bupr_members_review_setting extends WP_Widget {
 				'post_status' 		=> 'publish',
 				'category' 			=> 'bp-member',
 				'meta_query' 		=> array(
-						array(
-							'key'		=>	'linked_bp_member',
-							'value'		=>	$id,
-							'compare'	=>	'=',
-						),
+					array(
+						'key'		=>	'linked_bp_member',
+						'value'		=>	$id,
+						'compare'	=>	'=',
+					),
 				),
 			);
 
@@ -68,7 +68,7 @@ class bupr_members_review_setting extends WP_Widget {
 			if(!empty($bupr_admin_settings)){
 				$bupr_review_rating_fields 	= $bupr_admin_settings['profile_rating_fields'];
 			}
-			$bupr_total_rating  		= 0;
+			$bupr_total_rating  = $rate_counter	= 0;
 			$bupr_reviews_count 		= count( $reviews );
 			$bupr_total_review_count	= '';
 			if($bupr_reviews_count != 0){
@@ -88,6 +88,7 @@ class bupr_members_review_setting extends WP_Widget {
 							if($reviews_field_count != 0){
 								$bupr_total_rating += (int)$rate/$reviews_field_count;
 								$bupr_total_review_count ++;
+								$rate_counter++;
 							}
 						endif;
 					}
@@ -110,14 +111,16 @@ class bupr_members_review_setting extends WP_Widget {
 					'max_review'  => $bupr_reviews_count,
 					'avg_rating'  => $bupr_avg_rating,
 					'member_name' => $user->data->user_nicename,
-					'avr_type'    => $bupr_type
+					'avr_type'    => $bupr_type,
+					'rate_counter' => $rate_counter
 				);
 				$bupr_star_rating[$user->data->ID] = array(
 					'user_id'     => $user->data->ID,
 					'max_review'  => $bupr_reviews_count,
 					'avg_rating'  => $bupr_avg_rating,
 					'member_name' => $user->data->user_nicename,
-					'avr_type'    => $bupr_type
+					'avr_type'    => $bupr_type,
+					'rate_counter' => $rate_counter
 				);
 				$bupr_member_count++;
 			}
@@ -141,16 +144,16 @@ class bupr_members_review_setting extends WP_Widget {
 		if($bupr_member_count != 0){
 			foreach($bupr_members_ratings_data as $buprKey => $buprValue){
 				if($bupr_user_count == $memberLimit){
-						break;
+					break;
 				}else{
 					echo '<div class="bupr-members">';
 					if($avatar == 'Show'){
-							echo '<div class="bupr-col-4">';
-							echo get_avatar($buprValue['user_id'] , 65);
-							echo '</div>';
-							echo '<div class="bupr-col-8 members">';
-					}else{
-							echo '<div class="bupr-col-12 members">';
+						echo '<div class="bupr-col-4">';
+						echo get_avatar($buprValue['user_id'] , 65);
+						echo '</div>';
+						echo '<div class="bupr-col-8 members">';
+					} else {
+						echo '<div class="bupr-col-12 members">';
 					}
 					$members_profile = bp_core_get_userlink( $buprValue['user_id']);
 					echo '<p>';
@@ -162,25 +165,37 @@ class bupr_members_review_setting extends WP_Widget {
 					$stars_on = $stars_off = $stars_half = '';
 					$remaining = $bupr_avg_rating - (int) $bupr_avg_rating;
 					if( $remaining > 0 ) {
-							$stars_on = intval( $bupr_avg_rating );
-							$stars_half = 1;
-							$bupr_half_squar = 1;
-							$stars_off = 5 - ( $stars_on + $stars_half );
+						$stars_on = intval( $bupr_avg_rating );
+						$stars_half = 1;
+						$bupr_half_squar = 1;
+						$stars_off = 5 - ( $stars_on + $stars_half );
 					} else {
-							$stars_on = $bupr_avg_rating;
-							$stars_off = 5 - $bupr_avg_rating;
-							$stars_half = 0;
+						$stars_on = $bupr_avg_rating;
+						$stars_off = 5 - $bupr_avg_rating;
+						$stars_half = 0;
 					}
 
-					for( $i = 1; $i <= $stars_on; $i++ ){
+					if( $bupr_avg_rating > 0 ) { ?>
+					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+						<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
+						<span itemprop="bestRating"   content="5"></span>
+						<span itemprop="ratingCount"  content="<?php echo $buprValue['rate_counter']; ?>"></span>
+						<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
+						<span itemprop="itemReviewed" content="Person"></span>
+						<span itemprop="name" content="<?php echo bp_core_get_username( $buprValue['user_id'] ); ?>"></span>
+						<span itemprop="url" content="<?php echo bp_core_get_userlink( $buprValue['user_id'], false, true ); ?>"></span>
+					</div>
+					<?php }
+
+					for( $i = 1; $i <= $stars_on; $i++ ) {
 						?><span class="fa fa-star bupr-star-rate"></span><?php
 					}
 
-					for( $i = 1; $i <= $stars_half; $i++ ){
+					for( $i = 1; $i <= $stars_half; $i++ ) {
 						?><span class="fa fa-star-half-o bupr-star-rate"></span><?php
 					}
 
-					for( $i = 1; $i <= $stars_off; $i++ ){
+					for( $i = 1; $i <= $stars_off; $i++ ) {
 						?><span class="fa fa-star-o bupr-star-rate"></span><?php
 					}
 
@@ -202,90 +217,90 @@ class bupr_members_review_setting extends WP_Widget {
 		echo $after_widget;
 	}
 
-		/* wbcom sort member list acording to max review */
-		function bupr_sort_max_review($bupr_rating1, $bupr_rating2)
-		{
-			return strcmp($bupr_rating2['max_review'] , $bupr_rating1['max_review']);
-		}
+	/* wbcom sort member list acording to max review */
+	function bupr_sort_max_review($bupr_rating1, $bupr_rating2)
+	{
+		return strcmp($bupr_rating2['max_review'] , $bupr_rating1['max_review']);
+	}
 
-		/* wbcom sort member list according to max star */
-		function bupr_sort_max_stars($bupr_rating1, $bupr_rating2){
-			return strcmp($bupr_rating2['avg_rating'] , $bupr_rating1['avg_rating']);
-		}
+	/* wbcom sort member list according to max star */
+	function bupr_sort_max_stars($bupr_rating1, $bupr_rating2){
+		return strcmp($bupr_rating2['avg_rating'] , $bupr_rating1['avg_rating']);
+	}
 
-		/** @see WP_Widget::update -- do not rename this */
-		function update($new_instance, $old_instance) {
-			$instance = $old_instance;
-			$instance['bupr_title']   = strip_tags($new_instance['bupr_title']);
-			$instance['bupr_member']  = $new_instance['bupr_member'];
-			$instance['top_member']   = $new_instance['top_member'];
-			$instance['avatar']       = $new_instance['avatar'];
-			return $instance;
-		}
+	/** @see WP_Widget::update -- do not rename this */
+	function update($new_instance, $old_instance) {
+		$instance = $old_instance;
+		$instance['bupr_title']   = strip_tags($new_instance['bupr_title']);
+		$instance['bupr_member']  = $new_instance['bupr_member'];
+		$instance['top_member']   = $new_instance['top_member'];
+		$instance['avatar']       = $new_instance['avatar'];
+		return $instance;
+	}
 
-		/** @see WP_Widget::form -- do not rename this */
-		function form($instance) {
-				$defaults = array(
-					'bupr_title'  => __('Top Members',BUPR_TEXT_DOMAIN),
-					'bupr_member' => 5,
-					'top_member'  => 'top rated',
-					'avatar'      => 'Show'
-				);
-				$instance     = wp_parse_args( (array) $instance, $defaults );
-				$title        = esc_attr($instance['bupr_title']);
-				$member       = esc_attr($instance['bupr_member']);
-				$topmembers   = esc_attr($instance['top_member']);
-				$avatar       = esc_attr($instance['avatar']);
-				?>
-				<div class="bupr-widget-class">
-				<p>
-					<label for="<?php echo $this->get_field_id('bupr_title'); ?>"><?php _e('Enter Title',BUPR_TEXT_DOMAIN); ?>:</label>
-					<input class="regular_text" id="<?php echo $this->get_field_id('bupr_title'); ?>" name="<?php echo $this->get_field_name('bupr_title'); ?>" type="text" value="<?php echo $title; ?>" />
-				</p>
-				<p>
-					<label for="<?php echo $this->get_field_id('bupr_member'); ?>"><?php _e('Display Members',BUPR_TEXT_DOMAIN); ?>:</label>
-					<input class="regular_text" id="<?php echo $this->get_field_id('bupr_member'); ?>" name="<?php echo $this->get_field_name('bupr_member'); ?>" type="number" value="<?php echo $member; ?>" />
-				</p>
+	/** @see WP_Widget::form -- do not rename this */
+	function form($instance) {
+		$defaults = array(
+			'bupr_title'  => __('Top Members',BUPR_TEXT_DOMAIN),
+			'bupr_member' => 5,
+			'top_member'  => 'top rated',
+			'avatar'      => 'Show'
+		);
+		$instance     = wp_parse_args( (array) $instance, $defaults );
+		$title        = esc_attr($instance['bupr_title']);
+		$member       = esc_attr($instance['bupr_member']);
+		$topmembers   = esc_attr($instance['top_member']);
+		$avatar       = esc_attr($instance['avatar']);
+		?>
+		<div class="bupr-widget-class">
+			<p>
+				<label for="<?php echo $this->get_field_id('bupr_title'); ?>"><?php _e('Enter Title',BUPR_TEXT_DOMAIN); ?>:</label>
+				<input class="regular_text" id="<?php echo $this->get_field_id('bupr_title'); ?>" name="<?php echo $this->get_field_name('bupr_title'); ?>" type="text" value="<?php echo $title; ?>" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('bupr_member'); ?>"><?php _e('Display Members',BUPR_TEXT_DOMAIN); ?>:</label>
+				<input class="regular_text" id="<?php echo $this->get_field_id('bupr_member'); ?>" name="<?php echo $this->get_field_name('bupr_member'); ?>" type="number" value="<?php echo $member; ?>" />
+			</p>
 
-				<p>
-					<span>
+			<p>
+				<span>
 					<input class="regular_text" id="<?php echo $this->get_field_id('top_rated'); ?>" name="<?php echo $this->get_field_name('top_member'); ?>" value="top rated" type="radio" <?php checked( $topmembers, 'top rated' ); ?>/>
-					 <label for="<?php echo $this->get_field_id('Top rated'); ?>"><?php _e('Top Rated ',BUPR_TEXT_DOMAIN); ?>
+					<label for="<?php echo $this->get_field_id('Top rated'); ?>"><?php _e('Top Rated ',BUPR_TEXT_DOMAIN); ?>
 					</label>
-					</span>
-					<span>
+				</span>
+				<span>
 					<input class="regular_text" id="<?php echo $this->get_field_id('top_viewed'); ?>" name="<?php echo $this->get_field_name('top_member'); ?>" value="top view" type="radio" <?php checked( $topmembers,'top view' ); ?>/>
-					 <label for="<?php echo $this->get_field_id('Top Viewed'); ?>"><?php _e('Most Reviewed',BUPR_TEXT_DOMAIN); ?>
+					<label for="<?php echo $this->get_field_id('Top Viewed'); ?>"><?php _e('Most Reviewed',BUPR_TEXT_DOMAIN); ?>
 					</label>
-					</span>
-				</p>
+				</span>
+			</p>
 
 
 
-				<p>
-					<label for="<?php echo $this->get_field_id('avatar'); ?>"><?php _e('Display Avatar ',BUPR_TEXT_DOMAIN); ?>
-					</label>
-					<?php
-					if(!empty($avatar) && $avatar == 'Show'){
-							$bupr_options = array('Show' , 'Hide');
-					}else if(!empty($avatar) && $avatar == 'Hide'){
-							$bupr_options = array( 'Hide' , 'Show');
-					}else{
-							$bupr_options = array('Show' , 'Hide');
-					}
-					?>
-					<select id="<?php echo $this->get_field_id( 'avatar' ); ?>" name="<?php echo $this->get_field_name( 'avatar' ); ?>">
-						<?php
-						foreach($bupr_options as $bupr_option){
-							?>
-							<option value="<?php echo $bupr_option ?>"><?php _e($bupr_option , BUPR_TEXT_DOMAIN); ?></option><?php
-						} ?>
-
-					</select>
-				</p>
-				</div>
+			<p>
+				<label for="<?php echo $this->get_field_id('avatar'); ?>"><?php _e('Display Avatar ',BUPR_TEXT_DOMAIN); ?>
+				</label>
 				<?php
-		}
+				if(!empty($avatar) && $avatar == 'Show'){
+					$bupr_options = array('Show' , 'Hide');
+				}else if(!empty($avatar) && $avatar == 'Hide'){
+					$bupr_options = array( 'Hide' , 'Show');
+				}else{
+					$bupr_options = array('Show' , 'Hide');
+				}
+				?>
+				<select id="<?php echo $this->get_field_id( 'avatar' ); ?>" name="<?php echo $this->get_field_name( 'avatar' ); ?>">
+					<?php
+					foreach($bupr_options as $bupr_option){
+						?>
+						<option value="<?php echo $bupr_option ?>"><?php _e($bupr_option , BUPR_TEXT_DOMAIN); ?></option><?php
+					} ?>
+
+				</select>
+			</p>
+		</div>
+		<?php
+	}
 }
 
 ?>
