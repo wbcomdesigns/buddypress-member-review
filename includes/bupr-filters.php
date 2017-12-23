@@ -29,7 +29,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_filter( 'post_row_actions', array( $this, 'bupr_bp_member_reviews_row_actions' ), 10, 2 );
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_remove_edit_bulk_actions' ), 10, 1 );
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
-			add_action( 'bp_directory_members_actions', array( $this, 'bupr_rating_directory') );
+			add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
 		}
 
 		public function bupr_rating_directory() {
