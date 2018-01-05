@@ -121,7 +121,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 				<div class="bp-member-add-form">
 
 				<p>
-					<?php _e( "Fill in details to submit $bupr_review_title", BUPR_TEXT_DOMAIN );?>
+					<?php echo sprintf(__('Fill in details to submit %s', BUPR_TEXT_DOMAIN), esc_html($bupr_review_title));?>
 				</p>
 
 				<?php if ( 0 === bp_displayed_user_id() ) { ?>
@@ -175,7 +175,7 @@ if( !class_exists( 'BUPR_Shortcodes' ) ) {
 					<p>
 						<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce'); ?>
 						<button type="button" class="btn btn-default" id="bupr_save_review" name="submit-review">
-						<?php _e( "Submit $bupr_review_title", BUPR_TEXT_DOMAIN );?>
+						<?php echo sprintf(__('Submit %s', BUPR_TEXT_DOMAIN), esc_html($bupr_review_title));?>
 						</button>
 						<input type="hidden" value="<?php echo $login_user; ?>" id="bupr_current_user_id" />
 						<img src="<?php echo $bupr_spinner_src;?>" class="bupr-save-reivew-spinner" />
