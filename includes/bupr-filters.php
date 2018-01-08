@@ -159,7 +159,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			if( !empty( $bupr_exc_member )) {
 				if( ( bp_displayed_user_id() != bp_loggedin_user_id() ) && !in_array( bp_displayed_user_id(), $bupr_exc_member ) ) {
-					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'add-review';
+					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'reviews/add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add ', BUPR_TEXT_DOMAIN ); echo $bupr_review_title; ?></a>
@@ -168,7 +168,7 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 			} else {
 				if( bp_displayed_user_id() != bp_loggedin_user_id() ) {
-					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'add-review';
+					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ).'reviews/add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url;?>" class="add-review" show ="<?php echo $review_div; ?>"><?php _e( 'Add ', BUPR_TEXT_DOMAIN ); echo $bupr_review_title; ?></a>
@@ -470,17 +470,17 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 				);
 				bp_core_new_nav_item($tab_args);
 
-				if( bp_displayed_user_id() !== get_current_user_id() ) {
-					$add_rev_tab_args = array(
-						'name' => __('Add ', BUPR_TEXT_DOMAIN).$bupr_review_title,
-						'slug' => 'add-review',
-						'screen_function' => array($this, 'bupr_reviews_form_tab_function_to_show_screen'),
-						'position' => 70,
-						'default_subnav_slug' => 'reviews_sub',
-						'show_for_displayed_user' => true,
-					);
-					bp_core_new_nav_item($add_rev_tab_args);
-				}
+				// if( bp_displayed_user_id() !== get_current_user_id() ) {
+				// 	$add_rev_tab_args = array(
+				// 		'name' => __('Add ', BUPR_TEXT_DOMAIN).$bupr_review_title,
+				// 		'slug' => 'add-review',
+				// 		'screen_function' => array($this, 'bupr_reviews_form_tab_function_to_show_screen'),
+				// 		'position' => 70,
+				// 		'default_subnav_slug' => 'reviews_sub',
+				// 		'show_for_displayed_user' => true,
+				// 	);
+				// 	bp_core_new_nav_item($add_rev_tab_args);
+				// }
 
 				$parent_slug = 'reviews';
 
@@ -496,6 +496,21 @@ if( !class_exists( 'BUPR_Custom_Hooks' ) ) {
 						'link' => site_url()."/members/$name/$parent_slug/view/",
 					)
 				);
+
+				//Add subnav to add a review
+				if( bp_displayed_user_id() !== get_current_user_id() ) {
+					bp_core_new_subnav_item(
+						array(
+							'name' => __('Add ', BUPR_TEXT_DOMAIN).$bupr_review_title,
+							'slug' => 'add-review',
+							'parent_url' => $bp->loggedin_user->domain.$parent_slug.'/',
+							'parent_slug' => $parent_slug,
+							'screen_function' => array($this, 'bupr_reviews_form_tab_function_to_show_screen'),
+							'position' => 200,
+							'link' => site_url()."/members/$name/$parent_slug/add-review/",
+						)
+					);
+				}
 			}
 		}
 
