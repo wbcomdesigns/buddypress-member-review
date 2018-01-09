@@ -328,7 +328,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				} else {
 					_e( 'You already posted a review for this member.', BUPR_TEXT_DOMAIN );
 				}
-					die;
+				die;
 			}
 		}
 	}
