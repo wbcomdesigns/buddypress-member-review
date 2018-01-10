@@ -60,11 +60,11 @@ $reviews = new WP_Query( $args ); ?>
 	<div class="bp-member-reviews">
 		<div id="bp-member-reviews-list" cellspacing="0">
 			<div id="request-review-list" class="item-list">
-			<?php
-			if ( $reviews->have_posts() ) {
-				while ( $reviews->have_posts() ) :
-					$reviews->the_post();
-					?>
+				<?php
+				if ( $reviews->have_posts() ) {
+					while ( $reviews->have_posts() ) :
+						$reviews->the_post();
+						?>
 						<div class="bupr-row">
 							<div class="bupr-col-2 bupr-members-profiles">
 								<div class="item-avatar">
@@ -90,101 +90,101 @@ $reviews = new WP_Query( $args ); ?>
 								<?php $url         = 'view/' . get_the_id(); ?>
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">
-									<?php
-									  $trimcontent = get_the_content();
-									if ( ! empty( $trimcontent ) ) {
-										$len = strlen( $trimcontent );
-										if ( $len > 150 ) {
-											$shortexcerpt = substr( $trimcontent, 0, 150 );
-											echo '<p>' . $shortexcerpt . '</p>';
+										<?php
+										$trimcontent = get_the_content();
+										if ( ! empty( $trimcontent ) ) {
+											$len = strlen( $trimcontent );
+											if ( $len > 150 ) {
+												$shortexcerpt = substr( $trimcontent, 0, 150 );
+												echo '<p>' . $shortexcerpt . '</p>';
 												?>
 												<a href="<?php echo $url; ?>"><i><?php _e( 'read more...', BUPR_TEXT_DOMAIN ); ?></i></a>
 												<?php
-										} else {
-											echo '<p>' . $trimcontent . '</p>';
-										}
-									}
-
-										?>
-									<?php
-									$bupr_admin_settings = get_option( 'bupr_admin_settings' );
-
-									if ( ! empty( $bupr_admin_settings['profile_rating_fields'] ) ) {
-										$member_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
-									}
-									$bupr_rating_criteria = array();
-									if ( ! empty( $member_review_rating_fields ) ) {
-										foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
-											$bupr_rating_criteria[] = $bupr_keys;
-										}
-									}
-									$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
-									if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
-										foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
-
-											if ( in_array( $field, $bupr_rating_criteria ) ) {
-
-												echo '<div class="bupr-row multi-review inline-content">' . '<div class="bupr-col-6 ">' . $field . '</div>';
-
-												/*** star rating Ratings */
-												$stars_on  = $bupr_value;
-												$stars_off = 5 - $stars_on;
-												echo '<div class="bupr-col-6 ">';
-												for ( $i = 1; $i <= $stars_on; $i++ ) {
-													?>
-													<span class="fa fa-star bupr-star-rate"></span>
-													<?php
-												}
-
-												for ( $i = 1; $i <= $stars_off; $i++ ) {
-													?>
-													<span class="fa fa-star-o stars bupr-star-rate"></span>
-													<?php
-												}
-												/*star rating end */
-
-												echo '</div>' . '</div>';
+											} else {
+												echo '<p>' . $trimcontent . '</p>';
 											}
 										}
-									endif;
-									?>
+
+										?>
+										<?php
+										$bupr_admin_settings = get_option( 'bupr_admin_settings' );
+
+										if ( ! empty( $bupr_admin_settings['profile_rating_fields'] ) ) {
+											$member_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
+										}
+										$bupr_rating_criteria = array();
+										if ( ! empty( $member_review_rating_fields ) ) {
+											foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
+												$bupr_rating_criteria[] = $bupr_keys;
+											}
+										}
+										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
+										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
+											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
+
+												if ( in_array( $field, $bupr_rating_criteria ) ) {
+
+													echo '<div class="bupr-row multi-review inline-content">' . '<div class="bupr-col-6 ">' . $field . '</div>';
+
+													/*** star rating Ratings */
+													$stars_on  = $bupr_value;
+													$stars_off = 5 - $stars_on;
+													echo '<div class="bupr-col-6 ">';
+													for ( $i = 1; $i <= $stars_on; $i++ ) {
+														?>
+														<span class="fa fa-star bupr-star-rate"></span>
+														<?php
+													}
+
+													for ( $i = 1; $i <= $stars_off; $i++ ) {
+														?>
+														<span class="fa fa-star-o stars bupr-star-rate"></span>
+														<?php
+													}
+													/*star rating end */
+
+													echo '</div>' . '</div>';
+												}
+											}
+										endif;
+										?>
 									</div>
 								</div>
 							</div>
 						</div>
-					<?php
+						<?php
 					endwhile;
 
-				$total_pages = $reviews->max_num_pages;
-				if ( $total_pages > 1 ) {
-					?>
-					<div class="bupr-row bupr-pagination">
+					$total_pages = $reviews->max_num_pages;
+					if ( $total_pages > 1 ) {
+						?>
+						<div class="bupr-row bupr-pagination">
+							<?php
+							/*** Posts pagination ***/
+							echo "<div class='bupr-posts-pagination'>";
+							echo paginate_links(
+								array(
+									'base'    => add_query_arg( 'page', '%#%' ),
+									'format'  => '',
+									'current' => max( 1, get_query_var( 'page' ) ),
+									'total'   => $reviews->max_num_pages,
+								)
+							);
+							echo '</div>';
+							?>
+						</div>
 						<?php
-						/*** Posts pagination ***/
-						echo "<div class='bupr-posts-pagination'>";
-						echo paginate_links(
-							array(
-								'base'    => add_query_arg( 'page', '%#%' ),
-								'format'  => '',
-								'current' => max( 1, get_query_var( 'page' ) ),
-								'total'   => $reviews->max_num_pages,
-							)
-						);
-						echo '</div>';
+					}
+					wp_reset_postdata();
+				} else {
 					?>
+					<div id="message" class="info">
+						<p><?php _e( 'Sorry, no reviews were found.', 'buddypress' ); ?></p>
 					</div>
 					<?php
 				}
-				wp_reset_postdata();
-			} else {
-					?>
-						<div id="message" class="info">
-							<p><?php _e( 'Sorry, no reviews were found.', 'buddypress' ); ?></p>
-						</div>
-					<?php
-			}
-					?>
-				</div>
+				?>
 			</div>
 		</div>
 	</div>
+</div>

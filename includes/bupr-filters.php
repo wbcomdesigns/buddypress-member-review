@@ -104,41 +104,41 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$bupr_half_squar = '';
 				$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
 				if ( $remaining > 0 ) {
-						$stars_on        = intval( $bupr_avg_rating );
-						$stars_half      = 1;
-						$bupr_half_squar = 1;
-						$stars_off       = 5 - ( $stars_on + $stars_half );
+					$stars_on        = intval( $bupr_avg_rating );
+					$stars_half      = 1;
+					$bupr_half_squar = 1;
+					$stars_off       = 5 - ( $stars_on + $stars_half );
 				} else {
-						$stars_on   = $bupr_avg_rating;
-						$stars_off  = 5 - $bupr_avg_rating;
-						$stars_half = 0;
+					$stars_on   = $bupr_avg_rating;
+					$stars_off  = 5 - $bupr_avg_rating;
+					$stars_half = 0;
 				}
 				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 				if ( $bupr_avg_rating > 0 ) { ?>
-					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-						<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
-						<span itemprop="bestRating"   content="5"></span>
-						<span itemprop="ratingCount"  content="<?php echo $rate_counter; ?>"></span>
-						<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
-						<span itemprop="itemReviewed" content="Person"></span>
-						<span itemprop="name" content="<?php echo bp_core_get_username( $members_template->member->id ); ?>"></span>
-						<span itemprop="url" content="<?php echo bp_core_get_userlink( $members_template->member->id, false, true ); ?>"></span>
+				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+					<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
+					<span itemprop="bestRating"   content="5"></span>
+					<span itemprop="ratingCount"  content="<?php echo $rate_counter; ?>"></span>
+					<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
+					<span itemprop="itemReviewed" content="Person"></span>
+					<span itemprop="name" content="<?php echo bp_core_get_username( $members_template->member->id ); ?>"></span>
+					<span itemprop="url" content="<?php echo bp_core_get_userlink( $members_template->member->id, false, true ); ?>"></span>
 					<?php
 					echo "<div class='member-review-stars'>";
 					for ( $i = 1; $i <= $stars_on; $i++ ) {
-					?>
+						?>
 						<span class="fa fa-star bupr-star-rate"></span>
-					<?php
+						<?php
 					}
 
 					for ( $i = 1; $i <= $stars_half; $i++ ) {
-					?>
+						?>
 						<span class="fa fa-star-half-o bupr-star-rate"></span>
 						<?php
 					}
 
 					for ( $i = 1; $i <= $stars_off; $i++ ) {
-					?>
+						?>
 						<span class="fa fa-star-o bupr-star-rate"></span>
 						<?php
 					}
@@ -146,7 +146,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					?>
 				</div>
 				<?php } ?>
-			<?php
+				<?php
 			}
 		}
 
@@ -171,11 +171,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url; ?>" class="add-review" show ="<?php echo $review_div; ?>">
-											<?php
-											_e( 'Add ', BUPR_TEXT_DOMAIN );
-											echo $bupr_review_title;
-?>
-</a>
+							<?php
+							_e( 'Add ', BUPR_TEXT_DOMAIN );
+							echo $bupr_review_title;
+							?>
+						</a>
 					</div>
 					<?php
 				}
@@ -185,11 +185,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url; ?>" class="add-review" show ="<?php echo $review_div; ?>">
-											<?php
-											_e( 'Add ', BUPR_TEXT_DOMAIN );
-											echo $bupr_review_title;
-?>
-</a>
+							<?php
+							_e( 'Add ', BUPR_TEXT_DOMAIN );
+							echo $bupr_review_title;
+							?>
+						</a>
 					</div>
 					<?php
 				}
@@ -247,7 +247,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_member_average_rating() {
-		?>
+			?>
 			<br>
 			<?php
 			/* get display tab setting from db */
@@ -319,18 +319,18 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$bupr_half_squar = '';
 				$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
 				if ( $remaining > 0 ) {
-						$stars_on        = intval( $bupr_avg_rating );
-						$stars_half      = 1;
-						$bupr_half_squar = 1;
-						$stars_off       = 5 - ( $stars_on + $stars_half );
+					$stars_on        = intval( $bupr_avg_rating );
+					$stars_half      = 1;
+					$bupr_half_squar = 1;
+					$stars_off       = 5 - ( $stars_on + $stars_half );
 				} else {
-						$stars_on   = $bupr_avg_rating;
-						$stars_off  = 5 - $bupr_avg_rating;
-						$stars_half = 0;
+					$stars_on   = $bupr_avg_rating;
+					$stars_off  = 5 - $bupr_avg_rating;
+					$stars_half = 0;
 				}
 				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 				if ( $bupr_avg_rating > 0 ) {
-				?>
+					?>
 					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 						<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
 						<span itemprop="bestRating"   content="5"></span>
@@ -339,34 +339,34 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<span itemprop="itemReviewed" content="Person"></span>
 						<span itemprop="name" content="<?php echo bp_core_get_username( bp_displayed_user_id() ); ?>"></span>
 						<span itemprop="url" content="<?php echo bp_core_get_userlink( bp_displayed_user_id(), false, true ); ?>"></span>
-					<?php
-					echo "<div class='member-review-stars'>";
-					for ( $i = 1; $i <= $stars_on; $i++ ) {
-					?>
-						<span class="fa fa-star bupr-star-rate"></span>
-					<?php
-					}
-
-					for ( $i = 1; $i <= $stars_half; $i++ ) {
-					?>
-						<span class="fa fa-star-half-o bupr-star-rate"></span>
 						<?php
-					}
+						echo "<div class='member-review-stars'>";
+						for ( $i = 1; $i <= $stars_on; $i++ ) {
+							?>
+							<span class="fa fa-star bupr-star-rate"></span>
+							<?php
+						}
 
-					for ( $i = 1; $i <= $stars_off; $i++ ) {
-					?>
-						<span class="fa fa-star-o bupr-star-rate"></span>
-						<?php
-					}
-					echo '</div>';
-					echo "<div class='member-review-stats'>";
-				?>
+						for ( $i = 1; $i <= $stars_half; $i++ ) {
+							?>
+							<span class="fa fa-star-half-o bupr-star-rate"></span>
+							<?php
+						}
+
+						for ( $i = 1; $i <= $stars_off; $i++ ) {
+							?>
+							<span class="fa fa-star-o bupr-star-rate"></span>
+							<?php
+						}
+						echo '</div>';
+						echo "<div class='member-review-stats'>";
+						?>
 						<span>
 
 							<?php
 							_e( 'Rating ', BUPR_TEXT_DOMAIN );
-									echo ' : ' . $bupr_avg_rating . '/5 - ';
-										echo $bupr_reviews_count . ' ' . $bupr_review_title;
+							echo ' : ' . $bupr_avg_rating . '/5 - ';
+							echo $bupr_reviews_count . ' ' . $bupr_review_title;
 
 							?>
 						</span>
@@ -374,7 +374,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				</div>
 				<?php } ?>
 
-			<?php
+				<?php
 			}
 		}
 
@@ -495,22 +495,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					'slug'                    => 'reviews',
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
-					'default_subnav_slug'     => 'reviews_sub',
+					'default_subnav_slug'     => 'view',
 					'show_for_displayed_user' => true,
 				);
 				bp_core_new_nav_item( $tab_args );
 
-				// if( bp_displayed_user_id() !== get_current_user_id() ) {
-				// $add_rev_tab_args = array(
-				// 'name' => __('Add ', BUPR_TEXT_DOMAIN).$bupr_review_title,
-				// 'slug' => 'add-review',
-				// 'screen_function' => array($this, 'bupr_reviews_form_tab_function_to_show_screen'),
-				// 'position' => 70,
-				// 'default_subnav_slug' => 'reviews_sub',
-				// 'show_for_displayed_user' => true,
-				// );
-				// bp_core_new_nav_item($add_rev_tab_args);
-				// }
 				$parent_slug = 'reviews';
 
 				// Add subnav to view a review
@@ -522,7 +511,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						'parent_slug'     => $parent_slug,
 						'screen_function' => array( $this, 'bupr_view_review_tab_function_to_show_screen' ),
 						'position'        => 100,
-						'link'            => site_url() . "/members/$name/$parent_slug/view/",
+						'link'            => site_url() . "/members/$name/$parent_slug/",
 					)
 				);
 
@@ -581,22 +570,22 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		// Action performed to show the content of add review tab
 		public function bupr_reviews_form_to_show_content() {
-		?>
+			?>
 			<div class="bupr-bp-member-review-no-popup-add-block">
 				<?php
 				if ( is_user_logged_in() ) {
 					do_shortcode( '[add_profile_review_form]' );
 				} else {
-				?>
+					?>
 					<div id="message" class="info">
 						<p>
 							<?php _e( 'You must login !.', BUPR_PLUGIN_URL ); ?>
 						</p>
 					</div>
-				<?php } ?>
-			</div>
-		<?php
-		}
+					<?php } ?>
+				</div>
+				<?php
+			}
 
 		/**
 		 * Actions performed to hide row actions

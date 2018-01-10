@@ -2,11 +2,11 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-	/* get display tab setting from db */
-	$bupr_star_color       = '#eeee22';
-	$bupr_star_type        = 'Stars Rating';
-	$bupr_review_title     = 'Reviews';
-	$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+/* get display tab setting from db */
+$bupr_star_color       = '#eeee22';
+$bupr_star_type        = 'Stars Rating';
+$bupr_review_title     = 'Reviews';
+$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 	$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 }
@@ -16,9 +16,10 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_type'] ) ) {
 	$bupr_star_type = $bupr_display_settings['bupr_star_type'];
 }
-	$url = $_SERVER['REQUEST_URI'];
-	preg_match_all( '!\d+!', $url, $matches );
-	$review_id = basename( $url );
+$url = $_SERVER['REQUEST_URI'];
+preg_match_all( '!\d+!', $url, $matches );
+$review_id = (int) basename( $url );
+if( !empty( $review_id ) ) {
 	$review    = get_post( $review_id );
 
 	$review_title = $review->post_title;
@@ -40,27 +41,27 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 			'object'  => 'user',
 			'html'    => false,
 		)
-	); ?>
-	<!-- wbcom Display members review on review tab -->
-	<div class="bgr-single-review">
-		<article id="post-<?php echo $review_id; ?>" class="post-<?php echo $review_id; ?> post type-review status-publish format-standard hentry bupr-single-reivew">
-			<div class="bupr-col-3 bupr-members-profiles">
-				<div class="author">
-					<img src="<?php echo $avatar; ?>" class="avatar user-<?php echo $author; ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo $review_author; ?>" width="50" height="50">
-					<div class="reviewer">
-						<h4>
-							<?php _e( $member_profile, BUPR_TEXT_DOMAIN ); ?>
-						</h4>
+		); ?>
+		<!-- wbcom Display members review on review tab -->
+		<div class="bgr-single-review">
+			<article id="post-<?php echo $review_id; ?>" class="post-<?php echo $review_id; ?> post type-review status-publish format-standard hentry bupr-single-reivew">
+				<div class="bupr-col-3 bupr-members-profiles">
+					<div class="author">
+						<img src="<?php echo $avatar; ?>" class="avatar user-<?php echo $author; ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo $review_author; ?>" width="50" height="50">
+						<div class="reviewer">
+							<h4>
+								<?php _e( $member_profile, BUPR_TEXT_DOMAIN ); ?>
+							</h4>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="bupr-col-8">
+				<div class="bupr-col-8">
 				<!-- <h2 class="alpha entry-title">
 					<?php // _e($review_title , BUPR_TEXT_DOMAIN ); ?>
 				</h2> -->
 				<span class="posted-on">
 					<b>
-					<?php _e( 'Posted on', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'Posted on', BUPR_TEXT_DOMAIN ); ?>
 						<time class="entry-date published updated">
 							<?php echo date_format( date_create( $review_date ), 'F d, Y' ); ?>
 						</time>
@@ -85,22 +86,22 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 						if ( in_array( $field, $bupr_rating_criteria ) ) {
 
 							echo '<div class="bupr-row multi-review inline-content">' . '<div class="bupr-col-6 ">' . $field . '</div>';
-								/*** star rating Ratings */
-								$stars_on  = $bupr_value;
-								$stars_off = 5 - $stars_on;
-								echo '<div class="bupr-col-6 ">';
+							/*** star rating Ratings */
+							$stars_on  = $bupr_value;
+							$stars_off = 5 - $stars_on;
+							echo '<div class="bupr-col-6 ">';
 							for ( $i = 1; $i <= $stars_on; $i++ ) {
 								?>
-									<span class="fa fa-star bupr-star-rate"></span>
-									<?php
+								<span class="fa fa-star bupr-star-rate"></span>
+								<?php
 							}
 
 							for ( $i = 1; $i <= $stars_off; $i++ ) {
 								?>
-									<span class="fa fa-star-o stars bupr-star-rate"></span>
-									<?php
+								<span class="fa fa-star-o stars bupr-star-rate"></span>
+								<?php
 							}
-								/*star rating end */
+							/*star rating end */
 							echo '</div>' . '</div>';
 						}
 					}
@@ -109,3 +110,5 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 			</div>
 		</article>
 	</div>
+
+	<?php } ?>
