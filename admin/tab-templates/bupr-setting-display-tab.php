@@ -35,7 +35,7 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 					<?php _e( 'Reviews', BUPR_TEXT_DOMAIN ); ?>
 				</div>
 				<div class="bupr-admin-col-8">
-					<input type="text" name="bupr_member_tab_title" id="bupr_member_tab_title" placeholder="Enter Tab title for fron-end." value="<?php echo ! empty( $bupr_review_title ) ? $bupr_review_title : 'Review'; ?>">
+					<input type="text" name="bupr_member_tab_title" id="bupr_member_tab_title" value="<?php echo ! empty( $bupr_review_title ) ? $bupr_review_title : 'Review'; ?>">
 					<p class="description">
 						<?php _e( 'Change Labels from BuddyPress tab and review form.', BUPR_TEXT_DOMAIN ); ?>
 					</p>
