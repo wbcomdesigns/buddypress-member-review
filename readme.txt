@@ -1,5 +1,5 @@
 === BuddyPress Member Reviews ===
-Contributors: wbcomdesigns
+Contributors: wbcomdesigns , vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
@@ -10,9 +10,19 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review itself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria. You can add multiple criteria for review. And you can change the positions of those Criteria.  Review form shows on the member's profile but you can show review form on another page just by shortcode. BP member profile review plugin adds a widget for display top reviewed member listing .
+This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review itself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria. 
 
-If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/contact/).
+You can add multiple criteria for review. And you can change the positions of those Criteria.  Review form shows on the member's profile but you can show review form on another page just by shortcode. BP member profile review plugin adds a widget for display top reviewed member listing .
+
+It is built to be reliable, scalable, secure and flexible. We have worked hard to make it easy to use and we will love your feedback in making it better.
+
+= Links =
+
+*	[Plugin url](https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/ "BuddyPress Member Review" )
+*	[Demo]( https://demos.wbcomdesigns.com/wbcomplugins/ "BuddyPress Member Review Demo")
+*	[Support](https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/)
+*	[Github Development Repo](https://github.com/wbcomdesigns/buddypress-member-review/)
+
 
 == Installation ==
 
@@ -20,6 +30,9 @@ If you need additional help you can contact us for [Custom Development](https://
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Frequently Asked Questions ==
+
+= Where do I get support?
+We request you to use [Wbcom Designs](https://wbcomdesigns.com/contact/) for all the support questions. We love helping. Using Wbcom Designs allows us to assist you better and quicker.
 
 = How can we sumit review to a member profile by using this plugin? =
 
@@ -42,23 +55,21 @@ Members Review widgets display list of members on site front-end . When you succ
 Yes you can use the review form on other page, just go to "Dashboard->Review->BP member review setting page" and click shortcode tab and copy review from shortcode and paste it on the other page.
 
 == Screenshots ==
-
-1. The screenshot shows general settings tab of admin settings and corresponds to screenshot-1.(png|jpg|jpeg|gif).
-2. The screenshot shows criteria settings tab of admin settings and corresponds to screenshot-2.(png|jpg|jpeg|gif).
-3. The screenshot shows show shortcodes and corresponds to screenshot-3.(png|jpg|jpeg|gif).
-4. The screenshot shows display settings tab of admin settings and corresponds to screenshot-4.(png|jpg|jpeg|gif).
-5. The screenshot shows FAQ(s) and corresponds to screenshot-5.(png|jpg|jpeg|gif).
-6. The screenshot shows the add review form and corresponds to screenshot-6.(png|jpg|jpeg|gif).
-7. The screenshot shows the reviews listing and multi-rating on member review page and corresponds to screenshot-7.(png|jpg|jpeg|gif).
-8. The screenshot shows the reviews average in single member page and multi-rating on member review page and corresponds to screenshot-8.(png|jpg|jpeg|gif).
-9. The screenshot shows review form by shortcode and corresponds to screenshot-9.(png|jpg|jpeg|gif).
-10. The screenshot shows the review widget in widgets and corresponds to screenshot-10.(png|jpg|jpeg|gif).
-11. The screenshot shows the review widget in front-end and corresponds to screenshot-11.(png|jpg|jpeg|gif).
+1. Members Directory View
+2. Members Single Profile View
+3. Members Add Review section
+4. Plugin Settings
 
 == Changelog ==
 
+= 1.0.4 =
+* Enhancement - Add support for member directory
+* Enhancement - Added Google Rating Snippet meta tags
+* Enhancement - Simplified rating view on single member profile
+* Fix - Removed JS tab for add review and added real sub nav to add reviews
+
 = 1.0.3 =
-* Review header cleanup
+* Fix - Review header cleanup
 
 = 1.0.2 =
 * Fix - Added validation for shortcode review form and member review form for both condition with & without criteria fields.
@@ -73,9 +84,6 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 * Added BuddyPress Notifcation options
 * Added Exclude Members for review options
 * Removed option to rate yourself
-
-= 1.0.0 =
-* Initial release.
 
 == Upgrade Notice ==
 = 1.0.0 =
