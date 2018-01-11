@@ -32,7 +32,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_submenu_page_admin_settings() {
-			add_submenu_page( 'edit.php?post_type=review', __( 'Reviews Admin Settings', BUPR_TEXT_DOMAIN ), __( 'Member Review', BUPR_TEXT_DOMAIN ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
+			add_submenu_page( 'edit.php?post_type=review', __( 'Reviews Admin Settings', BUPR_TEXT_DOMAIN ), __( 'Member Settings', BUPR_TEXT_DOMAIN ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
 
 		/**
