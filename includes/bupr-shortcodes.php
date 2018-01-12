@@ -109,7 +109,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				} else {
 					?>
 					  <div id="message" class="error">
-					   <p><?php _e( "You already posted a $bupr_review_title for this member.", BUPR_TEXT_DOMAIN ); ?> </p>
+					   <p><?php echo sprintf( __( 'You already posted a %s for this member.', BUPR_TEXT_DOMAIN ), esc_html( $bupr_review_title ) ); ?> </p>
 					</div>
 					<?php
 				}
