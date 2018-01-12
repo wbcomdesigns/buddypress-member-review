@@ -179,7 +179,7 @@ $reviews = new WP_Query( $args ); ?>
 				} else {
 					?>
 					<div id="message" class="info">
-						<p><?php _e( 'Sorry, no reviews were found.', 'buddypress' ); ?></p>
+						<p><?php _e( "Sorry, no reviews were found.", BUPR_TEXT_DOMAIN ); ?></p>
 					</div>
 					<?php
 				}
