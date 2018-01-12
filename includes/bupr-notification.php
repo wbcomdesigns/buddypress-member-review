@@ -82,8 +82,8 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			$user_info            = get_userdata( $post_author_id );
 			$user_name            = $user_info->user_login;
 			$notification_link    = home_url() . '/members/' . $admin_name . '/reviews/view/' . $review_id;
-			$notification_title   = 'A new review posted.';
-			$notification_content = "$user_name posted a review";
+			$notification_title = sprintf( __( 'A new review posted.', BUPR_TEXT_DOMAIN ) );
+			$notification_content = sprintf( __( '%s posted a review', BUPR_TEXT_DOMAIN ), esc_html( $user_name ) );
 
 			if ( 'string' == $format ) {
 				$return = sprintf( "<a href='%s' title='%s'>%s</a>", esc_url( $notification_link ), esc_attr( $notification_title ), esc_html( $notification_content ) );
