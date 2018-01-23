@@ -20,7 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	*/
 	define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 	define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-	define( 'BUPR_TEXT_DOMAIN', 'bp-member-reviews' );
 
 	/* define options name for admin setting option */
 	define( 'BUPR_GENERAL_OPTIONS', 'bupr_admin_general_options' );
@@ -92,7 +91,7 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 		$bupr_plugin = 'BuddyPress Member Reviews';
 		$bp_plugin   = 'BuddyPress';
 
-		echo '<div class="error"><p>' . sprintf( __( '%1$s is ineffective now as it requires %2$s to function correctly.', BUPR_TEXT_DOMAIN ), '<strong>' . esc_html( $bupr_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' ) . '</p></div>';
+		echo '<div class="error"><p>' . sprintf( __( '%1$s is ineffective now as it requires %2$s to function correctly.', 'bp-member-reviews' ), '<strong>' . esc_html( $bupr_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' ) . '</p></div>';
 		if ( isset( $_GET['activate'] ) ) {
 			unset( $_GET['activate'] );
 		}

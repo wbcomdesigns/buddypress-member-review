@@ -1,5 +1,5 @@
 <?php
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 global $bp,$post;
@@ -87,7 +87,7 @@ $reviews = new WP_Query( $args ); ?>
 							</div>
 
 							<div class="bupr-col-9 bupr-members-content">
-								<?php $url         = 'view/' . get_the_id(); ?>
+								<?php $url           = 'view/' . get_the_id(); ?>
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">
 										<?php
@@ -98,7 +98,7 @@ $reviews = new WP_Query( $args ); ?>
 												$shortexcerpt = substr( $trimcontent, 0, 150 );
 												echo '<p>' . $shortexcerpt . '</p>';
 												?>
-												<a href="<?php echo $url; ?>"><i><?php _e( 'read more...', BUPR_TEXT_DOMAIN ); ?></i></a>
+												<a href="<?php echo $url; ?>"><i><?php _e( 'read more...', 'bp-member-reviews' ); ?></i></a>
 												<?php
 											} else {
 												echo '<p>' . $trimcontent . '</p>';
@@ -179,7 +179,7 @@ $reviews = new WP_Query( $args ); ?>
 				} else {
 					?>
 					<div id="message" class="info">
-						<p><?php _e( "Sorry, no reviews were found.", BUPR_TEXT_DOMAIN ); ?></p>
+						<p><?php _e( 'Sorry, no reviews were found.', 'bp-member-reviews' ); ?></p>
 					</div>
 					<?php
 				}

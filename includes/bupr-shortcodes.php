@@ -33,7 +33,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			global $bp;
 			/* get display tab setting from db */
 			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = __( 'Reviews', BUPR_TEXT_DOMAIN );
+			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -109,7 +109,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				} else {
 					?>
 					  <div id="message" class="error">
-					   <p><?php echo sprintf( __( 'You already posted a %s for this member.', BUPR_TEXT_DOMAIN ), esc_html( $bupr_review_title ) ); ?> </p>
+					   <p><?php echo sprintf( __( 'You already posted a %s for this member.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?> </p>
 					</div>
 					<?php
 				}
@@ -125,13 +125,13 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				<div class="bp-member-add-form">
 
 				<p>
-					<?php echo sprintf( __( 'Fill in details to submit %s', BUPR_TEXT_DOMAIN ), esc_html( $bupr_review_title ) ); ?>
+					<?php echo sprintf( __( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>
 				</p>
 
 				<?php if ( 0 === bp_displayed_user_id() ) { ?>
 				<p>
 					<select name="bupr_member_id" id="bupr_member_review_id">
-						<option value=""><?php _e( '--Select--', BUPR_TEXT_DOMAIN ); ?></option>
+						<option value=""><?php _e( '--Select--', 'bp-member-reviews' ); ?></option>
 						<?php
 						if ( ! empty( $bupr_member ) ) {
 							foreach ( $bupr_member as $user ) {
@@ -140,15 +140,15 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						}
 						?>
 					</select><br/>
-					<span class="bupr-error-fields">*<?php _e( 'This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
+					<span class="bupr-error-fields">*<?php _e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 				</p>
 				<?php } ?>
 				<input type="hidden" id="bupr_member_review_id" value="<?php echo bp_displayed_user_id(); ?>">
 				<p class="bupr-hide-subject">
-					<input name="review-subject" id="review_subject" type="text" placeholder="<?php _e( 'Review Subject', BUPR_TEXT_DOMAIN ); ?>" ><br/><span class="bupr-error-fields">*<?php _e( 'This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
+					<input name="review-subject" id="review_subject" type="text" placeholder="<?php _e( 'Review Subject', 'bp-member-reviews' ); ?>" ><br/><span class="bupr-error-fields">*<?php _e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 				</p>
 				<p>
-					<textarea name="review-desc" id="review_desc" placeholder="<?php _e( 'Review Description', BUPR_TEXT_DOMAIN ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php _e( 'This field is required.', BUPR_TEXT_DOMAIN ); ?></span>
+					<textarea name="review-desc" id="review_desc" placeholder="<?php _e( 'Review Description', 'bp-member-reviews' ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php _e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 				</p>
 				<?php
 				if ( ! empty( $profile_rating_fields ) ) {
@@ -159,7 +159,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						?>
 							<div class="bupr-col-12">
 								<div class="bupr-col-3 bupr-criteria-label">
-									<?php _e( html_entity_decode( $bupr_rating_fileds ), BUPR_TEXT_DOMAIN ); ?>
+									<?php _e( html_entity_decode( $bupr_rating_fileds ), 'bp-member-reviews' ); ?>
 								</div>
 								<div class="bupr-col-6 bupr-criteria-content" id="member_review<?php echo $field_counter; ?>">
 									 <input type="hidden" id="<?php echo 'clicked' . $field_counter; ?>" value="<?php echo 'not_clicked'; ?>">
@@ -170,7 +170,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										<span class="member_stars <?php echo $i; ?> fa fa-star-o bupr-stars bupr-star-rate <?php echo $i; ?>" id="<?php echo $field_counter . $i; ?>" data-attr="<?php echo $i; ?>" ></span>
 									<?php } ?>
 								</div>
-								<div class="bupr-col-12 bupr-error-fields">*<?php _e( 'This field is required.', BUPR_TEXT_DOMAIN ); ?></div>
+								<div class="bupr-col-12 bupr-error-fields">*<?php _e( 'This field is required.', 'bp-member-reviews' ); ?></div>
 							</div>
 							<?php
 							$field_counter++;
@@ -183,7 +183,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					<p>
 						<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce' ); ?>
 						<button type="button" class="btn btn-default" id="bupr_save_review" name="submit-review">
-						<?php echo sprintf( __( 'Submit %s', BUPR_TEXT_DOMAIN ), esc_html( $bupr_review_title ) ); ?>
+						<?php echo sprintf( __( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>
 						</button>
 						<input type="hidden" value="<?php echo $login_user; ?>" id="bupr_current_user_id" />
 						<img src="<?php echo $bupr_spinner_src; ?>" class="bupr-save-reivew-spinner" />

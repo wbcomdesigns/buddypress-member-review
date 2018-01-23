@@ -1,5 +1,5 @@
 <?php
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 /* get display tab setting from db */
@@ -19,8 +19,8 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 $url = $_SERVER['REQUEST_URI'];
 preg_match_all( '!\d+!', $url, $matches );
 $review_id = (int) basename( $url );
-if( !empty( $review_id ) ) {
-	$review    = get_post( $review_id );
+if ( ! empty( $review_id ) ) {
+	$review = get_post( $review_id );
 
 	$review_title = $review->post_title;
 	$review_url   = get_permalink( $review_id );
@@ -41,7 +41,7 @@ if( !empty( $review_id ) ) {
 			'object'  => 'user',
 			'html'    => false,
 		)
-		); ?>
+	); ?>
 		<!-- wbcom Display members review on review tab -->
 		<div class="bgr-single-review">
 			<article id="post-<?php echo $review_id; ?>" class="post-<?php echo $review_id; ?> post type-review status-publish format-standard hentry bupr-single-reivew">
@@ -50,18 +50,18 @@ if( !empty( $review_id ) ) {
 						<img src="<?php echo $avatar; ?>" class="avatar user-<?php echo $author; ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo $review_author; ?>" width="50" height="50">
 						<div class="reviewer">
 							<h4>
-								<?php _e( $member_profile, BUPR_TEXT_DOMAIN ); ?>
+								<?php _e( $member_profile, 'bp-member-reviews' ); ?>
 							</h4>
 						</div>
 					</div>
 				</div>
 				<div class="bupr-col-8">
 				<!-- <h2 class="alpha entry-title">
-					<?php // _e($review_title , BUPR_TEXT_DOMAIN ); ?>
+					<?php // _e($review_title , 'bp-member-reviews' ); ?>
 				</h2> -->
 				<span class="posted-on">
 					<b>
-						<?php _e( 'Posted on', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'Posted on', 'bp-member-reviews' ); ?>
 						<time class="entry-date published updated">
 							<?php echo date_format( date_create( $review_date ), 'F d, Y' ); ?>
 						</time>

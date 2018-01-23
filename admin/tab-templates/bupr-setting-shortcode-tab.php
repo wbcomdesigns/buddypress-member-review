@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="bupr-adming-setting">
 	<div class="bupr-tab-header">
 		<h3>
-			<?php _e( 'Reviews Shortcode ', BUPR_TEXT_DOMAIN ); ?>
+			<?php _e( 'Reviews Shortcode ', 'bp-member-reviews' ); ?>
 		</h3>
 		<input type="hidden" class="bupr-tab-active" value="shortcode"/>
 	</div>
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div class="bupr-admin-col-6">
 					<p class="description">
-						<?php _e( ' This shortcode will be display BP member review form.', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( ' This shortcode will be display BP member review form.', 'bp-member-reviews' ); ?>
 					</p>
 				</div>
 			</div>

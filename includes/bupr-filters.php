@@ -36,7 +36,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			/* get display tab setting from db */
 			global $members_template;
 			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = __( 'Reviews', BUPR_TEXT_DOMAIN );
+			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -160,7 +160,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			} else {
-				$bupr_review_title = __( 'Reviews', BUPR_TEXT_DOMAIN );
+				$bupr_review_title = __( 'Reviews', 'bp-member-reviews' );
 			}
 			$review_div      = 'form';
 			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
@@ -172,7 +172,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url; ?>" class="add-review" show ="<?php echo $review_div; ?>">
 							<?php
-							_e( 'Add ', BUPR_TEXT_DOMAIN );
+							_e( 'Add ', 'bp-member-reviews' );
 							echo $bupr_review_title;
 							?>
 						</a>
@@ -186,7 +186,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo $review_url; ?>" class="add-review" show ="<?php echo $review_div; ?>">
 							<?php
-							_e( 'Add ', BUPR_TEXT_DOMAIN );
+							_e( 'Add ', 'bp-member-reviews' );
 							echo $bupr_review_title;
 							?>
 						</a>
@@ -201,7 +201,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
-			$bupr_review_title     = __( 'Reviews', BUPR_TEXT_DOMAIN );
+			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -252,7 +252,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			<?php
 			/* get display tab setting from db */
 			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = __( 'Reviews', BUPR_TEXT_DOMAIN );
+			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -364,7 +364,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<span>
 
 							<?php
-							_e( 'Rating ', BUPR_TEXT_DOMAIN );
+							_e( 'Rating ', 'bp-member-reviews' );
 							echo ' : ' . $bupr_avg_rating . '/5 - ';
 							echo $bupr_reviews_count . ' ' . $bupr_review_title;
 
@@ -451,7 +451,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$bupr_star_color   = $bupr_display_settings['bupr_star_color'];
 			}
 			if ( empty( $bupr_review_title ) ) {
-				$bupr_review_title = __( 'Reviews', BUPR_TEXT_DOMAIN );
+				$bupr_review_title = __( 'Reviews', 'bp-member-reviews' );
 			}
 
 			$bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS, true );
@@ -505,7 +505,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				// Add subnav to view a review
 				bp_core_new_subnav_item(
 					array(
-						'name'            => __( 'View', BUPR_TEXT_DOMAIN ),
+						'name'            => __( 'View', 'bp-member-reviews' ),
 						'slug'            => 'view',
 						'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 						'parent_slug'     => $parent_slug,
@@ -519,7 +519,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( bp_displayed_user_id() !== get_current_user_id() ) {
 					bp_core_new_subnav_item(
 						array(
-							'name'            => __( 'Add ', BUPR_TEXT_DOMAIN ) . $bupr_review_title,
+							'name'            => __( 'Add ', 'bp-member-reviews' ) . $bupr_review_title,
 							'slug'            => 'add-review',
 							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 							'parent_slug'     => $parent_slug,
@@ -585,7 +585,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<?php } ?>
 				</div>
 				<?php
-			}
+		}
 
 		/**
 		 * Actions performed to hide row actions

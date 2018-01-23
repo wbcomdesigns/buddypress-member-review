@@ -12,14 +12,14 @@ class bupr_members_review_setting extends WP_Widget {
 	function __construct() {
 		$widget_ops  = array(
 			'classname'   => 'bupr_members_review_setting',
-			'description' => __( 'Display members list according to members reviews ', BUPR_TEXT_DOMAIN ),
+			'description' => __( 'Display members list according to members reviews ', 'bp-member-reviews' ),
 		);
 		$control_ops = array(
 			'width'   => 280,
 			'height'  => 350,
 			'id_base' => 'bupr_members_review_setting',
 		);
-		parent::__construct( 'bupr_members_review_setting', __( ' Top Members : Display members list accoding to reviews', BUPR_TEXT_DOMAIN ), $widget_ops, $control_ops );
+		parent::__construct( 'bupr_members_review_setting', __( ' Top Members : Display members list accoding to reviews', 'bp-member-reviews' ), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -164,7 +164,7 @@ class bupr_members_review_setting extends WP_Widget {
 															}
 															$members_profile = bp_core_get_userlink( $buprValue['user_id'] );
 															echo '<p>';
-															_e( $members_profile, BUPR_TEXT_DOMAIN );
+															_e( $members_profile, 'bp-member-reviews' );
 															echo '</p>';
 
 															$bupr_avg_rating    = $buprValue['avg_rating'];
@@ -216,9 +216,9 @@ class bupr_members_review_setting extends WP_Widget {
 
 															$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 															echo '<p>';
-															_e( 'Rating', BUPR_TEXT_DOMAIN );
+															_e( 'Rating', 'bp-member-reviews' );
 															echo ' : ( ' . $bupr_avg_rating . ' )</p><p>';
-															_e( 'Total ', BUPR_TEXT_DOMAIN );
+															_e( 'Total ', 'bp-member-reviews' );
 															echo $bupr_review_title . ' : ' . $bupr_reviews_count . '</p></div></div>';
 														}
 
@@ -226,7 +226,7 @@ class bupr_members_review_setting extends WP_Widget {
 													}
 												} else {
 													echo '<p>';
-													_e( 'No member has been reviewed yet.', BUPR_TEXT_DOMAIN );
+													_e( 'No member has been reviewed yet.', 'bp-member-reviews' );
 													echo '</p>';
 												}
 												echo $after_widget;
@@ -255,7 +255,7 @@ class bupr_members_review_setting extends WP_Widget {
 	/** @see WP_Widget::form -- do not rename this */
 	function form( $instance ) {
 		$defaults   = array(
-			'bupr_title'  => __( 'Top Members', BUPR_TEXT_DOMAIN ),
+			'bupr_title'  => __( 'Top Members', 'bp-member-reviews' ),
 			'bupr_member' => 5,
 			'top_member'  => 'top rated',
 			'avatar'      => 'Show',
@@ -268,23 +268,23 @@ class bupr_members_review_setting extends WP_Widget {
 		?>
 		<div class="bupr-widget-class">
 			<p>
-				<label for="<?php echo $this->get_field_id( 'bupr_title' ); ?>"><?php _e( 'Enter Title', BUPR_TEXT_DOMAIN ); ?>:</label>
+				<label for="<?php echo $this->get_field_id( 'bupr_title' ); ?>"><?php _e( 'Enter Title', 'bp-member-reviews' ); ?>:</label>
 				<input class="regular_text" id="<?php echo $this->get_field_id( 'bupr_title' ); ?>" name="<?php echo $this->get_field_name( 'bupr_title' ); ?>" type="text" value="<?php echo $title; ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'bupr_member' ); ?>"><?php _e( 'Display Members', BUPR_TEXT_DOMAIN ); ?>:</label>
+				<label for="<?php echo $this->get_field_id( 'bupr_member' ); ?>"><?php _e( 'Display Members', 'bp-member-reviews' ); ?>:</label>
 				<input class="regular_text" id="<?php echo $this->get_field_id( 'bupr_member' ); ?>" name="<?php echo $this->get_field_name( 'bupr_member' ); ?>" type="number" value="<?php echo $member; ?>" />
 			</p>
 
 			<p>
 				<span>
 					<input class="regular_text" id="<?php echo $this->get_field_id( 'top_rated' ); ?>" name="<?php echo $this->get_field_name( 'top_member' ); ?>" value="top rated" type="radio" <?php checked( $topmembers, 'top rated' ); ?>/>
-					<label for="<?php echo $this->get_field_id( 'Top rated' ); ?>"><?php _e( 'Top Rated ', BUPR_TEXT_DOMAIN ); ?>
+					<label for="<?php echo $this->get_field_id( 'Top rated' ); ?>"><?php _e( 'Top Rated ', 'bp-member-reviews' ); ?>
 					</label>
 				</span>
 				<span>
 					<input class="regular_text" id="<?php echo $this->get_field_id( 'top_viewed' ); ?>" name="<?php echo $this->get_field_name( 'top_member' ); ?>" value="top view" type="radio" <?php checked( $topmembers, 'top view' ); ?>/>
-					<label for="<?php echo $this->get_field_id( 'Top Viewed' ); ?>"><?php _e( 'Most Reviewed', BUPR_TEXT_DOMAIN ); ?>
+					<label for="<?php echo $this->get_field_id( 'Top Viewed' ); ?>"><?php _e( 'Most Reviewed', 'bp-member-reviews' ); ?>
 					</label>
 				</span>
 			</p>
@@ -292,7 +292,7 @@ class bupr_members_review_setting extends WP_Widget {
 
 
 			<p>
-				<label for="<?php echo $this->get_field_id( 'avatar' ); ?>"><?php _e( 'Display Avatar ', BUPR_TEXT_DOMAIN ); ?>
+				<label for="<?php echo $this->get_field_id( 'avatar' ); ?>"><?php _e( 'Display Avatar ', 'bp-member-reviews' ); ?>
 				</label>
 				<?php
 				if ( ! empty( $avatar ) && $avatar == 'Show' ) {
@@ -307,7 +307,7 @@ class bupr_members_review_setting extends WP_Widget {
 					<?php
 					foreach ( $bupr_options as $bupr_option ) {
 						?>
-						<option value="<?php echo $bupr_option; ?>"><?php _e( $bupr_option, BUPR_TEXT_DOMAIN ); ?></option>
+						<option value="<?php echo $bupr_option; ?>"><?php _e( $bupr_option, 'bp-member-reviews' ); ?></option>
 													<?php
 					}
 					?>

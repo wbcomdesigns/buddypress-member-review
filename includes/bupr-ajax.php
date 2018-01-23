@@ -1,5 +1,11 @@
 <?php
-// Exit if accessed directly
+/**
+ * Class to serve AJAX Calls
+ *
+ * @since    1.0.0
+ * @author   Wbcom Designs
+ */
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -39,14 +45,14 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			add_action( 'wp_ajax_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
 			add_action( 'wp_ajax_nopriv_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
 
-			/*** Filter post_date_gmt for prevent update post date on update_post_data ***/
+			/*** Filter post_date_gmt for prevent update post date on update_post_data */
 			add_filter( 'wp_insert_post_data', array( $this, 'bupr_filter_review_post' ), 10, 1 );
 		}
 
 		public function bupr_filter_review_post( $data ) {
-			if( $data['post_type'] == 'review' ) {
-				$post_date = $data['post_date'];
-				$post_date_gmt = get_gmt_from_date( $post_date );
+			if ( $data['post_type'] == 'review' ) {
+				$post_date             = $data['post_date'];
+				$post_date_gmt         = get_gmt_from_date( $post_date );
 				$data['post_date_gmt'] = $post_date_gmt;
 			}
 			return $data;
@@ -304,13 +310,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 
 							if ( $bupr_auto_approve_reviews == 'no' ) {
-								_e( ' Thank you for taking the time to write this wonderful review. Your review will display on member profile after moderator approval.', BUPR_TEXT_DOMAIN );
+								_e( ' Thank you for taking the time to write this wonderful review. Your review will display on member profile after moderator approval.', 'bp-member-reviews' );
 							} else {
-								_e( ' Thank you for taking the time to write this wonderful review!', BUPR_TEXT_DOMAIN );
+								_e( ' Thank you for taking the time to write this wonderful review!', 'bp-member-reviews' );
 							}
 						} else {
 							echo '<p class="bupr-error">';
-							_e( 'Please try again!', BUPR_TEXT_DOMAIN );
+							_e( 'Please try again!', 'bp-member-reviews' );
 							echo '</p>';
 						}
 
@@ -322,11 +328,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						endif;
 					} else {
 						echo '<p class="bupr-error">';
-						_e( 'Please select a member.', BUPR_TEXT_DOMAIN );
+						_e( 'Please select a member.', 'bp-member-reviews' );
 						echo '</p>';
 					}
 				} else {
-					_e( 'You already posted a review for this member.', BUPR_TEXT_DOMAIN );
+					_e( 'You already posted a review for this member.', 'bp-member-reviews' );
 				}
 				die;
 			}

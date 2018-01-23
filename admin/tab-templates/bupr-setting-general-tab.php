@@ -44,7 +44,7 @@ foreach ( get_users() as $user ) {
 <div class="bupr-adming-setting">
 	<div class="bupr-tab-header">
 		<h3>
-			<?php _e( 'General Settings', BUPR_TEXT_DOMAIN ); ?>
+			<?php _e( 'General Settings', 'bp-member-reviews' ); ?>
 		</h3>
 		<input type="hidden" class="bupr-tab-active" value="general"/>
 	</div>
@@ -56,7 +56,7 @@ foreach ( get_users() as $user ) {
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-6 bupr-label">
 					<label for="bupr-multi-review">
-						<?php _e( 'Multiple Review', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'Multiple Review', 'bp-member-reviews' ); ?>
 					 </label>
 				</div>
 				<div class="bupr-admin-col-6 ">
@@ -64,14 +64,14 @@ foreach ( get_users() as $user ) {
 						<input type="checkbox" id="bupr-multi-review" <?php checked( $bupr_multi_reviews, 'yes' ); ?>>
 						<div class="bupr-slider bupr-round"></div>
 					</label>
-					<p class="description"><?php _e( 'Enable this option, if you want to add functionality to user can send multiple review to same user.', BUPR_TEXT_DOMAIN ); ?></p>
+					<p class="description"><?php _e( 'Enable this option, if you want to add functionality to user can send multiple review to same user.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-6 bupr-label">
 					<label for="bupr_review_auto_approval">
-						<?php _e( 'Auto approve reviews ', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'Auto approve reviews ', 'bp-member-reviews' ); ?>
 					 </label>
 				</div>
 				<div class="bupr-admin-col-6 ">
@@ -79,14 +79,14 @@ foreach ( get_users() as $user ) {
 						<input type="checkbox" id="bupr_review_auto_approval" <?php checked( $bupr_auto_approve_reviews, 'yes' ); ?>>
 						<div class="bupr-slider bupr-round"></div>
 					</label>
-					<p class="description"><?php _e( 'Enable this option, if you want to have the reviews automatically approved, else manual approval will be required.', BUPR_TEXT_DOMAIN ); ?></p>
+					<p class="description"><?php _e( 'Enable this option, if you want to have the reviews automatically approved, else manual approval will be required.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-6 bupr-label">
 					<label for="bupr_review_email">
-						<?php _e( 'Emails ', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'Emails ', 'bp-member-reviews' ); ?>
 					 </label>
 				</div>
 				<div class="bupr-admin-col-6 ">
@@ -94,14 +94,14 @@ foreach ( get_users() as $user ) {
 						<input type="checkbox" id="bupr_review_email" <?php checked( $bupr_allow_email, 'yes' ); ?>>
 						<div class="bupr-slider bupr-round"></div>
 					</label>
-					<p class="description"><?php _e( 'Enable this option, if you want that member receive an email when someone add review in its profile.', BUPR_TEXT_DOMAIN ); ?></p>
+					<p class="description"><?php _e( 'Enable this option, if you want that member receive an email when someone add review in its profile.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-6 bupr-label">
 					<label for="bupr_review_notification">
-						<?php _e( 'BuddyPress notifications ', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'BuddyPress notifications ', 'bp-member-reviews' ); ?>
 					</label>
 				</div>
 				<div class="bupr-admin-col-6 ">
@@ -109,14 +109,14 @@ foreach ( get_users() as $user ) {
 						<input type="checkbox" id="bupr_review_notification" <?php checked( $bupr_allow_notification, 'yes' ); ?>>
 						<div class="bupr-slider bupr-round"></div>
 					</label>
-					<p class="description"><?php _e( 'Enable this option, if you want that member receive email when someone add review in its profile.', BUPR_TEXT_DOMAIN ); ?></p>
+					<p class="description"><?php _e( 'Enable this option, if you want that member receive email when someone add review in its profile.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
 			<div class="bupr-admin-row">
 				<div class="bupr-admin-col-6 bupr-label">
 					<label for="profile_reviews_per_page">
-						<?php _e( 'Reviews pages show at most', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'Reviews pages show at most', 'bp-member-reviews' ); ?>
 					</label>
 				</div>
 				<div class="bupr-admin-col-6">
@@ -128,15 +128,15 @@ foreach ( get_users() as $user ) {
 						echo '3';  }
 ?>
 " type="number">
-					<?php _e( 'Reviews', BUPR_TEXT_DOMAIN ); ?>
-					<p class="description"><?php _e( 'This option lets you limit number of reviews in Member Reviews page.', BUPR_TEXT_DOMAIN ); ?></p>
+					<?php _e( 'Reviews', 'bp-member-reviews' ); ?>
+					<p class="description"><?php _e( 'This option lets you limit number of reviews in Member Reviews page.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-6 bupr-label">
 					<label for="bupr_excluding_box">
-						<?php _e( 'Exclude Members for review', BUPR_TEXT_DOMAIN ); ?>
+						<?php _e( 'Exclude Members for review', 'bp-member-reviews' ); ?>
 					 </label>
 				</div>
 				<div class="bupr-admin-col-6 ">
@@ -158,13 +158,13 @@ foreach ( get_users() as $user ) {
 					}
 					?>
 					</select>
-					<p class="description"><?php _e( "This option lets you choose those members that you don't want to provide review functionality.", BUPR_TEXT_DOMAIN ); ?></p>
+					<p class="description"><?php _e( "This option lets you choose those members that you don't want to provide review functionality.", 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
 			<div class="bupr-admin-row">
 				<div class="bupr-admin-col-6">
-					<input type="button" class="button button-primary" id="bupr-save-general-settings" value="<?php _e( 'Save Settings', BUPR_TEXT_DOMAIN ); ?>">
+					<input type="button" class="button button-primary" id="bupr-save-general-settings" value="<?php _e( 'Save Settings', 'bp-member-reviews' ); ?>">
 					<img src="<?php echo $bupr_spinner_src; ?>" class="bupr-admin-settings-spinner" />
 				</div>
 			</div>
