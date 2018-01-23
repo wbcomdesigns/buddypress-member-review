@@ -155,17 +155,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_review_taxonomy_cpt() {
 			$category_labels = array(
-				'name'              => _x( 'Reviews Category', 'taxonomy general name' ),
-				'singular_name'     => _x( 'Review Category', 'taxonomy singular name' ),
-				'search_items'      => __( 'Search Categories' ),
-				'all_items'         => __( 'All Categories' ),
-				'parent_item'       => __( 'Parent Category' ),
-				'parent_item_colon' => __( 'Parent Category:' ),
-				'edit_item'         => __( 'Edit Category' ),
-				'update_item'       => __( 'Update Category' ),
-				'add_new_item'      => __( 'Add Category' ),
-				'new_item_name'     => __( 'New Category Name' ),
-				'menu_name'         => __( 'Category' ),
+				'name'              => _x( 'Reviews Category', 'taxonomy general name', 'bp-member-reviews' ),
+				'singular_name'     => _x( 'Review Category', 'taxonomy singular name', 'bp-member-reviews' ),
+				'search_items'      => __( 'Search Categories', 'bp-member-reviews' ),
+				'all_items'         => __( 'All Categories', 'bp-member-reviews' ),
+				'parent_item'       => __( 'Parent Category', 'bp-member-reviews' ),
+				'parent_item_colon' => __( 'Parent Category:', 'bp-member-reviews' ),
+				'edit_item'         => __( 'Edit Category' , 'bp-member-reviews'),
+				'update_item'       => __( 'Update Category', 'bp-member-reviews' ),
+				'add_new_item'      => __( 'Add Category', 'bp-member-reviews' ),
+				'new_item_name'     => __( 'New Category Name', 'bp-member-reviews' ),
+				'menu_name'         => __( 'Category', 'bp-member-reviews' ),
 			);
 			$category_args   = array(
 				'hierarchical'      => true,

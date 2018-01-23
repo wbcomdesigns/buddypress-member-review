@@ -1,25 +1,28 @@
-#, fuzzy
+# Copyright (C) 2018 
+# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: BuddyPress Member Reviews\n"
-"POT-Creation-Date: 2018-01-11 15:14+0530\n"
-"PO-Revision-Date: 2018-01-11 15:14+0530\n"
-"Last-Translator: Varun Dubey <varun@wbcomdesigns.com>\n"
-"Language-Team: Varun Dubey <varun@wbcomdesigns.com>\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-23 12:25:43+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.5\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: buddypress-member-review.php\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Varun Dubey\n"
+"Language-Team: Wbcom Designs\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"X-Poedit-Basepath: ../\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: grunt-wp-i18n1.0.1\n"
 
 #: admin/bupr-admin.php:35
 msgid "Reviews Admin Settings"
@@ -114,16 +117,6 @@ msgstr ""
 msgid "No Review Found In Trash"
 msgstr ""
 
-#: admin/bupr-admin.php:158
-msgctxt "taxonomy general name"
-msgid "Reviews Category"
-msgstr ""
-
-#: admin/bupr-admin.php:159
-msgctxt "taxonomy singular name"
-msgid "Review Category"
-msgstr ""
-
 #: admin/bupr-admin.php:160
 msgid "Search Categories"
 msgstr ""
@@ -170,7 +163,8 @@ msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:44
 msgid ""
-"Enable this option,if you want to allow members to be rated by 'Criteria(s)'."
+"Enable this option,if you want to allow members to be rated by "
+"'Criteria(s)'."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:66
@@ -356,34 +350,32 @@ msgid "Where do I ask for support?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:80
-#, php-format
 msgid "Please visit %1$s for any query related to plugin and BuddyPress."
 msgstr ""
 
-#: buddypress-member-review.php:95
-#, php-format
+#: buddypress-member-review.php:94
 msgid "%1$s is ineffective now as it requires %2$s to function correctly."
 msgstr ""
 
-#: includes/bupr-ajax.php:307
+#: includes/bupr-ajax.php:313
 msgid ""
 " Thank you for taking the time to write this wonderful review. Your review "
 "will display on member profile after moderator approval."
 msgstr ""
 
-#: includes/bupr-ajax.php:309
+#: includes/bupr-ajax.php:315
 msgid " Thank you for taking the time to write this wonderful review!"
 msgstr ""
 
-#: includes/bupr-ajax.php:313
+#: includes/bupr-ajax.php:319
 msgid "Please try again!"
 msgstr ""
 
-#: includes/bupr-ajax.php:325
+#: includes/bupr-ajax.php:331
 msgid "Please select a member."
 msgstr ""
 
-#: includes/bupr-ajax.php:329
+#: includes/bupr-ajax.php:335
 msgid "You already posted a review for this member."
 msgstr ""
 
@@ -408,8 +400,19 @@ msgstr ""
 msgid "Member Reviews"
 msgstr ""
 
+#: includes/bupr-notification.php:85
+msgid "A new review posted."
+msgstr ""
+
+#: includes/bupr-notification.php:86
+msgid "%s posted a review"
+msgstr ""
+
+#: includes/bupr-shortcodes.php:112
+msgid "You already posted a %s for this member."
+msgstr ""
+
 #: includes/bupr-shortcodes.php:128
-#, php-format
 msgid "Fill in details to submit %s"
 msgstr ""
 
@@ -431,7 +434,6 @@ msgid "Review Description"
 msgstr ""
 
 #: includes/bupr-shortcodes.php:186
-#, php-format
 msgid "Submit %s"
 msgstr ""
 
@@ -491,27 +493,12 @@ msgstr ""
 msgid "Display Avatar "
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "BuddyPress Member Reviews"
+#: admin/bupr-admin.php:158
+msgctxt "taxonomy general name"
+msgid "Reviews Category"
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"This plugin  allows only site members to add reviews to the buddypress "
-"members on the site. But the member can not review himself/herself. And if "
-"the visitor is not logged in, he can only see the listing of the reviews but "
-"can not review.  The review form allows the members to even rate the "
-"member's profile out of 5 points with multiple review criteria.."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Wbcom Designs"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://wbcomdesigns.com"
+#: admin/bupr-admin.php:159
+msgctxt "taxonomy singular name"
+msgid "Review Category"
 msgstr ""

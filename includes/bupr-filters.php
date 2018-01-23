@@ -579,7 +579,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					?>
 					<div id="message" class="info">
 						<p>
-							<?php _e( 'You must login !.', BUPR_PLUGIN_URL ); ?>
+							<?php _e( 'You must login !.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 					<?php } ?>
