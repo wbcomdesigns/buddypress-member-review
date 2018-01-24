@@ -1,10 +1,22 @@
 <?php
+/**
+ * BuddyPress Member Review admin function class file.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
-// Add admin page for importing Review(s)
+// Add admin page for importing Review(s).
 if ( ! class_exists( 'BUPR_Admin' ) ) {
+	/**
+	 * The admin-facing functionality of the plugin.
+	 *
+	 * @package    BuddyPress_Member_Reviews
+	 * @author     wbcomdesigns <admin@wbcomdesigns.com>
+	 */
 	class BUPR_Admin {
 
 		/**
@@ -18,7 +30,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_action( 'admin_menu', array( $this, 'bupr_add_submenu_page_admin_settings' ) );
 			/* Register custom post type review */
 			$bupr_post_types = get_post_types();
-			if ( ! in_array( 'review', $bupr_post_types ) ) {
+			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
 				add_action( 'init', array( $this, 'bupr_review_cpt' ) );
 				add_action( 'init', array( $this, 'bupr_review_taxonomy_cpt' ) );
 			}
@@ -42,34 +54,28 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		/*
-		public function bupr_admin_options_page() {
-			include 'review-admin-options-page.php';
-		}*/
-
-
-		function bupr_admin_options_page( $current = 'general' ) {?>
+		public function bupr_admin_options_page( $current = 'general' ) {?>
 			<div id="wpbody-content" class="bupr-setting-page" aria-label="Main content" tabindex="0">
 				<div class="wrap">
 					<div class="bupr-header">
 						<div class="bupr-extra-actions">
-							<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/contact/', '_blank');"><i class="fa fa-envelope" aria-hidden="true"></i> <?php _e( 'Email Support', 'bp-member-reviews' ); ?></button>
-							<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/', '_blank');"><i class="fa fa-file" aria-hidden="true"></i> <?php _e( 'User Manual', 'bp-member-reviews' ); ?></button>
-							<button type="button" class="button button-secondary" onclick="window.open('https://wordpress.org/support/plugin/bp-user-profile-reviews/reviews/', '_blank');"><i class="fa fa-star" aria-hidden="true"></i> <?php _e( 'Rate Us on WordPress.org', 'bp-member-reviews' ); ?></button>
+							<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/contact/', '_blank');"><i class="fa fa-envelope" aria-hidden="true"></i> <?php esc_html_e( 'Email Support', 'bp-member-reviews' ); ?></button>
+							<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/', '_blank');"><i class="fa fa-file" aria-hidden="true"></i> <?php esc_html_e( 'User Manual', 'bp-member-reviews' ); ?></button>
+							<button type="button" class="button button-secondary" onclick="window.open('https://wordpress.org/support/plugin/bp-user-profile-reviews/reviews/', '_blank');"><i class="fa fa-star" aria-hidden="true"></i> <?php esc_html_e( 'Rate Us on WordPress.org', 'bp-member-reviews' ); ?></button>
 						</div>
 					</div>
 					<h1>
-						<?php _e( 'BuddyPress Member Reviews Settings', 'bp-member-reviews' ); ?>
+						<?php esc_html_e( 'BuddyPress Member Reviews Settings', 'bp-member-reviews' ); ?>
 					</h1>
 					<div id="bupr_settings_updated" class="updated settings-error notice is-dismissible">
 						<p>
 							<strong>
-								<?php _e( 'BuddyPress Member Reviews Settings Saved.', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'BuddyPress Member Reviews Settings Saved.', 'bp-member-reviews' ); ?>
 							</strong>
 						</p>
 						<button type="button" class="notice-dismiss">
 							<span class="screen-reader-text">
-								<?php _e( 'BuddyPress Member Reviews Settings Saved.', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'BuddyPress Member Reviews Settings Saved.', 'bp-member-reviews' ); ?>
 							</span>
 						</button>
 					</div>
@@ -161,7 +167,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				'all_items'         => __( 'All Categories', 'bp-member-reviews' ),
 				'parent_item'       => __( 'Parent Category', 'bp-member-reviews' ),
 				'parent_item_colon' => __( 'Parent Category:', 'bp-member-reviews' ),
-				'edit_item'         => __( 'Edit Category' , 'bp-member-reviews'),
+				'edit_item'         => __( 'Edit Category', 'bp-member-reviews' ),
 				'update_item'       => __( 'Update Category', 'bp-member-reviews' ),
 				'add_new_item'      => __( 'Add Category', 'bp-member-reviews' ),
 				'new_item_name'     => __( 'New Category Name', 'bp-member-reviews' ),

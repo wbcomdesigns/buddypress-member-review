@@ -1,10 +1,16 @@
 <?php
+/**
+ * File use for fetching corresponding tab function file.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 if ( isset( $_GET['tab'] ) ) {
-	$bupr_setting_tab = sanitize_text_field( $_GET['tab'] );
+	$bupr_setting_tab = sanitize_text_field( wp_unslash($_GET['tab']) );
 } else {
 	$bupr_setting_tab = 'general';
 }
@@ -14,6 +20,7 @@ bupr_include_admin_setting_tabs( $bupr_setting_tab );
  *
  * @since    1.0.0
  * @author   Wbcom Designs
+ * @param    string $bupr_setting_tab The string is used for getting current tab.
  */
 function bupr_include_admin_setting_tabs( $bupr_setting_tab = 'general' ) {
 	switch ( $bupr_setting_tab ) {
