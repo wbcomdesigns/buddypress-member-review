@@ -1,4 +1,10 @@
 <?php
+/**
+ * Reviews tab template.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
@@ -34,7 +40,7 @@ if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['profile_r
 if ( empty( $profile_reviews_per_page ) ) {
 	$profile_reviews_per_page = 3;
 }
-// Gather all the bp member reviews
+// Gather all the bp member reviews.
 $args = array(
 	'post_type'      => 'review',
 	'post_status'    => 'publish',
@@ -55,7 +61,7 @@ $reviews = new WP_Query( $args ); ?>
 <div class="bupr-bp-member-reviews-block">
 
 	<!-- MODAL FOR USER LOGIN -->
-	<input type="hidden" id="reviews_pluginurl" value="<?php echo BUPR_PLUGIN_URL; ?>">
+	<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_attr( BUPR_PLUGIN_URL ); ?>">
 
 	<div class="bp-member-reviews">
 		<div id="bp-member-reviews-list" cellspacing="0">
@@ -96,15 +102,14 @@ $reviews = new WP_Query( $args ); ?>
 											$len = strlen( $trimcontent );
 											if ( $len > 150 ) {
 												$shortexcerpt = substr( $trimcontent, 0, 150 );
-												echo '<p>' . $shortexcerpt . '</p>';
+												echo '<p>' . esc_attr( $shortexcerpt ) . '</p>';
 												?>
-												<a href="<?php echo $url; ?>"><i><?php _e( 'read more...', 'bp-member-reviews' ); ?></i></a>
+												<a href="<?php echo esc_attr( $url ); ?>"><i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i></a>
 												<?php
 											} else {
-												echo '<p>' . $trimcontent . '</p>';
+												echo '<p>' . esc_attr( $trimcontent ) . '</p>';
 											}
 										}
-
 										?>
 										<?php
 										$bupr_admin_settings = get_option( 'bupr_admin_settings' );
@@ -124,9 +129,9 @@ $reviews = new WP_Query( $args ); ?>
 
 												if ( in_array( $field, $bupr_rating_criteria ) ) {
 
-													echo '<div class="bupr-row multi-review inline-content">' . '<div class="bupr-col-6 ">' . $field . '</div>';
+													echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-6 ">' . $field . '</div>';
 
-													/*** star rating Ratings */
+													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
 													$stars_off = 5 - $stars_on;
 													echo '<div class="bupr-col-6 ">';

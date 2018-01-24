@@ -463,6 +463,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_member_profile_reviews_tab() {
 
 			/* get display tab setting from db */
+			$bp_pages= bp_core_get_directory_pages();
+			$member_slug = $bp_pages->members->slug;
+
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -529,7 +532,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						'parent_slug'     => $parent_slug,
 						'screen_function' => array( $this, 'bupr_view_review_tab_function_to_show_screen' ),
 						'position'        => 100,
-						'link'            => site_url() . "/members/$name/$parent_slug/",
+						'link'            => site_url() . "/$member_slug/$name/$parent_slug/",
 					)
 				);
 
@@ -543,7 +546,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							'parent_slug'     => $parent_slug,
 							'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
 							'position'        => 200,
-							'link'            => site_url() . "/members/$name/$parent_slug/add-review/",
+							'link'            => site_url() . "/$member_slug/$name/$parent_slug/add-review/",
 						)
 					);
 				}
