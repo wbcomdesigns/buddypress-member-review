@@ -9,10 +9,12 @@
  * License: GPLv2+
  * Text Domain: bp-member-reviews
  * Domain Path: /languages
+ *
+ * @package BuddyPress_Member_Reviews
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 	/**
@@ -28,14 +30,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'BUPR_DISPLAY_OPTIONS', 'bupr_admin_display_options' );
 
 if ( ! function_exists( 'bupr_load_textdomain' ) ) {
-
-	/**
-		* Load plugin textdomain.
-		*
-		* @author   Wbcom Designs
-		* @since    1.0.0
-		*/
 	add_action( 'init', 'bupr_load_textdomain' );
+	/**
+	 * Load plugin textdomain.
+	 *
+	 * @author   Wbcom Designs
+	 * @since    1.0.0
+	 */
 	function bupr_load_textdomain() {
 		$domain = 'bp-member-reviews';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
@@ -98,8 +99,14 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 	}
 }
 
-		add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
+add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
 
+/**
+ * BuddyPress member reviews notification.
+ *
+ * @author   Wbcom Designs
+ * @since    1.0.0
+ */
 function bupr_bp_notifications_for_review() {
 	include 'includes/bupr-notification.php';
 	buddypress()->bupr_bp_review                                = new BUPR_Notifications();
@@ -108,12 +115,13 @@ function bupr_bp_notifications_for_review() {
 
 
 
-	/**
-	 * Settings link for this plugin.
-	 *
-	 * @author   Wbcom Designs
-	 * @since    1.0.0
-	 */
+/**
+ * Settings link for this plugin.
+ *
+ * @author   Wbcom Designs
+ * @since    1.0.0
+ * @param    array $links    The plugin setting links array.
+ */
 function bupr_admin_page_link( $links ) {
 	$page_link = array(
 		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">Settings</a>',

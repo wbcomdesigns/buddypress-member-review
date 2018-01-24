@@ -7,7 +7,6 @@ $bupr_spinner_src = includes_url() . '/images/spinner.gif';
 
 /* admin setting on dashboard */
 $bupr_admin_settings = get_option( 'bupr_admin_settings', true );
-// echo '<pre>'; print_r( $bupr_admin_settings ); die;
 if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['profile_rating_fields'] ) ) {
 	$profile_rating_fields = $bupr_admin_settings['profile_rating_fields'];
 }

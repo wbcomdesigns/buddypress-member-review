@@ -30,6 +30,24 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_remove_edit_bulk_actions' ), 10, 1 );
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 			add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
+			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
+		}
+
+		/**
+		 * To add default criteria review settings.
+		 */
+		public function bupr_set_default_rating_criteria(){
+			$bupr_admin_settings = get_option( 'bupr_admin_settings', true );
+			if(empty($bupr_admin_settings) || !is_array($bupr_admin_settings)){
+				$default_admin_criteria = array(
+					'profile_multi_rating_allowed' => '1',
+					'profile_rating_fields'	=> array(
+						'Member Response' => 'yes',
+						'Member Skills' => 'yes'
+					)
+				);
+				update_option('bupr_admin_settings',$default_admin_criteria);
+			}
 		}
 
 		public function bupr_rating_directory() {
