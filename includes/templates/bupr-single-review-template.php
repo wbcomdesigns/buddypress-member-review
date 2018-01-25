@@ -1,7 +1,13 @@
 <?php
+/**
+ * Single Reviews tab template.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
+global $allowedtags,$allowedposttags;
 /* get display tab setting from db */
 $bupr_star_color       = '#eeee22';
 $bupr_star_type        = 'Stars Rating';
@@ -16,7 +22,7 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_type'] ) ) {
 	$bupr_star_type = $bupr_display_settings['bupr_star_type'];
 }
-$url = $_SERVER['REQUEST_URI'];
+$url = filter_input( INPUT_SERVER, 'REQUEST_URI' );
 preg_match_all( '!\d+!', $url, $matches );
 $review_id = (int) basename( $url );
 if ( ! empty( $review_id ) ) {
@@ -34,7 +40,7 @@ if ( ! empty( $review_id ) ) {
 	$review_date_time  = $review->post_date;
 	$review_date       = explode( ' ', $review_date_time )[0];
 
-	// Author Thumbnail
+	// Author Thumbnail.
 	$avatar = bp_core_fetch_avatar(
 		array(
 			'item_id' => $author,
@@ -44,30 +50,27 @@ if ( ! empty( $review_id ) ) {
 	); ?>
 		<!-- wbcom Display members review on review tab -->
 		<div class="bgr-single-review">
-			<article id="post-<?php echo $review_id; ?>" class="post-<?php echo $review_id; ?> post type-review status-publish format-standard hentry bupr-single-reivew">
+			<article id="post-<?php echo esc_attr( $review_id ); ?>" class="post-<?php echo esc_attr( $review_id ); ?> post type-review status-publish format-standard hentry bupr-single-reivew">
 				<div class="bupr-col-3 bupr-members-profiles">
 					<div class="author">
-						<img src="<?php echo $avatar; ?>" class="avatar user-<?php echo $author; ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo $review_author; ?>" width="50" height="50">
+						<img src="<?php echo esc_url( $avatar ); ?>" class="avatar user-<?php echo esc_attr( $author ); ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo esc_attr( $review_author ); ?>" width="50" height="50">
 						<div class="reviewer">
 							<h4>
-								<?php _e( $member_profile, 'bp-member-reviews' ); ?>
+								<?php echo wp_kses( $member_profile, $allowedtags ); ?>
 							</h4>
 						</div>
 					</div>
 				</div>
 				<div class="bupr-col-8">
-				<!-- <h2 class="alpha entry-title">
-					<?php // _e($review_title , 'bp-member-reviews' ); ?>
-				</h2> -->
 				<span class="posted-on">
 					<b>
-						<?php _e( 'Posted on', 'bp-member-reviews' ); ?>
+						<?php esc_html_e( 'Posted on', 'bp-member-reviews' ); ?>
 						<time class="entry-date published updated">
-							<?php echo date_format( date_create( $review_date ), 'F d, Y' ); ?>
+							<?php echo esc_attr( date_format( date_create( $review_date ), 'F d, Y' ) ); ?>
 						</time>
 					</b>
 				</span>
-				<div class="bupr-col-12"><?php echo $review->post_content; ?></div>
+				<div class="bupr-col-12"><?php echo wp_kses( $review->post_content, $allowedposttags ); ?></div>
 				<?php
 				$bupr_admin_settings = get_option( 'bupr_admin_settings' );
 
@@ -83,10 +86,10 @@ if ( ! empty( $review_id ) ) {
 				if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 					foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 
-						if ( in_array( $field, $bupr_rating_criteria ) ) {
+						if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 
-							echo '<div class="bupr-row multi-review inline-content">' . '<div class="bupr-col-6 ">' . $field . '</div>';
-							/*** star rating Ratings */
+							echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-6 ">' . esc_attr( $field ) . '</div>';
+							/*** Star rating Ratings */
 							$stars_on  = $bupr_value;
 							$stars_off = 5 - $stars_on;
 							echo '<div class="bupr-col-6 ">';
@@ -102,7 +105,7 @@ if ( ! empty( $review_id ) ) {
 								<?php
 							}
 							/*star rating end */
-							echo '</div>' . '</div>';
+							echo '</div></div>';
 						}
 					}
 				endif;
