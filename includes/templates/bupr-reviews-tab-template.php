@@ -9,6 +9,7 @@
 defined( 'ABSPATH' ) || exit;
 
 global $bp,$post;
+global $allowedtags,$allowedposttags;
 /* get display tab setting from db */
 $bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 if ( ! empty( $bupr_display_settings ) ) {
@@ -87,7 +88,9 @@ $reviews = new WP_Query( $args ); ?>
 								</div>
 								<div class="reviewer">
 									<h4>
-										<?php echo bp_core_get_userlink( $author ); ?>
+										<?php
+										echo wp_kses( bp_core_get_userlink( $author ), $allowedtags );
+										?>
 									</h4>
 								</div>
 							</div>
@@ -126,10 +129,9 @@ $reviews = new WP_Query( $args ); ?>
 										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
+												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 
-												if ( in_array( $field, $bupr_rating_criteria ) ) {
-
-													echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-6 ">' . $field . '</div>';
+													echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-6 ">' . esc_attr( $field ) . '</div>';
 
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
@@ -148,7 +150,7 @@ $reviews = new WP_Query( $args ); ?>
 													}
 													/*star rating end */
 
-													echo '</div>' . '</div>';
+													echo '</div></div>';
 												}
 											}
 										endif;
@@ -167,14 +169,14 @@ $reviews = new WP_Query( $args ); ?>
 							<?php
 							/*** Posts pagination ***/
 							echo "<div class='bupr-posts-pagination'>";
-							echo paginate_links(
+							echo wp_kses(paginate_links(
 								array(
 									'base'    => add_query_arg( 'page', '%#%' ),
 									'format'  => '',
 									'current' => max( 1, get_query_var( 'page' ) ),
 									'total'   => $reviews->max_num_pages,
 								)
-							);
+							), $allowedposttags);
 							echo '</div>';
 							?>
 						</div>
@@ -184,7 +186,7 @@ $reviews = new WP_Query( $args ); ?>
 				} else {
 					?>
 					<div id="message" class="info">
-						<p><?php _e( 'Sorry, no reviews were found.', 'bp-member-reviews' ); ?></p>
+						<p><?php esc_html_e( 'Sorry, no reviews were found.', 'bp-member-reviews' ); ?></p>
 					</div>
 					<?php
 				}
