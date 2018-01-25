@@ -1,18 +1,34 @@
 <?php
+/**
+ * Class to serve notification Calls.
+ *
+ * @since    1.0.0
+ * @author   Wbcom Designs
+ * @package BuddyPress_Member_Reviews
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
-/**
- * Class to add custom scripts on woocommerce hooks
- */
-if ( ! class_exists( 'BUPR_Notifications' ) ) {
 
+if ( ! class_exists( 'BUPR_Notifications' ) ) {
+	/**
+	 * Class to add notifications.
+	 *
+	 * @since    1.0.0
+	 * @author   Wbcom Designs
+	 */
 	class BUPR_Notifications extends BP_Component {
 
-		// component id
 		protected $_bupr_component_name = 'bupr_bp_review';
 
+		/**
+		 * Constructor.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function __construct() {
 			$this->slug = $this->_bupr_component_name;
 
@@ -23,6 +39,14 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			buddypress()->active_components[ $this->_bupr_component_name ] = '1';
 		}
 
+		/**
+		 * Setup globals.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @param    array $args  Globals array.
+		 * @author   Wbcom Designs
+		 */
 		public function setup_globals( $args = array() ) {
 			parent::setup_globals(
 				array(
@@ -33,31 +57,48 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			);
 		}
 
+		/**
+		 * Function to send review notification.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function setup_actions() {
-			// When review added
+			// When review added.
 			add_action( 'bupr_sent_review_notification', array( $this, 'bupr_add_review_notification' ), 99, 2 );
 
 			parent::setup_actions();
 		}
 
+		/**
+		 * Function to get component name.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function component_name() {
 			return $this->_bupr_component_name;
 		}
 
-		/*
-		 --------------------------------------------------------------------
-		 * Adding notifications for new review posted by any buddypress member
-		 * --------------------------------------------------------------------
+		/**
+		 * Adding notifications for new review posted by any buddypress member.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @param    string $bupr_memberid Member id.
+		 * @param    string $review_id     Review id.
+		 * @author   Wbcom Designs
 		 */
-
-		function bupr_add_review_notification( $bupr_memberID, $review_id ) {
+		public function bupr_add_review_notification( $bupr_memberid, $review_id ) {
 			if ( bp_is_active( 'notifications' ) ) {
 				$current_user = wp_get_current_user();
 				$member_id    = $current_user->ID;
 				$args         = array(
-					'user_id'           => $bupr_memberID,
+					'user_id'           => $bupr_memberid,
 					'item_id'           => $review_id,
-					'secondary_item_id' => $bupr_memberID,
+					'secondary_item_id' => $bupr_memberid,
 					'component_name'    => $this->_bupr_component_name,
 					'component_action'  => 'bupr_add_review_action',
 					'date_notified'     => bp_core_current_time(),
@@ -68,12 +109,18 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			}
 		}
 
-		/*
-		 --------------------------------------------------------
+		/**
 		 * Formatting notifications for review when added
-		 * --------------------------------------------------------
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @param    string $review_id     Review id.
+		 * @param    string $member_id     Member id.
+		 * @param    string $user_id       User id.
+		 * @param    string $format        Format.
+		 * @author   Wbcom Designs
 		 */
-		function bupr_add_review_notification_format( $review_id, $member_id, $user_id, $format = '' ) {
+		public function bupr_add_review_notification_format( $review_id, $member_id, $user_id, $format = '' ) {
 			global $bp;
 			$admin_id             = bp_displayed_user_id();
 			$post_author_id       = get_post_field( 'post_author', $review_id );
@@ -99,6 +146,18 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 }
 
 add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_format_notifications', 10, 5 );
+/**
+ * Formatting notifications for review when added.
+ *
+ * @since    1.0.0
+ * @access   public
+ * @param    string $action     Action.
+ * @param    string $item_id    Item id.
+ * @param    string $secondary_item_id       Secondary item id.
+ * @param    string $user_id        User id.
+ * @param    string $format        Format.
+ * @author   Wbcom Designs
+ */
 function bupr_format_notifications( $action, $item_id, $secondary_item_id, $user_id, $format = 'string' ) {
 	if ( bp_is_active( 'notifications' ) ) {
 		switch ( $action ) {

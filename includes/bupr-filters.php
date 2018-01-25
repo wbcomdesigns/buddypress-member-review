@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to serve AJAX Calls
+ * Class to serve filter Calls.
  *
  * @since    1.0.0
  * @author   Wbcom Designs
