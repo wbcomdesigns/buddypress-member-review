@@ -1,15 +1,23 @@
 <?php
-// Exit if accessed directly
+/**
+ * Class to add custom scripts and styles.
+ *
+ * @since    1.0.0
+ * @author   Wbcom Designs
+ * @package BuddyPress_Member_Reviews
+ */
+
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-/**
-* Class to add custom scripts and styles.
-*
-* @since    1.0.0
-* @access   public
-* @author   Wbcom Designs
-*/
 if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
+	/**
+	 * Class to add custom scripts and styles.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @author   Wbcom Designs
+	 */
 	class BUPRScriptsStyles {
 
 		/**
@@ -21,8 +29,8 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 */
 		public function __construct() {
 
-			// Add Scripts only on reviews tab
-			$curr_url = $_SERVER['REQUEST_URI'];
+			// Add Scripts only on reviews tab.
+			$curr_url = filter_input( INPUT_SERVER, 'REQUEST_URI' );
 			add_action( 'wp_enqueue_scripts', array( $this, 'bupr_custom_variables' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'wpdocs_styles_method' ) );
 
@@ -45,7 +53,14 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 			wp_enqueue_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js/bupr-front.js', array( 'jquery' ) );
 		}
 
-		function wpdocs_styles_method() {
+		/**
+		 * Actions performed for enqueuing styles for site front
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
+		public function wpdocs_styles_method() {
 			/* get display tab setting from db */
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
