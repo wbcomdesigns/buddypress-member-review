@@ -1,14 +1,23 @@
 <?php
-// Exit if accessed directly
+/**
+ * Class to serve AJAX Calls
+ *
+ * @since    1.0.0
+ * @author   Wbcom Designs
+ * @package BuddyPress_Member_Reviews
+ */
+
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-/**
-* Class to add custom hooks for this plugin
-*
-* @since    1.0.0
-* @author   Wbcom Designs
-*/
 if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
+
+	/**
+	 * Class to add custom hooks for this plugin
+	 *
+	 * @since    1.0.0
+	 * @author   Wbcom Designs
+	 */
 	class BUPR_Custom_Hooks {
 
 		/**
@@ -33,23 +42,35 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 		}
 
+
 		/**
 		 * To add default criteria review settings.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
 		 */
-		public function bupr_set_default_rating_criteria(){
+		public function bupr_set_default_rating_criteria() {
 			$bupr_admin_settings = get_option( 'bupr_admin_settings', true );
-			if(empty($bupr_admin_settings) || !is_array($bupr_admin_settings)){
+			if ( empty( $bupr_admin_settings ) || ! is_array( $bupr_admin_settings ) ) {
 				$default_admin_criteria = array(
 					'profile_multi_rating_allowed' => '1',
-					'profile_rating_fields'	=> array(
+					'profile_rating_fields'        => array(
 						'Member Response' => 'yes',
-						'Member Skills' => 'yes'
-					)
+						'Member Skills'   => 'yes',
+					),
 				);
-				update_option('bupr_admin_settings',$default_admin_criteria);
+				update_option( 'bupr_admin_settings', $default_admin_criteria );
 			}
 		}
 
+		/**
+		 * BuddyPress Rating diresctory.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_rating_directory() {
 			/* get display tab setting from db */
 			global $members_template;
@@ -134,13 +155,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 				if ( $bupr_avg_rating > 0 ) { ?>
 				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-					<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
+					<span itemprop="ratingValue"  content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
 					<span itemprop="bestRating"   content="5"></span>
-					<span itemprop="ratingCount"  content="<?php echo $rate_counter; ?>"></span>
-					<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
+					<span itemprop="ratingCount"  content="<?php echo esc_attr( $rate_counter ); ?>"></span>
+					<span itemprop="reviewCount"  content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
 					<span itemprop="itemReviewed" content="Person"></span>
-					<span itemprop="name" content="<?php echo bp_core_get_username( $members_template->member->id ); ?>"></span>
-					<span itemprop="url" content="<?php echo bp_core_get_userlink( $members_template->member->id, false, true ); ?>"></span>
+					<span itemprop="name" content="<?php echo esc_attr( bp_core_get_username( $members_template->member->id ) ); ?>"></span>
+					<span itemprop="url" content="<?php echo esc_attr( bp_core_get_userlink( $members_template->member->id, false, true ) ); ?>"></span>
 					<?php
 					echo "<div class='member-review-stars'>";
 					for ( $i = 1; $i <= $stars_on; $i++ ) {
@@ -169,7 +190,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Actions performed to add a review button on member header
+		 * Actions performed to add a review button on member header.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_review_button_on_member_header() {
 			global $bp;
@@ -188,10 +213,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ) . 'reviews/add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo $review_url; ?>" class="add-review" show ="<?php echo $review_div; ?>">
+						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							_e( 'Add ', 'bp-member-reviews' );
-							echo $bupr_review_title;
+							esc_html_e( 'Add ', 'bp-member-reviews' );
+							echo esc_attr( $bupr_review_title );
 							?>
 						</a>
 					</div>
@@ -202,10 +227,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_url = bp_core_get_userlink( bp_displayed_user_id(), false, true ) . 'reviews/add-review';
 					?>
 					<div id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo $review_url; ?>" class="add-review" show ="<?php echo $review_div; ?>">
+						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							_e( 'Add ', 'bp-member-reviews' );
-							echo $bupr_review_title;
+							esc_html_e( 'Add ', 'bp-member-reviews' );
+							echo esc_attr( $bupr_review_title );
 							?>
 						</a>
 					</div>
@@ -215,7 +240,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Setup Reviews link in admin bar
+		 * Setup Reviews link in admin bar.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @param    array $wp_admin_nav Member Review add menu array.
+		 * @author   Wbcom Designs
 		 */
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
@@ -350,13 +380,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( $bupr_avg_rating > 0 ) {
 					?>
 					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-						<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
+						<span itemprop="ratingValue"  content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
 						<span itemprop="bestRating"   content="5"></span>
-						<span itemprop="ratingCount"  content="<?php echo $rate_counter; ?>"></span>
-						<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
+						<span itemprop="ratingCount"  content="<?php echo esc_attr( $rate_counter ); ?>"></span>
+						<span itemprop="reviewCount"  content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
 						<span itemprop="itemReviewed" content="Person"></span>
-						<span itemprop="name" content="<?php echo bp_core_get_username( bp_displayed_user_id() ); ?>"></span>
-						<span itemprop="url" content="<?php echo bp_core_get_userlink( bp_displayed_user_id(), false, true ); ?>"></span>
+						<span itemprop="name" content="<?php echo esc_attr( bp_core_get_username( bp_displayed_user_id() ) ); ?>"></span>
+						<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( bp_displayed_user_id(), false, true ) ); ?>"></span>
 						<?php
 						echo "<div class='member-review-stars'>";
 						for ( $i = 1; $i <= $stars_on; $i++ ) {
@@ -382,9 +412,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<span>
 
 							<?php
-							_e( 'Rating ', 'bp-member-reviews' );
-							echo ' : ' . $bupr_avg_rating . '/5 - ';
-							echo $bupr_reviews_count . ' ' . $bupr_review_title;
+							esc_html_e( 'Rating ', 'bp-member-reviews' );
+							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
+							echo esc_attr( $bupr_reviews_count ) . ' ' . esc_attr( $bupr_review_title );
 
 							?>
 						</span>
@@ -401,6 +431,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 *
 		 * @since    1.0.0
 		 * @access   public
+		 * @param    array $actions Actions array.
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_remove_edit_bulk_actions( $actions ) {
@@ -413,6 +444,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 *
 		 * @since    1.0.0
 		 * @access   public
+		 * @param    array $actions Actions array.
+		 * @param    array $post    Posts array.
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
@@ -423,14 +456,14 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				unset( $actions['inline hide-if-no-js'] );
 
 				if ( wp_get_object_terms( $post->ID, 'review_category' )[0]->name == 'BP Member' ) {
-					// Add a link to view the review
+					// Add a link to view the review.
 					$review_title     = $post->post_title;
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
 					$review_url             = bp_core_get_userlink( $linked_bp_member, false, true ) . 'reviews/view/' . $post->ID;
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">View Review</a>';
 
-					// Add Approve Link for draft reviews
+					// Add Approve Link for draft reviews.
 					if ( $post->post_status == 'draft' ) {
 						$actions['approve_review'] = '<a href="javascript:void(0);" title="' . $review_title . '" class="bupr-approve-review" data-rid="' . $post->ID . '">Approve</a>';
 					}
@@ -447,8 +480,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_bp_member_reviews_taxonomy_term() {
-			$termExists = term_exists( 'BP Member', 'review_category' );
-			if ( $termExists === 0 || $termExists === null ) {
+			$termexists = term_exists( 'BP Member', 'review_category' );
+			if ( $termexists === 0 || $termexists === null ) {
 				wp_insert_term( 'BP Member', 'review_category' );
 			}
 		}
@@ -463,7 +496,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_member_profile_reviews_tab() {
 
 			/* get display tab setting from db */
-			$bp_pages= bp_core_get_directory_pages();
+			$bp_pages    = bp_core_get_directory_pages();
 			$member_slug = $bp_pages->members->slug;
 
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
@@ -523,7 +556,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				$parent_slug = 'reviews';
 
-				// Add subnav to view a review
+				// Add subnav to view a review.
 				bp_core_new_subnav_item(
 					array(
 						'name'            => __( 'View', 'bp-member-reviews' ),
@@ -536,7 +569,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					)
 				);
 
-				// Add subnav to add a review
+				// Add subnav to add a review.
 				if ( bp_displayed_user_id() !== get_current_user_id() ) {
 					bp_core_new_subnav_item(
 						array(
@@ -554,42 +587,46 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Actions performed to hide row actions
+		 * Action performed to show screen of reviews listing tab.
 		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		// Action performed to show screen of reviews listing tab
 		public function bupr_reviews_tab_function_to_show_screen() {
 			add_action( 'bp_template_content', array( $this, 'bupr_reviews_tab_function_to_show_content' ) );
 			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 		}
 
+		/**
+		 * Action performed to show screen of reviews form tab.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_reviews_form_tab_function_to_show_screen() {
 			add_action( 'bp_template_content', array( $this, 'bupr_reviews_form_to_show_content' ) );
 			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 		}
 
 		/**
-		 * Actions performed to hide row actions
+		 * Actions performed to show the content of reviews list tab
 		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		// Action performed to show the content of reviews list tab
 		public function bupr_reviews_tab_function_to_show_content() {
 			include 'templates/bupr-reviews-tab-template.php';
 		}
 
 		/**
-		 *
+		 * Action performed to show the content of add review tab
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		// Action performed to show the content of add review tab
 		public function bupr_reviews_form_to_show_content() {
 			?>
 			<div class="bupr-bp-member-review-no-popup-add-block">
@@ -600,7 +637,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					?>
 					<div id="message" class="info">
 						<p>
-							<?php _e( 'You must login !.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'You must login !.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 					<?php } ?>
@@ -609,26 +646,24 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Actions performed to hide row actions
+		 * Action performed to show screen of single review view tab.
 		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		// Action performed to show screen of single review view tab
 		public function bupr_view_review_tab_function_to_show_screen() {
 			add_action( 'bp_template_content', array( $this, 'bupr_view_review_tab_function_to_show_content' ) );
 			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 		}
 
 		/**
-		 * Actions performed to hide row actions
+		 * Action performed to show the content of reviews list tab.
 		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		// Action performed to show the content of reviews list tab
 		public function bupr_view_review_tab_function_to_show_content() {
 			include 'templates/bupr-single-review-template.php';
 		}
