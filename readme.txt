@@ -19,7 +19,7 @@ It is built to be reliable, scalable, secure and flexible. We have worked hard t
 = Links =
 
 *	[Plugin url](https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/ "BuddyPress Member Review" )
-*	[Demo]( https://demos.wbcomdesigns.com/wbcomplugins/ "BuddyPress Member Review Demo")
+*	[Demo]( https://demos.wbcomdesigns.com/wbcomplugins/login "BuddyPress Member Review Demo")
 *	[Support](https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/)
 *	[Github Development Repo](https://github.com/wbcomdesigns/buddypress-member-review/)
 
