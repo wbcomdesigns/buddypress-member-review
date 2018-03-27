@@ -30,13 +30,9 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		public function __construct() {
 
 			// Add Scripts only on reviews tab.
-			$curr_url = filter_input( INPUT_SERVER, 'REQUEST_URI' );
 			add_action( 'wp_enqueue_scripts', array( $this, 'bupr_custom_variables' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'wpdocs_styles_method' ) );
-
-			if ( strpos( $curr_url, 'review' ) !== false ) {
-				add_action( 'admin_enqueue_scripts', array( $this, 'bupr_admin_custom_variables' ) );
-			}
+			add_action( 'admin_enqueue_scripts', array( $this, 'bupr_admin_custom_variables' ) );
 		}
 
 		/**
@@ -86,30 +82,36 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_admin_custom_variables() {
-			wp_enqueue_script( 'jquery' );
-			wp_enqueue_script( 'jquery-ui-sortable' );
-			wp_enqueue_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/font-awesome.min.css' );
-			if ( ! wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
-				wp_enqueue_style( 'wbcom-selectize-css', BUPR_PLUGIN_URL . 'admin/assets/css/selectize.css' );
-			}
-			if ( ! wp_script_is( 'wbcom-selectize-js', 'enqueued' ) ) {
-				wp_enqueue_script( 'wbcom-selectize-js', BUPR_PLUGIN_URL . 'admin/assets/js/selectize.min.js', array( 'jquery' ) );
-			}
-			wp_enqueue_script( 'bupr-js-admin', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-admin.js', array( 'jquery' ) );
 
-			wp_localize_script(
-				'bupr-js-admin',
-				'bupr_admin_ajax_object',
-				array(
-					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				)
-			);
-			wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css' );
-			if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
-				wp_enqueue_style( 'wp-color-picker' );
-			}
-			/* add wp color picker */
-			wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-color-picker.js', array( 'wp-color-picker' ), false, true );
+			if ( function_exists( 'get_current_screen' ) ) {
+				$screen = get_current_screen();
+				if ( 'review_page_bp-member-review-settings' === $screen->base ) {
+					wp_enqueue_script( 'jquery' );
+					wp_enqueue_script( 'jquery-ui-sortable' );
+					wp_enqueue_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/font-awesome.min.css' );
+					if ( ! wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
+						wp_enqueue_style( 'wbcom-selectize-css', BUPR_PLUGIN_URL . 'admin/assets/css/selectize.css' );
+					}
+					if ( ! wp_script_is( 'wbcom-selectize-js', 'enqueued' ) ) {
+						wp_enqueue_script( 'wbcom-selectize-js', BUPR_PLUGIN_URL . 'admin/assets/js/selectize.min.js', array( 'jquery' ) );
+					}
+					wp_enqueue_script( 'bupr-js-admin', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-admin.js', array( 'jquery' ) );
+
+					wp_localize_script(
+						'bupr-js-admin',
+						'bupr_admin_ajax_object',
+						array(
+							'ajaxurl' => admin_url( 'admin-ajax.php' ),
+						)
+					);
+					wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css' );
+					if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
+						wp_enqueue_style( 'wp-color-picker' );
+					}
+					/* add wp color picker */
+					wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-color-picker.js', array( 'wp-color-picker' ), false, true );
+				}
+			}	
 		}
 	}
 	new BUPRScriptsStyles();

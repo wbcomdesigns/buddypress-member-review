@@ -63,8 +63,8 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 		} else {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bupr_admin_page_link' );
 			/**
-				* Include needed files on init
-				*/
+			* Include needed files on init
+			*/
 			$include_files = array(
 				'includes/bupr-scripts.php',
 				'admin/bupr-admin.php',
@@ -74,6 +74,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 				'includes/bupr-ajax.php',
 
 			);
+
 			foreach ( $include_files as $include_file ) {
 				include $include_file;
 			}
