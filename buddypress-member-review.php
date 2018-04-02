@@ -3,9 +3,9 @@
  * Plugin Name: BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/
  * Description: This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review himself/herself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria..
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Wbcom Designs
- * Author URI: http://wbcomdesigns.com
+ * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
  * Text Domain: bp-member-reviews
  * Domain Path: /languages
