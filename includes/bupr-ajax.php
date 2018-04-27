@@ -315,8 +315,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( $bupr_allow_email == 'yes' ) {
 								$bupr_to       = $bupr_reciever_email;
 								$bupr_subject  = $review_subject;
-								$bupr_message  = "<p>Welcome ! <b> $bupr_reciever_name </b> You have a new review on your member profile </p>";
-								$bupr_message .= '<p>To read your review click on the link given below.</p>';
+								$bupr_message .= sprintf( __( '%s Welcome ! %s %s %s You have a new review on your member profile %s.', 'bp-member-reviews' ), '<p>','<b>', $bupr_reciever_name, '</b>', '</p>' );
+								$bupr_message .= __( 'To read your review click on the link given below.', 'bp-member-reviews' );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
 								$bupr_header  .= "MIME-Version: 1.0\r\n";
