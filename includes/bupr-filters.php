@@ -72,6 +72,16 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_rating_directory() {
+
+			/* List reviews at member directory if setting is enabled. */
+			$bupr_admin_settings      = get_option( BUPR_GENERAL_OPTIONS, true );
+			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_member_dir_reviews'] ) ) {
+				$bupr_member_dir_reviews = $bupr_admin_settings['bupr_member_dir_reviews'];
+				if ( $bupr_member_dir_reviews != 'yes' ) {
+					return;
+				}
+			}
+
 			/* get display tab setting from db */
 			global $members_template;
 			$bupr_star_color       = '#FFC400';
