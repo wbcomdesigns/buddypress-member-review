@@ -40,14 +40,27 @@ if ( ! empty( $review_id ) ) {
 	$review_date_time  = $review->post_date;
 	$review_date       = explode( ' ', $review_date_time )[0];
 
-	// Author Thumbnail.
-	$avatar = bp_core_fetch_avatar(
-		array(
-			'item_id' => $author,
-			'object'  => 'user',
-			'html'    => false,
-		)
-	); ?>
+	$anonymous_post_review = get_post_meta( $review_id, 'bupr_anonymous_review_post', true );
+
+	/* Hide user avatar and username if it was a anonymous review. */
+	if( $anonymous_post_review == 'yes' ){
+			$avatar =  bp_core_avatar_default($type='local',array(
+				'height'  => 96,
+				'width'   => 96,
+				'html'    => false
+			));
+			$member_profile	= __( 'anonymous', 'bp-member-reviews' );						
+	}else{
+		// Author Thumbnail.
+		$avatar = bp_core_fetch_avatar(
+			array(
+				'item_id' => $author,
+				'object'  => 'user',
+				'html'    => false,
+			)
+		);
+	}
+	 ?>
 		<!-- wbcom Display members review on review tab -->
 		<div class="bgr-single-review">
 			<article id="post-<?php echo esc_attr( $review_id ); ?>" class="post-<?php echo esc_attr( $review_id ); ?> post type-review status-publish format-standard hentry bupr-single-reivew">

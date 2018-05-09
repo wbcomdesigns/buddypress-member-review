@@ -109,6 +109,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$bupr_reviews_per_page     = filter_input( INPUT_POST, 'bupr_reviews_per_page', FILTER_SANITIZE_STRING );
 				$bupr_member_dir_reviews   = filter_input( INPUT_POST, 'bupr_member_dir_reviews', FILTER_SANITIZE_STRING );
 				$bupr_member_dir_add_reviews = filter_input( INPUT_POST, 'bupr_member_dir_add_reviews', FILTER_SANITIZE_STRING );
+				$bupr_enable_anonymous_reviews = filter_input( INPUT_POST, 'bupr_enable_anonymous_reviews', FILTER_SANITIZE_STRING );
 				$bupr_exc_member           = array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_exc_member'] ) );
 				$bupr_exclude_id           = array();
 				if ( ! empty( $bupr_exc_member ) ) {
@@ -125,6 +126,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					'profile_reviews_per_page'  => $bupr_reviews_per_page,
 					'bupr_allow_email'          => $bupr_allow_email,
 					'bupr_allow_notification'   => $bupr_allow_notification,
+					'bupr_enable_anonymous_reviews' => $bupr_enable_anonymous_reviews,
 					'bupr_exc_member'           => $bupr_exclude_id,
 				);
 				update_option( BUPR_GENERAL_OPTIONS, $bupr_general_options );
@@ -236,6 +238,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_STRING );
 				$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id', FILTER_SANITIZE_STRING );
 				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_SANITIZE_STRING );
+				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review', FILTER_SANITIZE_STRING );
 				$profile_rated_field_values = array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) );
 
 				$bupr_count = 0;
@@ -287,7 +290,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							'post_type'    => 'review',
 							'post_title'   => $review_subject,
 							'post_content' => $review_desc,
-							'post_status'  => $bupr_reviews_status,
+							'post_status'  => $bupr_reviews_status
 						);
 
 						$review_id = wp_insert_post( $add_review_args );
@@ -342,7 +345,10 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 						wp_set_object_terms( $review_id, 'BP Member', 'review_category' );
 						update_post_meta( $review_id, 'linked_bp_member', $bupr_member_id );
-
+						
+						if( $anonymous_review == 'yes' ){
+							update_post_meta( $review_id, 'bupr_anonymous_review_post', $anonymous_review );
+						}
 						if ( ! empty( $bupr_rated_stars ) ) :
 							update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
 						endif;

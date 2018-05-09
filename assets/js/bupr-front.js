@@ -100,6 +100,14 @@ jQuery( document ).ready(
 				var bupr_review_rating = {};
 				var empty_rate         = 0;
 
+				/* Send anonymous review. */
+				var bupr_anonymous_review = '';
+				if ( jQuery( '#bupr_anonymous_review' ).is( ':checked' ) ) {
+					bupr_anonymous_review = 'yes';
+				} else {
+					bupr_anonymous_review = 'no';
+				}
+
 				jQuery( '.bupr-star-member-rating' ).each(
 					function(index) {
 						bupr_review_rating[index] = jQuery( this ).val();
@@ -133,7 +141,8 @@ jQuery( document ).ready(
 									'bupr_review_title'     : bupr_review_title,
 									'bupr_review_desc'      : bupr_review_desc,
 									'bupr_review_rating'    : bupr_review_rating,
-									'bupr_field_counter'    : bupr_review_count
+									'bupr_field_counter'    : bupr_review_count,
+									'bupr_anonymous_review' : bupr_anonymous_review
 								},
 								function(response) {
 									jQuery( '.bupr-save-reivew-spinner' ).hide();

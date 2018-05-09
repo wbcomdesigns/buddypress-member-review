@@ -71,25 +71,41 @@ $reviews = new WP_Query( $args ); ?>
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
+						$anonymous_post_review = get_post_meta( get_the_id(), 'bupr_anonymous_review_post', true );
 						?>
 						<div class="bupr-row">
 							<div class="bupr-col-2 bupr-members-profiles">
 								<div class="item-avatar">
 									<?php
 									$author = $reviews->post->post_author;
-									bp_displayed_user_avatar(
-										array(
-											'item_id' => $author,
+									if( $anonymous_post_review == 'yes' ){
+										$avatar_url =  bp_core_avatar_default($type='local',array(
 											'height'  => 96,
 											'width'   => 96,
-										)
-									);
+											'html'    => true
+										));
+										echo "<img src='".$avatar_url."' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
+									}else{
+										
+										echo bp_core_fetch_avatar(
+											array(
+												'item_id' => $author,
+												'height'  => 96,
+												'width'   => 96,
+											)
+										);
+									}
 									?>
 								</div>
 								<div class="reviewer">
 									<h4>
 										<?php
-										echo wp_kses( bp_core_get_userlink( $author ), $allowedtags );
+										if( $anonymous_post_review == 'yes' ){
+											esc_html_e( 'anonymous', 'bp-member-reviews' );
+										}else{
+											echo wp_kses( bp_core_get_userlink( $author ), $allowedtags );
+										}
+										
 										?>
 									</h4>
 								</div>

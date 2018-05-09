@@ -14,7 +14,7 @@ $bupr_spinner_src = includes_url() . '/images/spinner.gif';
 
 /* admin setting on dashboard */
 $bupr_admin_settings      = get_option( BUPR_GENERAL_OPTIONS, true );
-$bupr_multi_reviews       = $bupr_auto_approve_reviews = $bupr_allow_email = $bupr_allow_notification = $bupr_member_dir_reviews = $bupr_member_dir_add_reviews = '';
+$bupr_multi_reviews       = $bupr_auto_approve_reviews = $bupr_allow_email = $bupr_allow_notification = $bupr_member_dir_reviews = $bupr_member_dir_add_reviews = $bupr_enable_anonymous_reviews = '';
 $bupr_exc_member          = array();
 $profile_reviews_per_page = 3;
 
@@ -32,6 +32,10 @@ if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_memb
 
 if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_member_dir_add_reviews'] ) ) {
 	$bupr_member_dir_add_reviews = $bupr_admin_settings['bupr_member_dir_add_reviews'];
+}
+
+if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_enable_anonymous_reviews'] ) ) {
+	$bupr_enable_anonymous_reviews = $bupr_admin_settings['bupr_enable_anonymous_reviews'];
 }
 
 if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_allow_email'] ) ) {
@@ -198,7 +202,20 @@ foreach ( get_users() as $user ) {
 					<p class="description"><?php esc_html_e( "This option lets you choose those members that you don't want to provide review functionality.", 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
-
+			<div class="bupr-admin-row border">
+				<div class="bupr-admin-col-6 bupr-label">
+					<label for="bupr_enable_anonymous_reviews">
+						<?php esc_html_e( 'Enable anonymous reviews', 'bp-member-reviews' ); ?>
+					</label>
+				</div>
+				<div class="bupr-admin-col-6 ">
+					<label class="bupr-switch">
+						<input type="checkbox" id="bupr_enable_anonymous_reviews" <?php checked( $bupr_enable_anonymous_reviews, 'yes' ); ?>>
+						<div class="bupr-slider bupr-round"></div>
+					</label>
+					<p class="description"><?php esc_html_e( 'Enable this option if you want users to review members anonymously.', 'bp-member-reviews' ); ?></p>
+				</div>
+			</div>
 			<div class="bupr-admin-row">
 				<div class="bupr-admin-col-6">
 					<input type="button" class="button button-primary" id="bupr-save-general-settings" value="<?php esc_html_e( 'Save Settings', 'bp-member-reviews' ); ?>">

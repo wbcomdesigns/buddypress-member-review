@@ -142,6 +142,15 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_review_form( $bupr_review_title, $bupr_star_color, $login_user, $bupr_spinner_src, $bupr_admin_settings, $bupr_multi_reviews, $profile_rating_fields, $bupr_review_succes, $bupr_flag, $bupr_member ) {
+
+			$bupr_admin_settings      = get_option( BUPR_GENERAL_OPTIONS, true );
+			$flag = false;
+			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_enable_anonymous_reviews'] ) ) {
+				$bupr_enable_anonymous_reviews = $bupr_admin_settings['bupr_enable_anonymous_reviews'];
+				if ( $bupr_enable_anonymous_reviews == 'yes' ) {
+					$flag = true;
+				}
+			}
 		?>
 			<div id="message" class="success add_review_msg success_review_msg"><p></p></div>
 			<form action="" method="POST">
@@ -204,9 +213,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					?>
 					<input type="hidden" id="member_rating_field_counter" value="<?php echo esc_attr( --$field_counter ); ?>">
 					<?php } ?>
-
+					<?php if( $flag ){ ?>
+					<p>
+						<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php esc_html_e( 'Send review anonymously.', 'bp-member-reviews' ); ?></label>
+					</p>
+					<?php } ?>
 					<p>
 						<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce' ); ?>
+
 						<button type="button" class="btn btn-default" id="bupr_save_review" name="submit-review">
 						<?php echo sprintf( __( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>
 						</button>
