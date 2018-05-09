@@ -14,7 +14,7 @@ $bupr_spinner_src = includes_url() . '/images/spinner.gif';
 
 /* admin setting on dashboard */
 $bupr_admin_settings      = get_option( BUPR_GENERAL_OPTIONS, true );
-$bupr_multi_reviews       = $bupr_auto_approve_reviews = $bupr_allow_email = $bupr_allow_notification = '';
+$bupr_multi_reviews       = $bupr_auto_approve_reviews = $bupr_allow_email = $bupr_allow_notification = $bupr_member_dir_reviews = '';
 $bupr_exc_member          = array();
 $profile_reviews_per_page = 3;
 
@@ -24,6 +24,10 @@ if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_mult
 
 if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_auto_approve_reviews'] ) ) {
 	$bupr_auto_approve_reviews = $bupr_admin_settings['bupr_auto_approve_reviews'];
+}
+
+if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_member_dir_reviews'] ) ) {
+	$bupr_member_dir_reviews = $bupr_admin_settings['bupr_member_dir_reviews'];
 }
 
 if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_allow_email'] ) ) {
@@ -86,6 +90,21 @@ foreach ( get_users() as $user ) {
 						<div class="bupr-slider bupr-round"></div>
 					</label>
 					<p class="description"><?php esc_html_e( 'Enable this option, if you want to have the reviews automatically approved, else manual approval will be required.', 'bp-member-reviews' ); ?></p>
+				</div>
+			</div>
+
+			<div class="bupr-admin-row border">
+				<div class="bupr-admin-col-6 bupr-label">
+					<label for="bupr_member_dir_reviews">
+						<?php esc_html_e( 'Show reviews at member directory', 'bp-member-reviews' ); ?>
+					</label>
+				</div>
+				<div class="bupr-admin-col-6 ">
+					<label class="bupr-switch">
+						<input type="checkbox" id="bupr_member_dir_reviews" <?php checked( $bupr_member_dir_reviews, 'yes' ); ?>>
+						<div class="bupr-slider bupr-round"></div>
+					</label>
+					<p class="description"><?php esc_html_e( 'Enable this option, if you want to list reviews at member directory page.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
