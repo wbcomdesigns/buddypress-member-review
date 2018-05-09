@@ -108,6 +108,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$bupr_allow_notification   = filter_input( INPUT_POST, 'bupr_allow_notification', FILTER_SANITIZE_STRING );
 				$bupr_reviews_per_page     = filter_input( INPUT_POST, 'bupr_reviews_per_page', FILTER_SANITIZE_STRING );
 				$bupr_member_dir_reviews   = filter_input( INPUT_POST, 'bupr_member_dir_reviews', FILTER_SANITIZE_STRING );
+				$bupr_member_dir_add_reviews = filter_input( INPUT_POST, 'bupr_member_dir_add_reviews', FILTER_SANITIZE_STRING );
 				$bupr_exc_member           = array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_exc_member'] ) );
 				$bupr_exclude_id           = array();
 				if ( ! empty( $bupr_exc_member ) ) {
@@ -120,6 +121,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					'bupr_multi_reviews'        => $bupr_multi_reviews,
 					'bupr_auto_approve_reviews' => $bupr_auto_approve_reviews,
 					'bupr_member_dir_reviews'   => $bupr_member_dir_reviews,
+					'bupr_member_dir_add_reviews' => $bupr_member_dir_add_reviews,
 					'profile_reviews_per_page'  => $bupr_reviews_per_page,
 					'bupr_allow_email'          => $bupr_allow_email,
 					'bupr_allow_notification'   => $bupr_allow_notification,

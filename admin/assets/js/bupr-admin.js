@@ -75,6 +75,14 @@ jQuery( document ).ready(
 					bupr_member_dir_reviews = 'no';
 				}
 
+				/* Add review link at member directory. */
+				var bupr_member_dir_add_reviews = '';
+				if ( jQuery( '#bupr_member_dir_add_reviews' ).is( ':checked' ) ) {
+					bupr_member_dir_add_reviews = 'yes';
+				} else {
+					bupr_member_dir_add_reviews = 'no';
+				}
+
 				/* Review notification value */
 				var bupr_allow_notification = '';
 				if ( jQuery( '#bupr_review_notification' ).is( ':checked' ) ) {
@@ -93,7 +101,8 @@ jQuery( document ).ready(
 						'bupr_reviews_per_page' 	: bupr_reviews_per_page,
 						'bupr_exc_member' 			: bupr_exc_member,
 						'bupr_auto_approve_reviews'	: bupr_auto_approve_reviews,
-						'bupr_member_dir_reviews' : bupr_member_dir_reviews
+						'bupr_member_dir_reviews'   : bupr_member_dir_reviews,
+						'bupr_member_dir_add_reviews' : bupr_member_dir_add_reviews
 					},
 					function ( response ) {
 						if ( response === 'gen-setting-saved-successfully' ) {
