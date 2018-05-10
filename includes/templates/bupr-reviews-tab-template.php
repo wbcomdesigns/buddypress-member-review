@@ -144,16 +144,19 @@ $reviews = new WP_Query( $args ); ?>
 											}
 										}
 										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
+										
+										$bupr_review_rating_text = get_post_meta( $post->ID, 'bupr_review_rating_text', true );
+										
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 
-													echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-6 ">' . esc_attr( $field ) . '</div>';
+													echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-3 ">' . esc_attr( $field ) . '</div>';
 
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
 													$stars_off = 5 - $stars_on;
-													echo '<div class="bupr-col-6 ">';
+													echo '<div class="bupr-col-3 ">';
 													for ( $i = 1; $i <= $stars_on; $i++ ) {
 														?>
 														<span class="fa fa-star bupr-star-rate"></span>
@@ -167,7 +170,11 @@ $reviews = new WP_Query( $args ); ?>
 													}
 													/*star rating end */
 
-													echo '</div></div>';
+													echo '</div>';
+													if( isset( $bupr_review_rating_text[$field] ) && !empty( $bupr_review_rating_text[$field] )){
+														echo '<div class="bupr-col-3">'.$bupr_review_rating_text[$field].'</div>';
+													}
+													echo '</div>';
 												}
 											}
 										endif;
