@@ -204,10 +204,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 */
 		public function wp_allow_bupr_my_member() {
 			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) == 'allow_bupr_member_review_update' ) {
+
 				$bupr_admin_settings = get_option( 'bupr_admin_settings' );
 				if ( ! empty( $bupr_admin_settings ) ) {
 					$profile_rating_fields = $bupr_admin_settings['profile_rating_fields'];
 				}
+				
+
 				$bupr_rating_criteria = array();
 				if ( ! empty( $profile_rating_fields ) ) {
 					foreach ( $profile_rating_fields as $bupr_keys => $bupr_fields ) {
@@ -216,6 +219,21 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						}
 					}
 				}
+
+				if( class_exists( 'BuddyBoss_BMT_Plugin' ) ) {
+					$member_type = bp_get_member_type( bp_displayed_user_id(), true );
+					$member_type_review_mapping = get_option( 'bupr_member_type_criteria', array() );
+					if( !empty( $member_type_review_mapping ) && isset( $member_type_review_mapping[$member_type] ) && !in_array('all', $member_type_review_mapping[$member_type])){
+						$bupr_rating_criteria = $member_type_review_mapping[$member_type];
+						foreach ( $bupr_rating_criteria as $key => $value ) {
+							if( !in_array( $key , $bupr_rating_criteria ) ) {
+								unset( $bupr_rating_criteria[$key] );
+							}
+						}
+					}
+					
+				}
+
 
 				$bupr_auto_approve_reviews   = 'no';
 				$bupr_multi_reviews          = 'no';
@@ -232,7 +250,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					$bupr_multi_reviews = $bupr_admin_general_settings['bupr_multi_reviews'];
 				}
 
-				// print_r($profile_rating_fields);
 				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user', FILTER_SANITIZE_STRING );
 				$review_subject             = filter_input( INPUT_POST, 'bupr_review_title', FILTER_SANITIZE_STRING );
 				$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_STRING );
@@ -268,6 +285,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				} else {
 					$user_post_count = 0;
 				}
+
 				if ( $user_post_count == 0 ) {
 					if ( ! empty( $profile_rated_field_values ) ) {
 						foreach ( $profile_rated_field_values as $bupr_stars_rate ) {

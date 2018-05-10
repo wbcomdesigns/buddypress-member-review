@@ -26,6 +26,8 @@ if ( isset( $bupr_admin_settings['profile_multi_rating_allowed'] ) ) {
 		$bupr_multi_rating_allowed_class = '';
 	}
 }
+/* Available member type objects. */
+$member_types = bp_get_member_types('', 'objects');
 ?>
 <div class="bupr-adming-setting">
 	<div class="bupr-tab-header">

@@ -71,7 +71,8 @@ $reviews = new WP_Query( $args ); ?>
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						$anonymous_post_review = get_post_meta( get_the_id(), 'bupr_anonymous_review_post', true );
+						
+						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						?>
 						<div class="bupr-row">
 							<div class="bupr-col-2 bupr-members-profiles">

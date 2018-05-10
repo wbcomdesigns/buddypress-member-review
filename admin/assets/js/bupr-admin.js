@@ -8,6 +8,10 @@ jQuery( document ).ready(
 		jQuery( "#buprTextBoxContainer" ).sortable();
 		jQuery( "#buprTextBoxContainer" ).disableSelection();
 		jQuery( '#bupr_excluding_box' ).selectize();
+		jQuery( '.bupr_mt_criteria_select' ).selectize({
+	 		placeholder		: "Select criterias",
+	 		plugins			: ['remove_button']
+	 	});
 
 		/*----------------------------------------
 		* Support tab accordian js
