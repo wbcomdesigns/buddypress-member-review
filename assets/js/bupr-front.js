@@ -157,7 +157,7 @@ jQuery( document ).ready(
 									var date                           = new Date();
 									date.setTime( date.getTime() + (20 * 1000) );
 									jQuery.cookie( 'response', response, { expires: date } );
-									//window.location.reload();
+									window.location.reload();
 								}
 							);
 						}
@@ -194,7 +194,7 @@ jQuery( document ).ready(
 								var date                           = new Date();
 								date.setTime( date.getTime() + (20 * 1000) );
 								jQuery.cookie( 'response', response, { expires: date } );
-								//window.location.reload();
+								window.location.reload();
 							}
 						);
 					}
