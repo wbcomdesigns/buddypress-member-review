@@ -220,7 +220,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					}
 				}
 
-				if( class_exists( 'BuddyBoss_BMT_Plugin' ) ) {
+				if( !empty( bp_get_member_types('','objects') ) ) {
 					$member_type = bp_get_member_type( bp_displayed_user_id(), true );
 					$member_type_review_mapping = get_option( 'bupr_member_type_criteria', array() );
 					if( !empty( $member_type_review_mapping ) && isset( $member_type_review_mapping[$member_type] ) && !in_array('all', $member_type_review_mapping[$member_type])){

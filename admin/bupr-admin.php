@@ -117,7 +117,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					<?php
 
 					
-					if( class_exists( 'BuddyBoss_BMT_Plugin' ) ) {
+					if( !empty( bp_get_member_types('','objects') ) ) {
 						$bupr_tabs = array(
 						'general'   => __( 'General', 'bp-member-reviews' ),
 						'criteria'  => __( 'Criteria', 'bp-member-reviews' ),
