@@ -119,7 +119,7 @@ foreach ( get_users() as $user ) {
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-6 bupr-label">
 					<label for="bupr_member_dir_add_reviews">
-						<?php esc_html_e( 'Add review link at member directory', 'bp-member-reviews' ); ?>
+						<?php esc_html_e( 'Add view review link at member directory', 'bp-member-reviews' ); ?>
 					</label>
 				</div>
 				<div class="bupr-admin-col-6 ">

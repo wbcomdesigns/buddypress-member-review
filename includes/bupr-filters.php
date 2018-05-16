@@ -45,7 +45,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_member_dir_add_reviews'] ) ) {
 				$bupr_member_dir_add_reviews = $bupr_admin_settings['bupr_member_dir_add_reviews'];
 				if ( $bupr_member_dir_add_reviews == 'yes' ) {
-					add_action( 'bp_directory_members_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
+					add_action( 'bp_directory_members_actions', array( $this, 'bupr_view_review_button_on_member_directory' ) );
 				}
 			}
 			add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
@@ -256,6 +256,62 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
 							esc_html_e( 'Add ', 'bp-member-reviews' );
+							echo esc_attr( $bupr_review_title );
+							?>
+						</a>
+					</div>
+					<?php
+				}
+			}
+		}
+
+		/**
+		 * Actions performed to add a review button on member header.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
+		public function bupr_view_review_button_on_member_directory() {
+			global $bp;
+			$bupr_admin_settings   = get_option( BUPR_GENERAL_OPTIONS, true );
+			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
+				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
+			} else {
+				$bupr_review_title = __( 'Reviews', 'bp-member-reviews' );
+			}
+			$review_div      = 'form';
+			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
+
+			if( bp_is_user() ){
+				$member_id = bp_displayed_user_id();
+			}else{
+				$member_id = bp_get_member_user_id();
+			}
+
+			if ( ! empty( $bupr_exc_member ) ) {
+				if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr_exc_member ) ) {
+					$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews';
+					?>
+					<div id="bupr-view-review-btn" class="generic-button">
+						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
+							<?php
+							esc_html_e( 'View ', 'bp-member-reviews' );
+							echo esc_attr( $bupr_review_title );
+							?>
+						</a>
+					</div>
+					<?php
+				}
+			} else {
+				if ( $member_id != bp_loggedin_user_id() ) {
+					$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews';
+					?>
+					<div id="bupr-view-review-btn" class="generic-button">
+						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
+							<?php
+							esc_html_e( 'View ', 'bp-member-reviews' );
 							echo esc_attr( $bupr_review_title );
 							?>
 						</a>
