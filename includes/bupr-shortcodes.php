@@ -219,9 +219,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										<span class="member_stars <?php echo esc_attr( $i ); ?> fa fa-star-o bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 									<?php } ?>
 								</div>
-								<div class="bupr-col-3 bupr-criteria-content">
-									<textarea name="member_rating_text[]" id="member_rating_text" class="member_rating_text" data-id="<?php echo $bupr_rating_fileds ?>" rows="1"></textarea>
-								</div>
 								<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
 							</div>
 							<?php

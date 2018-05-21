@@ -145,8 +145,6 @@ $reviews = new WP_Query( $args ); ?>
 										}
 										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 										
-										$bupr_review_rating_text = get_post_meta( $post->ID, 'bupr_review_rating_text', true );
-										
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
@@ -171,9 +169,6 @@ $reviews = new WP_Query( $args ); ?>
 													/*star rating end */
 
 													echo '</div>';
-													if( isset( $bupr_review_rating_text[$field] ) && !empty( $bupr_review_rating_text[$field] )){
-														echo '<div class="bupr-col-3">'.$bupr_review_rating_text[$field].'</div>';
-													}
 													echo '</div>';
 												}
 											}

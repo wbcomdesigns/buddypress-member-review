@@ -258,7 +258,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_SANITIZE_STRING );
 				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review', FILTER_SANITIZE_STRING );
 				$profile_rated_field_values = array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) );
-				$bupr_review_rating_text = array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating_text'] ) );
 
 				$bupr_count = 0;
 
@@ -371,7 +370,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						}
 						if ( ! empty( $bupr_rated_stars ) ) :
 							update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
-							update_post_meta( $review_id, 'bupr_review_rating_text', $bupr_review_rating_text );
 						endif;
 					} else {
 						echo '<p class="bupr-error">';

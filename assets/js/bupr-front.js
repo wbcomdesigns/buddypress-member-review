@@ -98,7 +98,7 @@ jQuery( document ).ready(
 				var bupr_review_desc   = jQuery( '#review_desc' ).val();
 				var bupr_review_count  = jQuery( '#member_rating_field_counter' ).val();
 				var bupr_review_rating = {};
-				var bupr_review_rating_text = {};
+				//var bupr_review_rating_text = {};
 				var empty_rate         = 0;
 
 				/* Send anonymous review. */
@@ -115,11 +115,11 @@ jQuery( document ).ready(
 					}
 				);
 
-				jQuery( '.member_rating_text' ).each(
-					function(index) {
-						bupr_review_rating_text[jQuery( this ).data('id')] = jQuery( this ).val();
-					}
-				);
+				// jQuery( '.member_rating_text' ).each(
+				// 	function(index) {
+				// 		bupr_review_rating_text[jQuery( this ).data('id')] = jQuery( this ).val();
+				// 	}
+				// );
 				jQuery( '.bupr-star-member-rating' ).each(
 					function() {
 						var rate_val = jQuery( this ).val();
@@ -147,7 +147,6 @@ jQuery( document ).ready(
 									'bupr_review_title'     : bupr_review_title,
 									'bupr_review_desc'      : bupr_review_desc,
 									'bupr_review_rating'    : bupr_review_rating,
-									'bupr_review_rating_text' : bupr_review_rating_text,
 									'bupr_field_counter'    : bupr_review_count,
 									'bupr_anonymous_review' : bupr_anonymous_review
 								},
