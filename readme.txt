@@ -3,7 +3,7 @@ Contributors: wbcomdesigns , vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 4.9.4
+Tested up to: 4.9.6
 Stable tag: 3.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -61,6 +61,12 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+
+= 1.0.7 =
+* Enhancement - Added admin setting to enable/disable review listing at member directory.
+* Enhancement - Added admin setting to enable/disable View Review link at member directory.
+* Enhancement - Added option for sending reviews anonymously with admin enable/disable setting.
+* Fix - Ajax response issue while saving admin settings under General setting tab.
 
 = 1.0.6 =
 * Fix - Admin Styles css and js files are not applied
