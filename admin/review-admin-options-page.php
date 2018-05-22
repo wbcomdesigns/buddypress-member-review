@@ -31,9 +31,6 @@ function bupr_include_admin_setting_tabs( $bupr_setting_tab = 'general' ) {
 		case 'criteria':
 			include 'tab-templates/bupr-setting-criteria-tab.php';
 			break;
-		case 'member_type_criteria':
-			include 'tab-templates/bupr-member-types-criteria-tab.php';
-			break;
 		case 'shortcode':
 			include 'tab-templates/bupr-setting-shortcode-tab.php';
 			break;

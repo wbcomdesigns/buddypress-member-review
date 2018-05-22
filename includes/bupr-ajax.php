@@ -220,22 +220,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					}
 				}
 
-				if( !empty( bp_get_member_types('','objects') ) ) {
-					$member_type = bp_get_member_type( bp_displayed_user_id(), true );
-					$member_type_review_mapping = get_option( 'bupr_member_type_criteria', array() );
-					if( !empty( $member_type_review_mapping ) && isset( $member_type_review_mapping[$member_type] ) && !in_array('all', $member_type_review_mapping[$member_type])){
-						
-						$member_type_rating_criteria = $member_type_review_mapping[$member_type];
-						foreach ( $bupr_rating_criteria as $key => $value ) {
-							if( !in_array( $value , $member_type_rating_criteria ) ) {
-								unset( $bupr_rating_criteria[$key] );
-							}
-						}
-
-					}
-					
-				}
-
 				$bupr_auto_approve_reviews   = 'no';
 				$bupr_multi_reviews          = 'no';
 				$bupr_reviews_status         = 'draft';

@@ -28,8 +28,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'bupr_add_submenu_page_admin_settings' ) );
-			add_action( 'init', array( $this, 'bupr_add_member_type_criteria_register_setting' ) );
-			add_action( 'init', array( $this, 'bupr_update_all_member_types_criteria' ) );
 			/* Register custom post type review */
 			$bupr_post_types = get_post_types();
 			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
@@ -47,39 +45,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_add_submenu_page_admin_settings() {
 			add_submenu_page( 'edit.php?post_type=review', __( 'Reviews Admin Settings', 'bp-member-reviews' ), __( 'Member Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
-		}
-
-		/**
-		 * Register member type criteria setting.
-		 *
-		 * @since    1.0.0
-		 * @access   public
-		 * @author   Wbcom Designs
-		 */
-		public function bupr_add_member_type_criteria_register_setting() {
-			register_setting( 'bupr_member_type_criteria', 'bupr_member_type_criteria' ); // plugin's member type criteria setting.
-		}
-
-		public function bupr_update_all_member_types_criteria() {
-			$bupr_member_type_criteria = get_option( 'bupr_member_type_criteria' );
-
-			$enabled_criterias = array();
-			$bupr_admin_settings = get_option( 'bupr_admin_settings', true );
-			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['profile_rating_fields'] ) ) {
-				$profile_rating_fields = $bupr_admin_settings['profile_rating_fields'];
-				foreach ($profile_rating_fields as $criteria => $criteria_setting) {
-					if( $criteria_setting == 'yes'){
-						$enabled_criterias[$criteria] = $criteria;
-					}
-				}
-			}
-
-			if( empty( $bupr_member_type_criteria ) ){
-				$bupr_member_type_criteria = array();
-				$bupr_member_type_criteria['all_members'] = $enabled_criterias;
-				update_option( 'bupr_member_type_criteria', $bupr_member_type_criteria );
-			}
-		}
+		}	
 
 		/**
 		 * Include admin option page
@@ -116,25 +82,14 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 					<?php
 
+						$bupr_tabs = array(
+						'general'   => __( 'General', 'bp-member-reviews' ),
+						'criteria'  => __( 'Criteria', 'bp-member-reviews' ),
+						'shortcode' => __( 'Shortcode', 'bp-member-reviews' ),
+						'display'   => __( 'Display', 'bp-member-reviews' ),
+						'support'   => __( 'Support', 'bp-member-reviews' ),
+						);
 					
-					if( !empty( bp_get_member_types('','objects') ) ) {
-						$bupr_tabs = array(
-						'general'   => __( 'General', 'bp-member-reviews' ),
-						'criteria'  => __( 'Criteria', 'bp-member-reviews' ),
-						'member_type_criteria' => __( 'Member Types Criteria', 'bp-member-reviews' ),
-						'shortcode' => __( 'Shortcode', 'bp-member-reviews' ),
-						'display'   => __( 'Display', 'bp-member-reviews' ),
-						'support'   => __( 'Support', 'bp-member-reviews' ),
-						);
-					}else{
-						$bupr_tabs = array(
-						'general'   => __( 'General', 'bp-member-reviews' ),
-						'criteria'  => __( 'Criteria', 'bp-member-reviews' ),
-						'shortcode' => __( 'Shortcode', 'bp-member-reviews' ),
-						'display'   => __( 'Display', 'bp-member-reviews' ),
-						'support'   => __( 'Support', 'bp-member-reviews' ),
-						);
-					}
 
 					$bupr_tab_html = '<h2 class="nav-tab-wrapper">';
 					foreach ( $bupr_tabs as $bupr_tab => $bupr_name ) {

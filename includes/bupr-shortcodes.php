@@ -188,20 +188,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					$field_counter = 1;
 					$flage         = true;
 
-					if( !empty( bp_get_member_types('','objects') ) ) {
-						$member_type = bp_get_member_type( bp_displayed_user_id(), true );
-						$member_type_review_mapping = get_option( 'bupr_member_type_criteria', array() );
-						if( !empty( $member_type_review_mapping ) && isset( $member_type_review_mapping[$member_type]) && !in_array('all', $member_type_review_mapping[$member_type]) ){
-							$bupr_rating_criteria = $member_type_review_mapping[$member_type];
-							foreach ( $profile_rating_fields as $key => $value ) {
-								if( !in_array( $key , $bupr_rating_criteria ) ) {
-									unset( $profile_rating_fields[$key] );
-								}
-							}
-						}
-						
-					}
-
 					foreach ( $profile_rating_fields as $bupr_rating_fileds => $bupr_criteria_setting ) :
 
 						if ( $bupr_criteria_setting == 'yes' ) {
