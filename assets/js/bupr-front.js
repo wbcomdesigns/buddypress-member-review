@@ -183,7 +183,6 @@ jQuery( document ).ready(
 								'bupr_review_title'     : bupr_review_title,
 								'bupr_review_desc'      : bupr_review_desc,
 								'bupr_review_rating'    : bupr_review_rating,
-								'bupr_review_rating_text' : bupr_review_rating_text,
 								'bupr_field_counter'    : bupr_review_count,
 								'bupr_anonymous_review' : bupr_anonymous_review
 							},
