@@ -62,6 +62,9 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 
 == Changelog ==
 
+= 1.0.8 =
+* Fix - Undefined variable issue in js code.
+
 = 1.0.7 =
 * Enhancement - Added admin setting to enable/disable review listing at member directory.
 * Enhancement - Added admin setting to enable/disable View Review link at member directory.
