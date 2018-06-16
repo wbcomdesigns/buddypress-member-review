@@ -200,6 +200,7 @@ jQuery( document ).ready(
 						'bupr_multiple_criteria_allowed'	: bupr_multiple_criteria_allowed
 					},
 					function ( response ) {
+						console.log(response);
 						if ( response === 'admin-settings-saved' ) {
 							jQuery( '#bupr_settings_updated' ).show();
 							jQuery( '#bupr-save-criteria-settings' ).removeClass( 'bupr-btn-ajax' );
