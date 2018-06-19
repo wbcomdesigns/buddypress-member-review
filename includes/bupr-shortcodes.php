@@ -240,7 +240,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_shortcode_review_form() {
-			ob_start();
 			$this->bupr_display_review_form();
 
 		}
