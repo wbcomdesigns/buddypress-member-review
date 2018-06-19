@@ -142,7 +142,7 @@ foreach ( get_users() as $user ) {
 						<input type="checkbox" id="bupr_review_email" <?php checked( $bupr_allow_email, 'yes' ); ?>>
 						<div class="bupr-slider bupr-round"></div>
 					</label>
-					<p class="description"><?php esc_html_e( 'Enable this option, if you want that member receive an email when someone add review in its profile.', 'bp-member-reviews' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Enable this option, if you want that member receive an email when someone add review in their profile.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
@@ -157,7 +157,7 @@ foreach ( get_users() as $user ) {
 						<input type="checkbox" id="bupr_review_notification" <?php checked( $bupr_allow_notification, 'yes' ); ?>>
 						<div class="bupr-slider bupr-round"></div>
 					</label>
-					<p class="description"><?php esc_html_e( 'Enable this option, if you want that member receive email when someone add review in its profile.', 'bp-member-reviews' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Enable this option, if you want that member receive buddypress notification when someone add review in their profile.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 
