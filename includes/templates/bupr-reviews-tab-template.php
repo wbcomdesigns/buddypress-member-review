@@ -75,7 +75,7 @@ $reviews = new WP_Query( $args ); ?>
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						?>
 						<div class="bupr-row">
-							<div class="bupr-col-2 bupr-members-profiles">
+							<div class="bupr-col-3 bupr-members-profiles">
 								<div class="item-avatar">
 									<?php
 									$author = $reviews->post->post_author;
@@ -149,12 +149,12 @@ $reviews = new WP_Query( $args ); ?>
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 
-													echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-3 ">' . esc_attr( $field ) . '</div>';
+													echo '<div class="bupr-row multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
 
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
 													$stars_off = 5 - $stars_on;
-													echo '<div class="bupr-col-3 ">';
+													echo '<div class="bupr-col-4 ">';
 													for ( $i = 1; $i <= $stars_on; $i++ ) {
 														?>
 														<span class="fa fa-star bupr-star-rate"></span>
