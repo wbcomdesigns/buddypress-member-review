@@ -263,3 +263,8 @@
 .bupr-full-description {
   padding: 10px 0 5px;
 }
+
+.member-review-stars {
+	float: left;
+	clear: both;
+}
