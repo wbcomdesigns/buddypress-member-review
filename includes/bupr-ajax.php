@@ -313,7 +313,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								$bupr_reciever_email = $bupr_reciever_data->data->user_email;
 								$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
 								$bupr_reciever_login = $bupr_reciever_data->data->user_login;
-								$bupr_review_url     = home_url() . '/members/' . $bupr_reciever_login . '/reviews/view/' . $review_id;
+								// $bupr_review_url     = home_url() . '/members/' . $bupr_reciever_login . '/reviews/view/' . $review_id;
+								$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ). 'reviews/view/' . $review_id;
 							}
 
 							/* send notification to member if  notification is enable */
