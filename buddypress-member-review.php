@@ -3,7 +3,7 @@
  * Plugin Name: BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/
  * Description: This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review himself/herself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria..
- * Version: 1.0.8
+ * Version: 1.0.9
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
@@ -90,10 +90,10 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 	 * @since    1.0.0
 	 */
 	function bupr_admin_notice() {
-		$bupr_plugin = 'BuddyPress Member Reviews';
-		$bp_plugin   = 'BuddyPress';
+		$bupr_plugin = esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' );
+		$bp_plugin   = esc_html__( 'BuddyPress', 'bp-member-reviews' );
 
-		echo '<div class="error"><p>' . sprintf( __( '%1$s is ineffective now as it requires %2$s to function correctly.', 'bp-member-reviews' ), '<strong>' . esc_html( $bupr_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' ) . '</p></div>';
+		echo '<div class="error"><p>' . sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to function correctly.', 'bp-member-reviews' ), '<strong>' . esc_html( $bupr_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' ) . '</p></div>';
 		if ( isset( $_GET['activate'] ) ) {
 			unset( $_GET['activate'] );
 		}
@@ -110,8 +110,8 @@ add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
  */
 function bupr_bp_notifications_for_review() {
 	include 'includes/bupr-notification.php';
-	buddypress()->bupr_bp_review                                = new BUPR_Notifications();
-			buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
+	buddypress()->bupr_bp_review                        = new BUPR_Notifications();
+	buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
 }
 
 
@@ -125,7 +125,7 @@ function bupr_bp_notifications_for_review() {
  */
 function bupr_admin_page_link( $links ) {
 	$page_link = array(
-		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">Settings</a>',
+		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">'. esc_html__( 'Settings', 'bp-member-reviews' ) .'</a>',
 	);
 	return array_merge( $links, $page_link );
 }

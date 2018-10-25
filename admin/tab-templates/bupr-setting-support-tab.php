@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php esc_html_e( 'Where do I ask for support?', 'bp-member-reviews' ); ?>
 					</button>
 					<div class="panel">
-						<p><?php echo sprintf( __( 'Please visit %1$s for any query related to plugin and BuddyPress.', 'bp-member-reviews' ), '<a href="http://wbcomdesigns.com/contact" rel="nofollow" target="_blank"> Wbcom Designs </a>' ); ?></p>
+						<p><?php echo sprintf( esc_html__( 'Please visit %1$s for any query related to plugin and BuddyPress.', 'bp-member-reviews' ), '<a href="http://wbcomdesigns.com/contact" rel="nofollow" target="_blank"> Wbcom Designs </a>' ); ?></p>
 					</div>
 				</div>
 			</div>

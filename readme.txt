@@ -3,8 +3,8 @@ Contributors: wbcomdesigns , vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 4.9.6
-Stable tag: 3.9.5
+Tested up to: 4.9.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,13 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+
+= 1.0.9 =
+* Fix - Compatibilty with BuddyPress 3.2.0.
+* Fix - BuddyPress notification issue.
+* Fix - Fixed Translation string issue.
+* Enhancement - Added plural label for Review.
+* Enhancement - Added shortcode for display top reviews on page.
 
 = 1.0.8 =
 * Fix - Undefined variable issue in js code.

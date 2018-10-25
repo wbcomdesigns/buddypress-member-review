@@ -237,15 +237,17 @@ jQuery( document ).ready(
 				jQuery( this ).addClass( 'bupr-btn-ajax' );
 				jQuery( '.bupr-admin-settings-spinner' ).show();
 				/* wbcom get all options value */
-				var bupr_review_title = jQuery( '#bupr_member_tab_title' ).val();
-				var bupr_review_color = jQuery( '#bupr_display_color' ).val();
-				var bupr_rating_type  = jQuery( '#bupr_rating_template_type' ).val();
+				var bupr_review_title        = jQuery( '#bupr_member_tab_title' ).val();
+				var bupr_review_title_plural = jQuery( '#bupr_member_tab_title_plural' ).val();
+				var bupr_review_color        = jQuery( '#bupr_display_color' ).val();
+				var bupr_rating_type         = jQuery( '#bupr_rating_template_type' ).val();
 				jQuery.post(
 					bupr_admin_ajax_object.ajaxurl,
 					{
-						'action' 				: 'bupr_admin_tab_display',
-						'bupr_review_title' 	: bupr_review_title,
-						'bupr_review_color' 	: bupr_review_color
+						'action' 				   : 'bupr_admin_tab_display',
+						'bupr_review_title' 	   : bupr_review_title,
+						'bupr_review_title_plural' : bupr_review_title_plural,
+						'bupr_review_color' 	   : bupr_review_color
 					},
 					function ( response ) {
 						if ( response === 'admin-settings-saved' ) {

@@ -17,7 +17,7 @@ if ( ! empty( $bupr_display_settings ) ) {
 	$bupr_star_color   = $bupr_display_settings['bupr_star_color'];
 }
 if ( empty( $bupr_review_title ) ) {
-	$bupr_review_title = 'Reviews';
+	$bupr_review_title = esc_html__( 'Reviews', 'bp-member-reviews' );
 }
 
 $bupr_review_succes = false;
@@ -203,9 +203,17 @@ $reviews = new WP_Query( $args ); ?>
 					}
 					wp_reset_postdata();
 				} else {
+					$bp_template_option = bp_get_option('_bp_theme_package_id');
+						if( 'nouveau' == $bp_template_option ) {
 					?>
-					<div id="message" class="info">
-						<p><?php esc_html_e( 'Sorry, no reviews were found.', 'bp-member-reviews' ); ?></p>
+					<div id="message" class="info bp-feedback bp-messages bp-template-notice">
+						<span class="bp-icon" aria-hidden="true"></span>
+					<?php } else { ?>						
+						<div id="message" class="info">
+					<?php } ?>				
+						<p><?php echo sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), $bupr_review_title ); ?>
+							
+						</p>
 					</div>
 					<?php
 				}

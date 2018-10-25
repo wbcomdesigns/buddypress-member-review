@@ -41,11 +41,15 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		public function bupr_display_review_form() {
 			global $bp;
 			/* get display tab setting from db */
-			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_star_color          = '#FFC400';
+			$bupr_review_title        = esc_html__( 'Review', 'bp-member-reviews' );
+			$bupr_review_title_plural = esc_html__( 'Reviews', 'bp-member-reviews' );
+			$bupr_display_settings    = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
+			}
+			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title_plural'] ) ) {
+				$bupr_review_title_plural = $bupr_display_settings['bupr_review_title_plural'];
 			}
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
 				$bupr_star_color = $bupr_display_settings['bupr_star_color'];
@@ -99,8 +103,18 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 					$reviews_args = new WP_Query( $member_args );
 
-			if ( ! bp_is_members_component() && ! bp_is_user() ) { ?>
-				<div id="message" class="success success_review_msg"><p></p></div>
+			if ( ! bp_is_members_component() && ! bp_is_user() ) {
+				$bp_template_option = bp_get_option('_bp_theme_package_id');
+				if( 'nouveau' == $bp_template_option ) {
+				?>
+					<div id="message" class="success success_review_msg bp-feedback bp-messages bp-template-notice">
+						<span class="bp-icon" aria-hidden="true"></span>
+				<?php } else { ?>
+					<div id="message" class="success success_review_msg">
+				<?php } ?>				
+						<p>							
+						</p>
+					</div>
 				<?php
 			}
 
@@ -115,10 +129,16 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				if ( $user_post_count == 0 ) {
 					$this->bupr_review_form( $bupr_review_title, $bupr_star_color, $login_user, $bupr_spinner_src, $bupr_admin_settings, $bupr_multi_reviews, $profile_rating_fields, $bupr_review_succes, $bupr_flag, $bupr_member );
 				} else {
+						$bp_template_option = bp_get_option('_bp_theme_package_id');
+						if( 'nouveau' == $bp_template_option ) {
 					?>
-					<div id="message" class="error">
-					<p><?php echo sprintf( __( 'You already posted a %s for this member.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?> </p>
-					</div>
+						<div id="message" class="error bp-feedback bp-messages bp-template-notice">
+							<span class="bp-icon" aria-hidden="true"></span>
+						<?php } else { ?>
+							<div id="message" class="error">
+						<?php } ?>
+						    <p><?php echo sprintf( esc_html__( 'You already posted a %s for this member.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?> </p>						
+						</div>
 					<?php
 				}
 			}
@@ -150,15 +170,24 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					$flag = true;
 				}
 			}
-		?>
-			<div id="message" class="success add_review_msg success_review_msg"><p></p></div>
+			$bp_template_option = bp_get_option('_bp_theme_package_id');
+			if( 'nouveau' == $bp_template_option ) {
+			?>
+				<div id="message" class="success add_review_msg success_review_msg bp-feedback bp-messages bp-template-notice">
+					<span class="bp-icon" aria-hidden="true"></span>
+			<?php } else { ?>
+				<div id="message" class="success add_review_msg success_review_msg">
+			<?php } ?>				
+					<p>							
+					</p>
+				</div>
 			<form action="" method="POST">
 				<input type="hidden" value="<?php echo ! empty( $bupr_star_color ) ? esc_attr( $bupr_star_color ) : '#1fd9e0'; ?>" class="bupr-display-rating-color">
 				<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_url( BUPR_PLUGIN_URL ); ?>">
 				<div class="bp-member-add-form">
 
 				<p>
-					<?php echo sprintf( __( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>
+					<?php echo sprintf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>
 				</p>
 
 				<?php if ( 0 === bp_displayed_user_id() ) { ?>
@@ -181,7 +210,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					<input name="review-subject" id="review_subject" type="text" placeholder="<?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?>" ><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 				</p>
 				<p>
-					<textarea name="review-desc" id="review_desc" placeholder="<?php esc_html_e( 'Review Description', 'bp-member-reviews' ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
+					<textarea name="review-desc" id="review_desc" placeholder="<?php echo sprintf( esc_html__( '%s Description', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 				</p>
 				<?php
 				if ( ! empty( $profile_rating_fields ) ) {
@@ -216,14 +245,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					<?php } ?>
 					<?php if( $flag ){ ?>
 					<p>
-						<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php esc_html_e( 'Send review anonymously.', 'bp-member-reviews' ); ?></label>
+						<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php echo sprintf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?></label>
 					</p>
 					<?php } ?>
 					<p>
 						<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce' ); ?>
 
 						<button type="button" class="btn btn-default" id="bupr_save_review" name="submit-review">
-						<?php echo sprintf( __( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>
+						<?php echo sprintf( esc_html__( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ); ?>
 						</button>
 						<input type="hidden" value="<?php echo esc_attr( $login_user ); ?>" id="bupr_current_user_id" />
 						<img src="<?php echo esc_url( $bupr_spinner_src ); ?>" class="bupr-save-reivew-spinner" />

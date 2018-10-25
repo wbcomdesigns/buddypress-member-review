@@ -11,15 +11,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 	$bupr_spinner_src = includes_url() . '/images/spinner.gif';
 	/* get display tab setting from db */
-	$bupr_star_color       = '#FFC400';
-	$bupr_review_title     = 'Reviews';
+	$bupr_star_color          = '#FFC400';
+	$bupr_review_title        = esc_html__( 'Review', 'bp-member-reviews' );
+	$bupr_review_title_plural = esc_html__( 'Reviews', 'bp-member-reviews' );
 	$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
-if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
-	$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-}
-if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
-	$bupr_star_color = $bupr_display_settings['bupr_star_color'];
-}
+	if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
+		$bupr_review_title = $bupr_display_settings['bupr_review_title'];
+	}
+	if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title_plural'] ) ) {
+		$bupr_review_title_plural = $bupr_display_settings['bupr_review_title_plural'];
+	}
+	if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
+		$bupr_star_color = $bupr_display_settings['bupr_star_color'];
+	}
 
 ?>
 <div class="bupr-adming-setting ">
@@ -38,12 +42,23 @@ if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_
 		<div id="bupr-settings-tbl" class="bupr-table">
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-4 bupr-label">
-					<?php esc_html_e( 'Reviews', 'bp-member-reviews' ); ?>
+					<?php esc_html_e( 'Review', 'bp-member-reviews' ); ?>
 				</div>
 				<div class="bupr-admin-col-8">
 					<input type="text" name="bupr_member_tab_title" id="bupr_member_tab_title" value="<?php echo ! empty( $bupr_review_title ) ? esc_attr( $bupr_review_title ) : 'Review'; ?>">
 					<p class="description">
 						<?php esc_html_e( 'Change Labels from BuddyPress tab and review form.', 'bp-member-reviews' ); ?>
+					</p>
+				</div>
+			</div>
+			<div class="bupr-admin-row border">
+				<div class="bupr-admin-col-4 bupr-label">
+					<?php esc_html_e( 'Review( Plural )', 'bp-member-reviews' ); ?>
+				</div>
+				<div class="bupr-admin-col-8">
+					<input type="text" name="bupr_member_tab_title_plural" id="bupr_member_tab_title_plural" value="<?php echo ! empty( $bupr_review_title_plural ) ? esc_attr( $bupr_review_title_plural ) : esc_html__( 'Reviews', 'bp-member-reviews' ); ?>">
+					<p class="description">
+						<?php esc_html_e( 'This option provides flexibility to change plural of Review.', 'bp-member-reviews' ); ?>
 					</p>
 				</div>
 			</div>

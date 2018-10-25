@@ -44,7 +44,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_submenu_page_admin_settings() {
-			add_submenu_page( 'edit.php?post_type=review', __( 'Reviews Admin Settings', 'bp-member-reviews' ), __( 'Member Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
+			add_submenu_page( 'edit.php?post_type=review', esc_html__( 'Reviews Admin Settings', 'bp-member-reviews' ), esc_html__( 'Member Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}	
 
 		/**
@@ -83,11 +83,11 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					<?php
 
 						$bupr_tabs = array(
-						'general'   => __( 'General', 'bp-member-reviews' ),
-						'criteria'  => __( 'Criteria', 'bp-member-reviews' ),
-						'shortcode' => __( 'Shortcode', 'bp-member-reviews' ),
-						'display'   => __( 'Display', 'bp-member-reviews' ),
-						'support'   => __( 'Support', 'bp-member-reviews' ),
+						'general'   => esc_html__( 'General', 'bp-member-reviews' ),
+						'criteria'  => esc_html__( 'Criteria', 'bp-member-reviews' ),
+						'shortcode' => esc_html__( 'Shortcode', 'bp-member-reviews' ),
+						'display'   => esc_html__( 'Display', 'bp-member-reviews' ),
+						'support'   => esc_html__( 'Support', 'bp-member-reviews' ),
 						);
 					
 
@@ -97,7 +97,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						$bupr_tab_html .= '<a class="nav-tab ' . $bupr_tab . '' . $class . '" href="admin.php?page=bp-member-review-settings&tab=' . $bupr_tab . '">' . $bupr_name . '</a>';
 					}
 					$bupr_tab_html .= '</h2>';
-					_e( $bupr_tab_html, 'bp-member-reviews' );
+					echo $bupr_tab_html;
 					include 'review-admin-options-page.php';
 					?>
 				</div>
@@ -114,19 +114,19 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_review_cpt() {
 			$labels = array(
-				'name'               => __( 'Reviews', 'bp-member-reviews' ),
-				'singular_name'      => __( 'Review', 'bp-member-reviews' ),
-				'menu_name'          => __( 'Reviews', 'bp-member-reviews' ),
-				'name_admin_bar'     => __( 'Reviews', 'bp-member-reviews' ),
-				'add_new'            => __( 'Add New Review', 'bp-member-reviews' ),
-				'add_new_item'       => __( 'Add New Review', 'bp-member-reviews' ),
-				'new_item'           => __( 'New Review', 'bp-member-reviews' ),
-				'view_item'          => __( 'View Reviews', 'bp-member-reviews' ),
-				'all_items'          => __( 'All Reviews', 'bp-member-reviews' ),
-				'search_items'       => __( 'Search Reviews', 'bp-member-reviews' ),
-				'parent_item_colon'  => __( 'Parent Review:', 'bp-member-reviews' ),
-				'not_found'          => __( 'No Review Found', 'bp-member-reviews' ),
-				'not_found_in_trash' => __( 'No Review Found In Trash', 'bp-member-reviews' ),
+				'name'               => esc_html__( 'Reviews', 'bp-member-reviews' ),
+				'singular_name'      => esc_html__( 'Review', 'bp-member-reviews' ),
+				'menu_name'          => esc_html__( 'Reviews', 'bp-member-reviews' ),
+				'name_admin_bar'     => esc_html__( 'Reviews', 'bp-member-reviews' ),
+				'add_new'            => esc_html__( 'Add New Review', 'bp-member-reviews' ),
+				'add_new_item'       => esc_html__( 'Add New Review', 'bp-member-reviews' ),
+				'new_item'           => esc_html__( 'New Review', 'bp-member-reviews' ),
+				'view_item'          => esc_html__( 'View Reviews', 'bp-member-reviews' ),
+				'all_items'          => esc_html__( 'All Reviews', 'bp-member-reviews' ),
+				'search_items'       => esc_html__( 'Search Reviews', 'bp-member-reviews' ),
+				'parent_item_colon'  => esc_html__( 'Parent Review:', 'bp-member-reviews' ),
+				'not_found'          => esc_html__( 'No Review Found', 'bp-member-reviews' ),
+				'not_found_in_trash' => esc_html__( 'No Review Found In Trash', 'bp-member-reviews' ),
 			);
 			$args   = array(
 				'labels'             => $labels,
@@ -162,17 +162,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_review_taxonomy_cpt() {
 			$category_labels = array(
-				'name'              => _x( 'Reviews Category', 'taxonomy general name', 'bp-member-reviews' ),
-				'singular_name'     => _x( 'Review Category', 'taxonomy singular name', 'bp-member-reviews' ),
-				'search_items'      => __( 'Search Categories', 'bp-member-reviews' ),
-				'all_items'         => __( 'All Categories', 'bp-member-reviews' ),
-				'parent_item'       => __( 'Parent Category', 'bp-member-reviews' ),
-				'parent_item_colon' => __( 'Parent Category:', 'bp-member-reviews' ),
-				'edit_item'         => __( 'Edit Category', 'bp-member-reviews' ),
-				'update_item'       => __( 'Update Category', 'bp-member-reviews' ),
-				'add_new_item'      => __( 'Add Category', 'bp-member-reviews' ),
-				'new_item_name'     => __( 'New Category Name', 'bp-member-reviews' ),
-				'menu_name'         => __( 'Category', 'bp-member-reviews' ),
+				'name'              => esc_html_x( 'Reviews Category', 'taxonomy general name', 'bp-member-reviews' ),
+				'singular_name'     => esc_html_x( 'Review Category', 'taxonomy singular name', 'bp-member-reviews' ),
+				'search_items'      => esc_html__( 'Search Categories', 'bp-member-reviews' ),
+				'all_items'         => esc_html__( 'All Categories', 'bp-member-reviews' ),
+				'parent_item'       => esc_html__( 'Parent Category', 'bp-member-reviews' ),
+				'parent_item_colon' => esc_html__( 'Parent Category:', 'bp-member-reviews' ),
+				'edit_item'         => esc_html__( 'Edit Category', 'bp-member-reviews' ),
+				'update_item'       => esc_html__( 'Update Category', 'bp-member-reviews' ),
+				'add_new_item'      => esc_html__( 'Add Category', 'bp-member-reviews' ),
+				'new_item_name'     => esc_html__( 'New Category Name', 'bp-member-reviews' ),
+				'menu_name'         => esc_html__( 'Category', 'bp-member-reviews' ),
 			);
 			$category_args   = array(
 				'hierarchical'      => true,

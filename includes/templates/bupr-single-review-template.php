@@ -9,12 +9,16 @@
 defined( 'ABSPATH' ) || exit;
 global $allowedtags,$allowedposttags;
 /* get display tab setting from db */
-$bupr_star_color       = '#eeee22';
-$bupr_star_type        = 'Stars Rating';
-$bupr_review_title     = 'Reviews';
-$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+$bupr_star_color          = '#eeee22';
+$bupr_star_type           = 'Stars Rating';
+$bupr_review_title        = esc_html__( 'Review', 'bp-member-reviews' );
+$bupr_review_title_plural = esc_html__( 'Reviews', 'bp-member-reviews' );
+$bupr_display_settings    = get_option( BUPR_DISPLAY_OPTIONS, true );
 if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 	$bupr_review_title = $bupr_display_settings['bupr_review_title'];
+}
+if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title_plural'] ) ) {
+	$bupr_review_title_plural = $bupr_display_settings['bupr_review_title_plural'];
 }
 if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
 	$bupr_star_color = $bupr_display_settings['bupr_star_color'];
@@ -49,7 +53,7 @@ if ( ! empty( $review_id ) ) {
 				'width'   => 96,
 				'html'    => false
 			));
-			$member_profile	= __( 'anonymous', 'bp-member-reviews' );						
+			$member_profile	= esc_html__( 'anonymous', 'bp-member-reviews' );						
 	}else{
 		// Author Thumbnail.
 		$avatar = bp_core_fetch_avatar(

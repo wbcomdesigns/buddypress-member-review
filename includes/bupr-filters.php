@@ -95,7 +95,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			/* get display tab setting from db */
 			global $members_template;
 			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
+			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -223,7 +223,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			} else {
-				$bupr_review_title = __( 'Reviews', 'bp-member-reviews' );
+				$bupr_review_title = esc_html__( 'Reviews', 'bp-member-reviews' );
 			}
 			$review_div      = 'form';
 			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
@@ -241,8 +241,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							esc_html_e( 'Add ', 'bp-member-reviews' );
-							echo esc_attr( $bupr_review_title );
+							echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
 							?>
 						</a>
 					</div>
@@ -255,8 +254,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							esc_html_e( 'Add ', 'bp-member-reviews' );
-							echo esc_attr( $bupr_review_title );
+							echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
 							?>
 						</a>
 					</div>
@@ -279,7 +277,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			} else {
-				$bupr_review_title = __( 'Reviews', 'bp-member-reviews' );
+				$bupr_review_title = esc_html__( 'Reviews', 'bp-member-reviews' );
 			}
 			$review_div      = 'form';
 			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
@@ -311,8 +309,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div id="bupr-view-review-btn" class="generic-button">
 						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							esc_html_e( 'View ', 'bp-member-reviews' );
-							echo esc_attr( $bupr_review_title );
+							echo sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
 							?>
 						</a>
 					</div>
@@ -331,7 +328,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
-			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
+			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -382,7 +379,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			<?php
 			/* get display tab setting from db */
 			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = __( 'Reviews', 'bp-member-reviews' );
+			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
@@ -543,11 +540,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
 					$review_url             = bp_core_get_userlink( $linked_bp_member, false, true ) . 'reviews/view/' . $post->ID;
-					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">View Review</a>';
+					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">'. sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
 					if ( $post->post_status == 'draft' ) {
-						$actions['approve_review'] = '<a href="javascript:void(0);" title="' . $review_title . '" class="bupr-approve-review" data-rid="' . $post->ID . '">Approve</a>';
+						$actions['approve_review'] = '<a href="javascript:void(0);" title="' . $review_title . '" class="bupr-approve-review" data-rid="' . $post->ID . '">' . esc_html__( 'Approve', 'bp-member-reviews' ) . '</a>';
 					}
 				}
 			}
@@ -583,11 +580,16 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
 			if ( ! empty( $bupr_display_settings ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-				$bupr_star_color   = $bupr_display_settings['bupr_star_color'];
+				$bupr_review_title        = $bupr_display_settings['bupr_review_title'];
+				$bupr_review_title_plural = $bupr_display_settings['bupr_review_title_plural'];
+				$bupr_star_color          = $bupr_display_settings['bupr_star_color'];
 			}
 			if ( empty( $bupr_review_title ) ) {
-				$bupr_review_title = __( 'Reviews', 'bp-member-reviews' );
+				$bupr_review_title = esc_html__( 'Review', 'bp-member-reviews' );
+			}
+
+			if ( empty( $bupr_review_title_plural ) ) {
+				$bupr_review_title_plural = esc_html__( 'Reviews', 'bp-member-reviews' );
 			}
 
 			$bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS, true );
@@ -627,7 +629,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				$name     = bp_get_displayed_user_username();
 				$tab_args = array(
-					'name'                    => $bupr_review_title . ' ' . $bupr_notification,
+					'name'                    => $bupr_review_title_plural . ' ' . $bupr_notification,
 					'slug'                    => 'reviews',
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
@@ -641,7 +643,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				// Add subnav to view a review.
 				bp_core_new_subnav_item(
 					array(
-						'name'            => __( 'View', 'bp-member-reviews' ),
+						'name'            => esc_html__( 'View', 'bp-member-reviews' ),
 						'slug'            => 'view',
 						'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 						'parent_slug'     => $parent_slug,
@@ -655,7 +657,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( bp_displayed_user_id() !== get_current_user_id() ) {
 					bp_core_new_subnav_item(
 						array(
-							'name'            => __( 'Add ', 'bp-member-reviews' ) . $bupr_review_title,
+							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ),
 							'slug'            => 'add-review',
 							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 							'parent_slug'     => $parent_slug,
@@ -716,12 +718,17 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( is_user_logged_in() ) {
 					do_shortcode( '[add_profile_review_form]' );
 				} else {
+					$bp_template_option = bp_get_option('_bp_theme_package_id');
+						if( 'nouveau' == $bp_template_option ) {
 					?>
-					<div id="message" class="info">
-						<p>
-							<?php esc_html_e( 'You must login !.', 'bp-member-reviews' ); ?>
+					<div id="message" class="info bp-feedback bp-messages bp-template-notice">
+						<span class="bp-icon" aria-hidden="true"></span>
+					<?php } else { ?>
+						<div id="message" class="info">
+					<?php } ?>				
+						<p><?php esc_html_e( 'You must login!', 'bp-member-reviews' ); ?>		
 						</p>
-					</div>
+					</div>					
 					<?php } ?>
 				</div>
 				<?php

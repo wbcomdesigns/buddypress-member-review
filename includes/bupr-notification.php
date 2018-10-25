@@ -33,7 +33,7 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			$this->slug = $this->_bupr_component_name;
 
 			parent::start(
-				$this->_bupr_component_name, __( 'Member Reviews', 'bp-member-reviews' ), dirname( __FILE__ )
+				$this->_bupr_component_name, esc_html__( 'Member Reviews', 'bp-member-reviews' ), dirname( __FILE__ )
 			);
 
 			buddypress()->active_components[ $this->_bupr_component_name ] = '1';
@@ -127,22 +127,24 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			$admin_info           = get_userdata( $member_id );
 			
 			if($admin_info){
-				$admin_name           = $admin_info->user_login;
+				$admin_name  = $admin_info->display_name;
 			}else{
-				$admin_name           = '';
+				$admin_name  = '';
 			}
 			
-			$user_info            = get_userdata( $post_author_id );
-
+			$user_info = get_userdata( $post_author_id );
+			$user_name = '';
 			if($user_info){
-				$user_name            = $user_info->user_login;
-			}else{
-				$user_name            = '';
+				$user_name = $user_info->display_name;				
+			}
+			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
+				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			}
 			
 			$notification_link    = home_url() . '/members/' . $admin_name . '/reviews/view/' . $review_id;
-			$notification_title   = sprintf( __( 'A new review posted.', 'bp-member-reviews' ) );
-			$notification_content = sprintf( __( '%s posted a review', 'bp-member-reviews' ), esc_html( $user_name ) );
+			$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
+			$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( $bupr_review_title ) );
 
 			if ( 'string' == $format ) {
 				$return = sprintf( "<a href='%s' title='%s'>%s</a>", esc_url( $notification_link ), esc_attr( $notification_title ), esc_html( $notification_content ) );

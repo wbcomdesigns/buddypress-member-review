@@ -180,14 +180,19 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		public function bupr_admin_tab_display_settings() {
 			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) === 'bupr_admin_tab_display' ) {
 
-				$bupr_review_title = filter_input( INPUT_POST, 'bupr_review_title', FILTER_SANITIZE_STRING );
-				$bupr_review_color = filter_input( INPUT_POST, 'bupr_review_color', FILTER_SANITIZE_STRING );
+				$bupr_review_title        = filter_input( INPUT_POST, 'bupr_review_title', FILTER_SANITIZE_STRING );
+				$bupr_review_title_plural = filter_input( INPUT_POST, 'bupr_review_title_plural', FILTER_SANITIZE_STRING );
+				$bupr_review_color        = filter_input( INPUT_POST, 'bupr_review_color', FILTER_SANITIZE_STRING );
 				if ( empty( $bupr_review_title ) ) {
-					$bupr_review_title = 'Review';
+					$bupr_review_title = esc_html__( 'Review', 'bp-member-reviews' );
+				}
+				if ( empty( $bupr_review_title_plural ) ) {
+					$bupr_review_title_plural = esc_html__( 'Reviews', 'bp-member-reviews' );
 				}
 				$bupr_display_setting = array(
-					'bupr_review_title' => $bupr_review_title,
-					'bupr_star_color'   => $bupr_review_color,
+					'bupr_review_title'        => $bupr_review_title,
+					'bupr_review_title_plural' => $bupr_review_title_plural,
+					'bupr_star_color'          => $bupr_review_color,
 				);
 				update_option( BUPR_DISPLAY_OPTIONS, $bupr_display_setting );
 				echo 'admin-settings-saved';
@@ -326,8 +331,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( $bupr_allow_email == 'yes' ) {
 								$bupr_to       = $bupr_reciever_email;
 								$bupr_subject  = $review_subject;
-								$bupr_message .= sprintf( __( '%s Welcome ! %s %s %s You have a new review on your member profile %s.', 'bp-member-reviews' ), '<p>','<b>', $bupr_reciever_name, '</b>', '</p>' );
-								$bupr_message .= __( 'To read your review click on the link given below.', 'bp-member-reviews' );
+								$bupr_message .= sprintf( esc_html__( '%s Welcome ! %s %s %s You have a new review on your member profile %s.', 'bp-member-reviews' ), '<p>','<b>', $bupr_reciever_name, '</b>', '</p>' );
+								$bupr_message .= esc_html__( 'To read your review click on the link given below.', 'bp-member-reviews' );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
 								$bupr_header  .= "MIME-Version: 1.0\r\n";
@@ -335,11 +340,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								wp_mail( $bupr_to, $bupr_subject, $bupr_message, $bupr_header );
 
 							}
-
+							$bupr_review_title     = esc_html__( 'Review', 'bp-member-reviews' );
+							$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+							if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
+								$bupr_review_title = $bupr_display_settings['bupr_review_title'];
+							}
 							if ( $bupr_auto_approve_reviews == 'no' ) {
-								esc_html_e( ' Thank you for taking the time to write this wonderful review. Your review will display on member profile after moderator approval.', 'bp-member-reviews' );
+								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s. Your %1$s will display on member profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
 							} else {
-								esc_html_e( ' Thank you for taking the time to write this wonderful review!', 'bp-member-reviews' );
+								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s!', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
 							}
 						} else {
 							echo '<p class="bupr-error">';
@@ -362,7 +371,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						echo '</p>';
 					}
 				} else {
-					esc_html_e( 'You already posted a review for this member.', 'bp-member-reviews' );
+					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );					
 				}
 				die;
 			}
