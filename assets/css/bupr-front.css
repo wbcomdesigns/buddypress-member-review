@@ -59,9 +59,12 @@
 /* widget css for front-end */
 .bupr-members{
 	border-bottom: 1px solid hsl(0, 0%, 87%);
-	height: 115px;
+	height: auto;
 	width: 100%;
 	text-align:center;
+	position: relative;
+	display: block;
+	float: left;
 }
 .members{
 	text-transform: capitalize;

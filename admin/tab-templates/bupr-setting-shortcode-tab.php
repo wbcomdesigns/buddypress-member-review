@@ -37,11 +37,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<strong>
 							<?php echo esc_attr( '[bupr_display_top_members]' ); ?>
 						</strong>
+						
 					</div>
 					<div class="bupr-admin-col-6">
 						<p class="description">
-							<?php esc_html_e( 'This shortcode will be display Top rated/reviewed members.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'This shortcode will be display Top rated/reviewed members.', 'bp-member-reviews' ); ?>							
 						</p>
+						<h4><?php esc_html_e( 'Parameters:', 'bp-member-reviews' ); ?></h4>
+						<ul>
+							<li><p><b><?php echo esc_html( 'title' ) . '</b>:  ' . esc_html__( "Using this parameter. you can add a title before top rated/reviewed members listing. For example: ", 'bp-member-reviews' ) . "[bupr_display_top_members title='Top Rated Member Listing']"; ?></p></li>
+							<li><p><b><?php echo esc_html( 'total_member' ) . '</b>:  ' . esc_html__( "This parameter lets you limit the number of reviews in Member Reviews page. For example: ", 'bp-member-reviews' ) . "[bupr_display_top_members total_member=4]"; ?></b></li>
+							<li><p><b><?php echo esc_html( 'type' ) . '</b>:  ' . esc_html__( "Using this parameter you can display members according to 'top reviewed' or 'top rated'. For example: ", 'bp-member-reviews' ) . "[bupr_display_top_members type='top reviewed']"; ?></p></li>
+							<li><p><b><?php echo esc_html( 'avatar' ) . '</b>:  ' . esc_html__( "This parameter gives you flexibility to 'show' or 'hide' member avatar in the listing. For example: ", 'bp-member-reviews' ) . "[bupr_display_top_members avatar='hide']"; ?></p></li>
+						</ul>
+						
 					</div>
 				</div>
 			</div>
