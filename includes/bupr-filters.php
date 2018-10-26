@@ -223,7 +223,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			} else {
-				$bupr_review_title = esc_html__( 'Reviews', 'bp-member-reviews' );
+				$bupr_review_title = esc_html__( 'Review', 'bp-member-reviews' );
 			}
 			$review_div      = 'form';
 			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
