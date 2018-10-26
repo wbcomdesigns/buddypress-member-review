@@ -529,6 +529,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
 			global $bp;
+			$bupr_review_title     = esc_html__( 'Review', 'bp-member-reviews' );
+			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			if ( ! empty( $bupr_display_settings ) ) {
+				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
+			}
 			if ( $post->post_type == 'review' ) {
 				unset( $actions['edit'] );
 				unset( $actions['view'] );
