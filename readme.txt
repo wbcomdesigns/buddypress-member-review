@@ -63,7 +63,7 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 == Changelog ==
 
 = 1.0.9 =
-* Fix - Compatibilty with BuddyPress 3.2.0.
+* Fix - Compatibility with BuddyPress 3.2.0.
 * Fix - BuddyPress notification issue.
 * Fix - Fixed Translation string issue.
 * Enhancement - Added plural label for Review.
