@@ -29,8 +29,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div class="bupr-admin-col-6">
 					<p class="description">
-						<?php esc_html_e( ' This shortcode will be display BP member review form.', 'bp-member-reviews' ); ?>
+						<?php esc_html_e( 'This shortcode will be display BP member review form.', 'bp-member-reviews' ); ?>
 					</p>
+				</div>
+				<div class="bupr-admin-row border">
+					<div class="bupr-admin-col-6 bupr-label">
+						<strong>
+							<?php echo esc_attr( '[bupr_display_top_members]' ); ?>
+						</strong>
+					</div>
+					<div class="bupr-admin-col-6">
+						<p class="description">
+							<?php esc_html_e( 'This shortcode will be display Top rated/reviewed members.', 'bp-member-reviews' ); ?>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
