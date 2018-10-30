@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/
- * Description: This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review himself/herself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria..
+ * Description: This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review himself/herself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria.
  * Version: 1.0.9
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 	define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-	/* define options name for admin setting option */
+/* define options name for admin setting option */
 	define( 'BUPR_GENERAL_OPTIONS', 'bupr_admin_general_options' );
 	define( 'BUPR_CRITERIA_OPTIONS', 'bupr_admin_criteria_options' );
 	define( 'BUPR_SHORTCODE_OPTIONS', 'bupr_admin_shortcode_options' );
@@ -67,6 +67,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 			*/
 			$include_files = array(
 				'includes/bupr-scripts.php',
+				'includes/class-buprglobals.php',
 				'admin/bupr-admin.php',
 				'includes/bupr-filters.php',
 				'includes/bupr-shortcodes.php',

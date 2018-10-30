@@ -7,7 +7,7 @@ jQuery( document ).ready(
 		*-----------------------------------------*/
 		jQuery( "#buprTextBoxContainer" ).sortable();
 		jQuery( "#buprTextBoxContainer" ).disableSelection();
-		jQuery( '#bupr_excluding_box' ).selectize();
+		jQuery( '#bupr_exc_member' ).selectize();
 		jQuery( '.bupr_mt_criteria_select' ).selectize({
 	 		placeholder		: "Select criterias",
 	 		plugins			: ['remove_button']
@@ -86,7 +86,7 @@ jQuery( document ).ready(
 				} else {
 					bupr_member_dir_add_reviews = 'no';
 				}
-				
+
 				/* Add review link at member directory. */
 				var bupr_enable_anonymous_reviews = '';
 				if ( jQuery( '#bupr_enable_anonymous_reviews' ).is( ':checked' ) ) {
@@ -288,6 +288,7 @@ jQuery( document ).ready(
 * Add extra criteria fields
 *-----------------------------------------*/
 function GetDynamicTextBox(value) {
-	return '<div class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " /></div>' +
-		   '<div class="bupr-admin-col-6"><input type="button" value="Remove" class="bupr-remove button button-secondary" /><label class="bupr-switch bupr-switch-custom"><input type="checkbox" class="bupr_enable_criteria" value="yes" checked><div class="bupr-slider bupr-round"></div></label></div></div>'
+	var rand_num = Math.random();
+	return '<div class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name]['+ rand_num +']" class = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " /></div>' +
+		   '<div class="bupr-admin-col-6"><input type="button" value="Remove" class="bupr-remove button button-secondary" /><label class="bupr-switch bupr-switch-custom"><input type="checkbox" name="bupr_admin_settings[rating_field_name_display]['+ rand_num + ']" class="bupr_enable_criteria" value="yes" checked><div class="bupr-slider bupr-round"></div></label></div></div>'
 }

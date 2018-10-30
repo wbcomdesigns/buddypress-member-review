@@ -41,7 +41,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 
 			/* Add review link at member's directory if option admin setting is enabled. */
-			$bupr_admin_settings      = get_option( BUPR_GENERAL_OPTIONS, true );
+			$bupr_admin_settings      = get_option( 'bupr_admin_general_options', true );
 			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_member_dir_add_reviews'] ) ) {
 				$bupr_member_dir_add_reviews = $bupr_admin_settings['bupr_member_dir_add_reviews'];
 				if ( $bupr_member_dir_add_reviews == 'yes' ) {
@@ -61,16 +61,16 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_set_default_rating_criteria() {
-			$bupr_admin_settings = get_option( 'bupr_admin_settings', true );
+			$bupr_admin_settings = get_option( 'bupr_admin_general_options', true );
 			if ( empty( $bupr_admin_settings ) || ! is_array( $bupr_admin_settings ) ) {
 				$default_admin_criteria = array(
 					'profile_multi_rating_allowed' => '1',
 					'profile_rating_fields'        => array(
-						'Member Response' => 'yes',
-						'Member Skills'   => 'yes',
+						esc_html__( 'Member Response', 'bp-member-reviews' ) => 'yes',
+						esc_html__( 'Member Skills', 'bp-member-reviews' ) => 'yes',
 					),
 				);
-				update_option( 'bupr_admin_settings', $default_admin_criteria );
+				update_option( 'bupr_admin_general_options', $default_admin_criteria );
 			}
 		}
 
@@ -84,7 +84,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_rating_directory() {
 
 			/* List reviews at member directory if setting is enabled. */
-			$bupr_admin_settings      = get_option( BUPR_GENERAL_OPTIONS, true );
+			$bupr_admin_settings      = get_option( 'bupr_admin_general_options', true );
 			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_member_dir_reviews'] ) ) {
 				$bupr_member_dir_reviews = $bupr_admin_settings['bupr_member_dir_reviews'];
 				if ( $bupr_member_dir_reviews != 'yes' ) {
@@ -96,7 +96,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			global $members_template;
 			$bupr_star_color       = '#FFC400';
 			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			}
@@ -127,7 +127,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$bupr_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
 			}
 
-			$bupr_total_rating       = $rate_counter  = 0;
+			$bupr_total_rating       = 0;
+			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
 			$bupr_total_review_count = '';
 			if ( $bupr_reviews_count != 0 ) {
@@ -136,8 +137,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$reviews_field_count = 0;
 					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
 					if ( ! empty( $review_ratings[0] ) ) {
-						// $reviews_field_count  = count( $bupr_review_rating_fields );
-						if ( ! empty( $bupr_review_rating_fields ) && ! empty( $review_ratings[0] ) ) :
+						if ( ! empty( $bupr_review_rating_fields ) && ! empty( $review_ratings[0] ) ) {
 							foreach ( $review_ratings[0] as $field => $value ) {
 								if ( array_key_exists( $field, $bupr_review_rating_fields ) ) {
 									$rate += $value;
@@ -150,7 +150,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								$bupr_total_review_count ++;
 								$rate_counter++;
 							}
-						endif;
+						}
 					}
 				}
 
@@ -218,8 +218,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_add_review_button_on_member_header() {
 			global $bp;
-			$bupr_admin_settings   = get_option( BUPR_GENERAL_OPTIONS, true );
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_admin_settings   = get_option( 'bupr_admin_general_options', true );
+			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
 			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			} else {
@@ -272,8 +272,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_view_review_button_on_member_directory() {
 			global $bp;
-			$bupr_admin_settings   = get_option( BUPR_GENERAL_OPTIONS, true );
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_admin_settings   = get_option( 'bupr_admin_general_options', true );
+			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
 			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			} else {
@@ -329,7 +329,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
 			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			}
@@ -380,7 +380,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			/* get display tab setting from db */
 			$bupr_star_color       = '#FFC400';
 			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
 			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			}
@@ -530,7 +530,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
 			global $bp;
 			$bupr_review_title     = esc_html__( 'Review', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
 			if ( ! empty( $bupr_display_settings ) ) {
 				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
 			}
@@ -583,7 +583,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$bp_pages    = bp_core_get_directory_pages();
 			$member_slug = $bp_pages->members->slug;
 
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
+			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
 			if ( ! empty( $bupr_display_settings ) ) {
 				$bupr_review_title        = $bupr_display_settings['bupr_review_title'];
 				$bupr_review_title_plural = $bupr_display_settings['bupr_review_title_plural'];
@@ -597,7 +597,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$bupr_review_title_plural = esc_html__( 'Reviews', 'bp-member-reviews' );
 			}
 
-			$bupr_admin_settings = get_option( BUPR_GENERAL_OPTIONS, true );
+			$bupr_admin_settings = get_option( 'bupr_admin_general_options', true );
 			if ( ! empty( $bupr_admin_settings ) ) {
 				$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
 			}
