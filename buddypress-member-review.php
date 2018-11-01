@@ -117,7 +117,7 @@ function bupr_bp_notifications_for_review() {
  */
 function bupr_admin_page_link( $links ) {
 	$page_link = array(
-		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">'. esc_html__( 'Settings', 'bp-member-reviews' ) .'</a>',
+		'<a href="' . admin_url( 'edit.php?post_type=review&page=bp-member-review-settings' ) . '">'. esc_html__( 'Settings', 'bp-member-reviews' ) .'</a>',
 	);
 	return array_merge( $links, $page_link );
 }
