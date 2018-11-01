@@ -37,18 +37,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			add_action( 'wp_ajax_bupr_approve_review', array( $this, 'bupr_approve_review' ) );
 			add_action( 'wp_ajax_nopriv_bupr_approve_review', array( $this, 'bupr_approve_review' ) );
 
-			/* add action for general tab admin setting */
-			add_action( 'wp_ajax_bupr_admin_tab_generals', array( $this, 'bupr_admin_tab_general_settings' ) );
-			add_action( 'wp_ajax_nopriv_bupr_admin_tab_generals', array( $this, 'bupr_admin_tab_general_settings' ) );
-
-			/* add action for criteria tab admin setting */
-			add_action( 'wp_ajax_bupr_admin_tab_criteria', array( $this, 'bupr_admin_tab_criteria' ) );
-			add_action( 'wp_ajax_nopriv_bupr_admin_tab_criteria', array( $this, 'bupr_admin_tab_criteria' ) );
-
-			/* add action for display tab admin setting */
-			add_action( 'wp_ajax_bupr_admin_tab_display', array( $this, 'bupr_admin_tab_display_settings' ) );
-			add_action( 'wp_ajax_nopriv_bupr_admin_tab_display', array( $this, 'bupr_admin_tab_display_settings' ) );
-
 			add_action( 'wp_ajax_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
 			add_action( 'wp_ajax_nopriv_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
 
@@ -100,37 +88,24 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function wp_allow_bupr_my_member() {
-			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) == 'allow_bupr_member_review_update' ) {
-
-				$bupr_admin_settings = get_option( 'bupr_admin_settings' );
-				if ( ! empty( $bupr_admin_settings ) ) {
-					$profile_rating_fields = $bupr_admin_settings['profile_rating_fields'];
-				}
-				
+			global $bupr;
+			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) == 'allow_bupr_member_review_update' ) {			
 
 				$bupr_rating_criteria = array();
-				if ( ! empty( $profile_rating_fields ) ) {
-					foreach ( $profile_rating_fields as $bupr_keys => $bupr_fields ) {
+				if ( ! empty( $bupr['active_rating_fields'] ) ) {
+					foreach ( $bupr['active_rating_fields'] as $bupr_keys => $bupr_fields ) {
 						if ( $bupr_fields == 'yes' ) {
 							$bupr_rating_criteria[] = $bupr_keys;
 						}
 					}
 				}
 
-				$bupr_auto_approve_reviews   = 'no';
-				$bupr_multi_reviews          = 'no';
-				$bupr_reviews_status         = 'draft';
-				$bupr_admin_general_settings = get_option( BUPR_GENERAL_OPTIONS, true );
-				if ( ! empty( $bupr_admin_general_settings ) && ! empty( $bupr_admin_general_settings['bupr_auto_approve_reviews'] ) ) {
-					$bupr_auto_approve_reviews = $bupr_admin_general_settings['bupr_auto_approve_reviews'];
-					if ( $bupr_auto_approve_reviews == 'yes' ) {
-						$bupr_reviews_status = 'publish';
-					}
+				$bupr_reviews_status = 'draft';
+				if ( 'yes' == $bupr['auto_approve_reviews'] ) {
+					$bupr_reviews_status = 'publish';
 				}
 
-				if ( ! empty( $bupr_admin_general_settings ) && array_key_exists( 'bupr_multi_reviews', $bupr_admin_general_settings ) ) {
-					$bupr_multi_reviews = $bupr_admin_general_settings['bupr_multi_reviews'];
-				}
+				$bupr_multi_reviews = $bupr['multi_reviews'];
 
 				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user', FILTER_SANITIZE_STRING );
 				$review_subject             = filter_input( INPUT_POST, 'bupr_review_title', FILTER_SANITIZE_STRING );
@@ -160,9 +135,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						),
 					),
 				);
-				$reviews_args     = new WP_Query( $member_args );
+				$reviews_args = new WP_Query( $member_args );
 
-				if ( $bupr_multi_reviews == 'no' ) {
+				if ( 'no' == $bupr['multi_reviews'] ) {
 					$user_post_count = $reviews_args->post_count;
 				} else {
 					$user_post_count = 0;
@@ -195,13 +170,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 						$review_id = wp_insert_post( $add_review_args );
 						if ( $review_id ) {
-							$bupr_email_notification = get_option( 'bupr_admin_general_options' );
-							if ( ! empty( $bupr_email_notification ) ) {
-								$bupr_allow_email = $bupr_email_notification['bupr_allow_email'];
-							}
-							if ( ! empty( $bupr_email_notification ) ) {
-								$bupr_allow_notifi = $bupr_email_notification['bupr_allow_notification'];
-							}
 
 							if ( ! empty( $bupr_current_user ) && ! empty( $bupr_member_id ) ) {
 								$bupr_sender_data    = get_userdata( $bupr_current_user );
@@ -210,37 +178,31 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								$bupr_reciever_email = $bupr_reciever_data->data->user_email;
 								$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
 								$bupr_reciever_login = $bupr_reciever_data->data->user_login;
-								// $bupr_review_url     = home_url() . '/members/' . $bupr_reciever_login . '/reviews/view/' . $review_id;
-								$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ). 'reviews/view/' . $review_id;
+								$bupr_review_url     = bp_core_get_user_domain( $bupr_member_id ). 'reviews/view/' . $review_id;
 							}
 
 							/* send notification to member if  notification is enable */
-							if ( $bupr_allow_notifi == 'yes' ) {
+							if ( 'yes' == $bupr['allow_notification'] ) {
 								do_action( 'bupr_sent_review_notification', $bupr_member_id, $review_id );
 							}
 
 							/* send email to member if email notification is enable */
-							if ( $bupr_allow_email == 'yes' ) {
+							if ( 'yes' == $bupr['allow_email'] ) {
 								$bupr_to       = $bupr_reciever_email;
 								$bupr_subject  = $review_subject;
-								$bupr_message .= sprintf( esc_html__( '%s Welcome ! %s %s %s You have a new review on your member profile %s.', 'bp-member-reviews' ), '<p>','<b>', $bupr_reciever_name, '</b>', '</p>' );
+								$bupr_message .= '<p>'. sprintf( esc_html__( 'Welcome ! %s You have a new review on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ) ) . '</p>';
 								$bupr_message .= esc_html__( 'To read your review click on the link given below.', 'bp-member-reviews' );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
 								$bupr_header  .= "MIME-Version: 1.0\r\n";
 								$bupr_header  .= "Content-type: text/html\r\n";
 								wp_mail( $bupr_to, $bupr_subject, $bupr_message, $bupr_header );
+							}
 
-							}
-							$bupr_review_title     = esc_html__( 'Review', 'bp-member-reviews' );
-							$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
-							if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
-								$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-							}
-							if ( $bupr_auto_approve_reviews == 'no' ) {
-								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s. Your %1$s will display on member profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
+							if ( 'no' == $bupr['auto_approve_reviews'] ) {
+								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s. Your %1$s will display on member profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							} else {
-								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s!', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
+								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s!', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							}
 						} else {
 							echo '<p class="bupr-error">';
@@ -251,7 +213,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						wp_set_object_terms( $review_id, 'BP Member', 'review_category' );
 						update_post_meta( $review_id, 'linked_bp_member', $bupr_member_id );
 						
-						if( $anonymous_review == 'yes' ){
+						if( 'yes' == $bupr['anonymous_reviews'] ){
 							update_post_meta( $review_id, 'bupr_anonymous_review_post', $anonymous_review );
 						}
 						if ( ! empty( $bupr_rated_stars ) ) :
@@ -263,7 +225,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						echo '</p>';
 					}
 				} else {
-					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );					
+					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );					
 				}
 				die;
 			}

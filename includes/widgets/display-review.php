@@ -26,19 +26,9 @@ class bupr_members_review_setting extends WP_Widget {
 		extract( $args );
 
 		global $wpdb;
+		global $bupr;
 		$bupr_type       = 'integer';
 		$bupr_avg_rating = 0;
-		/* get display tab setting from db */
-		$bupr_star_color       = '#eeee22';
-		$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
-		$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
-		if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
-			$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-		}
-		if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
-			$bupr_star_color = $bupr_display_settings['bupr_star_color'];
-		}
-
 		$user_id = get_current_user_id();
 		// Our variables from the widget settings.
 		$bupr_title  = '';
@@ -82,11 +72,7 @@ class bupr_members_review_setting extends WP_Widget {
 				),
 			);
 
-			$reviews             = get_posts( $bupr_args );
-			$bupr_admin_settings = get_option( 'bupr_admin_settings' );
-			if ( ! empty( $bupr_admin_settings ) ) {
-				$bupr_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
-			}
+			$reviews                 = get_posts( $bupr_args );
 			$bupr_total_rating       = $rate_counter = 0;
 			$bupr_reviews_count      = count( $reviews );
 			$bupr_total_review_count = '';
@@ -96,10 +82,10 @@ class bupr_members_review_setting extends WP_Widget {
 					$reviews_field_count = 0;
 					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
 					if ( ! empty( $review_ratings[0] ) ) {
-						// $reviews_field_count  = count( $bupr_review_rating_fields );
-						if ( ! empty( $bupr_review_rating_fields ) && ! empty( $review_ratings[0] ) ) :
+
+						if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $review_ratings[0] ) ) :
 							foreach ( $review_ratings[0] as $field => $value ) {
-								if ( array_key_exists( $field, $bupr_review_rating_fields ) ) {
+								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
 									$rate += $value;
 									$reviews_field_count++;
 								}
@@ -153,31 +139,31 @@ class bupr_members_review_setting extends WP_Widget {
 			usort( $bupr_max_review, array( $this, 'bupr_sort_max_review' ) );
 			$bupr_members_ratings_data = $bupr_max_review;
 		} ?>
-		<input type="hidden" value="<?php echo ! empty( $bupr_star_color ) ? $bupr_star_color : '#1fd9e0'; ?>" class="bupr-display-rating-color">
+		<input type="hidden" value="<?php echo $bupr['rating_color']; ?>" class="bupr-display-rating-color">
 												<?php
 												echo $before_widget;
 												$bupr_user_count = 0;
 												echo $before_title;
 												echo $bupr_title;
 												echo $after_title;
+												echo '<ul class="bupr-member-main">';
 												if ( $bupr_member_count != 0 ) {
 													foreach ( $bupr_members_ratings_data as $buprKey => $buprValue ) {
 														if ( $bupr_user_count == $memberLimit ) {
 															break;
 														} else {
-															echo '<div class="bupr-members">';
 															if ( $avatar == 'Show' ) {
-																echo '<div class="bupr-col-4">';
+																echo '<li class="bupr-members"><div class="bupr-img-widget">';
 																echo get_avatar( $buprValue['user_id'], 65 );
 																echo '</div>';
-																echo '<div class="bupr-col-8 members">';
+																echo '<div class="bupr-content-widget">';
 															} else {
-																echo '<div class="bupr-col-12 members">';
+																echo '<li class="bupr-members bupr-hide"><div class="bupr-content-widget">';
 															}
 															$members_profile = bp_core_get_userlink( $buprValue['user_id'] );
-															echo '<p>';
-															_e( $members_profile, 'bp-member-reviews' );
-															echo '</p>';
+															echo '<div class="bupr-member-title">';
+															echo $members_profile;
+															echo '</div>';
 
 															$bupr_avg_rating    = $buprValue['avg_rating'];
 															$bupr_reviews_count = $buprValue['max_review'];
@@ -193,19 +179,19 @@ class bupr_members_review_setting extends WP_Widget {
 																$stars_off  = 5 - $bupr_avg_rating;
 																$stars_half = 0;
 															}
-
+															echo '<div class="bupr-member-rating">';
 															if ( $bupr_avg_rating > 0 ) {
 															?>
 															<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 																<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
-						<span itemprop="bestRating"   content="5"></span>
-						<span itemprop="ratingCount"  content="<?php echo $buprValue['rate_counter']; ?>"></span>
-						<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
-						<span itemprop="itemReviewed" content="Person"></span>
-						<span itemprop="name" content="<?php echo bp_core_get_username( $buprValue['user_id'] ); ?>"></span>
-						<span itemprop="url" content="<?php echo bp_core_get_userlink( $buprValue['user_id'], false, true ); ?>"></span>
-					</div>
-					<?php
+																<span itemprop="bestRating"   content="5"></span>
+																<span itemprop="ratingCount"  content="<?php echo $buprValue['rate_counter']; ?>"></span>
+																<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
+																<span itemprop="itemReviewed" content="Person"></span>
+																<span itemprop="name" content="<?php echo bp_core_get_username( $buprValue['user_id'] ); ?>"></span>
+																<span itemprop="url" content="<?php echo bp_core_get_userlink( $buprValue['user_id'], false, true ); ?>"></span>
+															</div>
+															<?php
 															}
 
 															for ( $i = 1; $i <= $stars_on; $i++ ) {
@@ -225,13 +211,15 @@ class bupr_members_review_setting extends WP_Widget {
 																<span class="fa fa-star-o bupr-star-rate"></span>
 																<?php
 															}
+															echo '</div>';
 
 															$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-															echo '<p>';
-															esc_html_e( 'Rating', 'bp-member-reviews' );
-															echo ' : ( ' . $bupr_avg_rating . ' )</p><p>';
-															esc_html_e( 'Total ', 'bp-member-reviews' );
-															echo $bupr_review_title . ' : ' . $bupr_reviews_count . '</p></div></div>';
+																echo '<span class="bupr-meta">';
+																echo sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
+																echo '</span><span class="bupr-meta">';
+																echo sprintf( esc_html__( 'Total %1$ : %2$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ), esc_attr( $bupr_reviews_count ) );
+																echo '</span></div></li>';
+															
 														}
 
 														$bupr_user_count++;
@@ -241,6 +229,7 @@ class bupr_members_review_setting extends WP_Widget {
 													esc_html_e( 'No member has been reviewed yet.', 'bp-member-reviews' );
 													echo '</p>';
 												}
+												echo "</ul>";
 												echo $after_widget;
 	}
 
@@ -319,16 +308,13 @@ class bupr_members_review_setting extends WP_Widget {
 					<?php
 					foreach ( $bupr_options as $bupr_option ) {
 						?>
-						<option value="<?php echo $bupr_option; ?>"><?php _e( $bupr_option, 'bp-member-reviews' ); ?></option>
+						<option value="<?php echo $bupr_option; ?>"><?php echo $bupr_option; ?></option>
 													<?php
 					}
 					?>
-
 				</select>
 			</p>
 		</div>
 		<?php
 	}
 }
-
-?>

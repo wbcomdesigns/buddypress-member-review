@@ -29,7 +29,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function __construct() {
 
-			add_action( 'bp_setup_nav', array( $this, 'bupr_member_profile_reviews_tab' ) );
+			add_action( 'wp', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
 			add_action( 'bp_before_member_header_meta', array( $this, 'bupr_member_average_rating' ) );
 
 			add_action( 'bp_setup_admin_bar', array( $this, 'bupr_setup_admin_bar' ), 80 );
@@ -61,7 +61,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_set_default_rating_criteria() {
-			$bupr_admin_settings = get_option( 'bupr_admin_general_options', true );
+			$bupr_admin_settings = get_option( 'bupr_admin_settings', true );
 			if ( empty( $bupr_admin_settings ) || ! is_array( $bupr_admin_settings ) ) {
 				$default_admin_criteria = array(
 					'profile_multi_rating_allowed' => '1',
@@ -70,43 +70,29 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						esc_html__( 'Member Skills', 'bp-member-reviews' ) => 'yes',
 					),
 				);
-				update_option( 'bupr_admin_general_options', $default_admin_criteria );
+				update_option( 'bupr_admin_settings', $default_admin_criteria );
 			}
 		}
 
 		/**
-		 * BuddyPress Rating diresctory.
+		 * BuddyPress Rating directory.
 		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_rating_directory() {
-
-			/* List reviews at member directory if setting is enabled. */
-			$bupr_admin_settings      = get_option( 'bupr_admin_general_options', true );
-			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['bupr_member_dir_reviews'] ) ) {
-				$bupr_member_dir_reviews = $bupr_admin_settings['bupr_member_dir_reviews'];
-				if ( $bupr_member_dir_reviews != 'yes' ) {
-					return;
-				}
-			}
-
-			/* get display tab setting from db */
 			global $members_template;
-			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
-			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-			}
-			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
-				$bupr_star_color = $bupr_display_settings['bupr_star_color'];
+			global $bupr;
+
+			/* List ratings at member directory if setting is enabled. */
+			if ( 'yes' != $bupr['dir_view_ratings'] ) {
+				return;
 			}
 
 			$bupr_type       = 'integer';
 			$bupr_avg_rating = 0;
-			/* Gather all the members reviews */
+			/* Gather all the members ratings */
 			$bupr_args = array(
 				'post_type'      => 'review',
 				'posts_per_page' => -1,
@@ -121,12 +107,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				),
 			);
 
-			$reviews             = get_posts( $bupr_args );
-			$bupr_admin_settings = get_option( 'bupr_admin_settings' );
-			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['profile_rating_fields'] ) ) {
-				$bupr_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
-			}
-
+			$reviews                 = get_posts( $bupr_args );
 			$bupr_total_rating       = 0;
 			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
@@ -137,9 +118,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$reviews_field_count = 0;
 					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
 					if ( ! empty( $review_ratings[0] ) ) {
-						if ( ! empty( $bupr_review_rating_fields ) && ! empty( $review_ratings[0] ) ) {
+						if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $review_ratings[0] ) ) {
 							foreach ( $review_ratings[0] as $field => $value ) {
-								if ( array_key_exists( $field, $bupr_review_rating_fields ) ) {
+								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
 									$rate += $value;
 									$reviews_field_count++;
 								}
@@ -218,34 +199,33 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_add_review_button_on_member_header() {
 			global $bp;
-			$bupr_admin_settings   = get_option( 'bupr_admin_general_options', true );
-			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
-			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-			} else {
-				$bupr_review_title = esc_html__( 'Review', 'bp-member-reviews' );
-			}
+			global $bupr;
 			$review_div      = 'form';
-			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
-
 			if( bp_is_user() ){
 				$member_id = bp_displayed_user_id();
 			}else{
 				$member_id = bp_get_member_user_id();
 			}
 
-			if ( ! empty( $bupr_exc_member ) ) {
-				if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr_exc_member ) ) {
+			if ( ! empty( $bupr['exclude_members'] ) ) {
+				if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr['exclude_members'] ) ) {
 					$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews/add-review';
-					?>
-					<div id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
-							<?php
-							echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
-							?>
-						</a>
-					</div>
-					<?php
+					$bp_template_option = bp_get_option('_bp_theme_package_id');
+						if( 'nouveau' == $bp_template_option ) { ?>
+							<li id="bupr-add-review-btn" class="generic-button">
+						<?php } else { ?>
+							<div id="bupr-add-review-btn" class="generic-button">
+						<?php } ?>		
+								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
+									<?php
+									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+									?>
+								</a>
+						<?php if( 'nouveau' == $bp_template_option ) { ?>		
+							</li>
+						<?php } else { ?>
+						    </div>	
+					<?php }
 				}
 			} else {
 				if ( $member_id != bp_loggedin_user_id() ) {
@@ -254,7 +234,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div id="bupr-add-review-btn" class="generic-button">
 						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
+							echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							?>
 						</a>
 					</div>
@@ -272,31 +252,22 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_view_review_button_on_member_directory() {
 			global $bp;
-			$bupr_admin_settings   = get_option( 'bupr_admin_general_options', true );
-			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
-			if ( ! empty( $bupr_display_settings ) && isset( $bupr_display_settings['bupr_review_title'] ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-			} else {
-				$bupr_review_title = esc_html__( 'Reviews', 'bp-member-reviews' );
-			}
+			global $bupr;
 			$review_div      = 'form';
-			$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
-
 			if( bp_is_user() ){
 				$member_id = bp_displayed_user_id();
 			}else{
 				$member_id = bp_get_member_user_id();
 			}
 
-			if ( ! empty( $bupr_exc_member ) ) {
-				if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr_exc_member ) ) {
+			if ( ! empty( $bupr['exclude_members'] ) ) {
+				if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr['exclude_members'] ) ) {
 					$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews';
 					?>
 					<div id="bupr-view-review-btn" class="generic-button">
 						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							esc_html_e( 'View ', 'bp-member-reviews' );
-							echo esc_attr( $bupr_review_title );
+							echo sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), $bupr['review_label'] );
 							?>
 						</a>
 					</div>
@@ -309,7 +280,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div id="bupr-view-review-btn" class="generic-button">
 						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 							<?php
-							echo sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
+							echo sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), $bupr['review_label'] );
 							?>
 						</a>
 					</div>
@@ -328,12 +299,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
-			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
-			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-			}
-
+			global $bupr;
 			$bupr_args = array(
 				'post_type'      => 'review',
 				'posts_per_page' => -1,
@@ -359,7 +325,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					array(
 						'parent' => 'my-account-buddypress',
 						'id'     => 'my-account-' . $profile_menu_slug,
-						'title'  => $bupr_review_title . ' <span class="count">' . $reviews_count . '</span>',
+						'title'  => $bupr['review_label_plural'] . ' <span class="count">' . $reviews_count . '</span>',
 						'href'   => trailingslashit( $base_url ),
 					)
 				);
@@ -374,20 +340,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_member_average_rating() {
-			?>
-			<br>
-			<?php
-			/* get display tab setting from db */
-			$bupr_star_color       = '#FFC400';
-			$bupr_review_title     = esc_html__( 'Reviews', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
-			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-			}
-			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
-				$bupr_star_color = $bupr_display_settings['bupr_star_color'];
-			}
-
+			global $bupr;
 			$bupr_type       = 'integer';
 			$bupr_avg_rating = 0;
 			/* Gather all the members reviews */
@@ -405,25 +358,20 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				),
 			);
 
-			$reviews             = get_posts( $bupr_args );
-			$bupr_admin_settings = get_option( 'bupr_admin_settings' );
-			if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['profile_rating_fields'] ) ) {
-				$bupr_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
-			}
-
-			$bupr_total_rating       = $rate_counter  = 0;
+			$reviews                 = get_posts( $bupr_args );
+			$bupr_total_rating       = 0;
+			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
 			$bupr_total_review_count = '';
-			if ( $bupr_reviews_count != 0 ) {
+			if ( 0 != $bupr_reviews_count ) {
 				foreach ( $reviews as $review ) {
 					$rate                = 0;
 					$reviews_field_count = 0;
 					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
 					if ( ! empty( $review_ratings[0] ) ) {
-						// $reviews_field_count  = count( $bupr_review_rating_fields );
-						if ( ! empty( $bupr_review_rating_fields ) && ! empty( $review_ratings[0] ) ) :
+						if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $review_ratings[0] ) ) :
 							foreach ( $review_ratings[0] as $field => $value ) {
-								if ( array_key_exists( $field, $bupr_review_rating_fields ) ) {
+								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
 									$rate += $value;
 									$reviews_field_count++;
 								}
@@ -442,7 +390,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$bupr_type       = gettype( $bupr_avg_rating );
 				}
 
-				$bupr_stars_on   = $stars_off = $stars_half = '';
+				$bupr_stars_on   = '';
+				$stars_off       = '';
+				$stars_half      = '';
 				$bupr_half_squar = '';
 				$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
 				if ( $remaining > 0 ) {
@@ -493,8 +443,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 							esc_html_e( 'Rating ', 'bp-member-reviews' );
 							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
-							echo esc_attr( $bupr_reviews_count ) . ' ' . esc_attr( $bupr_review_title );
-
+							echo esc_attr( $bupr_reviews_count ) . ' ' . esc_attr( $bupr['review_label'] );
 							?>
 						</span>
 					</div>
@@ -529,11 +478,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
 			global $bp;
-			$bupr_review_title     = esc_html__( 'Review', 'bp-member-reviews' );
-			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
-			if ( ! empty( $bupr_display_settings ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-			}
+			global $bupr;
 			if ( $post->post_type == 'review' ) {
 				unset( $actions['edit'] );
 				unset( $actions['view'] );
@@ -545,7 +490,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
 					$review_url             = bp_core_get_userlink( $linked_bp_member, false, true ) . 'reviews/view/' . $post->ID;
-					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">'. sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ) . '</a>';
+					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">'. sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
 					if ( $post->post_status == 'draft' ) {
@@ -578,33 +523,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_member_profile_reviews_tab() {
-
-			/* get display tab setting from db */
+			global $bp;
+			global $bupr;
 			$bp_pages    = bp_core_get_directory_pages();
 			$member_slug = $bp_pages->members->slug;
-
-			$bupr_display_settings = get_option( 'bupr_admin_display_options', true );
-			if ( ! empty( $bupr_display_settings ) ) {
-				$bupr_review_title        = $bupr_display_settings['bupr_review_title'];
-				$bupr_review_title_plural = $bupr_display_settings['bupr_review_title_plural'];
-				$bupr_star_color          = $bupr_display_settings['bupr_star_color'];
-			}
-			if ( empty( $bupr_review_title ) ) {
-				$bupr_review_title = esc_html__( 'Review', 'bp-member-reviews' );
-			}
-
-			if ( empty( $bupr_review_title_plural ) ) {
-				$bupr_review_title_plural = esc_html__( 'Reviews', 'bp-member-reviews' );
-			}
-
-			$bupr_admin_settings = get_option( 'bupr_admin_general_options', true );
-			if ( ! empty( $bupr_admin_settings ) ) {
-				$bupr_exc_member = $bupr_admin_settings['bupr_exc_member'];
-			}
-			if ( ! empty( $bupr_exc_member ) && array_key_exists( bp_displayed_user_id(), $bupr_exc_member ) ) {
+			if ( ! empty( $bupr['exclude_members'] ) && in_array( bp_displayed_user_id(), $bupr['exclude_members'] ) ) {
 
 			} else {
-				global $bp;
 				/* count member's review */
 				$bupr_args = array(
 					'post_type'      => 'review',
@@ -634,7 +559,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				$name     = bp_get_displayed_user_username();
 				$tab_args = array(
-					'name'                    => $bupr_review_title_plural . ' ' . $bupr_notification,
+					'name'                    => $bupr['review_label_plural'] . ' ' . $bupr_notification,
 					'slug'                    => 'reviews',
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
@@ -662,7 +587,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( bp_displayed_user_id() !== get_current_user_id() ) {
 					bp_core_new_subnav_item(
 						array(
-							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr_review_title ) ),
+							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
 							'slug'            => 'add-review',
 							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 							'parent_slug'     => $parent_slug,
@@ -730,13 +655,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<span class="bp-icon" aria-hidden="true"></span>
 					<?php } else { ?>
 						<div id="message" class="info">
-					<?php } ?>				
+					<?php } ?>			
 						<p><?php esc_html_e( 'You must login!', 'bp-member-reviews' ); ?>		
 						</p>
-					</div>					
+					</div>				
 					<?php } ?>
-				</div>
-				<?php
+			</div>
+			<?php
 		}
 
 		/**

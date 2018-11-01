@@ -122,29 +122,26 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 		 */
 		public function bupr_add_review_notification_format( $review_id, $member_id, $user_id, $format = '' ) {
 			global $bp;
-			$admin_id             = bp_displayed_user_id();
-			$post_author_id       = get_post_field( 'post_author', $review_id );
-			$admin_info           = get_userdata( $member_id );
+			global $bupr;
+			$admin_id       = bp_displayed_user_id();
+			$post_author_id = get_post_field( 'post_author', $review_id );
+			$admin_info     = get_userdata( $member_id );
 			
-			if($admin_info){
-				$admin_name  = $admin_info->display_name;
-			}else{
+			if ( $admin_info ) {
+				$admin_name  = $admin_info->user_login;
+			} else {
 				$admin_name  = '';
 			}
 			
 			$user_info = get_userdata( $post_author_id );
 			$user_name = '';
-			if($user_info){
-				$user_name = $user_info->display_name;				
+			if ( $user_info ) {
+				$user_name = $user_info->display_name;		
 			}
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
-			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_review_title'] ) ) {
-				$bupr_review_title = $bupr_display_settings['bupr_review_title'];
-			}
-			
+
 			$notification_link    = home_url() . '/members/' . $admin_name . '/reviews/view/' . $review_id;
-			$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr_review_title ) );
-			$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( $bupr_review_title ) );
+			$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+			$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( $bupr['review_label'] ) );
 
 			if ( 'string' == $format ) {
 				$return = sprintf( "<a href='%s' title='%s'>%s</a>", esc_url( $notification_link ), esc_attr( $notification_title ), esc_html( $notification_content ) );

@@ -1,6 +1,6 @@
 <?php
 /**
- * BuddyPress Member Review member types criteria tab funcion file.
+ * BuddyPress Member Review member types criteria tab form.
  *
  * @package BuddyPress_Member_Reviews
  */

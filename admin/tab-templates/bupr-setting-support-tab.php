@@ -1,6 +1,6 @@
 <?php
 /**
- * BuddyPress Member Review support tab function file.
+ * BuddyPress Member Review support tab.
  *
  * @package BuddyPress_Member_Reviews
  */

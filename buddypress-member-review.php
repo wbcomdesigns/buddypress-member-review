@@ -23,12 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 	define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-/* define options name for admin setting option */
-	define( 'BUPR_GENERAL_OPTIONS', 'bupr_admin_general_options' );
-	define( 'BUPR_CRITERIA_OPTIONS', 'bupr_admin_criteria_options' );
-	define( 'BUPR_SHORTCODE_OPTIONS', 'bupr_admin_shortcode_options' );
-	define( 'BUPR_DISPLAY_OPTIONS', 'bupr_admin_display_options' );
-
 if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 	add_action( 'init', 'bupr_load_textdomain' );
 	/**
@@ -66,14 +60,13 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 			* Include needed files on init
 			*/
 			$include_files = array(
-				'includes/bupr-scripts.php',
 				'includes/class-buprglobals.php',
+				'includes/bupr-scripts.php',
 				'admin/bupr-admin.php',
 				'includes/bupr-filters.php',
 				'includes/bupr-shortcodes.php',
 				'includes/widgets/display-review.php',
 				'includes/bupr-ajax.php',
-
 			);
 
 			foreach ( $include_files as $include_file ) {
@@ -114,8 +107,6 @@ function bupr_bp_notifications_for_review() {
 	buddypress()->bupr_bp_review                        = new BUPR_Notifications();
 	buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
 }
-
-
 
 /**
  * Settings link for this plugin.

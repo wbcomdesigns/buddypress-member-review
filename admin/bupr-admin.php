@@ -86,20 +86,19 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_plugin_settings() {
-			$this->plugin_settings_tabs['general'] = esc_html__( 'General', 'bp-member-reviews' );
+			$this->plugin_settings_tabs['bupr-general'] = esc_html__( 'General', 'bp-member-reviews' );
 			register_setting( 'bupr_admin_general_options', 'bupr_admin_general_options' );
-			add_settings_section( 'general', ' ', array( $this, 'bupr_admin_general_content' ), 'general' );
-			$this->plugin_settings_tabs['criteria'] = esc_html__( 'Criteria', 'bp-member-reviews' );
+			add_settings_section( 'bupr-general', ' ', array( $this, 'bupr_admin_general_content' ), 'bupr-general' );
+			$this->plugin_settings_tabs['bupr-criteria'] = esc_html__( 'Criteria', 'bp-member-reviews' );
 			register_setting( 'bupr_admin_settings', 'bupr_admin_settings' );
-			add_settings_section( 'criteria', ' ', array( $this, 'bupr_admin_criteria_content' ), 'criteria' );
-			$this->plugin_settings_tabs['shortcode'] = esc_html__( 'Shortcode', 'bp-member-reviews' );
-			register_setting( 'bupr_admin_shortcode_options', 'bupr_admin_shortcode_options' );
-			add_settings_section( 'shortcode', ' ', array( $this, 'bupr_admin_shortcode_content' ), 'shortcode' );
-			$this->plugin_settings_tabs['display'] = esc_html__( 'Display', 'bp-member-reviews' );
+			add_settings_section( 'bupr-criteria', ' ', array( $this, 'bupr_admin_criteria_content' ), 'bupr-criteria' );
+			$this->plugin_settings_tabs['bupr-shortcode'] = esc_html__( 'Shortcode', 'bp-member-reviews' );
+			add_settings_section( 'bupr-shortcode', ' ', array( $this, 'bupr_admin_shortcode_content' ), 'bupr-shortcode' );
+			$this->plugin_settings_tabs['bupr-display'] = esc_html__( 'Display', 'bp-member-reviews' );
 			register_setting( 'bupr_admin_display_options', 'bupr_admin_display_options' );
-			add_settings_section( 'display', ' ', array( $this, 'bupr_admin_display_content' ), 'display' );
-			$this->plugin_settings_tabs['support'] = __( 'Support', 'bp-member-reviews' );
-			add_settings_section( 'support', ' ', array( $this, 'bupr_admin_support_content' ), 'support' );
+			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
+			$this->plugin_settings_tabs['bupr-support'] = __( 'Support', 'bp-member-reviews' );
+			add_settings_section( 'bupr-support', ' ', array( $this, 'bupr_admin_support_content' ), 'bupr-support' );
 		}
 
 		public function bupr_admin_general_content() {
@@ -130,7 +129,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_admin_options_page() {
 			global $allowedposttags;
-			$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'general';
+			$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
 			?>
 			<div class="wrap">
 				<div class="bupr-header">
@@ -161,7 +160,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @access public
 		 */
 		public function bupr_plugin_settings_tabs() {
-			$current_tab    = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'general';
+			$current_tab    = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
 			// xprofile setup tab.
 			echo '<h2 class="nav-tab-wrapper">';
 			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {

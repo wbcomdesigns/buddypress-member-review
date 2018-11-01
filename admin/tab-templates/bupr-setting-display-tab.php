@@ -1,6 +1,6 @@
 <?php
 /**
- * BuddyPress Member Review display tab function file.
+ * BuddyPress Member Review display tab.
  *
  * @package BuddyPress_Member_Reviews
  */

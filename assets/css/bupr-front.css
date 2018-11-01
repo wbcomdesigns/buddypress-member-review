@@ -7,12 +7,6 @@
 	float: left;
 	padding: 10px 0;
  }
-.bupr-row{
-	clear: both;
-	border-bottom: 1px solid #ddd;
-	overflow: hidden;
-	padding-bottom: 5px;
-}
 .bupr-col-1 {width: 8.33%;}
 .bupr-col-2 {width: 16.66%;}
 .bupr-col-3 {width: 25%;}
@@ -26,6 +20,32 @@
 .bupr-col-11 {width: 91.66%;}
 .bupr-col-12 {width: 100%;}
 
+.bupr-row{
+	clear: both;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	padding: 15px 0;
+	display: block !important; 
+}
+.bupr-row:first-child{
+	padding-top: 0;
+}
+.bupr-row:last-child{
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+.bp-nouveau .bupr-row{
+	margin-bottom: 20px;
+    padding: 15px;
+    background: #fff;
+    border: 0;
+    box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16);
+}
+
+
+
+
 .bupr-review-full-description{
 	display: none;
 	padding-top: 20px;
@@ -35,6 +55,7 @@
 	width: 50%;
 	height:40px;
 }
+
 @media(max-width: 767px){
 	[class*="bupr-col-"] {
 		width: 100%;
@@ -45,6 +66,8 @@
 	  clear: left;
 	}
 }
+
+
 .sel{
 	color:red;
 }
@@ -56,16 +79,52 @@
 	border-bottom: 0;
 	clear: both;
 }
+
 /* widget css for front-end */
-.bupr-members{
-	border-bottom: 1px solid hsl(0, 0%, 87%);
-	height: auto;
-	width: 100%;
-	text-align:center;
-	position: relative;
-	display: block;
-	float: left;
+.bupr_members_review_setting ul.bupr-member-main li.bupr-members{
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: auto;
+    width: 100%;
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 15px 0;
 }
+ul.bupr-member-main{
+	margin:0;
+	list-style: none;
+	padding: 0px;
+}
+
+.bupr_members_review_setting ul.bupr-member-main li:first-child{
+	padding-top: 0;
+}
+.bupr_members_review_setting ul.bupr-member-main li:last-child{
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+ul.bupr-member-main li.bupr-members img.avatar{
+	width:70px;
+	height: 70px;
+	float: left;
+	margin:0 10px 10px 0; 
+}
+ul.bupr-member-main li.bupr-members .bupr-content-widget{
+	margin-left: 80px;
+}
+ul.bupr-member-main li.bupr-members.bupr-hide .bupr-content-widget{
+	margin-left: 0px;
+}
+ul.bupr-member-main li.bupr-members .bupr-member-title{
+	font-weight: bold;
+}
+ul.bupr-member-main li.bupr-members .bupr-meta{
+	display: block;;
+	font-size: 90%;
+	line-height: normal;
+    margin-top: 5px;
+}
+
 .members{
 	text-transform: capitalize;
 	text-align:left;
@@ -80,23 +139,35 @@
 	text-align: center;
 }
 /* review tab */
+
 .bupr-members-profiles{
-	text-align:center;
+	text-align: center;
+    width: 80px;
+    float: left;
 }
+.bupr-members-profiles img.avatar{
+	max-width: 50px;
+	max-height: 50px;
+}
+
 .bupr-members-profiles .reviewer h4{
 	text-transform: capitalize;
-	margin:10px 0px!important;
+	margin:10px 0 0;
+	font-size: 80%;
 }
 .bupr-members-content{
-	padding:0px 10px;
+	margin-left: 100px;
 }
 .bupr-members-content .review-subject h4{
 	margin:5px 0px!important;
 }
+
+
 /* end */
 /* pagination */
 .bupr-posts-pagination{
-	margin: 10px 0;
+	margin: 15px 0;
+	text-align: right;
 }
 .bupr-posts-pagination span{
 	border: 1px solid hsl(0, 0%, 50%);
@@ -104,11 +175,23 @@
 	margin: 0 5px;
 	padding: 5px 10px;
 }
-.bupr-posts-pagination a{
-	border: 1px solid hsl(0, 0%, 87%);
-	border-radius: 5px;
-	margin: 0 5px;
-	padding: 5px 10px;
+.bupr-posts-pagination .page-numbers{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    margin: 0px 0px;
+    padding: 0;
+    background: #fff;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    line-height: 32px;
+    font-size: 80%;
+    font-weight: bold;
+}
+.bupr-posts-pagination .next.page-numbers, .bupr-posts-pagination .prev.page-numbers{
+	width: auto;
+	padding: 0 10px;
 }
 .bupr-single-reivew{
 	margin-top:20px;
@@ -126,6 +209,7 @@
 
 .bupr-error-fields{
 	display:none;
+	font-size: 12px;
 	color:red;
 }
 /* bupr success and error msg */
@@ -243,10 +327,19 @@
 
 .bupr-bp-member-review-no-popup-add-block #review_desc {
   width : 100%;
+  padding: 10px;
 }
 
 .bupr-bp-member-review-no-popup-add-block #bupr_save_review {
   width: 100%;
+  margin: 0;
+  max-width: 148px;
+  height: auto !important;
+}
+
+.bp-member-add-form input[type="checkbox"]#bupr_anonymous_review{
+	vertical-align: middle;
+	margin: 0 5px 0 0;
 }
 
 .add_review_msg {
@@ -257,17 +350,19 @@
   display: none;
 }
 
-.bupr-row.multi-review.inline-content {
-  border-bottom: none;
-  padding: 0px;
-  margin: 0px 0px 0px 10px;
-}
-
-.bupr-full-description {
-  padding: 10px 0 5px;
+#bupr-view-review-btn{
+	width: 100%;
 }
 
 .member-review-stars {
-	float: left;
+	float: none;
 	clear: both;
+	text-align: center;
+}
+
+.widget.bupr_members_review_setting{
+	overflow: hidden;
+}
+.widget.bupr_members_review_setting .bupr-members{
+	
 }

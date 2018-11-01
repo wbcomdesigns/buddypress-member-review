@@ -57,14 +57,8 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function wpdocs_styles_method() {
-			/* get display tab setting from db */
-			$bupr_display_settings = get_option( BUPR_DISPLAY_OPTIONS, true );
-			if ( ! empty( $bupr_display_settings ) && ! empty( $bupr_display_settings['bupr_star_color'] ) ) {
-				$bupr_star_color = $bupr_display_settings['bupr_star_color'];
-			}
-			if ( empty( $bupr_star_color ) ) {
-				$bupr_star_color = '#FFC400';
-			}
+			global $bupr;
+			$bupr_star_color = $bupr['rating_color'];
 			wp_enqueue_style( 'bupr-rating-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css' );
 
 			$custom_css = ".bupr-star-rate {

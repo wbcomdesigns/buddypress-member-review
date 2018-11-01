@@ -1,8 +1,8 @@
 <?php
 /**
- * Class to add custom scripts and styles.
+ * Class to define all the global variables related to plugin.
  *
- * @since    1.0.0
+ * @since    1.0.9
  * @author   Wbcom Designs
  * @package BuddyPress_Member_Reviews
  */
@@ -12,9 +12,9 @@ defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'BUPRGlobals' ) ) {
 	/**
-	 * Class to add custom scripts and styles.
+	 * Class to add global variables of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.9
 	 * @access   public
 	 * @author   Wbcom Designs
 	 */
@@ -23,18 +23,18 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 		/**
 		 * Constructor.
 		 *
-		 * @since    1.0.0
+		 * @since    1.0.9
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
-			add_action( 'init', array( $this, 'bupr_review_globals' ) );
+			add_action( 'init', array( $this, 'bupr_review_globals' ), 10 );
 		}
 
 		/**
-		 * Actions performed for enqueuing scripts and styles for site front
+		 * All the global variables related to this plugin.
 		 *
-		 * @since    1.0.0
+		 * @since    1.0.9
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
@@ -49,14 +49,14 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				if ( array_key_exists( 'bupr_auto_approve_reviews', $bupr_general_settings ) ) {
 					$auto_approve_reviews = $bupr_general_settings['bupr_auto_approve_reviews'];
 				}
-				if ( array_key_exists( 'reviews_per_page', $bupr_general_settings ) ) {
-					$reviews_per_page = $bupr_general_settings['reviews_per_page'];
+				if ( array_key_exists( 'profile_reviews_per_page', $bupr_general_settings ) ) {
+					$reviews_per_page = $bupr_general_settings['profile_reviews_per_page'];
 				}
 				if ( array_key_exists( 'bupr_member_dir_reviews', $bupr_general_settings ) ) {
 					$dir_view_ratings = $bupr_general_settings['bupr_member_dir_reviews'];
 				}
 				if ( array_key_exists( 'bupr_member_dir_add_reviews', $bupr_general_settings ) ) {
-					$dir_view_review_btn = $bupr_general_settings['bupr_member_dir_reviews'];
+					$dir_view_review_btn = $bupr_general_settings['bupr_member_dir_add_reviews'];
 				}
 				if ( array_key_exists( 'bupr_allow_email', $bupr_general_settings ) ) {
 					$allow_email = $bupr_general_settings['bupr_allow_email'];

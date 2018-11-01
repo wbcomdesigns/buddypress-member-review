@@ -1,6 +1,6 @@
 <?php
 /**
- * BuddyPress Member Review shortcode tab function file.
+ * BuddyPress Member Review shortcode tab.
  *
  * @package BuddyPress_Member_Reviews
  */
