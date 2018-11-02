@@ -47,7 +47,7 @@ if ( ! empty( $review_id ) ) {
 			)
 		);
 	}
-	 ?>
+	?>
 		<!-- wbcom Display members review on review tab -->
 		<div class="bgr-single-review">
 			<article id="post-<?php echo esc_attr( $review_id ); ?>" class="post-<?php echo esc_attr( $review_id ); ?> post type-review status-publish format-standard hentry bupr-single-reivew">
@@ -93,13 +93,13 @@ if ( ! empty( $review_id ) ) {
 									echo '<div class="bupr-col-6 ">';
 									for ( $i = 1; $i <= $stars_on; $i++ ) {
 										?>
-										<span class="fa fa-star bupr-star-rate"></span>
+										<span class="fas fa-star bupr-star-rate"></span>
 										<?php
 									}
 
 									for ( $i = 1; $i <= $stars_off; $i++ ) {
 										?>
-										<span class="fa fa-star-o stars bupr-star-rate"></span>
+										<span class="far fa-star stars bupr-star-rate"></span>
 										<?php
 									}
 									/*star rating end */

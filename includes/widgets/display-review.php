@@ -196,19 +196,19 @@ class bupr_members_review_setting extends WP_Widget {
 
 															for ( $i = 1; $i <= $stars_on; $i++ ) {
 																?>
-																<span class="fa fa-star bupr-star-rate"></span>
+																<span class="fas fa-star bupr-star-rate"></span>
 																<?php
 															}
 
 															for ( $i = 1; $i <= $stars_half; $i++ ) {
 																?>
-																<span class="fa fa-star-half-o bupr-star-rate"></span>
+																<span class="fas fa-star-half-alt bupr-star-rate"></span>
 																<?php
 															}
 
 															for ( $i = 1; $i <= $stars_off; $i++ ) {
 																?>
-																<span class="fa fa-star-o bupr-star-rate"></span>
+																<span class="far fa-star bupr-star-rate"></span>
 																<?php
 															}
 															echo '</div>';

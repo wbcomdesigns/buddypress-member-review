@@ -131,13 +131,13 @@ $reviews = new WP_Query( $args ); ?>
 													echo '<div class="bupr-col-4 ">';
 													for ( $i = 1; $i <= $stars_on; $i++ ) {
 														?>
-														<span class="fa fa-star bupr-star-rate"></span>
+														<span class="fas fa-star bupr-star-rate"></span>
 														<?php
 													}
 
 													for ( $i = 1; $i <= $stars_off; $i++ ) {
 														?>
-														<span class="fa fa-star-o stars bupr-star-rate"></span>
+														<span class="far fa-star stars bupr-star-rate"></span>
 														<?php
 													}
 													/*star rating end */

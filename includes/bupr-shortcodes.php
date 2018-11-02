@@ -210,19 +210,19 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 						for ( $i = 1; $i <= $stars_on; $i++ ) {
 							?>
-							<span class="fa fa-star bupr-star-rate"></span>
+							<span class="fas fa-star bupr-star-rate"></span>
 							<?php
 						}
 
 						for ( $i = 1; $i <= $stars_half; $i++ ) {
 							?>
-							<span class="fa fa-star-half-o bupr-star-rate"></span>
+							<span class="fas fa-star-half-alt bupr-star-rate"></span>
 							<?php
 						}
 
 						for ( $i = 1; $i <= $stars_off; $i++ ) {
 							?>
-							<span class="fa fa-star-o bupr-star-rate"></span>
+							<span class="far fa-star bupr-star-rate"></span>
 							<?php
 						}
 						echo '</div>';
@@ -354,13 +354,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 * Bupr review form.
 		 *
 		 * @since    1.0.0
-		 * @param    string $bupr_review_title      Review Title.
-		 * @param    string $bupr_star_color        Star   Color.
 		 * @param    string $login_user             Login  User.
 		 * @param    string $bupr_spinner_src       Spinner  User.
-		 * @param    array  $bupr_admin_settings    Admin Settings array.
-		 * @param    string $bupr_multi_reviews     Multiple Reviews.
-		 * @param    string $profile_rating_fields  Rating fields.
 		 * @param    string $bupr_review_succes     Review Success.
 		 * @param    int    $bupr_flag              Flag.
 		 * @param    array  $bupr_member            Member array
@@ -432,7 +427,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									<?php
 									for ( $i = 1; $i <= 5; $i++ ) {
 									?>
-										<span class="member_stars <?php echo esc_attr( $i ); ?> fa fa-star-o bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+										<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 									<?php } ?>
 								</div>
 								<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
