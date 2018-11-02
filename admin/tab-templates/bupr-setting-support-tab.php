@@ -25,19 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</button>
 					<div class="panel">
 						<p>
-							<?php esc_html_e( 'When visiting the "/members" section in the site, go for single profile view page, there you can see a menu namely, "Reviews" that will allow you if you are a site member to add profile review', 'bp-member-reviews' ); ?>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="bupr-admin-row border">
-				<div class="bupr-admin-col-12">
-					<button class="bupr-accordion">
-					<?php esc_html_e( 'What does the admin settings mean?', 'bp-member-reviews' ); ?>
-					</button>
-					<div class="panel">
-						<p>
-							<?php esc_html_e( 'The admin settings modifies the review creation template. If the popup allowed is checked, the form is will appear in a popup, otherwise the form will toggle on the same page.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'When visiting the "/members" section in the site, go for single profile view page, there you can see a menu namely, "Reviews" which will allow you to add a profile review only if you are a member.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 				</div>
@@ -61,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</button>
 					<div class="panel">
 						<p>
-							<?php esc_html_e( 'Members Review widgets display list of members on site front-end . When you successfully activate BP Member profile review plugin. Then you can see Members reivew widget in the widget section.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Members Review widgets display list of members on site front-end . When you successfully activate BP Member profile review plugin, then you can see Members review widget in the widget section.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 				</div>

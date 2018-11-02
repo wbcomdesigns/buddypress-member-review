@@ -48,22 +48,23 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_update_admin_settings( $new_value, $old_value ) {
-			$rating_fields  = $new_value['rating_field_name'];
-			$rating_display = $new_value['rating_field_name_display'];
-			$criteria_arr   = array();
-			if( !empty( $rating_fields ) ) {
-				foreach( $rating_fields as $key => $fname ) {
-					if( array_key_exists( $key, $rating_display ) ) {
-						$criteria_arr[$fname] = 'yes';
-					} else {
-						$criteria_arr[$fname] = 'no';
+			if ( array_key_exists( 'rating_field_name', $new_value ) ) {
+				$rating_fields  = $new_value['rating_field_name'];
+				$rating_display = $new_value['rating_field_name_display'];
+				$criteria_arr   = array();
+				if ( !empty( $rating_fields ) ) {
+					foreach ( $rating_fields as $key => $fname ) {
+						if ( array_key_exists( $key, $rating_display ) ) {
+							$criteria_arr[$fname] = 'yes';
+						} else {
+							$criteria_arr[$fname] = 'no';
+						}
 					}
+					unset( $new_value['rating_field_name'] );
+					unset( $new_value['rating_field_name_display'] );
+					$new_value['profile_rating_fields'] = $criteria_arr;
 				}
-			}
-			unset( $new_value['rating_field_name'] );
-			unset( $new_value['rating_field_name_display'] );
-			$new_value['profile_rating_fields'] = $criteria_arr;
-
+			}	
 			return $new_value;		    
 		}
 
@@ -75,7 +76,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_submenu_page_admin_settings() {
-			add_submenu_page( 'edit.php?post_type=review', esc_html__( 'Reviews Admin Settings', 'bp-member-reviews' ), esc_html__( 'Member Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
+			add_submenu_page( 'edit.php?post_type=review', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'Review Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
 
 		/**

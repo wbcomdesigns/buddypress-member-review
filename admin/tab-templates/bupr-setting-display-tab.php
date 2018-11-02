@@ -18,7 +18,7 @@ global $bupr;
 	?>
 	<p class="description">
 		<b><?php esc_html_e( 'Note', 'bp-member-reviews' ); ?>:</b>
-		<?php esc_html_e( ' Rating will be displayed in Review form, if and only if you added criteria for review.', 'bp-member-reviews' ); ?>
+		<?php esc_html_e( 'If and only if you have added a criteria for review.', 'bp-member-reviews' ); ?>
 	</p>
 	<h2 class="title">
 		<?php esc_html_e( 'Labels', 'bp-member-reviews' ); ?>

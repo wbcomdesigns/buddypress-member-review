@@ -79,7 +79,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 			<div id="bupr-add-criteria-action" class="bupr-admin-row border <?php echo esc_attr( $bupr_multi_rating_allowed_class ); ?>">
 				<div class="bupr-admin-col-12">
 					<input id="bupr-btnAdd" type="button" value="Add Criteria" class="button button-secondary"/>
-					<p class="description"><?php esc_html_e( 'This option provide you to add multiple rating criteria. By default, no criteria will be shown until you active it.', 'bp-member-reviews' ); ?></p>
+					<p class="description"><?php esc_html_e( 'This option will allow you to add multiple rating criteria. By default, no citeria will be shown until you activate it.', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>
 		</div>

@@ -68,6 +68,7 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 * Fix - Fixed Translation string issue.
 * Enhancement - Added plural label for Review.
 * Enhancement - Added shortcode for display top reviews on page.
+* Enhancement - French Translation added by Jean Pierre Michaud.
 
 = 1.0.8 =
 * Fix - Undefined variable issue in js code.
