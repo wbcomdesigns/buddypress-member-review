@@ -357,6 +357,9 @@ ul.bupr-member-main li.bupr-members .bupr-meta{
 .member-review-stars {
 	float: none;
 	clear: both;
+}
+
+.kleo-masonry-item .member-review-stars{
 	text-align: center;
 }
 
