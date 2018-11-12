@@ -250,10 +250,24 @@ button.bupr-accordion.active::after {
     position: relative;
 }
 
+#wb_admin_header:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
 #wb_admin_header #wb_admin_logo {
     display: inline-block;
     float: left;
     margin-bottom: 0;
+}
+
+#wb_admin_header #wb_admin_logo img {
+    margin: 28px 20px;
+    width: 160px;
 }
 
 #wb_admin_header #wb_admin_logo .wb_admin_right,
