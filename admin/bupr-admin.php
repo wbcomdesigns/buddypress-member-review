@@ -75,7 +75,9 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_submenu_page_admin_settings() {
-			add_menu_page( esc_html__( 'WBCOM', 'bp-member-reviews' ), __( 'WBCOM', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-groups', 59 );
+			if ( empty ( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+				add_menu_page( esc_html__( 'WBCOM', 'bp-member-reviews' ), __( 'WBCOM', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-groups', 59 );
+			}
 			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'Review Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
 

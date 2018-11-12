@@ -81,7 +81,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 			}
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
-				if ( 'review_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
+				if ( 'wbcom_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
 					wp_enqueue_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/font-awesome.min.css' );

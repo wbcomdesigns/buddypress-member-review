@@ -61,7 +61,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
         }
 
         public function wbcom_support_submenu_page_callback() {
-            include 'templates/wbcom-supports-page.php';
+            include 'templates/wbcom-support-page.php';
         }
 
 		public function wbcom_admin_setting_header_html() { ?>
