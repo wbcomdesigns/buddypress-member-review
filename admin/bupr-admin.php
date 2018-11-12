@@ -166,12 +166,12 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		public function bupr_plugin_settings_tabs() {
 			$current_tab    = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
 			// xprofile setup tab.
-			echo '<h2 class="nav-tab-wrapper">';
+			echo '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
 			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
 				$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
 				echo '<a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings' . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a>';
 			}
-			echo '</h2>';
+			echo '</h2></div>';
 		}
 
 		/**
