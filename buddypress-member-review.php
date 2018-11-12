@@ -61,6 +61,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 			*/
 			$include_files = array(
 				'includes/class-buprglobals.php',
+				'admin/wbcom-admin-settings.php',
 				'includes/bupr-scripts.php',
 				'admin/bupr-admin.php',
 				'includes/bupr-filters.php',

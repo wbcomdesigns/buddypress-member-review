@@ -76,7 +76,9 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_admin_custom_variables() {
-
+			if ( ! wp_script_is( 'wbcom-admin-setting-js', 'enqueued' ) ) {
+				wp_enqueue_script( 'wbcom-admin-setting-js', BUPR_PLUGIN_URL . 'admin/assets/js/wbcom-admin-setting.js', array( 'jquery' ) );
+			}
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
 				if ( 'review_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
