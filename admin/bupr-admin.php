@@ -78,7 +78,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			if ( empty ( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
 				add_menu_page( esc_html__( 'WBCOM', 'bp-member-reviews' ), __( 'WBCOM', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-groups', 59 );
 			}
-			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'Review Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
+			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'User Review Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
 
 		/**
@@ -136,11 +136,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			?>
 			<div class="wrap">
 				<div class="bupr-header">
-					<div class="bupr-extra-actions">
-						<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/contact/', '_blank');"><i class="fa fa-envelope" aria-hidden="true"></i> <?php esc_html_e( 'Email Support', 'bp-member-reviews' ); ?></button>
-						<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/', '_blank');"><i class="fa fa-file" aria-hidden="true"></i> <?php esc_html_e( 'User Manual', 'bp-member-reviews' ); ?></button>
-						<button type="button" class="button button-secondary" onclick="window.open('https://wordpress.org/support/plugin/bp-user-profile-reviews/reviews/', '_blank');"><i class="fa fa-star" aria-hidden="true"></i> <?php esc_html_e( 'Rate Us on WordPress.org', 'bp-member-reviews' ); ?></button>
-					</div>
 					<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					<h1>
 						<?php esc_html_e( 'BuddyPress Member Reviews Settings', 'bp-member-reviews' ); ?>

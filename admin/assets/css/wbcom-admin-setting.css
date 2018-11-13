@@ -1,0 +1,97 @@
+.reign-demos-wrapper {
+    overflow: hidden;
+    clear: both;
+    display: block;
+}
+
+.demo-name {
+    font-size: 20px;
+}
+
+.demo-content-wrap {
+    clear: both;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.demo-content-wrap .wbcom-demo-importer {
+    width: 33.33%;
+}
+
+.demo-content-wrap .wbcom-demo-importer .container {
+    position: relative;
+    background-color: #fff;
+    padding: 0px;
+    margin: 20px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    overflow: hidden;
+    -webkit-transition: all 0.125s ease-in-out 0s;
+    -moz-transition: all 0.125s ease-in-out 0s;
+    -ms-transition: all 0.125s ease-in-out 0s;
+    -o-transition: all 0.125s ease-in-out 0s;
+    transition: all 0.125s ease-in-out 0s;
+}
+
+.demo-content-wrap .wbcom-demo-importer .container:hover {
+    -webkit-box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
+    -moz-box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
+    -o-box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
+    box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
+    -webkit-transform: translate(0, -5px);
+    -moz-transform: translate(0, -5px);
+    -ms-transform: translate(0, -5px);
+    -o-transform: translate(0, -5px);
+    transform: translate(0, -5px);
+}
+
+.demo-content-wrap .wbcom-demo-importer .image {
+    display: block;
+}
+
+.demo-title {
+    text-align: center;
+    padding: 15px;
+}
+
+.demo-title h2 {
+    margin: 0px;
+    line-height: 28px;
+}
+
+.wbcom-demo-importer .middle {
+    margin-top: 10px;
+}
+
+.wbcom-demo-importer .middle .wbcom-button.wbcom-purchase {
+    background: #03A9F4;
+    color: #fff;
+}
+
+.wbcom-demo-importer .middle .wbcom-button {
+    display: inline-block;
+}
+
+.wbcom-demo-importer .middle .wbcom-button {
+    background-color: #efefef;
+    color: #424242;
+}
+
+.wbcom-demo-importer .wbcom-button {
+    text-decoration: none;
+    background-color: #ff746b;
+    color: #ffffff;
+    padding: 10px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 5px;
+    transition: all .5s;
+    min-width: 120px;
+    font-weight: 600;
+    outline: none;
+}
