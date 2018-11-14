@@ -526,7 +526,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 	}
 
 	function instantiate_wbcom_importer_plugins_manager() {
-		include_once 'class-tgm-plugin-activation.php';
+		// include_once 'class-tgm-plugin-activation.php';
 		new Wbcom_Admin_Settings();
 	}
 	instantiate_wbcom_importer_plugins_manager();
