@@ -324,3 +324,64 @@ button.bupr-accordion.active::after {
     font-weight: 500;
     margin: 10px 0 0;
 }
+/* Admin Header Style: End */
+
+/* Admin Settings Page Style: Start */
+.wbcom-admin-settings-page {
+    background: #50646b;
+    border-radius: 0 0 3px 3px;
+    display: flex;
+    overflow: hidden;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper,
+.wrap .wbcom-admin-settings-page h2.nav-tab-wrapper,
+.wbcom-admin-settings-page h1.nav-tab-wrapper {
+    width: 200px;
+    padding-top: 1px;
+    padding-bottom: 100px;
+    margin: 0;
+    background: #3a494e;
+    border-bottom: 0;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab {
+    float: none;
+    display: block;
+    border: 0;
+    border-bottom: none;
+    margin: 15px 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    background: rgba(255,255,255,0);
+    color: #fff;
+    border-radius: 4px;
+    opacity: .7;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab-active,
+.wbcom-admin-settings-page .nav-tab-active:focus,
+.wbcom-admin-settings-page .nav-tab-active:focus:active,
+.wbcom-admin-settings-page .nav-tab-active:hover,
+.wbcom-admin-settings-page .nav-tab:focus,
+.wbcom-admin-settings-page .nav-tab:hover {
+    background: rgba(255,255,255,.2);
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    box-shadow: none;
+    opacity: 1;
+}
+
+.wbcom-admin-settings-page .wbcom-tab-content {
+    width: 100%;
+    background: #fff;
+    padding: 20px 40px;
+}
+/* Admin Settings Page Style: Start */
