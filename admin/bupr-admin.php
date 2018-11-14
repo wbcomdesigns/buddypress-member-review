@@ -137,7 +137,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			<div class="wrap">
 				<div class="bupr-header">
 					<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-					<h1 class='wbcom-plugin-heading'>
+					<h1 class="wbcom-plugin-heading">
 						<?php esc_html_e( 'BuddyPress Member Reviews Settings', 'bp-member-reviews' ); ?>
 					</h1>
 				</div>
