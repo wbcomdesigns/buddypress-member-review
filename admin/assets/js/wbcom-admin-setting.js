@@ -10,29 +10,28 @@ jQuery( document ).ready(
 	jQuery( 'button.wbcom-plugin-action-button' ).click( function( event ) {
 		event.preventDefault();
 		var thisRef = jQuery( this );
-
 		if( thisRef.hasClass( 'already-active' ) ) {
 			return;
 		}
-
 		jQuery.ajax({
-			url : wbcom_theme_demo_installer_params.ajax_url,
+			url : wbcom_plugin_installer_params.ajax_url,
 			type : 'post',
 			dataType : 'json',
 			data : {
-				action : 'wbcom_admin_plugin_installation',
+				action : 'wbcom_manage_plugin_installation',
 				plugin_action : thisRef.siblings( 'input.plugin-action').val(),
 				plugin_slug : thisRef.siblings( 'input.plugin-slug').val()
 			},
 			success : function( response ) {
+				console.log( response );
 				if( response.success ) {
 					thisRef.siblings( 'p.plugin-status').html( 'Active' );
 					thisRef.siblings( 'p.plugin-status').addClass( 'already-active' );
-					thisRef.html( 'Already Installed & Activated' );
+					thisRef.html( wbcom_plugin_installer_params.success_msz );
 					thisRef.attr( 'class', 'wbcom-plugin-action-button button already-active' );
 				}
 				else {
-					alert( 'There was a problem performing the action.' );
+					alert( wbcom_plugin_installer_params.error_msz );
 				}
 			},
 			'error' : function( response ) {

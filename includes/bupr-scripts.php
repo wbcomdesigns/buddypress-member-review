@@ -97,7 +97,9 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 						'bupr-js-admin',
 						'bupr_admin_ajax_object',
 						array(
-							'ajaxurl' => admin_url( 'admin-ajax.php' ),
+							'ajaxurl'     => admin_url( 'admin-ajax.php' ),
+							'success_msz' => esc_html__( 'Already Installed & Activated', 'bp-member-reviews' ),
+							'error_msz'   => esc_html__( 'There was a problem performing the action.', 'bp-member-reviews' )
 						)
 					);
 					wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css' );

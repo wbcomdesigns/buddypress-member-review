@@ -141,13 +141,14 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						<?php esc_html_e( 'BuddyPress Member Reviews Settings', 'bp-member-reviews' ); ?>
 					</h1>
 				</div>
-
-				<?php
-				settings_errors();
-				$this->bupr_plugin_settings_tabs();
-				settings_fields( $tab );
-				do_settings_sections( $tab );
-				?>
+				<div class="wbcom-admin-settings-page">
+					<?php
+					settings_errors();
+					$this->bupr_plugin_settings_tabs();
+					settings_fields( $tab );
+					do_settings_sections( $tab );
+					?>
+				</div>
 			</div>
 			<?php
 		}
