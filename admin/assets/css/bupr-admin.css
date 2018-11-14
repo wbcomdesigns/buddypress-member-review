@@ -306,6 +306,10 @@ button.bupr-accordion.active::after {
     text-decoration: none;
 }
 
+#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a:hover {
+    color: #2196F3;
+}
+
 #wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item.is-active a {
     box-shadow: 0;
     color: #2196F3;
