@@ -407,9 +407,14 @@ button.bupr-accordion.active::after {
     font-weight: 600;
     border: 0;
     box-shadow: none;
+    float: right;
 }
 
 .wbcom-admin-settings-page .wbcom-tab-content .button:hover {
     box-shadow: 0 1.5px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.wbcom-admin-settings-page table.form-table tr {
+    border-bottom: 1px solid #ddd;
 }
 /* Admin Settings Page Style: Start */
