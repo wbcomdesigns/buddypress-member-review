@@ -298,13 +298,18 @@ button.bupr-accordion.active::after {
     font-size: 15px;
     display: block;
     min-width: 120px;
-    padding: 25px 20px;
+    padding: 26px 20px;
     background-color: #fff;
     color: #a8a8a8;
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
     transition: all .2s ease-out;
     text-decoration: none;
+}
+
+#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a:hover {
@@ -338,6 +343,50 @@ button.bupr-accordion.active::after {
     border-top: 1px solid #e8e8e8;
 }
 /* Admin Header Style: End */
+
+/* Admin Header Animation: Start */
+.wbcom_btn_material {
+    overflow: hidden;
+    position: relative;
+}
+
+.wbcom_material {
+    position: absolute;
+    display:block;
+    background: #57a8b1;
+    border-radius:100%!important;
+    -webkit-transform:scale(0);
+    -moz-transform:scale(0);
+    -o-transform:scale(0);
+    transform:scale(0);
+    border: 0;
+}
+
+.is-animated {
+    -webkit-animation:ripple .65s linear;
+    -moz-animation:ripple .65s linear;
+    -ms-animation:ripple .65s linear;
+    -o-animation:ripple .65s linear;
+    animation:ripple .65s linear
+}
+
+@-webkit-keyframes ripple {
+    100%{opacity:0;-webkit-transform:scale(2.5)}
+}
+
+@-moz-keyframes ripple {
+    100%{opacity:0;-moz-transform:scale(2.5)}
+}
+
+@-o-keyframes ripple {
+    100%{opacity:0;-o-transform:scale(2.5)}
+}
+
+@keyframes ripple {
+    100%{opacity:0;transform:scale(2.5)}
+}
+
+/* Admin Header Animation: End */
 
 /* Admin Settings Page Style: Start */
 .wbcom-admin-settings-page {
@@ -417,4 +466,4 @@ button.bupr-accordion.active::after {
 .wbcom-admin-settings-page table.form-table tr {
     border-bottom: 1px solid #ddd;
 }
-/* Admin Settings Page Style: Start */
+/* Admin Settings Page Style: End */
