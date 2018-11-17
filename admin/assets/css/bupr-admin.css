@@ -316,7 +316,7 @@ button.bupr-accordion.active::after {
     color: #2196F3;
 }
 
-#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item.is-active a {
+#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item.is_active a {
     box-shadow: 0;
     color: #2196F3;
 }
@@ -331,7 +331,7 @@ button.bupr-accordion.active::after {
     margin: 10px 0 0;
 }
 
-.wrap h1.wbcom-plugin-heading {
+.wrap .wbcom-plugin-heading {
     margin: 0;
     font-size: 32px;
     line-height: initial;

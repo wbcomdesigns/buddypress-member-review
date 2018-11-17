@@ -1,3 +1,4 @@
+/* Themes style : Start */
 .reign-demos-wrapper {
     overflow: hidden;
     clear: both;
@@ -20,21 +21,34 @@
     padding: 16px 40px;
     background: #fff;
     border-radius: 0 0 3px 3px;
+    -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    -moz-box-shadow: 0 2px 10px rgba(0,0,0,.1);
     box-shadow: 0 2px 10px rgba(0,0,0,.1);
+}
+
+.demo-content-wrap > p {
+    font-size: 15px;
+    color: #50646b;
 }
 
 .demo-content-wrap .wbcom-demo-importer .container {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     padding: 0px;
     margin: 20px 0;
     overflow: hidden;
     border-radius: 4px;
     border: 1px solid #e8e8e8;
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,.05);
     box-shadow: 0 2px 4px rgba(0,0,0,.05);
 }
 
 .demo-content-wrap .wbcom-image-wrapper {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 30%;
     flex: 0 0 30%;
     max-width: 250px;
     vertical-align: top;
@@ -118,3 +132,117 @@
     font-weight: 500;
     outline: none;
 }
+/* Themes style : End */
+
+/* Components style : Start */
+.reign-importer-section {
+    padding: 16px 40px;
+    background: #fff;
+    border-radius: 0 0 3px 3px;
+    -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    -moz-box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,.1);
+}
+
+.reign-demos-inner-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+}
+
+.wbcom-req-plugin-card {
+    margin: 15px;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 46%;
+    flex: 0 0 46%;
+    max-width: 46%;
+
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    border-radius: 4px;
+    border: 1px solid #e8e8e8;
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+}
+
+.wbcom_single_icon_wrapper {
+    background: #478aa2;
+    text-align: center;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.wbcom_single_left {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 30%;
+    flex: 0 0 30%;
+    max-width: 145px;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #e8e8e8;
+
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.wbcom_single_icon_wrapper i.fa {
+    font-size: 34px;
+    color: #fff;
+}
+
+.plugin-container {
+    padding: 16px;
+}
+
+.plugin-container h3 {
+    margin: 0 0 10px;
+    font-size: 1.6em;
+    color: #50646b;
+    line-height: 1.6em;
+    font-weight: 300;
+}
+
+.plugin-container p {
+    color: #50646b;
+}
+
+@media screen and (max-width: 767px) {
+    .reign-demos-inner-wrapper {
+        display: block;
+    }
+
+    .wbcom-req-plugin-card {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+/* Components style : End */
