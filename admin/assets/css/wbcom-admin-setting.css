@@ -5,47 +5,40 @@
 }
 
 .demo-name {
-    font-size: 20px;
+    margin: 0;
+    font-size: 32px;
+    line-height: initial;
+    font-weight: 300;
+    color: #50646b;
+    background: #FBFBFB;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e8e8e8;
+    border-top: 1px solid #e8e8e8;
 }
 
 .demo-content-wrap {
-    clear: both;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-
-.demo-content-wrap .wbcom-demo-importer {
-    width: 33.33%;
+    padding: 16px 40px;
+    background: #fff;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1);
 }
 
 .demo-content-wrap .wbcom-demo-importer .container {
     position: relative;
-    background-color: #fff;
+    display: flex;
     padding: 0px;
-    margin: 20px;
-    border: 1px solid #e6e6e6;
-    border-radius: 5px;
+    margin: 20px 0;
     overflow: hidden;
-    -webkit-transition: all 0.125s ease-in-out 0s;
-    -moz-transition: all 0.125s ease-in-out 0s;
-    -ms-transition: all 0.125s ease-in-out 0s;
-    -o-transition: all 0.125s ease-in-out 0s;
-    transition: all 0.125s ease-in-out 0s;
+    border-radius: 4px;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
 }
 
-.demo-content-wrap .wbcom-demo-importer .container:hover {
-    -webkit-box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
-    -moz-box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
-    -o-box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
-    box-shadow: 1.563px 8.863px 30px 0px rgba(0, 0, 0, 0.13);
-    -webkit-transform: translate(0, -5px);
-    -moz-transform: translate(0, -5px);
-    -ms-transform: translate(0, -5px);
-    -o-transform: translate(0, -5px);
-    transform: translate(0, -5px);
+.demo-content-wrap .wbcom-image-wrapper {
+    flex: 0 0 30%;
+    max-width: 250px;
+    vertical-align: top;
+    border-right: 1px solid #e8e8e8;
 }
 
 .demo-content-wrap .wbcom-demo-importer .image {
@@ -53,17 +46,45 @@
 }
 
 .demo-title {
-    text-align: center;
-    padding: 15px;
+    width: 100%;
+    padding: 16px 16px 60px;
 }
 
 .demo-title h2 {
-    margin: 0px;
-    line-height: 28px;
+    color: #50646b;
+    margin: 0 0 10px;
+    font-size: 1.6em;
+    line-height: 1.6em;
+    font-weight: 300;
+
+}
+
+.demo-title ul {
+    margin-top: 20px;
+    list-style: none;
+}
+
+.demo-title ul li {
+    width: 45%;
+    display: inline-block;
+    color: #50646b;
+    position: relative;
+    padding-left: 20px;
+    font-size: 1.1em;
+}
+
+.demo-title ul li:before {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-family: FontAwesome;
+    content: "\f00c";
+    color: #03A9F4;
 }
 
 .wbcom-demo-importer .middle {
     margin-top: 10px;
+    text-align: right;
 }
 
 .wbcom-demo-importer .middle .wbcom-button.wbcom-purchase {
@@ -78,12 +99,14 @@
 .wbcom-demo-importer .middle .wbcom-button {
     background-color: #efefef;
     color: #424242;
+    text-align: center;
 }
 
 .wbcom-demo-importer .wbcom-button {
     text-decoration: none;
     background-color: #ff746b;
     color: #ffffff;
+    font-size: 14px;
     padding: 10px 0;
     border: none;
     border-radius: 4px;
@@ -92,6 +115,6 @@
     margin: 5px;
     transition: all .5s;
     min-width: 120px;
-    font-weight: 600;
+    font-weight: 500;
     outline: none;
 }
