@@ -28,14 +28,6 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		var $plugins = array();
 
 		/**
-		 * @var TGM_Plugin_Activation Instance
-		 */
-		var $tgmpa;
-
-		const WP_REPO_REGEX = '|^http[s]?://wordpress\.org/(?:extend/)?plugins/|';
-		const IS_URL_REGEX = '|^http[s]?://|';
-
-		/**
 		 * Main WBCOM_Demo_Importer_Plugins_Manager Instance
 		 *
 		 * Ensures only one instance of WBCOM_Demo_Importer_Plugins_Manager is loaded or can be loaded.
@@ -484,6 +476,17 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 		public function wbcom_admin_setting_header_html() {
+			$page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
+			$plugin_active = $theme_active = $support_active = $settings_active = '';
+			switch( $page ) {
+				case 'wbcom-plugins-page': $plugin_active = 'is_active'; 
+				                      break;  
+				case 'wbcom-themes-page' : $theme_active = 'is_active'; 
+				                      break; 
+                case 'wbcom-support-page' : $support_active = 'is_active'; 
+				                      break; 
+				default : $settings_active = 'is_active';                    
+			}
 			?>
 			<div id="wb_admin_header" class="wp-clearfix">
 
@@ -494,25 +497,25 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 				<nav id="wb_admin_nav">
 					<ul>
-						<li class="wb_admin_nav_item">
+						<li class="wb_admin_nav_item <?php echo esc_attr( $settings_active ); ?>">
                             <a href="<?php echo get_admin_url().'admin.php?page=wbcomplugins'; ?>" id="wb_admin_nav_trigger_settings">
                                 <i class="fa fa-sliders "></i>
                                 <h4><?php esc_html_e( 'Settings', 'bp-member-reviews' ); ?></h4>
                             </a>
                         </li>
-						<li class="wb_admin_nav_item">
+						<li class="wb_admin_nav_item <?php echo esc_attr( $plugin_active ); ?>">
 							<a href="<?php echo get_admin_url().'admin.php?page=wbcom-plugins-page'; ?>" id="wb_admin_nav_trigger_extensions">
 								<i class="fa fa-th"></i>
 								<h4><?php esc_html_e( 'Components', 'bp-member-reviews' ); ?></h4>
 							</a>
 						</li>
-						<li class="wb_admin_nav_item">
+						<li class="wb_admin_nav_item <?php echo esc_attr( $theme_active ); ?>">
 							<a href="<?php echo get_admin_url().'admin.php?page=wbcom-themes-page'; ?>" id="wb_admin_nav_trigger_themes">
 								<i class="fa fa-magic"></i>
 								<h4><?php esc_html_e( 'Themes', 'bp-member-reviews' ); ?></h4>
 							</a>
 						</li>
-						<li class="wb_admin_nav_item">
+						<li class="wb_admin_nav_item <?php echo esc_attr( $support_active ); ?>">
 							<a href="<?php echo get_admin_url().'admin.php?page=wbcom-support-page'; ?>" id="wb_admin_nav_trigger_support">
 								<i class="fa fa-question-circle"></i>
 								<h4><?php esc_html_e( 'Support', 'bp-member-reviews' ); ?></h4>
