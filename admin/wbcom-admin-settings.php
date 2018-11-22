@@ -19,31 +19,6 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 	 */
 	class Wbcom_Admin_Settings {
 
-		/**
-		 * @var WBCOM_Demo_Importer_Plugins_Manager The single instance of the class
-		 * @since 1.0.0
-		 */
-		protected static $_instance = null;
-
-		var $plugins = array();
-
-		/**
-		 * Main WBCOM_Demo_Importer_Plugins_Manager Instance
-		 *
-		 * Ensures only one instance of WBCOM_Demo_Importer_Plugins_Manager is loaded or can be loaded.
-		 *
-		 * @since 1.0.0
-		 * @static
-		 * @see WBCOM_Demo_Importer_Plugins_Manager()
-		 * @return WBCOM_Demo_Importer_Plugins_Manager - Main instance
-		 */
-		// public static function instance() {
-		// 	if ( is_null( self::$_instance ) ) {
-		// 		self::$_instance = new self();
-		// 	}
-		// 	return self::$_instance;
-		// }
-
 		public function __construct() {
 			add_shortcode( 'wbcom_admin_setting_header', array( $this, 'wbcom_admin_setting_header_html' ) );
 			add_action( 'admin_menu', array( $this, 'wbcom_admin_additional_pages' ), 999 );
@@ -58,19 +33,18 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 		public function wbcom_do_plugin_action() {
-			$action	= !empty( $_POST['plugin_action'] ) ? $_POST['plugin_action'] 	: false;
-			$slug	= !empty( $_POST['plugin_slug'] ) 			? $_POST['plugin_slug'] 			: false;
+			$action	= !empty( $_POST['plugin_action'] ) ? $_POST['plugin_action'] : false;
+			$slug	= !empty( $_POST['plugin_slug'] ) ? $_POST['plugin_slug'] : false;
 
-			switch ( $action ) {
-				// case 'enable_plugin':
-				// 	$this->wbcom_do_plugin_activate( $slug );
-				// 	break;
-				case 'install_plugin':
-					$this->wbcom_do_plugin_install( $slug );
-					break;
-				default:
-					break;
+			if( 'install_plugin' == $action ) {
+				$this->wbcom_do_plugin_install( $slug );				
+			} else if( 'activate_plugin' == $action ) {
+				$this->wbcom_do_plugin_activate( $slug );
+			} else {
+
 			}
+			wp_send_json_success( $response );
+			die;
 		}
 
 
@@ -116,10 +90,12 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			$all_plugins = get_plugins();
 
 			if ( !empty( $all_plugins[$slug] ) ) {
-				return true;
+				$response = array( 'status' => 'installed' );
+				wp_send_json_success( $response );
 			} else {
 				return false;
 			}
+			exit;
 		}
 		 
 		function wbcom_do_plugin_install( $slug ) {
@@ -129,9 +105,13 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			$upgrader   = new Plugin_Upgrader();
 			$plugin_zip = $this->get_download_url( $slug );
 			$installed  = $upgrader->install( $plugin_zip );
-			if( $installed ) {
-
+			if ( $installed ) {
+				$response = array( 'status' => 'installed' );
+				echo wp_send_json_success( $response );
+			} else {
+				return false;
 			}
+			exit;
 		}
 		 
 		function upgrade_plugin( $plugin_slug ) {
@@ -247,11 +227,13 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 		function get_wp_repo_download_url( $slug ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' ); // for plugins_api..
-			$api = plugins_api('plugin_information', array('slug' => $slug, 'fields' => array('sections' => false) ) ); //Save on a bit of bandwidth.
-			if ( is_wp_error( $api ) ) {
+			$api = plugins_api( 'plugin_information', array('slug' => $slug, 'fields' => array('sections' => false) ) ); //Save on a bit of bandwidth.
+
+			if ( is_wp_error( $api ) ) {				
 				$status['error'] = $api->get_error_message();
 				wp_send_json_error( $status );
 			}
+
 			return $api->download_link;
 		}
 
@@ -526,10 +508,90 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			</div><?php
 		}
 
+		public function wbcom_all_free_plugins() {
+			$free_plugins = array( 
+				'0' => array( 
+						'name' => esc_html__( 'BuddyPress Activity Filter', 'bp-member-reviews' ), 
+						'slug' => 'bp-activity-filter',
+						'description' => esc_html__( 'Admin can set default and customised activities to be listed on front-end.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-activity-filter' )
+						),
+				'1' => array( 
+						'name' => esc_html__( 'BuddyPress Activity Social Share', 'bp-member-reviews' ), 
+						'slug' => 'bp-activity-social-share',
+						'description' => esc_html__( 'A perfect plugin to make your user activities on your website social-share-friendly, and increase your members social reach dramatically!', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-activity-social-share' ) 
+						),
+				'2' => array( 
+						'name' => esc_html__( 'BuddyPress Favorite Notification', 'bp-member-reviews' ), 
+						'slug' => 'bp-favorite-notification',
+						'description' => esc_html__( 'BuddyPress Favorite Notification adds a notification for BuddyPress activity.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-favorite-notification' )
+						),
+				'3' => array(
+						'name' => esc_html__( 'BuddyPress user ToDo List', 'bp-member-reviews' ), 
+						'slug' => 'bp-user-to-do-list',
+						'description' => esc_html__( 'Todo List is a modern task personal task management solution for BuddyPress.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-user-to-do-list' ) 
+						),
+			);	
+
+			return $free_plugins;
+		}
+
+		public function wbcom_plugin_status( $slug ) {
+			// if( $this->wbcom_is_plugin_installed( $plugin_slug ) ) {
+			// 	// if( $this->wbcom_is_plugin_active( $plugin_slug ) ) {
+
+			// 	// } else {
+
+			// 	// }	
+			// } else {
+
+			// }	
+		}
+
+		/**
+		 * Check if a plugin is active.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param string $slug Plugin slug.
+		 * @return bool True if active, false otherwise.
+		 */
+		// function wbcom_is_plugin_active( $slug ) {
+		// 	return ( ( ! empty( $this->plugins[ $slug ]['is_callable'] ) && is_callable( $this->plugins[ $slug ]['is_callable'] ) ) || is_plugin_active( $this->plugins[ $slug ]['file_path'] ) );
+		// }
+
+		// function wbcom_is_plugin_installed( $slug ) {
+		// 	if ( ! function_exists( 'get_plugins' ) ) {
+		// 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		// 	}
+		// 	$plugin_basename = $this->_get_wbcom_plugin_file_path_from_slug( $slug );
+		// 	get_plugins( $plugin_folder );
+
+		// 	$installed_plugins = $this->get_plugins(); // Retrieve a list of all installed plugins (WP cached).
+
+		// 	return ( ! empty( $installed_plugins[ $this->plugins[ $slug ]['file_path'] ] ) );
+		// }
+
+		function _get_wbcom_plugin_file_path_from_slug( $slug ) {
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$plugins_list = get_plugins();
+			$keys = array_keys( $plugins_list );
+			foreach ( $keys as $key ) {
+				if ( preg_match( '|^' . $slug . '/|', $key ) ) {
+					return $key;
+				}
+			}
+			return $slug;
+		}
+
 	}
 
 	function instantiate_wbcom_importer_plugins_manager() {
-		// include_once 'class-tgm-plugin-activation.php';
 		new Wbcom_Admin_Settings();
 	}
 	instantiate_wbcom_importer_plugins_manager();
