@@ -8,12 +8,9 @@ jQuery( document ).ready( function ( event ) {
 
     jQuery( document ).off('click', '.activation_button_wrap .wbcom-plugin-action-button').on( 'click', '.activation_button_wrap .wbcom-plugin-action-button', function ( event ) {
         event.preventDefault();
-        event.stopPropagation() 
+        event.stopPropagation(); 
         var thisRef = jQuery( this );
-        if ( thisRef.hasClass( 'already_active_plugin' ) ) {
-            return;
-        }
-        var action = thisRef.parent('.activation_button_wrap').siblings( 'input.plugin-action' ).val()
+        var action  = thisRef.parent('.activation_button_wrap').siblings( 'input.plugin-action' ).val()
         jQuery.ajax( {
             url: wbcom_plugin_installer_params.ajax_url,
             type: 'post',
@@ -26,29 +23,15 @@ jQuery( document ).ready( function ( event ) {
             complete: function() {
                 if( 'install_plugin' == action ) {
                     thisRef.parent('.activation_button_wrap').siblings( '.plugin-action' ).val( 'activate_plugin' );
-                    thisRef.html('<i class="fa fa-toggle-off"></i>'+ 'Activate');
+                    thisRef.html('<i class="fa fa-toggle-off"></i>'+ wbcom_plugin_installer_params.activate_text );
                 } else if( 'activate_plugin' == action ) {
-                    thisRef.parent('.activation_button_wrap').siblings( '.plugin-action' ).val( 'already_active_plugin' );
-                    thisRef.html('<i class="fa fa-toggle-on"></i>'+ 'Deactivate');
-                }    
+                    thisRef.parent('.activation_button_wrap').siblings( '.plugin-action' ).val( 'deactivate_plugin' );
+                    thisRef.html('<i class="fa fa-toggle-on"></i>'+ wbcom_plugin_installer_params.deactivate_text );
+                } else {
+                     thisRef.parent('.activation_button_wrap').siblings( '.plugin-action' ).val( 'activate_plugin' );
+                    thisRef.html('<i class="fa fa-toggle-off"></i>'+ wbcom_plugin_installer_params.activate_text );
+                }   
             }
-            // success: function ( response ) {
-            //         console.log( response['data']['action_completed'] );
-            //        // console.log( response.action_completed );
-            //     if ( response.success ) {
-
-            //         thisRef.siblings( 'p.plugin-status' ).html( 'Active' );
-            //         thisRef.siblings( 'p.plugin-status' ).addClass( 'already-active' );
-            //         thisRef.html( wbcom_plugin_installer_params.success_msz );
-            //         thisRef.attr( 'class', 'wbcom-plugin-action-button button already-active' );
-            //     } else {
-            //         alert( wbcom_plugin_installer_params.error_msz );
-            //     }
-            // },
-            // error: function ( response ) {
-            //     console.log('jjj');
-            //    // alert( 'There was a problem performing the action.' );
-            // }
         } );
     } );
 

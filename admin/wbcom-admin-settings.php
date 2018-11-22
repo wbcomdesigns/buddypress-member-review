@@ -41,45 +41,34 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			} else if( 'activate_plugin' == $action ) {
 				$this->wbcom_do_plugin_activate( $slug );
 			} else {
-
+				$this->wbcom_do_plugin_deactivate( $slug );
 			}
 			wp_send_json_success( $response );
 			die;
 		}
 
+		function wbcom_do_plugin_activate( $slug ) {
+			$plugin_file_path = $this->_get_plugin_file_path_from_slug( $slug );
+			$result = activate_plugin( $plugin_file_path );
+		}
 
-		function replace_plugin() {
-		  // modify these variables with your new/old plugin values
-		  $plugin_slug = 'wp-reset/wp-reset.php';
-		  $plugin_zip = $this->get_download_url( $slug );
-		  $old_plugin_slug = 'reset-wp/reset-wp.php';
-		   
-		  echo 'If things are not done in a minute <a href="plugins.php">click here to return to Plugins page</a><br><br>';
-		  echo 'Starting ...<br><br>';
-		   
-		  echo 'Check if new plugin is already installed - ';
-		  if ( is_plugin_installed( $plugin_slug ) ) {
-		    echo 'it\'s installed! Making sure it\'s the latest version.';
-		    upgrade_plugin( $plugin_slug );
-		    $installed = true;
-		  } else {
-		    echo 'it\'s not installed. Installing.';
-		    $installed = install_plugin( $plugin_zip );
-		  }
-		   
-		  if ( !is_wp_error( $installed ) && $installed ) {
-		    echo 'Activating new plugin.';
-		    $activate = activate_plugin( $plugin_slug );
-		     
-		    if ( is_null($activate) ) {
-		      echo '<br>Deactivating old plugin.<br>';
-		      deactivate_plugins( array( $old_plugin_slug ) );
-		       
-		      echo '<br>Done! Everything went smooth.';
-		    }
-		  } else {
-		    echo 'Could not install the new plugin.';
-		  }
+		function wbcom_do_plugin_deactivate( $slug ) {
+			$plugin_file_path = $this->_get_plugin_file_path_from_slug( $slug );
+			$result = deactivate_plugins( $plugin_file_path );
+		}
+
+		function _get_plugin_file_path_from_slug( $slug ) {
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$plugins_list = get_plugins();
+			$keys = array_keys( $plugins_list );
+			foreach ( $keys as $key ) {
+				if ( preg_match( '|^' . $slug . '/|', $key ) ) {
+					return $key;
+				}
+			}
+			return $slug;
 		}
 		   
 		function is_plugin_installed( $slug ) {
@@ -90,12 +79,10 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			$all_plugins = get_plugins();
 
 			if ( !empty( $all_plugins[$slug] ) ) {
-				$response = array( 'status' => 'installed' );
-				wp_send_json_success( $response );
+				return true;
 			} else {
 				return false;
 			}
-			exit;
 		}
 		 
 		function wbcom_do_plugin_install( $slug ) {
@@ -237,147 +224,6 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			return $api->download_link;
 		}
 
-		function get_addon_config( $plugin_slug ) {
-			if( ! empty( $this->plugins[ $plugin_slug ] ) ) {
-				return $this->plugins[ $plugin_slug ];
-			}
-		}
-
-		/**
-		 * Check if a plugin is installed. Does not take must-use plugins into account.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $slug Plugin slug.
-		 * @return bool True if installed, false otherwise.
-		 */
-		// public function is_plugin_installed( $slug ) {
-		// 	return $this->tgmpa->is_plugin_installed( $slug );
-		// }
-
-		/**
-		 * Check whether there is an update available for a plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $slug Plugin slug.
-		 * @return false|string Version number string of the available update or false if no update available.
-		 */
-		public function does_plugin_have_update( $slug ) {
-			return $this->tgmpa->does_plugin_have_update( $slug );
-		}
-
-		/**
-		 * Check if a plugin is active.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $slug Plugin slug.
-		 * @return bool True if active, false otherwise.
-		 */
-		public function is_plugin_active( $slug ) {
-			return $this->tgmpa->is_plugin_active( $slug );
-		}
-
-		/**
-		 * Retrieve the version number of an installed plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $slug Plugin slug.
-		 * @return string Version number as string or an empty string if the plugin is not installed
-		 *                or version unknown (plugins which don't comply with the plugin header standard).
-		 */
-		public function get_installed_version( $slug ) {
-
-			return $this->tgmpa->get_installed_version( $slug );
-		}
-
-		/**
-		 * Wrapper around the core WP get_plugins function, making sure it's actually available.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $plugin_folder Optional. Relative path to single plugin folder.
-		 * @return array Array of installed plugins with plugin information.
-		 */
-		public function get_plugins( $plugin_folder = '' ) {
-			return $this->tgmpa->get_plugins( $plugin_folder );
-		}
-
-		/**
-		 * Returns the status and actions for a plugin
-		 * @param  string $plugin_slug The plugin slug
-		 * @return array  The status and actions for the requested plugin
-		 */
-		function get_plugin_status( $plugin_slug ) {
-			$status = array();
-			$plugin_config = $this->get_addon_config( $plugin_slug );
-
-			if ( isset( $plugin_config['addon_type'] ) && $plugin_config['addon_type'] === 'child_theme' ) {
-				// We have a theme
-				if( $this->is_child_theme_installed() ) {
-					// Check if the theme is active or not
-					if ( $this->is_child_theme_active() ) {
-						$status['status']      = 'wbcom-active wbcom-addons-disabled';
-						$status['status_text'] = __( 'Active', WBCOM_Theme_Demo_Installer_TEXT_DOMAIN);
-						$status['action_text'] = __( 'Child theme installed and active', WBCOM_Theme_Demo_Installer_TEXT_DOMAIN);
-						$status['action']      = 'no_action';
-					} else  {
-						$status['status']      = 'wbcom-inactive';
-						$status['status_text'] = __( 'Inactive', WBCOM_Theme_Demo_Installer_TEXT_DOMAIN);
-						$status['action_text'] = __( 'Activate child theme', WBCOM_Theme_Demo_Installer_TEXT_DOMAIN);
-						$status['action']      = 'enable_child_theme';
-					}
-				}
-				else{
-					$status['status']      = 'wbcom-needs-install';
-					$status['status_text'] = __( 'Not installed', WBCOM_Theme_Demo_Installer_TEXT_DOMAIN);
-					$status['action_text'] = __( 'Install child theme', WBCOM_Theme_Demo_Installer_TEXT_DOMAIN);
-					$status['action']      = 'install_theme';
-
-					if( ! current_user_can( 'install_themes' ) ){
-						$status['status']         = 'wbcom-not-installed wbcom-addons-disabled';
-						$status['action_text']    = __( 'Permissions needed to install child themes. Contact site administrator.', WBCOM_Theme_Demo_Installer_TEXT_DOMAIN);
-						$status['action']         = 'contact_network_admin';
-					}
-
-				}
-			} else {
-				if ( $this->is_plugin_installed( $plugin_slug ) ) {
-				    echo '<pre>'; print_r('hhhh'); echo "</pre>"; die('ertettrtt');
-					if ( $this->is_plugin_active( $plugin_slug ) ) {
-						$status['status']         = 'wbcom-active';
-						$status['status_text'] = __( 'Active', '');
-						$status['action_text']           = __( 'Already Installed & Activated', '');
-						$status['action']         = 'disable_plugin';
-					} else  {
-						$status['status']         = 'wbcom-inactive';
-						$status['status_text'] = __( 'Inactive', '');
-						$status['action_text']           = __( 'Activate Plugin', '');
-						$status['action']         = 'enable_plugin';
-					}
-				} else {
-					echo '<pre>'; print_r(',mmmm'); echo "</pre>"; die('ertettrtt');
-					$status['status']         = 'wbcom-not-installed';
-					$status['status_text'] = __( 'Not Installed', '');
-					$status['action_text']           = __( 'Install Plugin', '' );
-					$status['action']         = 'install_plugin';
-
-					if( ! current_user_can( 'install_plugins' ) ){
-						$status['status']         = 'wbcom-not-installed wbcom-addons-disabled';
-						$status['action_text']    = __( 'You don\'t have permission to install plugins. Contact site administrator.', '');
-						$status['action']         = 'contact_network_admin';
-					}
-
-				}
-			}
-
-
-			return $status;
-		}
-
-
 		public function wbcom_enqueue_admin_scripts() {
 			if ( ! wp_script_is( 'wbcom-admin-setting-js', 'enqueued' ) ) {
 
@@ -393,7 +239,8 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 					'wbcom_plugin_installer_params',
 					array(
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
-						// 'success_url' => $this->get_demo_installer_page_url( array( 'success' => 'success' ) )
+						'activate_text' => esc_html__( 'Activate', 'bp-member-reviews' ),
+						'deactivate_text' => esc_html__( 'Deactivate', 'bp-member-reviews' )
 					)
 				);
 				wp_enqueue_script( 'wbcom_admin_setting_js' );
@@ -403,7 +250,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();			
-				if ( 'toplevel_page_wbcomplugins' === $screen->base || 'wbcom_page_wbcom-support-page' === $screen->base || 'wbcom_page_wbcom-plugins-page' === $screen->id || 'wbcom_page_wbcom-themes-page' === $screen->base ) {
+				if ( 'toplevel_page_wbcomplugins' === $screen->base || 'wbcom_page_wbcom-support-page' === $screen->base || 'wbcom_page_wbcom-plugins-page' === $screen->base || 'wbcom_page_wbcom-themes-page' === $screen->base ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
 					wp_enqueue_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/font-awesome.min.css' );
