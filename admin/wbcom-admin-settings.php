@@ -22,14 +22,9 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		public function __construct() {
 			add_shortcode( 'wbcom_admin_setting_header', array( $this, 'wbcom_admin_setting_header_html' ) );
 			add_action( 'admin_menu', array( $this, 'wbcom_admin_additional_pages' ), 999 );
-			add_action( 'tgmpa_register', array( $this, 'wbcom_required_plugins' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'wbcom_enqueue_admin_scripts' ) );
 
 			add_action('wp_ajax_wbcom_manage_plugin_installation', array( $this, 'wbcom_do_plugin_action' ) );
-
-		//	add_action( 'init', array( $this ,'populate_plugins' ) );
-		//	add_action( 'tgmpa_register', array( $this, 'required_plugins' ) );
-
 		}
 
 		public function wbcom_do_plugin_action() {
