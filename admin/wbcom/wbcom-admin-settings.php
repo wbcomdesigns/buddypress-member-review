@@ -242,8 +242,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 						'description' => esc_html__( 'This plugin is designed for the SPLIT TESTING, you can check performance of your ads layout and on the basis of them you can select one of them for your regular use.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'wb-ads-rotator-with-split-test' )
 						)								
-			);	
-
+			);
 			return $free_plugins;
 		}
 
@@ -438,25 +437,25 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 					<ul>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $settings_active ); ?>">
                             <a href="<?php echo get_admin_url().'admin.php?page=wbcomplugins'; ?>" id="wb_admin_nav_trigger_settings">
-                                <i class="fa fa-sliders "></i>
+                                <i class="fas fa-sliders "></i>
                                 <h4><?php esc_html_e( 'Settings', 'bp-member-reviews' ); ?></h4>
                             </a>
                         </li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $plugin_active ); ?>">
 							<a href="<?php echo get_admin_url().'admin.php?page=wbcom-plugins-page'; ?>" id="wb_admin_nav_trigger_extensions">
-								<i class="fa fa-th"></i>
+								<i class="fas fa-th"></i>
 								<h4><?php esc_html_e( 'Components', 'bp-member-reviews' ); ?></h4>
 							</a>
 						</li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $theme_active ); ?>">
 							<a href="<?php echo get_admin_url().'admin.php?page=wbcom-themes-page'; ?>" id="wb_admin_nav_trigger_themes">
-								<i class="fa fa-magic"></i>
+								<i class="fas fa-magic"></i>
 								<h4><?php esc_html_e( 'Themes', 'bp-member-reviews' ); ?></h4>
 							</a>
 						</li>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $support_active ); ?>">
 							<a href="<?php echo get_admin_url().'admin.php?page=wbcom-support-page'; ?>" id="wb_admin_nav_trigger_support">
-								<i class="fa fa-question-circle"></i>
+								<i class="fas fa-question-circle"></i>
 								<h4><?php esc_html_e( 'Support', 'bp-member-reviews' ); ?></h4>
 							</a>
 						</li>
