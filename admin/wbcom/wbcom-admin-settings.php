@@ -65,20 +65,6 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			}
 			return $slug;
 		}
-		   
-		function is_plugin_installed( $slug ) {
-			$plugin_zip = $this->get_download_url( $slug );
-			if ( ! function_exists( 'get_plugins' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/plugin.php';
-			}	
-			$all_plugins = get_plugins();
-
-			if ( !empty( $all_plugins[$slug] ) ) {
-				return true;
-			} else {
-				return false;
-			}
-		}
 		 
 		function wbcom_do_plugin_install( $slug ) {
 			include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
@@ -106,105 +92,8 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		  return $upgraded;
 		}
 
-		/**
-		 * Performs plugins installation
-		 * @param string $slug
-		 * @param boolean $echo
-		 * @return void | array
-		 */
-		// function wbcom_do_plugin_install( $slug, $echo = true ) {		
-		
-		// 	$url = $this->get_download_url( $slug );
-		// 	$status = $this->get_plugin_status( $slug );
-  //           echo '<pre>'; print_r( $url ); echo '</pre>';
-  //           echo '<pre>'; print_r( $status ); echo '</pre>'; die('jjj');
-		// 	if( ! current_user_can( 'install_plugins' ) ){
-		// 		$status['error'] = esc_html_x( 'You don\'t have permissions to install plugins', '' );
-		// 		if ( $echo ) {
-		// 			wp_send_json_error( $status );
-		// 		} else {
-		// 			return $status;
-		// 		}
-		// 	}
-
-		// 	$method = ''; // Leave blank so WP_Filesystem can populate it as necessary.
-
-		// 	if ( false === ( $creds = request_filesystem_credentials( esc_url_raw( $url ), $method, false, false, array() ) ) ) {
-		// 		return true;
-		// 	}
-
-		// 	if ( ! WP_Filesystem( $creds ) ) {
-		// 		request_filesystem_credentials( esc_url_raw( $url ), $method, true, false, array() ); // Setup WP_Filesystem.
-		// 		return true;
-		// 	}
-
-		// 	if ( ! class_exists( 'Plugin_Upgrader', false ) ) {
-		// 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-		// 	}
-
-		// 	$skin = new Automatic_Upgrader_Skin();
-		// 	$upgrader = new Plugin_Upgrader( $skin, array( 'clear_destination' => true ) );
-
-		// 	$result = $upgrader->install( $url );
-
-		// 	// There is a bug in WP where the install method can return null in case the folder already exists
-		// 	// see https://core.trac.wordpress.org/ticket/27365
-		// 	if( $result === null && ! empty( $skin->result ) ){
-		// 		$result = $skin->result;
-		// 	}
-
-		// 	if ( is_wp_error( $skin->result ) ) {
-		// 		$status['error'] = $result->get_error_message();
-		// 		if ( $echo ) {
-		// 			wp_send_json_error( $status );
-		// 		} else {
-		// 			return $status;
-		// 		}
-		// 	}
-
-		// 	$this->tgmpa->populate_file_path( $slug );
-		// 	$plugin_activate = $upgrader->plugin_info();
-		// 	$activate = activate_plugin( $plugin_activate );
-		// 	if ( is_wp_error( $activate ) ) {
-		// 		$status['error'] = wp_kses_post( $activate->get_error_message() );
-		// 		if ( $echo ) {
-		// 			wp_send_json_error( $status );
-		// 		} else {
-		// 			return $status;
-		// 		}
-		// 	}
-
-		// 	$status = $this->get_plugin_status( $slug );
-
-		// 	if ( $echo ) {
-		// 		wp_send_json_success( $status );
-		// 	} else {
-		// 		return $status;
-		// 	}
-
-		// }
-
-		/**
-		 * Returns the install url for the current plugin
-		 * @param string $slug
-		 * @return string
-		 */
-		public function get_download_url( $slug ) {
-			$dl_source = '';
-			if( isset( $this->plugins[ $slug ]['external_url'] ) && !empty( $this->plugins[ $slug ]['external_url'] ) ) {
-				return $this->plugins[ $slug ]['external_url'];
-			}
-			else {
-				$plugin_source_type = 'repo';
-			}
-			switch ( $plugin_source_type ) {
-				case 'repo':
-					return $this->get_wp_repo_download_url( $slug );
-				case 'external':
-					return $this->plugins[ $slug ]['source'];
-			}
-
-			return $dl_source; // Should never happen.
+		public function get_download_url( $slug ) {			
+			return $this->get_wp_repo_download_url( $slug );
 		}
 
 		function get_wp_repo_download_url( $slug ) {
@@ -217,6 +106,224 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			}
 
 			return $api->download_link;
+		}
+
+		public function wbcom_all_free_plugins() {
+			$free_plugins = array(
+				'0' => array( 
+						'name' => esc_html__( 'Custom Font Uploader', 'bp-member-reviews' ), 
+						'slug' => 'custom-font-uploader',
+						'description' => esc_html__( 'It also allows you to upload your own custom font to your site and use them using custom css.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'custom-font-uploader' )
+						), 
+				'1' => array( 
+						'name' => esc_html__( 'BuddyPress Activity Filter', 'bp-member-reviews' ), 
+						'slug' => 'bp-activity-filter',
+						'description' => esc_html__( 'Admin can set default and customised activities to be listed on front-end.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-activity-filter' )
+						),
+				'2' => array( 
+						'name' => esc_html__( 'BuddyPress Activity Social Share', 'bp-member-reviews' ), 
+						'slug' => 'bp-activity-social-share',
+						'description' => esc_html__( 'This plugin allows anyone easily share BuddyPress Activites on major social media (Facebook, Twitter, Google+, Linkedin ).', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-activity-social-share' )
+						),
+				'3' => array( 
+						'name' => esc_html__( 'BuddyPress Create Group Type', 'bp-member-reviews' ), 
+						'slug' => 'bp-create-group-type',
+						'description' => esc_html__( 'It will help to create group type for BuddyPress Groups.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-create-group-type' )
+						),
+				'4' => array( 
+						'name' => esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ), 
+						'slug' => 'bp-user-profile-reviews',
+						'description' => esc_html__( 'This plugin allows only site members to add reviews to the buddypress members on the site and even rate the member’s profile out of 5 points with multiple review criteria.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-user-profile-reviews' )
+						),
+				'5' => array( 
+						'name' => esc_html__( 'BuddyPress Group Reviews', 'bp-member-reviews' ), 
+						'slug' => 'review-buddypress-groups',
+						'description' => esc_html__( 'This plugin allows the BuddyPress Members to give reviews to the BuddyPress groups on the site. The review form allows the users to give text review, even rate the group on the basis of multiple criterias.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'review-buddypress-groups' )
+						),
+				'6' => array( 
+						'name' => esc_html__( 'BuddyPress Favorite Notification', 'bp-member-reviews' ), 
+						'slug' => 'bp-favorite-notification',
+						'description' => esc_html__( 'BuddyPress Favorite Notification adds a notification for BuddyPress activity.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-favorite-notification' )
+						),
+				'7' => array( 
+						'name' => esc_html__( 'Custom Email Options', 'bp-member-reviews' ), 
+						'slug' => 'custom-email-options',
+						'description' => esc_html__( 'Override default email options of Worpdress.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'custom-email-options' )
+						),
+				'8' => array( 
+						'name' => esc_html__( 'BuddyPress Checkins', 'bp-member-reviews' ), 
+						'slug' => 'bp-check-in',
+						'description' => esc_html__( 'This plugin allows BuddyPress members to share their location when they are posting activities, you can add places where you visited, nearby locations based on google places.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-check-in' )
+						),
+				'9' => array( 
+						'name' => esc_html__( 'BuddyPress Job Manager', 'bp-member-reviews' ), 
+						'slug' => 'bp-job-manager',
+						'description' => esc_html__( 'Incorporates BuddyPress with the WP Job Manager plugin by creating specific tabs in employer’s and candidate’s profiles.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-job-manager' )
+						),
+				'10' => array( 
+						'name' => esc_html__( 'BuddyPress user ToDo List', 'bp-member-reviews' ), 
+						'slug' => 'bp-user-to-do-list',
+						'description' => esc_html__( 'This plugin allows you to create your personal task list with timestamp. You can mark them complete when you are done with them. It will also send reminder when you have any overdue task.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-user-to-do-list' )
+						),
+				'11' => array( 
+						'name' => esc_html__( 'Shortcodes for BuddyPress', 'bp-member-reviews' ), 
+						'slug' => 'shortcodes-for-buddypress',
+						'description' => esc_html__( 'This plugin will add an extended feature to the big name “BuddyPress” that will generate Shortcode for Listing Activity Streams , Members and Groups on any post/page in website.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'shortcodes-for-buddypress' )
+						),
+				'12' => array( 
+						'name' => esc_html__( 'Woo Open Graph', 'bp-member-reviews' ), 
+						'slug' => 'woo-open-graph',
+						'description' => esc_html__( 'This plugin will add an extended feature to the big name “WooCommerce” that will adds well executed and accurate Open Graph Meta Tags to your site with title,description and WooCommerce featured image.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'woo-open-graph' )
+						),
+				'13' => array( 
+						'name' => esc_html__( 'BuddyPress Lock', 'bp-member-reviews' ), 
+						'slug' => 'lock-my-bp',
+						'description' => esc_html__( 'This plugin allows the administrator to lock the certain parts of their site. It help to create private BuddyPress community by locking certain BuddyPress Components, WordPress Pages, Custom Post Types for public view without using any membership plugin.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'lock-my-bp' )
+						),
+				'14' => array( 
+						'name' => esc_html__( 'Woo Audio Preview', 'bp-member-reviews' ), 
+						'slug' => 'woo-audio-preview',
+						'description' => esc_html__( 'This plugin Allows playing the audio files in sample mode to prevent unauthorized downloading of the audio files. It helps to display sample files at single product page.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'woo-audio-preview' )
+						),
+				'15' => array( 
+						'name' => esc_html__( 'WordPress System Log', 'bp-member-reviews' ), 
+						'slug' => 'wp-system-log',
+						'description' => esc_html__( 'This plugin helps administrators of the site see their environment on which the site is currently running that includes WordPress environment, tha database it requires, Server Environment and the plugins installed and activated on the site.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'wp-system-log' )
+						),
+				'16' => array( 
+						'name' => esc_html__( 'BP Post From Anywhere', 'bp-member-reviews' ), 
+						'slug' => 'bp-post-from-anywhere',
+						'description' => esc_html__( 'This plugin will generate shortcode and widgets for post updates section for activities so you can post update from anywhere, it might be sidebar, some page or any template file.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'bp-post-from-anywhere' )
+						),
+				'17' => array( 
+						'name' => esc_html__( 'Woo Document Preview', 'bp-member-reviews' ), 
+						'slug' => 'woo-document-preview',
+						'description' => esc_html__( 'This will allow you to add document preview at single product page. Which helps to offer more better idea when you are selling ebooks, pdf or some documents.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'woo-document-preview' )
+						),
+				'18' => array( 
+						'name' => esc_html__( 'WordPress Media Category', 'bp-member-reviews' ), 
+						'slug' => 'media-category',
+						'description' => esc_html__( 'This plugin helps administrators of the site categorize their wordpress media.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'media-category' )
+						),
+				'19' => array( 
+						'name' => esc_html__( 'Woo Price Quotes', 'bp-member-reviews' ), 
+						'slug' => 'woo-price-quote-inquiry',
+						'description' => esc_html__( 'This plugin helps in quoting the products that admin wishes to hide its purchasing details.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'woo-price-quote-inquiry' )
+						),
+				'20' => array( 
+						'name' => esc_html__( 'EDD Service Extended', 'bp-member-reviews' ), 
+						'slug' => 'edd-service-extended',
+						'description' => esc_html__( 'This plugin helps administrators of the site categorize their wordpress media.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'edd-service-extended' )
+						),
+				'21' => array( 
+						'name' => esc_html__( 'WB Ads Rotator with Split Test', 'bp-member-reviews' ), 
+						'slug' => 'wb-ads-rotator-with-split-test',
+						'description' => esc_html__( 'This plugin is designed for the SPLIT TESTING, you can check performance of your ads layout and on the basis of them you can select one of them for your regular use.', 'bp-member-reviews' ),
+						'status' => $this->wbcom_plugin_status( 'wb-ads-rotator-with-split-test' )
+						)								
+			);	
+
+			return $free_plugins;
+		}
+
+		public function wbcom_all_paid_plugins() {
+			$paid_plugins = array(
+					'0' => array( 
+						'name' => esc_html__( 'BuddyPress Moderation Pro', 'bp-member-reviews' ), 
+						'description' => esc_html__( 'BuddyPress Community Moderation offers a solution for site owners to keep their communities straight. With community policing strategy, members of the community have an option for moderation sitewide by attaching flags to content created within the various components.', 'bp-member-reviews' ),
+						'download_url' => 'https://wbcomdesigns.com/downloads/buddypress-moderation-pro/',
+					),
+					'1' => array( 
+						'name' => esc_html__( 'BuddyPress Polls', 'bp-member-reviews' ), 
+						'description' => esc_html__( 'Use BuddyPress Polls plugin to create polls inside the activity, let your user response to your polls. Members can create pools like activities, easily votes on them.', 'bp-member-reviews' ),
+						'download_url' => 'https://wbcomdesigns.com/downloads/buddypress-polls/',
+					),
+					'2' => array( 
+						'name' => esc_html__( 'BuddyPress Resume Manager', 'bp-member-reviews' ), 
+						'description' => esc_html__( 'BuddyPress Resume Manager adds a separate BuddyPress Resume menu at a user’s BuddyPress Profile Page to display individual member resume. We have added predefined fields for the resumes and site admin and enable and disable them.', 'bp-member-reviews' ),
+						'download_url' => 'https://wbcomdesigns.com/downloads/buddypress-resume-manager/',
+					),
+					'3' => array( 
+						'name' => esc_html__( 'BuddyPress Profanity', 'bp-member-reviews' ), 
+						'description' => esc_html__( 'Use BuddyPress Profanity plugin to censor content in your community! Easily Censor all the unwanted words in activities, private messages contents by specifying a list of keywords to be filtered.', 'bp-member-reviews' ),
+						'download_url' => 'https://wbcomdesigns.com/downloads/buddypress-profanity/',
+					),
+					'4' => array( 
+						'name' => esc_html__( 'BuddyPress Private Community Pro', 'bp-member-reviews' ), 
+						'description' => esc_html__( 'This plugin offers a lockdown for BuddyPress Component and will ask users to log in go further to check profile or any other protected details.', 'bp-member-reviews' ),
+						'download_url' => 'https://wbcomdesigns.com/downloads/buddypress-private-community-pro/',
+					),
+					'5' => array( 
+						'name' => esc_html__( 'BuddyPress Profile Pro', 'bp-member-reviews' ), 
+						'description' => esc_html__( 'This plugin gives you the power to extend BuddyPress Profiles with repeater fields and groups. You can easily add multiple field groups and display them at member’s profile.', 'bp-member-reviews' ),
+						'download_url' => 'https://wbcomdesigns.com/downloads/buddypress-profile-pro/',
+					),
+				);
+			return $paid_plugins;
+		}
+
+		function wbcom_is_plugin_installed( $slug ) {
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}	
+			$all_plugins = get_plugins();
+			$keys        = array_keys( $all_plugins );
+			foreach ( $keys as $key ) {
+				if ( preg_match( '|^' . $slug . '/|', $key ) ) {
+					return true;
+				}
+			}
+			return false;			
+		}
+
+		public function wbcom_plugin_status( $slug ) {
+			if( $this->wbcom_is_plugin_installed( $slug ) ) {
+				if( $this->wbcom_is_plugin_active( $slug ) ) {
+					return 'activated';
+				} else {
+					return 'installed';
+				}	
+			} else {
+				return 'not_installed';
+			}	
+		}
+
+		public function wbcom_is_plugin_active( $slug ) {
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}	
+			$all_plugins = get_plugins();
+			$keys        = array_keys( $all_plugins );
+			$response    = false;
+			foreach ( $keys as $key ) {
+				if ( preg_match( '|^' . $slug . '/|', $key ) ) {
+					if( is_plugin_active( $key ) ) {
+						$response = true;
+					}
+				}
+			}
+			return $response;
 		}
 
 		public function wbcom_enqueue_admin_scripts() {
@@ -246,16 +353,27 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();			
 				if ( 'toplevel_page_wbcomplugins' === $screen->base || 'wbcom_page_wbcom-support-page' === $screen->base || 'wbcom_page_wbcom-plugins-page' === $screen->base || 'wbcom_page_wbcom-themes-page' === $screen->base ) {
-					wp_enqueue_script( 'jquery' );
-					wp_enqueue_script( 'jquery-ui-sortable' );
-					wp_enqueue_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/font-awesome.min.css' );
+					if ( ! wp_script_is( 'jquery', 'enqueued' ) ) {
+						wp_enqueue_script( 'jquery' );
+					}
+					if ( ! wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {	
+						wp_enqueue_script( 'jquery-ui-sortable' );
+					}
+					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {	
+						wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css' );
+					}
 					if ( ! wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
 						wp_enqueue_style( 'wbcom-selectize-css', BUPR_PLUGIN_URL . 'admin/assets/css/selectize.css' );
 					}
 					if ( ! wp_script_is( 'wbcom-selectize-js', 'enqueued' ) ) {
 						wp_enqueue_script( 'wbcom-selectize-js', BUPR_PLUGIN_URL . 'admin/assets/js/selectize.min.js', array( 'jquery' ) );
 					}
-					wp_enqueue_script( 'bupr-js-admin', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-admin.js', array( 'jquery' ) );
+					if ( ! wp_script_is( 'bupr-js-admin', 'enqueued' ) ) {
+						wp_enqueue_script( 'bupr-js-admin', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-admin.js', array( 'jquery' ) );
+					}
+					if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
+						wp_enqueue_style( 'wp-color-picker' );
+					}
 
 					wp_localize_script(
 						'bupr-js-admin',
@@ -265,9 +383,6 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 						)
 					);
 					wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css' );
-					if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
-						wp_enqueue_style( 'wp-color-picker' );
-					}
 					/* add wp color picker */
 					wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-color-picker.js', array( 'wp-color-picker' ), false, true );
 				}
@@ -348,87 +463,6 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 					</ul>
 				</nav>
 			</div><?php
-		}
-
-		public function wbcom_all_free_plugins() {
-			$free_plugins = array( 
-				'0' => array( 
-						'name' => esc_html__( 'BuddyPress Activity Filter', 'bp-member-reviews' ), 
-						'slug' => 'bp-activity-filter',
-						'description' => esc_html__( 'Admin can set default and customised activities to be listed on front-end.', 'bp-member-reviews' ),
-						'status' => $this->wbcom_plugin_status( 'bp-activity-filter' )
-						),
-				'1' => array( 
-						'name' => esc_html__( 'BuddyPress Activity Social Share', 'bp-member-reviews' ), 
-						'slug' => 'bp-activity-social-share',
-						'description' => esc_html__( 'A perfect plugin to make your user activities on your website social-share-friendly, and increase your members social reach dramatically!', 'bp-member-reviews' ),
-						'status' => $this->wbcom_plugin_status( 'bp-activity-social-share' ) 
-						),
-				'2' => array( 
-						'name' => esc_html__( 'BuddyPress Favorite Notification', 'bp-member-reviews' ), 
-						'slug' => 'bp-favorite-notification',
-						'description' => esc_html__( 'BuddyPress Favorite Notification adds a notification for BuddyPress activity.', 'bp-member-reviews' ),
-						'status' => $this->wbcom_plugin_status( 'bp-favorite-notification' )
-						),
-				'3' => array(
-						'name' => esc_html__( 'BuddyPress user ToDo List', 'bp-member-reviews' ), 
-						'slug' => 'bp-user-to-do-list',
-						'description' => esc_html__( 'Todo List is a modern task personal task management solution for BuddyPress.', 'bp-member-reviews' ),
-						'status' => $this->wbcom_plugin_status( 'bp-user-to-do-list' ) 
-						),
-			);	
-
-			return $free_plugins;
-		}
-
-		public function wbcom_plugin_status( $slug ) {
-			// if( $this->wbcom_is_plugin_installed( $plugin_slug ) ) {
-			// 	// if( $this->wbcom_is_plugin_active( $plugin_slug ) ) {
-
-			// 	// } else {
-
-			// 	// }	
-			// } else {
-
-			// }	
-		}
-
-		/**
-		 * Check if a plugin is active.
-		 *
-		 * @since 2.5.0
-		 *
-		 * @param string $slug Plugin slug.
-		 * @return bool True if active, false otherwise.
-		 */
-		// function wbcom_is_plugin_active( $slug ) {
-		// 	return ( ( ! empty( $this->plugins[ $slug ]['is_callable'] ) && is_callable( $this->plugins[ $slug ]['is_callable'] ) ) || is_plugin_active( $this->plugins[ $slug ]['file_path'] ) );
-		// }
-
-		// function wbcom_is_plugin_installed( $slug ) {
-		// 	if ( ! function_exists( 'get_plugins' ) ) {
-		// 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		// 	}
-		// 	$plugin_basename = $this->_get_wbcom_plugin_file_path_from_slug( $slug );
-		// 	get_plugins( $plugin_folder );
-
-		// 	$installed_plugins = $this->get_plugins(); // Retrieve a list of all installed plugins (WP cached).
-
-		// 	return ( ! empty( $installed_plugins[ $this->plugins[ $slug ]['file_path'] ] ) );
-		// }
-
-		function _get_wbcom_plugin_file_path_from_slug( $slug ) {
-			if ( ! function_exists( 'get_plugins' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/plugin.php';
-			}
-			$plugins_list = get_plugins();
-			$keys = array_keys( $plugins_list );
-			foreach ( $keys as $key ) {
-				if ( preg_match( '|^' . $slug . '/|', $key ) ) {
-					return $key;
-				}
-			}
-			return $slug;
 		}
 
 	}
