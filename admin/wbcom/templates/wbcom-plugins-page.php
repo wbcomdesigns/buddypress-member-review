@@ -60,7 +60,7 @@
 						<h3><?php echo esc_html( $plugin_details['name'] ); ?></h3>
 						<p class="plugin-description"><?php echo esc_html( $plugin_details['description'] ); ?></p>					
 						<div class="activation_button_wrap">
-	                        <a href="<?php echo esc_url( $plugin_details['download_url'] ); ?>" class="eo_btn eo_btn_default" >
+	                        <a href="<?php echo esc_url( $plugin_details['download_url'] ); ?>" class="eo_btn eo_btn_default" target="_blank" >
 				                <i class="far fa-eye"></i>
 				                <?php esc_html_e( 'View', 'bp-member-reviews' ); ?>
 				            </a>				            
