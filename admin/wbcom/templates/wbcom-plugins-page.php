@@ -25,11 +25,11 @@
 				<div class="wbcom-req-plugin-card">
 					<div class="wbcom_single_left">
 						<div class="wbcom_single_icon_wrapper">
-							<i class="fab fa-3x fa-bandcamp" aria-hidden="true"></i>
+							<i class="<?php echo esc_attr( $plugin_details['icon'] ); ?>" aria-hidden="true"></i>
 						</div>
 					</div>
 					<div class="plugin-container">
-						<h3><?php echo esc_html( $plugin_details['name'] ); ?></h3>
+						<h3><a href="<?php echo esc_url( $plugin_details['wp_url'] ); ?>"><?php echo esc_html( $plugin_details['name'] ); ?></a></h3>
 						<p class="plugin-description"><?php echo esc_html( $plugin_details['description'] ); ?></p>
 						<input type="hidden" class="plugin-slug" name="plugin-slug" value="<?php echo esc_attr( $plugin_details['slug'] ); ?>">
 						<input type="hidden" class="plugin-action" name="plugin-action" value="<?php echo esc_attr( $plugin_action ); ?>">						
