@@ -4,7 +4,7 @@
     <div id="eo_admin_content_support" class="eo_admin_tab_content">
         <strong><?php esc_html_e( 'Having any question or issue ?', 'bp-member-reviews' ); ?></strong>
         <p>
-        	<?php esc_html_e( 'Our team is here to help you out at anytime. If you have any idea about how we could improve. You can share access to your site on our helpdesk if it can help getting faster. There are two ways to in touch with us :', 'bp-member-reviews' ); ?></p>
+			<?php esc_html_e( 'Our team is here to help you out at anytime. If you have any idea about how we could improve. You can share access to your site on our helpdesk if it can help getting faster. There are two ways to in touch with us :', 'bp-member-reviews' ); ?></p>
 
         <ul id="eo_support_list" class="eo_boxes_list wp-clearfix">
 
@@ -19,9 +19,9 @@
                         <h4><?php esc_html_e( 'Tickets Support', 'bp-member-reviews' ); ?></h4>
                         <p><?php esc_html_e( 'Open a ticket on our helpdesk, we don\'t guarantee a fast response but within a week. Except if you\'ve purchased one of our product we\'ll reply within 24 hours.', 'bp-member-reviews' ); ?></p>
                         <div class="text-right">
-                            <a href="https://support.wbcomdesigns.com/portal/newticket" class="eo_btn eo_btn_default" target="_blank">
+                            <a href="https://support.wbcomdesigns.com/portal/newticket" class="wb_btn wb_btn_default" target="_blank">
                                 <i class="fas fa-ticket-alt"></i>
-                                <?php esc_html_e( 'Open a ticket', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Open a ticket', 'bp-member-reviews' ); ?>
                             </a>
                         </div>
                     </div>
@@ -39,9 +39,9 @@
                         <h4><?php esc_html_e( 'Contact Us', 'bp-member-reviews' ); ?></h4>
                         <p><?php esc_html_e( 'Create a new thread on our plugin page, participation is open to anyone from all around the world. We\'ll be there to help as well but can\'t guarantee any delay.', 'bp-member-reviews' ); ?></p>
                         <div class="text-right">
-                            <a href="https://wbcomdesigns.com/contact/" class="eo_btn eo_btn_default" target="_blank">
+                            <a href="https://wbcomdesigns.com/contact/" class="wb_btn wb_btn_default" target="_blank">
                                 <i class="fas fa-phone-square"></i>
-                                <?php esc_html_e( 'Contact Us', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Contact Us', 'bp-member-reviews' ); ?>
                             </a>
                         </div>
                     </div>
@@ -50,4 +50,4 @@
 
         </ul>
     </div>
-</div>	
+</div>

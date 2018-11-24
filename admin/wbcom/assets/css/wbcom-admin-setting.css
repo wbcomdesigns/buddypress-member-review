@@ -218,6 +218,7 @@
 }
 
 .plugin-container {
+    width: 100%;
     padding: 16px;
 }
 
@@ -231,6 +232,39 @@
 
 .plugin-container p {
     color: #50646b;
+}
+
+.activation_button_wrap {
+    text-align: right;
+}
+
+.wb_btn_default {
+    text-decoration: none;
+    background-color: #03A9F4;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    transition: all .5s;
+    font-weight: 500;
+    outline: none;
+}
+
+.wb_btn_default:hover,
+.wb_btn_default:active,
+.wb_btn_default:focus,
+.wb_btn_default:visited {
+    background-color: #03A9F4;
+    color: #ffffff;
+}
+
+.wb_btn_default .fas:first-child {
+    margin-right: 5px;
 }
 
 @media screen and (max-width: 767px) {
