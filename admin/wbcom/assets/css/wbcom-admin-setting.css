@@ -171,7 +171,7 @@
 }
 
 .wbcom_single_icon_wrapper {
-    background: #478aa2;
+    background: #58acf1;
     text-align: center;
     display: inline-block;
     width: 70px;
@@ -228,6 +228,15 @@
     color: #50646b;
     line-height: 1.6em;
     font-weight: 300;
+}
+
+.plugin-container h3 a {
+    color: #58acf1;
+    text-decoration: none;
+}
+
+.plugin-container h3 a:hover {
+    text-decoration: underline;
 }
 
 .plugin-container p {
