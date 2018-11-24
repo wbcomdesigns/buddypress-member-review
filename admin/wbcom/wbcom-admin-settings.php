@@ -116,143 +116,143 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 						'description' => esc_html__( 'It also allows you to upload your own custom font to your site and use them using custom css.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'custom-font-uploader' ),
 						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'icon'   => 'fas fa-2x fa-upload'
 						), 
 				'1' => array( 
 						'name' => esc_html__( 'BuddyPress Activity Filter', 'bp-member-reviews' ), 
 						'slug' => 'bp-activity-filter',
 						'description' => esc_html__( 'Admin can set default and customised activities to be listed on front-end.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-activity-filter' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-activity-filter/',
+						'icon'   => 'fas fa-2x fa-filter'
 						),
 				'2' => array( 
 						'name' => esc_html__( 'BuddyPress Activity Social Share', 'bp-member-reviews' ), 
 						'slug' => 'bp-activity-social-share',
 						'description' => esc_html__( 'This plugin allows anyone easily share BuddyPress Activites on major social media (Facebook, Twitter, Google+, Linkedin ).', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-activity-social-share' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-activity-social-share/',
+						'icon'   => 'fas fa-2x fa-share-alt'
 						),
 				'3' => array( 
 						'name' => esc_html__( 'BuddyPress Create Group Type', 'bp-member-reviews' ), 
 						'slug' => 'bp-create-group-type',
 						'description' => esc_html__( 'It will help to create group type for BuddyPress Groups.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-create-group-type' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-create-group-type/',
+						'icon'   => 'fas fa-2x fa-sitemap'
 						),
 				'4' => array( 
 						'name' => esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ), 
 						'slug' => 'bp-user-profile-reviews',
 						'description' => esc_html__( 'This plugin allows only site members to add reviews to the buddypress members on the site and even rate the member’s profile out of 5 points with multiple review criteria.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-user-profile-reviews' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-user-profile-reviews/',
+						'icon'   => 'fas fa-2x fa-user'
 						),
 				'5' => array( 
 						'name' => esc_html__( 'BuddyPress Group Reviews', 'bp-member-reviews' ), 
 						'slug' => 'review-buddypress-groups',
 						'description' => esc_html__( 'This plugin allows the BuddyPress Members to give reviews to the BuddyPress groups on the site. The review form allows the users to give text review, even rate the group on the basis of multiple criterias.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'review-buddypress-groups' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/review-buddypress-groups/',
+						'icon'   => 'fas fa-2x fa-users'
 						),
 				'6' => array( 
 						'name' => esc_html__( 'BuddyPress Favorite Notification', 'bp-member-reviews' ), 
 						'slug' => 'bp-favorite-notification',
 						'description' => esc_html__( 'BuddyPress Favorite Notification adds a notification for BuddyPress activity.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-favorite-notification' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-favorite-notification/',
+						'icon'   => 'fas fa-2x fa-bell'
 						),
 				'7' => array( 
 						'name' => esc_html__( 'Custom Email Options', 'bp-member-reviews' ), 
 						'slug' => 'custom-email-options',
 						'description' => esc_html__( 'Override default email options of Worpdress.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'custom-email-options' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/custom-email-options/',
+						'icon'   => 'fas fa-2x fa-at'
 						),
 				'8' => array( 
 						'name' => esc_html__( 'BuddyPress Checkins', 'bp-member-reviews' ), 
 						'slug' => 'bp-check-in',
 						'description' => esc_html__( 'This plugin allows BuddyPress members to share their location when they are posting activities, you can add places where you visited, nearby locations based on google places.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-check-in' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-check-in/',
+						'icon'   => 'fas fa-2x fa-map-marker-alt'
 						),
 				'9' => array( 
 						'name' => esc_html__( 'BuddyPress Job Manager', 'bp-member-reviews' ), 
 						'slug' => 'bp-job-manager',
 						'description' => esc_html__( 'Incorporates BuddyPress with the WP Job Manager plugin by creating specific tabs in employer’s and candidate’s profiles.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-job-manager' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-job-manager/',
+						'icon'   => 'fas fa-2x fa-briefcase'
 						),
 				'10' => array( 
 						'name' => esc_html__( 'BuddyPress user ToDo List', 'bp-member-reviews' ), 
 						'slug' => 'bp-user-to-do-list',
 						'description' => esc_html__( 'This plugin allows you to create your personal task list with timestamp. You can mark them complete when you are done with them. It will also send reminder when you have any overdue task.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-user-to-do-list' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-user-to-do-list/',
+						'icon'   => 'fas fa-2x fa-list-ol'
 						),
 				'11' => array( 
 						'name' => esc_html__( 'Shortcodes for BuddyPress', 'bp-member-reviews' ), 
 						'slug' => 'shortcodes-for-buddypress',
 						'description' => esc_html__( 'This plugin will add an extended feature to the big name “BuddyPress” that will generate Shortcode for Listing Activity Streams , Members and Groups on any post/page in website.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'shortcodes-for-buddypress' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/shortcodes-for-buddypress/',
+						'icon'   => 'fas fa-2x fa-code'
 						),
 				'12' => array( 
 						'name' => esc_html__( 'Woo Open Graph', 'bp-member-reviews' ), 
 						'slug' => 'woo-open-graph',
 						'description' => esc_html__( 'This plugin will add an extended feature to the big name “WooCommerce” that will adds well executed and accurate Open Graph Meta Tags to your site with title,description and WooCommerce featured image.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'woo-open-graph' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/woo-open-graph/',
+						'icon'   => 'fas fa-2x fa-chart-bar'
 						),
 				'13' => array( 
 						'name' => esc_html__( 'BuddyPress Lock', 'bp-member-reviews' ), 
 						'slug' => 'lock-my-bp',
 						'description' => esc_html__( 'This plugin allows the administrator to lock the certain parts of their site. It help to create private BuddyPress community by locking certain BuddyPress Components, WordPress Pages, Custom Post Types for public view without using any membership plugin.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'lock-my-bp' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/lock-my-bp/',
+						'icon'   => 'fas fa-2x fa-lock'
 						),
 				'14' => array( 
 						'name' => esc_html__( 'Woo Audio Preview', 'bp-member-reviews' ), 
 						'slug' => 'woo-audio-preview',
 						'description' => esc_html__( 'This plugin Allows playing the audio files in sample mode to prevent unauthorized downloading of the audio files. It helps to display sample files at single product page.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'woo-audio-preview' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/woo-audio-preview/',
+						'icon'   => 'fas fa-2x fa-volume-up'
 						),
 				'15' => array( 
 						'name' => esc_html__( 'WordPress System Log', 'bp-member-reviews' ), 
 						'slug' => 'wp-system-log',
 						'description' => esc_html__( 'This plugin helps administrators of the site see their environment on which the site is currently running that includes WordPress environment, tha database it requires, Server Environment and the plugins installed and activated on the site.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'wp-system-log' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/wp-system-log/',
+						'icon'   => 'fas fa-2x fa-file-alt'
 						),
 				'16' => array( 
 						'name' => esc_html__( 'BP Post From Anywhere', 'bp-member-reviews' ), 
 						'slug' => 'bp-post-from-anywhere',
 						'description' => esc_html__( 'This plugin will generate shortcode and widgets for post updates section for activities so you can post update from anywhere, it might be sidebar, some page or any template file.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'bp-post-from-anywhere' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/bp-post-from-anywhere/',
+						'icon'   => 'fas fa-2x fa-edit'
 						),
 				'17' => array( 
 						'name' => esc_html__( 'Woo Document Preview', 'bp-member-reviews' ), 
 						'slug' => 'woo-document-preview',
 						'description' => esc_html__( 'This will allow you to add document preview at single product page. Which helps to offer more better idea when you are selling ebooks, pdf or some documents.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'woo-document-preview' ),
-						'wp_url' => 'https://wordpress.org/plugins/custom-font-uploader/',
-						'icon'   => 'fas fa-upload'
+						'wp_url' => 'https://wordpress.org/plugins/woo-document-preview/',
+						'icon'   => 'fas fa-2x fa-file'
 						),
 				'18' => array( 
 						'name' => esc_html__( 'WordPress Media Category', 'bp-member-reviews' ), 
@@ -260,7 +260,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 						'description' => esc_html__( 'This plugin helps administrators of the site categorize their wordpress media.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'media-category' ),
 						'wp_url' => 'https://wordpress.org/plugins/media-category/',
-						'icon'   => 'fas fa-3x fa-images'
+						'icon'   => 'fas fa-2x fa-images'
 						),
 				'19' => array( 
 						'name' => esc_html__( 'Woo Price Quotes', 'bp-member-reviews' ), 
@@ -268,7 +268,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 						'description' => esc_html__( 'This plugin helps in quoting the products that admin wishes to hide its purchasing details.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'woo-price-quote-inquiry' ),
 						'wp_url' => 'https://wordpress.org/plugins/woo-price-quote-inquiry/',
-						'icon'   => 'fas fa-3x fa-dollar-sign'
+						'icon'   => 'fas fa-2x fa-dollar-sign'
 						),
 				'20' => array( 
 						'name' => esc_html__( 'EDD Service Extended', 'bp-member-reviews' ), 
@@ -276,7 +276,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 						'description' => esc_html__( 'This plugin helps administrators of the site categorize their wordpress media.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'edd-service-extended' ),
 						'wp_url' => 'https://wordpress.org/plugins/edd-service-extended/',
-						'icon'   => 'fab fa-3x fa-product-hunt'
+						'icon'   => 'fab fa-2x fa-product-hunt'
 						),
 				'21' => array( 
 						'name' => esc_html__( 'WB Ads Rotator with Split Test', 'bp-member-reviews' ), 
@@ -284,7 +284,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 						'description' => esc_html__( 'This plugin is designed for the SPLIT TESTING, you can check performance of your ads layout and on the basis of them you can select one of them for your regular use.', 'bp-member-reviews' ),
 						'status' => $this->wbcom_plugin_status( 'wb-ads-rotator-with-split-test' ),
 						'wp_url' => 'https://wordpress.org/plugins/wb-ads-rotator-with-split-test/',
-						'icon'   => 'fas fa-3x fa-ad'
+						'icon'   => 'fas fa-2x fa-ad'
 						)								
 			);
 			return $free_plugins;
@@ -481,7 +481,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 					<ul>
 						<li class="wb_admin_nav_item <?php echo esc_attr( $settings_active ); ?>">
                             <a href="<?php echo get_admin_url().'admin.php?page=wbcomplugins'; ?>" id="wb_admin_nav_trigger_settings">
-                                <i class="fas fa-sliders "></i>
+                                <i class="fas fa-sliders-h"></i>
                                 <h4><?php esc_html_e( 'Settings', 'bp-member-reviews' ); ?></h4>
                             </a>
                         </li>

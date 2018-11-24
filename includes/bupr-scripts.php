@@ -84,7 +84,9 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				if ( 'wbcom_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
-					wp_enqueue_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/font-awesome.min.css' );
+					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {	
+						wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css' );
+					}
 					if ( ! wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
 						wp_enqueue_style( 'wbcom-selectize-css', BUPR_PLUGIN_URL . 'admin/assets/css/selectize.css' );
 					}
