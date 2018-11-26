@@ -30,7 +30,7 @@
 							<i class="<?php echo esc_attr( $plugin_details[ 'icon' ] ); ?>" aria-hidden="true"></i>
 						</div>
 					</div>
-					<div class="plugin-container">
+					<div class="wbcom_single_right">
 						<h3><a href="<?php echo esc_url( $plugin_details[ 'wp_url' ] ); ?>"><?php echo esc_html( $plugin_details[ 'name' ] ); ?></a></h3>
 						<p class="plugin-description"><?php echo esc_html( $plugin_details[ 'description' ] ); ?></p>
 						<input type="hidden" class="plugin-slug" name="plugin-slug" value="<?php echo esc_attr( $plugin_details[ 'slug' ] ); ?>">
@@ -58,7 +58,7 @@
 							<i class="fab fa-3x fa-bandcamp" aria-hidden="true"></i>
 						</div>
 					</div>
-					<div class="plugin-container">
+					<div class="wbcom_single_right">
 						<h3><?php echo esc_html( $plugin_details[ 'name' ] ); ?></h3>
 						<p class="plugin-description"><?php echo esc_html( $plugin_details[ 'description' ] ); ?></p>
 						<div class="activation_button_wrap">

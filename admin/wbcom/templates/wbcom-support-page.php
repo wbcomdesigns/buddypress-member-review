@@ -1,21 +1,21 @@
 <div class="wrap">
 	<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 	<h4 class="wbcom-plugin-heading"><?php esc_html_e( 'Support', 'bp-member-reviews' ); ?></h4>
-    <div id="eo_admin_content_support" class="eo_admin_tab_content">
+    <div id="wbcom_admin_content_support" class="wbcom_admin_tab_content">
         <strong><?php esc_html_e( 'Having any question or issue ?', 'bp-member-reviews' ); ?></strong>
         <p>
 			<?php esc_html_e( 'Our team is here to help you out at anytime. If you have any idea about how we could improve. You can share access to your site on our helpdesk if it can help getting faster. There are two ways to in touch with us :', 'bp-member-reviews' ); ?></p>
 
-        <ul id="eo_support_list" class="eo_boxes_list wp-clearfix">
+        <ul id="wbcom_support_list" class="wbcom_boxes_list wp-clearfix">
 
-            <li class="eo_single_box wp-clearfix">
-                <div class="eo_single_left">
-                    <div class="eo_single_icon_wrapper">
+            <li class="wbcom_single_box wp-clearfix">
+                <div class="wbcom_single_left">
+                    <div class="wbcom_single_icon_wrapper">
                         <i class="fas fa-2x fa-tags"></i>
                     </div>
                 </div>
-                <div class="eo_single_right">
-                    <div class="eo_single_inner">
+                <div class="wbcom_single_right">
+                    <div class="wbcom_single_inner">
                         <h4><?php esc_html_e( 'Tickets Support', 'bp-member-reviews' ); ?></h4>
                         <p><?php esc_html_e( 'Open a ticket on our helpdesk, we don\'t guarantee a fast response but within a week. Except if you\'ve purchased one of our product we\'ll reply within 24 hours.', 'bp-member-reviews' ); ?></p>
                         <div class="text-right">
@@ -28,14 +28,14 @@
                 </div>
             </li>
 
-            <li class="eo_single_box wp-clearfix">
-                <div class="eo_single_left">
-                    <div class="eo_single_icon_wrapper">
+            <li class="wbcom_single_box wp-clearfix">
+                <div class="wbcom_single_left">
+                    <div class="wbcom_single_icon_wrapper">
                         <i class="fas fa-2x fa-comments"></i>
                     </div>
                 </div>
-                <div class="eo_single_right">
-                    <div class="eo_single_inner">
+                <div class="wbcom_single_right">
+                    <div class="wbcom_single_inner">
                         <h4><?php esc_html_e( 'Contact Us', 'bp-member-reviews' ); ?></h4>
                         <p><?php esc_html_e( 'Create a new thread on our plugin page, participation is open to anyone from all around the world. We\'ll be there to help as well but can\'t guarantee any delay.', 'bp-member-reviews' ); ?></p>
                         <div class="text-right">
