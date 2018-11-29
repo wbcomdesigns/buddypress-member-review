@@ -6,7 +6,7 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="https://demos.wbcomdesigns.com/exporter/demos-imgs/reign-buddypress.jpg" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/reign.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'REIGN Community', 'bp-member-reviews' ); ?></h2>
@@ -32,7 +32,7 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="https://demos.wbcomdesigns.com/exporter/demos-imgs/learnmate-learndash-woo.jpg" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/learnmate.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'Learnmate', 'bp-member-reviews' ); ?></h2>
@@ -58,7 +58,7 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="https://demos.wbcomdesigns.com/exporter/demos-imgs/storemate-dokan-1.jpg" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/storemate.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'ShopMate Dokan', 'bp-member-reviews' ); ?></h2>
@@ -82,16 +82,15 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="https://demos.wbcomdesigns.com/exporter/demos-imgs/jobmate-theme.jpg" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/jobmate.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'Jobmate Theme', 'bp-member-reviews' ); ?></h2>
 						<ul class="wbcom_theme_features_list">
-                            <li><?php esc_html_e( 'Dokan Extra Widgets', 'bp-member-reviews' ); ?></li>
-                            <li><?php esc_html_e( 'Unique Single Product Page Customization', 'bp-member-reviews' ); ?></li>
-                            <li><?php esc_html_e( 'Awesome WooCommerce Pages', 'bp-member-reviews' ); ?></li>
-                            <li><?php esc_html_e( 'Grid And List Layout', 'bp-member-reviews' ); ?></li>
-                            <li><?php esc_html_e( 'Automated Mega Menu Support', 'bp-member-reviews' ); ?></li>
+                            <li><?php esc_html_e( 'Simple live searching and filtering', 'bp-member-reviews' ); ?></li>
+                            <li><?php esc_html_e( 'Unique Job listing Page', 'bp-member-reviews' ); ?></li>
+                            <li><?php esc_html_e( 'Awesome Resume list Page', 'bp-member-reviews' ); ?></li>
+                            <li><?php esc_html_e( 'Outstanding all job maanger pagesLayout', 'bp-member-reviews' ); ?></li>
                         </ul>
 						<div class="wbcom-middle">
 							<a target="_blank" href="https://wbcomdesigns.com/downloads/jobmate-theme/" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'Purchase', 'bp-member-reviews' ); ?></a>

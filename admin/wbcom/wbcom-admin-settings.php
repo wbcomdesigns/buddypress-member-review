@@ -366,31 +366,37 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 					'name'			 => esc_html__( 'BuddyPress Moderation Pro', 'bp-member-reviews' ),
 					'description'	 => esc_html__( 'BuddyPress Community Moderation offers a solution for site owners to keep their communities straight. With community policing strategy, members of the community have an option for moderation sitewide by attaching flags to content created within the various components.', 'bp-member-reviews' ),
 					'download_url'	 => 'https://wbcomdesigns.com/downloads/buddypress-moderation-pro/',
+					'icon'			 => 'fas fa-2x fa-exclamation-triangle'
 				),
 				'1'	 => array(
 					'name'			 => esc_html__( 'BuddyPress Polls', 'bp-member-reviews' ),
 					'description'	 => esc_html__( 'Use BuddyPress Polls plugin to create polls inside the activity, let your user response to your polls. Members can create pools like activities, easily votes on them.', 'bp-member-reviews' ),
 					'download_url'	 => 'https://wbcomdesigns.com/downloads/buddypress-polls/',
+					'icon'			 => 'fas fa-2x fa-poll'
 				),
 				'2'	 => array(
 					'name'			 => esc_html__( 'BuddyPress Resume Manager', 'bp-member-reviews' ),
 					'description'	 => esc_html__( 'BuddyPress Resume Manager adds a separate BuddyPress Resume menu at a user’s BuddyPress Profile Page to display individual member resume. We have added predefined fields for the resumes and site admin and enable and disable them.', 'bp-member-reviews' ),
 					'download_url'	 => 'https://wbcomdesigns.com/downloads/buddypress-resume-manager/',
+					'icon'			 => 'fas fa-2x fa-file'
 				),
 				'3'	 => array(
 					'name'			 => esc_html__( 'BuddyPress Profanity', 'bp-member-reviews' ),
 					'description'	 => esc_html__( 'Use BuddyPress Profanity plugin to censor content in your community! Easily Censor all the unwanted words in activities, private messages contents by specifying a list of keywords to be filtered.', 'bp-member-reviews' ),
 					'download_url'	 => 'https://wbcomdesigns.com/downloads/buddypress-profanity/',
+					'icon'			 => 'fab fa-2x fa-galactic-republic'
 				),
 				'4'	 => array(
 					'name'			 => esc_html__( 'BuddyPress Private Community Pro', 'bp-member-reviews' ),
 					'description'	 => esc_html__( 'This plugin offers a lockdown for BuddyPress Component and will ask users to log in go further to check profile or any other protected details.', 'bp-member-reviews' ),
 					'download_url'	 => 'https://wbcomdesigns.com/downloads/buddypress-private-community-pro/',
+					'icon'			 => 'fas fa-2x fa-user-lock'
 				),
 				'5'	 => array(
 					'name'			 => esc_html__( 'BuddyPress Profile Pro', 'bp-member-reviews' ),
 					'description'	 => esc_html__( 'This plugin gives you the power to extend BuddyPress Profiles with repeater fields and groups. You can easily add multiple field groups and display them at member’s profile.', 'bp-member-reviews' ),
 					'download_url'	 => 'https://wbcomdesigns.com/downloads/buddypress-profile-pro/',
+					'icon'			 => 'far fa-2x fa-user-circle'
 				),
 			);
 			return $paid_plugins;

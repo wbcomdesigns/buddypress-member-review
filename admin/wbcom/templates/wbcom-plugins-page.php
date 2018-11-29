@@ -55,7 +55,7 @@
 				<div class="wbcom-req-plugin-card">
 					<div class="wbcom_single_left">
 						<div class="wbcom_single_icon_wrapper">
-							<i class="fab fa-3x fa-bandcamp" aria-hidden="true"></i>
+							<i class="<?php echo esc_attr( $plugin_details[ 'icon' ] ); ?>" aria-hidden="true"></i>
 						</div>
 					</div>
 					<div class="wbcom_single_right">
