@@ -384,12 +384,15 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 				);
 				wp_enqueue_script( 'wbcom_admin_setting_js' );
 
+			}
+
+			if ( !wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
 				wp_enqueue_style( 'wbcom-admin-setting-css', BUPR_PLUGIN_URL . 'admin/wbcom/assets/css/wbcom-admin-setting.css' );
 			}
 
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
-				if ( 'toplevel_page_wbcomplugins' === $screen->base || 'wbcom_page_wbcom-support-page' === $screen->base || 'wbcom_page_wbcom-plugins-page' === $screen->base || 'wbcom_page_wbcom-themes-page' === $screen->base ) {
+				if ( 'toplevel_page_wbcomplugins' === $screen->base ) {
 					if ( !wp_script_is( 'jquery', 'enqueued' ) ) {
 						wp_enqueue_script( 'jquery' );
 					}
@@ -450,7 +453,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 		public function wbcom_admin_setting_header_html() {
 			$page			 = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
-			$plugin_active	 = $theme_active	 = $support_active	 = $settings_active = '';
+			$plugin_active	 = $theme_active = $support_active = $settings_active = '';
 			switch ( $page ) {
 				case 'wbcom-plugins-page': $plugin_active	 = 'is_active';
 					break;
@@ -494,6 +497,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 								<h4><?php esc_html_e( 'Support', 'bp-member-reviews' ); ?></h4>
 							</a>
 						</li>
+						<?php do_action( 'wbcom_add_header_menu' ); ?>
 					</ul>
 				</nav>
 			</div><?php
