@@ -229,7 +229,7 @@
     display: block;
 }
 
-.demo-name {
+.wbcom-demo-name {
     margin: 0;
     font-size: 32px;
     line-height: initial;
@@ -241,7 +241,7 @@
     border-top: 1px solid #e8e8e8;
 }
 
-.demo-content-wrap {
+.wbcom-demo-content-wrap {
     padding: 16px 40px;
     background: #fff;
     border-radius: 0 0 3px 3px;
@@ -250,14 +250,14 @@
     box-shadow: 0 2px 10px rgba(0,0,0,.1);
 }
 
-.demo-content-wrap > p,
+.wbcom-demo-content-wrap > p,
 .wbcom_admin_tab_content > p,
 .wbcom_admin_tab_content > strong {
     font-size: 15px;
     color: #50646b;
 }
 
-.demo-content-wrap .wbcom-demo-importer .container {
+.wbcom-demo-content-wrap .wbcom-demo-importer .container {
     width: 100%;
     position: relative;
     display: -webkit-box;
@@ -273,22 +273,22 @@
     box-shadow: 0 2px 4px rgba(0,0,0,.05);
 }
 
-.demo-content-wrap .wbcom-image-wrapper {
+.wbcom-demo-content-wrap .wbcom-image-wrapper {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
-    max-width: 550px;
+    max-width: 450px;
     vertical-align: top;
     border-right: 1px solid #e8e8e8;
 }
 
-.demo-content-wrap .wbcom-demo-importer .image {
+.wbcom-demo-content-wrap .wbcom-demo-importer .image {
     display: block;
 }
 
-.demo-title {
+.wbcom-demo-title {
     width: 100%;
-    padding: 16px;
+    padding: 30px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -296,7 +296,7 @@
     flex-flow: row wrap;
 }
 
-.demo-title h2 {
+.wbcom-demo-title h2 {
     width: 100%;
     color: #4C6085;
     margin: 0 0 10px;
@@ -305,43 +305,53 @@
     font-weight: 300;
 }
 
-.demo-title ul {
+.wbcom-demo-title ul {
     margin-top: 20px;
     list-style: none;
 }
 
-.demo-title ul li {
+.wbcom-demo-title ul li {
     width: 45%;
     display: inline-block;
     color: #50646b;
     position: relative;
     padding-left: 20px;
     font-size: 1.1em;
+    vertical-align: top;
 }
 
-.demo-title ul li:before {
+.wbcom-demo-title ul li:before {
     position: absolute;
     left: 0;
     top: 2px;
-    font-family: FontAwesome;
-    content: "\f00c";
     color: #03A9F4;
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-weight: 900;
+    height: 16px;
+    line-height: 16px;
+    width: 16px;
+    -webkit-font-smoothing: antialiased;
 }
 
-.wbcom-demo-importer .middle {
+.wbcom-demo-importer .wbcom-middle {
     margin-top: auto;
+    margin-left: auto;
 }
 
-.wbcom-demo-importer .middle .wbcom-button.wbcom-purchase {
+.wbcom-demo-importer .wbcom-middle .wbcom-button.wbcom-purchase {
     background: #03A9F4;
     color: #fff;
 }
 
-.wbcom-demo-importer .middle .wbcom-button {
+.wbcom-demo-importer .wbcom-middle .wbcom-button {
     display: inline-block;
 }
 
-.wbcom-demo-importer .middle .wbcom-button {
+.wbcom-demo-importer .wbcom-middle .wbcom-button {
     background-color: #efefef;
     color: #424242;
     text-align: center;
