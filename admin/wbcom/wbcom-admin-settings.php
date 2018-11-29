@@ -461,7 +461,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 		/**
-		 * Function for check plugin is activated or not.
+		 * Enqueue js & css related to wbcom plugin.
 		 *
 		 * @since 1.1.0
 		 * @access public
@@ -524,6 +524,12 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			}
 		}
 
+		/**
+		 * Function for add plugin's admin panel header pages.
+		 *
+		 * @since 1.1.0
+		 * @access public
+		 */
 		public function wbcom_admin_additional_pages() {
 			add_submenu_page(
 			'wbcomplugins', esc_html__( 'Components', 'bp-member-reviews' ), esc_html__( 'Components', 'bp-member-reviews' ), 'manage_options', 'wbcom-plugins-page', array( $this, 'wbcom_plugins_submenu_page_callback' )
@@ -536,18 +542,42 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 			);
 		}
 
+		/**
+		 * Function for include wbcom plugins list page.
+		 *
+		 * @since 1.1.0
+		 * @access public
+		 */
 		public function wbcom_plugins_submenu_page_callback() {
 			include 'templates/wbcom-plugins-page.php';
 		}
 
+		/**
+		 * Function for include themes list page.
+		 *
+		 * @since 1.1.0
+		 * @access public
+		 */
 		public function wbcom_themes_submenu_page_callback() {
 			include 'templates/wbcom-themes-page.php';
 		}
 
+		/**
+		 * Function for include support page.
+		 *
+		 * @since 1.1.0
+		 * @access public
+		 */
 		public function wbcom_support_submenu_page_callback() {
 			include 'templates/wbcom-support-page.php';
 		}
 
+		/**
+		 * Shortcode for display top menu header.
+		 *
+		 * @since 1.1.0
+		 * @access public
+		 */
 		public function wbcom_admin_setting_header_html() {
 			$page			 = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
 			$plugin_active	 = $theme_active = $support_active = $settings_active = '';
@@ -604,9 +634,9 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 	}
 
-	function instantiate_wbcom_importer_plugins_manager() {
+	function instantiate_wbcom_plugin_manager() {
 		new Wbcom_Admin_Settings();
 	}
 
-	instantiate_wbcom_importer_plugins_manager();
+	instantiate_wbcom_plugin_manager();
 }
