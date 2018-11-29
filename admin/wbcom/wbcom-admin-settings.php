@@ -370,6 +370,9 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		}
 
 		public function wbcom_enqueue_admin_scripts() {
+			if ( !wp_style_is( 'font-awesome', 'enqueued' ) ) {
+				wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css' );
+			}
 			if ( !wp_script_is( 'wbcom-admin-setting-js', 'enqueued' ) ) {
 
 				wp_register_script(
@@ -398,9 +401,6 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 					}
 					if ( !wp_script_is( 'jquery-ui-sortable', 'enqueued' ) ) {
 						wp_enqueue_script( 'jquery-ui-sortable' );
-					}
-					if ( !wp_style_is( 'font-awesome', 'enqueued' ) ) {
-						wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css' );
 					}
 					if ( !wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
 						wp_enqueue_style( 'wbcom-selectize-css', BUPR_PLUGIN_URL . 'admin/assets/css/selectize.css' );
