@@ -461,6 +461,8 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 					break;
 				case 'wbcom-support-page' : $support_active	 = 'is_active';
 					break;
+				case 'wbcom-license-page' : $license_active	 = 'is_active';
+					break;
 				default : $settings_active = 'is_active';
 			}
 			?>
