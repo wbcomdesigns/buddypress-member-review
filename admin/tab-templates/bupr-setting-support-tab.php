@@ -67,6 +67,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-12">
 					<button class="bupr-accordion">
+						<?php esc_html_e( 'What to do if I unable/fail to publish shortcode page after update to WordPress 5.0?', 'bp-member-reviews' ); ?>
+					</button>
+					<div class="panel">
+						<p><?php esc_html_e( 'Install the Classic Editor plugin. Then, in the right sidebar, you’ll see a link for “use classic editor.”', 'bp-member-reviews' ); ?></p>
+					</div>
+				</div>
+			</div>
+			<div class="bupr-admin-row border">
+				<div class="bupr-admin-col-12">
+					<button class="bupr-accordion">
 						<?php esc_html_e( 'Where do I ask for support?', 'bp-member-reviews' ); ?>
 					</button>
 					<div class="panel">
