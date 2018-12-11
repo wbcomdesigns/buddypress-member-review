@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php esc_html_e( 'What to do if I unable/fail to publish shortcode page after update to WordPress 5.0?', 'bp-member-reviews' ); ?>
 					</button>
 					<div class="panel">
-						<p><?php esc_html_e( 'Install the Classic Editor plugin. Then, in the right sidebar, you’ll see a link for “use classic editor.”', 'bp-member-reviews' ); ?></p>
+						<p><?php esc_html_e( 'Install the Classic Editor plugin. Then, in the right sidebar, you’ll see a link for “use classic editor”.', 'bp-member-reviews' ); ?></p>
 					</div>
 				</div>
 			</div>
