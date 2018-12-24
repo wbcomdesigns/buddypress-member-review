@@ -1,10 +1,10 @@
 === BuddyPress Member Reviews ===
-Contributors: wbcomdesigns , vapvarun
+Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 4.9.8
-Stable tag: 1.0.9
+Tested up to: 5.0.2
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,12 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+
+= 2.0.0 =
+* Enhancement - Improve Backend UI where you can manage all wbcom plugin's settings at one place.
+
+= 1.1.0 =
+* Fix - Compatibility with BuddyPress 4.1.0.
 
 = 1.0.9 =
 * Fix - Compatibility with BuddyPress 3.2.0.
