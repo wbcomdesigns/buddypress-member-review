@@ -80,8 +80,8 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				wp_enqueue_script( 'wbcom-admin-setting-js', BUPR_PLUGIN_URL . 'admin/assets/js/wbcom-admin-setting.js', array( 'jquery' ) );
 			}
 			if ( function_exists( 'get_current_screen' ) ) {
-				$screen = get_current_screen();				
-				if ( 'wbcom_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
+				$screen = get_current_screen();			
+				if ( 'wb-plugins_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
 					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {	

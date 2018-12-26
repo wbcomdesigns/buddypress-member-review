@@ -79,7 +79,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				add_menu_page( esc_html__( 'WB Plugins', 'bp-member-reviews' ), esc_html__( 'WB Plugins', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-lightbulb', 59 );
 		 		add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'bp-member-reviews' ), esc_html__( 'General', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins' );
 			}
-			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'User Review Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
+			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'User Reviews', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
 
 		/**
@@ -101,8 +101,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			$this->plugin_settings_tabs['bupr-display'] = esc_html__( 'Display', 'bp-member-reviews' );
 			register_setting( 'bupr_admin_display_options', 'bupr_admin_display_options' );
 			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
-			$this->plugin_settings_tabs['bupr-support'] = __( 'Support', 'bp-member-reviews' );
-			add_settings_section( 'bupr-support', ' ', array( $this, 'bupr_admin_support_content' ), 'bupr-support' );
 		}
 
 		public function bupr_admin_general_content() {
@@ -119,10 +117,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 		public function bupr_admin_display_content() {
 			include 'tab-templates/bupr-setting-display-tab.php';
-		}
-
-		public function bupr_admin_support_content() {
-			include 'tab-templates/bupr-setting-support-tab.php';
 		}
 
 		/**
