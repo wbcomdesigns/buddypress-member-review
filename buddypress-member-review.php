@@ -3,7 +3,11 @@
  * Plugin Name: BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/
  * Description: This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review himself/herself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria.
+<<<<<<< HEAD
  * Version: 1.1.0
+=======
+ * Version: 2.0.0
+>>>>>>> dev-ui-change
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
@@ -61,6 +65,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 			*/
 			$include_files = array(
 				'includes/class-buprglobals.php',
+				'admin/wbcom/wbcom-admin-settings.php',
 				'includes/bupr-scripts.php',
 				'admin/bupr-admin.php',
 				'includes/bupr-filters.php',
@@ -117,7 +122,7 @@ function bupr_bp_notifications_for_review() {
  */
 function bupr_admin_page_link( $links ) {
 	$page_link = array(
-		'<a href="' . admin_url( 'edit.php?post_type=review&page=bp-member-review-settings' ) . '">'. esc_html__( 'Settings', 'bp-member-reviews' ) .'</a>',
+		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">'. esc_html__( 'Settings', 'bp-member-reviews' ) .'</a>',
 	);
 	return array_merge( $links, $page_link );
 }

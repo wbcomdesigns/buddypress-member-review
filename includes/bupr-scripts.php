@@ -76,13 +76,17 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_admin_custom_variables() {
-
+			if ( ! wp_script_is( 'wbcom-admin-setting-js', 'enqueued' ) ) {
+				wp_enqueue_script( 'wbcom-admin-setting-js', BUPR_PLUGIN_URL . 'admin/assets/js/wbcom-admin-setting.js', array( 'jquery' ) );
+			}
 			if ( function_exists( 'get_current_screen' ) ) {
-				$screen = get_current_screen();
-				if ( 'review_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
+				$screen = get_current_screen();			
+				if ( 'wb-plugins_page_bp-member-review-settings' === $screen->base || 'edit-review' === $screen->id ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
-					wp_enqueue_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/font-awesome.min.css' );
+					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {	
+						wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css' );
+					}
 					if ( ! wp_style_is( 'wbcom-selectize-css', 'enqueued' ) ) {
 						wp_enqueue_style( 'wbcom-selectize-css', BUPR_PLUGIN_URL . 'admin/assets/css/selectize.css' );
 					}
@@ -95,7 +99,9 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 						'bupr-js-admin',
 						'bupr_admin_ajax_object',
 						array(
-							'ajaxurl' => admin_url( 'admin-ajax.php' ),
+							'ajaxurl'     => admin_url( 'admin-ajax.php' ),
+							'success_msz' => esc_html__( 'Already Installed & Activated', 'bp-member-reviews' ),
+							'error_msz'   => esc_html__( 'There was a problem performing the action.', 'bp-member-reviews' )
 						)
 					);
 					wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css' );

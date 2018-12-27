@@ -36,9 +36,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				add_action( 'init', array( $this, 'bupr_review_cpt' ) );
 				add_action( 'init', array( $this, 'bupr_review_taxonomy_cpt' ) );
 			}
+
 		}
-
-
 
 		/**
 		 * Actions performed on loading admin_menu.
@@ -76,7 +75,11 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_submenu_page_admin_settings() {
-			add_submenu_page( 'edit.php?post_type=review', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'Review Settings', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
+			if ( empty ( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+				add_menu_page( esc_html__( 'WB Plugins', 'bp-member-reviews' ), esc_html__( 'WB Plugins', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-lightbulb', 59 );
+		 		add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'bp-member-reviews' ), esc_html__( 'General', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins' );
+			}
+			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'User Reviews', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
 
 		/**
@@ -98,8 +101,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			$this->plugin_settings_tabs['bupr-display'] = esc_html__( 'Display', 'bp-member-reviews' );
 			register_setting( 'bupr_admin_display_options', 'bupr_admin_display_options' );
 			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
-			$this->plugin_settings_tabs['bupr-support'] = __( 'Support', 'bp-member-reviews' );
-			add_settings_section( 'bupr-support', ' ', array( $this, 'bupr_admin_support_content' ), 'bupr-support' );
 		}
 
 		public function bupr_admin_general_content() {
@@ -118,10 +119,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			include 'tab-templates/bupr-setting-display-tab.php';
 		}
 
-		public function bupr_admin_support_content() {
-			include 'tab-templates/bupr-setting-support-tab.php';
-		}
-
 		/**
 		 * Actions performed to create a submenu page content.
 		 *
@@ -134,22 +131,19 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			?>
 			<div class="wrap">
 				<div class="bupr-header">
-					<div class="bupr-extra-actions">
-						<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/contact/', '_blank');"><i class="fa fa-envelope" aria-hidden="true"></i> <?php esc_html_e( 'Email Support', 'bp-member-reviews' ); ?></button>
-						<button type="button" class="button button-secondary" onclick="window.open('https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/', '_blank');"><i class="fa fa-file" aria-hidden="true"></i> <?php esc_html_e( 'User Manual', 'bp-member-reviews' ); ?></button>
-						<button type="button" class="button button-secondary" onclick="window.open('https://wordpress.org/support/plugin/bp-user-profile-reviews/reviews/', '_blank');"><i class="fa fa-star" aria-hidden="true"></i> <?php esc_html_e( 'Rate Us on WordPress.org', 'bp-member-reviews' ); ?></button>
-					</div>
-					<h1>
+					<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+					<h1 class="wbcom-plugin-heading">
 						<?php esc_html_e( 'BuddyPress Member Reviews Settings', 'bp-member-reviews' ); ?>
 					</h1>
 				</div>
-
-				<?php
-				settings_errors();
-				$this->bupr_plugin_settings_tabs();
-				settings_fields( $tab );
-				do_settings_sections( $tab );
-				?>
+				<div class="wbcom-admin-settings-page">
+					<?php
+					settings_errors();
+					$this->bupr_plugin_settings_tabs();
+					settings_fields( $tab );
+					do_settings_sections( $tab );
+					?>
+				</div>
 			</div>
 			<?php
 		}
@@ -163,12 +157,12 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		public function bupr_plugin_settings_tabs() {
 			$current_tab    = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
 			// xprofile setup tab.
-			echo '<h2 class="nav-tab-wrapper">';
+			echo '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
 			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
 				$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-				echo '<a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?post_type=review&page=bp-member-review-settings' . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a>';
+				echo '<a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings' . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a>';
 			}
-			echo '</h2>';
+			echo '</h2></div>';
 		}
 
 		/**
