@@ -14,14 +14,14 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 	 * Class to add wbcom plugin's admin settings.
 	 *
 	 * @author   Wbcom Designs
-	 * @since    1.1.0
+	 * @since    2.0.0
 	 */
 	class Wbcom_Admin_Settings {
 
 		/**
 		 * Wbcom_Admin_Settings Constructor.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function __construct() {
@@ -34,7 +34,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Ajax call to serve action related to plugin's install/activate/deactive.
 		 *
-		 * @since 1.0.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_do_plugin_action() {
@@ -54,7 +54,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for activate plugin.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -66,7 +66,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for deactivate plugin.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -78,7 +78,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get plugin file name.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -99,7 +99,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for install plugin.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -122,7 +122,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for upgrade plugin.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $plugin_slug Plugin's slug.
 		 */
@@ -139,7 +139,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for return plugin's wordpress repo download url.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -150,7 +150,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get plugin's wordpress repo download url.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -169,7 +169,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get all wbcom free plugin's details.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_all_free_plugins() {
@@ -357,7 +357,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for get all wbcom paid plugin's details.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_all_paid_plugins() {
@@ -405,7 +405,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for check plugin is installed or not.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -426,7 +426,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for check plugin's status.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -445,7 +445,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for check plugin is activated or not.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 * @param string $slug Plugin's slug.
 		 */
@@ -469,7 +469,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Enqueue js & css related to wbcom plugin.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_enqueue_admin_scripts() {
@@ -533,7 +533,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for add plugin's admin panel header pages.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_admin_additional_pages() {
@@ -551,7 +551,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for include wbcom plugins list page.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_plugins_submenu_page_callback() {
@@ -561,7 +561,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for include themes list page.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_themes_submenu_page_callback() {
@@ -571,7 +571,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Function for include support page.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_support_submenu_page_callback() {
@@ -581,7 +581,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 		/**
 		 * Shortcode for display top menu header.
 		 *
-		 * @since 1.1.0
+		 * @since 2.0.0
 		 * @access public
 		 */
 		public function wbcom_admin_setting_header_html() {

@@ -3,13 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-<<<<<<< HEAD
-Tested up to: 5.0
-Stable tag: 1.1.0
-=======
 Tested up to: 5.0.2
 Stable tag: 2.0.0
->>>>>>> dev-ui-change
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,21 +62,11 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 
 == Changelog ==
 
-<<<<<<< HEAD
-= 1.1.0 =
-* Fix - Compatibility with BuddyPress 4.1.0. #43
-=======
 = 2.0.0 =
-* Enhancement - Improve Backend UI where you can manage all wbcom plugin's settings at one place.
-
-= 1.1.0 =
-* Fix - Compatibility with BuddyPress 4.1.0.
->>>>>>> dev-ui-change
-
-= 1.0.9 =
-* Fix - Compatibility with BuddyPress 3.2.0.
+* Fix - Compatibility with BuddyPress 4.1.0. #43
 * Fix - BuddyPress notification issue.
 * Fix - Fixed Translation string issue.
+* Enhancement - Improve Backend UI where you can manage all wbcom plugin's settings at one place.
 * Enhancement - Added plural label for Review.
 * Enhancement - Added shortcode for display top reviews on page.
 * Enhancement - Added French translation files – credits to Jean Pierre Michaud
