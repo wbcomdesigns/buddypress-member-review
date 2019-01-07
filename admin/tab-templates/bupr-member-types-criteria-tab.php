@@ -40,7 +40,7 @@ $member_types = bp_get_member_types('','objects');
 				<?php
 				settings_fields( 'bupr_member_type_criteria' );
 				do_settings_sections( 'bupr_member_type_criteria' );
-				  
+
 				if( is_array( $member_types ) && !empty($member_types)){
 					foreach ($member_types as $type => $member_obj){ ?>
 						<div class="bupr-admin-row border">
@@ -51,7 +51,7 @@ $member_types = bp_get_member_types('','objects');
 							</div>
 							<div class="bupr-admin-col-6 ">
 								<select name="bupr_member_type_criteria[<?php echo $type ?>][]" multiple class="bupr_mt_criteria_select">
-									<option value=''><?php esc_html_e( "Select criterias" ) ?></option>
+									<option value=''><?php esc_html_e( "Select criterias", 'bp-member-reviews' ) ?></option>
 									<?php foreach ($enabled_criterias as $key => $criteria) {
 										$_criterias = isset( $bupr_member_type_criteria[$type] )?$bupr_member_type_criteria[$type]:'';
 										if(in_array( $key, $_criterias )){
@@ -65,7 +65,7 @@ $member_types = bp_get_member_types('','objects');
 								<p class="description"><?php esc_html_e( "Only selected criteria will be available for respective member types.", 'bp-member-reviews' ); ?></p>
 							</div>
 						</div>
-			  <?php } 
+			  <?php }
 			    }
 				?>
 				<?php submit_button(); ?>
