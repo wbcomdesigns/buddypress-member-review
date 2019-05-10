@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 5.0.2
-Stable tag: 2.0.0
+Tested up to: 5.2
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,10 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+
+= 2.0.1 =
+* Fix - Compatibility with BuddyPress 4.3.0. #48
+* Fix - Fixed file not found error.
 
 = 2.0.0 =
 * Fix - Compatibility with BuddyPress 4.1.0. #43
