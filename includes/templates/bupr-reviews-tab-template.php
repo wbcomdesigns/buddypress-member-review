@@ -46,7 +46,8 @@ $reviews = new WP_Query( $args ); ?>
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						
+						$review_date_time  = $reviews->post_date;
+						$review_date       = explode( ' ', $review_date_time )[0];
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						?>
 						<div class="bupr-row">
@@ -88,6 +89,14 @@ $reviews = new WP_Query( $args ); ?>
 							</div>
 
 							<div class="bupr-members-content">
+								<span class="posted-on list">
+									<b>
+										<?php esc_html_e( 'Posted on', 'bp-member-reviews' ); ?>
+										<time class="entry-date published updated">
+											<?php echo esc_attr( date_format( date_create( $review_date ), 'F d, Y' ) ); ?>
+										</time>
+									</b>
+								</span>
 								<?php $url           = 'view/' . get_the_id(); ?>
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">

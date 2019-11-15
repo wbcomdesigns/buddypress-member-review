@@ -366,6 +366,6 @@ ul.bupr-member-main li.bupr-members .bupr-meta{
 .widget.bupr_members_review_setting{
 	overflow: hidden;
 }
-.widget.bupr_members_review_setting .bupr-members{
-	
+.posted-on.list {
+	padding-top: 10px;
 }
