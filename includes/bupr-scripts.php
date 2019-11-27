@@ -46,7 +46,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 			wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css/bupr-reviews.css' );
 			wp_enqueue_style( 'bupr-font-awesome', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css' );
 			wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css' );
-			wp_enqueue_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js/bupr-front.js', array( 'jquery' ) );
+			wp_enqueue_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js/bupr-front.js', array( 'jquery' ), time() );
 		}
 
 		/**

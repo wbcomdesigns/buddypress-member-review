@@ -201,6 +201,27 @@ jQuery( document ).ready(
 			}
 		);
 
+		jQuery( document ).on(
+			'click', '#bp-member-rating-list-options > a', function(event){
+				event.preventDefault();
+				var jQ = jQuery( this );
+				var filter = jQ.attr('attr-val');
+				var limit  = jQ.parent().siblings('.member-rating-limit').val();
+				console.log( limit );
+				jQuery.post(
+					ajaxurl,
+					{
+						'action' : 'bupr_filter_ratings',
+						'filter' : filter,
+						'limit'  : limit,
+					},
+					function(response) {
+						var obj = JSON.parse( response );
+						jQ.parent().siblings( '#bp-member-rating' ).html( obj.html );
+					}
+				);
+		});			
+
 	}
 );
 

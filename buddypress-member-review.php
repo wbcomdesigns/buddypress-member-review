@@ -67,6 +67,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 				'includes/bupr-filters.php',
 				'includes/bupr-shortcodes.php',
 				'includes/widgets/display-review.php',
+				'includes/widgets/member-rating.php',
 				'includes/bupr-ajax.php',
 			);
 

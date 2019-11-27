@@ -12,14 +12,14 @@ class bupr_members_review_setting extends WP_Widget {
 	function __construct() {
 		$widget_ops  = array(
 			'classname'   => 'bupr_members_review_setting',
-			'description' => esc_html__( 'Display members list according to members reviews ', 'bp-member-reviews' ),
+			'description' => esc_html__( 'Display members list according to members reviews.', 'bp-member-reviews' ),
 		);
 		$control_ops = array(
 			'width'   => 280,
 			'height'  => 350,
 			'id_base' => 'bupr_members_review_setting',
 		);
-		parent::__construct( 'bupr_members_review_setting', esc_html__( ' Top Members : Display members list accoding to reviews', 'bp-member-reviews' ), $widget_ops, $control_ops );
+		parent::__construct( 'bupr_members_review_setting', esc_html__( 'BP Member Review Widget', 'bp-member-reviews' ), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
