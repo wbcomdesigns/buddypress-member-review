@@ -69,7 +69,6 @@ class bupr_single_member_rating_widget extends WP_Widget {
 		/* Gather all the members reviews */
 		$bupr_args = array(
 			'post_type'      => 'review',
-			'posts_per_page' => $rating_limit,
 			'post_status'    => 'publish',
 			'category'       => 'bp-member',
 			'meta_query'     => array(
@@ -110,6 +109,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
 				}
 			}
 		}
+
 		?>		
 		<?php
 		echo $before_widget;
@@ -117,12 +117,20 @@ class bupr_single_member_rating_widget extends WP_Widget {
 		echo $before_title;
 		echo $bupr_title;
 		echo $after_title;		
-		if ( ! empty( $final_review_arr ) ) { ?>
+		if ( ! empty( $final_review_arr ) ) {
+			if ( 'highest' === $rating_default ) {
+				arsort( $final_review_arr );
+			} else if ( 'lowest' === $rating_default ) {
+				asort( $final_review_arr );
+			} else {
+				$final_review_arr = $final_review_arr;
+			}
+			?>
 			<div class="item-options" id="bp-member-rating-list-options">
-				<a href="<?php bp_members_directory_permalink(); ?>" attr-val="latest" id="member-latest-reviews" <?php if ( $rating_default == 'latest' ) : ?>class="selected"<?php endif; ?>><?php esc_html_e( 'Latest', 'bp-member-reviews' ); ?></a>
-				| <a href="<?php bp_members_directory_permalink(); ?>" attr-val="highest" id="member_good_reviews" <?php if ( $rating_default == 'highest' ) : ?>class="selected"<?php endif; ?>><?php esc_html_e( 'Highest', 'bp-member-reviews' ); ?></a>
-				| <a href="<?php bp_members_directory_permalink(); ?>" attr-val="lowest" id="member_bad_reviews" <?php if ( $rating_default == 'lowest' ) : ?>class="selected"<?php endif; ?>><?php esc_html_e( 'Lowest', 'bp-member-reviews' ); ?></a>
-			</div>	
+				<a href="#" attr-val="latest" id="member_latest_reviews" <?php if ( $rating_default == 'latest' ) : ?>class="selected"<?php endif; ?>><?php esc_html_e( 'Latest', 'bp-member-reviews' ); ?></a>
+				| <a href="#" attr-val="highest" id="member_good_reviews" <?php if ( $rating_default == 'highest' ) : ?>class="selected"<?php endif; ?>><?php esc_html_e( 'Highest', 'bp-member-reviews' ); ?></a>
+				| <a href="#" attr-val="lowest" id="member_bad_reviews" <?php if ( $rating_default == 'lowest' ) : ?>class="selected"<?php endif; ?>><?php esc_html_e( 'Lowest', 'bp-member-reviews' ); ?></a>
+			</div>
 			<?php
 			echo '<ul class="item-list" id="bp-member-rating">';
 			foreach ( $final_review_arr as $buprKey => $buprValue ) {
@@ -207,11 +215,10 @@ class bupr_single_member_rating_widget extends WP_Widget {
 
 	/** @see WP_Widget::update -- do not rename this */
 	function update( $new_instance, $old_instance ) {
-		$instance                = $old_instance;
-		$instance['bupr_title']  = strip_tags( $new_instance['bupr_title'] );
-		$instance['bupr_member'] = $new_instance['bupr_member'];
-		$instance['top_member']  = $new_instance['top_member'];
-		$instance['avatar']      = $new_instance['avatar'];
+		$instance                   = $old_instance;
+		$instance['bupr_title']     = strip_tags( $new_instance['bupr_title'] );
+		$instance['bupr_member']    = $new_instance['bupr_member'];
+		$instance['rating_default'] = $new_instance['rating_default'];
 		return $instance;
 	}
 
@@ -239,9 +246,9 @@ class bupr_single_member_rating_widget extends WP_Widget {
 			<p>
 				<label for="<?php echo $this->get_field_id( 'rating_default' ) ?>"><?php esc_html_e( 'Default ratings to show:', 'bp-member-reviews' ); ?></label>
 				<select name="<?php echo $this->get_field_name( 'rating_default' ); ?>" id="<?php echo $this->get_field_id( 'rating_default' ); ?>">
-					<option value="newest" <?php selected( $rating_default, 'latest' ); ?>><?php esc_html_e( 'Latest', 'bp-member-reviews' ); ?></option>
-					<option value="active" <?php selected( $rating_default, 'highest' );?>><?php esc_html_e( 'Highest', 'bp-member-reviews' ); ?></option>
-					<option value="popular"  <?php selected( $rating_default, 'lowest' ); ?>><?php esc_html_e( 'Lowest', 'bp-member-reviews' ); ?></option>
+					<option value="latest" <?php selected( $rating_default, 'latest' ); ?>><?php esc_html_e( 'Latest', 'bp-member-reviews' ); ?></option>
+					<option value="highest" <?php selected( $rating_default, 'highest' );?>><?php esc_html_e( 'Highest', 'bp-member-reviews' ); ?></option>
+					<option value="lowest"  <?php selected( $rating_default, 'lowest' ); ?>><?php esc_html_e( 'Lowest', 'bp-member-reviews' ); ?></option>
 				</select>
 		</p>		
 		</div>

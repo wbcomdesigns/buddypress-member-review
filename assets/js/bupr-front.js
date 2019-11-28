@@ -201,26 +201,48 @@ jQuery( document ).ready(
 			}
 		);
 
+		// Ratings Widget filter.
 		jQuery( document ).on(
 			'click', '#bp-member-rating-list-options > a', function(event){
-				event.preventDefault();
-				var jQ = jQuery( this );
-				var filter = jQ.attr('attr-val');
-				var limit  = jQ.parent().siblings('.member-rating-limit').val();
-				console.log( limit );
-				jQuery.post(
-					ajaxurl,
-					{
-						'action' : 'bupr_filter_ratings',
-						'filter' : filter,
-						'limit'  : limit,
-					},
-					function(response) {
-						var obj = JSON.parse( response );
-						jQ.parent().siblings( '#bp-member-rating' ).html( obj.html );
-					}
-				);
-		});			
+			event.preventDefault();
+			var jQ = jQuery( this );
+			jQ.siblings('a').removeClass('selected');
+			var filter = jQ.attr('attr-val');
+			var limit  = jQ.parent().siblings('.member-rating-limit').val();
+			jQuery.post(
+				ajaxurl,
+				{
+					'action' : 'bupr_filter_ratings',
+					'filter' : filter,
+					'limit'  : limit,
+				},
+				function(response) {
+					var obj = JSON.parse( response );
+					jQ.addClass('selected');
+					jQ.parent().siblings( '#bp-member-rating' ).html( obj.html );
+				}
+			);
+		});
+
+		// Reviews tab filter.
+		jQuery( document ).on(
+			'click', '#bp-reviews-filter-by > option', function(event){
+			event.preventDefault();
+			var jQ = jQuery( this );
+			var filter = jQ.val();
+			var limit  = jQ.parent().parent().siblings('.member-rating-limit').val();
+			jQuery.post(
+				ajaxurl,
+				{
+					'action' : 'bupr_reviews_filter',
+					'filter' : filter,
+					'limit'  : limit,
+				},
+				function(response) {
+					jQuery( '#request-review-list' ).html( response );
+				}
+			);
+		});	
 
 	}
 );

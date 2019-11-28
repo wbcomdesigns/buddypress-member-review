@@ -111,7 +111,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					/* add wp color picker */
 					wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-color-picker.js', array( 'wp-color-picker' ), false, true );
 				}
-			}	
+			}
 		}
 	}
 	new BUPRScriptsStyles();

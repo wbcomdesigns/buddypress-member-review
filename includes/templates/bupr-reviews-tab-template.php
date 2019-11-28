@@ -35,9 +35,16 @@ $args = array(
 $reviews = new WP_Query( $args ); ?>
 
 <div class="bupr-bp-member-reviews-block">
-
+	<div class="select-wrap">
+		<select id="bp-reviews-filter-by">
+			<option value="latest"><?php esc_html_e( 'Latest', 'bp-member-reviews' ); ?></option>
+			<option value="highest"><?php esc_html_e( 'Highest', 'bp-member-reviews' ); ?></option>
+			<option value="lowest"><?php esc_html_e( 'Lowest', 'bp-member-reviews' ); ?></option>
+		</select>
+	</div>
 	<!-- MODAL FOR USER LOGIN -->
 	<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_attr( BUPR_PLUGIN_URL ); ?>">
+	<input type="hidden" class="member-rating-limit" value="<?php echo $bupr['reviews_per_page']; ?>">
 
 	<div class="bp-member-reviews">
 		<div id="bp-member-reviews-list" cellspacing="0">
