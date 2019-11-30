@@ -1,17 +1,12 @@
 <div class="wrap">
-	<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-	<?php
+	<?php echo do_shortcode( '[wbcom_admin_setting_header]' );
+
 	$request_url_free_plugins = BUPR_PLUGIN_URL . "admin/wbcom/inc/plugins-free.json";
-	$retrieved_free_data      = '';
 	$response_free_plugins    = wp_remote_get( $request_url_free_plugins, array( 'timeout' => 120 ) );
 
 	$request_url_paid_plugins = BUPR_PLUGIN_URL . "admin/wbcom/inc/plugins-paid.json";
-	$retrieved_free_data      = '';
 	$response_paid_plugins    = wp_remote_get( $request_url_paid_plugins, array( 'timeout' => 120 ) );
 
-	$wbcom_setting_obj	 = new Wbcom_Admin_Settings();
-	$free_plugins		 = $wbcom_setting_obj->wbcom_all_free_plugins();
-	$paid_plugins		 = $wbcom_setting_obj->wbcom_all_paid_plugins();
 	?>
 	<h4 class="wbcom-plugin-heading"><?php esc_html_e( 'Free Addons', 'bp-member-reviews' ); ?></h4>
 	<div class="reign-demos-wrapper reign-importer-section">
