@@ -155,13 +155,10 @@ class bupr_single_member_rating_widget extends WP_Widget {
 					echo get_avatar( $final_review_obj[ $buprKey ]->ID, 50 );
 					echo '</div>';
 					echo '<div class="item">';
-
-					if ( $user_anonymous_review != 'yes' ) {
-						$members_profile = bp_core_get_userlink( $final_review_obj[ $buprKey ]->post_author );
-						echo '<div class="item-title fn">';
-						echo $members_profile;
-						echo '</div>';
-					}
+					$members_profile = bp_core_get_userlink( $final_review_obj[ $buprKey ]->post_author );
+					echo '<div class="item-title fn">';
+					echo ( $user_anonymous_review != 'yes' ) ? $members_profile : 'anonymous';
+					echo '</div>';
 
 					$bupr_avg_rating = $buprValue;
 					$stars_on        = $stars_off        = $stars_half       = '';
