@@ -270,21 +270,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			return false;
 		}
 
-		public function bupr_recursive_array_search( $needle, $haystack ) {
-			foreach ( $haystack as $key => $value ) {
-				$current_key = $key;
-				if (
-					$needle === $value
-					or (
-				is_array( $value )
-				&& bupr_recursive_array_search( $needle, $value ) !== false
-					)
-				) {
-					return $current_key;
-				}
-			}
-			return false;
-		}
 
 		/**
 		 * Actions performed to create Review cpt taxonomy
