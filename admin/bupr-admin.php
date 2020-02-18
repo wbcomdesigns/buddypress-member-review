@@ -219,18 +219,71 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		/**
 		 * [bupr_get_review_count description] Function count
 		 *
-		 * @return [type] [description]
+		 * @return [type] [Count on Review menu item ]
 		 */
 		public function bupr_get_review_count() {
 			global $bupr, $menu;
 			if ( $bupr['auto_approve_reviews'] != 'yes' ) {
-				$count = wp_count_posts( 'review' );
-				if ( $count ) {
-					$count      = $count->draft;
-					$count_html = ( $count == 0 ) ? '' : '<span class="awaiting-mod">' . $count . '</span>';
+
+				foreach ( $menu as $each_menu ) {
+					if ( $each_menu[2] == 'edit.php?post_type=review' ) {
+						$count = wp_count_posts( 'review' );
+						if ( $count ) {
+							$count = $count->draft;
+
+							$key = $this->bupr_recursive_array_search( 'edit.php?post_type=review', $menu );
+
+							if ( ! $key ) {
+								return;
+							}
+
+							$menu[ $key ][0] .= sprintf(
+								'<span class="awaiting-mod update-plugins count-%1$s"><span class="plugin-count">%1$s</span></span>',
+								$count
+							);
+						}
+					}
 				}
-				$menu[26][0] = 'Review' . ' ' . $count_html;
 			}
+		}
+
+		/**
+		 * [bupr_recursive_array_search description]
+		 *
+		 * @param  [sting] $needle
+		 * @param  [array] $haystack
+		 * @return [number]  [Return array key.]
+		 */
+		public function bupr_recursive_array_search( $needle, $haystack ) {
+			foreach ( $haystack as $key => $value ) {
+				$current_key = $key;
+				if (
+					$needle === $value
+					or (
+				is_array( $value )
+				&& $this->bupr_recursive_array_search( $needle, $value ) !== false
+					)
+				) {
+					return $current_key;
+				}
+			}
+			return false;
+		}
+
+		public function bupr_recursive_array_search( $needle, $haystack ) {
+			foreach ( $haystack as $key => $value ) {
+				$current_key = $key;
+				if (
+					$needle === $value
+					or (
+				is_array( $value )
+				&& bupr_recursive_array_search( $needle, $value ) !== false
+					)
+				) {
+					return $current_key;
+				}
+			}
+			return false;
 		}
 
 		/**
