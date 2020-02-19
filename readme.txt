@@ -61,6 +61,14 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+
+= 2.2.0 =
+* Fix: Remove redclare function.
+* Fix: (#64) updated message string on bad review.
+* Fix: (#57) Fix admin does not get notification to approve the review.
+* Fix: (#63) Fix filter tabs are not working.
+* Fix: (#62) Fix Anonymous Review
+
 = 2.1.0 =
 * Fix - (#59) Update style
 * Fix - (#53) Member ratings and Top Members ratings UI managed
