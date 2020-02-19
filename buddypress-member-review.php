@@ -113,13 +113,48 @@ function bupr_bp_notifications_for_review() {
 /**
  * Settings link for this plugin.
  *
+ * @param array $links The plugin setting links array.
+ * @return array
  * @author   Wbcom Designs
  * @since    1.0.0
- * @param    array $links    The plugin setting links array.
  */
 function bupr_admin_page_link( $links ) {
 	$page_link = array(
 		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">'. esc_html__( 'Settings', 'bp-member-reviews' ) .'</a>',
 	);
 	return array_merge( $links, $page_link );
+}
+
+/**
+ *  Check if buddypress activate.
+ */
+function bupr_requires_buddypress()
+{
+
+    if ( !class_exists( 'Buddypress' ) ) {
+        deactivate_plugins( plugin_basename( __FILE__ ) );
+        //deactivate_plugins('buddypress-polls/buddypress-polls.php');
+        add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+        unset($_GET['activate']);
+    }
+}
+
+add_action( 'admin_init', 'bupr_requires_buddypress' );
+/**
+ * Throw an Alert to tell the Admin why it didn't activate.
+ *
+ * @author wbcomdesigns
+ * @since  1.0.0
+ */
+function bupr_required_plugin_admin_notice()
+{
+
+    $bpquotes_plugin          = esc_html__('BuddyPress Member Reviews', 'bp-member-reviews');
+    $bp_plugin                = esc_html__('BuddyPress', 'bp-member-reviews');
+    echo '<div class="error"><p>';
+    echo sprintf(esc_html__('%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-member-reviews'), '<strong>' . esc_html($bpquotes_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>');
+    echo '</p></div>';
+    if (isset($_GET['activate']) ) {
+        unset($_GET['activate']);
+    }
 }

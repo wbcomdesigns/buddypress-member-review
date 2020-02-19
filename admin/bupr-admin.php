@@ -27,8 +27,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
+
 			add_action( 'admin_menu', array( $this, 'bupr_add_submenu_page_admin_settings' ) );
-		    add_action( 'admin_init', array( $this, 'bupr_plugin_settings' ) );
+			add_action( 'admin_menu', array( $this, 'bupr_get_review_count' ) );
+			add_action( 'admin_init', array( $this, 'bupr_plugin_settings' ) );
 			add_filter( 'pre_update_option_bupr_admin_settings', array( $this, 'bupr_update_admin_settings' ), 10, 2 );
 			/* Register custom post type review */
 			$bupr_post_types = get_post_types();
@@ -51,20 +53,20 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				$rating_fields  = $new_value['rating_field_name'];
 				$rating_display = $new_value['rating_field_name_display'];
 				$criteria_arr   = array();
-				if ( !empty( $rating_fields ) ) {
+				if ( ! empty( $rating_fields ) ) {
 					foreach ( $rating_fields as $key => $fname ) {
 						if ( array_key_exists( $key, $rating_display ) ) {
-							$criteria_arr[$fname] = 'yes';
+							$criteria_arr[ $fname ] = 'yes';
 						} else {
-							$criteria_arr[$fname] = 'no';
+							$criteria_arr[ $fname ] = 'no';
 						}
 					}
 					unset( $new_value['rating_field_name'] );
 					unset( $new_value['rating_field_name_display'] );
 					$new_value['profile_rating_fields'] = $criteria_arr;
 				}
-			}	
-			return $new_value;		    
+			}
+			return $new_value;
 		}
 
 		/**
@@ -75,9 +77,9 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_submenu_page_admin_settings() {
-			if ( empty ( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+			if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
 				add_menu_page( esc_html__( 'WB Plugins', 'bp-member-reviews' ), esc_html__( 'WB Plugins', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-lightbulb', 59 );
-		 		add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'bp-member-reviews' ), esc_html__( 'General', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins' );
+				add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'bp-member-reviews' ), esc_html__( 'General', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins' );
 			}
 			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'User Reviews', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
@@ -155,7 +157,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @access public
 		 */
 		public function bupr_plugin_settings_tabs() {
-			$current_tab    = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
+			$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
 			// xprofile setup tab.
 			echo '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
 			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
@@ -211,7 +213,63 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				'supports'           => array( 'title', 'editor', 'author', 'thumbnail' ),
 			);
 			register_post_type( 'review', $args );
+
 		}
+
+		/**
+		 * [bupr_get_review_count description] Function count
+		 *
+		 * @return [type] [Count on Review menu item ]
+		 */
+		public function bupr_get_review_count() {
+			global $bupr, $menu;
+			if ( $bupr['auto_approve_reviews'] != 'yes' ) {
+
+				foreach ( $menu as $each_menu ) {
+					if ( $each_menu[2] == 'edit.php?post_type=review' ) {
+						$count = wp_count_posts( 'review' );
+						if ( $count ) {
+							$count = $count->draft;
+
+							$key = $this->bupr_recursive_array_search( 'edit.php?post_type=review', $menu );
+
+							if ( ! $key ) {
+								return;
+							}
+
+							$menu[ $key ][0] .= sprintf(
+								'<span class="awaiting-mod update-plugins count-%1$s"><span class="plugin-count">%1$s</span></span>',
+								$count
+							);
+						}
+					}
+				}
+			}
+		}
+
+		/**
+		 * [bupr_recursive_array_search description]
+		 *
+		 * @param  [sting] $needle
+		 * @param  [array] $haystack
+		 * @return [number]  [Return array key.]
+		 */
+		public function bupr_recursive_array_search( $needle, $haystack ) {
+			foreach ( $haystack as $key => $value ) {
+				$current_key = $key;
+				if (
+					$needle === $value
+					or (
+				is_array( $value )
+				&& $this->bupr_recursive_array_search( $needle, $value ) !== false
+					)
+				) {
+					return $current_key;
+				}
+			}
+			return false;
+		}
+
 
 		/**
 		 * Actions performed to create Review cpt taxonomy

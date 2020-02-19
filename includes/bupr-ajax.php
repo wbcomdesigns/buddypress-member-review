@@ -65,15 +65,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$filter = sanitize_text_field( filter_input( INPUT_POST, 'filter' ) );
 				$limit  = sanitize_text_field( filter_input( INPUT_POST, 'limit' ) );
 
-				/*** Displayed user Reviews start ***/ 
+				/*** Displayed user Reviews start */
 
 				$bupr_avg_rating = 0;
 				/* Gather all the members reviews */
 				$bupr_args = array(
-					'post_type'      => 'review',
-					'post_status'    => 'publish',
-					'category'       => 'bp-member',
-					'meta_query'     => array(
+					'post_type'   => 'review',
+					'post_status' => 'publish',
+					'category'    => 'bp-member',
+					'meta_query'  => array(
 						array(
 							'key'     => 'linked_bp_member',
 							'value'   => bp_displayed_user_id(),
@@ -82,13 +82,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					),
 				);
 
-				/*** Displayed user Reviews end ***/
+				/*** Displayed user Reviews end */
 
-				$reviews                 = get_posts( $bupr_args );		
-				$bupr_total_rating       = 0;
-				$bupr_reviews_count      = count( $reviews );
-				$final_review_arr        = array();
-				$final_review_obj        = array();
+				$reviews            = get_posts( $bupr_args );
+				$bupr_total_rating  = 0;
+				$bupr_reviews_count = count( $reviews );
+				$final_review_arr   = array();
+				$final_review_obj   = array();
 				if ( $bupr_reviews_count != 0 ) {
 					foreach ( $reviews as $review ) {
 						$rate                = 0;
@@ -104,8 +104,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 									}
 								}
 								if ( $reviews_field_count != 0 ) {
-									$final_review_arr[$review->ID] = (int) $rate / $reviews_field_count;
-									$final_review_obj[$review->ID] = $review;
+									$final_review_arr[ $review->ID ] = (int) $rate / $reviews_field_count;
+									$final_review_obj[ $review->ID ] = $review;
 								}
 							}
 						}
@@ -115,7 +115,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				if ( ! empty( $final_review_arr ) ) {
 					if ( 'highest' === $filter ) {
 						arsort( $final_review_arr );
-					} else if ( 'lowest' === $filter ) {
+					} elseif ( 'lowest' === $filter ) {
 						asort( $final_review_arr );
 					} else {
 						$final_review_arr = $final_review_arr;
@@ -144,86 +144,89 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						$review_date_time  = $reviews->post_date;
-						$review_date       = explode( ' ', $review_date_time )[0];
+						$review_date_time      = $reviews->post_date;
+						$review_date           = explode( ' ', $review_date_time )[0];
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
-						$author = $reviews->post->post_author;
-						$html .= '<div class="bupr-row"><div class="bupr-members-profiles"><div class="item-avatar">';
-									if( $anonymous_post_review == 'yes' ){
-										$avatar_url =  bp_core_avatar_default( $type='local',array(
-											'height'  => 96,
-											'width'   => 96,
-											'html'    => true
-										) );
-									$html .= "<img src='".$avatar_url."' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
-									}else{
-										
-										$html .= bp_core_fetch_avatar(
-											array(
-												'item_id' => $author,
-												'height'  => 96,
-												'width'   => 96,
-											)
-										);
-									}
+						$author                = $reviews->post->post_author;
+						$html                 .= '<div class="bupr-row"><div class="bupr-members-profiles"><div class="item-avatar">';
+						if ( $anonymous_post_review == 'yes' ) {
+							$avatar_url = bp_core_avatar_default(
+								$type   = 'local',
+								array(
+									'height' => 96,
+									'width'  => 96,
+									'html'   => true,
+								)
+							);
+							$html .= "<img src='" . $avatar_url . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
+						} else {
+
+							$html .= bp_core_fetch_avatar(
+								array(
+									'item_id' => $author,
+									'height'  => 96,
+									'width'   => 96,
+								)
+							);
+						}
 
 								$html .= '</div><div class="reviewer"><h4>';
-										if( $anonymous_post_review == 'yes' ){
-											$html .= esc_html__( 'anonymous', 'bp-member-reviews' );
-										}else{
-											$html .= wp_kses( bp_core_get_userlink( $author ), $allowedtags );
-										}
+						if ( $anonymous_post_review == 'yes' ) {
+							$html .= esc_html__( 'anonymous', 'bp-member-reviews' );
+						} else {
+							$html .= wp_kses( bp_core_get_userlink( $author ), $allowedtags );
+						}
 
-									$html .= '</h4></div></div><div class="bupr-members-content"><span class="posted-on list"><b>' . esc_html__( 'Posted on ', 'bp-member-reviews' ) . '<time class="entry-date published updated">' .
+									$html           .= '</h4></div></div><div class="bupr-members-content"><span class="posted-on list"><b>' . esc_html__( 'Posted on ', 'bp-member-reviews' ) . '<time class="entry-date published updated">' .
 											esc_attr( date_format( date_create( $review_date ), 'F d, Y' ) ) . '</time></b></span>';
-								$url   = 'view/' . get_the_id();
-								$html .= '<div class="bupr-review-description"><div class="bupr-full-description">';
+								$url                 = 'view/' . get_the_id();
+								$html               .= '<div class="bupr-review-description"><div class="bupr-full-description">';
 										$trimcontent = get_the_content();
-										if ( ! empty( $trimcontent ) ) {
-											$len = strlen( $trimcontent );
-											if ( $len > 150 ) {
-												$shortexcerpt = substr( $trimcontent, 0, 150 );
-												$html .= '<div class="description">' . wpautop( $shortexcerpt ) . '</div>';
-												$html .= '<a href="' . esc_attr( $url ) .'"><i>' . esc_html__( 'read more...', 'bp-member-reviews' ) .'</i></a>';
-											} else {
-												$html .= '<div class="description">' . wpautop( $trimcontent ) . '</div>';
-											}
-										}									
+						if ( ! empty( $trimcontent ) ) {
+							$len = strlen( $trimcontent );
+							if ( $len > 150 ) {
+								$shortexcerpt = substr( $trimcontent, 0, 150 );
+								$html        .= '<div class="description">' . wpautop( $shortexcerpt ) . '</div>';
+								$html        .= '<a href="' . esc_attr( $url ) . '"><i>' . esc_html__( 'read more...', 'bp-member-reviews' ) . '</i></a>';
+							} else {
+								$html .= '<div class="description">' . wpautop( $trimcontent ) . '</div>';
+							}
+						}
 
-										if ( ! empty( $bupr['active_rating_fields'] ) ) {
-											$member_review_rating_fields = $bupr['active_rating_fields'];
-										}
+						if ( ! empty( $bupr['active_rating_fields'] ) ) {
+							$member_review_rating_fields = $bupr['active_rating_fields'];
+						}
 										$bupr_rating_criteria = array();
-										if ( ! empty( $member_review_rating_fields ) ) {
-											foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
-												$bupr_rating_criteria[] = $bupr_keys;
-											}
-										}
+						if ( ! empty( $member_review_rating_fields ) ) {
+							foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
+								$bupr_rating_criteria[] = $bupr_keys;
+							}
+						}
 										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
-										
-										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
-											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
-												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 
-													$html .= '<div class="multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
+						if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
+							foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
+								if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 
-													/*** Star rating Ratings */
-													$stars_on  = $bupr_value;
-													$stars_off = 5 - $stars_on;
-													$html .= '<div class="bupr-col-4 ">';
-													for ( $i = 1; $i <= $stars_on; $i++ ) {
-														$html .= '<span class="fas fa-star bupr-star-rate"></span>';
-													}
+									$html .= '<div class="multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
 
-													for ( $i = 1; $i <= $stars_off; $i++ ) {
-														$html .= '<span class="far fa-star stars bupr-star-rate"></span>';
-													}
-													/*star rating end */
+									/*** Star rating Ratings */
+									$stars_on  = $bupr_value;
+									$stars_off = 5 - $stars_on;
+									$html     .= '<div class="bupr-col-4 ">';
+									for ( $i = 1; $i <= $stars_on; $i++ ) {
+										$html .= '<span class="fas fa-star bupr-star-rate"></span>';
+									}
 
-													$html .= '</div>';
-													$html .= '</div>';
-												}
-											}
+									for ( $i = 1; $i <= $stars_off; $i++ ) {
+										$html .= '<span class="far fa-star stars bupr-star-rate"></span>';
+									}
+									/*star rating end */
+
+									$html .= '</div>';
+									$html .= '</div>';
+								}
+							}
 										endif;
 									$html .= '</div></div></div></div>';
 					endwhile;
@@ -231,29 +234,32 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					$total_pages = $reviews->max_num_pages;
 					if ( $total_pages > 1 ) {
 						$html .= '<div class="bupr-pagination">';
-							/*** Posts pagination ***/
+							/*** Posts pagination */
 							$html .= "<div class='bupr-posts-pagination'>";
-							$html .= wp_kses(paginate_links(
-								array(
-									'base'    => add_query_arg( 'page', '%#%' ),
-									'format'  => '',
-									'current' => max( 1, get_query_var( 'page' ) ),
-									'total'   => $reviews->max_num_pages,
-								)
-							), $allowedposttags);
+							$html .= wp_kses(
+								paginate_links(
+									array(
+										'base'    => add_query_arg( 'page', '%#%' ),
+										'format'  => '',
+										'current' => max( 1, get_query_var( 'page' ) ),
+										'total'   => $reviews->max_num_pages,
+									)
+								),
+								$allowedposttags
+							);
 							$html .= '</div>';
-						$html .= '</div>';
+						$html     .= '</div>';
 					}
 					wp_reset_postdata();
 				} else {
-					$bp_template_option = bp_get_option('_bp_theme_package_id');
-					if( 'nouveau' == $bp_template_option ) {					
+					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+					if ( 'nouveau' == $bp_template_option ) {
 						$html .= '<div id="message" class="info bp-feedback bp-messages bp-template-notice"><span class="bp-icon" aria-hidden="true"></span>';
-					} else {		
+					} else {
 						$html .= '<div id="message" class="info">';
-					}				
-						$html .= '<p>'. sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), $bupr['review_label'] ) . '
-							
+					}
+						$html .= '<p>' . sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), $bupr['review_label'] ) . '
+
 						</p>
 					</div>';
 
@@ -277,13 +283,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				global $bupr;
 				$filter = sanitize_text_field( filter_input( INPUT_POST, 'filter' ) );
 				$limit  = sanitize_text_field( filter_input( INPUT_POST, 'limit' ) );
-				
+
 				/* Gather all the members reviews */
 				$bupr_args = array(
-					'post_type'      => 'review',
-					'post_status'    => 'publish',
-					'category'       => 'bp-member',
-					'meta_query'     => array(
+					'post_type'   => 'review',
+					'post_status' => 'publish',
+					'category'    => 'bp-member',
+					'meta_query'  => array(
 						array(
 							'key'     => 'linked_bp_member',
 							'value'   => bp_displayed_user_id(),
@@ -292,15 +298,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					),
 				);
 
-				/*** Displayed user Reviews end ***/
+				/*** Displayed user Reviews end */
 
-				$reviews                 = get_posts( $bupr_args );
-				$bupr_total_rating       = 0;
-				$bupr_reviews_count      = count( $reviews );
-				$final_review_arr        = array();
-				$final_review_obj        = array();
-				$html                    = '';
-				
+				$reviews            = get_posts( $bupr_args );
+				$bupr_total_rating  = 0;
+				$bupr_reviews_count = count( $reviews );
+				$final_review_arr   = array();
+				$final_review_obj   = array();
+				$html               = '';
+
 				if ( $bupr_reviews_count != 0 ) {
 					foreach ( $reviews as $review ) {
 						$rate                = 0;
@@ -316,8 +322,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 									}
 								}
 								if ( $reviews_field_count != 0 ) {
-									$final_review_arr[$review->ID] = (int) $rate / $reviews_field_count;
-									$final_review_obj[$review->ID] = $review;
+									$final_review_arr[ $review->ID ] = (int) $rate / $reviews_field_count;
+									$final_review_obj[ $review->ID ] = $review;
 								}
 							}
 						}
@@ -326,7 +332,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$bupr_user_count = 0;
 				if ( 'highest' === $filter ) {
 					arsort( $final_review_arr );
-				} else if ( 'lowest' === $filter ) {
+				} elseif ( 'lowest' === $filter ) {
 					asort( $final_review_arr );
 				} else {
 					$final_review_arr = $final_review_arr;
@@ -336,20 +342,20 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					foreach ( $final_review_arr as $buprKey => $buprValue ) {
 						if ( $bupr_user_count == $limit ) {
 							break;
-						} else {				
+						} else {
 							$html .= '<li class="vcard"><div class="item-avatar">';
-							$html .= get_avatar( $final_review_obj[$buprKey]->ID, 65 );
+							$html .= get_avatar( $final_review_obj[ $buprKey ]->ID, 65 );
 							$html .= '</div>';
 							$html .= '<div class="item">';
-							
-							$members_profile = bp_core_get_userlink( $final_review_obj[$buprKey]->post_author );
-							$html .= '<div class="item-title fn">';
-							$html .= $members_profile;
-							$html .= '</div>';
 
-							$bupr_avg_rating    = $buprValue;
-							$stars_on           = $stars_off = $stars_half = '';
-							$remaining          = $bupr_avg_rating - (int) $bupr_avg_rating;
+							$members_profile = bp_core_get_userlink( $final_review_obj[ $buprKey ]->post_author );
+							$html           .= '<div class="item-title fn">';
+							$html           .= $members_profile;
+							$html           .= '</div>';
+
+							$bupr_avg_rating = $buprValue;
+							$stars_on        = $stars_off = $stars_half = '';
+							$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
 							if ( $remaining > 0 ) {
 								$stars_on        = intval( $bupr_avg_rating );
 								$stars_half      = 1;
@@ -362,26 +368,26 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 							$html .= '<div class="item-meta">';
 
-							for ( $i = 1; $i <= $stars_on; $i++ ) {					
-								$html .= '<span class="fas fa-star bupr-star-rate"></span>';								
+							for ( $i = 1; $i <= $stars_on; $i++ ) {
+								$html .= '<span class="fas fa-star bupr-star-rate"></span>';
 							}
 
-							for ( $i = 1; $i <= $stars_half; $i++ ) {					
-								$html .= '<span class="fas fa-star-half-alt bupr-star-rate"></span>';							
+							for ( $i = 1; $i <= $stars_half; $i++ ) {
+								$html .= '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
 							}
 
 							for ( $i = 1; $i <= $stars_off; $i++ ) {
 								$html .= '<span class="far fa-star bupr-star-rate"></span>';
-								
+
 							}
 							$html .= '</div>';
 
 							$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-							$html .= '<span class="bupr-meta">';
-							$html .= sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
-							$html .= '</span>';
-							$html .= '</div></li>';
-							
+							$html           .= '<span class="bupr-meta">';
+							$html           .= sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
+							$html           .= '</span>';
+							$html           .= '</div></li>';
+
 						}
 
 						$bupr_user_count++;
@@ -390,7 +396,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					$html .= '<p>' . esc_html__( 'No member has been rated yet.', 'bp-member-reviews' ) . '</p>';
 				}
 				$result = array(
-					'html'    => $html,
+					'html' => $html,
 				);
 				echo json_encode( $result );
 				die;
@@ -442,7 +448,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 */
 		public function wp_allow_bupr_my_member() {
 			global $bupr;
-			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) == 'allow_bupr_member_review_update' ) {			
+			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) == 'allow_bupr_member_review_update' ) {
 
 				$bupr_rating_criteria = array();
 				if ( ! empty( $bupr['active_rating_fields'] ) ) {
@@ -488,7 +494,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						),
 					),
 				);
-				$reviews_args = new WP_Query( $member_args );
+				$reviews_args     = new WP_Query( $member_args );
 
 				if ( 'no' == $bupr['multi_reviews'] ) {
 					$user_post_count = $reviews_args->post_count;
@@ -518,7 +524,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							'post_type'    => 'review',
 							'post_title'   => $review_subject,
 							'post_content' => $review_desc,
-							'post_status'  => $bupr_reviews_status
+							'post_status'  => $bupr_reviews_status,
 						);
 
 						$review_id = wp_insert_post( $add_review_args );
@@ -531,7 +537,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								$bupr_reciever_email = $bupr_reciever_data->data->user_email;
 								$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
 								$bupr_reciever_login = $bupr_reciever_data->data->user_login;
-								$bupr_review_url     = bp_core_get_user_domain( $bupr_member_id ). 'reviews/view/' . $review_id;
+								$bupr_review_url     = bp_core_get_user_domain( $bupr_member_id ) . 'reviews/view/' . $review_id;
 							}
 
 							/* send notification to member if  notification is enable */
@@ -543,7 +549,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( 'yes' == $bupr['allow_email'] ) {
 								$bupr_to       = $bupr_reciever_email;
 								$bupr_subject  = $review_subject;
-								$bupr_message .= '<p>'. sprintf( esc_html__( 'Welcome ! %s You have a new review on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ) ) . '</p>';
+								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new review on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ) ) . '</p>';
 								$bupr_message .= esc_html__( 'To read your review click on the link given below.', 'bp-member-reviews' );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
@@ -553,9 +559,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 
 							if ( 'no' == $bupr['auto_approve_reviews'] ) {
-								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s. Your %1$s will display on member profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s. Your %1$s will display on member profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							} else {
-								echo sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s!', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							}
 						} else {
 							echo '<p class="bupr-error">';
@@ -565,8 +571,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 						wp_set_object_terms( $review_id, 'BP Member', 'review_category' );
 						update_post_meta( $review_id, 'linked_bp_member', $bupr_member_id );
-						
-						if( 'yes' == $bupr['anonymous_reviews'] ){
+
+						if ( 'yes' == $bupr['anonymous_reviews'] ) {
 							update_post_meta( $review_id, 'bupr_anonymous_review_post', $anonymous_review );
 						}
 						if ( ! empty( $bupr_rated_stars ) ) :
@@ -578,7 +584,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						echo '</p>';
 					}
 				} else {
-					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );					
+					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 				}
 				die;
 			}
