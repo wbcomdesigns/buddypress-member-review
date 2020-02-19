@@ -147,6 +147,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta{
     text-align: center;
     width: 80px;
     float: left;
+    text-align: left;
 }
 .bupr-members-profiles img.avatar{
     max-width: 50px;
@@ -336,7 +337,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta{
 .bupr-bp-member-review-no-popup-add-block #bupr_save_review {
     width: 100%;
     margin: 0;
-    max-width: 148px;
+    max-width: 160px;
     height: auto !important;
 }
 

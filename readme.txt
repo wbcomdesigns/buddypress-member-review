@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 5.2
-Stable tag: 2.0.1
+Tested up to: 5.3.2
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,11 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+= 2.1.0 =
+* Fix - (#59) Update style
+* Fix - (#53) Member ratings and Top Members ratings UI managed
+* Fix - Added rating widget.
+* Fix - (#52)-Date (when the review is posted) issue.
 
 = 2.0.1 =
 * Fix - Compatibility with BuddyPress 4.3.0. #48

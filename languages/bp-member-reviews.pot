@@ -1,14 +1,14 @@
-# Copyright (C) 2019
+# Copyright (C) 2020 
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-07 19:52:23+00:00\n"
+"POT-Creation-Date: 2020-02-14 10:09:58+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Varun Dubey\n"
 "Language-Team: Wbcom Designs\n"
 "Language: en\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"X-Generator: grunt-wp-i18n1.0.1\n"
 
 #: admin/bupr-admin.php:79
 msgid "WB Plugins"
@@ -404,31 +404,39 @@ msgstr ""
 msgid "Please visit %1$s for any query related to plugin and BuddyPress."
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:8
+#: admin/wbcom/templates/wbcom-plugins-page.php:16
 msgid "Free Addons"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:14
+#: admin/wbcom/templates/wbcom-plugins-page.php:32
 msgid "Install"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:18
+#: admin/wbcom/templates/wbcom-plugins-page.php:36
 #: admin/wbcom/wbcom-admin-settings.php:487
 msgid "Activate"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:22
+#: admin/wbcom/templates/wbcom-plugins-page.php:40
 #: admin/wbcom/wbcom-admin-settings.php:488
 msgid "Deactivate"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:50
+#: admin/wbcom/templates/wbcom-plugins-page.php:69
+msgid "No Free Plugins Available"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:76
 msgid "Paid Addons"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:67
+#: admin/wbcom/templates/wbcom-plugins-page.php:104
 #: includes/bupr-filters.php:572
 msgid "View"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:111
+msgid "No Paid Plugins Available"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:3
@@ -646,7 +654,7 @@ msgstr ""
 msgid "It will help to create group type for BuddyPress Groups."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:210 buddypress-member-review.php:88
+#: admin/wbcom/wbcom-admin-settings.php:210 buddypress-member-review.php:89
 msgid "BuddyPress Member Reviews"
 msgstr ""
 
@@ -910,45 +918,75 @@ msgstr ""
 msgid "Themes"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:614 buddypress-member-review.php:121
+#: admin/wbcom/wbcom-admin-settings.php:614 buddypress-member-review.php:122
 msgid "Settings"
 msgstr ""
 
-#: buddypress-member-review.php:89
+#: buddypress-member-review.php:90
 msgid "BuddyPress"
 msgstr ""
 
-#: buddypress-member-review.php:91
+#: buddypress-member-review.php:92
 msgid "%1$s is ineffective now as it requires %2$s to function correctly."
 msgstr ""
 
-#: includes/bupr-ajax.php:193
+#: includes/bupr-ajax.php:172
+#: includes/templates/bupr-reviews-tab-template.php:88
+#: includes/templates/bupr-single-review-template.php:39
+msgid "anonymous"
+msgstr ""
+
+#: includes/bupr-ajax.php:177
+msgid "Posted on "
+msgstr ""
+
+#: includes/bupr-ajax.php:187
+#: includes/templates/bupr-reviews-tab-template.php:118
+msgid "read more..."
+msgstr ""
+
+#: includes/bupr-ajax.php:255
+#: includes/templates/bupr-reviews-tab-template.php:204
+msgid "Sorry, no %1$s were found."
+msgstr ""
+
+#: includes/bupr-ajax.php:381 includes/bupr-shortcodes.php:230
+#: includes/widgets/display-review.php:217
+#: includes/widgets/member-rating.php:184
+msgid "Rating : ( %1$s )"
+msgstr ""
+
+#: includes/bupr-ajax.php:390 includes/widgets/member-rating.php:193
+msgid "No member has been rated yet."
+msgstr ""
+
+#: includes/bupr-ajax.php:546
 msgid "Welcome ! %s You have a new review on your profile."
 msgstr ""
 
-#: includes/bupr-ajax.php:194
+#: includes/bupr-ajax.php:547
 msgid "To read your review click on the link given below."
 msgstr ""
 
-#: includes/bupr-ajax.php:203
+#: includes/bupr-ajax.php:556
 msgid ""
 "Thank you for taking the time to write this wonderful %1$s. Your %1$s will "
 "display on member profile after moderator approval."
 msgstr ""
 
-#: includes/bupr-ajax.php:205
+#: includes/bupr-ajax.php:558
 msgid "Thank you for taking the time to write this wonderful %1$s!"
 msgstr ""
 
-#: includes/bupr-ajax.php:209
+#: includes/bupr-ajax.php:562
 msgid "Please try again!"
 msgstr ""
 
-#: includes/bupr-ajax.php:224
+#: includes/bupr-ajax.php:577
 msgid "Please select a member."
 msgstr ""
 
-#: includes/bupr-ajax.php:228
+#: includes/bupr-ajax.php:581
 msgid "You already posted a %1$s for this member."
 msgstr ""
 
@@ -1005,74 +1043,76 @@ msgstr ""
 msgid "There was a problem performing the action."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:232 includes/widgets/display-review.php:218
-msgid "Rating : ( %1$s )"
-msgstr ""
-
-#: includes/bupr-shortcodes.php:234 includes/widgets/display-review.php:220
+#: includes/bupr-shortcodes.php:232 includes/widgets/display-review.php:219
 msgid "Total %1$s : %2$s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:242 includes/widgets/display-review.php:229
+#: includes/bupr-shortcodes.php:240 includes/widgets/display-review.php:227
 msgid "No member has been reviewed yet."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:346
+#: includes/bupr-shortcodes.php:344
 msgid "You already posted a %s for this member."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:387
+#: includes/bupr-shortcodes.php:385
 msgid "Fill in details to submit %s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:393
+#: includes/bupr-shortcodes.php:391
 msgid "--Select--"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:402 includes/bupr-shortcodes.php:407
-#: includes/bupr-shortcodes.php:409 includes/bupr-shortcodes.php:433
+#: includes/bupr-shortcodes.php:400 includes/bupr-shortcodes.php:405
+#: includes/bupr-shortcodes.php:407 includes/bupr-shortcodes.php:431
 msgid "This field is required."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:407
+#: includes/bupr-shortcodes.php:405
 msgid "Review Subject"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:409
+#: includes/bupr-shortcodes.php:407
 msgid "%s Description"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:444
+#: includes/bupr-shortcodes.php:442
 msgid "Send %s anonymously."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:451
+#: includes/bupr-shortcodes.php:449
 msgid "Submit %s"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:80
-#: includes/templates/bupr-single-review-template.php:39
-msgid "anonymous"
+#: includes/templates/bupr-reviews-tab-template.php:40
+#: includes/widgets/member-rating.php:128
+#: includes/widgets/member-rating.php:249
+msgid "Latest"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:102
-msgid "read more..."
+#: includes/templates/bupr-reviews-tab-template.php:41
+#: includes/widgets/member-rating.php:129
+#: includes/widgets/member-rating.php:250
+msgid "Highest"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:188
-msgid "Sorry, no %1$s were found."
+#: includes/templates/bupr-reviews-tab-template.php:42
+#: includes/widgets/member-rating.php:130
+#: includes/widgets/member-rating.php:251
+msgid "Lowest"
 msgstr ""
 
+#: includes/templates/bupr-reviews-tab-template.php:101
 #: includes/templates/bupr-single-review-template.php:68
 msgid "Posted on"
 msgstr ""
 
-#: includes/widgets/display-review.php:15
-msgid "Display members list according to members reviews "
+#: includes/widgets/display-review.php:14
+msgid "Display members list according to members reviews."
 msgstr ""
 
-#: includes/widgets/display-review.php:22
-msgid " Top Members : Display members list accoding to reviews"
+#: includes/widgets/display-review.php:21
+msgid "BP Member Review Widget"
 msgstr ""
 
 #: includes/widgets/display-review.php:259
@@ -1080,10 +1120,12 @@ msgid "Top Members"
 msgstr ""
 
 #: includes/widgets/display-review.php:272
+#: includes/widgets/member-rating.php:239
 msgid "Enter Title"
 msgstr ""
 
 #: includes/widgets/display-review.php:276
+#: includes/widgets/member-rating.php:243
 msgid "Display Members"
 msgstr ""
 
@@ -1097,6 +1139,22 @@ msgstr ""
 
 #: includes/widgets/display-review.php:296
 msgid "Display Avatar "
+msgstr ""
+
+#: includes/widgets/member-rating.php:14
+msgid "Display displayed member ratings."
+msgstr ""
+
+#: includes/widgets/member-rating.php:21
+msgid "BP Displayed Member Rating Widget"
+msgstr ""
+
+#: includes/widgets/member-rating.php:45
+msgid "%s's Ratings"
+msgstr ""
+
+#: includes/widgets/member-rating.php:247
+msgid "Default ratings to show:"
 msgstr ""
 
 #: admin/bupr-admin.php:225
