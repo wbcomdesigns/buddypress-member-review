@@ -128,15 +128,6 @@ ul.bupr-member-main li.bupr-members .bupr-meta{
     margin-top: 5px;
 }
 
-.members{
-    /*    text-transform: capitalize;*/
-    text-align:left;
-    padding:0px;
-}
-.members p{
-    margin:5px 0px!important;
-}
-
 .bupr-modal-msg{
     margin: 50px 0px;
     text-align: center;
