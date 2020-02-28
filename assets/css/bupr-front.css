@@ -129,7 +129,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta{
 }
 
 .members{
-    text-transform: capitalize;
+    /*    text-transform: capitalize;*/
     text-align:left;
     padding:0px;
 }
