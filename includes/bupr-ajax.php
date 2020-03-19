@@ -559,7 +559,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 
 							if ( 'no' == $bupr['auto_approve_reviews'] ) {
-								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s. Your %1$s will display on member profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+								echo sprintf( esc_html__( 'Thank you for taking time to write this %1$s. Your %1$s will display on members\' profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							} else {
 								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							}
