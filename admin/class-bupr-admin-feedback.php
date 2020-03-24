@@ -147,7 +147,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 				$install_date = get_site_option( $this->date_option );
 
 				// If difference between install date and now is greater than time limit, then display notice.
-				if ( ( time() - $install_date ) < $this->time_limit ) {
+				if ( ( time() - $install_date ) > $this->time_limit ) {
 					add_action( 'admin_notices', array( $this, 'display_admin_notice' ) );
 				}
 			}
