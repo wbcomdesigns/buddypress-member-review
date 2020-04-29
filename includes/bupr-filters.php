@@ -40,8 +40,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 
-			/* Add review link at member's directory if option admin setting is enabled. */
-			add_action( 'bp_directory_members_actions', array( $this, 'bupr_view_review_button_on_member_directory' ) );
+			/*
+			 Add review link at member's directory if option admin setting is enabled. */
+			// add_action( 'bp_directory_members_actions', array( $this, 'bupr_view_review_button_on_member_directory' ) );
 			add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 		}
@@ -194,32 +195,34 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_add_review_button_on_member_header() {
 			global $bp;
 			global $bupr;
-			$review_div      = 'form';
-			if( bp_is_user() ){
+			$review_div = 'form';
+			if ( bp_is_user() ) {
 				$member_id = bp_displayed_user_id();
-			}else{
+			} else {
 				$member_id = bp_get_member_user_id();
 			}
 
 			if ( ! empty( $bupr['exclude_members'] ) ) {
 				if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr['exclude_members'] ) ) {
-					$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews/add-review';
-					$bp_template_option = bp_get_option('_bp_theme_package_id');
-						if( 'nouveau' == $bp_template_option ) { ?>
+					$review_url         = bp_core_get_userlink( $member_id, false, true ) . 'reviews/add-review';
+					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+					if ( 'nouveau' == $bp_template_option ) {
+						?>
 							<li id="bupr-add-review-btn" class="generic-button">
 						<?php } else { ?>
 							<div id="bupr-add-review-btn" class="generic-button">
-						<?php } ?>		
+						<?php } ?>
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 									<?php
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 									?>
 								</a>
-						<?php if( 'nouveau' == $bp_template_option ) { ?>		
+						<?php if ( 'nouveau' == $bp_template_option ) { ?>
 							</li>
 						<?php } else { ?>
-						    </div>	
-					<?php }
+							</div>
+							<?php
+						}
 				}
 			} else {
 				if ( $member_id != bp_loggedin_user_id() ) {
@@ -244,14 +247,15 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
+		/*
 		public function bupr_view_review_button_on_member_directory() {
 			global $bp;
 			global $bupr;
-			if( 'yes' == $bupr['dir_view_review_btn'] ) {
-				$review_div      = 'form';
-				if( bp_is_user() ){
+			if ( 'yes' == $bupr['dir_view_review_btn'] ) {
+				$review_div = 'form';
+				if ( bp_is_user() ) {
 					$member_id = bp_displayed_user_id();
-				}else{
+				} else {
 					$member_id = bp_get_member_user_id();
 				}
 
@@ -284,6 +288,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 			}
 		}
+		*/
 
 		/**
 		 * Setup Reviews link in admin bar.
@@ -486,7 +491,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
 					$review_url             = bp_core_get_userlink( $linked_bp_member, false, true ) . 'reviews/view/' . $post->ID;
-					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">'. sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
+					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
 					if ( $post->post_status == 'draft' ) {
@@ -633,6 +638,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 		/**
 		 * Action performed to show the content of add review tab
+		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
@@ -644,17 +650,17 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( is_user_logged_in() ) {
 					do_shortcode( '[add_profile_review_form]' );
 				} else {
-					$bp_template_option = bp_get_option('_bp_theme_package_id');
-						if( 'nouveau' == $bp_template_option ) {
-					?>
+					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+					if ( 'nouveau' == $bp_template_option ) {
+						?>
 					<div id="message" class="info bp-feedback bp-messages bp-template-notice">
 						<span class="bp-icon" aria-hidden="true"></span>
 					<?php } else { ?>
 						<div id="message" class="info">
-					<?php } ?>			
-						<p><?php esc_html_e( 'You must login!', 'bp-member-reviews' ); ?>		
+					<?php } ?>
+						<p><?php esc_html_e( 'You must login!', 'bp-member-reviews' ); ?>
 						</p>
-					</div>				
+					</div>
 					<?php } ?>
 			</div>
 			<?php

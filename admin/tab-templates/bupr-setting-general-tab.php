@@ -69,20 +69,20 @@ foreach ( get_users() as $user ) {
 						<p class="description"><?php esc_html_e( 'Enable this option, if you want to show ratings at member directory page.', 'bp-member-reviews' ); ?></p>
 					</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th scope="row">
 						<label for="bupr_member_dir_add_reviews">
-							<?php esc_html_e( 'Add view review link at member directory', 'bp-member-reviews' ); ?>
+							<?php // esc_html_e( 'Add view review link at member directory', 'bp-member-reviews' ); ?>
 						</label>
 					</th>
 					<td>
 						<label class="bupr-switch">
-							<input type="checkbox" id="bupr_member_dir_add_reviews" name="bupr_admin_general_options[bupr_member_dir_add_reviews]" <?php checked( esc_attr( $bupr['dir_view_review_btn'] ), 'yes' ); ?> value="yes">
+							<input type="checkbox" id="bupr_member_dir_add_reviews" name="bupr_admin_general_options[bupr_member_dir_add_reviews]" <?php // checked( esc_attr( $bupr['dir_view_review_btn'] ), 'yes' ); ?> value="yes">
 							<div class="bupr-slider bupr-round"></div>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable this option for Add Review link at member directory.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php // esc_html_e( 'Enable this option for Add Review link at member directory.', 'bp-member-reviews' ); ?></p>
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th scope="row">
 						<label for="bupr_allow_email">
@@ -135,19 +135,20 @@ foreach ( get_users() as $user ) {
 							if ( $bupr_member_data ) {
 								foreach ( $bupr_member_data as $bupr_member_id => $bupr_member_name ) {
 									if ( ! empty( $bupr['exclude_members'] ) ) {
-										if ( in_array( $bupr_member_id, $bupr['exclude_members'] ) ) { ?>
+										if ( in_array( $bupr_member_id, $bupr['exclude_members'] ) ) {
+											?>
 													<option value="<?php echo esc_attr( $bupr_member_id ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo $bupr_member_name; ?></option>
 													<?php } else { ?>
 													<option value="<?php echo $bupr_member_id; ?>"><?php echo $bupr_member_name; ?></option>
 													<?php
-												}
+													}
 									} else {
 										?>
 													<option value="<?php echo $bupr_member_id; ?>"><?php echo $bupr_member_name; ?></option>
 													<?php
-											}
-										}
 									}
+								}
+							}
 							?>
 						</select>
 						<p class="description"><?php esc_html_e( "This option lets you choose those members whom you don't want to provide review functionality.", 'bp-member-reviews' ); ?></p>
