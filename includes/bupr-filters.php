@@ -47,6 +47,20 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 		}
 
+		/**
+		 * Get displayed user role
+		 *
+		 * @since    2.3.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
+		public function bupr_get_current_user_roles( $user_id ) {
+			if ( is_user_logged_in() ) {
+				$user  = get_userdata( $user_id );
+				$roles = $user->roles;
+				return $roles; // This returns an array
+			}
+		}
 
 		/**
 		 * To add default criteria review settings.
@@ -193,6 +207,18 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_review_button_on_member_header() {
+			if ( is_user_logged_in() ) {
+				if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
+
+					$this->bupr_members_right_to_review();
+
+				} else {
+
+					$this->bupr_members_right_to_take_review();
+
+				}
+			}
+			/*
 			global $bp;
 			global $bupr;
 			$review_div = 'form';
@@ -201,9 +227,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			} else {
 				$member_id = bp_get_member_user_id();
 			}
-
-			if ( ! empty( $bupr['exclude_members'] ) ) {
-				if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr['exclude_members'] ) ) {
+			$user_role = $this->bupr_get_current_user_roles( $member_id );
+			if ( ! empty( $bupr['exclude_given_members'] ) ) {
+				/* Exclude members who can take reviews */
+				/*
+				if ( in_array( $user_role[0], $bupr['exclude_given_members'] ) ) {
 					$review_url         = bp_core_get_userlink( $member_id, false, true ) . 'reviews/add-review';
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 					if ( 'nouveau' == $bp_template_option ) {
@@ -224,7 +252,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 						}
 				}
-			} else {
+			} /*
+			else {
 				if ( $member_id != bp_loggedin_user_id() ) {
 					$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews/add-review';
 					?>
@@ -237,7 +266,82 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					</div>
 					<?php
 				}
+			}*/
+		}
+
+		/**
+		 * Map members who can give review by member role.
+		 */
+		public function bupr_members_right_to_review() {
+			global $bp, $bupr;
+
+			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
+				if ( ! empty( $bupr['exclude_given_members'] ) ) {
+					$user_id   = bp_loggedin_user_id();
+					$user_role = $this->bupr_get_current_user_roles( $user_id );
+					if ( in_array( $user_role[0], $bupr['exclude_given_members'] ) ) {
+						$review_url         = bp_core_get_userlink( $user_id, false, true ) . 'reviews/add-review';
+						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+						if ( 'nouveau' == $bp_template_option ) {
+							?>
+							<li id="bupr-add-review-btn" class="generic-button">
+							<?php } else { ?>
+							<div id="bupr-add-review-btn" class="generic-button">
+						<?php } ?>
+								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
+									<?php
+									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+									?>
+								</a>
+							<?php if ( 'nouveau' == $bp_template_option ) { ?>
+							</li>
+						<?php } else { ?>
+							</div>
+								<?php
+						}
+					}
+				}
 			}
+
+		}
+
+		/**
+		 * Members whom can only take reviews
+		 *
+		 * @return [type] [description]
+		 */
+		public function bupr_members_right_to_take_review() {
+			global $bp, $bupr;
+
+			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
+
+				if ( ! empty( $bupr['add_taken_members'] ) ) {
+					$user_id   = bp_displayed_user_id();
+					$user_role = $this->bupr_get_current_user_roles( $user_id );
+					if ( in_array( $user_role[0], $bupr['add_taken_members'] ) ) {
+						$review_url         = bp_core_get_userlink( $user_id, false, true ) . 'reviews/add-review';
+						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+						if ( 'nouveau' == $bp_template_option ) {
+							?>
+							<li id="bupr-add-review-btn" class="generic-button">
+							<?php } else { ?>
+							<div id="bupr-add-review-btn" class="generic-button">
+						<?php } ?>
+								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
+									<?php
+									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+									?>
+								</a>
+							<?php if ( 'nouveau' == $bp_template_option ) { ?>
+							</li>
+						<?php } else { ?>
+							</div>
+								<?php
+						}
+					}
+				}
+			}
+
 		}
 
 		/**
@@ -247,11 +351,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		/*
+		 /*
 		public function bupr_view_review_button_on_member_directory() {
 			global $bp;
 			global $bupr;
-			if ( 'yes' == $bupr['dir_view_review_btn'] ) {
+			if ( 'no' == $bupr['dir_view_review_btn'] ) {
 				$review_div = 'form';
 				if ( bp_is_user() ) {
 					$member_id = bp_displayed_user_id();
@@ -259,8 +363,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$member_id = bp_get_member_user_id();
 				}
 
-				if ( ! empty( $bupr['exclude_members'] ) ) {
-					if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr['exclude_members'] ) ) {
+				if ( ! empty( $bupr['exclude_given_members'] ) ) {
+					if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr['exclude_given_members'] ) ) {
 						$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews';
 						?>
 						<div id="bupr-view-review-btn" class="generic-button">
@@ -287,8 +391,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					}
 				}
 			}
-		}
-		*/
+		}*/
+
 
 		/**
 		 * Setup Reviews link in admin bar.
@@ -528,7 +632,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			global $bupr;
 			$bp_pages    = bp_core_get_directory_pages();
 			$member_slug = $bp_pages->members->slug;
-			if ( ! empty( $bupr['exclude_members'] ) && in_array( bp_displayed_user_id(), $bupr['exclude_members'] ) ) {
+
+			if ( ! empty( $bupr['exclude_given_members'] ) && in_array( $user_role[0], $bupr['exclude_given_members'] ) ) {
 
 			} else {
 				/* count member's review */
@@ -585,18 +690,38 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				);
 
 				// Add subnav to add a review.
-				if ( bp_displayed_user_id() !== get_current_user_id() ) {
-					bp_core_new_subnav_item(
-						array(
-							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
-							'slug'            => 'add-review',
-							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
-							'parent_slug'     => $parent_slug,
-							'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
-							'position'        => 200,
-							'link'            => site_url() . "/$member_slug/$name/$parent_slug/add-review/",
-						)
-					);
+				if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
+					$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
+
+					if ( ! empty( $bupr['exclude_given_members'] ) && in_array( $user_role[0], $bupr['exclude_given_members'] ) ) {
+						bp_core_new_subnav_item(
+							array(
+								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
+								'slug'            => 'add-review',
+								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
+								'parent_slug'     => $parent_slug,
+								'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
+								'position'        => 200,
+								'link'            => site_url() . "/$member_slug/$name/$parent_slug/add-review/",
+							)
+						);
+					}
+				} else {
+					$user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
+					if ( ! empty( $bupr['add_taken_members'] ) && in_array( $user_role[0], $bupr['add_taken_members'] ) ) {
+						bp_core_new_subnav_item(
+							array(
+								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
+								'slug'            => 'add-review',
+								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
+								'parent_slug'     => $parent_slug,
+								'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
+								'position'        => 200,
+								'link'            => site_url() . "/$member_slug/$name/$parent_slug/add-review/",
+							)
+						);
+
+					}
 				}
 			}
 		}
