@@ -33,7 +33,9 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			$this->slug = $this->_bupr_component_name;
 
 			parent::start(
-				$this->_bupr_component_name, esc_html__( 'Member Reviews', 'bp-member-reviews' ), dirname( __FILE__ )
+				$this->_bupr_component_name,
+				esc_html__( 'Member Reviews', 'bp-member-reviews' ),
+				dirname( __FILE__ )
 			);
 
 			buddypress()->active_components[ $this->_bupr_component_name ] = '1';
@@ -126,17 +128,17 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 			$admin_id       = bp_displayed_user_id();
 			$post_author_id = get_post_field( 'post_author', $review_id );
 			$admin_info     = get_userdata( $member_id );
-			
+
 			if ( $admin_info ) {
-				$admin_name  = $admin_info->user_login;
+				$admin_name = $admin_info->user_login;
 			} else {
-				$admin_name  = '';
+				$admin_name = '';
 			}
-			
+
 			$user_info = get_userdata( $post_author_id );
 			$user_name = '';
 			if ( $user_info ) {
-				$user_name = $user_info->display_name;		
+				$user_name = $user_info->display_name;
 			}
 
 			$notification_link    = home_url() . '/members/' . $admin_name . '/reviews/view/' . $review_id;
@@ -156,6 +158,7 @@ if ( ! class_exists( 'BUPR_Notifications' ) ) {
 	}
 }
 
+/*
 add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_format_notifications', 10, 5 );
 /**
  * Formatting notifications for review when added.
@@ -169,6 +172,7 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_format_notifica
  * @param    string $format        Format.
  * @author   Wbcom Designs
  */
+/*
 function bupr_format_notifications( $action, $item_id, $secondary_item_id, $user_id, $format = 'string' ) {
 	if ( bp_is_active( 'notifications' ) ) {
 		switch ( $action ) {
@@ -185,3 +189,4 @@ function bupr_format_notifications( $action, $item_id, $secondary_item_id, $user
 		}
 	}
 }
+*/
