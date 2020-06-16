@@ -57,7 +57,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_get_current_user_roles( $user_id ) {
 			if ( is_user_logged_in() ) {
 				$user  = get_userdata( $user_id );
-				$roles = $user->roles;
+				$roles = array();
+				if ( is_object( $user ) ) {
+					$roles = $user->roles;
+				}
 				return $roles; // This returns an array
 			}
 		}
@@ -777,7 +780,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				if ( ! empty( $bupr['add_taken_members'] ) ) {
 					$user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
-
 					if ( in_array( $user_role[0], $bupr['add_taken_members'] ) ) {
 						bp_core_new_subnav_item(
 							array(

@@ -69,6 +69,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 				'includes/widgets/display-review.php',
 				'includes/widgets/member-rating.php',
 				'includes/bupr-ajax.php',
+				'includes/bupr-notification.php'
 			);
 
 			foreach ( $include_files as $include_file ) {
@@ -96,7 +97,7 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 	}
 }
 
-add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
+//add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
 
 /**
  * BuddyPress member reviews notification.
@@ -104,11 +105,11 @@ add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
  * @author   Wbcom Designs
  * @since    1.0.0
  */
-function bupr_bp_notifications_for_review() {
-	include 'includes/bupr-notification.php';
-	buddypress()->bupr_bp_review                        = new BUPR_Notifications();
-	buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
-}
+// function bupr_bp_notifications_for_review() {
+// 	include 'includes/bupr-notification.php';
+// 	buddypress()->bupr_bp_review                        = new BUPR_Notifications();
+// 	buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
+// }
 
 /**
  * Settings link for this plugin.
