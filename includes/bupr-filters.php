@@ -273,8 +273,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_members_right_to_review() {
 			global $bp, $bupr;
-			$user_id   = bp_loggedin_user_id();
-			$user_role = $this->bupr_get_current_user_roles( $user_id );
+			$review_div = 'form';
+			$user_id    = bp_loggedin_user_id();
+			$user_role  = $this->bupr_get_current_user_roles( $user_id );
 
 			if ( ! in_array( $user_role[0], $bupr['exclude_given_members'] ) ) {
 				return;
@@ -778,8 +779,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					return;
 				}
 
-				if ( ! empty( $bupr['add_taken_members'] ) ) {
-					$user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
+				if ( ! empty( $bupr['add_taken_members'] ) && ! empty( $user_role ) ) {
+					// $user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
+
 					if ( in_array( $user_role[0], $bupr['add_taken_members'] ) ) {
 						bp_core_new_subnav_item(
 							array(
