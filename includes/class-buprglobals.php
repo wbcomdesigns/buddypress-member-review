@@ -39,11 +39,15 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_review_globals() {
-			global $bupr;
+			global $bupr,$wp_roles;
 			$bupr_general_settings  = get_option( 'bupr_admin_general_options' );
 			$bupr_criteria_settings = get_option( 'bupr_admin_settings' );
 			$bupr_display_settings  = get_option( 'bupr_admin_display_options' );
-
+			$name = array();
+			foreach( $wp_roles->roles as $role => $details ){
+				$name[] = $role;
+			}
+			
 			/**** Global variable values for General settings */
 			if ( ! empty( $bupr_general_settings ) ) {
 				if ( array_key_exists( 'bupr_auto_approve_reviews', $bupr_general_settings ) ) {
@@ -114,8 +118,8 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				$reviews_per_page      = 3;
 				$allow_email           = 'yes';
 				$allow_notification    = 'yes';
-				$exclude_given_members = array();
-				$add_taken_members     = array();
+				$exclude_given_members = $name;
+				$add_taken_members     = $name;
 				$auto_approve_reviews  = 'yes';
 			}
 
@@ -181,7 +185,6 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'multi_criteria_allowed' => $bupr_multi_criteria_allowed,
 				'active_rating_fields'   => $active_rating_fields,
 			);
-
 		}
 
 	}
