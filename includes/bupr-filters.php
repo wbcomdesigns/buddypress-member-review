@@ -780,7 +780,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 
 				if ( ! empty( $bupr['add_taken_members'] ) && ! empty( $user_role ) ) {
-					// $user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
+					$user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
 
 					if ( in_array( $user_role[0], $bupr['add_taken_members'] ) ) {
 						bp_core_new_subnav_item(
