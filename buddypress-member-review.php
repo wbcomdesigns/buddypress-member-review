@@ -69,6 +69,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 				'includes/widgets/display-review.php',
 				'includes/widgets/member-rating.php',
 				'includes/bupr-ajax.php',
+				'includes/bupr-notification.php'
 			);
 
 			foreach ( $include_files as $include_file ) {
@@ -96,7 +97,7 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 	}
 }
 
-add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
+//add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
 
 /**
  * BuddyPress member reviews notification.
@@ -104,11 +105,11 @@ add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
  * @author   Wbcom Designs
  * @since    1.0.0
  */
-function bupr_bp_notifications_for_review() {
-	include 'includes/bupr-notification.php';
-	buddypress()->bupr_bp_review                        = new BUPR_Notifications();
-	buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
-}
+// function bupr_bp_notifications_for_review() {
+// 	include 'includes/bupr-notification.php';
+// 	buddypress()->bupr_bp_review                        = new BUPR_Notifications();
+// 	buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
+// }
 
 /**
  * Settings link for this plugin.
@@ -120,7 +121,7 @@ function bupr_bp_notifications_for_review() {
  */
 function bupr_admin_page_link( $links ) {
 	$page_link = array(
-		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">'. esc_html__( 'Settings', 'bp-member-reviews' ) .'</a>',
+		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">' . esc_html__( 'Settings', 'bp-member-reviews' ) . '</a>',
 	);
 	return array_merge( $links, $page_link );
 }
@@ -128,15 +129,13 @@ function bupr_admin_page_link( $links ) {
 /**
  *  Check if buddypress activate.
  */
-function bupr_requires_buddypress()
-{
-
-    if ( !class_exists( 'Buddypress' ) ) {
-        deactivate_plugins( plugin_basename( __FILE__ ) );
-        //deactivate_plugins('buddypress-polls/buddypress-polls.php');
-        add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-        unset($_GET['activate']);
-    }
+function bupr_requires_buddypress() {
+	if ( ! class_exists( 'Buddypress' ) ) {
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+		// deactivate_plugins('buddypress-polls/buddypress-polls.php');
+		add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+		unset( $_GET['activate'] );
+	}
 }
 
 add_action( 'admin_init', 'bupr_requires_buddypress' );
@@ -146,15 +145,13 @@ add_action( 'admin_init', 'bupr_requires_buddypress' );
  * @author wbcomdesigns
  * @since  1.0.0
  */
-function bupr_required_plugin_admin_notice()
-{
-
-    $bpquotes_plugin          = esc_html__('BuddyPress Member Reviews', 'bp-member-reviews');
-    $bp_plugin                = esc_html__('BuddyPress', 'bp-member-reviews');
-    echo '<div class="error"><p>';
-    echo sprintf(esc_html__('%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-member-reviews'), '<strong>' . esc_html($bpquotes_plugin) . '</strong>', '<strong>' . esc_html($bp_plugin) . '</strong>');
-    echo '</p></div>';
-    if (isset($_GET['activate']) ) {
-        unset($_GET['activate']);
-    }
+function bupr_required_plugin_admin_notice() {
+	$bpquotes_plugin = esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' );
+	$bp_plugin       = esc_html__( 'BuddyPress', 'bp-member-reviews' );
+	echo '<div class="error"><p>';
+	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-member-reviews' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
+	echo '</p></div>';
+	if ( isset( $_GET['activate'] ) ) {
+		unset( $_GET['activate'] );
+	}
 }

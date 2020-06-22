@@ -25,19 +25,22 @@ if ( ! empty( $review_id ) ) {
 	$member_profile    = bp_core_get_userlink( $author_id );
 	$review_author_url = home_url() . '/author/' . $review_author;
 	$review_date_time  = $review->post_date;
-	$review_date       = explode( ' ', $review_date_time )[0];
+	$review_date       = human_time_diff( strtotime( $review_date_time ), current_time( 'timestamp' ) ) . ' ago';
 
 	$anonymous_post_review = get_post_meta( $review_id, 'bupr_anonymous_review_post', true );
 
 	/* Hide user avatar and username if it was a anonymous review. */
-	if( $anonymous_post_review == 'yes' ){
-			$avatar =  bp_core_avatar_default( $type='local',array(
-				'height'  => 96,
-				'width'   => 96,
-				'html'    => false
-			));
-			$member_profile	= esc_html__( 'anonymous', 'bp-member-reviews' );						
-	}else{
+	if ( $anonymous_post_review == 'yes' ) {
+			$avatar   = bp_core_avatar_default(
+				$type = 'local',
+				array(
+					'height' => 96,
+					'width'  => 96,
+					'html'   => false,
+				)
+			);
+			$member_profile = esc_html__( 'anonymous', 'bp-member-reviews' );
+	} else {
 		// Author Thumbnail.
 		$avatar = bp_core_fetch_avatar(
 			array(
@@ -51,7 +54,7 @@ if ( ! empty( $review_id ) ) {
 		<!-- wbcom Display members review on review tab -->
 		<div class="bgr-single-review">
 			<article id="post-<?php echo esc_attr( $review_id ); ?>" class="post-<?php echo esc_attr( $review_id ); ?> post type-review status-publish format-standard hentry bupr-single-reivew">
-				<div class="bupr-row">	
+				<div class="bupr-row">
 					<div class="bupr-members-profiles">
 						<div class="author">
 							<img src="<?php echo esc_url( $avatar ); ?>" class="avatar user-<?php echo esc_attr( $author ); ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo esc_attr( $review_author ); ?>" width="50" height="50">
@@ -67,13 +70,13 @@ if ( ! empty( $review_id ) ) {
 							<b>
 								<?php esc_html_e( 'Posted on', 'bp-member-reviews' ); ?>
 								<time class="entry-date published updated">
-									<?php echo esc_attr( date_format( date_create( $review_date ), 'F d, Y' ) ); ?>
+									<?php echo esc_html( $review_date ); ?>
 								</time>
 							</b>
 						</span>
 						<div class="bupr-col-12 description"><?php echo wp_kses( $review->post_content, $allowedposttags ); ?></div>
 						<?php
-						$bupr_rating_criteria        = array();
+						$bupr_rating_criteria = array();
 						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							foreach ( $bupr['active_rating_fields'] as $bupr_keys => $bupr_fields ) {
 								$bupr_rating_criteria[] = $bupr_keys;

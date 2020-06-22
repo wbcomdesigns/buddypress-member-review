@@ -11,12 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 /* admin setting on dashboard */
 global $bupr;
-/* get all user for exclude for review */
-$bupr_member_data = array();
-foreach ( get_users() as $user ) {
-	$bupr_key                      = $user->data->ID;
-	$bupr_member_data[ $bupr_key ] = $user->data->display_name;
-}
+/*
+ get all user for exclude for review */
+ $user_roles = array_reverse( get_editable_roles() );
 
 ?>
 <div class="wbcom-tab-content">
@@ -69,20 +66,20 @@ foreach ( get_users() as $user ) {
 						<p class="description"><?php esc_html_e( 'Enable this option, if you want to show ratings at member directory page.', 'bp-member-reviews' ); ?></p>
 					</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th scope="row">
 						<label for="bupr_member_dir_add_reviews">
-							<?php esc_html_e( 'Add view review link at member directory', 'bp-member-reviews' ); ?>
+							<?php // esc_html_e( 'Add view review link at member directory', 'bp-member-reviews' ); ?>
 						</label>
 					</th>
 					<td>
 						<label class="bupr-switch">
-							<input type="checkbox" id="bupr_member_dir_add_reviews" name="bupr_admin_general_options[bupr_member_dir_add_reviews]" <?php checked( esc_attr( $bupr['dir_view_review_btn'] ), 'yes' ); ?> value="yes">
+							<input type="checkbox" id="bupr_member_dir_add_reviews" name="bupr_admin_general_options[bupr_member_dir_add_reviews]" <?php // checked( esc_attr( $bupr['dir_view_review_btn'] ), 'yes' ); ?> value="yes">
 							<div class="bupr-slider bupr-round"></div>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable this option for Add Review link at member directory.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php // esc_html_e( 'Enable this option for Add Review link at member directory.', 'bp-member-reviews' ); ?></p>
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th scope="row">
 						<label for="bupr_allow_email">
@@ -126,31 +123,69 @@ foreach ( get_users() as $user ) {
 				<tr>
 					<th scope="row">
 						<label for="bupr_exc_member">
-							<?php esc_html_e( 'Exclude Members From Writing and Receiving Reviews', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Members to writing reviews', 'bp-member-reviews' ); ?>
 						</label>
 					</th>
 					<td>
 						<select name="bupr_admin_general_options[bupr_exc_member][]" id="bupr_exc_member" class="bupr_excluding_member" multiple>
 							<?php
-							if ( $bupr_member_data ) {
-								foreach ( $bupr_member_data as $bupr_member_id => $bupr_member_name ) {
-									if ( ! empty( $bupr['exclude_members'] ) ) {
-										if ( in_array( $bupr_member_id, $bupr['exclude_members'] ) ) { ?>
-													<option value="<?php echo esc_attr( $bupr_member_id ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo $bupr_member_name; ?></option>
-													<?php } else { ?>
-													<option value="<?php echo $bupr_member_id; ?>"><?php echo $bupr_member_name; ?></option>
-													<?php
-												}
+							foreach ( $user_roles as $role => $details ) {
+								$name = translate_user_role( $details['name'] );
+								if ( ! empty( $bupr['exclude_given_members'] ) ) {
+									if ( in_array( $role, $bupr['exclude_given_members'] ) ) {
+										?>
+											<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo $name; ?></option>
+										<?php
 									} else {
 										?>
-													<option value="<?php echo $bupr_member_id; ?>"><?php echo $bupr_member_name; ?></option>
-													<?php
-											}
-										}
+											<option value='<?php echo esc_attr( $role ); ?>'><?php echo $name; ?></option>
+										<?php
 									}
+								} else {
+									?>
+										<option value="<?php echo esc_attr( $role ); ?>"><?php echo $name; ?></option>
+									<?php
+								}
+							}
+
+
 							?>
 						</select>
-						<p class="description"><?php esc_html_e( "This option lets you choose those members whom you don't want to provide review functionality.", 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Select user roles which have only right to give review.', 'bp-member-reviews' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="bupr_exc_member">
+							<?php esc_html_e( 'Members to take reviews', 'bp-member-reviews' ); ?>
+						</label>
+					</th>
+					<td>
+						<select name="bupr_admin_general_options[bupr_add_member][]" id="bupr_add_member" class="bupr_adding_member" multiple>
+							<?php
+							foreach ( $user_roles as $role => $details ) {
+								$name = translate_user_role( $details['name'] );
+								if ( ! empty( $bupr['add_taken_members'] ) ) {
+									if ( in_array( $role, $bupr['add_taken_members'] ) ) {
+										?>
+											<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo $name; ?></option>
+										<?php
+									} else {
+										?>
+											<option value='<?php echo esc_attr( $role ); ?>'><?php echo $name; ?></option>
+										<?php
+									}
+								} else {
+									?>
+										<option value="<?php echo esc_attr( $role ); ?>"><?php echo $name; ?></option>
+									<?php
+								}
+							}
+
+
+							?>
+						</select>
+						<p class="description"><?php esc_html_e( 'Select user roles which have you want to give review.', 'bp-member-reviews' ); ?></p>
 					</td>
 				</tr>
 				<tr>

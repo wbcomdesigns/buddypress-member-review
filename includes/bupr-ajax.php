@@ -144,8 +144,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						$review_date_time      = $reviews->post_date;
-						$review_date           = explode( ' ', $review_date_time )[0];
+						// $review_date_time      = $reviews->post_date;
+						$review_date           = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago';
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						$author                = $reviews->post->post_author;
 						$html                 .= '<div class="bupr-row"><div class="bupr-members-profiles"><div class="item-avatar">';
@@ -176,12 +176,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						} else {
 							$html .= wp_kses( bp_core_get_userlink( $author ), $allowedtags );
 						}
-
-									$html           .= '</h4></div></div><div class="bupr-members-content"><span class="posted-on list"><b>' . esc_html__( 'Posted on ', 'bp-member-reviews' ) . '<time class="entry-date published updated">' .
-											esc_attr( date_format( date_create( $review_date ), 'F d, Y' ) ) . '</time></b></span>';
-								$url                 = 'view/' . get_the_id();
-								$html               .= '<div class="bupr-review-description"><div class="bupr-full-description">';
-										$trimcontent = get_the_content();
+						$html       .= '</h4></div></div><div class="bupr-members-content"><span class="posted-on list"><b>' . esc_html__( 'Posted on ', 'bp-member-reviews' ) . '<time class="entry-date published updated">' .
+						esc_html( $review_date ) . '</time></b></span>';
+						$url         = 'view/' . get_the_id();
+						$html       .= '<div class="bupr-review-description"><div class="bupr-full-description">';
+						$trimcontent = get_the_content();
 						if ( ! empty( $trimcontent ) ) {
 							$len = strlen( $trimcontent );
 							if ( $len > 150 ) {
@@ -561,7 +560,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( 'no' == $bupr['auto_approve_reviews'] ) {
 								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s. Your %1$s will display on member profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							} else {
-								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 							}
 						} else {
 							echo '<p class="bupr-error">';

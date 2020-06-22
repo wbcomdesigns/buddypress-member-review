@@ -65,7 +65,10 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 					$allow_notification = $bupr_general_settings['bupr_allow_notification'];
 				}
 				if ( array_key_exists( 'bupr_exc_member', $bupr_general_settings ) ) {
-					$exclude_members = $bupr_general_settings['bupr_exc_member'];
+					$exclude_given_members = $bupr_general_settings['bupr_exc_member'];
+				}
+				if ( array_key_exists( 'bupr_add_member', $bupr_general_settings ) ) {
+					$add_taken_members = $bupr_general_settings['bupr_add_member'];
 				}
 				if ( array_key_exists( 'bupr_multi_reviews', $bupr_general_settings ) ) {
 					$multi_reviews = $bupr_general_settings['bupr_multi_reviews'];
@@ -97,19 +100,23 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				if ( empty( $allow_notification ) ) {
 					$allow_notification = 'no';
 				}
-				if ( empty( $exclude_members ) ) {
-					$exclude_members = array();
+				if ( empty( $exclude_given_members ) ) {
+					$exclude_given_members = array();
+				}
+				if ( empty( $add_taken_members ) ) {
+					$add_taken_members = array();
 				}
 			} else {
-				$anonymous_reviews    = 'yes';
-				$dir_view_ratings     = 'yes';
-				$dir_view_review_btn  = 'yes';
-				$multi_reviews        = 'yes';
-				$reviews_per_page     = 3;
-				$allow_email          = 'yes';
-				$allow_notification   = 'yes';
-				$exclude_members      = array();
-				$auto_approve_reviews = 'yes';
+				$anonymous_reviews     = 'yes';
+				$dir_view_ratings      = 'yes';
+				$dir_view_review_btn   = 'yes';
+				$multi_reviews         = 'yes';
+				$reviews_per_page      = 3;
+				$allow_email           = 'yes';
+				$allow_notification    = 'yes';
+				$exclude_given_members = array();
+				$add_taken_members     = array();
+				$auto_approve_reviews  = 'yes';
 			}
 
 			/**** Global variable values for Display settings */
@@ -138,7 +145,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				$rating_color        = '#FFC400';
 			}
 
-			/**** Global variable values for Criteria settings */			
+			/**** Global variable values for Criteria settings */
 			if ( ! empty( $bupr_criteria_settings ) ) {
 				if ( array_key_exists( 'profile_multi_rating_allowed', $bupr_criteria_settings ) ) {
 					$bupr_multi_criteria_allowed = $bupr_criteria_settings['profile_multi_rating_allowed'];
@@ -154,7 +161,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				}
 			} else {
 				$bupr_multi_criteria_allowed = '1';
-				$active_rating_fields = array();
+				$active_rating_fields        = array();
 			}
 
 			$bupr = array(
@@ -166,11 +173,12 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'reviews_per_page'       => $reviews_per_page,
 				'allow_email'            => $allow_email,
 				'allow_notification'     => $allow_notification,
-				'exclude_members'        => $exclude_members,
+				'exclude_given_members'  => $exclude_given_members,
+				'add_taken_members'      => $add_taken_members,
 				'rating_color'           => $rating_color,
 				'review_label'           => $review_label,
-				'review_label_plural'    => $review_label_plural,    
-				'multi_criteria_allowed' => $bupr_multi_criteria_allowed,    
+				'review_label_plural'    => $review_label_plural,
+				'multi_criteria_allowed' => $bupr_multi_criteria_allowed,
 				'active_rating_fields'   => $active_rating_fields,
 			);
 

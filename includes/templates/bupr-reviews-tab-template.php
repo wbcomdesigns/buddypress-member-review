@@ -53,8 +53,8 @@ $reviews = new WP_Query( $args ); ?>
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						$review_date_time  = $reviews->post_date;
-						$review_date       = explode( ' ', $review_date_time )[0];
+						// $review_date_time      = $reviews->post_date;
+						$review_date           = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago';
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						?>
 						<div class="bupr-row">
@@ -62,15 +62,18 @@ $reviews = new WP_Query( $args ); ?>
 								<div class="item-avatar">
 									<?php
 									$author = $reviews->post->post_author;
-									if( $anonymous_post_review == 'yes' ){
-										$avatar_url =  bp_core_avatar_default( $type='local',array(
-											'height'  => 96,
-											'width'   => 96,
-											'html'    => true
-										) );
-										echo "<img src='".$avatar_url."' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
-									}else{
-										
+									if ( $anonymous_post_review == 'yes' ) {
+										$avatar_url = bp_core_avatar_default(
+											$type   = 'local',
+											array(
+												'height' => 96,
+												'width'  => 96,
+												'html'   => true,
+											)
+										);
+										echo "<img src='" . $avatar_url . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
+									} else {
+
 										echo bp_core_fetch_avatar(
 											array(
 												'item_id' => $author,
@@ -84,12 +87,12 @@ $reviews = new WP_Query( $args ); ?>
 								<div class="reviewer">
 									<h4>
 										<?php
-										if( $anonymous_post_review == 'yes' ){
+										if ( $anonymous_post_review == 'yes' ) {
 											esc_html_e( 'anonymous', 'bp-member-reviews' );
-										}else{
+										} else {
 											echo wp_kses( bp_core_get_userlink( $author ), $allowedtags );
 										}
-										
+
 										?>
 									</h4>
 								</div>
@@ -100,11 +103,11 @@ $reviews = new WP_Query( $args ); ?>
 									<b>
 										<?php esc_html_e( 'Posted on', 'bp-member-reviews' ); ?>
 										<time class="entry-date published updated">
-											<?php echo esc_attr( date_format( date_create( $review_date ), 'F d, Y' ) ); ?>
+											<?php echo esc_html( $review_date ); ?>
 										</time>
 									</b>
 								</span>
-								<?php $url           = 'view/' . get_the_id(); ?>
+								<?php $url = 'view/' . get_the_id(); ?>
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">
 										<?php
@@ -122,7 +125,7 @@ $reviews = new WP_Query( $args ); ?>
 											}
 										}
 										?>
-										<?php										
+										<?php
 
 										if ( ! empty( $bupr['active_rating_fields'] ) ) {
 											$member_review_rating_fields = $bupr['active_rating_fields'];
@@ -134,7 +137,7 @@ $reviews = new WP_Query( $args ); ?>
 											}
 										}
 										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
-										
+
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
@@ -178,14 +181,17 @@ $reviews = new WP_Query( $args ); ?>
 							<?php
 							/*** Posts pagination ***/
 							echo "<div class='bupr-posts-pagination'>";
-							echo wp_kses(paginate_links(
-								array(
-									'base'    => add_query_arg( 'page', '%#%' ),
-									'format'  => '',
-									'current' => max( 1, get_query_var( 'page' ) ),
-									'total'   => $reviews->max_num_pages,
-								)
-							), $allowedposttags);
+							echo wp_kses(
+								paginate_links(
+									array(
+										'base'    => add_query_arg( 'page', '%#%' ),
+										'format'  => '',
+										'current' => max( 1, get_query_var( 'page' ) ),
+										'total'   => $reviews->max_num_pages,
+									)
+								),
+								$allowedposttags
+							);
 							echo '</div>';
 							?>
 						</div>
@@ -193,16 +199,16 @@ $reviews = new WP_Query( $args ); ?>
 					}
 					wp_reset_postdata();
 				} else {
-					$bp_template_option = bp_get_option('_bp_theme_package_id');
-						if( 'nouveau' == $bp_template_option ) {
-					?>
+					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+					if ( 'nouveau' == $bp_template_option ) {
+						?>
 					<div id="message" class="info bp-feedback bp-messages bp-template-notice">
 						<span class="bp-icon" aria-hidden="true"></span>
-					<?php } else { ?>						
+					<?php } else { ?>
 						<div id="message" class="info">
-					<?php } ?>				
+					<?php } ?>
 						<p><?php echo sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), $bupr['review_label'] ); ?>
-							
+
 						</p>
 					</div>
 					<?php
