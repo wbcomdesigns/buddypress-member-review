@@ -3,7 +3,7 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.4.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -61,6 +61,12 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+
+= 2.3.0 =
+* Fix: (#76) Fixed php notices and warnings
+* Fix: (#74) Fixed review action is showing in notification
+* Fix: #72)Changed review date format
+* Fix: (#73) Fixed blank bbpress notifications
 
 = 2.2.0 =
 * Fix: Remove redclare function.
