@@ -54,8 +54,21 @@ $reviews = new WP_Query( $args ); ?>
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
 						// $review_date_time      = $reviews->post_date;
-						$review_date           = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago';
+						$review_date           = date_i18n( 'M Y' );
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
+						$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
+
+						if ( ! empty( $bupr['active_rating_fields'] ) ) {
+							$member_review_rating_fields = $bupr['active_rating_fields'];
+						}
+						$bupr_rating_criteria = array();
+						if ( ! empty( $member_review_rating_fields ) ) {
+							foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
+								if ( 'yes' === $bupr_fields ) {
+									$bupr_rating_criteria[] = $bupr_keys;
+								}
+							}
+						}
 						?>
 						<div class="bupr-row">
 							<div class="bupr-members-profiles">
@@ -92,21 +105,53 @@ $reviews = new WP_Query( $args ); ?>
 										} else {
 											echo wp_kses( bp_core_get_userlink( $author ), $allowedtags );
 										}
-
 										?>
 									</h4>
 								</div>
 							</div>
 
 							<div class="bupr-members-content">
+								<?php
+
+								if ( ! empty( $member_review_ratings ) ) {
+									$member_review_ratings_new = array();
+									echo "<div class='rating-sec'>";
+									foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
+										if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
+											$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
+										}
+									}
+									if ( ! empty( $member_review_ratings_new ) ) {
+										$aggregate = array_sum( $member_review_ratings_new ) / count( $member_review_ratings_new );
+										echo "<div class='rating-star'>";
+										for ( $i = 0; $i < 5; $i++ ) {
+											if ( floor( $aggregate ) - $i >= 1 ) {
+												?>
+												<span class="fas fa-star bupr-star-rate"></span>
+												<?php
+											} elseif ( $aggregate - $i > 0 ) {
+												?>
+												<span class="fa fa-star-half-o bupr-star-rate"></span>
+												<?php
+											} else {
+												?>
+												<span class="far fa-star stars bupr-star-rate"></span>
+												<?php
+											}
+										}
+										echo '</div>';
+										echo '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
+									}
+								}
+
+								?>
 								<span class="posted-on list">
-									<b>
-										<?php esc_html_e( 'Posted on', 'bp-member-reviews' ); ?>
 										<time class="entry-date published updated">
 											<?php echo esc_html( $review_date ); ?>
 										</time>
-									</b>
 								</span>
+								<?php echo '</div>'; ?>
+
 								<?php $url = 'view/' . get_the_id(); ?>
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">
@@ -116,34 +161,23 @@ $reviews = new WP_Query( $args ); ?>
 											$len = strlen( $trimcontent );
 											if ( $len > 150 ) {
 												$shortexcerpt = substr( $trimcontent, 0, 150 );
-												echo '<div class="description">' . wpautop( $shortexcerpt ) . '</div>';
 												?>
-												<a href="<?php echo esc_attr( $url ); ?>"><i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i></a>
+												<div class="description">
+													<?php echo wpautop( $shortexcerpt ); ?>
+													<a href="<?php echo esc_attr( $url ); ?> " class="bupr-read-more">
+														<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
+													</a>
+												</div>
+											<?php } else { ?>
+												<div class="description"><?php echo wpautop( $trimcontent ); ?></div>
 												<?php
-											} else {
-												echo '<div class="description">' . wpautop( $trimcontent ) . '</div>';
 											}
 										}
-										?>
-										<?php
-
-										if ( ! empty( $bupr['active_rating_fields'] ) ) {
-											$member_review_rating_fields = $bupr['active_rating_fields'];
-										}
-										$bupr_rating_criteria = array();
-										if ( ! empty( $member_review_rating_fields ) ) {
-											foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
-												$bupr_rating_criteria[] = $bupr_keys;
-											}
-										}
-										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
-
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
+
 												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
-
 													echo '<div class="multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
-
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
 													$stars_off = 5 - $stars_on;

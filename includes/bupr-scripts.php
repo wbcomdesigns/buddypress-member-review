@@ -81,7 +81,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 			}
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
-				if ( ( isset($_GET['page']) && $_GET['page'] == 'bp-member-review-settings' ) || ( isset($_GET['post_type']) && 'review' === $_GET['post_type'] ) ) {
+				if ( ( isset( $_GET['page'] ) && $_GET['page'] == 'bp-member-review-settings' ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
 					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {

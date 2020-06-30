@@ -94,6 +94,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$rate                = 0;
 						$reviews_field_count = 0;
 						$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
+
 						if ( ! empty( $review_ratings[0] ) ) {
 
 							if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $review_ratings[0] ) ) {
@@ -144,8 +145,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						// $review_date_time      = $reviews->post_date;
-						$review_date           = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ago';
+						$review_date           = date_i18n( 'M Y' );
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						$author                = $reviews->post->post_author;
 						$html                 .= '<div class="bupr-row"><div class="bupr-members-profiles"><div class="item-avatar">';
@@ -170,55 +170,83 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							);
 						}
 
-								$html .= '</div><div class="reviewer"><h4>';
+						if ( ! empty( $bupr['active_rating_fields'] ) ) {
+							$member_review_rating_fields = $bupr['active_rating_fields'];
+						}
+						$bupr_rating_criteria = array();
+						if ( ! empty( $member_review_rating_fields ) ) {
+							foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
+								if ( 'yes' === $bupr_fields ) {
+									$bupr_rating_criteria[] = $bupr_keys;
+								}
+							}
+						}
+
+						$html .= '</div><div class="reviewer"><h4>';
 						if ( $anonymous_post_review == 'yes' ) {
 							$html .= esc_html__( 'anonymous', 'bp-member-reviews' );
 						} else {
 							$html .= wp_kses( bp_core_get_userlink( $author ), $allowedtags );
 						}
-						$html       .= '</h4></div></div><div class="bupr-members-content"><span class="posted-on list"><b>' . esc_html__( 'Posted on ', 'bp-member-reviews' ) . '<time class="entry-date published updated">' .
-						esc_html( $review_date ) . '</time></b></span>';
-						$url         = 'view/' . get_the_id();
-						$html       .= '<div class="bupr-review-description"><div class="bupr-full-description">';
+						$html .= '</h4></div></div><div class="bupr-members-content">';
+
+						if ( ! empty( $member_review_ratings ) ) {
+							$member_review_ratings_new = array();
+							$html                     .= "<div class='rating-sec'>";
+							foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
+								if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
+									$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
+								}
+							}
+							if ( ! empty( $member_review_ratings_new ) ) {
+								$aggregate = array_sum( $member_review_ratings_new ) / count( $member_review_ratings_new );
+								$html     .= "<div class='rating-star'>";
+								for ( $i = 0; $i < 5; $i++ ) {
+									if ( floor( $aggregate ) - $i >= 1 ) {
+										$html .= '<span class="fas fa-star bupr-star-rate"></span>';
+									} elseif ( $aggregate - $i > 0 ) {
+										$html .= '<span class="fa fa-star-half-o bupr-star-rate"></span>';
+									} else {
+										$html .= '<span class="far fa-star stars bupr-star-rate"></span>';
+									}
+								}
+								$html .= '</div>';
+								$html .= '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
+							}
+						}
+
+						$html       .= '<span class="posted-on list"><time class="entry-date published updated">' . esc_html( $review_date ) . '	</time></span> ';
+						$html       .= '</div>';
+						$url         = 'view / ' . get_the_id();
+						$html       .= '<div class = "bupr-review-description"> <div class="bupr-full-description">';
 						$trimcontent = get_the_content();
 						if ( ! empty( $trimcontent ) ) {
 							$len = strlen( $trimcontent );
 							if ( $len > 150 ) {
 								$shortexcerpt = substr( $trimcontent, 0, 150 );
-								$html        .= '<div class="description">' . wpautop( $shortexcerpt ) . '</div>';
-								$html        .= '<a href="' . esc_attr( $url ) . '"><i>' . esc_html__( 'read more...', 'bp-member-reviews' ) . '</i></a>';
+								$html        .= '<div class ="description">' . wpautop( $shortexcerpt ) . '</div>';
+								$html        .= '<a href = "' . esc_attr( $url ) . '" ><i> ' . esc_html__( 'read more...', 'bp-member-reviews' ) . '</i></a>';
 							} else {
-								$html .= '<div class="description">' . wpautop( $trimcontent ) . '</div>';
+								$html .= ' <div class = "description">' . wpautop( $trimcontent ) . '</div>';
 							}
 						}
-
-						if ( ! empty( $bupr['active_rating_fields'] ) ) {
-							$member_review_rating_fields = $bupr['active_rating_fields'];
-						}
-										$bupr_rating_criteria = array();
-						if ( ! empty( $member_review_rating_fields ) ) {
-							foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
-								$bupr_rating_criteria[] = $bupr_keys;
-							}
-						}
-										$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 
 						if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 							foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 								if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 
-									$html .= '<div class="multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
+									$html .= ' <div class="multi-review inline-content"><div class="bupr-col-4">' . esc_attr( $field ) . '</div>';
 
 									/*** Star rating Ratings */
 									$stars_on  = $bupr_value;
 									$stars_off = 5 - $stars_on;
-									$html     .= '<div class="bupr-col-4 ">';
+									$html     .= '<div class= "bupr-col-4">';
 									for ( $i = 1; $i <= $stars_on; $i++ ) {
-										$html .= '<span class="fas fa-star bupr-star-rate"></span>';
+										$html .= '<span class= "fas fa-star bupr-star-rate"></span >';
 									}
 
 									for ( $i = 1; $i <= $stars_off; $i++ ) {
-										$html .= '<span class="far fa-star stars bupr-star-rate"></span>';
+										$html .= '<span class = "far fa-star stars bupr-star-rate"></span>';
 									}
 									/*star rating end */
 
@@ -232,13 +260,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 					$total_pages = $reviews->max_num_pages;
 					if ( $total_pages > 1 ) {
-						$html .= '<div class="bupr-pagination">';
+						$html .= "<div class = 'bupr-pagination' >";
 							/*** Posts pagination */
-							$html .= "<div class='bupr-posts-pagination'>";
+							$html .= "<div class='bupr - posts - pagination'>";
 							$html .= wp_kses(
 								paginate_links(
 									array(
-										'base'    => add_query_arg( 'page', '%#%' ),
+										'base'    => add_query_arg( 'page', ' % // %' ),
 										'format'  => '',
 										'current' => max( 1, get_query_var( 'page' ) ),
 										'total'   => $reviews->max_num_pages,
