@@ -123,7 +123,7 @@ global $bupr;
 				<tr>
 					<th scope="row">
 						<label for="bupr_exc_member">
-							<?php esc_html_e( 'Members to writing reviews', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Select member roles to write reviews', 'bp-member-reviews' ); ?>
 						</label>
 					</th>
 					<td>
@@ -157,7 +157,7 @@ global $bupr;
 				<tr>
 					<th scope="row">
 						<label for="bupr_exc_member">
-							<?php esc_html_e( 'Members to take reviews', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'User roles to accept reviews', 'bp-member-reviews' ); ?>
 						</label>
 					</th>
 					<td>
