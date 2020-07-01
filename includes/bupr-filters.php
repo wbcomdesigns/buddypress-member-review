@@ -41,9 +41,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 
 			/*
-			 Add review link at member's directory if option admin setting is enabled. */
+			 Add review link at member's directory if option admin setting is enabled.
+			*/
 			// add_action( 'bp_directory_members_actions', array( $this, 'bupr_view_review_button_on_member_directory' ) );
-			add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
+			add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 		}
 
