@@ -218,55 +218,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$this->bupr_members_right_to_take_review();
 				}
 			}
-			/*
-			global $bp;
-			global $bupr;
-			$review_div = 'form';
-			if ( bp_is_user() ) {
-				$member_id = bp_displayed_user_id();
-			} else {
-				$member_id = bp_get_member_user_id();
-			}
-			$user_role = $this->bupr_get_current_user_roles( $member_id );
-			if ( ! empty( $bupr['exclude_given_members'] ) ) {
-				/* Exclude members who can take reviews */
-				/*
-				if ( in_array( $user_role[0], $bupr['exclude_given_members'] ) ) {
-					$review_url         = bp_core_get_userlink( $member_id, false, true ) . 'reviews/add-review';
-					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-					if ( 'nouveau' == $bp_template_option ) {
-						?>
-							<li id="bupr-add-review-btn" class="generic-button">
-						<?php } else { ?>
-							<div id="bupr-add-review-btn" class="generic-button">
-						<?php } ?>
-								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
-									<?php
-									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-									?>
-								</a>
-						<?php if ( 'nouveau' == $bp_template_option ) { ?>
-							</li>
-						<?php } else { ?>
-							</div>
-							<?php
-						}
-				}
-			} /*
-			else {
-				if ( $member_id != bp_loggedin_user_id() ) {
-					$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews/add-review';
-					?>
-					<div id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
-							<?php
-							echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-							?>
-						</a>
-					</div>
-					<?php
-				}
-			}*/
 		}
 
 		/**
