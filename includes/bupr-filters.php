@@ -38,12 +38,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_filter( 'post_row_actions', array( $this, 'bupr_bp_member_reviews_row_actions' ), 10, 2 );
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_remove_edit_bulk_actions' ), 10, 1 );
 
-			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
+			//add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 
 			/*
 			 Add review link at member's directory if option admin setting is enabled.
 			*/
-			// add_action( 'bp_directory_members_actions', array( $this, 'bupr_view_review_button_on_member_directory' ) );
+
 			add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 		}
@@ -355,47 +355,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		 /*
-		public function bupr_view_review_button_on_member_directory() {
-			global $bp;
-			global $bupr;
-			if ( 'no' == $bupr['dir_view_review_btn'] ) {
-				$review_div = 'form';
-				if ( bp_is_user() ) {
-					$member_id = bp_displayed_user_id();
-				} else {
-					$member_id = bp_get_member_user_id();
-				}
-
-				if ( ! empty( $bupr['exclude_given_members'] ) ) {
-					if ( ( $member_id != bp_loggedin_user_id() ) && ! in_array( $member_id, $bupr['exclude_given_members'] ) ) {
-						$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews';
-						?>
-						<div id="bupr-view-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
-								<?php
-								echo sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), $bupr['review_label'] );
-								?>
-							</a>
-						</div>
-						<?php
-					}
-				} else {
-					if ( $member_id != bp_loggedin_user_id() ) {
-						$review_url = bp_core_get_userlink( $member_id, false, true ) . 'reviews';
-						?>
-						<div id="bupr-view-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
-								<?php
-								echo sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), $bupr['review_label'] );
-								?>
-							</a>
-						</div>
-						<?php
-					}
-				}
-			}
-		}*/
-
 
 		/**
 		 * Setup Reviews link in admin bar.
