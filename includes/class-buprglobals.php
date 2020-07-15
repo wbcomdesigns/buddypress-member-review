@@ -43,8 +43,8 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			$bupr_general_settings  = get_option( 'bupr_admin_general_options' );
 			$bupr_criteria_settings = get_option( 'bupr_admin_settings' );
 			$bupr_display_settings  = get_option( 'bupr_admin_display_options' );
-			$name = array();
-			foreach( $wp_roles->roles as $role => $details ){
+			$name                   = array();
+			foreach ( $wp_roles->roles as $role => $details ) {
 				$name[] = $role;
 			}
 
@@ -121,7 +121,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				$dir_view_ratings      = 'yes';
 				$dir_view_review_btn   = 'yes';
 				$multi_reviews         = 'yes';
-				$hide_button           = 'yes';
+				$hide_button           = 'no';
 				$reviews_per_page      = 3;
 				$allow_email           = 'yes';
 				$allow_notification    = 'yes';
