@@ -47,7 +47,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			foreach( $wp_roles->roles as $role => $details ){
 				$name[] = $role;
 			}
-			
+
 			/**** Global variable values for General settings */
 			if ( ! empty( $bupr_general_settings ) ) {
 				if ( array_key_exists( 'bupr_auto_approve_reviews', $bupr_general_settings ) ) {
@@ -77,6 +77,9 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				if ( array_key_exists( 'bupr_multi_reviews', $bupr_general_settings ) ) {
 					$multi_reviews = $bupr_general_settings['bupr_multi_reviews'];
 				}
+				if ( array_key_exists( 'bupr_hide_review_button', $bupr_general_settings ) ) {
+					$hide_button = $bupr_general_settings['bupr_hide_review_button'];
+				}
 				if ( array_key_exists( 'bupr_enable_anonymous_reviews', $bupr_general_settings ) ) {
 					$anonymous_reviews = $bupr_general_settings['bupr_enable_anonymous_reviews'];
 				}
@@ -91,6 +94,9 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				}
 				if ( empty( $multi_reviews ) ) {
 					$multi_reviews = 'no';
+				}
+				if ( empty( $hide_button ) ) {
+					$hide_button = 'no';
 				}
 				if ( empty( $auto_approve_reviews ) ) {
 					$auto_approve_reviews = 'no';
@@ -115,6 +121,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				$dir_view_ratings      = 'yes';
 				$dir_view_review_btn   = 'yes';
 				$multi_reviews         = 'yes';
+				$hide_button           = 'yes';
 				$reviews_per_page      = 3;
 				$allow_email           = 'yes';
 				$allow_notification    = 'yes';
@@ -174,6 +181,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'dir_view_ratings'       => $dir_view_ratings,
 				'dir_view_review_btn'    => $dir_view_review_btn,
 				'multi_reviews'          => $multi_reviews,
+				'hide_review_button'     => $hide_button,
 				'reviews_per_page'       => $reviews_per_page,
 				'allow_email'            => $allow_email,
 				'allow_notification'     => $allow_notification,

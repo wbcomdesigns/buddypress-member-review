@@ -40,6 +40,20 @@ global $bupr;
 				</tr>
 				<tr>
 					<th scope="row">
+						<label for="bupr-hide-review-button">
+							<?php esc_html_e( 'Hide Review Button', 'bp-member-reviews' ); ?>
+						</label>
+					</th>
+					<td>
+						<label class="bupr-switch">
+							<input name="bupr_admin_general_options[bupr_hide_review_button]" type="checkbox" id="bupr-hide-review-button" <?php checked( esc_attr( $bupr['hide_review_button'] ), 'yes' ); ?> value="yes">
+							<div class="bupr-slider bupr-round"></div>
+						</label>
+						<p class="description"><?php esc_html_e( 'Disable this option, if you want to hide review button from member header.', 'bp-member-reviews' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
 						<label for="bupr_review_auto_approval">
 							<?php esc_html_e( 'Auto approve reviews ', 'bp-member-reviews' ); ?>
 						</label>

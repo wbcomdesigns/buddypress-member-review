@@ -38,7 +38,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_filter( 'post_row_actions', array( $this, 'bupr_bp_member_reviews_row_actions' ), 10, 2 );
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_remove_edit_bulk_actions' ), 10, 1 );
 
-			//add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
+			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 
 			/*
 			 Add review link at member's directory if option admin setting is enabled.
@@ -211,11 +211,14 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_add_review_button_on_member_header() {
-			if ( is_user_logged_in() ) {
-				if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
-					$this->bupr_members_right_to_review();
-				} else {
-					$this->bupr_members_right_to_take_review();
+			global $bupr;
+			if ( ! empty( $bupr['hide_review_button'] ) && 'yes' === $bupr['hide_review_button'] ) {
+				if ( is_user_logged_in() ) {
+					if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
+						$this->bupr_members_right_to_review();
+					} else {
+						$this->bupr_members_right_to_take_review();
+					}
 				}
 			}
 		}
@@ -355,7 +358,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		 /*
-
 		/**
 		 * Setup Reviews link in admin bar.
 		 *
