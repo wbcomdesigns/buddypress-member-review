@@ -147,6 +147,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$reviews->the_post();
 						$review_date           = date_i18n( 'M Y' );
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
+						$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 						$author                = $reviews->post->post_author;
 						$html                 .= '<div class="bupr-row"><div class="bupr-members-profiles"><div class="item-avatar">';
 						if ( $anonymous_post_review == 'yes' ) {
@@ -172,6 +173,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							$member_review_rating_fields = $bupr['active_rating_fields'];
+
 						}
 						$bupr_rating_criteria = array();
 						if ( ! empty( $member_review_rating_fields ) ) {
@@ -232,9 +234,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						}
 
 						if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
+						
 							foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 								if ( in_array( $field, $bupr_rating_criteria, true ) ) {
-
 									$html .= ' <div class="multi-review inline-content"><div class="bupr-col-4">' . esc_attr( $field ) . '</div>';
 
 									/*** Star rating Ratings */
