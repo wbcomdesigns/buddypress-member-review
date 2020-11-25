@@ -64,6 +64,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 				'admin/wbcom/wbcom-admin-settings.php',
 				'includes/bupr-scripts.php',
 				'admin/bupr-admin.php',
+				'admin/class-bupr-admin-feedback.php',
 				'includes/bupr-filters.php',
 				'includes/bupr-shortcodes.php',
 				'includes/widgets/display-review.php',
