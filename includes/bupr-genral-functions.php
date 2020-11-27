@@ -22,7 +22,7 @@ function bupr_locate_template( $template_name, $template_path = '', $default_pat
 	endif;
 	// Set default plugin templates path.
 	if ( ! $default_path ) :
-		$default_path = BUPR_PLUGIN_PATH . 'includes/template/';
+		$default_path = BUPR_PLUGIN_PATH . 'includes/templates/';
 	endif;
 	// Search template file in theme folder.
 	$template = locate_template(
