@@ -351,14 +351,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Actions performed to add a review button on member header.
-		 *
-		 * @since    1.0.0
-		 * @access   public
-		 * @author   Wbcom Designs
-		 */
-		 /*
-		/**
 		 * Setup Reviews link in admin bar.
 		 *
 		 * @since    1.0.0
@@ -655,7 +647,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				if ( ! empty( $bupr['exclude_given_members'] ) ) {
 					$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-
 					if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
 						bp_core_new_subnav_item(
 							array(
@@ -669,18 +660,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							)
 						);
 
-					} else {
-						bp_core_new_subnav_item(
-							array(
-								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
-								'slug'            => 'add-review',
-								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
-								'parent_slug'     => $parent_slug,
-								'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
-								'position'        => 200,
-								'link'            => site_url() . "/$member_slug/$name/$parent_slug/add-review/",
-							)
-						);
 					}
 				}
 			} else {
