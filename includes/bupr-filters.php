@@ -756,7 +756,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_reviews_tab_function_to_show_content() {
-			include 'templates/bupr-reviews-tab-template.php';
+			bupr_get_template( 'bupr-reviews-tab-template.php' );
 		}
 
 		/**
@@ -809,7 +809,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_view_review_tab_function_to_show_content() {
-			include 'templates/bupr-single-review-template.php';
+			bupr_get_template( 'bupr-single-review-template.php' );
 		}
 
 	}

@@ -71,6 +71,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 				'includes/widgets/member-rating.php',
 				'includes/bupr-ajax.php',
 				'includes/bupr-notification.php',
+				'includes/bupr-genral-functions.php',
 			);
 
 			foreach ( $include_files as $include_file ) {
