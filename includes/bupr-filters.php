@@ -552,8 +552,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				unset( $actions['edit'] );
 				unset( $actions['view'] );
 				unset( $actions['inline hide-if-no-js'] );
-
-				if ( wp_get_object_terms( $post->ID, 'review_category' )[0]->name == 'BP Member' ) {
+				$review_term = isset( wp_get_object_terms( $post->ID, 'review_category' )[0]->name ) ? wp_get_object_terms( $post->ID, 'review_category' )[0]->name : '';
+				if ( 'BP Member' === $review_term ) {
 					// Add a link to view the review.
 					$review_title     = $post->post_title;
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );

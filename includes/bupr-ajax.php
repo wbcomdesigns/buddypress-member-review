@@ -234,7 +234,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						}
 
 						if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
-						
+
 							foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 								if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 									$html .= ' <div class="multi-review inline-content"><div class="bupr-col-4">' . esc_attr( $field ) . '</div>';
@@ -501,7 +501,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id', FILTER_SANITIZE_STRING );
 				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_SANITIZE_STRING );
 				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review', FILTER_SANITIZE_STRING );
-				$profile_rated_field_values = array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) );
+				$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : '';
 
 				$bupr_count = 0;
 
