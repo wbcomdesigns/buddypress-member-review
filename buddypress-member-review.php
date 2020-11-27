@@ -52,7 +52,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 	 * @since    1.0.0
 	 */
 	function bupr_plugins_files() {
-		if ( ! in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		if ( ! class_exists( 'BuddyPress' ) ) {
 			add_action( 'admin_notices', 'bupr_admin_notice' );
 		} else {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bupr_admin_page_link' );
@@ -70,7 +70,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 				'includes/widgets/display-review.php',
 				'includes/widgets/member-rating.php',
 				'includes/bupr-ajax.php',
-				'includes/bupr-notification.php'
+				'includes/bupr-notification.php',
 			);
 
 			foreach ( $include_files as $include_file ) {
@@ -98,7 +98,7 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 	}
 }
 
-//add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
+// add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
 
 /**
  * BuddyPress member reviews notification.
@@ -107,9 +107,9 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
  * @since    1.0.0
  */
 // function bupr_bp_notifications_for_review() {
-// 	include 'includes/bupr-notification.php';
-// 	buddypress()->bupr_bp_review                        = new BUPR_Notifications();
-// 	buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
+// include 'includes/bupr-notification.php';
+// buddypress()->bupr_bp_review                        = new BUPR_Notifications();
+// buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
 // }
 
 /**
