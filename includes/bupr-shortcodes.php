@@ -311,7 +311,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			);
 
 			$reviews_args = new WP_Query( $member_args );
-
 			if ( ! bp_is_members_component() && ! bp_is_user() ) {
 				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 				if ( 'nouveau' == $bp_template_option ) {
@@ -347,11 +346,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								<div id="message" class="info">
 							<?php } ?>
 							<?php
-							$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
-							if ( $auto_approve_reviews == 'yes' ) {
-								$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
+							if ( 'publish' === $reviews_args->posts[0]->post_status ) {
+								$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
 							} else {
-								$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
+								if ( $auto_approve_reviews == 'yes' ) {
+									$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
+								} else {
+									$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
+								}
 							}
 							?>
 								<p><?php echo $message; ?> </p>
