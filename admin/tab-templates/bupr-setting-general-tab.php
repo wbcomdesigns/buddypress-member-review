@@ -49,7 +49,7 @@ global $bupr;
 							<input name="bupr_admin_general_options[bupr_hide_review_button]" type="checkbox" id="bupr-hide-review-button" <?php checked( esc_attr( $bupr['hide_review_button'] ), 'yes' ); ?> value="yes">
 							<div class="bupr-slider bupr-round"></div>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable this option if you want to hide Add Review button on member profile.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable this option if you want to Add Review button on member profile.', 'bp-member-reviews' ); ?></p>
 					</td>
 				</tr>
 				<tr>
