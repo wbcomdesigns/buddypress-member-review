@@ -41,7 +41,7 @@ global $bupr;
 				<tr>
 					<th scope="row">
 						<label for="bupr-hide-review-button">
-							<?php esc_html_e( 'Hide Review Button', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Show Review Button', 'bp-member-reviews' ); ?>
 						</label>
 					</th>
 					<td>
@@ -49,7 +49,7 @@ global $bupr;
 							<input name="bupr_admin_general_options[bupr_hide_review_button]" type="checkbox" id="bupr-hide-review-button" <?php checked( esc_attr( $bupr['hide_review_button'] ), 'yes' ); ?> value="yes">
 							<div class="bupr-slider bupr-round"></div>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable this option if you want to Add Review button on member profile.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable this option if you want to show the Add Review button on member profile header.', 'bp-member-reviews' ); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -105,7 +105,7 @@ global $bupr;
 							<input type="checkbox" id="bupr_allow_email" name="bupr_admin_general_options[bupr_allow_email]" <?php checked( esc_attr( $bupr['allow_email'] ), 'yes' ); ?> value="yes">
 							<div class="bupr-slider bupr-round"></div>
 						</label>
-						<p class="description"><?php esc_html_e( 'Enable this option, if you want that member to receive an email when someone adds review in their profile.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enable this option, if you want the member to receive an email when someone adds review in their profile.', 'bp-member-reviews' ); ?></p>
 					</td>
 				</tr>
 				<tr>
