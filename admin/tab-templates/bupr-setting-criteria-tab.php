@@ -49,7 +49,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 					if ( ! empty( $bupr['active_rating_fields'] ) ) {
 						foreach ( $bupr['active_rating_fields'] as $profile_rating_field => $bupr_criteria_setting ) :
 							$key_val = rand();
-						?>
+							?>
 							<div class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
 								<div class="bupr-admin-col-6">
 									<span>&equiv;</span>
