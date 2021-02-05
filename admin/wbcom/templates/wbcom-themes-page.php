@@ -6,7 +6,7 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/reign.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo esc_url( BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/reign.jpg' ); ?>" alt="<?php esc_attr_e( 'Avatar', 'bp-member-reviews' ); ?>" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'REIGN Theme', 'bp-member-reviews' ); ?></h2>
@@ -32,7 +32,7 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/learnmate.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo esc_url( BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/learnmate.jpg' ); ?>" alt="<?php esc_attr_e( 'Avatar', 'bp-member-reviews' ); ?>" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'LearnMate Solution', 'bp-member-reviews' ); ?></h2>
@@ -58,7 +58,7 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/storemate.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo esc_url( BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/storemate.jpg' ); ?>" alt="<?php esc_attr_e( 'Avatar', 'bp-member-reviews' ); ?>" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'StoreMate Solution', 'bp-member-reviews' ); ?></h2>
@@ -82,7 +82,7 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="<?php echo BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/buddyx.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo esc_url( BUPR_PLUGIN_URL . 'admin/wbcom/assets/imgs/buddyx.jpg' ); ?>" alt="<?php esc_attr_e( 'Avatar', 'bp-member-reviews' ); ?>" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'BuddyX Theme', 'bp-member-reviews' ); ?></h2>

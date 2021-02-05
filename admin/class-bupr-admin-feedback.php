@@ -268,7 +268,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			<div class="notice updated bp-member-reviews-notice">
 				<div class="bp-member-reviews-notice-inner">
 					<div class="bp-member-reviews-notice-icon">
-						<img src="<?php echo BUPR_PLUGIN_URL . '/admin/wbcom/assets/imgs/bp_member_review.png'; ?>" alt="<?php echo esc_attr__( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?>" />
+						<img src="<?php echo esc_url( BUPR_PLUGIN_URL . '/admin/wbcom/assets/imgs/bp_member_review.png' ); ?>" alt="<?php echo esc_attr__( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?>" />
 					</div>
 					<div class="bp-member-reviews-notice-content">
 						<h3><?php echo esc_html__( 'Are you enjoying BuddyPress Member Reviews?', 'bp-member-reviews' ); ?></h3>

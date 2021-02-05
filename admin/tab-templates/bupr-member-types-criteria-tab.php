@@ -46,11 +46,11 @@ $member_types = bp_get_member_types('','objects');
 						<div class="bupr-admin-row border">
 							<div class="bupr-admin-col-6 bupr-label">
 								<label for="bupr-multi-review">
-									<?php echo $member_obj->labels['name']; ?>
+									<?php echo esc_html( $member_obj->labels['name'] ); ?>
 								</label>
 							</div>
 							<div class="bupr-admin-col-6 ">
-								<select name="bupr_member_type_criteria[<?php echo $type ?>][]" multiple class="bupr_mt_criteria_select">
+								<select name="bupr_member_type_criteria[<?php echo esc_attr( $type ) ?>][]" multiple class="bupr_mt_criteria_select">
 									<option value=''><?php esc_html_e( "Select criterias", 'bp-member-reviews' ) ?></option>
 									<?php foreach ($enabled_criterias as $key => $criteria) {
 										$_criterias = isset( $bupr_member_type_criteria[$type] )?$bupr_member_type_criteria[$type]:'';
@@ -59,7 +59,7 @@ $member_types = bp_get_member_types('','objects');
 										}else{
 											$selected = '';
 										}
-										echo "<option value='".$key."' ".$selected.">".$criteria."</option>";
+										echo "<option value='". esc_attr( $key ) ."' ". esc_attr( $selected ) .">". esc_attr( $criteria ) ."</option>";
 									} ?>
 								</select>
 								<p class="description"><?php esc_html_e( "Only selected criteria will be available for respective member types.", 'bp-member-reviews' ); ?></p>

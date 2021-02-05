@@ -53,7 +53,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 							<div class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
 								<div class="bupr-admin-col-6">
 									<span>&equiv;</span>
-									<input name="bupr_admin_settings[rating_field_name][<?php echo $key_val; ?>]" class="buprDynamicTextBox" type="text" value="<?php echo esc_attr( $profile_rating_field ); ?>" />
+									<input name="bupr_admin_settings[rating_field_name][<?php echo esc_attr( $key_val ); ?>]" class="buprDynamicTextBox" type="text" value="<?php echo esc_attr( $profile_rating_field ); ?>" />
 								</div>
 
 								<div class="bupr-admin-col-6 buprcriteria">
@@ -64,7 +64,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 										</span>
 									</p>
 									<label class="bupr-switch">
-										<input name="bupr_admin_settings[rating_field_name_display][<?php echo $key_val; ?>]" type="checkbox" class="bupr_enable_criteria" value="<?php echo 'yes'; ?>" <?php checked( $bupr_criteria_setting, 'yes' ); ?>>
+										<input name="bupr_admin_settings[rating_field_name_display][<?php echo esc_attr( $key_val ); ?>]" type="checkbox" class="bupr_enable_criteria" value="<?php echo 'yes'; ?>" <?php checked( $bupr_criteria_setting, 'yes' ); ?>>
 										<div class="bupr-slider bupr-round"></div>
 									</label>
 									<span class="description">

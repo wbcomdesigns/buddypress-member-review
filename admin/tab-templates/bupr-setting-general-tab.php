@@ -148,16 +148,16 @@ global $bupr;
 								if ( ! empty( $bupr['exclude_given_members'] ) ) {
 									if ( in_array( $role, $bupr['exclude_given_members'] ) ) {
 										?>
-											<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo $name; ?></option>
+											<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo esc_html( $name ); ?></option>
 										<?php
 									} else {
 										?>
-											<option value='<?php echo esc_attr( $role ); ?>'><?php echo $name; ?></option>
+											<option value='<?php echo esc_attr( $role ); ?>'><?php echo esc_html( $name ); ?></option>
 										<?php
 									}
 								} else {
 									?>
-										<option value="<?php echo esc_attr( $role ); ?>"><?php echo $name; ?></option>
+										<option value="<?php echo esc_attr( $role ); ?>"><?php echo esc_html( $name ); ?></option>
 									<?php
 								}
 							}
@@ -182,16 +182,16 @@ global $bupr;
 								if ( ! empty( $bupr['add_taken_members'] ) ) {
 									if ( in_array( $role, $bupr['add_taken_members'] ) ) {
 										?>
-											<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo $name; ?></option>
+											<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo esc_html( $name ); ?></option>
 										<?php
 									} else {
 										?>
-											<option value='<?php echo esc_attr( $role ); ?>'><?php echo $name; ?></option>
+											<option value='<?php echo esc_attr( $role ); ?>'><?php echo esc_html( $name ); ?></option>
 										<?php
 									}
 								} else {
 									?>
-										<option value="<?php echo esc_attr( $role ); ?>"><?php echo $name; ?></option>
+										<option value="<?php echo esc_attr( $role ); ?>"><?php echo esc_html( $name ); ?></option>
 									<?php
 								}
 							}

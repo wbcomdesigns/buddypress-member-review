@@ -112,11 +112,11 @@ class bupr_single_member_rating_widget extends WP_Widget {
 		}
 		?>
 		<?php
-		echo $before_widget;
+		echo $before_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		$bupr_user_count = 0;
-		echo $before_title;
-		echo $bupr_title;
-		echo $after_title;
+		echo $before_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo esc_html( $bupr_title );
+		echo $after_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		if ( ! empty( $final_review_arr ) ) {
 			if ( 'highest' === $rating_default ) {
 				arsort( $final_review_arr );
@@ -157,7 +157,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
 					echo '<div class="item">';
 					$members_profile = bp_core_get_userlink( $final_review_obj[ $buprKey ]->post_author );
 					echo '<div class="item-title fn">';
-					echo ( $user_anonymous_review != 'yes' ) ? $members_profile : 'anonymous';
+					echo ( $user_anonymous_review != 'yes' ) ? esc_html( $members_profile ) : 'anonymous';
 					echo '</div>';
 
 					$bupr_avg_rating = $buprValue;
@@ -210,10 +210,10 @@ class bupr_single_member_rating_widget extends WP_Widget {
 		}
 		?>
 		</ul>
-		<input type="hidden" value="<?php echo $bupr['rating_color']; ?>" class="bupr-display-rating-color">
-		<input type="hidden" value="<?php echo $rating_limit; ?>" class="member-rating-limit">
+		<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
+		<input type="hidden" value="<?php echo esc_attr( $rating_limit ); ?>" class="member-rating-limit">
 		<?php
-		echo $after_widget;
+		echo $after_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/* wbcom sort member list acording to max review */
@@ -251,16 +251,16 @@ class bupr_single_member_rating_widget extends WP_Widget {
 		?>
 		<div class="bupr-widget-class">
 			<p>
-				<label for="<?php echo $this->get_field_id( 'bupr_title' ); ?>"><?php esc_html_e( 'Enter Title', 'bp-member-reviews' ); ?>:</label>
-				<input class="regular_text" id="<?php echo $this->get_field_id( 'bupr_title' ); ?>" name="<?php echo $this->get_field_name( 'bupr_title' ); ?>" type="text" value="<?php echo $title; ?>" />
+				<label for="<?php echo esc_attr( $this->get_field_id( 'bupr_title' ) ); ?>"><?php esc_html_e( 'Enter Title', 'bp-member-reviews' ); ?>:</label>
+				<input class="regular_text" id="<?php echo esc_attr( $this->get_field_id( 'bupr_title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'bupr_title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'bupr_member' ); ?>"><?php esc_html_e( 'Display Members', 'bp-member-reviews' ); ?>:</label>
-				<input class="regular_text" id="<?php echo $this->get_field_id( 'bupr_member' ); ?>" name="<?php echo $this->get_field_name( 'bupr_member' ); ?>" type="number" value="<?php echo $member; ?>" />
+				<label for="<?php echo esc_attr( $this->get_field_id( 'bupr_member' ) ); ?>"><?php esc_html_e( 'Display Members', 'bp-member-reviews' ); ?>:</label>
+				<input class="regular_text" id="<?php echo esc_attr( $this->get_field_id( 'bupr_member' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'bupr_member' ) ); ?>" type="number" value="<?php echo esc_attr( $member ); ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'rating_default' ); ?>"><?php esc_html_e( 'Default ratings to show:', 'bp-member-reviews' ); ?></label>
-				<select name="<?php echo $this->get_field_name( 'rating_default' ); ?>" id="<?php echo $this->get_field_id( 'rating_default' ); ?>">
+				<label for="<?php echo esc_attr( $this->get_field_id( 'rating_default' ) ); ?>"><?php esc_html_e( 'Default ratings to show:', 'bp-member-reviews' ); ?></label>
+				<select name="<?php echo esc_attr( $this->get_field_name( 'rating_default' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'rating_default' ) ); ?>">
 					<option value="latest" <?php selected( $rating_default, 'latest' ); ?>><?php esc_html_e( 'Latest', 'bp-member-reviews' ); ?></option>
 					<option value="highest" <?php selected( $rating_default, 'highest' ); ?>><?php esc_html_e( 'Highest', 'bp-member-reviews' ); ?></option>
 					<option value="lowest"  <?php selected( $rating_default, 'lowest' ); ?>><?php esc_html_e( 'Lowest', 'bp-member-reviews' ); ?></option>
