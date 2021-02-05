@@ -619,7 +619,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$name     = bp_get_displayed_user_username();
 				$tab_args = array(
 					'name'                    => $bupr['review_label_plural'] . ' ' . $bupr_notification,
-					'slug'                    => 'reviews',
+					'slug'                    => apply_filters( 'bupr_review_tab_slug', sanitize_title( $bupr['review_label_plural'] ) ),
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
 					'default_subnav_slug'     => 'view',
