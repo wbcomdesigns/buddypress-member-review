@@ -90,7 +90,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
  * @param integer $reply_to
  * @return void
  */
-function bupr_buddypress_add_notification( $bupr_memberid, $review_id  ) {
+function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 
 	// Bail if somehow this is hooked to an edit action
 	if ( ! empty( $is_edit ) ) {
