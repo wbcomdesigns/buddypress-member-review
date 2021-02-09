@@ -61,6 +61,10 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+= 2.4.1 =
+* Fix: New reviews tab should follow the same slug as parent.
+* Fix: BP nav bar link will also use the dynamic review slug from options.
+
 = 2.4.0 =
 * Fix: ( #123) Allow to change review url when label is changed
 * Fix: (#122) Fixed escaping functions
@@ -141,4 +145,3 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 == Upgrade Notice ==
 = 1.0.0 =
 This version is the initial version of the plugin with basic review adding functionality.
-
