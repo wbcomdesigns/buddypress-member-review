@@ -378,7 +378,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$reviews       = get_posts( $bupr_args );
 			$reviews_count = count( $reviews );
 
-			$profile_menu_slug = 'reviews';
+			$profile_menu_slug = isset( $bupr['review_label_plural'] ) ? sanitize_title( $bupr['review_label_plural'] ) : esc_html( 'reviews' );
 
 			$base_url = bp_loggedin_user_domain() . $profile_menu_slug;
 			if ( is_user_logged_in() ) {
