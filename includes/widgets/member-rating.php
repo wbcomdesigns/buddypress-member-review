@@ -156,8 +156,8 @@ class bupr_single_member_rating_widget extends WP_Widget {
 					echo '</div>';
 					echo '<div class="item">';
 					$members_profile = bp_core_get_userlink( $final_review_obj[ $buprKey ]->post_author );
-					echo '<div class="item-title fn">';
-					echo ( $user_anonymous_review != 'yes' ) ? esc_html( $members_profile ) : 'anonymous';
+					echo '<div class="item-title">';
+					echo ( $user_anonymous_review != 'yes' ) ? wp_kses_post( $members_profile ) : 'anonymous';
 					echo '</div>';
 
 					$bupr_avg_rating = $buprValue;
