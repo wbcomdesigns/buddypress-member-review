@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 10:31:39+00:00\n"
+"POT-Creation-Date: 2021-02-09 07:04:40+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -191,7 +191,7 @@ msgstr ""
 
 #: admin/class-bupr-admin-feedback.php:271
 #: admin/class-bupr-admin-feedback.php:311
-#: admin/wbcom/wbcom-admin-settings.php:195 buddypress-member-review.php:92
+#: admin/wbcom/wbcom-admin-settings.php:201 buddypress-member-review.php:92
 #: buddypress-member-review.php:151
 msgid "BuddyPress Member Reviews"
 msgstr ""
@@ -224,11 +224,11 @@ msgstr ""
 msgid "Set review criteria according to member types"
 msgstr ""
 
-#: admin/tab-templates/bupr-member-types-criteria-tab.php:54
+#: admin/tab-templates/bupr-member-types-criteria-tab.php:55
 msgid "Select criterias"
 msgstr ""
 
-#: admin/tab-templates/bupr-member-types-criteria-tab.php:65
+#: admin/tab-templates/bupr-member-types-criteria-tab.php:68
 msgid "Only selected criteria will be available for respective member types."
 msgstr ""
 
@@ -531,12 +531,12 @@ msgid "Install"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-plugins-page.php:18
-#: admin/wbcom/wbcom-admin-settings.php:362
+#: admin/wbcom/wbcom-admin-settings.php:374
 msgid "Activate"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-plugins-page.php:22
-#: admin/wbcom/wbcom-admin-settings.php:363
+#: admin/wbcom/wbcom-admin-settings.php:375
 msgid "Deactivate"
 msgstr ""
 
@@ -544,14 +544,15 @@ msgstr ""
 msgid "Paid Addons"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:67
+#: admin/wbcom/templates/wbcom-plugins-page.php:68
 #: includes/bupr-filters.php:635
 msgid "View"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:3
-#: admin/wbcom/wbcom-admin-settings.php:390
-#: admin/wbcom/wbcom-admin-settings.php:475
+#: admin/wbcom/wbcom-admin-settings.php:413
+#: admin/wbcom/wbcom-admin-settings.php:414
+#: admin/wbcom/wbcom-admin-settings.php:507
 msgid "Support"
 msgstr ""
 
@@ -593,6 +594,13 @@ msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:4
 msgid "Reign BuddyPress"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:9
+#: admin/wbcom/templates/wbcom-themes-page.php:35
+#: admin/wbcom/templates/wbcom-themes-page.php:61
+#: admin/wbcom/templates/wbcom-themes-page.php:85
+msgid "Avatar"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:12
@@ -734,47 +742,47 @@ msgstr ""
 msgid "Suitable for All Devices"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:179
+#: admin/wbcom/wbcom-admin-settings.php:185
 msgid "Custom Font Uploader"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:181
+#: admin/wbcom/wbcom-admin-settings.php:187
 msgid ""
 "It also allows you to upload your own custom font to your site and use them "
 "using custom css."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:187
+#: admin/wbcom/wbcom-admin-settings.php:193
 msgid "BuddyPress Create Group Type"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:189
+#: admin/wbcom/wbcom-admin-settings.php:195
 msgid "It will help to create group type for BuddyPress Groups."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:197
+#: admin/wbcom/wbcom-admin-settings.php:203
 msgid ""
 "This plugin allows only site members to add reviews to the buddypress "
 "members on the site and even rate the member’s profile out of 5 points with "
 "multiple review criteria."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:203
+#: admin/wbcom/wbcom-admin-settings.php:209
 msgid "BuddyPress Group Reviews"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:205
+#: admin/wbcom/wbcom-admin-settings.php:211
 msgid ""
 "This plugin allows the BuddyPress Members to give reviews to the BuddyPress "
 "groups on the site. The review form allows the users to give text review, "
 "even rate the group on the basis of multiple criterias."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:223
+#: admin/wbcom/wbcom-admin-settings.php:229
 msgid "BuddyPress Moderation Pro"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:224
+#: admin/wbcom/wbcom-admin-settings.php:230
 msgid ""
 "BuddyPress Community Moderation offers a solution for site owners to keep "
 "their communities straight. With community policing strategy, members of "
@@ -782,85 +790,85 @@ msgid ""
 "content created within the various components."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:229
+#: admin/wbcom/wbcom-admin-settings.php:235
 msgid "BuddyPress Polls"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:230
+#: admin/wbcom/wbcom-admin-settings.php:236
 msgid ""
 "Use BuddyPress Polls plugin to create polls inside the activity, let your "
 "user response to your polls. Members can create pools like activities, "
 "easily votes on them."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:235
+#: admin/wbcom/wbcom-admin-settings.php:241
 msgid "BuddyPress Hashtags"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:236
+#: admin/wbcom/wbcom-admin-settings.php:242
 msgid ""
 "Allows members to use hashtags in BuddyPress activities and bbPress topics "
 "and ready with widgets."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:241
+#: admin/wbcom/wbcom-admin-settings.php:247
 msgid "BuddyPress Profanity"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:242
+#: admin/wbcom/wbcom-admin-settings.php:248
 msgid ""
 "Use BuddyPress Profanity plugin to censor content in your community! Easily "
 "Censor all the unwanted words in activities, private messages contents by "
 "specifying a list of keywords to be filtered."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:247
+#: admin/wbcom/wbcom-admin-settings.php:253
 msgid "BuddyPress Private Community Pro"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:248
+#: admin/wbcom/wbcom-admin-settings.php:254
 msgid ""
 "This plugin offers a lockdown for BuddyPress Component and will ask users "
 "to log in go further to check profile or any other protected details."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:253
+#: admin/wbcom/wbcom-admin-settings.php:259
 msgid "BuddyPress Profile Pro"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:254
+#: admin/wbcom/wbcom-admin-settings.php:260
 msgid ""
 "This plugin gives you the power to extend BuddyPress Profiles with repeater "
 "fields and groups. You can easily add multiple field groups and display "
 "them at member’s profile."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:259
+#: admin/wbcom/wbcom-admin-settings.php:265
 msgid "BuddyPress Sticky Post"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:260
+#: admin/wbcom/wbcom-admin-settings.php:266
 msgid ""
 "This will make it easier for the site administrator to make the pinned "
 "activity item recognized first by the community whenever they visit the "
 "site."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:265
+#: admin/wbcom/wbcom-admin-settings.php:271
 msgid "BuddyPress Auto Friends"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:266
+#: admin/wbcom/wbcom-admin-settings.php:272
 msgid ""
 "Allow the site admin to select global friends for all his members with "
 "BuddyPress Auto friends plugin."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:271
+#: admin/wbcom/wbcom-admin-settings.php:277
 msgid "BuddyPress Quotes"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:272
+#: admin/wbcom/wbcom-admin-settings.php:278
 msgid ""
 "BuddyPress quotes plugin comes with the feature to let users post their "
 "activity updates with interactive backgrounds selection such as colors and "
@@ -868,17 +876,19 @@ msgid ""
 "story."
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:384
-#: admin/wbcom/wbcom-admin-settings.php:463
+#: admin/wbcom/wbcom-admin-settings.php:397
+#: admin/wbcom/wbcom-admin-settings.php:398
+#: admin/wbcom/wbcom-admin-settings.php:495
 msgid "Components"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:387
-#: admin/wbcom/wbcom-admin-settings.php:469
+#: admin/wbcom/wbcom-admin-settings.php:405
+#: admin/wbcom/wbcom-admin-settings.php:406
+#: admin/wbcom/wbcom-admin-settings.php:501
 msgid "Themes"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:457 buddypress-member-review.php:126
+#: admin/wbcom/wbcom-admin-settings.php:489 buddypress-member-review.php:126
 msgid "Settings"
 msgstr ""
 
