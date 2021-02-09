@@ -61,7 +61,7 @@ $member_types = bp_get_member_types( '', 'objects' );
 										} else {
 											$selected = '';
 										}
-										echo "<option value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . '>' . esc_attr( $criteria ) . '</option>';
+										echo "<option value='" . esc_attr( $key ) . "' " . esc_attr( $selected ) . '>' . esc_html( $criteria ) . '</option>';
 									}
 									?>
 								</select>

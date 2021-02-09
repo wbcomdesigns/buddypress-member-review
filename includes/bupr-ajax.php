@@ -294,7 +294,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 				}
 
-				echo wp_kese_post( $html );
+				echo stripslashes( $html );
 				die;
 
 			}
