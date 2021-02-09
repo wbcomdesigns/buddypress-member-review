@@ -313,8 +313,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				<?php } else { ?>
 						<div id="message" class="success success_review_msg">
 					<?php } ?>
-						<p>
-						</p>
+						<p></p>
 					</div>
 				<?php
 			}
@@ -337,20 +336,21 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								<span class="bp-icon" aria-hidden="true"></span>
 					<?php } else { ?>
 								<div id="message" class="info">
-							<?php } ?>
-							<?php
-							if ( 'publish' === $reviews_args->posts[0]->post_status ) {
-								$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
-							} else {
-								if ( $auto_approve_reviews == 'yes' ) {
-									$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
-								} else {
-									$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
-								}
-							}
-							?>
-								<p><?php echo esc_html( $message ); ?> </p>
+										<?php } ?>
+										<?php
+										if ( 'publish' === $reviews_args->posts[0]->post_status ) {
+											$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
+										} else {
+											if ( $auto_approve_reviews === 'yes' ) {
+												$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
+											} else {
+												$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
+											}
+										}
+										?>
+										<p><?php echo $message; ?> </p>
 							</div>
+						</div>
 					<?php
 				}
 			}
@@ -381,6 +381,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				<?php } else { ?>
 					<div id="message" class="success add_review_msg success_review_msg">
 						<?php } ?>
+						<p></p>
 					</div>
 					<form action="" method="POST">
 						<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
