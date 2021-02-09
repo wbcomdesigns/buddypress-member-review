@@ -3,7 +3,7 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 5.4.2
+Tested up to: 5.6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -61,6 +61,11 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+= 2.4.0 =
+* Fix: ( #123) Allow to change review url when label is changed
+* Fix: (#122) Fixed escaping functions
+* Fix: (#110) Updated Language file and changed the strings
+* Fix: (#103) Fixed hide review button in backend settings
 
 = 2.3.0 =
 * Fix: (#76) Fixed php notices and warnings
