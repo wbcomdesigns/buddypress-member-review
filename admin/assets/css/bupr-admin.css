@@ -208,7 +208,7 @@ input:checked+.bupr-slider:before {
 
 @media(max-width: 767px) {
   [class*="bupr-admin-col-"] {
-    width: 100%;
+	width: 100%;
   }
 }
 

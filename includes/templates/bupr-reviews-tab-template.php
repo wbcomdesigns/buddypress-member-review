@@ -44,7 +44,7 @@ $reviews = new WP_Query( $args ); ?>
 	</div>
 	<!-- MODAL FOR USER LOGIN -->
 	<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_attr( BUPR_PLUGIN_URL ); ?>">
-	<input type="hidden" class="member-rating-limit" value="<?php echo $bupr['reviews_per_page']; ?>">
+	<input type="hidden" class="member-rating-limit" value="<?php echo esc_attr( $bupr['reviews_per_page'] ); ?>">
 
 	<div class="bp-member-reviews">
 		<div id="bp-member-reviews-list" cellspacing="0">
@@ -84,10 +84,10 @@ $reviews = new WP_Query( $args ); ?>
 												'html'   => true,
 											)
 										);
-										echo "<img src='" . $avatar_url . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
+										echo "<img src='" . esc_url( $avatar_url ) . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
 									} else {
 
-										echo bp_core_fetch_avatar(
+										echo bp_core_fetch_avatar( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 											array(
 												'item_id' => $author,
 												'height'  => 96,
@@ -163,13 +163,13 @@ $reviews = new WP_Query( $args ); ?>
 												$shortexcerpt = substr( $trimcontent, 0, 150 );
 												?>
 												<div class="description">
-													<?php echo wpautop( $shortexcerpt ); ?>
-													<a href="<?php echo esc_attr( $url ); ?> " class="bupr-read-more">
+													<?php echo esc_html( wpautop( $shortexcerpt ) ); ?>
+													<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
 														<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
 													</a>
 												</div>
 											<?php } else { ?>
-												<div class="description"><?php echo wpautop( $trimcontent ); ?></div>
+												<div class="description"><?php echo esc_html( wpautop( $trimcontent ) ); ?></div>
 												<?php
 											}
 										}
@@ -241,7 +241,7 @@ $reviews = new WP_Query( $args ); ?>
 					<?php } else { ?>
 						<div id="message" class="info">
 					<?php } ?>
-						<p><?php echo sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), $bupr['review_label'] ); ?>
+						<p><?php echo sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 
 						</p>
 					</div>

@@ -153,10 +153,10 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			}
 			echo '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting ">';
 			?>
-			<input type="hidden" value="<?php echo $bupr['rating_color']; ?>" class="bupr-display-rating-color">
+			<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
 			<?php
 			$bupr_user_count = 0;
-			echo '<h2>' . $bupr_title . '</h2>';
+			echo '<h2>' . esc_html( $bupr_title ) . '</h2>';
 			echo '<ul class="bupr-member-main">';
 			if ( $bupr_member_count != 0 ) {
 				foreach ( $bupr_members_ratings_data as $buprKey => $buprValue ) {
@@ -174,7 +174,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						}
 						$members_profile = bp_core_get_userlink( $buprValue['user_id'] );
 						echo '<div class="bupr-member-title">';
-						echo $members_profile;
+						echo esc_html( $members_profile );
 						echo '</div>';
 
 						$bupr_avg_rating    = $buprValue['avg_rating'];
@@ -197,13 +197,13 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							?>
 
 							<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-								<span itemprop="ratingValue"  content="<?php echo $bupr_avg_rating; ?>"></span>
+								<span itemprop="ratingValue"  content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
 								<span itemprop="bestRating"   content="5"></span>
-								<span itemprop="ratingCount"  content="<?php echo $buprValue['rate_counter']; ?>"></span>
-								<span itemprop="reviewCount"  content="<?php echo $bupr_reviews_count; ?>"></span>
+								<span itemprop="ratingCount"  content="<?php echo esc_attr( $buprValue['rate_counter'] ); ?>"></span>
+								<span itemprop="reviewCount"  content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
 								<span itemprop="itemReviewed" content="Person"></span>
-								<span itemprop="name" content="<?php echo bp_core_get_username( $buprValue['user_id'] ); ?>"></span>
-								<span itemprop="url" content="<?php echo bp_core_get_userlink( $buprValue['user_id'], false, true ); ?>"></span>
+								<span itemprop="name" content="<?php echo esc_attr( bp_core_get_username( $buprValue['user_id'] ) ); ?>"></span>
+								<span itemprop="url" content="<?php echo esc_attr( bp_core_get_userlink( $buprValue['user_id'], false, true ) ); ?>"></span>
 							</div>
 							<?php
 						}
@@ -356,7 +356,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								}
 							}
 							?>
-								<p><?php echo $message; ?> </p>
+								<p><?php echo esc_html( $message ); ?> </p>
 							</div>
 					<?php
 				}
@@ -392,7 +392,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							</p>
 						</div>
 						<form action="" method="POST">
-							<input type="hidden" value="<?php echo $bupr['rating_color']; ?>" class="bupr-display-rating-color">
+							<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
 							<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_url( BUPR_PLUGIN_URL ); ?>">
 							<div class="bp-member-add-form">
 

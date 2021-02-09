@@ -5,7 +5,7 @@
  * @package BuddyPress_Member_Reviews
  */
 
-//Exit if accessed directly.
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

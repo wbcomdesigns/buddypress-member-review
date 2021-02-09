@@ -94,13 +94,13 @@
 
 @media(max-width: 767px) {
   [class*="bupr-col-"] {
-    width: 100%;
+	width: 100%;
   }
 
   .bupr-criteria-label span {
-    display: inline;
-    width: 100%;
-    clear: left;
+	display: inline;
+	width: 100%;
+	clear: left;
   }
 }
 
@@ -164,7 +164,7 @@ ul.bupr-member-main li.bupr-members.bupr-hide .bupr-content-widget {
 }
 
 /*ul.bupr-member-main li.bupr-members .bupr-member-title{
-    font-weight: bold;
+	font-weight: bold;
 }*/
 ul.bupr-member-main li.bupr-members .bupr-meta {
   display: block;
@@ -322,8 +322,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 @media print {
   .br-theme-bars-square .bupr-rating-widget a {
-    border: 2px solid #b3b3b3;
-    color: #b3b3b3;
+	border: 2px solid #b3b3b3;
+	color: #b3b3b3;
   }
 }
 
@@ -372,7 +372,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 @media(min-width: 768px) and (max-width: 1068px) {
   #bupr-add-review-modal .modal-content {
-    min-width: 380px;
+	min-width: 380px;
   }
 }
 
@@ -477,22 +477,22 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 @media only screen and (max-width: 480px) {
   .bupr-members-profiles {
-    width: 60px;
+	width: 60px;
   }
 
   .bupr-members-content {
-    margin-left: 60px;
+	margin-left: 60px;
   }
 }
 
 @media only screen and (max-width: 768px) {
   .multi-review {
-    display: flex;
+	display: flex;
   }
 }
 
 @media only screen and (max-width: 420px) {
   .multi-review {
-    display: inline-block;
+	display: inline-block;
   }
 }

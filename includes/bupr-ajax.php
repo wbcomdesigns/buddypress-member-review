@@ -294,7 +294,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 				}
 
-				echo stripslashes( $html );
+				echo stripslashes( $html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				die;
 
 			}
