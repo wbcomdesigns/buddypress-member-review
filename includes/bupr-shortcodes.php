@@ -174,7 +174,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						}
 						$members_profile = bp_core_get_userlink( $buprValue['user_id'] );
 						echo '<div class="bupr-member-title">';
-						echo esc_html( $members_profile );
+						echo wp_kses_post( $members_profile );
 						echo '</div>';
 
 						$bupr_avg_rating    = $buprValue['avg_rating'];

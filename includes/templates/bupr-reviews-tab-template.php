@@ -163,13 +163,13 @@ $reviews = new WP_Query( $args ); ?>
 												$shortexcerpt = substr( $trimcontent, 0, 150 );
 												?>
 												<div class="description">
-													<?php echo esc_html( wpautop( $shortexcerpt ) ); ?>
+													<?php echo wpautop( $shortexcerpt ); ?>
 													<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
 														<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
 													</a>
 												</div>
 											<?php } else { ?>
-												<div class="description"><?php echo esc_html( wpautop( $trimcontent ) ); ?></div>
+												<div class="description"><?php echo wpautop( $trimcontent ); ?></div>
 												<?php
 											}
 										}
