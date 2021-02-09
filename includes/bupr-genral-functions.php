@@ -63,3 +63,31 @@ function bupr_get_template( $template_name, $args = array(), $tempate_path = '',
 	endif;
 	include $template_file;
 }
+
+/**
+ * Get Review tab name on memeber profile.
+ *
+ * @return string Tab name
+ */
+function bupr_profile_review_tab_name() {
+	global $bupr;
+
+	if ( isset( $bupr['review_label_plural'] ) ) {
+		$tab_name = $bupr['review_label_plural'];
+	}
+	return apply_filters( 'bupr_review_tab_name', esc_html( $tab_name ) );
+}
+
+/**
+ * Get Review tab slug on memeber profile.
+ *
+ * @return string Tab name
+ */
+function bupr_profile_review_tab_slug() {
+	global $bupr;
+
+	if ( isset( $bupr['review_label_plural'] ) ) {
+		$tab_slug = sanitize_title( $bupr['review_label_plural'] );
+	}
+	return apply_filters( 'bupr_review_tab_slug', esc_html( $tab_slug ) );
+}
