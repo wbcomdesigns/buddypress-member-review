@@ -632,8 +632,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				// Add subnav to view a review.
 				bp_core_new_subnav_item(
 					array(
-						'name'            => esc_html__( 'View', 'bp-member-reviews' ),
-						'slug'            => 'view',
+						'name'            => bupr_profile_review_tab_name(),
+						'slug'            => bupr_profile_review_tab_slug(),
 						'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 						'parent_slug'     => $parent_slug,
 						'screen_function' => array( $this, 'bupr_view_review_tab_function_to_show_screen' ),
