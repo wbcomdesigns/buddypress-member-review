@@ -566,7 +566,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								$bupr_reciever_email = $bupr_reciever_data->data->user_email;
 								$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
 								$bupr_reciever_login = $bupr_reciever_data->data->user_login;
-								$bupr_review_url     = bp_core_get_user_domain( $bupr_member_id ) . 'reviews/view/' . $review_id;
+								$bupr_review_url     = bp_core_get_user_domain( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $review_id;
 							}
 
 							/* send notification to member if  notification is enable */
@@ -577,9 +577,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							/* send email to member if email notification is enable */
 							if ( 'yes' == $bupr['allow_email'] ) {
 								$bupr_to       = $bupr_reciever_email;
-								$bupr_subject  = $review_subject;
-								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new review on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ) ) . '</p>';
-								$bupr_message .= esc_html__( 'To read your review click on the link given below.', 'bp-member-reviews' );
+								$bupr_subject  = sprintf( 'You have got a new %s', $bupr['review_label'] );// $review_subject;
+								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), $bupr['review_label'] ) . '</p>';
+								$bupr_message .= sprintf( esc_html__( 'To read your %s click on the link given below.', 'bp-member-reviews' ), $bupr['review_label'] );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
 								$bupr_header  .= "MIME-Version: 1.0\r\n";
