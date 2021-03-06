@@ -43,18 +43,19 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_custom_variables() {
+			global $bupr;
 			wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css/bupr-reviews.css' );
 			wp_enqueue_style( 'bupr-font-awesome', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css' );
 			wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css' );
-			$title_review  = $bupr['review_label'];
-			$cur_name      = bp_get_displayed_user_fullname();
-			$reviews_title = array(
+			wp_enqueue_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js/bupr-front.js', array( 'jquery' ), time() );
+			$title_review   = $bupr['review_label'];
+			$cur_name       = bp_get_displayed_user_fullname();
+			$reviews_titles = array(
 				'cur_username' => $cur_name,
 				'review_title' => $title_review,
-
 			);
-			wp_localize_script( 'bupr-front-js', 'mail_title', $reviews_title );
-			wp_enqueue_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js/bupr-front.js', array( 'jquery' ), time() );
+			wp_localize_script( 'bupr-front-js', 'mail_title', $reviews_titles );
+
 		}
 
 		/**
@@ -89,7 +90,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 			}
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
-				if ( ( isset( $_GET['page'] ) && $_GET['page'] == 'bp-member-review-settings' ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) {
+				if ( ( isset( $_GET['page'] ) && 'bp-member-review-settings' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
 					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {

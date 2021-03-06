@@ -13,15 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function bupr_filter_notifications_get_registered_components( $component_names = array() ) {
 
-			// Force $component_names to be an array
+			// Force $component_names to be an array.
 	if ( ! is_array( $component_names ) ) {
 			$component_names = array();
 	}
 
-			// Add 'buddypress_member_review' component to registered components array
+			// Add 'buddypress_member_review' component to registered components array.
 			array_push( $component_names, 'buddypress_member_review' );
 
-			// Return component's with 'buddypress_member_review' appended
+			// Return component's with 'buddypress_member_review' appended.
 			return $component_names;
 }
 add_filter( 'bp_notifications_get_registered_components', 'bupr_filter_notifications_get_registered_components', 10 );
@@ -92,16 +92,16 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
  */
 function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 
-	// Bail if somehow this is hooked to an edit action
+	// Bail if somehow this is hooked to an edit action.
 	if ( ! empty( $is_edit ) ) {
 			return;
 	}
 
-	// Get autohr information
+	// Get autohr information.
 	$current_user = wp_get_current_user();
 	$member_id    = $current_user->ID;
 
-	// Get some reply information
+	// Get some reply information.
 		$args = array(
 			'user_id'           => $bupr_memberid,
 			'item_id'           => $review_id,

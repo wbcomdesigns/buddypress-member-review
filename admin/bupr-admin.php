@@ -223,7 +223,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_get_review_count() {
 			global $bupr, $menu;
-			if ( $bupr['auto_approve_reviews'] != 'yes' ) {
+			if ( 'yes' !== $bupr['auto_approve_reviews'] ) {
 
 				foreach ( $menu as $each_menu ) {
 					if ( $each_menu[2] == 'edit.php?post_type=review' ) {

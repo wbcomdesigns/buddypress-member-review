@@ -41,15 +41,15 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 
 			/*
-			 Add review link at member's directory if option admin setting is enabled.
-			*/
+			 * Add review link at member's directory if option admin setting is enabled.
+			 */
 
 			add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 		}
 
 		/**
-		 * Get displayed user role
+		 * Get displayed user role.
 		 *
 		 * @since    2.3.0
 		 * @access   public
@@ -62,7 +62,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( is_object( $user ) ) {
 					$roles = $user->roles;
 				}
-				return $roles; // This returns an array
+				return $roles; // This returns an array.
 			}
 		}
 
@@ -99,7 +99,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			global $bupr;
 
 			/* List ratings at member directory if setting is enabled. */
-			if ( 'yes' != $bupr['dir_view_ratings'] ) {
+			if ( 'yes' !== $bupr['dir_view_ratings'] ) {
 				return;
 			}
 
@@ -125,7 +125,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
 			$bupr_total_review_count = '';
-			if ( $bupr_reviews_count != 0 ) {
+			if ( 0 !== $bupr_reviews_count ) {
 				foreach ( $reviews as $review ) {
 					$rate                = 0;
 					$reviews_field_count = 0;
@@ -139,7 +139,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								}
 							}
 
-							if ( $reviews_field_count != 0 ) {
+							if ( 0 !== $reviews_field_count ) {
 								$bupr_total_rating += (int) $rate / $reviews_field_count;
 								$bupr_total_review_count ++;
 								$rate_counter++;
@@ -148,7 +148,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					}
 				}
 
-				if ( $bupr_total_review_count != 0 ) {
+				if ( 0 !== $bupr_total_review_count ) {
 					$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
 					$bupr_type       = gettype( $bupr_avg_rating );
 				}
@@ -243,7 +243,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
 						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_slug() . '/add-' . bupr_profile_review_tab_slug();
 						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-						if ( 'nouveau' == $bp_template_option ) {
+						if ( 'nouveau' === $bp_template_option ) {
 							?>
 								<li id="bupr-add-review-btn" class="generic-button">
 							<?php } else { ?>
@@ -254,7 +254,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 									?>
 								</a>
-							<?php if ( 'nouveau' == $bp_template_option ) { ?>
+							<?php if ( 'nouveau' === $bp_template_option ) { ?>
 							</li>
 						<?php } else { ?>
 							</div>
@@ -264,7 +264,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				} else {
 					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_slug() . '/add-' . bupr_profile_review_tab_slug();
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-					if ( 'nouveau' == $bp_template_option ) {
+					if ( 'nouveau' === $bp_template_option ) {
 						?>
 						<li id="bupr-add-review-btn" class="generic-button">
 						<?php } else { ?>
@@ -275,7 +275,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 								?>
 							</a>
-						<?php if ( 'nouveau' == $bp_template_option ) { ?>
+						<?php if ( 'nouveau' === $bp_template_option ) { ?>
 						</li>
 					<?php } else { ?>
 						</div>
@@ -328,7 +328,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				} else {
 					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_slug() . '/add-' . bupr_profile_review_tab_slug();
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-					if ( 'nouveau' == $bp_template_option ) {
+					if ( 'nouveau' === $bp_template_option ) {
 						?>
 						<li id="bupr-add-review-btn" class="generic-button">
 						<?php } else { ?>
@@ -339,7 +339,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 								?>
 							</a>
-						<?php if ( 'nouveau' == $bp_template_option ) { ?>
+						<?php if ( 'nouveau' === $bp_template_option ) { ?>
 						</li>
 					<?php } else { ?>
 						</div>
@@ -424,7 +424,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
 			$bupr_total_review_count = '';
-			if ( 0 != $bupr_reviews_count ) {
+			if ( 0 !== $bupr_reviews_count ) {
 				foreach ( $reviews as $review ) {
 					$rate                = 0;
 					$reviews_field_count = 0;
@@ -437,7 +437,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 									$reviews_field_count++;
 								}
 							}
-							if ( $reviews_field_count != 0 ) {
+							if ( 0 !== $reviews_field_count ) {
 								$bupr_total_rating += (int) $rate / $reviews_field_count;
 								$bupr_total_review_count ++;
 								$rate_counter++;
@@ -446,7 +446,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					}
 				}
 
-				if ( $bupr_total_review_count != 0 ) {
+				if ( 0 !== $bupr_total_review_count ) {
 					$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
 					$bupr_type       = gettype( $bupr_avg_rating );
 				}
@@ -540,7 +540,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
 			global $bp;
 			global $bupr;
-			if ( $post->post_type == 'review' ) {
+			if ( 'review' === $post->post_type ) {
 				unset( $actions['edit'] );
 				unset( $actions['view'] );
 				unset( $actions['inline hide-if-no-js'] );
@@ -554,7 +554,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
-					if ( $post->post_status == 'draft' ) {
+					if ( 'draft' === $post->post_status ) {
 						$actions['approve_review'] = '<a href="javascript:void(0);" title="' . $review_title . '" class="bupr-approve-review" data-rid="' . $post->ID . '">' . esc_html__( 'Approve', 'bp-member-reviews' ) . '</a>';
 					}
 				}
@@ -571,7 +571,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_add_bp_member_reviews_taxonomy_term() {
 			$termexists = term_exists( 'BP Member', 'review_category' );
-			if ( $termexists === 0 || $termexists === null ) {
+			if ( 0 === $termexists || null === $termexists ) {
 				wp_insert_term( 'BP Member', 'review_category' );
 			}
 		}
@@ -633,7 +633,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				bp_core_new_subnav_item(
 					array(
 						'name'            => bupr_profile_review_tab_name(),
-						'slug'            => bupr_profile_review_tab_slug(),
+						'slug'            => 'view',
 						'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 						'parent_slug'     => $parent_slug,
 						'screen_function' => array( $this, 'bupr_view_review_tab_function_to_show_screen' ),
@@ -753,7 +753,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					do_shortcode( '[add_profile_review_form]' );
 				} else {
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-					if ( 'nouveau' == $bp_template_option ) {
+					if ( 'nouveau' === $bp_template_option ) {
 						?>
 					<div id="message" class="info bp-feedback bp-messages bp-template-notice">
 						<span class="bp-icon" aria-hidden="true"></span>
