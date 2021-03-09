@@ -202,6 +202,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				<?php
 			}
 		}
+
 		/**
 		 * Actions performed to add a review button on member header.
 		 *
@@ -789,6 +790,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_view_review_tab_function_to_show_content() {
 			bupr_get_template( 'bupr-single-review-template.php' );
 		}
+
 	}
 	new BUPR_Custom_Hooks();
 }
