@@ -202,7 +202,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				<?php
 			}
 		}
-
 		/**
 		 * Actions performed to add a review button on member header.
 		 *
