@@ -650,7 +650,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
 						bp_core_new_subnav_item(
 							array(
-								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_tab_name() ) ),
+								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
 								'slug'            => 'add-' . bupr_profile_review_tab_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 								'parent_slug'     => $parent_slug,
@@ -747,10 +747,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_reviews_form_to_show_content() {
 			?>
-			<div class="bupr-bp-member-review-no-popup-add-block">
+			<div class="bupr-bp-member-review-no-popup-add-block gfgg">
 				<?php
 				if ( is_user_logged_in() ) {
-					do_shortcode( '[add_profile_review_form]' );
+					$bupr_form = new BUPR_Shortcodes();
+					echo $bupr_form->bupr_display_review_form();
+					// do_shortcode( '[add_profile_review_form]' );
 				} else {
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 					if ( 'nouveau' === $bp_template_option ) {
