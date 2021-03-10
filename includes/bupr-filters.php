@@ -650,6 +650,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
 						bp_core_new_subnav_item(
 							array(
+								/* translators: Review Label */
 								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
 								'slug'            => 'add-' . bupr_profile_review_tab_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
