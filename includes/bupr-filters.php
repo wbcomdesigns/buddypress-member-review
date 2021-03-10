@@ -445,12 +445,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						endif;
 					}
 				}
-
-				if ( 0 !== $bupr_total_review_count ) {
+				if ( 0 !== $bupr_total_review_count && 0 !== $bupr_total_rating ) {
 					$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
 					$bupr_type       = gettype( $bupr_avg_rating );
 				}
-
 				$bupr_stars_on   = '';
 				$stars_off       = '';
 				$stars_half      = '';
