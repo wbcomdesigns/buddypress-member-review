@@ -241,7 +241,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( ! empty( $bupr['exclude_given_members'] ) ) {
 
 					if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
-						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_slug() . '/add-' . bupr_profile_review_tab_slug();
+						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_plural_slug();
 						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
@@ -262,7 +262,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						}
 					}
 				} else {
-					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_slug() . '/add-' . bupr_profile_review_tab_slug();
+					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_plural_slug();
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
@@ -305,7 +305,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$user_role = $this->bupr_get_current_user_roles( $user_id );
 
 					if ( in_array( $user_role[0], $bupr['add_taken_members'], true ) ) {
-						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_slug() . '/add-' . bupr_profile_review_tab_slug();
+						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_plural_slug();
 						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
@@ -326,7 +326,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						}
 					}
 				} else {
-					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_slug() . '/add-' . bupr_profile_review_tab_slug();
+					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_plural_slug();
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
@@ -617,7 +617,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$name     = bp_get_displayed_user_username();
 				$tab_args = array(
 					'name'                    => bupr_profile_review_tab_name() . ' ' . $bupr_notification,
-					'slug'                    => bupr_profile_review_tab_slug(),
+					'slug'                    => bupr_profile_review_tab_plural_slug(),
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
 					'default_subnav_slug'     => 'view',
@@ -625,7 +625,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				);
 				bp_core_new_nav_item( $tab_args );
 
-				$parent_slug = bupr_profile_review_tab_slug();
+				$parent_slug = bupr_profile_review_tab_plural_slug();
 
 				// Add subnav to view a review.
 				bp_core_new_subnav_item(
@@ -650,12 +650,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							array(
 								/* translators: Review Label */
 								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
-								'slug'            => 'add-' . bupr_profile_review_tab_slug(),
+								'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 								'parent_slug'     => $parent_slug,
 								'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
 								'position'        => 200,
-								'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_slug(),
+								'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_singular_slug(),
 							)
 						);
 
@@ -675,12 +675,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						bp_core_new_subnav_item(
 							array(
 								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_tab_name() ) ),
-								'slug'            => 'add-' . bupr_profile_review_tab_slug(),
+								'slug'            => 'add-' . bupr_profile_review_tab_plural_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 								'parent_slug'     => $parent_slug,
 								'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
 								'position'        => 200,
-								'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_slug(),
+								'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_plural_slug(),
 							)
 						);
 					}
@@ -689,12 +689,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					bp_core_new_subnav_item(
 						array(
 							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_tab_name() ) ),
-							'slug'            => 'add-' . bupr_profile_review_tab_slug(),
+							'slug'            => 'add-' . bupr_profile_review_tab_plural_slug(),
 							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 							'parent_slug'     => $parent_slug,
 							'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
 							'position'        => 200,
-							'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_slug(),
+							'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_plural_slug(),
 						)
 					);
 

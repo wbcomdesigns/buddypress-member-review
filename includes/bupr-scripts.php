@@ -31,7 +31,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 
 			// Add Scripts only on reviews tab.
 			add_action( 'wp_enqueue_scripts', array( $this, 'bupr_custom_variables' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'wpdocs_styles_method' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'bupr_styles_method' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'bupr_admin_custom_variables' ) );
 		}
 
@@ -65,7 +65,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @access   public
 		 * @author   Wbcom Designs
 		 */
-		public function wpdocs_styles_method() {
+		public function bupr_styles_method() {
 			global $bupr;
 			$bupr_star_color = $bupr['rating_color'];
 			wp_enqueue_style( 'bupr-rating-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css' );
