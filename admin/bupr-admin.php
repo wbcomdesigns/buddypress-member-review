@@ -92,6 +92,9 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_plugin_settings() {
+			$this->plugin_settings_tabs['bupr-welcome'] = esc_html__( 'Welcome', 'bp-member-reviews' );
+			add_settings_section( 'bupr-welcome', ' ', array( $this, 'bupr_admin_welcome_content' ), 'bupr-welcome' );
+			
 			$this->plugin_settings_tabs['bupr-general'] = esc_html__( 'General', 'bp-member-reviews' );
 			register_setting( 'bupr_admin_general_options', 'bupr_admin_general_options' );
 			add_settings_section( 'bupr-general', ' ', array( $this, 'bupr_admin_general_content' ), 'bupr-general' );
@@ -104,7 +107,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			register_setting( 'bupr_admin_display_options', 'bupr_admin_display_options' );
 			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
 		}
-
+		
+		public function bupr_admin_welcome_content() {
+			include 'tab-templates/bupr-welcome-page.php';
+		}			
 		public function bupr_admin_general_content() {
 			include 'tab-templates/bupr-setting-general-tab.php';
 		}
@@ -129,7 +135,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_admin_options_page() {
 			global $allowedposttags;
-			$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
+			$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-welcome';
 			?>
 			<div class="wrap">
 				<div class="bupr-header">
@@ -157,7 +163,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @access public
 		 */
 		public function bupr_plugin_settings_tabs() {
-			$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-general';
+			$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-welcome';
 			// xprofile setup tab.
 			echo '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
 			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
