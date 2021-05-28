@@ -13,7 +13,8 @@ if (!defined('ABSPATH')) {
     <div class="wbcom-welcome-main-wrapper">
         <div class="wbcom-welcome-head">
             <h2 class="wbcom-welcome-title"><?php esc_html_e( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?></h2>
-            <p class="wbcom-welcome-description"><?php esc_html_e( 'Allow the site admin to select global friends for all his members with BuddyPress Auto friends plugin. If you are starting an online community with BuddyPress and want some common friends to be added to the friend list of your members, BuddyPress Auto friends is the perfect option for you.', 'bp-member-reviews' ) ?></p>
+            <p class="wbcom-welcome-description"><?php esc_html_e( 'This plugin allows only site members to add reviews to the BuddyPress members on the site. And if the visitor is not logged in, the visitor can only see the listing of the reviews but can not review.', 'bp-member-reviews' ) ?></p>
+            <p class="wbcom-welcome-description"><?php esc_html_e( 'The review form allows the members to even rate the member’s profile out of 5 points with multiple review criteria. You can add multiple criteria for review. And you can change the positions of those Criteria. Review form shows on the member’s profile but you can show review form on another page just by using shortcode.', 'bp-member-reviews' ) ?></p>
         </div><!-- .wbcom-welcome-head -->
 
         <div class="wbcom-welcome-content">
@@ -31,8 +32,8 @@ if (!defined('ABSPATH')) {
 
                     <div class="col">
                         <h3><span class="dashicons dashicons-book"></span><?php esc_html_e( 'Documentation', 'bp-member-reviews' ); ?></h3>
-                        <p><?php esc_html_e( 'We have prepared an extensive guide on BuddyPress Auto Friends to learn all aspects of the plugin. You will find most of your answers here.', 'bp-member-reviews' ); ?></p>
-                        <a href="<?php echo esc_url( 'https://wbcomdesigns.com/docs/buddypress-paid-addons/bp-member-reviews/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-member-reviews' ); ?></a>
+                        <p><?php esc_html_e( 'We have prepared an extensive guide on BuddyPress Member Reviews to learn all aspects of the plugin. You will find most of your answers here.', 'bp-member-reviews' ); ?></p>
+                        <a href="<?php echo esc_url( 'https://wbcomdesigns.com/docs/buddypress-free-addons/buddypress-member-review/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-member-reviews' ); ?></a>
                     </div>
 
                     <div class="col">
