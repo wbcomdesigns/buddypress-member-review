@@ -81,7 +81,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				add_menu_page( esc_html__( 'WB Plugins', 'bp-member-reviews' ), esc_html__( 'WB Plugins', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-lightbulb', 59 );
 				add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'bp-member-reviews' ), esc_html__( 'General', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins' );
 			}
-			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
+			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'BP Member Reviews', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
 		}
 
 		/**
@@ -94,7 +94,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		public function bupr_plugin_settings() {
 			$this->plugin_settings_tabs['bupr-welcome'] = esc_html__( 'Welcome', 'bp-member-reviews' );
 			add_settings_section( 'bupr-welcome', ' ', array( $this, 'bupr_admin_welcome_content' ), 'bupr-welcome' );
-			
+
 			$this->plugin_settings_tabs['bupr-general'] = esc_html__( 'General', 'bp-member-reviews' );
 			register_setting( 'bupr_admin_general_options', 'bupr_admin_general_options' );
 			add_settings_section( 'bupr-general', ' ', array( $this, 'bupr_admin_general_content' ), 'bupr-general' );
@@ -107,10 +107,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			register_setting( 'bupr_admin_display_options', 'bupr_admin_display_options' );
 			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
 		}
-		
+
 		public function bupr_admin_welcome_content() {
 			include 'tab-templates/bupr-welcome-page.php';
-		}			
+		}
 		public function bupr_admin_general_content() {
 			include 'tab-templates/bupr-setting-general-tab.php';
 		}
