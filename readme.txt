@@ -16,12 +16,12 @@ You can add multiple criteria for review. And you can change the positions of th
 
 It is built to be reliable, scalable, secure and flexible. We have worked hard to make it easy to use and we will love your feedback in making it better.
 
+[vimeo https://vimeo.com/556813504]
+
 = Links =
 
-*	[Plugin url](https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/ "BuddyPress Member Review" )
-*	[Demo]( https://demos.wbcomdesigns.com/wbcomplugins/login "BuddyPress Member Review Demo")
-*	[Support](https://wbcomdesigns.com/helpdesk/article-categories/buddypress-user-profile-reviews/)
-*	[Github Development Repo](https://github.com/wbcomdesigns/buddypress-member-review/)
+*	[Plugin url](https://wbcomdesigns.com/downloads/buddypress-member-reviews/ "BuddyPress Member Reviews" )
+*	[Demo]( https://demos.wbcomdesigns.com/ "BuddyPress Member Review Demo")
 
 
 === THEME - WORDPRESS THEME WITH OUTSTANDING BUDDYPRESS SUPPORT ===
