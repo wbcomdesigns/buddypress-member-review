@@ -93,7 +93,13 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 == Changelog ==
 
 = 2.5.0 =
-
+* Fix: Update plugin backend UI
+* Fix: (#146) Fixed member can review themselfs
+* Fix: Update tab label and slug
+* Fix: (#143) Fixed errors and warnings
+* Fix: (#141) Fixed plural string with singular
+* Fix: Review form issue fixed
+* Fix: Fixed PHPCS issues
 
 = 2.4.1 =
 * Fix: New reviews tab should follow the same slug as parent.
