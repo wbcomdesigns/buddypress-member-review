@@ -578,8 +578,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( 'yes' === $bupr['allow_email'] ) {
 								$bupr_to       = $bupr_reciever_email;
 								$bupr_subject  = sprintf( 'You have got a new %s', $bupr['review_label'] );// $review_subject;
-								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), $bupr['review_label'] ) . '</p>';
-								$bupr_message .= sprintf( esc_html__( 'To read your %s click on the link given below.', 'bp-member-reviews' ), $bupr['review_label'] );
+								$bupr_message .= '<p>' . sprintf( __( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), $bupr['review_label'] ) . '</p>';
+								$bupr_message .= sprintf( __( 'To read your %s click on the link given below.', 'bp-member-reviews' ), $bupr['review_label'] );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
 								$bupr_header  .= "MIME-Version: 1.0\r\n";
