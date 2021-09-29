@@ -172,6 +172,10 @@ function bupr_activation_redirect_settings( $plugin ){
 	}
 }
 
+/*
+ * Site url translate using WPML
+ *
+ */
 
 add_filter( 'site_url', 'bupr_site_url');
 function bupr_site_url( $url ) {
