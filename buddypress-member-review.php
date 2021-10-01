@@ -177,9 +177,9 @@ function bupr_activation_redirect_settings( $plugin ){
  *
  */
 
-add_filter( 'site_url', 'bupr_site_url');
-function bupr_site_url( $url ) {
-	if ( !is_admin() ) {
+add_filter( 'site_url', 'bupr_site_url', 99);
+function bupr_site_url( $url ) {	
+	if ( !is_admin() && strpos($url,'wp-admin') == false) {		
 		return untrailingslashit(apply_filters( 'wpml_home_url', $url ));
 	} else {
 		return $url;
