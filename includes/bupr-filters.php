@@ -644,8 +644,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
 
 				if ( ! empty( $bupr['exclude_given_members'] ) ) {
-					$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-					if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) && ! bp_loggedin_user_id() ) {
+					$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );					
+					if ( !empty($user_role) &&  in_array( $user_role[0], $bupr['exclude_given_members'], true ) && ! bp_loggedin_user_id() ) {
 						bp_core_new_subnav_item(
 							array(
 								/* translators: Review Label */

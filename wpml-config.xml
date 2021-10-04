@@ -1,9 +1,5 @@
 <wpml-config>
-    <admin-texts>
-        <key name="bupr_admin_settings">
-            <key name="profile_rating_fields" />
-            <key name="rating_field_name" />            
-        </key>
+    <admin-texts>        
 		<key name="bupr_admin_display_options">
             <key name="bupr_review_title" />
             <key name="bupr_review_title_plural" />            
