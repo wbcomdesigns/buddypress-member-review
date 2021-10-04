@@ -585,6 +585,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			global $bp;
 			global $bupr;
 			$bp_pages    = bp_core_get_directory_pages();
+			add_filter( 'site_url', 'bupr_site_url', 99);
 			$member_slug = $bp_pages->members->slug;
 
 				/* count member's review */
@@ -700,6 +701,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				}
 			}
+			remove_filter( 'site_url', 'bupr_site_url', 99);
 		}
 
 		/**
