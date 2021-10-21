@@ -20,23 +20,13 @@ jQuery(document).ready(
 		*-----------------------------------------*/
 		var reviews_pluginurl = jQuery('#reviews_pluginurl').val();
 
-		// jQuery('.member_stars').mouseenter(
-		// 	function () {
-		// 		jQuery(this).parent().children().eq(0).val('not_clicked');
-		// 		var id = jQuery(this).attr('data-attr');				
-		// 		var parent_id = jQuery(this).parent().attr('id');
-		// 		for (i = 1; i <= id; i++) {
-		// 			jQuery('#' + parent_id).children('.' + i).addClass('fas').removeClass('far');;
-		// 		}
-		// 	}
-		// );
-
-		jQuery('.member_stars', '.member-edit-stars').mouseenter(
+		jQuery('.member_stars').mouseenter(
 			function () {
 				jQuery(this).parent().children().eq(0).val('not_clicked');
 				var id = jQuery(this).attr('data-attr');				
 				var parent_id = jQuery(this).parent().attr('id');
 				for (i = 1; i <= id; i++) {
+					console.log(jQuery('#' + parent_id).children('.' + i));
 					jQuery('#' + parent_id).children('.' + i).addClass('fas').removeClass('far');;
 				}
 			}
@@ -46,7 +36,7 @@ jQuery(document).ready(
 		/*----------------------------------------
 		* Remove Color on stars
 		*-----------------------------------------*/
-		jQuery('.member_stars', '.member-edit-stars').mouseleave(
+		jQuery('.member_stars' ).mouseleave(
 			function () {
 				var clicked_id = jQuery(this).parent().children().eq(1).val();
 				var id = jQuery(this).attr('data-attr');
@@ -63,7 +53,7 @@ jQuery(document).ready(
 		/*----------------------------------------
 		* Color the stars on click
 		*-----------------------------------------*/
-		jQuery('.member_stars', '.member-edit-stars').on(
+		jQuery('.member_stars' ).on(
 			'click',
 			function () {
 
@@ -332,6 +322,87 @@ jQuery(document).ready(
 			}
 		});
 
+		/*----------------------------------------
+		* Play with starts on review edit popup form
+		*-----------------------------------------*/
+		jQuery(document).on('mouseenter', '.member-edit-stars', function () {
+
+				jQuery(this).parent().children().eq(0).val('not_clicked');
+				var id = jQuery(this).attr('data-attr');			
+				var parent_id = jQuery(this).parent().attr('id');
+				for (i = 1; i <= id; i++) {
+					
+					jQuery('#' + parent_id).children('.' + i).addClass('fas').removeClass('far');;
+				}
+			}
+		);
+
+
+		jQuery(document).on('mouseleave', '.member-edit-stars', function () {
+
+				var clicked_id = jQuery(this).parent().children().eq(1).val();
+				var id = jQuery(this).attr('data-attr');
+				var parent_id = jQuery(this).parent().attr('id');
+				if (jQuery(this).parent().children().eq(0).val() !== 'clicked') {
+					var j = parseInt(clicked_id) + 1;
+					for (i = j; i <= 5; i++) {
+						jQuery('#' + parent_id).children('.' + i).addClass('far').removeClass('fas');
+					}
+				}
+			}
+		);
+
+		jQuery(document).on('click', '.member-edit-stars', function () {
+
+				var attr = jQuery(this).attr('data-attr');
+				var clicked_id = attr;
+				var parent_id = jQuery(this).parent().attr('id');
+				jQuery(this).parent().children().eq(1).val(attr);
+				jQuery(this).parent().children().eq(0).val('clicked');
+				for (i = 1; i <= attr; i++) {
+					jQuery('#' + parent_id).children('.' + i).addClass('fas').removeClass('far');
+				}
+
+				var k = parseInt(attr) + 1;
+				for (j = k; j <= 5; j++) {
+					jQuery('#' + parent_id).children('.' + j).addClass('far').removeClass('fas');
+				}
+			}
+		);
+
+
+		/*----------------------------------------
+		* Update review 
+		*-----------------------------------------*/
+		jQuery(document).on(
+			'click',
+			'#bupr_upodate_review',
+			function (event) {
+				event.preventDefault();
+				var bupr_review_desc = jQuery('#review_desc').val();
+				var bupr_review_rating = {};
+				jQuery('.bupr-star-member-rating').each(
+					function (index) {
+						bupr_review_rating[index] = jQuery(this).val();
+					}
+				);
+
+				jQuery('.bupr-save-reivew-spinner').show();
+				jQuery.post(
+					ajaxurl,
+					{
+						'action': 'bupr_update_review',						
+						'bupr_review_desc': bupr_review_desc,
+						'bupr_review_rating': bupr_review_rating,						
+					},
+					function (response) {
+						jQuery('.bupr-save-reivew-spinner').hide();
+						console.log(response);
+					}
+				);
+
+			}
+		);
 	}
 );
 
