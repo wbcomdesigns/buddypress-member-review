@@ -46,6 +46,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
+			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
 		}
 
 		/**
@@ -584,8 +585,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_member_profile_reviews_tab() {
 			global $bp;
 			global $bupr;
-			$bp_pages    = bp_core_get_directory_pages();
-			add_filter( 'site_url', 'bupr_site_url', 99);
+			$bp_pages = bp_core_get_directory_pages();
+			add_filter( 'site_url', 'bupr_site_url', 99 );
 			$member_slug = $bp_pages->members->slug;
 
 				/* count member's review */
@@ -645,8 +646,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
 
 				if ( ! empty( $bupr['exclude_given_members'] ) ) {
-					$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );					
-					if ( !empty($user_role) &&  in_array( $user_role[0], $bupr['exclude_given_members'], true ) && ! bp_loggedin_user_id() ) {
+					$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
+					if ( ! empty( $user_role ) && in_array( $user_role[0], $bupr['exclude_given_members'], true ) && ! bp_loggedin_user_id() ) {
 						bp_core_new_subnav_item(
 							array(
 								/* translators: Review Label */
@@ -701,7 +702,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				}
 			}
-			remove_filter( 'site_url', 'bupr_site_url', 99);
+			remove_filter( 'site_url', 'bupr_site_url', 99 );
 		}
 
 		/**
@@ -794,6 +795,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			bupr_get_template( 'bupr-single-review-template.php' );
 		}
 
+		public function bupr_edit_review_form_modal() {		
+			if ( is_user_logged_in() ) {
+				bupr_get_template( 'bupr-edit-review-form.php' );
+			}
+		}
 	}
 	new BUPR_Custom_Hooks();
 }

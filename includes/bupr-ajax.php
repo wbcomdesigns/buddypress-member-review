@@ -48,6 +48,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			// Filter Reviews listings.
 			add_action( 'wp_ajax_bupr_reviews_filter', array( $this, 'bupr_reviews_filter' ) );
 			add_action( 'wp_ajax_nopriv_bupr_reviews_filter', array( $this, 'bupr_reviews_filter' ) );
+
+			add_action( 'wp_ajax_bupr_edit_review', array( $this, 'bupr_edit_review' ) );
 		}
 
 		/**
@@ -616,6 +618,65 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 				}
 				die;
+			}
+		}
+
+		public function bupr_edit_review() {
+
+			if ( isset( $_POST['action'] ) && 'bupr_edit_review' === $_POST['action'] ) {
+				global $bupr;
+
+				$review_id             = filter_input( INPUT_POST, 'review', FILTER_SANITIZE_STRING );
+				$review                = get_post( $review_id );
+				$member_review_ratings = get_post_meta( $review_id, 'profile_star_rating', false );
+				$return_review         = array();
+				$review_output         = '';
+				$field_counter         = 1;
+
+				if ( ! empty( $bupr['active_rating_fields'] ) ) {
+					$member_review_rating_fields = $bupr['active_rating_fields'];
+				}
+
+				$bupr_rating_criteria = array();
+				if ( ! empty( $member_review_rating_fields ) ) {
+					foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
+						if ( 'yes' === $bupr_fields ) {
+							$bupr_rating_criteria[] = $bupr_keys;
+						}
+					}
+				}
+
+				$review_output .= '<textarea name="bupr-review-description" id="review_desc" rows="4" cols="50">' . $review->post_content . '</textarea>';
+				if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) {
+					foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
+						if ( in_array( $field, $bupr_rating_criteria, true ) ) {
+							$review_output .= '<div class="multi-review"><div class="bupr-col-4 bupr-criteria-label">' . esc_attr( $field ) . '</div>';
+							$review_output .= '<div id="member-review-' . $field_counter . '" class="bupr-col-4 bupr-criteria-content">';
+							$review_output .= '<input type="hidden" id="clicked' . esc_attr( $field_counter ) . '" value="not_clicked">';
+							$review_output .= '<input type="hidden" name="member_rated_stars[]" class="member_rated_stars bupr-star-member-rating" id="member_rated_stars' . esc_attr( $field_counter ) . '" value="0">';
+							/*** Star rating Ratings */
+							$stars_on       = $bupr_value;
+							$stars_off      = 5 - $stars_on;
+							for ( $i = 1; $i <= $stars_on; $i++ ) {
+								$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star" data-attr="' . esc_attr( $i ) . '"></span>';
+							}
+
+							for ( $i = 1; $i <= $stars_off; $i++ ) {
+								$review_output .= '<span class="far fa-star stars bupr-star-rate member-edit-stars bupr-star" data-attr="' . esc_attr( $i ) . '"></span>';
+							}
+							/*star rating end */
+							$review_output .= '</div></div>';
+						}
+						$field_counter++;
+					}
+				}
+
+				if ( ! empty( $review ) ) {
+					$return_review = array(
+						'review' => $review_output,
+					);
+					wp_send_json_success( $return_review );
+				}
 			}
 		}
 	}

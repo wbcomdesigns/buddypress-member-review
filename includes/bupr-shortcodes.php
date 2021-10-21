@@ -408,7 +408,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								</p>
 								<textarea name="review-desc" id="review_desc" placeholder="<?php echo sprintf( __( 'Enter your %s', 'bp-member-reviews' ), $bupr['review_label'] ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 
-					<?php
+					<?php	
+
 					if ( ! empty( $bupr['active_rating_fields'] ) ) {
 						$field_counter = 1;
 						$flage         = true;

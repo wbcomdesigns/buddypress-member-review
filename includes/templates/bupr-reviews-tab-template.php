@@ -34,6 +34,8 @@ $args = array(
 
 $reviews = new WP_Query( $args ); ?>
 
+<?php do_action( 'bupr_before_member_review_list' ); ?>
+
 <div class="bupr-bp-member-reviews-block">
 	<div class="select-wrap">
 		<select id="bp-reviews-filter-by">
@@ -71,6 +73,9 @@ $reviews = new WP_Query( $args ); ?>
 						}
 						?>
 						<div class="bupr-row">
+							<div id="bupr-reiew-edit" class="bupr-edit-review" data-review="<?php echo esc_attr( $post->ID ); ?>">
+								<button type="button" class="bupr-edit-review-button"><?php echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), bupr_profile_review_singular_tab_name() ); ?></button>
+							</div>
 							<div class="bupr-members-profiles">
 								<div class="item-avatar">
 									<?php
@@ -175,6 +180,7 @@ $reviews = new WP_Query( $args ); ?>
 												<?php
 											}
 										}
+
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 
@@ -254,3 +260,4 @@ $reviews = new WP_Query( $args ); ?>
 		</div>
 	</div>
 </div>
+<?php do_action( 'bupr_after_member_review_list' ); ?>

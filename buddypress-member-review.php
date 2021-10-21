@@ -17,11 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-	/**
-	 * Constants used in the plugin.
-	 */
-	define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-	define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+/**
+ * Constants used in the plugin.
+ */
+define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 	add_action( 'init', 'bupr_load_textdomain' );
