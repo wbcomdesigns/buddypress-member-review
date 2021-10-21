@@ -535,6 +535,11 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     color: inherit;
 }
 
+.olympus-theme .bgr-submit-review,
+.olympus-theme .bgr-submit-review:hover {
+    color: inherit;
+}
+
 @media only screen and (max-width: 480px) {
     .bupr-members-profiles {
         width: 60px;
