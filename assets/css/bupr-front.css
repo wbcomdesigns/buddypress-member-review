@@ -556,12 +556,6 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 @media only screen and (max-width: 420px) {
-<<<<<<< Updated upstream
-    .multi-review {
-        display: inline-block;
-    }
-}
-=======
   .multi-review {
 	display: inline-block;
   }
@@ -606,4 +600,3 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     transform: scale(1.0);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
->>>>>>> Stashed changes
