@@ -152,7 +152,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
 					break;
 				} else {
 					echo '<li class="vcard"><div class="item-avatar">';
-					echo get_avatar( $final_review_obj[ $buprKey ]->ID, 50 );
+					echo get_avatar( $final_review_obj[ $buprKey ]->post_author, 50 );
 					echo '</div>';
 					echo '<div class="item">';
 					$members_profile = bp_core_get_userlink( $final_review_obj[ $buprKey ]->post_author );
