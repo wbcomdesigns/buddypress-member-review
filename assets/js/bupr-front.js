@@ -173,7 +173,7 @@ jQuery(document).ready(
 											expires: date
 										}
 									);
-									window.location.reload();
+												window.location.reload();
 								}
 							);
 						}
@@ -215,7 +215,7 @@ jQuery(document).ready(
 										expires: date
 									}
 								);
-								window.location.reload();
+														window.location.reload();
 							}
 						);
 					}
@@ -379,11 +379,14 @@ jQuery(document).ready(
 			'#bupr_upodate_review',
 			function (event) {
 				event.preventDefault();
+				var modal = document.querySelector(".bupr-review-modal");
+				var review_id = jQuery('#bupr-edit-review-field-wrapper').data('review');
 				var bupr_review_desc = jQuery('#review_desc').val();
 				var bupr_review_rating = {};
 				jQuery('.bupr-star-member-rating').each(
-					function (index) {
-						bupr_review_rating[index] = jQuery(this).val();
+					function (index, item) {	
+						let critaria = jQuery(this).data('critaria');
+						bupr_review_rating[critaria] = jQuery(this).val();
 					}
 				);
 
@@ -392,12 +395,17 @@ jQuery(document).ready(
 					ajaxurl,
 					{
 						'action': 'bupr_update_review',						
+						'review_id': review_id,
 						'bupr_review_desc': bupr_review_desc,
 						'bupr_review_rating': bupr_review_rating,						
 					},
-					function (response) {
+					function (response) {						
 						jQuery('.bupr-save-reivew-spinner').hide();
-						console.log(response);
+						
+						if (response.success){
+							modal.classList.remove("bupr-show-modal");
+							window.location.reload();
+						}s						
 					}
 				);
 

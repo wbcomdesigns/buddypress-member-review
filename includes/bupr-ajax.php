@@ -506,8 +506,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review', FILTER_SANITIZE_STRING );
 				$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : '';
 
-
-
 				$bupr_count = 0;
 
 				$bupr_member_star = array();
@@ -649,6 +647,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					}
 				}
 
+				$review_output .= '<div id="bupr-edit-review-field-wrapper" data-review="' . esc_attr( $review_id ) . '">';
 				$review_output .= '<textarea name="bupr-review-description" id="review_desc" rows="4" cols="50">' . $review->post_content . '</textarea>';
 				if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) {
 					foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
@@ -656,7 +655,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							$review_output .= '<div class="multi-review"><div class="bupr-col-4 bupr-criteria-label">' . esc_attr( $field ) . '</div>';
 							$review_output .= '<div id="member-review-' . $field_counter . '" class="bupr-col-4 bupr-criteria-content">';
 							$review_output .= '<input type="hidden" id="clicked' . esc_attr( $field_counter ) . '" value="not_clicked">';
-							$review_output .= '<input type="hidden" name="member_rated_stars[]" class="member_rated_stars bupr-star-member-rating" id="member_rated_stars' . esc_attr( $field_counter ) . '" value="0">';
+							$review_output .= '<input type="hidden" name="member_rated_stars[]" class="member_rated_stars bupr-star-member-rating" id="member_rated_stars' . esc_attr( $field_counter ) . '" data-critaria="' . esc_attr( $field ) . '" value="0" >';
 							/*** Star rating Ratings */
 							$stars_on  = $bupr_value;
 							$stars_off = 5 - $stars_on;
@@ -678,6 +677,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					}
 				}
 				$review_output .= '<button type="button" class="btn btn-default" id="bupr_upodate_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
+				$review_output .= '</div>';
 
 				if ( ! empty( $review ) ) {
 					$return_review = array(
@@ -692,8 +692,34 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			if ( isset( $_POST['action'] ) && 'bupr_update_review' === $_POST['action'] ) {
 				global $bupr;
 
-				
+				$review_id       = filter_input( INPUT_POST, 'review_id', FILTER_SANITIZE_STRING );
+				$review_content  = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_STRING );
+				$critaria_rating = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : '';
+				$old_ratings     = get_post_meta( $review_id, 'profile_star_rating', true );
 
+				$review_args = array(
+					'ID'           => esc_sql( $review_id ),
+					'post_content' => wp_kses_post( $review_content ),
+					'post_status'  => 'publish',
+				);
+
+				$update_review = wp_update_post( $review_args, true );
+
+				if ( ! empty( $critaria_rating ) ) {
+					foreach ( $critaria_rating as $critaria => $rating ) {
+						if ( array_key_exists( $critaria, $old_ratings ) ) {
+							$old_ratings[ $critaria ] = $rating;
+						}
+					}
+
+					update_post_meta( $review_id, 'profile_star_rating', $old_ratings );
+				}
+
+				if ( ! is_wp_error( $update_review ) ) {
+					wp_send_json_success();
+				} else {
+					wp_send_json_error();
+				}
 			}
 
 		}
