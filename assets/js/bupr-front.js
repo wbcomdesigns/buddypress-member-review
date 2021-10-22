@@ -281,7 +281,9 @@ jQuery(document).ready(
 			'#bupr-reiew-edit',
 			function (event) {				
 				event.preventDefault();
-				var modal = document.querySelector(".bupr-review-modal");
+				var reviewwrapper = document.getElementById("bupr-edit-review");
+				console.log(reviewwrapper);
+				var modal = document.querySelector(".bupr-review-modal");				
 				var button = jQuery(this);				
 				var review_id = button.data('review');				
 				if (review_id){
@@ -293,11 +295,13 @@ jQuery(document).ready(
 						},
 						function (response) {
 							if (response.success && '' != response.data.review){
+								if ( '' !== reviewwrapper.innerHTML ){
+									reviewwrapper.innerHTML = '';									
+								}
 								let review = response.data.review;
 								jQuery('#bupr-edit-review').append(review);
 								modal.classList.add("bupr-show-modal");
 							}
-							
 						}
 					);
 

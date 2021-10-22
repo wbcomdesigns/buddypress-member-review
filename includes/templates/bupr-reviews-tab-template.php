@@ -73,7 +73,7 @@ $reviews = new WP_Query( $args ); ?>
 						}
 						?>
 						<div class="bupr-row">
-							<div id="bupr-reiew-edit" class="bupr-edit-review" data-review="<?php echo esc_attr( $post->ID ); ?>">
+							<div id="bupr-reiew-edit" class="bupr-edit-review-button-wrapper" data-review="<?php echo esc_attr( $post->ID ); ?>">
 								<button type="button" class="bupr-edit-review-button"><?php echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), bupr_profile_review_singular_tab_name() ); ?></button>
 							</div>
 							<div class="bupr-members-profiles">
