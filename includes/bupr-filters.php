@@ -32,7 +32,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'wp', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
 			add_action( 'bp_before_member_header_meta', array( $this, 'bupr_member_average_rating' ) );
 
-			add_action( 'bp_setup_admin_bar', array( $this, 'bupr_setup_admin_bar' ), 80 );
+			add_action( 'bp_setup_admin_bar', array( $this, 'bupr_setup_admin_bar' ), 10 );
 
 			add_action( 'init', array( $this, 'bupr_add_bp_member_reviews_taxonomy_term' ) );
 			add_filter( 'post_row_actions', array( $this, 'bupr_bp_member_reviews_row_actions' ), 10, 2 );
