@@ -1,25 +1,24 @@
 {
-  "name": "buddypress-member-review",
-  "version": "0.1.0",
+  "name": "buddypress-member-reviews",
+  "version": "1.1.0",
   "url": "https://github.com/wbcomdesigns/buddypress-member-review",
   "license": "GPL-2.0+",
-  "description": "WP Job Manager Support for BuddyPress",
+  "description": "Add reviews to your BuddyPress community members, we offer multiple criteria ratings with google rating schema",
   "devDependencies": {
-    "eslint": "^4.15.0",
-    "eslint-plugin-wordpress": "^0.1.0",
-    "grunt": "^1.4.1",
-    "grunt-check-dependencies": "~1.0.0",
-    "grunt-checktextdomain": "^1.0.1",
-    "grunt-wp-i18n": "^1.0.0"
+    "grunt": "^1.1.0",
+    "minimist": ">=1.2.2",
+    "grunt-wp-i18n": "^1.0.3"
   },
   "engines": {
-    "node": ">=6.9.1"
+    "node": "16.4.0",
+    "npm": "7.24.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/wbcomdesigns/buddypress-member-review"
   },
   "dependencies": {
+    "grunt-checktextdomain": "^1.0.1",
     "load-grunt-tasks": "^3.5.2"
   }
 }

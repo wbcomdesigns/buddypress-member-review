@@ -580,8 +580,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							/* send email to member if email notification is enable */
 							if ( 'yes' === $bupr['allow_email'] ) {
 								$bupr_to       = $bupr_reciever_email;
-								$bupr_subject  = sprintf( 'You have got a new %s', $bupr['review_label'] );// $review_subject;
+								/* translators: %s is replaced with the review singular lable of translations */
+								$bupr_subject  = sprintf( __( 'You have got a new %s', 'bp-member-reviews' ), $bupr['review_label'] );// $review_subject;
+
+								/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
 								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), $bupr['review_label'] ) . '</p>';
+
+								/* translators: %s is replaced with the review singular lable of translations */
 								$bupr_message .= sprintf( esc_html__( 'To read your %s click on the link given below.', 'bp-member-reviews' ), $bupr['review_label'] );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
