@@ -4,6 +4,7 @@
 # Global
 # Widgets
 # Review Tab
+# Edit Review Model
 # Pagination
 # Success and Error Message
 # Square Rating
@@ -95,7 +96,7 @@
     padding: 15px;
     background: #fff;
     border: 0;
-    box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.16);
 }
 
 .bupr-review-full-description {
@@ -137,8 +138,8 @@
 
 
 /*--------------------------------------------------------------
-  # Widgets
-  --------------------------------------------------------------*/
+# Widgets
+--------------------------------------------------------------*/
 
 .bupr_members_review_setting ul.bupr-member-main li.bupr-members,
 .widget ul#bp-member-rating li {
@@ -199,8 +200,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 
 /*--------------------------------------------------------------
-  # Review Tab
-  --------------------------------------------------------------*/
+# Review Tab
+--------------------------------------------------------------*/
 
 .bupr-members-profiles {
     text-align: center;
@@ -230,8 +231,83 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 
 /*--------------------------------------------------------------
-  # Pagination
-  --------------------------------------------------------------*/
+# Edit Review Model
+--------------------------------------------------------------*/
+.bupr-review-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+    z-index: 9999999;
+}
+
+.bupr-review-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    max-width: 30rem;
+    width: calc(100% - 30px);
+    margin: auto;
+    border-radius: 8px !important;
+}
+
+.bupr-review-modal-close-button {
+    float: right;
+    width: 1.5rem;
+    padding-bottom: 10px;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+.bupr-review-modal-close-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.bupr-review-modal-close-button svg:hover {
+    transform: scale(1.1);
+    transition: all .3s;
+}
+
+.bupr-show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.bupr-edit-review-button-wrapper {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+button.bupr-edit-review-button {
+    padding: 10px !important;
+    border-radius: 4px !important;
+}
+
+.bupr-review-modal-content button#bupr_upodate_review {
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/*--------------------------------------------------------------
+# Pagination
+--------------------------------------------------------------*/
 
 .bupr-posts-pagination {
     margin: 15px 0;
@@ -293,8 +369,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 
 /*--------------------------------------------------------------
-  # Success and Error Message
-  --------------------------------------------------------------*/
+# Success and Error Message
+--------------------------------------------------------------*/
 
 .bupr-success {
     background-color: hsl(103, 44%, 89%);
@@ -318,8 +394,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 
 /*--------------------------------------------------------------
-  # Square Rating
-  --------------------------------------------------------------*/
+# Square Rating
+--------------------------------------------------------------*/
 
 .br-theme-bars-square .bupr-rating-widget {
     height: 15px;
@@ -366,8 +442,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 
 /*--------------------------------------------------------------
-  # Square Half Rating Box
-  --------------------------------------------------------------*/
+# Square Half Rating Box
+--------------------------------------------------------------*/
 
 .br-theme-bars-square .br-readonly a.bupr-square-half {
     border-top: 2px solid #729bf8;
@@ -479,8 +555,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 
 /*--------------------------------------------------------------
-  # Themes Specific
-  --------------------------------------------------------------*/
+# Themes Specific
+--------------------------------------------------------------*/
 
 .widget-area .widget.buddypress div.item-options#bp-member-rating-list-options a {
     margin: 0;
@@ -556,47 +632,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 @media only screen and (max-width: 420px) {
-  .multi-review {
-	display: inline-block;
-  }
-}
-
-/**
-*  Edit review modal 
-*/
-.bupr-review-modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(1.1);
-    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
-}
-.bupr-review-modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 1rem 1.5rem;
-    width: 24rem;
-    border-radius: 0.5rem;
-}
-.bupr-review-modal-close-button {
-    float: right;
-    width: 1.5rem;
-    line-height: 1.5rem;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 0.25rem;
-}
-.bupr-show-modal {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1.0);
-    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+    .multi-review {
+        display: inline-block;
+    }
 }
