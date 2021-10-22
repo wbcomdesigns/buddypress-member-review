@@ -36,6 +36,7 @@
 
 #bupr_member_review_id {
   padding: 10px;
+  padding-left: 10px !important;
   max-width: 300px;
   width: 100%;
   border: 1px #e3e3e3 solid;
