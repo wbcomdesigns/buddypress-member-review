@@ -45,6 +45,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			 */
 
 			add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
+
+			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
+				add_action( 'bp_nouveau_get_member_meta', array( $this, 'bupr_rating_directory' ), 50 );
+			}
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
 		}
@@ -96,6 +100,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_rating_directory() {
+
 			global $members_template;
 			global $bupr;
 
@@ -685,7 +690,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							)
 						);
 					}
-				} else {				
+				} else {
 
 					bp_core_new_subnav_item(
 						array(
