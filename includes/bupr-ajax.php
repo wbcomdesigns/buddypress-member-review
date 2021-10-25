@@ -579,9 +579,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 							/* send email to member if email notification is enable */
 							if ( 'yes' === $bupr['allow_email'] ) {
-								$bupr_to       = $bupr_reciever_email;
+								$bupr_to = $bupr_reciever_email;
 								/* translators: %s is replaced with the review singular lable of translations */
-								$bupr_subject  = sprintf( __( 'You have got a new %s', 'bp-member-reviews' ), $bupr['review_label'] );// $review_subject;
+								$bupr_subject = sprintf( __( 'You have got a new %s', 'bp-member-reviews' ), $bupr['review_label'] );// $review_subject;
 
 								/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
 								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), $bupr['review_label'] ) . '</p>';
@@ -708,11 +708,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					'post_status'  => 'publish',
 				);
 
-				$update_review = wp_update_post( $review_args, true );
+				$update_review = wp_update_post( $review_args, true );	
 
 				if ( ! empty( $critaria_rating ) ) {
 					foreach ( $critaria_rating as $critaria => $rating ) {
-						if ( array_key_exists( $critaria, $old_ratings ) ) {
+						if ( array_key_exists( $critaria, $old_ratings ) && '0' !== $rating ) {
 							$old_ratings[ $critaria ] = $rating;
 						}
 					}

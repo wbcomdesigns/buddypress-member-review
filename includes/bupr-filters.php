@@ -101,6 +101,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_rating_directory() {
 
+			if ( ! bp_is_members_directory() ) {
+				return;
+			}
+
 			global $members_template;
 			global $bupr;
 

@@ -409,7 +409,7 @@ jQuery(document).ready(
 						if (response.success){
 							modal.classList.remove("bupr-show-modal");
 							window.location.reload();
-						}s						
+						}			
 					}
 				);
 
