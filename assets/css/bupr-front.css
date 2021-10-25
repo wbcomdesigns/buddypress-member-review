@@ -295,14 +295,32 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 button.bupr-edit-review-button {
     padding: 10px !important;
     border-radius: 4px !important;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-left: auto;
 }
 
 .bupr-review-modal-content button#bupr_upodate_review {
     text-align: center;
     margin: auto;
     width: 100%;
-    display: inline-block;
     margin-top: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 /*--------------------------------------------------------------
@@ -500,7 +518,8 @@ button.bupr-edit-review-button {
     margin-right: 0px;
 }
 
-.bupr-bp-member-review-no-popup-add-block #review_desc {
+.bupr-bp-member-review-no-popup-add-block #review_desc,
+#review_desc {
     width: 100%;
     padding: 10px;
 }
@@ -579,7 +598,11 @@ button.bupr-edit-review-button {
 }
 
 .rating-sec {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: 10px;
@@ -627,6 +650,8 @@ button.bupr-edit-review-button {
 
 @media only screen and (max-width: 768px) {
     .multi-review {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
     }
 }
