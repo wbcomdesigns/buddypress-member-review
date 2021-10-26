@@ -175,23 +175,16 @@ class bupr_single_member_rating_widget extends WP_Widget {
 					}
 					echo '<div class="item-meta">';
 
-					for ( $i = 1; $i <= $stars_on; $i++ ) {
-						?>
-						<span class="fas fa-star bupr-star-rate"></span>
-						<?php
+					for ( $i = 1; $i <= $stars_on; $i++ ) { 
+                                            ?><span class="fas fa-star bupr-star-rate"></span><?php
 					}
-
-					for ( $i = 1; $i <= $stars_half; $i++ ) {
-						?>
-						<span class="fas fa-star-half-alt bupr-star-rate"></span>
-						<?php
+					for ( $i = 1; $i <= $stars_half; $i++ ) { 
+                                            ?><span class="fas fa-star-half-alt bupr-star-rate"></span><?php
 					}
-
-					for ( $i = 1; $i <= $stars_off; $i++ ) {
-						?>
-						<span class="far fa-star bupr-star-rate"></span>
-						<?php
+					for ( $i = 1; $i <= $stars_off; $i++ ) { 
+                                            ?><span class="far fa-star bupr-star-rate"></span><?php
 					}
+                                        
 					echo '</div>';
 
 					$bupr_avg_rating = round( $bupr_avg_rating, 2 );
