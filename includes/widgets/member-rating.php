@@ -150,7 +150,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
 				$user_anonymous_review = get_post_meta( $buprKey, 'bupr_anonymous_review_post', true );
 				if ( $bupr_user_count == $rating_limit ) {
 					break;
-				} else {
+				} else {					
 					echo '<li class="vcard"><div class="item-avatar">';
 					echo get_avatar( $final_review_obj[ $buprKey ]->post_author, 50 );
 					echo '</div>';

@@ -376,7 +376,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							break;
 						} else {
 							$html .= '<li class="vcard"><div class="item-avatar">';
-							$html .= get_avatar( $final_review_obj[ $buprKey ]->ID, 65 );
+							$html .= get_avatar( $final_review_obj[ $buprKey ]->post_author, 65 );
 							$html .= '</div>';
 							$html .= '<div class="item">';
 
@@ -708,7 +708,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					'post_status'  => 'publish',
 				);
 
-				$update_review = wp_update_post( $review_args, true );	
+				$update_review = wp_update_post( $review_args, true );
 
 				if ( ! empty( $critaria_rating ) ) {
 					foreach ( $critaria_rating as $critaria => $rating ) {
