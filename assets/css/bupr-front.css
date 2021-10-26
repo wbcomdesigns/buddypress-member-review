@@ -617,6 +617,10 @@ button.bupr-edit-review-button {
     padding: 0px;
 }
 
+.bupr-full-description {
+    word-break: break-all;
+}
+
 .description {
     font-style: italic;
 }
