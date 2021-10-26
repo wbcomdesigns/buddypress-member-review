@@ -708,7 +708,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					'post_status'  => 'publish',
 				);
 
-				$update_review = wp_update_post( $review_args, true );
+				$update_review = wp_update_post( $review_args, true );	
 
 				if ( ! empty( $critaria_rating ) ) {
 					foreach ( $critaria_rating as $critaria => $rating ) {
