@@ -17,11 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-	/**
-	 * Constants used in the plugin.
-	 */
-	define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-	define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+/**
+ * Constants used in the plugin.
+ */
+define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 	add_action( 'init', 'bupr_load_textdomain' );
@@ -169,5 +169,19 @@ function bupr_activation_redirect_settings( $plugin ){
 	if( $plugin == plugin_basename( __FILE__ ) ) {
 		wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) ) ;
 		exit;
+	}
+}
+
+/*
+ * Site url translate using WPML
+ *
+ */
+
+//add_filter( 'site_url', 'bupr_site_url', 99);
+function bupr_site_url( $url ) {	
+	if ( !is_admin() && strpos($url,'wp-admin') == false) {		
+		return untrailingslashit(apply_filters( 'wpml_home_url', $url ));
+	} else {
+		return $url;
 	}
 }

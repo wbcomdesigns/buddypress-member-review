@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-27 14:04:08+00:00\n"
+"POT-Creation-Date: 2021-10-22 13:39:45+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -251,15 +251,15 @@ msgid ""
 "'Criteria(s)'."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-criteria-tab.php:63
+#: admin/tab-templates/bupr-setting-criteria-tab.php:67
 msgid "Remove criteria fields permanently."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-criteria-tab.php:71
+#: admin/tab-templates/bupr-setting-criteria-tab.php:75
 msgid "Enable/Disable criteria fields from review form."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-criteria-tab.php:83
+#: admin/tab-templates/bupr-setting-criteria-tab.php:87
 msgid ""
 "This option will allow you to add multiple rating criteria. By default, no "
 "citeria will be shown until you activate it."
@@ -992,32 +992,38 @@ msgstr ""
 msgid "%1$s is ineffective now as it requires %2$s to be installed and active."
 msgstr ""
 
-#: includes/bupr-ajax.php:189
-#: includes/templates/bupr-reviews-tab-template.php:104
+#: includes/bupr-ajax.php:192
+#: includes/templates/bupr-reviews-tab-template.php:109
 #: includes/templates/bupr-single-review-template.php:43
 msgid "anonymous"
 msgstr ""
 
-#: includes/bupr-ajax.php:230
-#: includes/templates/bupr-reviews-tab-template.php:170
+#: includes/bupr-ajax.php:233
+#: includes/templates/bupr-reviews-tab-template.php:175
 msgid "read more..."
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-ajax.php:290
 #: includes/templates/bupr-reviews-tab-template.php:246
+=======
+#: includes/bupr-ajax.php:293
+#: includes/templates/bupr-reviews-tab-template.php:252
+>>>>>>> origin/2.5.1
 msgid "Sorry, no %1$s were found."
 msgstr ""
 
-#: includes/bupr-ajax.php:416 includes/bupr-shortcodes.php:225
+#: includes/bupr-ajax.php:419 includes/bupr-shortcodes.php:225
 #: includes/widgets/display-review.php:217
 #: includes/widgets/member-rating.php:199
 msgid "Rating : ( %1$s )"
 msgstr ""
 
-#: includes/bupr-ajax.php:425 includes/widgets/member-rating.php:208
+#: includes/bupr-ajax.php:428 includes/widgets/member-rating.php:208
 msgid "No member has been rated yet."
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-ajax.php:581
 msgid "Welcome ! %s You have a new %2$s on your profile."
 msgstr ""
@@ -1027,59 +1033,104 @@ msgid "To read your %s click on the link given below."
 msgstr ""
 
 #: includes/bupr-ajax.php:591
+=======
+#: includes/bupr-ajax.php:584
+#. translators: %s is replaced with the review singular lable of translations
+msgid "You have got a new %s"
+msgstr ""
+
+#: includes/bupr-ajax.php:587
+#. translators: %s is replaced with the user name %2$s is replaced with the
+#. review singular lable of translations
+msgid "Welcome ! %s You have a new %2$s on your profile."
+msgstr ""
+
+#: includes/bupr-ajax.php:590
+#. translators: %s is replaced with the review singular lable of translations
+msgid "To read your %s click on the link given below."
+msgstr ""
+
+#: includes/bupr-ajax.php:599
+>>>>>>> origin/2.5.1
 msgid ""
 "Thank you for taking time to write this %1$s. Your %1$s will display on "
 "members' profile after moderator approval."
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-ajax.php:593
+=======
+#: includes/bupr-ajax.php:601
+>>>>>>> origin/2.5.1
 msgid "Thank you for taking the time to write this %1$s!"
 msgstr ""
 
-#: includes/bupr-ajax.php:597
+#: includes/bupr-ajax.php:605
 msgid "Please try again!"
 msgstr ""
 
-#: includes/bupr-ajax.php:612
+#: includes/bupr-ajax.php:620
 msgid "Please select a member."
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-ajax.php:616 includes/bupr-shortcodes.php:342
+=======
+#: includes/bupr-ajax.php:624 includes/bupr-shortcodes.php:342
+>>>>>>> origin/2.5.1
 msgid "You already posted a %1$s for this member."
 msgstr ""
 
-#: includes/bupr-filters.php:82
+#: includes/bupr-ajax.php:684
+msgid "Update %s"
+msgstr ""
+
+#: includes/bupr-filters.php:87
 msgid "Member Response"
 msgstr ""
 
-#: includes/bupr-filters.php:83
+#: includes/bupr-filters.php:88
 msgid "Member Skills"
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-filters.php:254 includes/bupr-filters.php:275
 #: includes/bupr-filters.php:318 includes/bupr-filters.php:339
+=======
+#: includes/bupr-filters.php:260 includes/bupr-filters.php:281
+#: includes/bupr-filters.php:324 includes/bupr-filters.php:345
+>>>>>>> origin/2.5.1
 msgid "Add %s"
 msgstr ""
 
-#: includes/bupr-filters.php:503
+#: includes/bupr-filters.php:509
 msgid "Rating "
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-filters.php:552
+=======
+#: includes/bupr-filters.php:558
+>>>>>>> origin/2.5.1
 msgid "View %s"
 msgstr ""
 
-#: includes/bupr-filters.php:556
+#: includes/bupr-filters.php:562
 msgid "Approve"
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-filters.php:652 includes/bupr-filters.php:677
 #: includes/bupr-filters.php:691
+=======
+#: includes/bupr-filters.php:658 includes/bupr-filters.php:683
+#: includes/bupr-filters.php:697
+>>>>>>> origin/2.5.1
 #. translators: Review Label
 msgid "Add %1$s"
 msgstr ""
 
-#: includes/bupr-filters.php:764
+#: includes/bupr-filters.php:771
 msgid "You must login!"
 msgstr ""
 
@@ -1126,7 +1177,7 @@ msgid "--Select--"
 msgstr ""
 
 #: includes/bupr-shortcodes.php:402 includes/bupr-shortcodes.php:407
-#: includes/bupr-shortcodes.php:409 includes/bupr-shortcodes.php:430
+#: includes/bupr-shortcodes.php:409 includes/bupr-shortcodes.php:431
 msgid "This field is required."
 msgstr ""
 
@@ -1138,30 +1189,42 @@ msgstr ""
 msgid "Enter your %s"
 msgstr ""
 
+<<<<<<< HEAD
 #: includes/bupr-shortcodes.php:442
 msgid "Send %s anonymously."
 msgstr ""
 
 #: includes/bupr-shortcodes.php:449
+=======
+#: includes/bupr-shortcodes.php:443
+msgid "Send %s anonymously."
+msgstr ""
+
+#: includes/bupr-shortcodes.php:450
+>>>>>>> origin/2.5.1
 msgid "Submit %s"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:40
+#: includes/templates/bupr-reviews-tab-template.php:42
 #: includes/widgets/member-rating.php:135
 #: includes/widgets/member-rating.php:264
 msgid "Latest"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:41
+#: includes/templates/bupr-reviews-tab-template.php:43
 #: includes/widgets/member-rating.php:140
 #: includes/widgets/member-rating.php:265
 msgid "Highest"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:42
+#: includes/templates/bupr-reviews-tab-template.php:44
 #: includes/widgets/member-rating.php:145
 #: includes/widgets/member-rating.php:266
 msgid "Lowest"
+msgstr ""
+
+#: includes/templates/bupr-reviews-tab-template.php:77
+msgid "Edit %s"
 msgstr ""
 
 #: includes/widgets/display-review.php:14
