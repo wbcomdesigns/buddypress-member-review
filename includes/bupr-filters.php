@@ -51,6 +51,36 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
+
+			if ( in_array( 'bp-rewrites/class-bp-rewrites.php', get_option( 'active_plugins' ) ) ) {
+				add_filter( 'bp_nouveau_get_nav_link', array( $this, 'bupr_nouveau_link_fix' ), 10, 2 );
+			}
+		}
+
+		/**
+		 * @bupr_nouveau_link_fix() nav item links.
+		 *
+		 * @param string $link     The URL for the nav item.
+		 * @param object $nav_item The nav item object.
+		 * @return string The URL for the nav item.
+		 */
+		public function bupr_nouveau_link_fix( $link, $nav_item ) {
+			$bp_nouveau = bp_nouveau();
+			$nav_item   = $bp_nouveau->current_nav_item;
+
+			$link = '#';
+			if ( ! empty( $nav_item->link ) ) {
+				$link = $nav_item->link;
+			}
+
+			if ( 'personal' === $bp_nouveau->displayed_nav && ! empty( $nav_item->primary ) ) {
+				if ( bp_loggedin_user_domain() ) {
+					$link = str_replace( bp_loggedin_user_domain(), bp_displayed_user_domain(), $link );
+				} else {
+					$link = trailingslashit( bp_displayed_user_domain() . $link );
+				}
+			}
+			return $link;
 		}
 
 		/**
