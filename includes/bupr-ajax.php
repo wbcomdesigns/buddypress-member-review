@@ -560,6 +560,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						);
 
 						$review_id = wp_insert_post( $add_review_args );
+
+						do_action( 'bupr_member_review_after_review_insert', $review_id );
+
 						if ( $review_id ) {
 
 							if ( ! empty( $bupr_current_user ) && ! empty( $bupr_member_id ) ) {
@@ -708,7 +711,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					'post_status'  => 'publish',
 				);
 
-				$update_review = wp_update_post( $review_args, true );	
+				$update_review = wp_update_post( $review_args, true );
 
 				if ( ! empty( $critaria_rating ) ) {
 					foreach ( $critaria_rating as $critaria => $rating ) {
