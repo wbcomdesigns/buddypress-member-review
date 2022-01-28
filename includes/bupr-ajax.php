@@ -584,13 +584,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( 'yes' === $bupr['allow_email'] ) {
 								$bupr_to = $bupr_reciever_email;
 								/* translators: %s is replaced with the review singular lable of translations */
-								$bupr_subject = sprintf( __( 'You have got a new %s', 'bp-member-reviews' ), $bupr['review_label'] );// $review_subject;
+								$bupr_subject = sprintf( __( 'You have got a new %s', 'bp-member-reviews' ), bupr_profile_review_tab_singular_slug() );// $review_subject;
 
 								/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
-								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), $bupr['review_label'] ) . '</p>';
+								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), bupr_profile_review_tab_singular_slug() ) . '</p>';
 
 								/* translators: %s is replaced with the review singular lable of translations */
-								$bupr_message .= sprintf( esc_html__( 'To read your %s click on the link given below.', 'bp-member-reviews' ), $bupr['review_label'] );
+								$bupr_message .= sprintf( esc_html__( 'To read your %s click on the link given below.', 'bp-member-reviews' ), bupr_profile_review_tab_singular_slug() );
 								$bupr_message .= '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 								$bupr_header   = "From:$bupr_sender_email \r\n";
 								$bupr_header  .= "MIME-Version: 1.0\r\n";
