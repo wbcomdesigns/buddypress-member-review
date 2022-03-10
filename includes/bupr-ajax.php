@@ -296,8 +296,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					</div>';
 
 				}
-
-				echo stripslashes( $html );
+				echo wp_kses_post( stripslashes( $html ) );
 				die;
 
 			}

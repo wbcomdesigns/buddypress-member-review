@@ -78,7 +78,7 @@ $reviews = new WP_Query( $args );
 							<?php if ( ! empty( $bupr['allow_update'] ) && 'yes' === $bupr['allow_update'] ) : ?>
 								<?php if ( bp_loggedin_user_id() == $author_id ) : ?>
 									<div id="bupr-reiew-edit" class="bupr-edit-review-button-wrapper" data-review="<?php echo esc_attr( $post->ID ); ?>">
-										<button type="button" class="bupr-edit-review-button"><?php echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), bupr_profile_review_singular_tab_name() ); ?></button>
+										<button type="button" class="bupr-edit-review-button"><?php echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ); ?></button>
 									</div>
 								<?php endif; ?>
 							<?php endif; ?>
@@ -176,13 +176,13 @@ $reviews = new WP_Query( $args );
 												$shortexcerpt = substr( $trimcontent, 0, 150 );
 												?>
 												<div class="description">
-													<?php echo wpautop( $shortexcerpt ); ?>
+													<?php echo wp_kses_post( wpautop( $shortexcerpt ) ); ?>
 													<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
 														<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
 													</a>
 												</div>
 											<?php } else { ?>
-												<div class="description"><?php echo wpautop( $trimcontent ); ?></div>
+												<div class="description"><?php echo wp_kses_post( wpautop( $trimcontent ) ); ?></div>
 												<?php
 											}
 										}
