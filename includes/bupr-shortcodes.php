@@ -348,7 +348,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									}
 								}
 								?>
-										<p><?php echo $message; ?> </p>
+										<p><?php echo esc_html( $message ); ?> </p>
 							</div>
 						</div>
 							<?php
