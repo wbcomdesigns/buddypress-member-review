@@ -47,7 +47,6 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		$user_id        = bp_displayed_user_id();
 		$post_author_id = get_post_field( 'post_author', $item_id );
 		$admin_info     = get_userdata( $secondary_item_id );
-
 		if ( $admin_info ) {
 			$admin_name = $admin_info->user_nicename;
 		} else {
@@ -59,7 +58,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		if ( $user_info ) {
 			$user_name = $user_info->display_name;
 		}
-		$notification_link    = home_url() . '/members/' . strtolower( $admin_name ) . '/' . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+		$notification_link    = bp_core_get_user_domain( $user_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 		$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( $bupr['review_label'] ) );
 
