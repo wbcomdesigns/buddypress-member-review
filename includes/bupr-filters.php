@@ -30,8 +30,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function __construct() {
 
 			add_action( 'wp', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
-			add_action( 'bp_before_member_header_meta', array( $this, 'bupr_member_average_rating' ) );
-
+			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
+				add_action( 'bp_before_member_in_header_meta', array( $this, 'bupr_member_average_rating' ) );
+			} else {
+				add_action( 'bp_before_member_header_meta', array( $this, 'bupr_member_average_rating' ) );
+			}
 			add_action( 'bp_setup_admin_bar', array( $this, 'bupr_setup_admin_bar' ), 10 );
 
 			add_action( 'init', array( $this, 'bupr_add_bp_member_reviews_taxonomy_term' ) );
@@ -44,10 +47,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			 * Add review link at member's directory if option admin setting is enabled.
 			 */
 
-			add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
-
 			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
-				add_action( 'bp_nouveau_get_member_meta', array( $this, 'bupr_rating_directory' ), 50 );
+				add_action( 'bp_member_members_list_item', array( $this, 'bupr_rating_directory' ), 50 );
+			} else {
+				add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
 			}
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
