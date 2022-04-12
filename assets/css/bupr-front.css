@@ -665,3 +665,10 @@ button.bupr-edit-review-button {
         display: inline-block;
     }
 }
+
+/*--------------------------------------------------------------
+# BuddyBoss Theme Specific
+--------------------------------------------------------------*/
+.theme-buddyboss-theme .members-directory-wrapper .members  .member-review-stars{
+    text-align: center;
+}
