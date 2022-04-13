@@ -157,7 +157,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						if ( ! empty( $bupr['allow_update'] ) && 'yes' === $bupr['allow_update'] ) {
 							if ( bp_loggedin_user_id() == $author_id ) {
 								$html .= '<div id="bupr-reiew-edit" class="bupr-edit-review-button-wrapper" data-review=" ' . esc_attr( $post->ID ) . '">';
-								$html .= '<button type="button" class="bupr-edit-review-button">' . sprintf( esc_html__( 'Edit % s', 'bp - member - reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ) . '</button>';
+								$html .= '<button type="button" class="bupr-edit-review-button">' . sprintf( esc_html__( 'Edit % s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ) . '</button>';
 								$html .= '</div>';
 							}
 						}
