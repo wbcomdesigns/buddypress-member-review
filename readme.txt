@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 5.9.2
-Stable tag: 2.7.0
+Tested up to: 5.9.3
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,12 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+= 2.8.0 =
+* Fix: Fixed string translations
+* Fix: BuddyBoss Support Managed
+* Fix: (#176) Fixed notification link issue when bp rewrites plugin activated
+* Fix: (#175) Fixed edit button is not displaying after filter the review
+
 = 2.7.0 =
 * Fix: Fixed phpcs error
 * Fix: Removed install plugin button from wrapper
