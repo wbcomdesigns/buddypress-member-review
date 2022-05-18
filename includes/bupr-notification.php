@@ -44,7 +44,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 	global $bp, $bupr;
 
 	if ( 'bupr_add_review_action' === $action ) {
-		$user_id        = bp_displayed_user_id();
+		$user_id        = bp_loggedin_user_id();
 		$post_author_id = get_post_field( 'post_author', $item_id );
 		$admin_info     = get_userdata( $secondary_item_id );
 		if ( $admin_info ) {
