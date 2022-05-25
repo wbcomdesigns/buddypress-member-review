@@ -706,7 +706,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 			} else {
 				$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-				if ( ! in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
+				if ( ! empty( $user_role ) && ! in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
 					return;
 				}
 
