@@ -58,6 +58,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( in_array( 'bp-rewrites/class-bp-rewrites.php', get_option( 'active_plugins' ) ) ) {
 				add_filter( 'bp_nouveau_get_nav_link', array( $this, 'bupr_nouveau_link_fix' ), 10, 2 );
 			}
+
+			add_action( 'bupr_member_review_after_review_insert', array( $this, 'bupr_create_review_activity' ), 10, 2 );
+
 		}
 
 		/**
@@ -840,6 +843,53 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( is_user_logged_in() ) {
 				bupr_get_template( 'bupr-edit-review-form.php' );
 			}
+		}
+
+		/**
+		 * Create activity on new review create
+		 *
+		 * @since    2.8.1
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
+		public function bupr_create_review_activity( $review_id, $reviewed_user_id ) {
+			global $bupr,$bp;
+
+			if ( isset( $bupr['review_activity'] ) && 'yes' === $bupr['review_activity'] ) {
+				$review = get_post( $review_id );
+				if ( ! empty( $review ) ) {
+					$reviewer_user_id      = $review->post_author;
+					$reviewer_user_link    = bp_core_get_userlink( $reviewer_user_id );
+					$reviewed_user_link    = bp_core_get_userlink( $reviewed_user_id );
+					$content               = $review->post_content;  
+					$action                = sprintf(
+						apply_filters(
+							'bupr_member_review_activity_action',
+							__( '%1$s write a %2$s to %3$s', 'bp-member-reviews' )
+						),
+						$reviewer_user_link,
+						$bupr['review_label'],
+						$reviewed_user_link
+					);
+
+					$activity_id = bp_activity_add(
+						array(
+							'action'        => $action,
+							'content'       => $content,
+							'component'     => $bp->members->id,
+							'type'          => 'member_review',
+							'user_id'       => bp_loggedin_user_id(),
+							'item_id'       => $review_id,
+							'hide_sitewide' => false,
+							'is_spam'       => false,
+							'privacy'       => 'public',
+							'error_type'    => 'bool',
+						)
+					);
+
+				}
+			}
+
 		}
 	}
 	new BUPR_Custom_Hooks();

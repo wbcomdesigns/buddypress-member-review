@@ -230,6 +230,20 @@ global $bupr;
 						<p class="description"><?php esc_html_e( 'Enable this option if you want users to review members anonymously.', 'bp-member-reviews' ); ?></p>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row">
+						<label for="bupr_enable_review_activity">
+							<?php esc_html_e( 'Review Activity', 'bp-member-reviews' ); ?>
+						</label>
+					</th>
+					<td>
+						<label class="bupr-switch">
+							<input type="checkbox" id="bupr_enable_review_activity" value="yes" name="bupr_admin_general_options[bupr_enable_review_activity]" <?php checked( esc_attr( $bupr['review_activity'] ), 'yes' ); ?>>
+							<div class="bupr-slider bupr-round"></div>
+						</label>
+						<p class="description"><?php esc_html_e( 'Enable this option to post activity on every review.', 'bp-member-reviews' ); ?></p>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<?php submit_button(); ?>

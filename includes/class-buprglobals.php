@@ -86,6 +86,12 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				if ( array_key_exists( 'bupr_enable_anonymous_reviews', $bupr_general_settings ) ) {
 					$anonymous_reviews = $bupr_general_settings['bupr_enable_anonymous_reviews'];
 				}
+				if ( array_key_exists( 'bupr_enable_review_activity', $bupr_general_settings ) ) {
+					$review_activity = $bupr_general_settings['bupr_enable_review_activity'];
+				}
+				if ( empty( $review_activity ) ) {
+					$review_activity = 'no';
+				}
 				if ( empty( $anonymous_reviews ) ) {
 					$anonymous_reviews = 'no';
 				}
@@ -135,6 +141,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				$exclude_given_members = $name;
 				$add_taken_members     = $name;
 				$auto_approve_reviews  = 'yes';
+				$review_activity       = 'yes';
 			}
 
 			/**** Global variable values for Display settings */
@@ -200,6 +207,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'review_label_plural'    => $review_label_plural,
 				'multi_criteria_allowed' => $bupr_multi_criteria_allowed,
 				'active_rating_fields'   => $active_rating_fields,
+				'review_activity'        => $review_activity,
 			);
 		}
 

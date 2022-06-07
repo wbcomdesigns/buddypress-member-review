@@ -569,7 +569,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 						$review_id = wp_insert_post( $add_review_args );
 
-						do_action( 'bupr_member_review_after_review_insert', $review_id );
+						do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
 
 						if ( $review_id ) {
 
