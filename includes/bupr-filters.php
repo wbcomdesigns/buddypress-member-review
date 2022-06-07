@@ -865,7 +865,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$action                = sprintf(
 						apply_filters(
 							'bupr_member_review_activity_action',
-							__( '%1$s write a %2$s to %3$s', 'bp-member-reviews' )
+							__( '%1$s posted a new %2$s to %3$s', 'bp-member-reviews' )
 						),
 						$reviewer_user_link,
 						$bupr['review_label'],
