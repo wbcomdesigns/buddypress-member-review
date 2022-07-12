@@ -22,25 +22,27 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 		settings_fields( 'bupr_admin_settings' );
 		do_settings_sections( 'bupr_admin_settings' );
 		?>
+		<div class="wbcom-admin-title-section">
 		<h2 class="title">
 			<?php esc_html_e( 'Review Criteria(s)', 'bp-member-reviews' ); ?>
 		</h2>
-		<table class="form-table">		
-			<tbody>
-				<tr>
-					<th scope="row">
-						<label><?php esc_html_e( 'Allow Multiple Criteria(s)?', 'bp-member-reviews' ); ?></label>
-					</th>
-					<td>
+		</div>
+		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
+		<div class="form-table">
+				<div class="wbcom-settings-section-wrap">
+					<div scope="row">
+						<div class="wbcom-settings-section-options-heading">
+							<label><?php esc_html_e( 'Allow Multiple Criteria(s)?', 'bp-member-reviews' ); ?></label>
+						</div>
+					</div>
 						<label class="bupr-switch">
 							<input type="checkbox" value='1' name="bupr_admin_settings[profile_multi_rating_allowed]" id="bupr_allow_multiple_criteria" <?php checked( esc_attr( $bupr['multi_criteria_allowed'] ), '1' ); ?>>
 							<div class="bupr-slider bupr-round"></div>
 						</label>
 						<p class="description"><?php esc_html_e( "Enable this option,if you want to allow members to be rated by 'Criteria(s)'.", 'bp-member-reviews' ); ?></p>
-					</td>
-				</tr>			
-			</tbody>
-		</table>
+				</div>
+		</div>
+		<div class="wbcom-settings-section-wrap">
 		<div class="bupr-admin-settings-block">
 			<div id="bupr-settings-tbl" class="bupr-table bupr-criteria-settings-tbl">
 
@@ -51,7 +53,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 						foreach ( $bupr['active_rating_fields'] as $profile_rating_field => $bupr_criteria_setting ) :
 							$key_val = rand();
 							if ( function_exists( 'icl_register_string' ) ) {
-								icl_register_string( 'bp-member-reviews', 'rating_field_name_' . $key++, $profile_rating_field );								
+								icl_register_string( 'bp-member-reviews', 'rating_field_name_' . $key++, $profile_rating_field );
 							}
 							?>
 							<div class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
@@ -80,15 +82,19 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 						endforeach;
 					}
 					?>
+					</div>
 				</div>
+			</div>
+		</div>
+				<div class="wbcom-settings-section-wrap">
 				<div id="bupr-add-criteria-action" class="bupr-admin-row border <?php echo esc_attr( $bupr_multi_rating_allowed_class ); ?>">
 					<div class="bupr-admin-col-12">
 						<input id="bupr-btnAdd" type="button" value="Add Criteria" class="button button-secondary"/>
 						<p class="description"><?php esc_html_e( 'This option will allow you to add multiple rating criteria. By default, no citeria will be shown until you activate it.', 'bp-member-reviews' ); ?></p>
 					</div>
 				</div>
-			</div>
-		</div>
+				</div>
 		<?php submit_button(); ?>
+				</div>	
 	</form>
 </div>

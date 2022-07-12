@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Constants used in the plugin.
  */
+define( 'BUPR_PLUGIN_VERSION', '2.8.0' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -164,10 +165,10 @@ function bupr_required_plugin_admin_notice() {
  */
 
 add_action( 'activated_plugin', 'bupr_activation_redirect_settings' );
-function bupr_activation_redirect_settings( $plugin ){
+function bupr_activation_redirect_settings( $plugin ) {
 
-	if( $plugin == plugin_basename( __FILE__ ) ) {
-		wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) ) ;
+	if ( $plugin == plugin_basename( __FILE__ ) ) {
+		wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
 		exit;
 	}
 }
@@ -177,10 +178,10 @@ function bupr_activation_redirect_settings( $plugin ){
  *
  */
 
-//add_filter( 'site_url', 'bupr_site_url', 99);
-function bupr_site_url( $url ) {	
-	if ( !is_admin() && strpos($url,'wp-admin') == false) {		
-		return untrailingslashit(apply_filters( 'wpml_home_url', $url ));
+// add_filter( 'site_url', 'bupr_site_url', 99);
+function bupr_site_url( $url ) {
+	if ( ! is_admin() && strpos( $url, 'wp-admin' ) == false ) {
+		return untrailingslashit( apply_filters( 'wpml_home_url', $url ) );
 	} else {
 		return $url;
 	}
