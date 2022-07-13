@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="wbcom-settings-section-options">
 						<p class="description">
-							<?php echo esc_html__( "For example: [bupr_display_top_members title='Top Rated Member Listing']" ); ?>
+							<?php echo esc_html__( "For example: [bupr_display_top_members title='Top Rated Member Listing']", 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 				</div>
@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="wbcom-settings-section-options">
 						<p class="description">
-							<?php echo esc_html__( 'For example: [bupr_display_top_members total_member=4]' ); ?>
+							<?php echo esc_html__( 'For example: [bupr_display_top_members total_member=4]', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 				</div>
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="wbcom-settings-section-options">
 						<p class="description">
-							<?php echo esc_html__( "For example: [bupr_display_top_members type='top reviewed']" ); ?>
+							<?php echo esc_html__( "For example: [bupr_display_top_members type='top reviewed']", 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 				</div>
@@ -112,7 +112,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="wbcom-settings-section-options">
 						<p class="description">
-							<?php echo esc_html__( "For example: [bupr_display_top_members avatar='hide']" ); ?>
+							<?php echo esc_html__( "For example: [bupr_display_top_members avatar='hide']", 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 				</div>

@@ -13,7 +13,7 @@ global $bupr;
 ?>
 <div class="wbcom-tab-content">
 	<div class="wbcom-admin-title-section">
-		<h3><?php esc_html_e( 'Display Settings', 'bp-display-xprofile' ); ?></h3>
+		<h3><?php esc_html_e( 'Display Settings', 'bp-member-reviews' ); ?></h3>
 		<p class="wbcom-welcome-description">
 			<b><?php esc_html_e( 'Note', 'bp-member-reviews' ); ?>:</b>
 			<?php esc_html_e( 'If and only if you have added a criteria for review.', 'bp-member-reviews' ); ?>		</p>
