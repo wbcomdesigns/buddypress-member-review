@@ -122,6 +122,7 @@ h4.wbcom-support-section {
     box-shadow: none !important;
     margin: 0 5px 0px 0px;
 }
+
 .wbcom-settings-section-options input[type=radio]:checked::before {
     width: 18px;
     height: 18px;
@@ -980,7 +981,7 @@ License style
 .nav-tab-wrapper ul li a.nav-tab:before {
     content: "\f229";
     font-family: dashicons;
-    display: inline-block !important;
+    display: inline-block;
     line-height: normal;
     font-weight: 400;
     font-style: normal;
@@ -1220,7 +1221,8 @@ input:checked+.wb-slider:before {
     overflow: hidden;
     border-radius: 12px;
 }
-.wbcom-faq-section-row{
+
+.wbcom-faq-section-row {
     align-self: flex-start;
     width: auto;
     background: #fff;
@@ -1233,17 +1235,18 @@ input:checked+.wb-slider:before {
     transition: all 0.6s ease 0s;
     position: relative;
 }
+
 .wbcom-faq-section-row:hover {
     background-color: #2A32EF;
     border-color: #2A32EF;
 }
+
 .wbcom-faq-section-row:hover p,
-.wbcom-faq-section-row:hover
-button.wbcom-faq-accordion:after,
-.wbcom-faq-section-row:hover .wbcom-faq-panel li,
+.wbcom-faq-section-row:hover button.wbcom-faq-accordion:after,
 .wbcom-faq-section-row:hover button.wbcom-faq-accordion {
     color: #fff;
 }
+
 button.wbcom-faq-accordion {
     border: medium none;
     color: #333;
@@ -1257,16 +1260,20 @@ button.wbcom-faq-accordion {
     transition: all 0.4s ease 0s;
     width: 100%;
 }
-button.wb-ads-accordion.active, button.wb-ads-accordion:hover {
+
+button.wb-ads-accordion.active,
+button.wb-ads-accordion:hover {
     color: #2A32EF;
 }
+
 div.wbcom-faq-panel {
     padding: 0;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-    margin:0px;
+    margin: 0px;
 }
+
 button.wbcom-faq-accordion::after {
     color: hsl(0, 0%, 47%);
     content: "+";
@@ -1278,16 +1285,20 @@ button.wbcom-faq-accordion::after {
     position: absolute;
     top: 10px;
 }
+
 button.wbcom-faq-accordion:hover::after {
     color: white;
 }
+
 button.wbcom-faq-accordion.active::after {
     content: "−";
-    color:white;
+    color: white;
 }
+
 .wbcom-faq-admin-row {
     clear: both;
 }
+
 div.wbcom-faq-panel p {
     font-size: 15px;
     margin: 5px 0 0;

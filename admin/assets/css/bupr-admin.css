@@ -289,11 +289,18 @@ button.bupr-accordion.active::after {
     float: right;
 }
 
-.nav-tab-wrapper ul .bpmmd_faq a:before {
-    content: "\f101" !important;
-}
-
 .nav-tab-wrapper ul .bupr-general a:before {
     content: "\f111" !important;
 }
+
+.nav-tab-wrapper ul .bupr-criteria a:before {
+    content: "\f155" !important;
+}
+
+.nav-tab-wrapper ul .bupr-shortcode a:before {
+    content: "\f150" !important;
+}
+
+.nav-tab-wrapper ul .bupr-display a:before {
+    content: "\f478" !important;
 }

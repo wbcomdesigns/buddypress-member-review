@@ -12,60 +12,111 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="wbcom-tab-content">
-	<div class="bupr-adming-setting">
+	<div class="wbcom-wrapper-admin">
 		<div class="bupr-tab-header">
 			<div class="wbcom-admin-title-section">
 				<h3>
-					<?php esc_html_e( 'Reviews Shortcode ', 'bp-member-reviews' ); ?>
+					<?php esc_html_e( 'Member Review Shortcode', 'bp-member-reviews' ); ?>
 				</h3>
 				<input type="hidden" class="bupr-tab-active" value="shortcode"/>
 			</div>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view"> 
-			<div class="bupr-admin-settings-block">
-				<div id="bupr-settings-tbl" class="bupr-table">
-					<!-- <div class="bupr-admin-row border"> -->
-					<div class="wbcom-settings-section-wrap">
-						<div class="bupr-admin-col-6 bupr-label">
-							<strong>
-								<?php echo esc_attr( '[add_profile_review_form]' ); ?>
-							</strong>
-						</div>
-						<div class="bupr-admin-col-6">
-							<p class="description">
-								<?php esc_html_e( 'This shortcode will display the BuddyPress member review form.', 'bp-member-reviews' ); ?>
-							</p>
-						</div>
+			<div class="form-table">
+				<div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'Profile Review From Shortcode', 'bp-member-reviews' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( 'This shortcode will display the BuddyPress member review form.', 'bp-member-reviews' ); ?>
+						</p>
 					</div>
-						<div class="wbcom-settings-section-wrap">
-							<!-- <div class="bupr-admin-row border"> -->
-							<div class="bupr-admin-col-6 bupr-label">
-								<strong>
-									<?php echo esc_attr( '[bupr_display_top_members]' ); ?>
-								</strong>
-							</div>
-							<div class="bupr-admin-col-6">
-								<p class="description">
-									<?php esc_html_e( 'This shortcode will display Top rated/reviewed members.', 'bp-member-reviews' ); ?>							
-								</p>
-							</div>
-						</div>
-							<div class="wbcom-settings-section-wrap">
-							<div class="wbcom-settings-section-options-heading">
-								<label><?php esc_html_e( 'Parameters:', 'bp-member-reviews' ); ?></label>
-							</div>
-								<ul>
-									<li><p><b><?php echo esc_html( 'title' ) . '</b>:  ' . esc_html__( 'Using this parameter, you can add a title before top-rated/reviewed members listing. For example ', 'bp-member-reviews' ) . "[bupr_display_top_members title='Top Rated Member Listing']"; ?></p></li>
-									<li><p><b><?php echo esc_html( 'total_member' ) . '</b>:  ' . esc_html__( 'This parameter lets you limit the number of reviews on the Top Rated/Reviewed Members listing page. For example: ', 'bp-member-reviews' ) . '[bupr_display_top_members total_member=4]'; ?></b></li>
-									<li><p><b><?php echo esc_html( 'type' ) . '</b>:  ' . esc_html__( "Using this parameter you can display members according to 'top reviewed' or 'top rated'. For example: ", 'bp-member-reviews' ) . "[bupr_display_top_members type='top reviewed']"; ?></p></li>
-									<li><p><b><?php echo esc_html( 'avatar' ) . '</b>:  ' . esc_html__( "This parameter gives you flexibility to 'show' or 'hide' member avatar in the listing. For example: ", 'bp-member-reviews' ) . "[bupr_display_top_members avatar='hide']"; ?></p></li>
-								</ul>
-							</div>
-						</div>
-						<!-- </div> -->
-						<!-- </div> -->
-					<!-- </div> -->
+					<div class="wbcom-settings-section-options">
+						<p class="description">
+							<?php echo esc_attr( '[add_profile_review_form]' ); ?>
+						</p>
+					</div>
 				</div>
+				<div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'Top Reviewed Members Shortcode', 'bp-member-reviews' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( 'This shortcode will display Top rated/reviewed members.', 'bp-member-reviews' ); ?>							
+						</p>
+					</div>
+					<div class="wbcom-settings-section-options">
+						<p class="description">
+							<?php echo esc_attr( '[bupr_display_top_members]' ); ?>
+						</p>
+					</div>
+				</div>
+				<div class="wbcom-admin-title-section">
+					<h3><?php esc_html_e( 'Parameters', 'bp-member-reviews' ); ?></h3>
+				</div>
+				<div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'title', 'bp-member-reviews' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( 'Using this parameter, you can add a title before top-rated/reviewed members listing.', 'bp-member-reviews' ); ?>							
+						</p>
+					</div>
+					<div class="wbcom-settings-section-options">
+						<p class="description">
+							<?php echo esc_html__( "For example: [bupr_display_top_members title='Top Rated Member Listing']" ); ?>
+						</p>
+					</div>
+				</div>
+				<div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'total_member', 'bp-member-reviews' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( 'This parameter lets you limit the number of reviews on the Top Rated/Reviewed Members listing page.', 'bp-member-reviews' ); ?>							
+						</p>
+					</div>
+					<div class="wbcom-settings-section-options">
+						<p class="description">
+							<?php echo esc_html__( 'For example: [bupr_display_top_members total_member=4]' ); ?>
+						</p>
+					</div>
+				</div>
+				<div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'type', 'bp-member-reviews' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( "Using this parameter you can display members according to 'top reviewed' or 'top rated'.", 'bp-member-reviews' ); ?>							
+						</p>
+					</div>
+					<div class="wbcom-settings-section-options">
+						<p class="description">
+							<?php echo esc_html__( "For example: [bupr_display_top_members type='top reviewed']" ); ?>
+						</p>
+					</div>
+				</div>
+				<div class="wbcom-settings-section-wrap">
+					<div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'avatar', 'bp-member-reviews' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( "Using this parameter you can display members according to 'top reviewed' or 'top rated'.", 'bp-member-reviews' ); ?>							
+						</p>
+					</div>
+					<div class="wbcom-settings-section-options">
+						<p class="description">
+							<?php echo esc_html__( "For example: [bupr_display_top_members avatar='hide']" ); ?>
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
