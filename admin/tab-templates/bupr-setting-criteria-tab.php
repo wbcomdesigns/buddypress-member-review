@@ -23,9 +23,9 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 		do_settings_sections( 'bupr_admin_settings' );
 		?>
 		<div class="wbcom-admin-title-section">
-		<h2 class="title">
+		<h3 class="title">
 			<?php esc_html_e( 'Review Criteria(s)', 'bp-member-reviews' ); ?>
-		</h2>
+		</h3>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
 			<div class="form-table">
@@ -42,11 +42,10 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 						</label>
 					</div>
 			</div>
-			<div class="wbcom-settings-section-wrap ">
+			<div class="wbcom-settings-section-wrap <?php echo esc_attr( $bupr_multi_rating_allowed_class ); ?>">
 				<div class="bupr-admin-settings-block">
 					<div id="bupr-settings-tbl" class="bupr-table bupr-criteria-settings-tbl">
-
-					<div id="buprTextBoxContainer" class="<?php echo esc_attr( $bupr_multi_rating_allowed_class ); ?>">
+					<div id="buprTextBoxContainer">
 						<?php
 						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							$key = 0;
@@ -56,26 +55,25 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 									icl_register_string( 'bp-member-reviews', 'rating_field_name_' . $key++, $profile_rating_field );
 								}
 								?>
-								<div class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
+								<div id="bupr-admin-row-criteria" class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
 									<div class="bupr-admin-col-6">
-										<span>&equiv;</span>
+										<span class="move-icons">&equiv;</span>
 										<input name="bupr_admin_settings[rating_field_name][<?php echo esc_attr( $key_val ); ?>]" class="buprDynamicTextBox" type="text" value="<?php echo esc_attr( $profile_rating_field ); ?>" />
 									</div>
 
 									<div class="bupr-admin-col-6 buprcriteria">
 										<p class="bupr-delete-tag">
 											<input type="button" value="Delete" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
-											<span class="description">
-											<?php esc_html_e( 'Remove criteria fields permanently.', 'bp-member-reviews' ); ?>
-											</span>
+											<!-- <span class="description">
+											<?php //esc_html_e( 'Remove criteria fields permanently.', 'bp-member-reviews' ); ?>
+											</span> -->
 										</p>
-										<label class="bupr-switch">
+										<label>
 											<input name="bupr_admin_settings[rating_field_name_display][<?php echo esc_attr( $key_val ); ?>]" type="checkbox" class="bupr_enable_criteria" value="<?php echo 'yes'; ?>" <?php checked( $bupr_criteria_setting, 'yes' ); ?>>
-											<div class="bupr-slider bupr-round"></div>
+											<span class="description">
+											<?php esc_html_e( 'Enable/Disable criteria fields from review form.', 'bp-member-reviews' ); ?>
+											</span>
 										</label>
-										<span class="description">
-										<?php esc_html_e( 'Enable/Disable criteria fields from review form.', 'bp-member-reviews' ); ?>
-										</span>
 									</div>
 								</div>
 								<?php
@@ -85,7 +83,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 						</div>
 					</div>
 
-				<div id="bupr-add-criteria-action" class="bupr-admin-row border <?php echo esc_attr( $bupr_multi_rating_allowed_class ); ?>">
+				<div id="bupr-add-criteria-action" class="bupr-admin-row border">
 					<div class="bupr-admin-col-12">
 						<input id="bupr-btnAdd" type="button" value="Add Criteria" class="button button-secondary"/>
 						<p class="description"><?php esc_html_e( 'This option will allow you to add multiple rating criteria. By default, no citeria will be shown until you activate it.', 'bp-member-reviews' ); ?></p>
