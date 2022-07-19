@@ -9,8 +9,7 @@
 	<div class="wbcom-wrap wbcom-plugin-wrapper">    	
 		<div class="wbcom_admin_header-wrapper">
 			<div id="wb_admin_plugin_name">
-				<?php esc_html_e( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?>
-				<span><?php printf( __( 'Version %s', 'bp-member-reviews' ), BUPR_PLUGIN_VERSION ); ?></span>
+				<?php esc_html_e( 'Themes & Extension', 'bp-member-reviews' ); ?>
 			</div>
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 		</div>
