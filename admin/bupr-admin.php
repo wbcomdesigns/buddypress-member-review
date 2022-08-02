@@ -31,12 +31,29 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_action( 'admin_menu', array( $this, 'bupr_add_submenu_page_admin_settings' ) );
 			add_action( 'admin_menu', array( $this, 'bupr_get_review_count' ) );
 			add_action( 'admin_init', array( $this, 'bupr_plugin_settings' ) );
+			add_action( 'in_admin_header', array( $this, 'wbcom_hide_all_admin_notices_from_setting_page' ) );
 			add_filter( 'pre_update_option_bupr_admin_settings', array( $this, 'bupr_update_admin_settings' ), 10, 2 );
 			/* Register custom post type review */
 			$bupr_post_types = get_post_types();
 			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
 				add_action( 'init', array( $this, 'bupr_review_cpt' ) );
 				add_action( 'init', array( $this, 'bupr_review_taxonomy_cpt' ) );
+			}
+
+		}
+
+		/**
+		 * Hide all notices from the setting page.
+		 *
+		 * @return void
+		 */
+		public function wbcom_hide_all_admin_notices_from_setting_page() {
+			$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'bp-member-review-settings' );
+			$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
+
+			if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
+				remove_all_actions( 'admin_notices' );
+				remove_all_actions( 'all_admin_notices' );
 			}
 
 		}
@@ -138,23 +155,32 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-welcome';
 			?>
 			<div class="wrap">
-                            <hr class="wp-header-end">
-                            <div class="wbcom-wrap">
-				<div class="bupr-header">
-					<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-					<h1 class="wbcom-plugin-heading">
-						<?php esc_html_e( 'BuddyPress Member Reviews Settings', 'bp-member-reviews' ); ?>
-					</h1>
+				<div class="wbcom-bb-plugins-offer-wrapper">
+					<div id="wb_admin_logo">
+						<a href="https://wbcomdesigns.com/downloads/buddypress-community-bundle/" target="_blank">
+							<img src="<?php echo esc_url( BUPR_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/wbcom-offer-notice.png'; ?>">
+						</a>
+					</div>
 				</div>
-				<div class="wbcom-admin-settings-page">
-					<?php
-					settings_errors();
-					$this->bupr_plugin_settings_tabs();
-					settings_fields( $tab );
-					do_settings_sections( $tab );
-					?>
+				<div class="wbcom-wrap">
+					<div class="blpro-header">
+						<div class="wbcom_admin_header-wrapper">
+							<div id="wb_admin_plugin_name">
+								<?php esc_html_e( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?>
+								<span><?php printf( __( 'Version %s', 'bp-member-reviews' ), BUPR_PLUGIN_VERSION ); ?></span>
+							</div>
+							<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+						</div>
+					</div>
+					<div class="wbcom-admin-settings-page">
+						<?php
+						settings_errors();
+						$this->bupr_plugin_settings_tabs();
+						settings_fields( $tab );
+						do_settings_sections( $tab );
+						?>
+					</div>
 				</div>
-                            </div>
 			</div>
 			<?php
 		}
@@ -171,7 +197,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
 				$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-				echo '<li><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings' . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
+				echo '<li class="' . esc_attr( $tab_key ) . '"><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings' . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
 			}
 			echo '</div></ul></div>';
 		}

@@ -64,55 +64,6 @@
     font-weight: normal;
 }
 
-/* Admin Switch Toggle : Start */
-.bupr-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-.bupr-switch input {
-    display:none;
-}
-
-.bupr-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-.bupr-slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-input:checked + .bupr-slider {
-    background-color: #1d76da;
-}
-
-input:focus + .bupr-slider {
-    box-shadow: 0 0 1px #1d76da;
-}
-
-input:checked + .bupr-slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
 
 /* Rounded sliders */
 .bupr-slider.bupr-round {
@@ -157,11 +108,45 @@ input:checked + .bupr-slider:before {
 /* setting page criteria tab */
 .bupr-criteria input[type=text] {
     width: 95%;
+    height: 40px;
+    border-radius: 8px;
+    border-color: #e3e2ea;
+    background-color: #fafafa;
 }
 
-.bupr-criteria input[type=button] {
-    margin: 0 !important;
-    padding: 0 26px;
+.bupr-admin-col-6.buprcriteria {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bupr-criteria .bupr-delete-tag input[type=button],
+#bupr-add-criteria-action input#bupr-btnAdd,
+#bupr-admin-row-criteria input.bupr-remove.button.button-secondary {
+    padding: 12px 30px !important;
+    font-size: 15px;
+    background: #ee1313;
+    margin-right: 35px !important;
+    text-shadow: none;
+    font-weight: 600;
+    width: auto  !important;
+    color: #fff;
+    line-height: 1;
+    border: 0;
+    transition: all 0.3s;
+    box-shadow: 0px 8px 20px rgba(32, 53, 85, 0.35);
+    border-radius: 12px !important;
+    height: auto !important;
+}
+.bupr-criteria .bupr-delete-tag input[type=button]:hover,
+#bupr-add-criteria-action input#bupr-btnAdd:hover{
+    background:#272B41;
+}
+#bupr-add-criteria-action input#bupr-btnAdd {
+    padding:16px 30px !important;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background: #08c462;
 }
 
 /*** css classes for admin setting page ***/
@@ -170,10 +155,19 @@ input:checked + .bupr-slider:before {
     padding: 10px 0;
 }
 
-.bupr-admin-row {
-    clear: both;
-    border-top: 1px solid #ddd;
-    padding-bottom: 5px;
+div#bupr-admin-row-criteria.bupr-admin-row {
+    overflow: hidden;
+    border: 1px solid #e3e2ec;
+    border-radius: 10px;
+    padding: 5px 13px;
+    margin-top: 15px;
+    display: flex;
+    background: #fff;
+    align-items: center;
+}
+.bupr-admin-row#bupr-admin-row-criteria .bupr-admin-col-6 {
+    display: flex;
+    align-items: center;
 }
 
 .bupr-admin-col-1 {
@@ -317,8 +311,15 @@ button.bupr-accordion.active::after {
     color: white;
 }
 
-.buprcriteria span {
-    margin: 0px 20px;
+.buprcriteria span.description {
+    margin: 0;
+}
+
+span.move-icons {
+    font-size: 30px;
+    font-weight: bold;
+    margin-right: 10px;
+    cursor: move;
 }
 
 .bupr-display-info {
@@ -337,4 +338,38 @@ button.bupr-accordion.active::after {
 
 .bupr-extra-actions {
     float: right;
+}
+
+.nav-tab-wrapper ul .bupr-general a:before {
+    content: "\f111" !important;
+}
+
+.nav-tab-wrapper ul .bupr-criteria a:before {
+    content: "\f155" !important;
+}
+
+.nav-tab-wrapper ul .bupr-shortcode a:before {
+    content: "\f150" !important;
+}
+
+.nav-tab-wrapper ul .bupr-display a:before {
+    content: "\f478" !important;
+}
+div#setting-error-settings_updated {
+    position: absolute;
+    right: 50px;
+    z-index: 99;
+    border-radius: 10px;
+    line-height: normal;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #10ab00;
+}
+button.notice-dismiss:before{
+    color: red !important;
+}
+.wbcom-settings-section-options input#profile_reviews_per_page {
+    width: 300px;
+    margin-right: 10px;
 }
