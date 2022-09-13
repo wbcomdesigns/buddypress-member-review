@@ -87,14 +87,24 @@ $reviews = new WP_Query( $args );
 									<?php
 									$author = $reviews->post->post_author;
 									if ( 'yes' === $anonymous_post_review ) {
-										$avatar_url = bp_core_avatar_default(
-											$type   = 'local',
-											array(
-												'height' => 96,
-												'width'  => 96,
-												'html'   => true,
-											)
-										);
+										if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) {
+											$avatar_url = bp_core_avatar_default(
+												$type   = 'local',
+												array(
+													'height' => 96,
+													'width'  => 96,
+													'html'   => true,
+												)
+											);
+										} elseif ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
+											$size = '';
+											if ( isset( $params['type'] ) && 'thumb' === $params['type'] ) {
+												$size = bp_core_avatar_thumb_width();
+											} else {
+												$size = bp_core_avatar_full_width();
+											}
+											$avatar_url = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=' . $size;
+										}
 										echo "<img src='" . esc_url( $avatar_url ) . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
 									} else {
 
