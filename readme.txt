@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.0.1
-Stable tag: 2.8.1
+Tested up to: 6.1.1
+Stable tag: 2.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,11 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+= 2.8.3 =
+* Fix: changes for translation issue
+* Fix: (#189) fixed image not show proper in buddyboss
+* Fix: (#187) fixed admin notice issue
+
 = 2.8.1 =
 * Fix: Updated Admin Wrapper
 
