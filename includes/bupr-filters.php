@@ -653,17 +653,18 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( ! empty( $bupr_reviews->posts ) ) {
 					$bupr_reviews = count( $bupr_reviews->posts );
 					if ( ! empty( $bupr_reviews ) ) {
-						$bupr_notification = '<span class="no-count">' . $bupr_reviews . '</span>';
+						$bupr_notification = '<span class="count">' . $bupr_reviews . '</span>';
 					} else {
-						$bupr_notification = '<span class="no-count">' . 0 . '</span>';
+						$bupr_notification = '<span class="count">' . 0 . '</span>';
 					}
 				} else {
-					$bupr_notification = '<span class="no-count">' . 0 . '</span>';
+					$bupr_notification = '<span class="count">' . 0 . '</span>';
 				}
 
-				$name     = bp_get_displayed_user_username();
+				$name = bp_get_displayed_user_username();
+
 				$tab_args = array(
-					'name'                    => bupr_profile_review_tab_name() . ' ' . $bupr_notification,
+					'name'                    => bupr_profile_review_tab_name() . $bupr_notification,
 					'slug'                    => bupr_profile_review_tab_plural_slug(),
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
@@ -858,11 +859,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( isset( $bupr['review_activity'] ) && 'yes' === $bupr['review_activity'] ) {
 				$review = get_post( $review_id );
 				if ( ! empty( $review ) ) {
-					$reviewer_user_id      = $review->post_author;
-					$reviewer_user_link    = bp_core_get_userlink( $reviewer_user_id );
-					$reviewed_user_link    = bp_core_get_userlink( $reviewed_user_id );
-					$content               = $review->post_content;  
-					$action                = sprintf(
+					$reviewer_user_id   = $review->post_author;
+					$reviewer_user_link = bp_core_get_userlink( $reviewer_user_id );
+					$reviewed_user_link = bp_core_get_userlink( $reviewed_user_id );
+					$content            = $review->post_content;
+					$action             = sprintf(
 						apply_filters(
 							'bupr_member_review_activity_action',
 							__( '%1$s posted a new %2$s to %3$s', 'bp-member-reviews' )
