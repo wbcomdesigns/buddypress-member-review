@@ -121,3 +121,30 @@ function bupr_profile_review_tab_singular_slug() {
 
 	return apply_filters( 'bupr_review_tab_singular_slug', esc_html( $tab_slug ) );
 }
+
+
+
+/**
+ * Register BuddyPress Member Review triggers
+ *
+ * @param array $triggers
+ * @return mixed
+ */
+function buddypress_member_review_bp_activity_triggers( $triggers ) {
+	$triggers[__( 'BuddyPress Member Review', 'bp-member-reviews' )] = array(
+            'gamipress_bp_member_review' => __( 'Give Member Review', 'bp-member-reviews' ),
+        );
+	
+	return $triggers;
+}
+add_filter( 'gamipress_activity_triggers', 'buddypress_member_review_bp_activity_triggers' );
+
+function buddypress_member_review_trigger_get_user_id( $user_id, $trigger, $args ) {
+	switch ( $trigger ) {
+		case 'gamipress_bp_member_review':
+            $user_id = $args[0];
+            break;
+	}
+	return $user_id;
+}
+add_filter( 'gamipress_trigger_get_user_id', 'buddypress_member_review_trigger_get_user_id', 10, 3);

@@ -475,6 +475,10 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					'post_status' => 'publish',
 				);
 				wp_update_post( $args );
+				$author_id = get_post_field( 'post_author', $rid );
+				
+				do_action( 'gamipress_bp_member_review', $author_id );
+				
 				echo 'review-approved-successfully';
 				die;
 			}
@@ -488,6 +492,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 */
 		public function wp_allow_bupr_my_member() {
 			global $bupr;
+			
+
 			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) === 'allow_bupr_member_review_update' ) {
 
 				$bupr_rating_criteria = array();
@@ -568,6 +574,10 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						);
 
 						$review_id = wp_insert_post( $add_review_args );
+						
+						if ( $bupr_reviews_status == 'publish' ) {
+							do_action( 'gamipress_bp_member_review', $bupr_current_user );
+						}
 
 						do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
 
