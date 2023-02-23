@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
 Tested up to: 6.1.1
-Stable tag: 2.8.3
+Stable tag: 2.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,12 @@ Yes you can use the review form on other page, just go to "Dashboard->Review->BP
 4. Plugin Settings
 
 == Changelog ==
+= 2.9.0 =
+* Enhancement: #199 - Gamipress Integration
+* Fix: (#202) Fixed anonymous review notification issue
+* Fix: (#193) Fixed review count not visible on member profile tab
+* Fix: Added missing review image
+
 = 2.8.3 =
 * Fix: changes for translation issue
 * Fix: (#189) fixed image not show proper in buddyboss
