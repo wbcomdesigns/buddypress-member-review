@@ -167,9 +167,11 @@ function bupr_required_plugin_admin_notice() {
 add_action( 'activated_plugin', 'bupr_activation_redirect_settings' );
 function bupr_activation_redirect_settings( $plugin ) {
 
-	if ( $plugin == plugin_basename( __FILE__ ) ) {
-		wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
-		exit;
+	if ( $plugin == plugin_basename( __FILE__ ) && class_exists( 'Buddypress' ) ) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
+			wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
+			exit;
+		}
 	}
 }
 
