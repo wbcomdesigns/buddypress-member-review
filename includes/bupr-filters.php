@@ -48,7 +48,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			 */
 
 			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
-				add_action( 'bp_member_members_list_item', array( $this, 'bupr_rating_directory' ), 50 );
+				add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
 			} else {
 				add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
 			}
