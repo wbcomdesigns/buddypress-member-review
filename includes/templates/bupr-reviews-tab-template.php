@@ -166,7 +166,7 @@ $reviews = new WP_Query( $args );
 								?>
 								<span class="posted-on list">
 										<time class="entry-date published updated">
-											<?php echo date( "M Y", strtotime( $reviews->post->post_date ) );?>
+											<?php echo esc_html_e( date( "M Y", strtotime( $reviews->post->post_date ) ), 'bp-member-reviews' );?>
 										</time>
 								</span>
 								<?php echo '</div>'; ?>
