@@ -797,9 +797,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			<div class="bupr-bp-member-review-no-popup-add-block gfgg">
 				<?php
 				if ( is_user_logged_in() ) {
-					do_action( 'bupr_member_review_form' );
-					// $bupr_form = new BUPR_Shortcodes();
-					// echo wp_kses_post( $bupr_form->bupr_display_review_form() );
+					$bupr_form = new BUPR_Shortcodes();
+					echo wp_kses_post( $bupr_form->bupr_display_review_form() );
 					// do_shortcode( '[add_profile_review_form]' );
 				} else {
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
