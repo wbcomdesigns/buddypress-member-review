@@ -29,6 +29,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		public function __construct() {
 			add_shortcode( 'add_profile_review_form', array( $this, 'bupr_shortcode_review_form' ) );
 			add_shortcode( 'bupr_display_top_members', array( $this, 'bupr_display_top_members_display' ) );
+			add_action( 'bupr_member_review_form', array( $this, 'bupr_display_review_form' ) );
 		}
 
 		/**
