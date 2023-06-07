@@ -56,8 +56,6 @@ $reviews = new WP_Query( $args );
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						// $review_date_time      = $reviews->post_date;
-						$review_date           = date_i18n( 'M Y' );
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 						$author_id             = get_post_field( 'post_author', get_the_ID() );
@@ -168,7 +166,7 @@ $reviews = new WP_Query( $args );
 								?>
 								<span class="posted-on list">
 										<time class="entry-date published updated">
-											<?php echo esc_html( $review_date ); ?>
+											<?php esc_html_e( date( "M Y", strtotime( $reviews->post->post_date ) ), 'bp-member-reviews' );?>
 										</time>
 								</span>
 								<?php echo '</div>'; ?>

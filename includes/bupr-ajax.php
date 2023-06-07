@@ -476,9 +476,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 				wp_update_post( $args );
 				$author_id = get_post_field( 'post_author', $rid );
-				
+
 				do_action( 'gamipress_bp_member_review', $author_id );
-				
+
 				echo 'review-approved-successfully';
 				die;
 			}
@@ -492,7 +492,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 */
 		public function wp_allow_bupr_my_member() {
 			global $bupr;
-			
 
 			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) === 'allow_bupr_member_review_update' ) {
 
@@ -574,7 +573,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						);
 
 						$review_id = wp_insert_post( $add_review_args );
-						
+
 						if ( $bupr_reviews_status == 'publish' ) {
 							do_action( 'gamipress_bp_member_review', $bupr_current_user );
 						}
@@ -605,7 +604,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								$bupr_subject = sprintf( __( 'You have got a new %s', 'bp-member-reviews' ), bupr_profile_review_tab_singular_slug() );// $review_subject;
 
 								/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
-								$bupr_message .= '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), bupr_profile_review_tab_singular_slug() ) . '</p>';
+								$bupr_message = '<p>' . sprintf( esc_html__( 'Welcome ! %s You have a new %2$s on your profile.', 'bp-member-reviews' ), esc_attr( $bupr_reciever_name ), bupr_profile_review_tab_singular_slug() ) . '</p>';
 
 								/* translators: %s is replaced with the review singular lable of translations */
 								$bupr_message .= sprintf( esc_html__( 'To read your %s click on the link given below.', 'bp-member-reviews' ), bupr_profile_review_tab_singular_slug() );
