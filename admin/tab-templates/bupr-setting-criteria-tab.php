@@ -63,7 +63,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 
 									<div class="bupr-admin-col-6 buprcriteria">
 										<p class="bupr-delete-tag">
-											<input type="button" value=<?php esc_html_e("Delete") ?> class="bupr-criteria-remove-button bupr-remove button button-secondary" />
+											<input type="button" value="<?php esc_html_e( 'Delete', 'bp-member-reviews' ) ?>" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
 											<!-- <span class="description">
 											<?php //esc_html_e( 'Remove criteria fields permanently.', 'bp-member-reviews' ); ?>
 											</span> -->
@@ -85,7 +85,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 
 				<div id="bupr-add-criteria-action" class="bupr-admin-row border">
 					<div class="bupr-admin-col-12">
-						<input id="bupr-btnAdd" type="button" value=<?php esc_html_e("Add Criteria") ?> class="button button-secondary"/>
+						<input id="bupr-btnAdd" type="button" value="<?php esc_html_e('Add Criteria' , 'bp-member-reviews') ?>" class="button button-secondary"/>
 						<p class="description"><?php esc_html_e( 'This option will allow you to add multiple rating criteria. By default, no citeria will be shown until you activate it.', 'bp-member-reviews' ); ?></p>
 					</div>
 				</div>
