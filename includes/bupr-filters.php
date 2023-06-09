@@ -548,7 +548,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 							esc_html_e( 'Rating ', 'bp-member-reviews' );
 							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
-							echo esc_attr( $bupr_reviews_count ) . ' ' . esc_attr( $bupr['review_label'] );
+							printf( _n( '%1$s %2$s ', '%1$s %3$s', $bupr_reviews_count, 'bp-member-reviews' ), number_format_i18n( esc_html( $bupr_reviews_count ) ), esc_html( $bupr['review_label'] ), esc_html( $bupr['review_label_plural'] ) );
 							?>
 						</span>
 					</div>
@@ -664,7 +664,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$name = bp_get_displayed_user_username();
 
 				$tab_args = array(
-					'name'                    => bupr_profile_review_tab_name() . $bupr_notification,
+					'name'                    => bupr_profile_review_tab_name().'s' . $bupr_notification,
 					'slug'                    => bupr_profile_review_tab_plural_slug(),
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
