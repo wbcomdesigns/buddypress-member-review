@@ -307,16 +307,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$reviews_args = new WP_Query( $member_args );
 			if ( ! bp_is_members_component() && ! bp_is_user() ) {
 				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-				if ( 'nouveau' === $bp_template_option ) {
-					?>
-					<div id="message" class="success success_review_msg bp-feedback bp-messages bp-template-notice">
-						<span class="bp-icon" aria-hidden="true"></span>
-				<?php } else { ?>
-						<div id="message" class="success success_review_msg">
-					<?php } ?>
-						<p></p>
-					</div>
-				<?php
 			}
 
 			if ( 0 === bp_displayed_user_id() ) {
