@@ -41,10 +41,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="wbcom-settings-section-wrap">
 					<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Top Reviewed Members Shortcode', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Top Rated Members Shortcode', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( 'This shortcode will display Top rated/reviewed members.', 'bp-member-reviews' ); ?>							
+							<?php esc_html_e( 'This shortcode will display Top rated members.', 'bp-member-reviews' ); ?>							
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -92,7 +92,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'type', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( "Using this parameter you can display members according to 'top reviewed' or 'top rated'.", 'bp-member-reviews' ); ?>							
+							<?php esc_html_e( 'Using this parameter you can display members according to Top Reviewed(as per the maximum number of reviews) or Top Rated(As per the highest ratings).', 'bp-member-reviews' ); ?>							
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'avatar', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( "Using this parameter you can display members according to 'top reviewed' or 'top rated'.", 'bp-member-reviews' ); ?>							
+							<?php esc_html_e( 'Using this parameter you can hide the members avatar.', 'bp-member-reviews' ); ?>							
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">
