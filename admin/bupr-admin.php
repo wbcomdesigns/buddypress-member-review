@@ -19,6 +19,16 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 	 */
 	class BUPR_Admin {
 
+
+		/**
+		 * plugin_settings_tabs
+		 *
+		 * @since    1.0.0
+		 * @access    public
+		 * @var mixed   $plugin_settings_tabs
+		 */
+		public $plugin_settings_tabs;
+
 		/**
 		 * Constructor.
 		 *
