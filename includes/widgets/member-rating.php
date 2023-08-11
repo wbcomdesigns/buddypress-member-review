@@ -42,6 +42,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
 			$bupr_title = apply_filters( 'widget_title', $instance['bupr_title'] );
 		} else {
 			$link       = trailingslashit( bp_displayed_user_domain() . bp_get_friends_slug() );
+			/* translators: %s: */
 			$bupr_title = sprintf( __( "%s's Ratings", 'bp-member-reviews' ), bp_get_displayed_user_fullname() );
 		}
 
@@ -189,6 +190,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
 
 					$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 					echo '<span class="bupr-meta">';
+					/* translators: %s: */
 					echo sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
 					echo '</span>';
 					echo '</div></li>';

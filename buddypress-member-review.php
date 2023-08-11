@@ -92,10 +92,11 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 	function bupr_admin_notice() {
 		$bupr_plugin = esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' );
 		$bp_plugin   = esc_html__( 'BuddyPress', 'bp-member-reviews' );
-
+		/* translators: %s: */
 		echo '<div class="error"><p>' . sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to function correctly.', 'bp-member-reviews' ), '<strong>' . esc_html( $bupr_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' ) . '</p></div>';
-		if ( isset( $_GET['activate'] ) ) {
-			unset( $_GET['activate'] );
+		if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
+			$activate = filter_input( INPUT_GET, 'activate' );
+			unset( $activate );
 		}
 	}
 }
@@ -137,7 +138,8 @@ function bupr_requires_buddypress() {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		// deactivate_plugins('buddypress-polls/buddypress-polls.php');
 		add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-		unset( $_GET['activate'] );
+		$activate = filter_input( INPUT_GET, 'activate' );
+		unset( $activate );
 	}
 }
 
@@ -152,10 +154,12 @@ function bupr_required_plugin_admin_notice() {
 	$bpquotes_plugin = esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' );
 	$bp_plugin       = esc_html__( 'BuddyPress', 'bp-member-reviews' );
 	echo '<div class="error"><p>';
+	/* translators: %s: */
 	echo sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to be installed and active.', 'bp-member-reviews' ), '<strong>' . esc_html( $bpquotes_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' );
 	echo '</p></div>';
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
+	if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
+		$activate = filter_input( INPUT_GET, 'activate' );
+		unset( $activate );
 	}
 }
 
@@ -168,7 +172,7 @@ add_action( 'activated_plugin', 'bupr_activation_redirect_settings' );
 function bupr_activation_redirect_settings( $plugin ) {
 
 	if ( $plugin == plugin_basename( __FILE__ ) && class_exists( 'Buddypress' ) ) {
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore
 			wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
 			exit;
 		}

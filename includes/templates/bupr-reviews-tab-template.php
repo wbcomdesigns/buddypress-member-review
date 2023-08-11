@@ -76,7 +76,10 @@ $reviews = new WP_Query( $args );
 							<?php if ( ! empty( $bupr['allow_update'] ) && 'yes' === $bupr['allow_update'] ) : ?>
 								<?php if ( bp_loggedin_user_id() == $author_id ) : ?>
 									<div id="bupr-reiew-edit" class="bupr-edit-review-button-wrapper" data-review="<?php echo esc_attr( $post->ID ); ?>">
-										<button type="button" class="bupr-edit-review-button"><?php echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ); ?></button>
+										<button type="button" class="bupr-edit-review-button"><?php 
+										/* translators: %s: */
+										echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ); 
+										?></button>
 									</div>
 								<?php endif; ?>
 							<?php endif; ?>
@@ -269,7 +272,10 @@ $reviews = new WP_Query( $args );
 					<?php } else { ?>
 						<div id="message" class="info">
 					<?php } ?>
-						<p><?php echo sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+						<p><?php 
+						/* translators: %s: */
+						echo sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); 
+						?>
 
 						</p>
 					</div>

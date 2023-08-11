@@ -298,7 +298,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$html .= '<div id="message" class="info bp-feedback bp-messages bp-template-notice"><span class="bp-icon" aria-hidden="true"></span>';
 					} else {
 						$html .= '<div id="message" class="info">';
-					}
+					}	
+					/* translators: %s: */
 						$html .= '<p>' . sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), $bupr['review_label'] ) . '
 
 						</p>
@@ -424,7 +425,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 							$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 							$html           .= '<span class="bupr-meta">';
-							$html           .= sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
+							/* translators: %s: */
+							$html           .= sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) ); 
 							$html           .= '</span>';
 							$html           .= '</div></li>';
 
@@ -491,6 +493,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function wp_allow_bupr_my_member() {
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'review-nonce' ) ) {
+				return false;
+			}
 			global $bupr;
 
 			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) === 'allow_bupr_member_review_update' ) {
@@ -510,7 +515,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				}
 
 				$bupr_multi_reviews = $bupr['multi_reviews'];
-
 				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user', FILTER_SANITIZE_STRING );
 				$review_subject             = filter_input( INPUT_POST, 'bupr_review_title', FILTER_SANITIZE_STRING );
 				$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_STRING );
@@ -616,8 +620,10 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 
 							if ( 'no' === $bupr['auto_approve_reviews'] ) {
+								/* translators: %s: */
 								echo sprintf( esc_html__( 'Thank you for taking time to write this %1$s. Your %1$s will display on members\' profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							} else {
+								/* translators: %s: */
 								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 							}
 						} else {
@@ -641,6 +647,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						echo '</p>';
 					}
 				} else {
+					/* translators: %s: */
 					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 				}
 				die;
@@ -648,7 +655,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		}
 
 		public function bupr_edit_review() {
-
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'review-nonce' ) ) {
+				return false;
+			}
 			if ( isset( $_POST['action'] ) && 'bupr_edit_review' === $_POST['action'] ) {
 				global $bupr;
 
@@ -701,6 +710,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$field_counter++;
 					}
 				}
+				/* translators: %s: */
 				$review_output .= '<button type="button" class="btn btn-default" id="bupr_upodate_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
 				$review_output .= '</div>';
 
@@ -714,6 +724,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		}
 
 		public function bupr_update_review() {
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'review-nonce' ) ) {
+				return false;
+			}
 			if ( isset( $_POST['action'] ) && 'bupr_update_review' === $_POST['action'] ) {
 				global $bupr;
 

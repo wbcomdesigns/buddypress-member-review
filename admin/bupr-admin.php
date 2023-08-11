@@ -177,7 +177,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						<div class="wbcom_admin_header-wrapper">
 							<div id="wb_admin_plugin_name">
 								<?php esc_html_e( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?>
-								<span><?php printf( __( 'Version %s', 'bp-member-reviews' ), BUPR_PLUGIN_VERSION ); ?></span>
+								<span><?php 
+								/* translators: %s: */
+								printf( esc_html__( 'Version %s', 'bp-member-reviews' ), esc_attr( BUPR_PLUGIN_VERSION ) ); 
+								?></span>
 							</div>
 							<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 						</div>

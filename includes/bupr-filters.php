@@ -297,6 +297,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php } ?>
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 									<?php
+									/* translators: %s: */
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 									?>
 								</a>
@@ -318,6 +319,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<?php } ?>
 							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 								<?php
+								/* translators: %s: */
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 								?>
 							</a>
@@ -361,6 +363,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						<?php } ?>
 							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 								<?php
+								/* translators: %s: */
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 								?>
 								</a>
@@ -382,6 +385,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<?php } ?>
 							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show ="<?php echo esc_attr( $review_div ); ?>">
 								<?php
+								/* translators: %s: */
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 								?>
 							</a>
@@ -548,7 +552,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 							esc_html_e( 'Rating ', 'bp-member-reviews' );
 							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
-							printf( _n( '%1$s %2$s ', '%1$s %3$s', $bupr_reviews_count, 'bp-member-reviews' ), number_format_i18n( esc_html( $bupr_reviews_count ) ), esc_html( $bupr['review_label'] ), esc_html( $bupr['review_label_plural'] ) );
+							/* translators: %s: */
+							printf( esc_html__( '%1$s %2$s ', '%1$s %3$s', $bupr_reviews_count, 'bp-member-reviews' ), esc_html( $bupr_reviews_count ), esc_html( $bupr['review_label'] ), esc_html( $bupr['review_label_plural'] ) );
 							?>
 						</span>
 					</div>
@@ -595,6 +600,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
 					$review_url             = bp_core_get_userlink( $linked_bp_member, false, true ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
+					/* translators: %s: */
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
@@ -721,6 +727,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( in_array( $user_role, $bupr['add_taken_members'], true ) ) {
 						bp_core_new_subnav_item(
 							array(
+								/* translators: %s: */
 								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
 								'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
@@ -735,6 +742,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 					bp_core_new_subnav_item(
 						array(
+							/* translators: %s: */
 							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
 							'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
 							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',

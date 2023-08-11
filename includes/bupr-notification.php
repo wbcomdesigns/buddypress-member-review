@@ -66,7 +66,9 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 
 		$user_id              = bp_loggedin_user_id();
 		$notification_link    = bp_core_get_user_domain( $user_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+		/* translators: %s: */
 		$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+		/* translators: %s: */
 		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( $bupr['review_label'] ) );
 
 		if ( 'string' === $format ) {

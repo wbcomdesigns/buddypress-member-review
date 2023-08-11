@@ -223,8 +223,10 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 						$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 						$output         .= '<span class="bupr-meta">';
+						/* translators: %s: */
 						$output         .= sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
 						$output         .= '</span><span class="bupr-meta">';
+						/* translators: %s: */
 						$output         .= sprintf( esc_html__( 'Total %1$s : %2$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ), esc_attr( $bupr_reviews_count ) );
 						$output         .= '</span></div></li>';
 					}
@@ -330,11 +332,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										<?php } ?>
 								<?php
 								if ( 'publish' === $reviews_args->posts[0]->post_status ) {
+									/* translators: %s: */
 									$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
 								} else {
 									if ( 'yes' === $auto_approve_reviews ) {
+										/* translators: %s: */
 										$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
 									} else {
+										/* translators: %s: */
 										$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
 									}
 								}
@@ -377,7 +382,10 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
 						<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_url( BUPR_PLUGIN_URL ); ?>">
 						<div class="bp-member-add-form">
-							<p><?php echo sprintf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?></p>
+							<p><?php 
+							/* translators: %s: */
+							echo sprintf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); 
+							?></p>
 					<?php if ( 0 === bp_displayed_user_id() ) { ?>
 								<p>
 										<select name="bupr_member_id" id="bupr_member_review_id">
@@ -438,7 +446,10 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce' ); ?>
 
 									<button type="button" class="btn btn-default" id="bupr_save_review" name="submit-review">
-					<?php echo sprintf( esc_html__( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php 
+									/* translators: %s: */
+									echo sprintf( esc_html__( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); 
+									?>
 									</button>
 									<input type="hidden" value="<?php echo esc_attr( $login_user ); ?>" id="bupr_current_user_id" />
 									<img src="<?php echo esc_url( $bupr_spinner_src ); ?>" class="bupr-save-reivew-spinner" />

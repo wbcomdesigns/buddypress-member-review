@@ -53,6 +53,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 			$reviews_titles = array(
 				'cur_username' => $cur_name,
 				'review_title' => $title_review,
+				'review_nonce' => wp_create_nonce('review-nonce'),
 			);
 			wp_localize_script( 'bupr-front-js', 'mail_title', $reviews_titles );
 
@@ -85,12 +86,13 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_admin_custom_variables() {
+			
 			if ( ! wp_script_is( 'wbcom-admin-setting-js', 'enqueued' ) ) {
 				wp_enqueue_script( 'wbcom-admin-setting-js', BUPR_PLUGIN_URL . 'admin/wbcom/assets/js/wbcom-admin-setting.js', array( 'jquery' ) );
 			}
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
-				if ( ( isset( $_GET['page'] ) && 'bp-member-review-settings' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) {
+				if ( ( isset( $_GET['page'] ) && 'bp-member-review-settings' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) { // phpcs:ignore
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
 					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {

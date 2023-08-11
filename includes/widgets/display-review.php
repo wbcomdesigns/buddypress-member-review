@@ -214,8 +214,10 @@ class bupr_members_review_setting extends WP_Widget {
 
 					$bupr_avg_rating = round( $bupr_avg_rating, 2 );
 					echo '<span class="bupr-meta">';
+					/* translators: %s: */
 					echo sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
 					echo '</span><span class="bupr-meta">';
+					/* translators: %s: */
 					echo sprintf( esc_html__( 'Total %1$s : %2$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ), esc_attr( $bupr_reviews_count ) );
 					echo '</span></div></li>';
 				}

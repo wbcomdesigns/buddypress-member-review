@@ -145,6 +145,7 @@ jQuery(document).ready(function () {
               bupr_review_rating: bupr_review_rating,
               bupr_field_counter: bupr_review_count,
               bupr_anonymous_review: bupr_anonymous_review,
+              nonce: mail_title.review_nonce,
             },
             function (response) {
               jQuery(".bupr-save-reivew-spinner").hide();
@@ -369,6 +370,7 @@ jQuery(document).ready(function () {
         review_id: review_id,
         bupr_review_desc: bupr_review_desc,
         bupr_review_rating: bupr_review_rating,
+        nonce: mail_title.review_nonce,
       },
       function (response) {
         jQuery(".bupr-save-reivew-spinner").hide();
