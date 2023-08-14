@@ -498,8 +498,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 			global $bupr;
 
-			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) === 'allow_bupr_member_review_update' ) {
-
+			if ( filter_input( INPUT_POST, 'action' ) && filter_input( INPUT_POST, 'action' ) === 'allow_bupr_member_review_update' ) {
 				$bupr_rating_criteria = array();
 				if ( ! empty( $bupr['active_rating_fields'] ) ) {
 					foreach ( $bupr['active_rating_fields'] as $bupr_keys => $bupr_fields ) {
@@ -515,12 +514,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				}
 
 				$bupr_multi_reviews = $bupr['multi_reviews'];
-				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user', FILTER_SANITIZE_STRING );
-				$review_subject             = filter_input( INPUT_POST, 'bupr_review_title', FILTER_SANITIZE_STRING );
-				$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_STRING );
-				$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id', FILTER_SANITIZE_STRING );
-				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_SANITIZE_STRING );
-				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review', FILTER_SANITIZE_STRING );
+				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user' );
+				$review_subject             = filter_input( INPUT_POST, 'bupr_review_title' );
+				$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc' );
+				$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id' );
+				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter' );
+				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review' );
 				$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : '';
 
 				$bupr_count = 0;
