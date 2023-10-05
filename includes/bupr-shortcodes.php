@@ -284,6 +284,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					$bupr_member[] = array(
 						'member_id'   => $user->ID,
 						'member_name' => $user->data->display_name,
+						'member_roles' => $user->roles[0],
 					);
 				}
 			}
@@ -378,14 +379,26 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						<?php } ?>
 						<p></p>
 					</div>
+					<?php
+					if ( is_user_logged_in() ) {
+						$user = wp_get_current_user();
+						$roles = (array) $user->roles;
+						if ( ! in_array( $roles[0], $bupr['exclude_given_members'] ) ) { ?>
+						<div class="bupr_not_give_review">
+								<p><?php echo esc_html( 'Sorry, You have not been given permission to review the user !!!' ); ?></p>
+						</div>
+							<?php
+						} else{ ?>
 					<form action="" method="POST">
 						<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
 						<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_url( BUPR_PLUGIN_URL ); ?>">
 						<div class="bp-member-add-form">
-							<p><?php 
+							<p>
+							<?php
 							/* translators: %s: */
-							echo sprintf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); 
-							?></p>
+							echo sprintf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+							?>
+							</p>
 					<?php if ( 0 === bp_displayed_user_id() ) { ?>
 								<p>
 										<select name="bupr_member_id" id="bupr_member_review_id">
@@ -393,7 +406,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								<?php
 								if ( ! empty( $bupr_member ) ) {
 									foreach ( $bupr_member as $user ) {
-										echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
+										if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && in_array( $user['member_roles'], $bupr['add_taken_members'] ) ) {
+											echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
+										}
 									}
 								}
 								?>
@@ -446,9 +461,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce' ); ?>
 
 									<button type="button" class="btn btn-default" id="bupr_save_review" name="submit-review">
-									<?php 
+									<?php
 									/* translators: %s: */
-									echo sprintf( esc_html__( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); 
+									echo sprintf( esc_html__( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 									?>
 									</button>
 									<input type="hidden" value="<?php echo esc_attr( $login_user ); ?>" id="bupr_current_user_id" />
@@ -457,6 +472,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							</div>
 						</form>
 					<?php
+						}
+					}
 		}
 
 		/**
