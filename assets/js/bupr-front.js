@@ -264,6 +264,7 @@ jQuery(document).ready(function () {
         {
           action: "bupr_edit_review",
           review: review_id,
+          nonce: mail_title.review_nonce,
         },
         function (response) {
           if (response.success && "" != response.data.review) {
