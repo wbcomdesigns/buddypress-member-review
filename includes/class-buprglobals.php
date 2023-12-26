@@ -89,6 +89,12 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				if ( array_key_exists( 'bupr_enable_review_activity', $bupr_general_settings ) ) {
 					$review_activity = $bupr_general_settings['bupr_enable_review_activity'];
 				}
+				if ( array_key_exists( 'review_email_subject', $bupr_general_settings ) ) {
+					$review_email_subject = $bupr_general_settings['review_email_subject'];
+				}
+				if ( array_key_exists( 'review_email_message', $bupr_general_settings ) ) {
+					$review_email_message = $bupr_general_settings['review_email_message'];
+				}
 				if ( empty( $review_activity ) ) {
 					$review_activity = 'no';
 				}
@@ -208,6 +214,10 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'multi_criteria_allowed' => $bupr_multi_criteria_allowed,
 				'active_rating_fields'   => $active_rating_fields,
 				'review_activity'        => $review_activity,
+				'review_email_subject'   => $review_email_subject,
+				'review_email_message'   => $review_email_message,
+				
+				
 			);
 		}
 

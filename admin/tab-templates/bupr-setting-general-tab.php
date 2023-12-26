@@ -11,8 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 /* admin setting on dashboard */
 global $bupr;
+$message = 'Hello [user-name], <br><br>
+We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>
+To view the review, simply click on the link below:<br>
+[review-link]<br><br>
+Best regards,<br>
+The [site-name] Team';
 // get all user for exclude for review.
 $user_roles = array_reverse( get_editable_roles() );
+$review_email_subject = ( isset( $bupr['bupr_review_email_subject'] ) ) ? $bupr['bupr_review_email_subject'] : 'Your Profile Has Received a Feedback on [site-name]';
+$review_email_message = ( isset( $bupr['bupr_review_email_message'] ) ) ? $bupr['bupr_review_email_message'] : $message;
 
 ?>
 <div class="wbcom-tab-content">
@@ -111,6 +119,37 @@ $user_roles = array_reverse( get_editable_roles() );
 								</label>
 							</div>
 						</div>
+						<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
+							<div class="wbcom-settings-section-options-heading">
+								<label>
+									<?php esc_html_e( 'Email Subject', 'bp-group-reviews' ); ?>
+								</label>
+								<p class="description"><?php esc_html_e( 'Please add review email subject.', 'bp-group-reviews' ); ?></p>
+							</div>
+							<div class="wbcom-settings-section-options">
+								<input id="review_deny_email_subject" class="large-text" name="bupr_admin_general_options[review_email_subject]" value="<?php echo esc_attr( $review_email_subject ); ?>" type="text" placeholder="Please enter review email subject.">
+							</div>
+						</div>
+						<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
+					<div class="wbcom-settings-section-options-heading">
+						<label>
+							<?php esc_html_e( 'Email Message', 'bp-group-reviews' ); ?>
+						</label>
+						<p class="description"><?php esc_html_e( 'Please add review email message.', 'bp-group-reviews' ); ?></p>
+					</div>
+					<div class="wbcom-settings-section-options">
+						<?php
+						wp_editor(
+							$review_email_message,
+							'review-email-message',
+							array(
+								'media_buttons' => false,
+								'textarea_name' => 'bupr_admin_general_options[review_email_message]',
+							)
+						);
+						?>
+					</div>
+				</div>
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label for="bupr_review_notification">

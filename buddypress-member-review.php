@@ -104,20 +104,6 @@ if ( ! function_exists( 'bupr_admin_notice' ) ) {
 	}
 }
 
-// add_action( 'bp_init', 'bupr_bp_notifications_for_review', 12 );
-
-/**
- * BuddyPress member reviews notification.
- *
- * @author   Wbcom Designs
- * @since    1.0.0
- */
-// function bupr_bp_notifications_for_review() {
-// include 'includes/bupr-notification.php';
-// buddypress()->bupr_bp_review                        = new BUPR_Notifications();
-// buddypress()->bupr_bp_review->notification_callback = 'bupr_format_notifications';
-// }
-
 /**
  * Settings link for this plugin.
  *
@@ -186,8 +172,6 @@ function bupr_activation_redirect_settings( $plugin ) {
  * Site url translate using WPML
  *
  */
-
-// add_filter( 'site_url', 'bupr_site_url', 99);
 function bupr_site_url( $url ) {
 	if ( ! is_admin() && strpos( $url, 'wp-admin' ) == false ) {
 		return untrailingslashit( apply_filters( 'wpml_home_url', $url ) );
