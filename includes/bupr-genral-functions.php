@@ -148,3 +148,22 @@ function buddypress_member_review_trigger_get_user_id( $user_id, $trigger, $args
 	return $user_id;
 }
 add_filter( 'gamipress_trigger_get_user_id', 'buddypress_member_review_trigger_get_user_id', 10, 3);
+
+function bupr_custom_query_vars_filter($vars)
+{
+	$vars[] = 'bp_member';
+	$vars[] = 'review_id';
+	return $vars;
+}
+add_filter('query_vars', 'bupr_custom_query_vars_filter');
+
+function bupr_custom_rewrite_rule()
+{
+	add_rewrite_rule(
+		'^members/([^/]+)/reviews/view/([0-9]+)/?$',
+		'index.php?bp_member=$matches[1]&review_id=$matches[2]',
+		'top'
+	);
+}
+add_action('init', 'bupr_custom_rewrite_rule');
+

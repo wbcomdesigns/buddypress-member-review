@@ -43,7 +43,7 @@ if (!class_exists('BUPR_Custom_Hooks')) {
 			add_action('init', array($this, 'bupr_add_bp_member_reviews_taxonomy_term'));
 			add_filter('post_row_actions', array($this, 'bupr_bp_member_reviews_row_actions'), 10, 2);
 			add_filter('bulk_actions-edit-review', array($this, 'bupr_remove_edit_bulk_actions'), 10, 1);
-
+			add_action('bp_screens', array($this, 'bupr_view_review_tab_function_to_show_screen'));
 			add_action('bp_member_header_actions', array($this, 'bupr_add_review_button_on_member_header'));
 
 			/*
