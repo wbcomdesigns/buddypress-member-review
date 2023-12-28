@@ -203,7 +203,17 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							$output .= '<span itemprop="ratingCount"  content="' . esc_attr( $buprValue['rate_counter'] ) . '"></span>';
 							$output .= '<span itemprop="reviewCount"  content="' . esc_attr( $bupr_reviews_count ) . '"></span>';
 							$output .= '<span itemprop="itemReviewed" content="Person"></span>';
-							$output .= '<span itemprop="name" content="' . esc_attr( bp_core_get_username( $buprValue['user_id'] ) ) . '"></span>';
+							// Check if the BuddyPress version function exists and compare the version
+							if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+								// Use bp_members_get_user_slug() for BuddyPress v12.0.0 and above
+								$user_slug = bp_members_get_user_slug($buprValue['user_id']);
+								$output .= '<span itemprop="name" content="' . esc_attr($user_slug) . '"></span>';
+							} else {
+								// Use bp_core_get_username() for older versions
+								$username = bp_core_get_username($buprValue['user_id']);
+								$output .= '<span itemprop="name" content="' . esc_attr($username) . '"></span>';
+							}
+
 							$output .= '<span itemprop="url" content="' . esc_attr( bp_core_get_userlink( $buprValue['user_id'], false, true ) ) . '"></span>';
 							$output .= '</div>';
 						}

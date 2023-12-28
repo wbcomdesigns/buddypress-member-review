@@ -614,14 +614,17 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							/* send email to member if email notification is enable */
 							if ( 'yes' === $bupr['allow_email'] ) {
 								$bupr_to = $bupr_reciever_email;
-								/* translators: %s is replaced with the review singular lable of translations */
-								if ( isset( $bupr['review_email_subject'] ) && ! empty( $bupr['review_email_subject'] ) ) {
-									$bupr_subject = str_replace(
-										array( '[site-name]' ),
-										array( $site_name ),
-										$bupr['review_email_subject']
-									);
+								// Define a default value for $bupr_subject with translation support
+								$bupr_subject = __('New Review on Your Profile at [site-name]', 'bp-member-reviews');
+
+								// Check if a custom subject line is set in the settings and update $bupr_subject accordingly
+								if (isset($bupr['review_email_subject']) && !empty($bupr['review_email_subject'])) {
+									$bupr_subject = $bupr['review_email_subject'];
 								}
+
+								// Replace '[site-name]' placeholder in the subject with the actual site name
+								$bupr_subject = str_replace('[site-name]', $site_name, $bupr_subject);
+
 								$message = 'Hello [user-name], <br><br>
 								We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>
 								To view the review, simply click on the link below:<br>
