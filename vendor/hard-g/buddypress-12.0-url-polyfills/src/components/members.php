@@ -37,7 +37,14 @@ if ( ! function_exists( 'bp_members_get_user_url' ) ) :
  * @return string The URL of the user.
  */
 function bp_members_get_user_url( $user_id = 0, $path_chunks = array() ) {
-	$user_url = bp_core_get_user_domain( $user_id );
+		// Check if the BuddyPress version function exists and compare the version
+		if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+			// Use bp_members_get_user_url() for BuddyPress v12.0.0 and above
+			$user_url = bp_members_get_user_url($user_id);
+		} else {
+			// Use bp_core_get_user_domain() for older versions
+			$user_url = bp_core_get_user_domain($user_id);
+		}
 
 	if ( ! empty( $path_chunks['single_item_component'] ) ) {
 		$user_url = trailingslashit( $user_url . $path_chunks['single_item_component'] );

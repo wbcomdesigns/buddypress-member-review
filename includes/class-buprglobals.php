@@ -214,8 +214,6 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'multi_criteria_allowed' => $bupr_multi_criteria_allowed,
 				'active_rating_fields'   => $active_rating_fields,
 				'review_activity'        => $review_activity,
-				'review_email_subject'   => $review_email_subject,
-				'review_email_message'   => $review_email_message,
 				
 				
 			);

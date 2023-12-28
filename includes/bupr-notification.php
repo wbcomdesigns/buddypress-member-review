@@ -65,7 +65,15 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		}
 
 		$user_id              = bp_loggedin_user_id();
-		$notification_link    = bp_core_get_user_domain( $user_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+		// Check if the BuddyPress version function exists and compare the version
+		if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+			// Use bp_members_get_user_url() for BuddyPress v12.0.0 and above
+			$notification_link = bp_members_get_user_url($user_id) . strtolower($bupr['review_label_plural']) . '/view/' . $item_id;
+		} else {
+			// Use bp_core_get_user_domain() for older versions
+			$notification_link = bp_core_get_user_domain($user_id) . strtolower($bupr['review_label_plural']) . '/view/' . $item_id;
+		}
+
 		/* translators: %s: */
 		$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		/* translators: %s: */

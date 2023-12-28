@@ -586,15 +586,24 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 						if ( $review_id ) {
 
-							if ( ! empty( $bupr_current_user ) && ! empty( $bupr_member_id ) ) {
-								$bupr_sender_data    = get_userdata( $bupr_current_user );
+							if (!empty($bupr_current_user) && !empty($bupr_member_id)) {
+								$bupr_sender_data    = get_userdata($bupr_current_user);
 								$bupr_sender_email   = $bupr_sender_data->data->user_email;
-								$bupr_reciever_data  = get_userdata( $bupr_member_id );
+								$bupr_reciever_data  = get_userdata($bupr_member_id);
 								$bupr_reciever_email = $bupr_reciever_data->data->user_email;
 								$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
 								$bupr_reciever_login = $bupr_reciever_data->data->user_login;
-								$bupr_review_url     = bp_core_get_user_domain( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $review_id;
+
+								// Check BuddyPress version and use the appropriate function
+								if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+									// Use bp_members_get_user_url() for BuddyPress v12.0.0 and above
+									$bupr_review_url = bp_members_get_user_url($bupr_member_id) . strtolower($bupr['review_label_plural']) . '/view/' . $review_id;
+								} else {
+									// Use bp_core_get_user_domain() for older versions
+									$bupr_review_url = bp_core_get_user_domain($bupr_member_id) . strtolower($bupr['review_label_plural']) . '/view/' . $review_id;
+								}
 							}
+
 
 							/* send notification to member if  notification is enable */
 							if ( 'yes' === $bupr['allow_notification'] ) {
