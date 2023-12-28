@@ -46,7 +46,14 @@ if ( ! function_exists( 'bp_rewrites_get_url' ) ) {
 	 * @return string The BuddyPress URL.
 	 */
 	function bp_rewrites_get_url( $args = array() ) {
-		$url = trailingslashit( bp_get_root_domain() );
+		// Check if the BuddyPress version function exists and compare the version
+		if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+			// Use bp_get_root_url() for BuddyPress v12.0.0 and above
+			$url = trailingslashit(bp_get_root_url());
+		} else {
+			// Use bp_get_root_domain() for older versions
+			$url = trailingslashit(bp_get_root_domain());
+		}
 
 		$r = bp_parse_args(
 			$args,
@@ -71,8 +78,15 @@ if ( ! function_exists( 'bp_rewrites_get_url' ) ) {
 				if ( $r['single_item'] ) {
 					$chunks[] = $r['single_item'];
 
-					if ( 'members' === $r['component_id'] && bp_core_enable_root_profiles() ) {
-						$url = trailingslashit( bp_get_root_domain() );
+					if ('members' === $r['component_id'] && bp_core_enable_root_profiles()) {
+						// Check if the BuddyPress version function exists and compare the version
+						if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+							// Use bp_get_root_url() for BuddyPress v12.0.0 and above
+							$url = trailingslashit(bp_get_root_url());
+						} else {
+							// Use bp_get_root_domain() for older versions
+							$url = trailingslashit(bp_get_root_domain());
+						}
 					}
 
 					if ( $r['single_item_component'] && 'members' === $r['component_id'] ) {
@@ -120,13 +134,23 @@ if ( ! function_exists( 'bp_rewrites_get_url' ) ) {
 	}
 }
 
-if ( ! function_exists( 'bp_get_root_url' ) ) {
+if (!function_exists('bp_get_root_url')) {
 	/**
 	 * Gets the root URL of the site.
 	 *
 	 * @return string
 	 */
-	function bp_get_root_url() {
-		return bp_get_root_domain();
+	function bp_get_root_url()
+	{
+		// Check if bp_get_root_domain is deprecated (BuddyPress 12.0.0 and above)
+		if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+			// Use an alternative to bp_get_root_domain for BuddyPress 12.0.0 and above
+			// You may use get_home_url() or another appropriate function based on your setup
+			return get_home_url();
+		} else {
+			// Use bp_get_root_domain for older versions
+			return bp_get_root_domain();
+		}
 	}
 }
+
