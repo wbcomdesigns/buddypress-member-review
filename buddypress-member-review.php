@@ -56,9 +56,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 	 * @since    1.0.0
 	 */
 	function bupr_plugins_files() {
-		if ( ! class_exists( 'BuddyPress' ) ) {
-			add_action( 'admin_notices', 'bupr_admin_notice' );
-		} else {
+		if ( class_exists( 'BuddyPress' ) ) {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bupr_admin_page_link' );
 			/**
 			* Include needed files on init
@@ -85,29 +83,11 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 	}
 }
 
-if ( ! function_exists( 'bupr_admin_notice' ) ) {
-	/**
-	 * Display admin notice
-	 *
-	 * @author   Wbcom Designs
-	 * @since    1.0.0
-	 */
-	function bupr_admin_notice() {
-		$bupr_plugin = esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' );
-		$bp_plugin   = esc_html__( 'BuddyPress', 'bp-member-reviews' );
-		/* translators: %s: */
-		echo '<div class="error"><p>' . sprintf( esc_html__( '%1$s is ineffective now as it requires %2$s to function correctly.', 'bp-member-reviews' ), '<strong>' . esc_html( $bupr_plugin ) . '</strong>', '<strong>' . esc_html( $bp_plugin ) . '</strong>' ) . '</p></div>';
-		if ( null !== filter_input( INPUT_GET, 'activate' ) ) {
-			$activate = filter_input( INPUT_GET, 'activate' );
-			unset( $activate );
-		}
-	}
-}
-
 /**
  * Settings link for this plugin.
  *
  * @param array $links The plugin setting links array.
+ * 
  * @return array
  * @author   Wbcom Designs
  * @since    1.0.0
