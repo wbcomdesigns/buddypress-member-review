@@ -274,7 +274,7 @@ $reviews = new WP_Query( $args );
 					<?php } ?>
 						<p><?php 
 						/* translators: %s: */
-						echo sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); 
+						echo sprintf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); 
 						?>
 
 						</p>

@@ -300,7 +300,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$html .= '<div id="message" class="info">';
 					}
 					/* translators: %s: */
-						$html .= '<p>' . sprintf( esc_html__( 'Sorry, no %1$s were found.', 'bp-member-reviews' ), $bupr['review_label'] ) . '
+						$html .= '<p>' . sprintf( esc_html__( 'Unfortunately, there are no %1$s were found.', 'bp-member-reviews' ), strtolower( $bupr['review_label'] ) ) . '
 
 						</p>
 					</div>';
@@ -681,7 +681,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					}
 				} else {
 					/* translators: %s: */
-					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 				}
 				die;
 			}
