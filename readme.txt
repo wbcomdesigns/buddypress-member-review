@@ -81,10 +81,14 @@ Go to "Dashboard->Review->BP member review setting page" and click the Criteria 
 Members Review widgets display a list of members on the site front end. When you successfully activate the Buddypress member review plugin. Then you can see the Members review widget in the widget section.
 
 == Screenshots ==
-1. Members Directory View
-2. Members Single Profile View
-3. Members Add a Review section
-4. Plugin Settings
+1. Member Reviews at member directory.(png|jpg|jpeg|gif).
+2. Review display at member profile.(png|jpg|jpeg|gif).
+3. Review submission at member profile.(png|jpg|jpeg|gif).
+4. Plugin settings- General Options.(png|jpg|jpeg|gif).
+5. Plugin settings- Review Criteria.(png|jpg|jpeg|gif).
+6. Plugin Option to shortcode.(png|jpg|jpeg|gif).
+7. Plugin Option to display.(png|jpg|jpeg|gif).
+
 
 == Changelog ==
 
