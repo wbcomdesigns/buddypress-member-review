@@ -370,7 +370,7 @@ if (!class_exists('BUPR_Custom_Hooks')) {
 							$user_id   = bp_displayed_user_id();
 							$user_role = $this->bupr_get_current_user_roles($user_id);
 
-							if (in_array($user_role[0], $bupr['add_taken_members'], true)) {
+							if (in_array($user_role, $bupr['add_taken_members'], true)) {
 								$review_url         = bp_core_get_userlink($user_id, false, true) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
 								$bp_template_option = bp_get_option('_bp_theme_package_id');
 								if ('nouveau' === $bp_template_option) {

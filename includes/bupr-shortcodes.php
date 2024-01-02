@@ -294,7 +294,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					$bupr_member[] = array(
 						'member_id'    => $user->ID,
 						'member_name'  => $user->data->display_name,
-						'member_roles' => $user->roles[0],
+						'member_roles' => $user->roles,
 					);
 				}
 			}
