@@ -3,18 +3,18 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.3.0
-Stable tag: 2.9.3
+Tested up to: 6.4.2
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-This plugin  allows only site members to add reviews to the buddypress members on the site. But the member can not review itself. And if the visitor is not logged in, he can only see the listing of the reviews but can not review.  The review form allows the members to even rate the member's profile out of 5 points with multiple review criteria.
+BuddyPress Member Reviews is designed to allow only registered users to add reviews to the profiles of other users on the Buddypress platform. However, users cannot review their own profiles. If a visitor is not logged in, they can only view the reviews and cannot add a review. The review form provides users with the ability to rate a member's profile using multiple criteria, with a maximum rating of 5 points.
 
-You can add multiple criteria for review. And you can change the positions of those Criteria.  Review form shows on the member's profile but you can show review form on another page just by shortcode. BP member profile review plugin adds a widget for display top reviewed member listing .
+You have the option to add multiple criteria for a review and can also rearrange the positions of those criteria. The review form appears on the member's profile page, but you can display it on another page using a shortcode. Additionally, the BP Member Profile Review plugin adds a widget to display the top reviewed members' listings.
 
-It is built to be reliable, scalable, secure and flexible. We have worked hard to make it easy to use and we will love your feedback in making it better.
+Our product is reliable, scalable, secure, and flexible. We have made it user-friendly and would appreciate your feedback to improve it.
 
 [vimeo https://vimeo.com/556813504]
 
@@ -25,7 +25,7 @@ It is built to be reliable, scalable, secure and flexible. We have worked hard t
 
 
 === THEME - WORDPRESS THEME WITH OUTSTANDING BUDDYPRESS SUPPORT ===
-* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customize options giving you a whole new way to visualize BuddyPress.
+* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customize options, giving you a whole new way to visualize BuddyPress.
 
 #### OUR ADON PLUGINS TO FURTHER IMPROVE YOUR BUDDYPRESS OR BUDDYBOSS PLATFORM COMMUNITY
 Check out free community add-ons by Wbcom Designs:
@@ -66,7 +66,7 @@ We'd like for you to use [Wbcom Designs](https://wbcomdesigns.com/contact/) for 
 
 = How can we submit a review to a member profile by using this plugin? =
 
-When visiting the "/members" section in the site, go for the single profile view page, there you can see a menu, namely, "Reviews," that will allow you (if you're a site member) to add profile reviews.
+When visiting the "/members" section in the site, go for the single profile view page, you can see a menu, namely, "Reviews," that will allow you (if you're a site member) to add profile reviews.
 
 = How can we add more rating criteria for the review form? =
 
@@ -91,6 +91,9 @@ Members Review widgets display a list of members on the site front end. When you
 
 
 == Changelog ==
+= 3.0.0 =
+* Fix: BuddyPress v12 Fixes
+* Fix: Updated screenshots
 
 = 2.9.3 =
 * Fix: PHPCS Fixes
