@@ -28,7 +28,7 @@ add_filter( 'bp_notifications_get_registered_components', 'bupr_filter_notificat
 
 
 
-add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_add_review_notification_format', 10, 5 );
+add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_add_review_notification_format', 10, 7 );
 /**
  * Formatting notifications for review when added.
  *
@@ -40,10 +40,10 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_add_review_noti
  * @param    string $format        Format.
  * @author   Wbcom Designs
  */
-function bupr_add_review_notification_format( $action, $item_id, $secondary_item_id, $total_items, $format = 'string' ) {
+function bupr_add_review_notification_format( $action, $item_id, $secondary_item_id, $total_items, $format = 'string', $component_action_name, $component_name ) {
 	global $bp, $bupr;
 
-	if ( 'bupr_add_review_action' === $action ) {
+	if ( 'bupr_add_review_action' === $component_action_name ) {
 		$anonymous_review = get_post_meta( $item_id, 'bupr_anonymous_review_post', true );
 		$user_name        = '';
 		if ( 'yes' === $anonymous_review ) {
@@ -77,7 +77,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		/* translators: %s: */
 		$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		/* translators: %s: */
-		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
+		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );		
 
 		if ( 'string' === $format ) {
 			$return = sprintf( "<a href='%s' title='%s'>%s</a>", esc_url( $notification_link ), esc_attr( $notification_title ), esc_html( $notification_content ) );
@@ -91,6 +91,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		return apply_filters( 'bupr_add_review_notification_format', $return, $user_id, $format );
 
 	}
+	return $action;
 }
 
 /**
