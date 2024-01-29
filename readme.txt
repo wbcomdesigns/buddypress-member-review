@@ -10,77 +10,81 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-BuddyPress Member Reviews is designed to allow only registered users to add reviews to the profiles of other users on the Buddypress platform. However, users cannot review their own profiles. If a visitor is not logged in, they can only view the reviews and cannot add a review. The review form provides users with the ability to rate a member's profile using multiple criteria, with a maximum rating of 5 points.
+The BuddyPress Member Reviews plugin enhances the Buddypress community by empowering registered users to post reviews on other members' profiles. This feature is exclusive to registered members, preventing users from reviewing their profiles to ensure unbiased feedback. The plugin provides guests a view-only mode, where they can read reviews but not contribute.
 
-You have the option to add multiple criteria for a review and can also rearrange the positions of those criteria. The review form appears on the member's profile page, but you can display it on another page using a shortcode. Additionally, the BP Member Profile Review plugin adds a widget to display the top reviewed members' listings.
+This plugin offers a customizable review form that supports multiple criteria, each rated up to 5 points. Administrators can add or modify these criteria and adjust their sequence to suit the community's needs. The review form seamlessly integrates into a member's profile page for easy access and can also be displayed on other pages using a shortcode, providing versatility in placement.
 
-Our product is reliable, scalable, secure, and flexible. We have made it user-friendly and would appreciate your feedback to improve it.
+To foster a competitive and engaging environment, the BP Member Profile Review plugin introduces a widget to showcase top-rated members, encouraging quality contributions within the community.
+
+We've designed this plugin with reliability, scalability, security, and flexibility, ensuring a user-friendly experience that can grow and adapt to your community. Your feedback is invaluable to us, and we welcome any suggestions to enhance this plugin further.
 
 [vimeo https://vimeo.com/556813504]
 
 = Links =
 
-*	[Plugin url](https://wbcomdesigns.com/downloads/buddypress-member-reviews/ "BuddyPress Member Reviews" )
-*	[Demo]( https://demos.wbcomdesigns.com/ "BuddyPress Member Review Demo")
-
+- [Plugin URL](https://wbcomdesigns.com/downloads/buddypress-member-reviews/) - Learn more about the BuddyPress Member Reviews plugin.
 
 === THEME - WORDPRESS THEME WITH OUTSTANDING BUDDYPRESS SUPPORT ===
-* [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - Offers unique layouts with clean code and easy-to-customize options, giving you a whole new way to visualize BuddyPress.
 
-#### OUR ADON PLUGINS TO FURTHER IMPROVE YOUR BUDDYPRESS OR BUDDYBOSS PLATFORM COMMUNITY
-Check out free community add-ons by Wbcom Designs:
+- [FREE BuddyPress Theme: BuddyX](https://wordpress.org/themes/buddyx/) - A clean and customizable theme to enhance your BuddyPress community experience.
 
-* **[Wbcom Designs - BuddyPress Member Reviews](https://wordpress.org/plugins/bp-user-profile-reviews/)** Allow members to add ratings or feedback to other community members.
-* **[Wbcom Designs - BuddyPress Group Reviews](https://wordpress.org/plugins/review-buddypress-groups/)** Allow members to add ratings or feedback to BuddyPress groups.
-* **[Wbcom Designs - BuddyPress Activity Social Share](https://wordpress.org/plugins/bp-activity-social-share/)** Allow members to share activities on their social profiles like Facebook, Twitter, What's App, LinkedIn with OG metadata.
-* **[Wbcom Designs - Private Community with BP Lock](https://wordpress.org/plugins/lock-my-bp/)** A plugin to make your community private and only accessible to logged-in users. It also allows you to keep select pages or component public.
-* **[Wbcom Designs - BuddyPress Job Manager](https://wordpress.org/plugins/bp-job-manager/)** Allows your to integrate WP Job Manager plugin to BuddyPress.
-* **[Wbcom Designs - Check-ins for BuddyPress Activity](https://wordpress.org/plugins/bp-check-in/)** Allow members to add their location or post their Check-ins updates to activity.
-* **[Wbcom Designs - BuddyPress Favorite Notification](https://wordpress.org/plugins/bp-favorite-notification/)** Allow members to be notified after any like or favorite on their BuddyPress activity.
-* **[Wbcom Designs - Shortcodes & Elementor Widgets For BuddyPress](https://wordpress.org/plugins/shortcodes-for-buddypress/)** It offers shortcodes and elementor widgets for the activity listing, member's directory display, and the group's directory on any post/page.
+#### OUR ADD-ON PLUGINS TO ENHANCE YOUR BUDDYPRESS OR BUDDYBOSS PLATFORM COMMUNITY
 
-Check out paid community add-ons by Wbcom Designs:
+Enhance your community with these free add-ons by Wbcom Designs:
 
-* **[Wbcom Designs - BuddyPress Hashtags](https://wbcomdesigns.com/downloads/buddypress-hashtags/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)** Allows members to use hashtags in BuddyPress or BuddyBoss Platform activities and bbPress topics.
-* **[Wbcom Designs - BuddyPress Polls](https://wbcomdesigns.com/downloads/buddypress-polls/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**  It allows you to extend BuddyPress or BuddyBoss Platform Activity for members to publish Polls with various options. It works perfectly for individual activities and group activities.
-* **[Wbcom Designs - BuddyPress Quotes](https://wbcomdesigns.com/downloads/buddypress-quotes/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)** It allows the feature to let members post their activity updates with interactive background selection such as colors and images set by the site administrator to tell a more expressive story.
-* **[Wbcom Designs - BuddyPress Status & Reaction](https://wbcomdesigns.com/downloads/buddypress-status/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)** Allow your members to set a status icon and tagline on their profile and offer an extensive set of icons to react to published activities.
-* **[Wbcom Designs - BuddyPress Profanity](https://wbcomdesigns.com/downloads/buddypress-profanity/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)** Allow you to censor content in your community! Easily Censor all the unwanted words in activities, and private message contents by specifying a list of keywords to be filtered.
-* **[Wbcom Designs - BuddyPress Sticky Post](https://wbcomdesigns.com/downloads/buddypress-sticky-post/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)** Allows site administrators to prioritize certain activities over others. It lets the admin pin up site-wide and group activities to the top of the activity list.
-* **[Wbcom Designs - BuddyPress Auto Friends](https://wbcomdesigns.com/downloads/buddypress-auto-friends/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)** Allow the site admin to select global friends for all his members and add bulk international friends.
-* **[Wbcom Designs - Shortcodes & Elementor Widgets For BuddyPress Pro](https://wordpress.org/plugins/shortcodes-for-buddypress/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)** It offers shortcodes and elementor widgets with various argument parameters for the activity listing, member's directory display, and the group's directory on any post/page.
+- **[BuddyPress Member Reviews](https://wordpress.org/plugins/bp-user-profile-reviews/)** - Enable member-to-member ratings and feedback.
+- **[BuddyPress Group Reviews](https://wordpress.org/plugins/review-buddypress-groups/)** - Allow group ratings and feedback.
+- **[BuddyPress Activity Social Share](https://wordpress.org/plugins/bp-activity-social-share/)** - Facilitate sharing of activities on social networks.
+- **[Private Community with BP Lock](https://wordpress.org/plugins/lock-my-bp/)** - Make your community private, with selective public access.
+- **[BuddyPress Job Manager](https://wordpress.org/plugins/bp-job-manager/)** - Integrate job listings into your community.
+- **[Check-ins for BuddyPress Activity](https://wordpress.org/plugins/bp-check-in/)** - Allow members to share their location.
+- **[BuddyPress Favorite Notification](https://wordpress.org/plugins/bp-favorite-notification/)** - Notify members of likes and favorites on their activities.
+- **[Shortcodes & Elementor Widgets For BuddyPress](https://wordpress.org/plugins/shortcodes-for-buddypress/)** - Add activity and directory listings with shortcodes and widgets.
 
+Discover premium add-ons to customize your community further:
+
+- **[BuddyPress Hashtags](https://wbcomdesigns.com/downloads/buddypress-hashtags/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
+- **[BuddyPress Polls](https://wbcomdesigns.com/downloads/buddypress-polls/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
+- **[BuddyPress Quotes](https://wbcomdesigns.com/downloads/buddypress-quotes/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
+- **[BuddyPress Status & Reaction](https://wbcomdesigns.com/downloads/buddypress-status/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
+- **[BuddyPress Profanity](https://wbcomdesigns.com/downloads/buddypress-profanity/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
+- **[BuddyPress Sticky Post](https://wbcomdesigns.com/downloads/buddypress-sticky-post/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
+- **[BuddyPress Auto Friends](https://wbcomdesigns.com/downloads/buddypress-auto-friends/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
+- **[Shortcodes & Elementor Widgets For BuddyPress Pro](https://wordpress.org/plugins/shortcodes-for-buddypress/?utm_source=wp.org&utm_medium=plugins&utm_campaign=wp.org)**
 
 = EXPERT SUPPORT =
-We are ready to provide incredible support. Ask your questions at [contact us directly](https://wbcomdesigns.com/support/).
+
+Need help? Contact us at [Wbcom Designs Support](https://wbcomdesigns.com/support/).
 
 == Installation ==
 
-1. Upload the "buddypress-member-review" folder to the /wp-content/plugins/ directory.
+1. Upload the "buddypress-member-review" folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Frequently Asked Questions ==
 
-= Where do I get support?
-We'd like for you to use [Wbcom Designs](https://wbcomdesigns.com/contact/) for all the support questions. We love helping. Using Wbcom Designs allows us to assist you better and quicker.
+= Where do I get support? =
 
-= How can we submit a review to a member profile by using this plugin? =
+Please visit [Wbcom Designs](https://wbcomdesigns.com/contact/) for support. We're here to help.
 
-When visiting the "/members" section in the site, go for the single profile view page, you can see a menu, namely, "Reviews," that will allow you (if you're a site member) to add profile reviews.
+= How can we submit a review to a member profile? =
 
-= How can we add more rating criteria for the review form? =
+Navigate to the "/members" section and select a profile. Click on the "Reviews" menu to add a review.
 
-Go to "Dashboard->Review->BP member review setting page" and click the Criteria tab, Add Criteria button, and click the save setting button to update the review criteria settings.
+= How can we add more rating criteria? =
 
-= How can I delete Criteria when I do not need it? =
+Go to "Dashboard->Review->BP member review setting page", find the Criteria tab, add your criteria, and save.
 
-Go to "Dashboard->Review->BP member review setting page" and click the Criteria tab. You can see many settings like deleting the Criteria or making them enable/disable or change their position.
+= How can I delete or edit Criteria? =
 
-= What is the Top Members widget, and how to use it? =
+Under the Criteria tab in the plugin settings, you'll find options to delete, enable/disable, or rearrange criteria.
 
-Members Review widgets display a list of members on the site front end. When you successfully activate the Buddypress member review plugin. Then you can see the Members review widget in the widget section.
+= What is the Top Members widget, and how do I use it? =
+
+This widget displays top-rated members. Find it in the widgets section after activating the plugin.
 
 == Screenshots ==
+
 1. Member Reviews at member directory.(png|jpg|jpeg|gif).
 2. Review display at member profile.(png|jpg|jpeg|gif).
 3. Review submission at member profile.(png|jpg|jpeg|gif).
