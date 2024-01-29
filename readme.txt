@@ -95,6 +95,11 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+= 3.1.0 =
+* Fix: (#227)Fixed add-review-button-on-member-header
+* Fix: Fixed notification issue
+* Fix: (#228) Fixed issue-with-group-review
+
 = 3.0.0 =
 * Fix: BuddyPress v12 Fixes
 * Fix: Updated screenshots
