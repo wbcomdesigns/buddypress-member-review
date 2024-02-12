@@ -512,7 +512,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					$bupr_reviews_status = 'publish';
 				}
 
-				$bupr_multi_reviews = $bupr['multi_reviews'];
+				$bupr_multi_reviews         = $bupr['multi_reviews'];
 				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user' );
 				$current_user         		= wp_get_current_user();
 				$user_name                  = $current_user->display_name;				
@@ -522,6 +522,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter' );
 				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review' );
 				$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : '';
+				$bupr_admin_general         = get_option( 'bupr_admin_general_options' );
 				$site_name                  = get_bloginfo( 'name' );
 				$bupr_count = 0;
 
@@ -618,8 +619,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								$bupr_subject = __('New Review on Your Profile at [site-name]', 'bp-member-reviews');
 
 								// Check if a custom subject line is set in the settings and update $bupr_subject accordingly
-								if (isset($bupr['review_email_subject']) && !empty($bupr['review_email_subject'])) {
-									$bupr_subject = $bupr['review_email_subject'];
+								if (isset($bupr_admin_general['review_email_subject']) && !empty($bupr_admin_general['review_email_subject'])) {
+									$bupr_subject = $bupr_admin_general['review_email_subject'];
 								}
 
 								// Replace '[site-name]' placeholder in the subject with the actual site name
@@ -632,11 +633,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								Best regards,<br>
 								The [site-name] Team';
 								/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
-								if ( isset( $bupr['review_email_message'] ) && ! empty( $bupr['review_email_message'] ) ) {
+								if ( isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] ) ) {
 									$bupr_message = str_replace(
 										array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
 										array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
-										$bupr['review_email_message']
+										$bupr_admin_general['review_email_message']
 									);
 								}else{
 									$bupr_message = str_replace(

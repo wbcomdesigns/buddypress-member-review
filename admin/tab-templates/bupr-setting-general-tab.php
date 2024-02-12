@@ -19,8 +19,9 @@ Best regards,<br>
 The [site-name] Team';
 // get all user for exclude for review.
 $user_roles = array_reverse( get_editable_roles() );
-$review_email_subject = ( isset( $bupr['bupr_review_email_subject'] ) ) ? $bupr['bupr_review_email_subject'] : 'New Review on Your Profile at [site-name]';
-$review_email_message = ( isset( $bupr['bupr_review_email_message'] ) ) ? $bupr['bupr_review_email_message'] : $message;
+$bupr_admin_general   = get_option( 'bupr_admin_general_options' );
+$review_email_subject = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'New Review on Your Profile at [site-name]';
+$review_email_message = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
 
 ?>
 <div class="wbcom-tab-content">
