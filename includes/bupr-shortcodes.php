@@ -298,7 +298,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					);
 				}
 			}
-
+					
 			$member_args = array(
 				'post_type'      => 'review',
 				'posts_per_page' => -1,
@@ -322,7 +322,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 			}
 
-			if ( 0 === bp_displayed_user_id() ) {
+			if ( 0 === bp_displayed_user_id() ) {				
 				$this->bupr_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member );
 			} else {
 				if ( 'no' === $bupr['multi_reviews'] ) {
@@ -391,7 +391,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					</div>
 					<?php
 					if ( is_user_logged_in() ) {
-						$user  = wp_get_current_user();
+						$user  = wp_get_current_user();						
 						$roles = (array) $user->roles;
 						if ( ! in_array( $roles[0], $bupr['exclude_given_members'] ) ) {
 							?>
@@ -417,8 +417,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 											<option value=""><?php esc_html_e( '--Select--', 'bp-member-reviews' ); ?></option>
 								<?php
 								if ( ! empty( $bupr_member ) ) {
-									foreach ( $bupr_member as $user ) {
-										if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && in_array( $user['member_roles'], $bupr['add_taken_members'] ) ) {
+									foreach ( $bupr_member as $user ) {										
+										if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && isset( $user['member_roles'][0] ) && in_array( $user['member_roles'][0], $bupr['add_taken_members'] ) ) {
 											echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
 										}
 									}
@@ -427,7 +427,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										</select><br/>
 										<span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 									</p>
-			<?php } ?>
+							<?php } ?>
 								<input type="hidden" id="bupr_member_review_id" value="<?php echo esc_attr( bp_displayed_user_id() ); ?>">
 								<p class="bupr-hide-subject">
 									<input name="review-subject" id="review_subject" type="text" placeholder="<?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?>" ><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
