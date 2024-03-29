@@ -146,6 +146,23 @@ function bupr_activation_redirect_settings( $plugin ) {
 			exit;
 		}
 	}
+	
+	if ( $plugin == $_REQUEST['plugin'] && class_exists( 'Buddypress' ) ) {
+		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate-plugin' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore		
+			set_transient( '_bp_member_review_is_new_install', true, 30 );
+		}
+	}
+}
+
+add_action( 'admin_init', 'bp_member_review_do_activation_redirect' );
+function bp_member_review_do_activation_redirect(){
+	
+	if ( get_transient( '_bp_member_review_is_new_install' ) ) {		
+	
+		delete_transient( '_bp_member_review_is_new_install' );
+		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
+		
+	}
 }
 
 /*
