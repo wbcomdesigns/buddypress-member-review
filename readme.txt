@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.4.2
-Stable tag: 3.0.0
+Tested up to: 6.5.0
+Stable tag: 3.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,11 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+= 3.1.1 =
+* Fix: (#229)Fixed email subject not save
+* Fix: (#230)Fixed user name is not display on dropdown on shortcode
+* Fix: Compatibility check with WordPress 6.5.0
+
 = 3.1.0 =
 * Fix: (#227)Fixed add-review-button-on-member-header
 * Fix: Fixed notification issue
