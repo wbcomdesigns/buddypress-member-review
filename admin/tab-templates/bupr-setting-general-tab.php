@@ -123,9 +123,9 @@ $review_email_message = ( ! empty( $bupr_admin_general['review_email_message'] )
 						<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Email Subject', 'bp-group-reviews' ); ?>
+									<?php esc_html_e( 'Email Subject', 'bp-member-reviews' ); ?>
 								</label>
-								<p class="description"><?php esc_html_e( 'Please add review email subject.', 'bp-group-reviews' ); ?></p>
+								<p class="description"><?php esc_html_e( 'Please add review email subject.', 'bp-member-reviews' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<input id="review_deny_email_subject" class="large-text" name="bupr_admin_general_options[review_email_subject]" value="<?php echo esc_attr( $review_email_subject ); ?>" type="text" placeholder="Please enter review email subject.">
@@ -134,9 +134,9 @@ $review_email_message = ( ! empty( $bupr_admin_general['review_email_message'] )
 						<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
 					<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Email Message', 'bp-group-reviews' ); ?>
+							<?php esc_html_e( 'Email Message', 'bp-member-reviews' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Please add review email message.', 'bp-group-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Please add review email message.', 'bp-member-reviews' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<?php

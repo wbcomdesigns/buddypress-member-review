@@ -576,7 +576,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							esc_html_e( 'Rating ', 'bp-member-reviews' );
 							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
 							/* translators: %s: */
-							printf( esc_html__( '%1$s %2$s ', '%1$s %3$s', $bupr_reviews_count, 'bp-member-reviews' ), esc_html( $bupr_reviews_count ), esc_html( $bupr['review_label'] ), esc_html( $bupr['review_label_plural'] ) );
+							printf( '%1$s %2$s ', '%1$s %3$s', esc_html( $bupr_reviews_count ), esc_html( $bupr['review_label'] ), esc_html( $bupr['review_label_plural'] ) );
 							?>
 						</span>
 					</div>
