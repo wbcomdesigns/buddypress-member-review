@@ -3,7 +3,7 @@
  * Plugin Name: Wbcom Designs - BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/
  * Description: The BuddyPress Member Reviews plugin enhances the Buddypress community by empowering registered users to post reviews on other members' profiles. This feature is exclusive to registered members, preventing users from reviewing their profiles to ensure unbiased feedback.
- * Version: 3.1.0
+ * Version: 3.1.1
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Constants used in the plugin.
  */
-define( 'BUPR_PLUGIN_VERSION', '3.1.0' );
+define( 'BUPR_PLUGIN_VERSION', '3.1.1' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -87,7 +87,7 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
  * Settings link for this plugin.
  *
  * @param array $links The plugin setting links array.
- * 
+ *
  * @return array
  * @author   Wbcom Designs
  * @since    1.0.0
@@ -146,7 +146,7 @@ function bupr_activation_redirect_settings( $plugin ) {
 			exit;
 		}
 	}
-	
+
 	if ( $plugin == $_REQUEST['plugin'] && class_exists( 'Buddypress' ) ) {
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action']  == 'activate-plugin' && isset( $_REQUEST['plugin'] ) && $_REQUEST['plugin'] == $plugin) { //phpcs:ignore		
 			set_transient( '_bp_member_review_is_new_install', true, 30 );
@@ -155,13 +155,13 @@ function bupr_activation_redirect_settings( $plugin ) {
 }
 
 add_action( 'admin_init', 'bp_member_review_do_activation_redirect' );
-function bp_member_review_do_activation_redirect(){
-	
-	if ( get_transient( '_bp_member_review_is_new_install' ) ) {		
-	
+function bp_member_review_do_activation_redirect() {
+
+	if ( get_transient( '_bp_member_review_is_new_install' ) ) {
+
 		delete_transient( '_bp_member_review_is_new_install' );
 		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
-		
+
 	}
 }
 
