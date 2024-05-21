@@ -566,9 +566,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 					if ( ! empty( $bupr_member_id ) && $bupr_member_id !== 0 ) {
 						$bupr_rated_stars = array();
-						if ( ! empty( $bupr_rating_criteria ) ) :
+						if ( ! empty( $bupr_rating_criteria ) ) {
 							$bupr_rated_stars = array_combine( $bupr_rating_criteria, $bupr_member_star );
-						endif;
+						} else {
+							$bupr_rated_stars = $bupr_member_star;
+						}
 
 						$add_review_args = array(
 							'post_type'    => 'review',

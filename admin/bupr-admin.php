@@ -77,10 +77,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_update_admin_settings( $new_value, $old_value ) {
 			if ( array_key_exists( 'rating_field_name', $new_value ) ) {
-				$rating_fields  = $new_value['rating_field_name'];
-				$rating_display = $new_value['rating_field_name_display'];
+				$rating_fields  = isset( $new_value['rating_field_name'] ) ? $new_value['rating_field_name'] : '';
+				$rating_display = isset( $new_value['rating_field_name_display'] ) ? $new_value['rating_field_name_display'] : array();
 				$criteria_arr   = array();
-				if ( ! empty( $rating_fields ) ) {
+				if ( ! empty( $rating_fields ) && isset( $rating_fields ) ) {
 					foreach ( $rating_fields as $key => $fname ) {
 						if ( array_key_exists( $key, $rating_display ) ) {
 							$criteria_arr[ $fname ] = 'yes';

@@ -183,6 +183,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
 									$rate += $value;
 									$reviews_field_count++;
+								} else {
+									$rate += $value;
+									$reviews_field_count++;
 								}
 							}
 
@@ -496,6 +499,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
 									$rate += $value;
 									$reviews_field_count++;
+								} else {
+									$rate += $value;
+									$reviews_field_count++;
 								}
 							}
 							if ( 0 !== $reviews_field_count ) {
@@ -575,8 +581,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 							esc_html_e( 'Rating ', 'bp-member-reviews' );
 							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
-							/* translators: %s: */
-							printf( '%1$s %2$s ', '%1$s %3$s', esc_html( $bupr_reviews_count ), esc_html( $bupr['review_label'] ), esc_html( $bupr['review_label_plural'] ) );
+							if( $bupr_reviews_count > 1 ){
+								$review_label = $bupr['review_label_plural'];
+							} else {
+								$review_label = $bupr['review_label'];
+							}
+							echo esc_html( $bupr_reviews_count ) . ' ' . $review_label;							
 							?>
 						</span>
 					</div>

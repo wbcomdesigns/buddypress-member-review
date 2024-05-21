@@ -362,6 +362,24 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				}
 			}
 		}
+		
+		/**
+		 * Check criteria
+		 *
+		 * @return bool
+		 */
+		public function bupr_criteria_is_enable(){
+			global $bupr;
+			$show_rating = false;
+			foreach ( $bupr['active_rating_fields'] as $bupr_rating_fields ) {
+				if ( 'yes' === $bupr_rating_fields ) {
+					$show_rating = true;
+					return $show_rating;
+				}					
+			}
+			return $show_rating;
+		}
+		
 		/**
 		 * Bupr review form.
 		 *
@@ -435,8 +453,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								<textarea name="review-desc" id="review_desc" placeholder="<?php echo sprintf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 
 							<?php
-
-							if ( ! empty( $bupr['active_rating_fields'] ) ) {
+							$bupr_display_rating = $this->bupr_criteria_is_enable();	
+							if ( true == $bupr_display_rating ) {
 								$field_counter = 1;
 								$flage         = true;
 								if ( $bupr['multi_criteria_allowed'] ) {
@@ -463,7 +481,22 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								}
 								?>
 				<input type="hidden" id="member_rating_field_counter" value="<?php echo esc_attr( --$field_counter ); ?>">
-							<?php } ?>
+							<?php } else { $field_counter = 1; ?>
+								<div class="multi-review">
+										<div class="bupr-col-4 bupr-criteria-label">
+											<label><?php esc_html_e( 'Rating : ', 'bo-member-reviews' );?></label>
+										</div>
+										<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
+											<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo 'not_clicked'; ?>">
+											<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" value="0">
+													<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
+												<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+											<?php } ?>
+										</div>
+										<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
+									</div>
+									<input type="hidden" id="member_rating_field_counter" value="1">
+								<?php } ?>
 							<?php if ( $flag ) { ?>
 									<p>
 										<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php echo sprintf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>

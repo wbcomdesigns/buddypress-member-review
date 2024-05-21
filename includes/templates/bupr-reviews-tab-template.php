@@ -135,10 +135,10 @@ $reviews = new WP_Query( $args );
 							<div class="bupr-members-content">
 								<?php
 
-								if ( ! empty( $member_review_ratings ) ) {
+								if ( ! empty( $member_review_ratings ) ) {									
 									$member_review_ratings_new = array();
 									echo "<div class='rating-sec'>";
-									foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
+									foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {										
 										if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
 											$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
 										}
@@ -163,6 +163,10 @@ $reviews = new WP_Query( $args );
 										}
 										echo '</div>';
 										echo '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
+									} else {										
+										foreach( $member_review_ratings as $member_review_rating ){
+											echo '<span class="rating-num">' . number_format( $member_review_rating[0], 2 ) . '</span>';
+										}
 									}
 								}
 
@@ -203,10 +207,8 @@ $reviews = new WP_Query( $args );
 												<?php
 											}
 										}
-
-										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) :
-											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
-
+										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) {
+											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {												
 												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
 													echo '<div class="multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
 													/*** Star rating Ratings */
@@ -228,9 +230,29 @@ $reviews = new WP_Query( $args );
 
 													echo '</div>';
 													echo '</div>';
+												} else {													
+													/*** Star rating Ratings */
+													$stars_on  = $bupr_value;
+													$stars_off = 5 - $stars_on;
+													echo '<div class="bupr-col-4 ">';
+													for ( $i = 1; $i <= $stars_on; $i++ ) {
+														?>
+														<span class="fas fa-star bupr-star-rate"></span>
+														<?php
+													}
+
+													for ( $i = 1; $i <= $stars_off; $i++ ) {
+														?>
+														<span class="far fa-star stars bupr-star-rate"></span>
+														<?php
+													}
+													/*star rating end */
+
+													echo '</div>';
+													echo '</div>';
 												}
 											}
-										endif;
+										}
 										?>
 									</div>
 								</div>
