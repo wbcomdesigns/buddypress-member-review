@@ -76,10 +76,12 @@ $reviews = new WP_Query( $args );
 							<?php if ( ! empty( $bupr['allow_update'] ) && 'yes' === $bupr['allow_update'] ) : ?>
 								<?php if ( bp_loggedin_user_id() == $author_id ) : ?>
 									<div id="bupr-reiew-edit" class="bupr-edit-review-button-wrapper" data-review="<?php echo esc_attr( $post->ID ); ?>">
-										<button type="button" class="bupr-edit-review-button"><?php 
+										<button type="button" class="bupr-edit-review-button">
+										<?php
 										/* translators: %s: */
-										echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ); 
-										?></button>
+										echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) );
+										?>
+										</button>
 									</div>
 								<?php endif; ?>
 							<?php endif; ?>
@@ -93,8 +95,8 @@ $reviews = new WP_Query( $args );
 												$type   = 'local',
 												array(
 													'height' => 96,
-													'width'  => 96,
-													'html'   => true,
+													'width' => 96,
+													'html' => true,
 												)
 											);
 										} elseif ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
@@ -135,10 +137,10 @@ $reviews = new WP_Query( $args );
 							<div class="bupr-members-content">
 								<?php
 
-								if ( ! empty( $member_review_ratings ) ) {									
+								if ( ! empty( $member_review_ratings ) ) {
 									$member_review_ratings_new = array();
 									echo "<div class='rating-sec'>";
-									foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {										
+									foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
 										if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
 											$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
 										}
@@ -163,9 +165,11 @@ $reviews = new WP_Query( $args );
 										}
 										echo '</div>';
 										echo '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
-									} else {										
-										foreach( $member_review_ratings as $member_review_rating ){
-											echo '<span class="rating-num">' . number_format( $member_review_rating[0], 2 ) . '</span>';
+									} else {
+										foreach ( $member_review_ratings as $member_review_rating ) {
+											if ( isset( $member_review_rating[0] ) && $member_review_rating[0] !== null ) {
+												echo '<span class="rating-num">' . number_format( $member_review_rating[0], 2 ) . '</span>';
+											}
 										}
 									}
 								}
@@ -174,7 +178,7 @@ $reviews = new WP_Query( $args );
 								<span class="posted-on list">
 										<time class="entry-date published updated">
 											<?php
-											  $review_date        = date_i18n( 'M Y', strtotime( $reviews->post->post_date ) );
+											  $review_date = date_i18n( 'M Y', strtotime( $reviews->post->post_date ) );
 											echo sprintf(
 												/* translators: 1: User registered date. */
 												esc_html( $review_date )
@@ -208,8 +212,11 @@ $reviews = new WP_Query( $args );
 											}
 										}
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) {
-											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {												
-												if ( in_array( $field, $bupr_rating_criteria, true ) ) {
+											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
+												if ( $field === 0 ) {
+													$field = '';
+												}
+												if ( is_array( $bupr_rating_criteria ) ) {
 													echo '<div class="multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
@@ -230,7 +237,7 @@ $reviews = new WP_Query( $args );
 
 													echo '</div>';
 													echo '</div>';
-												} else {													
+												} else {
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
 													$stars_off = 5 - $stars_on;
@@ -294,9 +301,10 @@ $reviews = new WP_Query( $args );
 					<?php } else { ?>
 						<div id="message" class="info">
 					<?php } ?>
-						<p><?php 
+						<p>
+						<?php
 						/* translators: %s: */
-						echo sprintf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); 
+						echo sprintf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 						?>
 
 						</p>

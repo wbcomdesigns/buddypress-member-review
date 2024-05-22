@@ -114,6 +114,7 @@
     [class*="bupr-col-"] {
         width: 100%;
     }
+
     .bupr-criteria-label span {
         display: inline;
         width: 100%;
@@ -647,6 +648,7 @@ button.bupr-edit-review-button {
     .bupr-members-profiles {
         width: 60px;
     }
+
     .bupr-members-content {
         margin-left: 60px;
     }
@@ -669,6 +671,10 @@ button.bupr-edit-review-button {
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
-.theme-buddyboss-theme .members-directory-wrapper .members  .member-review-stars{
+.theme-buddyboss-theme .members-directory-wrapper .members .member-review-stars {
     text-align: center;
+}
+
+.rating {
+    color: red;
 }
