@@ -38,13 +38,13 @@ $reviews = new WP_Query( $args );
 <?php do_action( 'bupr_before_member_review_list' ); ?>
 
 <div class="bupr-bp-member-reviews-block">
-	<div class="select-wrap">
+	<!-- <div class="select-wrap">
 		<select id="bp-reviews-filter-by">
 			<option value="latest"><?php esc_html_e( 'Latest', 'bp-member-reviews' ); ?></option>
 			<option value="highest"><?php esc_html_e( 'Highest', 'bp-member-reviews' ); ?></option>
 			<option value="lowest"><?php esc_html_e( 'Lowest', 'bp-member-reviews' ); ?></option>
 		</select>
-	</div>
+	</div> -->
 	<!-- MODAL FOR USER LOGIN -->
 	<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_attr( BUPR_PLUGIN_URL ); ?>">
 	<input type="hidden" class="member-rating-limit" value="<?php echo esc_attr( $bupr['reviews_per_page'] ); ?>">
@@ -66,9 +66,7 @@ $reviews = new WP_Query( $args );
 						$bupr_rating_criteria = array();
 						if ( ! empty( $member_review_rating_fields ) ) {
 							foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
-								if ( 'yes' === $bupr_fields ) {
 									$bupr_rating_criteria[] = $bupr_keys;
-								}
 							}
 						}
 						?>
@@ -212,11 +210,12 @@ $reviews = new WP_Query( $args );
 											}
 										}
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) {
+
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
 												if ( $field === 0 ) {
 													$field = '';
 												}
-												if ( is_array( $bupr_rating_criteria ) ) {
+												if ( $member_review_rating_fields ) {
 													echo '<div class="multi-review inline-content"><div class="bupr-col-4 ">' . esc_attr( $field ) . '</div>';
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
@@ -238,6 +237,7 @@ $reviews = new WP_Query( $args );
 													echo '</div>';
 													echo '</div>';
 												} else {
+													echo '<div class="multi-review inline-content">';
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
 													$stars_off = 5 - $stars_on;
@@ -266,32 +266,32 @@ $reviews = new WP_Query( $args );
 							</div>
 						</div>
 						<?php
-					endwhile;
+						endwhile;
 
-					$total_pages = $reviews->max_num_pages;
+						$total_pages = $reviews->max_num_pages;
 					if ( $total_pages > 1 ) {
 						?>
 						<div class="bupr-pagination">
-							<?php
-							/*** Posts pagination ***/
-							echo "<div class='bupr-posts-pagination'>";
-							echo wp_kses(
-								paginate_links(
-									array(
-										'base'    => add_query_arg( 'page', '%#%' ),
-										'format'  => '',
-										'current' => max( 1, get_query_var( 'page' ) ),
-										'total'   => $reviews->max_num_pages,
-									)
-								),
-								$allowedposttags
-							);
+						<?php
+						/*** Posts pagination ***/
+						echo "<div class='bupr-posts-pagination'>";
+						echo wp_kses(
+							paginate_links(
+								array(
+									'base'    => add_query_arg( 'page', '%#%' ),
+									'format'  => '',
+									'current' => max( 1, get_query_var( 'page' ) ),
+									'total'   => $reviews->max_num_pages,
+								)
+							),
+							$allowedposttags
+						);
 							echo '</div>';
-							?>
+						?>
 						</div>
 						<?php
 					}
-					wp_reset_postdata();
+						wp_reset_postdata();
 				} else {
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 					if ( 'nouveau' === $bp_template_option ) {
@@ -302,18 +302,18 @@ $reviews = new WP_Query( $args );
 						<div id="message" class="info">
 					<?php } ?>
 						<p>
-						<?php
-						/* translators: %s: */
-						echo sprintf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
-						?>
+							<?php
+							/* translators: %s: */
+							echo sprintf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+							?>
 
 						</p>
 					</div>
-					<?php
+							<?php
 				}
 				?>
 			</div>
 		</div>
 	</div>
 </div>
-<?php do_action( 'bupr_after_member_review_list' ); ?>
+					<?php do_action( 'bupr_after_member_review_list' ); ?>

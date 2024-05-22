@@ -40,9 +40,9 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_add_review_noti
  * @param    string $format        Format.
  * @author   Wbcom Designs
  */
-function bupr_add_review_notification_format( $action, $item_id, $secondary_item_id, $total_items, $format = 'string', $component_action_name, $component_name ) {
+function bupr_add_review_notification_format( $action, $item_id, $secondary_item_id, $total_items, $format, $component_action_name, $component_name ) {
 	global $bp, $bupr;
-
+	$format = 'string';
 	if ( 'bupr_add_review_action' === $component_action_name ) {
 		$anonymous_review = get_post_meta( $item_id, 'bupr_anonymous_review_post', true );
 		$user_name        = '';
@@ -64,20 +64,20 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 			}
 		}
 
-		$user_id              = bp_loggedin_user_id();
+		$user_id = bp_loggedin_user_id();
 		// Check if the BuddyPress version function exists and compare the version
-		if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+		if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
 			// Use bp_members_get_user_url() for BuddyPress v12.0.0 and above
-			$notification_link = bp_members_get_user_url($user_id) . strtolower($bupr['review_label_plural']) . '/view/' . $item_id;
+			$notification_link = bp_members_get_user_url( $user_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 		} else {
 			// Use bp_core_get_user_domain() for older versions
-			$notification_link = bp_core_get_user_domain($user_id) . strtolower($bupr['review_label_plural']) . '/view/' . $item_id;
+			$notification_link = bp_core_get_user_domain( $user_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 		}
 
 		/* translators: %s: */
-		$notification_title   = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+		$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		/* translators: %s: */
-		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );		
+		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
 
 		if ( 'string' === $format ) {
 			$return = sprintf( "<a href='%s' title='%s'>%s</a>", esc_url( $notification_link ), esc_attr( $notification_title ), esc_html( $notification_content ) );

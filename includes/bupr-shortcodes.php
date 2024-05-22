@@ -372,7 +372,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			global $bupr;
 			$show_rating = false;
 			foreach ( $bupr['active_rating_fields'] as $bupr_rating_fields ) {
-				if ( 'yes' === $bupr_rating_fields ) {
+				if ( $bupr['multi_criteria_allowed'] ) {
 					$show_rating = true;
 					return $show_rating;
 				}
@@ -434,12 +434,12 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										<select name="bupr_member_id" id="bupr_member_review_id">
 											<option value=""><?php esc_html_e( '--Select--', 'bp-member-reviews' ); ?></option>
 								<?php
-								if ( ! empty( $bupr_member ) ) {
-									foreach ( $bupr_member as $user ) {
-										if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && isset( $user['member_roles'][0] ) && in_array( $user['member_roles'][0], $bupr['add_taken_members'] ) ) {
-											echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
-										}
+								// if ( ! empty( $bupr_member ) ) {
+								foreach ( $bupr_member as $user ) {
+									if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && isset( $user['member_roles'][0] ) && in_array( $user['member_roles'][0], $bupr['add_taken_members'] ) ) {
+										echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
 									}
+									// }
 								}
 								?>
 										</select><br/>
@@ -455,8 +455,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								$flage         = true;
 								if ( $bupr['multi_criteria_allowed'] ) {
 									foreach ( $bupr['active_rating_fields'] as $bupr_rating_fields => $bupr_criteria_setting ) :
-										if ( 'yes' === $bupr_criteria_setting ) {
-											?>
+										?>
 							<div class="multi-review">
 								<div class="bupr-col-4 bupr-criteria-label">
 											<?php esc_html_e( html_entity_decode( $bupr_rating_fields ), 'bp-member-reviews' ); ?>
@@ -472,7 +471,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							</div>
 											<?php
 											$field_counter++;
-										}
 									endforeach;
 								}
 								?>

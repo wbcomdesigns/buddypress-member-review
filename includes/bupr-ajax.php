@@ -470,8 +470,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_approve_review() {
-			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING ) === 'bupr_approve_review' ) {
-				$rid  = sanitize_text_field( filter_input( INPUT_POST, 'review_id' ) );
+			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_approve_review') {
+				$rid  =  isset( $_POST['review_id'] ) ? sanitize_text_field( $_POST['review_id'] ) : '';
 				$args = array(
 					'ID'          => $rid,
 					'post_status' => 'publish',
@@ -497,16 +497,14 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				return false;
 			}
 			global $bupr;
+			
 			if ( filter_input( INPUT_POST, 'action' ) && filter_input( INPUT_POST, 'action' ) === 'allow_bupr_member_review_update' ) {
 				$bupr_rating_criteria = array();
 				if ( ! empty( $bupr['active_rating_fields'] ) ) {
 					foreach ( $bupr['active_rating_fields'] as $bupr_keys => $bupr_fields ) {
-						if ( $bupr_fields === 'yes' ) {
 							$bupr_rating_criteria[] = $bupr_keys;
-						}
 					}
 				}
-
 				$bupr_reviews_status = 'draft';
 				if ( 'yes' === $bupr['auto_approve_reviews'] ) {
 					$bupr_reviews_status = 'publish';
@@ -566,7 +564,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 					if ( ! empty( $bupr_member_id ) && $bupr_member_id !== 0 ) {
 						$bupr_rated_stars = array();
-						if ( ! empty( $bupr_rating_criteria ) ) {
+						// print_r($bupr_rating_criteria);
+						if ( $bupr['multi_criteria_allowed'] )  {
 							$bupr_rated_stars = array_combine( $bupr_rating_criteria, $bupr_member_star );
 						} else {
 							$bupr_rated_stars = $bupr_member_star;
