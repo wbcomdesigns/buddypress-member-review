@@ -130,8 +130,10 @@ if ( ! empty( $review_id ) ) {
 
 						if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $member_review_ratings[0] ) ) :
 							foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
-
-								if ( in_array( $field, $bupr_rating_criteria, true ) ) {
+								if ( $field === 0 ) {
+										$field = '';
+									}
+								if ( $member_review_rating_fields ) {
 
 									echo '<div class="multi-review inline-content"><div class="bupr-col-6 ">' . esc_attr( $field ) . '</div>';
 									/*** Star rating Ratings */
@@ -151,7 +153,28 @@ if ( ! empty( $review_id ) ) {
 									}
 									/*star rating end */
 									echo '</div></div>';
-								}
+								} else {
+										echo '<div class="multi-review inline-content">';
+										/*** Star rating Ratings */
+										$stars_on  = $bupr_value;
+										$stars_off = 5 - $stars_on;
+										echo '<div class="bupr-col-4 ">';
+										for ( $i = 1; $i <= $stars_on; $i++ ) {
+											?>
+											<span class="fas fa-star bupr-star-rate"></span>
+											<?php
+										}
+
+										for ( $i = 1; $i <= $stars_off; $i++ ) {
+											?>
+											<span class="far fa-star stars bupr-star-rate"></span>
+											<?php
+										}
+										/*star rating end */
+
+										echo '</div>';
+										echo '</div>';
+									}
 							}
 						endif;
 						?>
