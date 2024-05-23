@@ -114,7 +114,6 @@
     [class*="bupr-col-"] {
         width: 100%;
     }
-
     .bupr-criteria-label span {
         display: inline;
         width: 100%;
@@ -234,6 +233,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 /*--------------------------------------------------------------
 # Edit Review Model
 --------------------------------------------------------------*/
+
 .bupr-review-modal {
     position: fixed;
     left: 0;
@@ -323,6 +323,7 @@ button.bupr-edit-review-button {
     -ms-flex-pack: center;
     justify-content: center;
 }
+
 
 /*--------------------------------------------------------------
 # Pagination
@@ -646,11 +647,22 @@ button.bupr-edit-review-button {
 
 @media only screen and (max-width: 480px) {
     .bupr-members-profiles {
-        width: 60px;
+        align-items: center;
+        display: flex;
+        gap: 10px;
+        float: none;
+        width: 100%;
+        margin-bottom: 10px;
     }
-
+    .bupr-members-profiles .reviewer h4,
     .bupr-members-content {
-        margin-left: 60px;
+        margin: 0 !important;
+    }
+    .rating-num {
+        margin-left: 0;
+    }
+    .rating-star {
+        margin-right: 10px;
     }
 }
 
@@ -668,13 +680,19 @@ button.bupr-edit-review-button {
     }
 }
 
+
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
+
 .theme-buddyboss-theme .members-directory-wrapper .members .member-review-stars {
     text-align: center;
 }
 
 .rating {
     color: red;
+}
+
+#bupr-reiew-edit button.bupr-edit-review-button {
+    padding: 6px 15px !important;
 }
