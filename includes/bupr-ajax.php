@@ -658,8 +658,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( 'no' === $bupr['auto_approve_reviews'] ) {
 								if ( 'yes' === $bupr['allow_email'] ) {
 									$bupr_to = get_option('admin_email');
-									$bupr_subject = __('[site-name]: A new review needs your approval', 'bp-member-reviews');
-									$bupr_subject = str_replace('[site-name]', $site_name, $bupr_subject);
+									$bupr_subject     = __('[site-name]: A new review needs your approval', 'bp-member-reviews');
+									$bupr_subject     = str_replace('[site-name]', $site_name, $bupr_subject);
+									$bupr_review_url  = add_query_arg(
+														array(
+															'post_type' => 'review'
+														),
+														admin_url( 'edit.php' )
+													);
+									$approve_review_link = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 									$bupr_approve_message = '
 												Hi admin,
 												<br/>
@@ -670,8 +677,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 												[site-name]
 											';
 									$bupr_message = str_replace(
-											array( '[review-link]' ),
-											array( $review_link ),
+											array( '[review-link]', '[site-name]' ),
+											array( $approve_review_link, $site_name ),
 											$bupr_approve_message
 										);
 									$bupr_header   = "From:$bupr_sender_email \r\n";
