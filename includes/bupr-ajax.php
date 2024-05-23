@@ -656,6 +656,29 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 
 							if ( 'no' === $bupr['auto_approve_reviews'] ) {
+								if ( 'yes' === $bupr['allow_email'] ) {
+									$bupr_to = get_option('admin_email');
+									$bupr_subject = __('[site-name]: A new review needs your approval', 'bp-member-reviews');
+									$bupr_subject = str_replace('[site-name]', $site_name, $bupr_subject);
+									$bupr_approve_message = '
+												Hi admin,
+												<br/>
+												Greetings! There is a new review [review-link] that awaits your approval.
+												<br/>
+												Thank You.
+												<br/>
+												[site-name]
+											';
+									$bupr_message = str_replace(
+											array( '[review-link]' ),
+											array( $review_link ),
+											$bupr_approve_message
+										);
+									$bupr_header   = "From:$bupr_sender_email \r\n";
+									$bupr_header  .= "MIME-Version: 1.0\r\n";
+									$bupr_header  .= "Content-type: text/html\r\n";
+									wp_mail( $bupr_to, $bupr_subject, $bupr_message, $bupr_header );
+								}
 								/* translators: %s: */
 								echo sprintf( esc_html__( 'Thank you for taking time to write this %1$s. Your %1$s will display on members\' profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 							} else {
