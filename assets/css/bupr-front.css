@@ -696,3 +696,10 @@ button.bupr-edit-review-button {
 #bupr-reiew-edit button.bupr-edit-review-button {
     padding: 6px 15px !important;
 }
+
+.bp-member-add-form button#bupr_save_review {
+    display: inline-block;
+    max-width: 160px;
+    font-size: 16px;
+    font-weight: normal;
+}

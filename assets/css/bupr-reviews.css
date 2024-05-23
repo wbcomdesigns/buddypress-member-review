@@ -260,8 +260,3 @@
     font-size: 20px;
     color: #e84242;
 }
-
-.bp-member-add-form button#bupr_save_review {
-    display: inline-block;
-    max-width: 150px;
-}
