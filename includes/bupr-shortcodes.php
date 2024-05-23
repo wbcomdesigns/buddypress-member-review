@@ -481,7 +481,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								?>
 								<div class="multi-review">
 										<div class="bupr-col-4 bupr-criteria-label">
-											<label><?php esc_html_e( 'Rating : ', 'bo-member-reviews' ); ?><small class="rating">*</small></label>
+											<label><?php esc_html_e( 'Rating : ', 'bp-member-reviews' ); ?><small class="rating">*</small></label>
 										</div>
 										<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
 											<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo 'not_clicked'; ?>">
