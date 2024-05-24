@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Constants used in the plugin.
  */
-define( 'BUPR_PLUGIN_VERSION', '3.1.1' );
+define( 'BUPR_PLUGIN_VERSION', '3.2.0' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
