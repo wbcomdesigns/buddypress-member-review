@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.5.0
-Stable tag: 3.1.1
+Tested up to: 6.5.2
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,13 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+= 3.2.0 =
+* Fix: Resolved an issue where text statuses were not being saved (#171).
+* Fix: Corrected the mobile UI timeline reaction issue for a smoother user experience (#170).
+* Fix: Addressed the reaction reload issue to ensure consistent functionality.
+* Enhancement: Added an undo reaction option to improve user interaction.
+* Fix: Fixed the status icon issue for better visual representation (#167).
+
 = 3.1.1 =
 * Fix: (#229)Fixed email subject not save
 * Fix: (#230)Fixed user name is not display on dropdown on shortcode
