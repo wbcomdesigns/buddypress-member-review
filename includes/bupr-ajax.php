@@ -522,6 +522,10 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : '';
 				$bupr_admin_general         = get_option( 'bupr_admin_general_options' );
 				$site_name                  = get_bloginfo( 'name' );
+				$site_admins                = get_users( array( 'role' => 'administrator' ) );
+				if ( ! empty( $site_admins ) ) {
+					$site_admin = $site_admins[0]->display_name;
+				}
 				$bupr_count = 0;
 
 				$bupr_member_star = array();
@@ -647,18 +651,14 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 										$message
 									);
 								}
-
-								/* translators: %s is replaced with the review singular lable of translations */								
-								$bupr_header   = "From:$bupr_sender_email \r\n";
-								$bupr_header  .= "MIME-Version: 1.0\r\n";
-								$bupr_header  .= "Content-type: text/html\r\n";
-								wp_mail( $bupr_to, $bupr_subject, $bupr_message, $bupr_header );
+								$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
+								wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
 							}
 
 							if ( 'no' === $bupr['auto_approve_reviews'] ) {
 								if ( 'yes' === $bupr['allow_email'] ) {
-									$bupr_to = get_option('admin_email');
-									$bupr_subject     = __('[site-name]: A new review needs your approval', 'bp-member-reviews');
+									$bupr_to = get_option('admin_email');									
+									$bupr_subject     = $bupr_admin_general['review_approve_email_subject'];
 									$bupr_subject     = str_replace('[site-name]', $site_name, $bupr_subject);
 									$bupr_review_url  = add_query_arg(
 														array(
@@ -666,25 +666,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 														),
 														admin_url( 'edit.php' )
 													);
-									$approve_review_link = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
-									$bupr_approve_message = '
-												Hi admin,
-												<br/>
-												Greetings! There is a new review [review-link] that awaits your approval.
-												<br/>
-												Thank You.
-												<br/>
-												[site-name]
-											';
+									$approve_review_link = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';									
+									$bupr_approve_message = $bupr_admin_general['review_approve_email_message'];									
 									$bupr_message = str_replace(
-											array( '[review-link]', '[site-name]' ),
-											array( $approve_review_link, $site_name ),
-											$bupr_approve_message
-										);
-									$bupr_header   = "From:$bupr_sender_email \r\n";
-									$bupr_header  .= "MIME-Version: 1.0\r\n";
-									$bupr_header  .= "Content-type: text/html\r\n";
-									wp_mail( $bupr_to, $bupr_subject, $bupr_message, $bupr_header );
+										array( '[review-aproval-link]', '[site-admin]', '[site-name]' ),
+										array( $approve_review_link, $site_admin, $site_name ),
+										$bupr_approve_message
+									);
+									$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );									
+									wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
 								}
 								/* translators: %s: */
 								echo sprintf( esc_html__( 'Thank you for taking time to write this %1$s. Your %1$s will display on members\' profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
