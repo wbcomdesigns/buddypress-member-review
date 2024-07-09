@@ -166,7 +166,8 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 						</div>					
 					</div>
 					<?php					
-					if( ! array_key_exists( 'bupr_auto_approve_reviews', $bupr_admin_general ) ) {
+					if ( ! empty( $bupr_admin_general ) ) {
+						if ( ! array_key_exists( 'bupr_auto_approve_reviews', $bupr_admin_general ) ) {
 					?>
 					<!-- admin email section -->
 					 <div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
@@ -199,7 +200,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 						);
 						?>
 					</div>
-					<?php } ?>
+					<?php } } ?>
 					<!-- admin email section end -->
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
