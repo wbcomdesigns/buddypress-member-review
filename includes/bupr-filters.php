@@ -487,7 +487,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$bupr_total_rating       = 0;
 			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
-			$bupr_total_review_count = '';
+			$bupr_total_review_count = 0;
 			if ( 0 !== $bupr_reviews_count ) {
 				foreach ( $reviews as $review ) {
 					$rate                = 0;
@@ -581,12 +581,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 							esc_html_e( 'Rating ', 'bp-member-reviews' );
 							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
-							if( $bupr_reviews_count > 1 ){
+							if ( $bupr_reviews_count > 1 ) {
 								$review_label = $bupr['review_label_plural'];
 							} else {
 								$review_label = $bupr['review_label'];
 							}
-							echo esc_html( $bupr_reviews_count ) . ' ' . $review_label;							
+							echo esc_html( $bupr_reviews_count ) . ' ' . $review_label;
 							?>
 						</span>
 					</div>
