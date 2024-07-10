@@ -526,6 +526,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				if ( ! empty( $site_admins ) ) {
 					$site_admin = $site_admins[0]->display_name;
 				}
+				if( isset( $anonymous_review ) && $anonymous_review == 'yes' ) {
+					$user_name      = "An anonymous user";
+				} else {
+					$user_name      = $current_user->display_name;
+				}
+
 				$bupr_count = 0;
 
 				$bupr_member_star = array();
