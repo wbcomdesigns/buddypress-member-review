@@ -36,20 +36,13 @@ jQuery(document).ready(function (event) {
     "use strict";
     $(document).ready(function () {
         /* Mobile Toggle Menu */
-        jQuery(".wb-responsive-menu").on("click", function (e) {
+        $(".wb-responsive-menu").off("click").on("click", function (e) {
+            alert('asdfadsf');
             e.preventDefault();
-            if (
-                jQuery(".wbcom-admin-settings-page .nav-tab-wrapper ul").hasClass(
-                    "wbcom-show-mobile-menu"
-                )
-            ) {
-                jQuery(".wbcom-admin-settings-page .nav-tab-wrapper ul").removeClass(
-                    "wbcom-show-mobile-menu"
-                );
+            if ($(".wbcom-admin-settings-page .nav-tab-wrapper ul").hasClass("wbcom-show-mobile-menu")) {
+                $(".wbcom-admin-settings-page .nav-tab-wrapper ul").removeClass("wbcom-show-mobile-menu");
             } else {
-                jQuery(".wbcom-admin-settings-page .nav-tab-wrapper ul").addClass(
-                    "wbcom-show-mobile-menu"
-                );
+                $(".wbcom-admin-settings-page .nav-tab-wrapper ul").addClass("wbcom-show-mobile-menu");
             }
         });
         jQuery(document).on(

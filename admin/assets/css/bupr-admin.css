@@ -73,6 +73,7 @@
 .bupr-slider.bupr-round {
     border-radius: 34px;
 }
+
 .bupr-slider.bupr-round:before {
     border-radius: 50%;
 }
@@ -95,18 +96,21 @@
         width: 30px;
         height: 17px;
     }
+
     .bupr-slider:before {
         height: 13px;
         width: 13px;
         left: 2px;
         bottom: 2px;
     }
-    input:checked + .bupr-slider:before {
+
+    input:checked+.bupr-slider:before {
         -webkit-transform: translateX(13px);
         -ms-transform: translateX(13px);
         transform: translateX(13px);
     }
 }
+
 /* Admin Switch Toggle : End */
 
 /* setting page criteria tab */
@@ -119,8 +123,14 @@
 }
 
 .bupr-admin-col-6.buprcriteria {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
@@ -133,21 +143,24 @@
     margin-right: 35px !important;
     text-shadow: none;
     font-weight: 600;
-    width: auto  !important;
+    width: auto !important;
     color: #fff;
     line-height: 1;
     border: 0;
+    -webkit-transition: all 0.3s;
     transition: all 0.3s;
     box-shadow: 0px 8px 20px rgba(32, 53, 85, 0.35);
     border-radius: 12px !important;
     height: auto !important;
 }
+
 .bupr-criteria .bupr-delete-tag input[type=button]:hover,
-#bupr-add-criteria-action input#bupr-btnAdd:hover{
-    background:#272B41;
+#bupr-add-criteria-action input#bupr-btnAdd:hover {
+    background: #272B41;
 }
+
 #bupr-add-criteria-action input#bupr-btnAdd {
-    padding:16px 30px !important;
+    padding: 16px 30px !important;
     margin-bottom: 10px;
     margin-top: 10px;
     background: #08c462;
@@ -165,12 +178,21 @@ div#bupr-admin-row-criteria.bupr-admin-row {
     border-radius: 10px;
     padding: 5px 13px;
     margin-top: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     background: #fff;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 }
+
 .bupr-admin-row#bupr-admin-row-criteria .bupr-admin-col-6 {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 }
 
@@ -226,6 +248,17 @@ div#bupr-admin-row-criteria.bupr-admin-row {
     [class*="bupr-admin-col-"] {
         width: 100%;
     }
+
+    div#bupr-admin-row-criteria.bupr-admin-row {
+        -ms-flex-flow: wrap;
+        flex-flow: wrap;
+    }
+
+    .bupr-admin-col-6.buprcriteria {
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
 }
 
 button.bupr-accordion {
@@ -240,11 +273,13 @@ button.bupr-accordion {
     outline: medium none;
     padding: 15px 20px;
     text-align: left;
+    -webkit-transition: all 0.4s ease 0s;
     transition: all 0.4s ease 0s;
     width: 90%;
 }
 
-button.bupr-accordion.active, button.bupr-accordion:hover {
+button.bupr-accordion.active,
+button.bupr-accordion:hover {
     background-color: hsl(207, 90%, 54%);
     color: white;
 }
@@ -254,6 +289,7 @@ div.panel {
     background-color: white;
     max-height: 0;
     overflow: hidden;
+    -webkit-transition: max-height 0.2s ease-out;
     transition: max-height 0.2s ease-out;
     margin: 0px 5%;
 }
@@ -288,6 +324,8 @@ button.bupr-accordion.active::after {
 
 @media(max-width: 781px) {
     .buprcriteria input:checked+.bupr-slider::before {
+        -webkit-transform: translateX(35px) !important;
+        -ms-transform: translateX(35px) !important;
         transform: translateX(35px) !important;
     }
 
@@ -359,6 +397,7 @@ span.move-icons {
 .nav-tab-wrapper ul .bupr-display a:before {
     content: "\f478" !important;
 }
+
 div#setting-error-settings_updated {
     position: absolute;
     right: 50px;
@@ -370,9 +409,11 @@ div#setting-error-settings_updated {
     box-shadow: none;
     color: #10ab00;
 }
-button.notice-dismiss:before{
+
+button.notice-dismiss:before {
     color: red !important;
 }
+
 .wbcom-settings-section-options input#profile_reviews_per_page {
     width: 300px;
     margin-right: 10px;
