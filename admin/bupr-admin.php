@@ -82,10 +82,13 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				$criteria_arr   = array();
 				if ( ! empty( $rating_fields ) && isset( $rating_fields ) ) {
 					foreach ( $rating_fields as $key => $fname ) {
-						if ( array_key_exists( $key, $rating_display ) ) {
-							$criteria_arr[ $fname ] = 'yes';
-						} else {
-							$criteria_arr[ $fname ] = 'no';
+						// Check if $fname is not empty before adding it to the array
+						if ( ! empty( trim( $fname ) ) ) {
+							if ( array_key_exists( $key, $rating_display ) ) {
+								$criteria_arr[ $fname ] = 'yes';
+							} else {
+								$criteria_arr[ $fname ] = 'no';
+							}
 						}
 					}
 					unset( $new_value['rating_field_name'] );
@@ -94,7 +97,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				}
 			}
 			return $new_value;
-		}
+		}		
 
 		/**
 		 * Actions performed on loading admin_menu.
