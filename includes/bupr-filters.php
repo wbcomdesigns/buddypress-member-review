@@ -49,11 +49,20 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			 * Add review link at member's directory if option admin setting is enabled.
 			 */
 
-			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
+			 if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
+				// If BuddyBoss is active, use the BuddyBoss-specific action hook.
 				add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
 			} else {
-				add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
+				// Check for BuddyPress and whether Nouveau or Legacy template is used.
+				if ( function_exists( 'bp_nouveau' ) && bp_nouveau_is_active() ) {
+					// If using BuddyPress Nouveau template.
+					add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
+				} else {
+					// For BuddyPress Legacy template or third-party themes that use the old `bp_directory_members_item_meta` hook.
+					add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
+				}
 			}
+			
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
 
