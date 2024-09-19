@@ -24,9 +24,6 @@ define( 'BUPR_PLUGIN_VERSION', '3.2.0' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-require_once __DIR__ . '/vendor/autoload.php';
-HardG\BuddyPress120URLPolyfills\Loader::init();
-
 if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 	add_action( 'init', 'bupr_load_textdomain' );
 	/**
