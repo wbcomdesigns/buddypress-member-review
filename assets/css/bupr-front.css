@@ -557,10 +557,101 @@ button.bupr-edit-review-button {
     width: 100%;
 }
 
-.member-review-stars {
-    float: none;
-    clear: both;
+
+/* Left-aligned review container for single member profile */
+.bupr-member-review-wrapper {
+    margin: 10px 0;
+    text-align: left;
+    display: flex;
+    align-items: center; /* Align stars and text vertically */
+    justify-content: flex-start; /* Keep items left-aligned */
 }
+
+.bupr-member-review-stars {
+    display: inline-block;
+    margin-right: 10px;
+    position: relative; /* For the tooltip */
+}
+
+.bupr-member-tooltip::before {
+    content: attr(data-tooltip); /* Get the tooltip content from the custom attribute */
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.bupr-member-tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.bupr-member-rating-text {
+    font-size: 14px;
+    color: #555;
+    margin-left: 5px;
+}
+
+
+/* Parent container to center the review block */
+.bupr-directory-review-parent-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+/* Directory-specific styles */
+.bupr-directory-review-wrapper {
+    margin: 10px 0;
+    text-align: left;
+    display: flex;
+    align-items: center; /* Align stars and text vertically */
+    justify-content: flex-start; /* Keep items on a single line */
+}
+
+.bupr-directory-review-stars {
+    display: inline-block;
+    margin-right: 10px;
+    position: relative; /* For the tooltip */
+}
+
+.bupr-directory-tooltip::before {
+    content: attr(data-tooltip); /* Get the tooltip content from the custom attribute */
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.bupr-directory-tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.bupr-directory-rating-text {
+    font-size: 14px;
+    color: #555;
+    margin-left: 5px;
+}
+
 
 .kleo-masonry-item .member-review-stars {
     text-align: center;

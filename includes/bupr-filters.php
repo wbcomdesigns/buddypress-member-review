@@ -142,29 +142,22 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * BuddyPress Rating directory.
+		 * Display average rating in the BuddyPress directory.
 		 *
-		 * @since    1.0.0
-		 * @access   public
-		 * @author   Wbcom Designs
+		 * @since 1.0.0
 		 */
 		public function bupr_rating_directory() {
+			global $members_template, $bupr;
 
-			if ( ! bp_is_members_directory() ) {
-				return;
-			}
-
-			global $members_template;
-			global $bupr;
-
-			/* List ratings at member directory if setting is enabled. */
-			if ( 'yes' !== $bupr['dir_view_ratings'] ) {
+			// Check if we are on the members directory and if the setting is enabled
+			if ( ! bp_is_members_directory() || 'yes' !== $bupr['dir_view_ratings'] ) {
 				return;
 			}
 
 			$bupr_type       = 'integer';
 			$bupr_avg_rating = 0;
-			/* Gather all the members ratings */
+
+			// Gather all the member's ratings
 			$bupr_args = array(
 				'post_type'      => 'review',
 				'posts_per_page' => -1,
@@ -184,18 +177,17 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
 			$bupr_total_review_count = '';
+
 			if ( 0 !== $bupr_reviews_count ) {
 				foreach ( $reviews as $review ) {
 					$rate                = 0;
 					$reviews_field_count = 0;
 					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
+
 					if ( ! empty( $review_ratings[0] ) ) {
-						if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $review_ratings[0] ) ) {
+						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							foreach ( $review_ratings[0] as $field => $value ) {
 								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
-									$rate += $value;
-									$reviews_field_count++;
-								} else {
 									$rate += $value;
 									$reviews_field_count++;
 								}
@@ -215,67 +207,72 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$bupr_type       = gettype( $bupr_avg_rating );
 				}
 
-				$bupr_stars_on   = $stars_off = $stars_half = '';
-				$bupr_half_squar = '';
+				$bupr_stars_on   = '';
+				$stars_off       = '';
+				$stars_half      = '';
 				$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
+
 				if ( $remaining > 0 ) {
 					$stars_on        = intval( $bupr_avg_rating );
 					$stars_half      = 1;
-					$bupr_half_squar = 1;
 					$stars_off       = 5 - ( $stars_on + $stars_half );
 				} else {
 					$stars_on   = $bupr_avg_rating;
 					$stars_off  = 5 - $bupr_avg_rating;
 					$stars_half = 0;
 				}
+
 				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-				if ( $bupr_avg_rating > 0 ) { ?>
-					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-						<span itemprop="ratingValue" content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
-						<span itemprop="bestRating" content="5"></span>
-						<span itemprop="ratingCount" content="<?php echo esc_attr( $rate_counter ); ?>"></span>
-						<span itemprop="reviewCount" content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
-						<span itemprop="itemReviewed" content="Person"></span>
-						<span itemprop="name" content="
-						<?php
-														// Check if the BuddyPress version function exists and compare the version
-						if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
-							// Use bp_members_get_user_slug() for BuddyPress v12.0.0 and above
-							echo esc_attr( bp_members_get_user_slug( $members_template->member->id ) );
-						} else {
-							// Use bp_core_get_username() for older versions
-							echo esc_attr( bp_core_get_username( $members_template->member->id ) );
-						}
-						?>
-														"></span>
 
-						<span itemprop="url" content="<?php echo esc_attr( bp_core_get_userlink( $members_template->member->id, false, true ) ); ?>"></span>
-						<?php
-						echo "<div class='member-review-stars'>";
-						for ( $i = 1; $i <= $stars_on; $i++ ) {
-							?>
-							<span class="fas fa-star bupr-star-rate"></span>
-							<?php
-						}
+				if ( $bupr_avg_rating > 0 ) {
+					?>
+					<!-- Add Parent Container to Keep Alignment Center -->
+					<div class="bupr-directory-review-parent-container">
+						<div class="bupr-directory-review-wrapper">
+							<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+								<span itemprop="ratingValue" content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
+								<span itemprop="bestRating" content="5"></span>
+								<span itemprop="ratingCount" content="<?php echo esc_attr( $rate_counter ); ?>"></span>
+								<span itemprop="reviewCount" content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
+								<span itemprop="itemReviewed" content="Person"></span>
+								<span itemprop="name" content="
+								<?php
+									if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
+										echo esc_attr( bp_members_get_user_slug( $members_template->member->id ) );
+									} else {
+										echo esc_attr( bp_core_get_username( $members_template->member->id ) );
+									}
+								?>
+								"></span>
+								<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( $members_template->member->id, false, true ) ); ?>"></span>
 
-						for ( $i = 1; $i <= $stars_half; $i++ ) {
-							?>
-							<span class="fas fa-star-half-alt bupr-star-rate"></span>
-							<?php
-						}
-
-						for ( $i = 1; $i <= $stars_off; $i++ ) {
-							?>
-							<span class="far fa-star bupr-star-rate"></span>
-							<?php
-						}
-						echo '</div>';
-						?>
+								<div class="bupr-directory-review-stars bupr-directory-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter ); ?> reviews">
+									<?php
+									// Display the stars
+									for ( $i = 1; $i <= $stars_on; $i++ ) {
+										echo '<span class="fas fa-star bupr-star-rate"></span>';
+									}
+									for ( $i = 1; $i <= $stars_half; $i++ ) {
+										echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
+									}
+									for ( $i = 1; $i <= $stars_off; $i++ ) {
+										echo '<span class="far fa-star bupr-star-rate"></span>';
+									}
+									?>
+									<span class="bupr-directory-rating-text">
+										<?php echo esc_html( $bupr_avg_rating ) . '/5 (' . esc_html( $bupr_reviews_count ) . ' reviews)'; ?>
+									</span>
+								</div>
+							</div>
+						</div>
 					</div>
-				<?php } ?>
-				<?php
+					<?php
+				}
 			}
 		}
+
+
+
 
 		/**
 		 * Actions performed to add a review button on member header.
@@ -469,18 +466,18 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 		}
 
-				/**
-				 * Actions performed to show average rating on a bp member's profile
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Display average rating on a BuddyPress member's profile.
+		 *
+		 * @since 1.0.0
+		 */
 		public function bupr_member_average_rating() {
 			global $bupr;
+
 			$bupr_type       = 'integer';
 			$bupr_avg_rating = 0;
-			/* Gather all the members reviews */
+
+			// Gather all the member's reviews
 			$bupr_args = array(
 				'post_type'      => 'review',
 				'posts_per_page' => -1,
@@ -499,115 +496,100 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$bupr_total_rating       = 0;
 			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
-			$bupr_total_review_count = 0;
+			$bupr_total_review_count = '';
+
 			if ( 0 !== $bupr_reviews_count ) {
 				foreach ( $reviews as $review ) {
 					$rate                = 0;
 					$reviews_field_count = 0;
 					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
+
 					if ( ! empty( $review_ratings[0] ) ) {
-						if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $review_ratings[0] ) ) :
+						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							foreach ( $review_ratings[0] as $field => $value ) {
 								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
 									$rate += $value;
 									$reviews_field_count++;
-								} else {
-									$rate += $value;
-									$reviews_field_count++;
 								}
 							}
+
 							if ( 0 !== $reviews_field_count ) {
 								$bupr_total_rating += (int) $rate / $reviews_field_count;
 								$bupr_total_review_count++;
 								$rate_counter++;
 							}
-						endif;
+						}
 					}
 				}
-				if ( 0 !== $bupr_total_review_count && 0 !== $bupr_total_rating ) {
+
+				if ( 0 !== $bupr_total_review_count ) {
 					$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
 					$bupr_type       = gettype( $bupr_avg_rating );
 				}
+
 				$bupr_stars_on   = '';
 				$stars_off       = '';
 				$stars_half      = '';
-				$bupr_half_squar = '';
 				$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
+
 				if ( $remaining > 0 ) {
 					$stars_on        = intval( $bupr_avg_rating );
 					$stars_half      = 1;
-					$bupr_half_squar = 1;
 					$stars_off       = 5 - ( $stars_on + $stars_half );
 				} else {
 					$stars_on   = $bupr_avg_rating;
 					$stars_off  = 5 - $bupr_avg_rating;
 					$stars_half = 0;
 				}
+
 				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
+
 				if ( $bupr_avg_rating > 0 ) {
 					?>
-					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-						<span itemprop="ratingValue" content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
-						<span itemprop="bestRating" content="5"></span>
-						<span itemprop="ratingCount" content="<?php echo esc_attr( $rate_counter ); ?>"></span>
-						<span itemprop="reviewCount" content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
-						<span itemprop="itemReviewed" content="Person"></span>
-						<span itemprop="name" content="
-						<?php
-												// Check if the BuddyPress version function exists and compare the version
-						if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
-							// Use bp_members_get_user_slug() for BuddyPress v12.0.0 and above
-							echo esc_attr( bp_members_get_user_slug( bp_displayed_user_id() ) );
-						} else {
-							// Use bp_core_get_username() for older versions
-							echo esc_attr( bp_core_get_username( bp_displayed_user_id() ) );
-						}
-						?>
-														"></span>
-
-						<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( bp_displayed_user_id(), false, true ) ); ?>"></span>
-						<?php
-						echo "<div class='member-review-stars'>";
-						for ( $i = 1; $i <= $stars_on; $i++ ) {
-							?>
-							<span class="fas fa-star bupr-star-rate"></span>
+					<!-- Left-aligned container for member profile reviews -->
+					<div class="bupr-member-review-wrapper">
+						<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+							<span itemprop="ratingValue" content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
+							<span itemprop="bestRating" content="5"></span>
+							<span itemprop="ratingCount" content="<?php echo esc_attr( $rate_counter ); ?>"></span>
+							<span itemprop="reviewCount" content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
+							<span itemprop="itemReviewed" content="Person"></span>
+							<span itemprop="name" content="
 							<?php
-						}
-
-						for ( $i = 1; $i <= $stars_half; $i++ ) {
+								if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
+									echo esc_attr( bp_members_get_user_slug( bp_displayed_user_id() ) );
+								} else {
+									echo esc_attr( bp_core_get_username( bp_displayed_user_id() ) );
+								}
 							?>
-							<span class="fas fa-star-half-alt bupr-star-rate"></span>
-							<?php
-						}
+							"></span>
+							<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( bp_displayed_user_id(), false, true ) ); ?>"></span>
 
-						for ( $i = 1; $i <= $stars_off; $i++ ) {
-							?>
-							<span class="far fa-star bupr-star-rate"></span>
-							<?php
-						}
-								echo '</div>';
-								echo "<div class='member-review-stats'>";
-						?>
-						<span>
-
-							<?php
-							esc_html_e( 'Rating ', 'bp-member-reviews' );
-							echo ' : ' . esc_attr( $bupr_avg_rating ) . '/5 - ';
-							if ( $bupr_reviews_count > 1 ) {
-								$review_label = $bupr['review_label_plural'];
-							} else {
-								$review_label = $bupr['review_label'];
-							}
-							echo esc_html( $bupr_reviews_count ) . ' ' . $review_label;
-							?>
-						</span>
+							<div class="bupr-member-review-stars bupr-member-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter ); ?> reviews">
+								<?php
+								// Display the stars
+								for ( $i = 1; $i <= $stars_on; $i++ ) {
+									echo '<span class="fas fa-star bupr-star-rate"></span>';
+								}
+								for ( $i = 1; $i <= $stars_half; $i++ ) {
+									echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
+								}
+								for ( $i = 1; $i <= $stars_off; $i++ ) {
+									echo '<span class="far fa-star bupr-star-rate"></span>';
+								}
+								?>
+								<span class="bupr-member-rating-text">
+									<?php echo esc_html( $bupr_avg_rating ) . '/5 (' . esc_html( $bupr_reviews_count ) . ' reviews)'; ?>
+								</span>
+							</div>
+						</div>
 					</div>
-					</div>
-				<?php } ?>
-
-				<?php
+					<?php
+				}
 			}
 		}
+
+
 
 				/**
 				 * Actions performed to remove edit from bulk options
