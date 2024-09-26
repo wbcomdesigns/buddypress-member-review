@@ -735,6 +735,23 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
     color: inherit;
 }
 
+/* Adjust spacing for the Add Review button when Youzify is active */
+body[class*="youzify"] #bupr-add-review-btn .add-review.button {
+    padding: 10px 20px; /* Adjust padding */
+    margin-top: 15px;   /* Adjust margin if needed */
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px; /* Optional: Add border radius for a rounded look */
+    background-color: #0073aa; /* Optional: Set a background color */
+    color: #fff; /* Optional: Set text color */
+}
+
+/* Optionally, adjust the button's hover state */
+body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
+    background-color: #005177; /* Darken the background on hover */
+}
+
+
 .olympus-theme .bgr-submit-review,
 .olympus-theme .bgr-submit-review:hover {
     color: inherit;
