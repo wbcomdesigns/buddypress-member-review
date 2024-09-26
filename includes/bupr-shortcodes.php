@@ -288,16 +288,35 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			$bupr_review_succes = false;
 			$bupr_flag          = false;
-			$bupr_member        = array();
-			foreach ( get_users() as $user ) {
-				if ( get_current_user_id() !== $user->ID ) {
+			$bupr_member = array();
+
+			// Setting default query arguments
+			$args = array(
+				'exclude' => array( get_current_user_id() ), // Exclude current user directly
+				'fields'  => array( 'ID', 'display_name' ),  // Only get ID and display name
+				'number'  => 100, // Optional: Limit the number of users retrieved at a time
+			);
+			
+			// Apply a filter to the query arguments
+			$args = apply_filters( 'bupr_member_query_args', $args );
+			
+			$user_query = new WP_User_Query( $args );
+			
+			if ( ! empty( $user_query->get_results() ) ) {
+				foreach ( $user_query->get_results() as $user ) {
+					$user_info = get_userdata( $user->ID );
 					$bupr_member[] = array(
 						'member_id'    => $user->ID,
-						'member_name'  => $user->data->display_name,
-						'member_roles' => $user->roles,
+						'member_name'  => $user->display_name,
+						'member_roles' => $user_info->roles, // Fetch roles separately
 					);
 				}
 			}
+			
+			// Apply a filter to allow modification of the member array
+			$bupr_member = apply_filters( 'bupr_member_list', $bupr_member );
+			
+
 
 			$member_args = array(
 				'post_type'      => 'review',
