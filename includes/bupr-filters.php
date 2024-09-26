@@ -52,7 +52,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			// Check if BuddyBoss is active first.
 			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
 				// Use BuddyBoss specific action.
-				add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
+				add_action( 'bp_member_members_list_item', array( $this, 'bupr_rating_directory' ), 50 );
 			} else {
 				// Check the theme package ID to distinguish between BuddyPress Legacy and Nouveau.
 				$theme_package = bp_get_option( '_bp_theme_package_id' );
