@@ -37,6 +37,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			} else {
 				add_action( 'bp_before_member_header_meta', array( $this, 'bupr_member_average_rating' ) );
 			}
+			add_action( 'youzify_after_profile_header_user_meta', array( $this, 'bupr_member_average_rating' ) );
 			add_action( 'bp_setup_admin_bar', array( $this, 'bupr_setup_admin_bar' ), 10 );
 
 			add_action( 'init', array( $this, 'bupr_add_bp_member_reviews_taxonomy_term' ) );
