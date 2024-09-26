@@ -907,50 +907,73 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 		}
 
-				/**
-				 * Create activity on new review create
-				 *
-				 * @since    2.8.1
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Create activity on new review creation.
+		 *
+		 * @since 2.8.1
+		 * @access public
+		 * @author Wbcom Designs
+		 *
+		 * @param int $review_id        The ID of the review post.
+		 * @param int $reviewed_user_id The ID of the user being reviewed.
+		 */
 		public function bupr_create_review_activity( $review_id, $reviewed_user_id ) {
 			global $bupr, $bp;
+			
+			// Apply filter to allow disabling activity creation.
+			$allow_activity = apply_filters( 'bupr_allow_activity_posting', true, $review_id, $reviewed_user_id );
 
+			// If the filter returns false, do not proceed with activity creation.
+			if ( false === $allow_activity ) {
+				return;
+			}
+
+			// Check if the review activity should be created (based on settings).
 			if ( isset( $bupr['review_activity'] ) && 'yes' === $bupr['review_activity'] ) {
+				// Get the review post data.
 				$review = get_post( $review_id );
 				if ( ! empty( $review ) ) {
+					// Get the reviewer's (author's) and reviewed user's profile URLs.
 					$reviewer_user_id   = $review->post_author;
 					$reviewer_user_link = bp_core_get_userlink( $reviewer_user_id );
 					$reviewed_user_link = bp_core_get_userlink( $reviewed_user_id );
-					$content            = $review->post_content;
-					$action             = sprintf(
-						apply_filters(
-							'bupr_member_review_activity_action',
+
+					// Get the review content.
+					$review_content = $review->post_content;
+
+					// Construct the action text (reviewer to reviewed user).
+					$action = sprintf(
+						apply_filters( 'bupr_member_review_activity_action',
 							__( '%1$s posted a new %2$s to %3$s', 'bp-member-reviews' )
 						),
 						$reviewer_user_link,
-						$bupr['review_label'],
+						strtolower( esc_html( $bupr['review_label'] ) ),
 						$reviewed_user_link
 					);
 
-					$activity_id = bp_activity_add(
-						array(
-							'action'        => $action,
-							'content'       => $content,
-							'component'     => $bp->members->id,
-							'type'          => 'member_review',
-							'user_id'       => bp_loggedin_user_id(),
-							'item_id'       => $review_id,
-							'hide_sitewide' => false,
-							'is_spam'       => false,
-							'privacy'       => 'public',
-							'error_type'    => 'bool',
-						)
-					);
+					// Ensure the content is safe.
+					$escaped_content = wp_kses_post( $review_content );
+
+					// Add activity to BuddyPress.
+					bp_activity_add( array(
+						'action'        => $action,
+						'content'       => $escaped_content, // No links or ratings, just review content.
+						'component'     => $bp->members->id,
+						'type'          => 'member_review',
+						'user_id'       => $reviewer_user_id,
+						'item_id'       => $review_id,
+						'secondary_item_id' => $reviewed_user_id,
+						'hide_sitewide' => false,
+						'is_spam'       => false,
+						'privacy'       => 'public',
+					) );
 				}
 			}
 		}
+
+
+
+
 	}
 			new BUPR_Custom_Hooks();
 }

@@ -607,13 +607,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 								$bupr_reciever_login = $bupr_reciever_data->data->user_login;
 
 								// Check BuddyPress version and use the appropriate function
-								if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
-									// Use bp_members_get_user_url() for BuddyPress v12.0.0 and above
-									$bupr_review_url = bp_members_get_user_url($bupr_member_id) . strtolower($bupr['review_label_plural']) . '/view/' . $review_id;
+								// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
+								if ( function_exists( 'bp_members_get_user_url' ) ) {
+									// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
+									$bupr_review_url = bp_members_get_user_url( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $review_id;
 								} else {
-									// Use bp_core_get_user_domain() for older versions
-									$bupr_review_url = bp_core_get_user_domain($bupr_member_id) . strtolower($bupr['review_label_plural']) . '/view/' . $review_id;
+									// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
+									$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $review_id;
 								}
+
 							}
 
 
