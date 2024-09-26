@@ -11,31 +11,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 /* admin setting on dashboard */
 global $bupr;
-$message = 'Hello [user-name], <br><br>
-We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>
-To view the review, simply click on the link below:<br>
-[review-link]<br><br>
-Best regards,<br>
+$message = 'Hello [user-name],
+
+We hope this message finds you well.
+
+We are pleased to inform you that [reviewer-name] has recently submitted a review on your profile. To view the full review and respond, please click on the link below:
+
+[review-link]
+
+We appreciate your engagement in our community and value your contributions.
+
+Best regards,  
 The [site-name] Team';
-$approve_message = 'Hello [site-admin], 
-<br/>
+
+$approve_message = 'Hello [site-admin],
+
 Greetings!
-<br/>
-You have a new review to approve.
-<br/>
-To approve the review, simply click on the link below:
-<br/>
+
+You have received a new review on [site-name] that is pending approval. To review and approve the submission, please click on the link below:
+
 [review-aproval-link]
-<br/>
-Best regards,
-<br/>
+
+Thank you for helping us maintain a vibrant and engaged community.
+
+Best regards,  
 The [site-name] Team';
+
 // get all user for exclude for review.
 $user_roles = array_reverse( get_editable_roles() );
 $bupr_admin_general   = get_option( 'bupr_admin_general_options' );
-$review_email_subject = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'New Review on Your Profile at [site-name]';
+$review_email_subject = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'You Have Received a New Review on [site-name]';
 $review_email_message = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
-$review_approve_email_subject = ( ! empty( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : 'Review approve on Your Profile at [site-name]';
+$review_approve_email_subject = ( ! empty( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : 'A New Review Requires Your Approval on [site-name]';
 $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_email_message'] ) ) ? $bupr_admin_general['review_approve_email_message'] : $approve_message;
 ?>
 <div class="wbcom-tab-content">
@@ -55,7 +62,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr-multi-review">
 								<?php esc_html_e( 'Multiple Reviews', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option, if you want to add functionality for a user to send multiple reviews to same user.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Allow users to submit multiple reviews to the same user.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -69,7 +76,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr-hide-review-button">
 								<?php esc_html_e( 'Show Review Button', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option if you want to show the Add Review button on member profile header.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Display the "Add Review" button on member profile headers.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -83,7 +90,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_review_auto_approval">
 								<?php esc_html_e( 'Auto approve reviews ', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option, if you want to have the reviews automatically approved, else manual approval will be required.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Automatically approve reviews without requiring manual approval.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -97,7 +104,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_member_dir_reviews">
 								<?php esc_html_e( 'Show ratings in member directory', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option, if you want to show ratings at member directory page.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Display member ratings on the member directory page.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -125,7 +132,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_allow_email">
 								<?php esc_html_e( 'Emails ', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option, if you want the member to receive an email when someone adds review in their profile.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Send an email notification to members when someone reviews their profile.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -139,7 +146,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label>
 								<?php esc_html_e( 'Email Subject', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Please add review email subject.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Enter the subject line for review notification emails.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<input id="review_deny_email_subject" class="large-text" name="bupr_admin_general_options[review_email_subject]" value="<?php echo esc_attr( $review_email_subject ); ?>" type="text" placeholder="Please enter review email subject.">
@@ -175,7 +182,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 								<label>
 									<?php esc_html_e( 'Review Approve Email Subject', 'bp-member-reviews' ); ?>
 								</label>
-								<p class="description"><?php esc_html_e( 'Please add a review approval email subject', 'bp-member-reviews' ); ?></p>
+								<p class="description"><?php esc_html_e( 'Enter the subject line for review approval notification emails.', 'bp-member-reviews' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<input id="review_approve_email_subject" class="large-text" name="bupr_admin_general_options[review_approve_email_subject]" value="<?php echo esc_attr( $review_approve_email_subject ); ?>" type="text" placeholder="Please enter review email subject.">
@@ -186,7 +193,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 						<label>
 							<?php esc_html_e( 'Review Approve Email Message', 'bp-member-reviews' ); ?>
 						</label>
-						<p class="description"><?php esc_html_e( 'Please add review approve email message.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Enter the message content for review approval notification emails.', 'bp-member-reviews' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
 						<?php						
@@ -207,7 +214,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_review_notification">
 								<?php esc_html_e( 'BuddyPress Notifications', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option, if you want the member to receive a BuddyPress Notification when someone adds a review in their profile.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Notify members through BuddyPress when they receive a new review.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -221,7 +228,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_review_update">
 								<?php esc_html_e( 'Update Review', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option, if you want the members update/modify their reviews.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Allow members to update or modify their reviews.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -235,7 +242,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="profile_reviews_per_page">
 								<?php esc_html_e( 'Reviews pages show at most', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'This option lets you limit number of reviews in Member Reviews page.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Limit the number of reviews displayed per page on the Member Reviews page.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<input id="profile_reviews_per_page" class="small-text" name="bupr_admin_general_options[profile_reviews_per_page]" step="1" min="1" value="<?php echo esc_attr( $bupr['reviews_per_page'] ); ?>" type="number">
@@ -247,7 +254,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_exc_member">
 								<?php esc_html_e( 'Select member roles to write reviews', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Select user roles which have only right to give review.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Select user roles that are allowed to submit reviews.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_exc_member][]" id="bupr_exc_member" class="bupr_excluding_member" multiple>
@@ -279,7 +286,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_exc_member">
 								<?php esc_html_e( 'User roles to accept reviews', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Select user roles which have you want to give review.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Select user roles that are eligible to receive reviews.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_add_member][]" id="bupr_add_member" class="bupr_adding_member" multiple>
@@ -313,7 +320,7 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_enable_anonymous_reviews">
 								<?php esc_html_e( 'Enable anonymous reviews', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Enable this option if you want users to review members anonymously.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Allow users to submit reviews anonymously.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
