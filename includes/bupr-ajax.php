@@ -594,7 +594,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							do_action( 'gamipress_bp_member_review', $bupr_current_user );
 						}
 
-						do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
+						//do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
 
 						if ( $review_id ) {
 
@@ -703,6 +703,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						}
 						if ( ! empty( $bupr_rated_stars ) ) :
 							update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
+							
+							 // Recalculate reviews for the reviewed user after meta data is updated
+							 do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
 						endif;
 					} else {
 						echo '<p class="bupr-error">';

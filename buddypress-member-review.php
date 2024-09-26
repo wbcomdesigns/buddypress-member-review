@@ -144,3 +144,17 @@ function bupr_site_url( $url ) {
 	}
 	return $url;
 }
+
+/**
+ * Unschedule the cron event on plugin deactivation.
+ */
+function bupr_unschedule_review_recalculation() {
+    $timestamp = wp_next_scheduled( 'bupr_cron_recalculate_user_reviews_batch' );
+    if ( $timestamp ) {
+        wp_unschedule_event( $timestamp, 'bupr_cron_recalculate_user_reviews_batch' );
+    }
+    delete_option( 'bupr_current_batch' ); // Clean up the stored batch number
+}
+register_deactivation_hook( __FILE__, 'bupr_unschedule_review_recalculation' );
+
+

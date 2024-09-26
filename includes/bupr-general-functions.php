@@ -157,9 +157,7 @@ add_filter( 'gamipress_trigger_get_user_id', 'buddypress_member_review_trigger_g
 /**
  * Handle review submission and update user meta with review data.
  *
- * This function is triggered after a review is submitted and will calculate
- * the average rating for the reviewed user. It will then update the 
- * user's metadata to store the total review count and the new aggregate rating.
+ * This function is triggered after a review is submitted or updated.
  *
  * @param int $review_id       ID of the submitted review.
  * @param int $reviewed_user_id ID of the user who received the review.
@@ -167,46 +165,84 @@ add_filter( 'gamipress_trigger_get_user_id', 'buddypress_member_review_trigger_g
 add_action( 'bupr_member_review_after_review_insert', 'bupr_handle_review_submission', 10, 2 );
 
 function bupr_handle_review_submission( $review_id, $reviewed_user_id ) {
-    // Get the star rating from the review meta
-    $review_ratings = get_post_meta( $review_id, 'profile_star_rating', true );
-
-    // Calculate the average rating if it's an array of multiple criteria
-    if ( is_array( $review_ratings ) && ! empty( $review_ratings ) ) {
-        $total_rating = array_sum( $review_ratings );
-        $rating_count = count( $review_ratings );
-        $average_rating = $total_rating / $rating_count;
-    } else {
-        // If it's a single value, cast it to an integer
-        $average_rating = (int) $review_ratings;
-    }
-
-    // Update the user meta with the new review data
-    bupr_update_user_meta_for_reviews( $reviewed_user_id, $average_rating );
+    // Recalculate the review data for the reviewed user
+    bupr_recalculate_user_reviews_for_user( $reviewed_user_id );
 }
 
 /**
- * Update the reviewed user's meta data for review count and aggregate rating.
+ * Recalculate and update review data for a specific user using SQL.
  *
- * This function will update two user meta fields:
- * 1. 'bupr_review_count' - total number of reviews the user has received.
- * 2. 'bupr_aggregate_rating' - the average rating based on all reviews received.
+ * This function recalculates the total number of reviews and the aggregate rating for a specific user.
  *
- * @param int $reviewed_user_id ID of the user being reviewed.
- * @param float $new_rating     Rating given in the current review.
+ * @param int $user_id The ID of the user whose reviews need recalculation.
  */
-function bupr_update_user_meta_for_reviews( $reviewed_user_id, $new_rating ) {
-    // Retrieve current review count and aggregate rating from user meta
-    $current_review_count = (int) get_user_meta( $reviewed_user_id, 'bupr_review_count', true );
-    $current_aggregate_rating = (float) get_user_meta( $reviewed_user_id, 'bupr_aggregate_rating', true );
+function bupr_recalculate_user_reviews_for_user( $user_id ) {
+    global $wpdb;
 
-    // Increment the review count
-    $new_review_count = $current_review_count + 1;
-    update_user_meta( $reviewed_user_id, 'bupr_review_count', $new_review_count );
+    // Fetch all reviews for this user using raw SQL
+    $query = $wpdb->prepare(
+        "
+        SELECT p.ID 
+        FROM {$wpdb->posts} p
+        INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+        WHERE p.post_type = 'review'
+        AND p.post_status = 'publish'
+        AND pm.meta_key = 'linked_bp_member'
+        AND pm.meta_value = %d
+        ",
+        $user_id
+    );
 
-    // Calculate the new aggregate rating based on the new review
-    $new_aggregate_rating = ( ( $current_aggregate_rating * $current_review_count ) + $new_rating ) / $new_review_count;
-    update_user_meta( $reviewed_user_id, 'bupr_aggregate_rating', $new_aggregate_rating );
+    $reviews = $wpdb->get_results( $query );
+
+    // Log the number of reviews found
+    error_log( 'Recalculate function triggered for user ID: ' . $user_id );
+    error_log( 'Total reviews found: ' . count( $reviews ) );
+    error_log( 'Reviews: ' . print_r( $reviews, true ) );
+
+    // Initialize variables to calculate aggregate rating
+    $total_rating = 0;
+    $review_count = count( $reviews );
+
+    if ( $review_count > 0 ) {
+        foreach ( $reviews as $review ) {
+            // Fetch review ratings from post meta
+            $review_ratings = get_post_meta( $review->ID, 'profile_star_rating', true );
+
+            // Log each review being processed
+            error_log( 'Processing Review ID: ' . $review->ID . ' Rating: ' . print_r( $review_ratings, true ) );
+
+            // If the ratings are serialized, unserialize and calculate the average
+            if ( is_array( $review_ratings ) && ! empty( $review_ratings ) ) {
+                $total_rating += array_sum( $review_ratings ) / count( $review_ratings );
+            } else {
+                $total_rating += (int) $review_ratings;
+            }
+        }
+
+        // Calculate the aggregate rating
+        $aggregate_rating = $total_rating / $review_count;
+
+        // Log the calculated aggregate rating
+        error_log( 'Aggregate rating for user ' . $user_id . ': ' . $aggregate_rating );
+
+        // Update user meta with the calculated review count and aggregate rating
+        update_user_meta( $user_id, 'bupr_review_count', $review_count );
+        update_user_meta( $user_id, 'bupr_aggregate_rating', $aggregate_rating );
+
+        // Log the updated review count
+        error_log( 'Review count for user ' . $user_id . ': ' . $review_count );
+    } else {
+        // If no reviews are found, reset the user's review count and aggregate rating
+        update_user_meta( $user_id, 'bupr_review_count', 0 );
+        update_user_meta( $user_id, 'bupr_aggregate_rating', 0 );
+
+        // Log no reviews found
+        error_log( 'No reviews found for user ' . $user_id );
+    }
 }
+
+
 
 /**
  * Recalculate and update review data for a batch of users.
@@ -271,40 +307,6 @@ function bupr_recalculate_user_reviews_batch( $batch_size = 50, $paged = 1 ) {
 }
 
 /**
- * Admin interface to trigger batch recalculation of user reviews.
- */
-function bupr_trigger_recalculate_reviews_batch() {
-    $batch_size = 50; // Number of users to process per batch
-    $paged = isset( $_GET['paged'] ) ? (int) $_GET['paged'] : 1;
-
-    $users_processed = bupr_recalculate_user_reviews_batch( $batch_size, $paged );
-
-    if ( $users_processed < $batch_size ) {
-        echo '<div class="notice notice-success is-dismissible"><p>' . __( 'User reviews recalculation completed.', 'bp-member-reviews' ) . '</p></div>';
-    } else {
-        $next_page = $paged + 1;
-        echo '<div class="notice notice-info"><p>' . __( 'Processing batch ', 'bp-member-reviews' ) . $paged . '...</p></div>';
-        echo '<script>window.location.href = "' . admin_url( 'tools.php?page=bupr-recalculate-reviews&paged=' . $next_page ) . '";</script>';
-    }
-}
-
-/**
- * Add a submenu page to trigger batch recalculation.
- */
-function bupr_add_admin_recalculate_reviews_batch_menu() {
-    add_submenu_page(
-        'tools.php',
-        __( 'Recalculate User Reviews in Batches', 'bp-member-reviews' ),
-        __( 'Recalculate Reviews (Batch)', 'bp-member-reviews' ),
-        'manage_options',
-        'bupr-recalculate-reviews',
-        'bupr_trigger_recalculate_reviews_batch'
-    );
-}
-add_action( 'admin_menu', 'bupr_add_admin_recalculate_reviews_batch_menu' );
-
-
-/**
  * Schedule a cron job for recalculating user reviews in batches.
  */
 function bupr_schedule_review_recalculation() {
@@ -331,18 +333,6 @@ function bupr_cron_recalculate_user_reviews_batch() {
         update_option( 'bupr_current_batch', $paged + 1 );
     }
 }
-
-/**
- * Unschedule the cron event on plugin deactivation.
- */
-function bupr_unschedule_review_recalculation() {
-    $timestamp = wp_next_scheduled( 'bupr_cron_recalculate_user_reviews_batch' );
-    if ( $timestamp ) {
-        wp_unschedule_event( $timestamp, 'bupr_cron_recalculate_user_reviews_batch' );
-    }
-    delete_option( 'bupr_current_batch' ); // Clean up the stored batch number
-}
-register_deactivation_hook( __FILE__, 'bupr_unschedule_review_recalculation' );
 
 
 
