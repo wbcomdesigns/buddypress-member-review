@@ -601,8 +601,8 @@ button.bupr-edit-review-button {
     margin-left: 5px;
 }
 
-/* Disable alignment when legacy template is used */
-body.bp-legacy .bupr-directory-review-parent-container {
+/* Disable alignment when legacy template is used, but exclude when body contains 'youzify' */
+body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
     display: block; /* Disable flexbox alignment */
 }
 
