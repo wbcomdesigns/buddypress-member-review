@@ -305,60 +305,72 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$user_id    = bp_loggedin_user_id();
 			$user_role  = $this->bupr_get_current_user_roles( $user_id );
 
-			if ( ! in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
+			// If user role is excluded from giving reviews, exit early
+			if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
 				return;
 			}
 
+			// Check if the displayed user is not the logged-in user
 			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
 
+				// If exclude_given_members is not empty, process logic
 				if ( ! empty( $bupr['exclude_given_members'] ) ) {
 
-					if ( in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
+					// Check if the logged-in user is not excluded from giving reviews
+					if ( ! in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
+
+						// Construct the review URL
 						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
 						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+
+						// BuddyPress Nouveau template
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
 							<li id="bupr-add-review-btn" class="generic-button">
-							<?php } else { ?>
-								<div id="bupr-add-review-btn" class="generic-button">
-								<?php } ?>
-								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show="<?php echo esc_attr( $review_div ); ?>">
-									<?php
-									/* translators: %s: */
-									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-									?>
+								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button">
+									<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
-								<?php if ( 'nouveau' === $bp_template_option ) { ?>
 							</li>
-						<?php } else { ?>
+							<?php
+						} else { // BuddyPress legacy or other template
+							?>
+							<div id="bupr-add-review-btn" class="generic-button">
+								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button">
+									<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+								</a>
 							</div>
-									<?php
+							<?php
 						}
 					}
-				} else {
+
+				} else { // If exclude_given_members is empty, allow review submission for all members
+
+					// Construct the review URL
 					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+
+					// BuddyPress Nouveau template
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
 						<li id="bupr-add-review-btn" class="generic-button">
-						<?php } else { ?>
-							<div id="bupr-add-review-btn" class="generic-button">
-							<?php } ?>
-							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show="<?php echo esc_attr( $review_div ); ?>">
-						<?php
-						/* translators: %s: */
-						echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-						?>
+							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button">
+								<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 							</a>
-					<?php if ( 'nouveau' === $bp_template_option ) { ?>
 						</li>
-					<?php } else { ?>
+						<?php
+					} else { // BuddyPress legacy or other template
+						?>
+						<div id="bupr-add-review-btn" class="generic-button">
+							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button">
+								<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+							</a>
 						</div>
 						<?php
 					}
 				}
 			}
 		}
+
 
 				/**
 				 * Members whom can only take reviews
