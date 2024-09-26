@@ -33,7 +33,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		}
 
 		/**
-		 * Display top members on front-end.
+		 * Display top members on front-end using optimized SQL queries for ratings and reviews.
+		 * Added filters for future extensibility.
 		 *
 		 * @since    1.0.9
 		 * @author   Wbcom Designs
@@ -41,216 +42,108 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		public function bupr_display_top_members_display( $attrs ) {
 
 			global $wpdb;
-			global $bupr;
-			$atts            = shortcode_atts(
-				array(
+
+			// Extract shortcode attributes
+			$atts = shortcode_atts(
+				apply_filters( 'bupr_display_top_members_shortcode_atts', array(
 					'title'        => '',
 					'total_member' => 5,
 					'type'         => 'top rated',
 					'avatar'       => 'show',
-				),
+				), $attrs ),
 				$attrs
 			);
-			$bupr_type       = 'integer';
-			$bupr_avg_rating = 0;
-			$user_id         = get_current_user_id();
-			// Our variables from the widget settings.
-			$bupr_title              = $atts['title'];
-			$memberLimit             = $atts['total_member'];
-			$topMember               = $atts['type'];
-			$avatar                  = $atts['avatar'];
-			$output                  = '';
-			$bupr_users              = get_users();
-			$bupr_max_review         = array();
-			$bupr_star_rating        = array();
-			$bupr_member_count       = 0;
-			$bupr_total_review_count = '';
-			foreach ( $bupr_users as $user ) {
-				$id              = $user->data->ID;
-				$bupr_type       = 'integer';
-				$bupr_avg_rating = 0;
-				/* Gather all the members reviews */
-				$bupr_args = array(
-					'post_type'      => 'review',
-					'posts_per_page' => -1,
-					'post_status'    => 'publish',
-					'category'       => 'bp-member',
-					'meta_query'     => array(
-						array(
-							'key'     => 'linked_bp_member',
-							'value'   => $id,
-							'compare' => '=',
-						),
-					),
-				);
 
-				$reviews             = get_posts( $bupr_args );
-				$bupr_admin_settings = get_option( 'bupr_admin_settings' );
-				if ( ! empty( $bupr_admin_settings ) ) {
-					$bupr_review_rating_fields = $bupr_admin_settings['profile_rating_fields'];
-				}
-				$bupr_total_rating       = $rate_counter             = 0;
-				$bupr_reviews_count      = count( $reviews );
-				$bupr_total_review_count = '';
-				if ( 0 !== $bupr_reviews_count ) {
-					foreach ( $reviews as $review ) {
-						$rate                = 0;
-						$reviews_field_count = 0;
-						$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
-						if ( ! empty( $review_ratings[0] ) ) {
-							// $reviews_field_count  = count( $bupr_review_rating_fields );
-							if ( ! empty( $bupr_review_rating_fields ) && ! empty( $review_ratings[0] ) ) :
-								foreach ( $review_ratings[0] as $field => $value ) {
-									if ( array_key_exists( $field, $bupr_review_rating_fields ) ) {
-										$rate += $value;
-										$reviews_field_count++;
-									}
-								}
-								if ( 0 !== $reviews_field_count ) {
-									$bupr_total_rating += (int) $rate / $reviews_field_count;
-									$bupr_total_review_count ++;
-									$rate_counter++;
-								}
-							endif;
-						}
+			$bupr_title     = apply_filters( 'bupr_shortcode_title', $atts['title'] );
+			$member_limit   = apply_filters( 'bupr_shortcode_member_limit', $atts['total_member'] );
+			$top_member     = apply_filters( 'bupr_shortcode_type', $atts['type'] );
+			$avatar_display = apply_filters( 'bupr_shortcode_avatar', $atts['avatar'] );
+
+			$output = '';
+
+			// Determine the meta key based on the sorting type (top rated or most reviewed)
+			$meta_key = ( 'top rated' === $top_member ) ? 'bupr_aggregate_rating' : 'bupr_review_count';
+			$meta_key = apply_filters( 'bupr_shortcode_meta_key', $meta_key, $top_member );
+
+			// Query to fetch users based on their aggregate rating or review count
+			$query = $wpdb->prepare(
+				"SELECT user_id, meta_value 
+				FROM {$wpdb->usermeta} 
+				WHERE meta_key = %s
+				ORDER BY CAST(meta_value AS DECIMAL(10,2)) DESC 
+				LIMIT %d", 
+				$meta_key, 
+				$member_limit
+			);
+
+			$top_members = apply_filters( 'bupr_shortcode_query_results', $wpdb->get_results( $query ), $meta_key );
+
+			$output .= '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting">';
+			$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
+			$output .= '<ul class="bupr-member-main">';
+
+			// Display each top member
+			if ( ! empty( $top_members ) ) {
+				foreach ( $top_members as $member ) {
+					$user_id = apply_filters( 'bupr_shortcode_member_id', $member->user_id );
+
+					// Get user's aggregate rating and review count from meta
+					$aggregate_rating = get_user_meta( $user_id, 'bupr_aggregate_rating', true );
+					$review_count     = get_user_meta( $user_id, 'bupr_review_count', true );
+
+					$aggregate_rating = apply_filters( 'bupr_shortcode_aggregate_rating', ( ! empty( $aggregate_rating ) ? round( $aggregate_rating, 2 ) : 0 ), $user_id );
+					$review_count     = apply_filters( 'bupr_shortcode_review_count', ( ! empty( $review_count ) ? $review_count : 0 ), $user_id );
+
+					// Display avatar and user link
+					$output .= '<li class="bupr-members">';
+					if ( 'show' === $avatar_display ) {
+						$output .= apply_filters( 'bupr_shortcode_avatar_display', '<div class="bupr-img-widget">' . get_avatar( $user_id, 50 ) . '</div>', $user_id );
 					}
-
-					if ( 0 !== $bupr_total_review_count && 0 !== $bupr_total_rating ) {
-						$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
-						$bupr_type       = gettype( $bupr_avg_rating );
-					}
-
-					$bupr_stars_on = $stars_off        = $stars_half       = '';
-					if ( 0 !== $bupr_total_review_count && 0 !== $bupr_total_rating ) {
-						$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
-						$bupr_type       = gettype( $bupr_avg_rating );
-					}
-
-					$bupr_max_review[ $user->data->ID ]  = array(
-						'user_id'      => $user->data->ID,
-						'max_review'   => $bupr_reviews_count,
-						'avg_rating'   => $bupr_avg_rating,
-						'member_name'  => $user->data->user_nicename,
-						'avr_type'     => $bupr_type,
-						'rate_counter' => $rate_counter,
-					);
-					$bupr_star_rating[ $user->data->ID ] = array(
-						'user_id'      => $user->data->ID,
-						'max_review'   => $bupr_reviews_count,
-						'avg_rating'   => $bupr_avg_rating,
-						'member_name'  => $user->data->user_nicename,
-						'avr_type'     => $bupr_type,
-						'rate_counter' => $rate_counter,
-					);
-					$bupr_member_count++;
-				}
-			}
-
-			$bupr_members_ratings_data = array();
-			if ( 'top rated' === $topMember ) {
-				usort( $bupr_star_rating, array( $this, 'bupr_get_sort_max_stars' ) );
-				$bupr_members_ratings_data = $bupr_star_rating;
-			} elseif ( 'top reviewed' === $topMember ) {
-				usort( $bupr_max_review, array( $this, 'bupr_get_sort_max_review' ) );
-				$bupr_members_ratings_data = $bupr_max_review;
-			}
-			$output .= '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting ">';
-			$output .= ' <input type="hidden" value="' . esc_attr( $bupr['rating_color'] ) . '" class="bupr-display-rating-color"> ';
-
-			$bupr_user_count = 0;
-			$output         .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
-			$output         .= '<ul class="bupr-member-main">';
-			if ( 0 !== $bupr_member_count ) {
-				foreach ( $bupr_members_ratings_data as $buprKey => $buprValue ) {
-					if ( $bupr_user_count == $memberLimit ) {
-						break;
+					$output .= '<div class="bupr-content-widget">';
+					// Get user profile link based on available BuddyPress function
+					if ( function_exists( 'bp_members_get_user_slug' ) ) {
+						// Use the BuddyPress v12.0.0+ function if it exists
+						$members_profile = bp_members_get_user_slug( $user_id );
 					} else {
-
-						if ( 'show' === $avatar ) {
-							$output .= '<li class="bupr-members"><div class="bupr-img-widget">';
-							$output .= get_avatar( $buprValue['user_id'], 50 );
-							$output .= '</div>';
-							$output .= '<div class="bupr-content-widget">';
-						} else {
-							$output .= '<li class="bupr-members bupr-hide"><div class="bupr-content-widget">';
-						}
-						$members_profile = bp_core_get_userlink( $buprValue['user_id'] );
-						$output         .= '<div class="bupr-member-title">';
-						$output         .= wp_kses_post( $members_profile );
-						$output         .= '</div>';
-
-						$bupr_avg_rating    = $buprValue['avg_rating'];
-						$bupr_reviews_count = $buprValue['max_review'];
-						$stars_on           = $stars_off            = $stars_half           = '';
-						$remaining          = $bupr_avg_rating - (int) $bupr_avg_rating;
-						if ( $remaining > 0 ) {
-							$stars_on        = intval( $bupr_avg_rating );
-							$stars_half      = 1;
-							$bupr_half_squar = 1;
-							$stars_off       = 5 - ( $stars_on + $stars_half );
-						} else {
-							$stars_on   = $bupr_avg_rating;
-							$stars_off  = 5 - $bupr_avg_rating;
-							$stars_half = 0;
-						}
-
-						$output .= '<div class="bupr-member-rating">';
-						if ( $bupr_avg_rating > 0 ) {
-
-							$output .= '<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">';
-							$output .= '<span itemprop="ratingValue"  content=" ' . esc_attr( $bupr_avg_rating ) . '"></span>';
-							$output .= '<span itemprop="bestRating"   content="5"></span>';
-							$output .= '<span itemprop="ratingCount"  content="' . esc_attr( $buprValue['rate_counter'] ) . '"></span>';
-							$output .= '<span itemprop="reviewCount"  content="' . esc_attr( $bupr_reviews_count ) . '"></span>';
-							$output .= '<span itemprop="itemReviewed" content="Person"></span>';
-							// Check if the BuddyPress version function exists and compare the version
-							if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
-								// Use bp_members_get_user_slug() for BuddyPress v12.0.0 and above
-								$user_slug = bp_members_get_user_slug( $buprValue['user_id'] );
-								$output   .= '<span itemprop="name" content="' . esc_attr( $user_slug ) . '"></span>';
-							} else {
-								// Use bp_core_get_username() for older versions
-								$username = bp_core_get_username( $buprValue['user_id'] );
-								$output  .= '<span itemprop="name" content="' . esc_attr( $username ) . '"></span>';
-							}
-
-							$output .= '<span itemprop="url" content="' . esc_attr( bp_core_get_userlink( $buprValue['user_id'], false, true ) ) . '"></span>';
-							$output .= '</div>';
-						}
-
-						for ( $i = 1; $i <= $stars_on; $i++ ) {
-							$output .= '<span class="fas fa-star bupr-star-rate"></span>';
-						}
-
-						for ( $i = 1; $i <= $stars_half; $i++ ) {
-							$output .= '	<span class="fas fa-star-half-alt bupr-star-rate"></span>';
-						}
-
-						for ( $i = 1; $i <= $stars_off; $i++ ) {
-							$output .= '<span class="far fa-star bupr-star-rate"></span>';
-						}
-						$output .= '</div>';
-
-						$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-						$output         .= '<span class="bupr-meta">';
-						/* translators: %s: */
-						$output .= sprintf( esc_html__( 'Rating : ( %1$s )', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
-						$output .= '</span><span class="bupr-meta">';
-						/* translators: %s: */
-						$output .= sprintf( esc_html__( 'Total %1$s : %2$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ), esc_attr( $bupr_reviews_count ) );
-						$output .= '</span></div></li>';
+						// Fallback to the older BuddyPress function
+						$members_profile = bp_core_get_userlink( $user_id );
 					}
+					$output         .= '<div class="bupr-member-title">' . wp_kses_post( $members_profile ) . '</div>';
 
-					$bupr_user_count++;
+					// Display star rating (5-star format) and review count
+					$stars_on   = floor( $aggregate_rating );
+					$stars_half = ( $aggregate_rating - $stars_on >= 0.5 ) ? 1 : 0;
+					$stars_off  = 5 - ( $stars_on + $stars_half );
+
+					$output .= '<div class="bupr-member-rating">';
+					for ( $i = 1; $i <= $stars_on; $i++ ) {
+						$output .= apply_filters( 'bupr_shortcode_star_full', '<span class="fas fa-star bupr-star-rate"></span>', $user_id, $i );
+					}
+					if ( $stars_half ) {
+						$output .= apply_filters( 'bupr_shortcode_star_half', '<span class="fas fa-star-half-alt bupr-star-rate"></span>', $user_id );
+					}
+					for ( $i = 1; $i <= $stars_off; $i++ ) {
+						$output .= apply_filters( 'bupr_shortcode_star_empty', '<span class="far fa-star bupr-star-rate"></span>', $user_id );
+					}
+					$output .= '</div>';
+
+					$aggregate_rating = round( $aggregate_rating, 2 );
+					$output         .= '<span class="bupr-meta">';
+					$output         .= apply_filters( 'bupr_shortcode_rating_text', sprintf( esc_html__( 'Rating: %1$s/5 (%2$s reviews)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ) ), $user_id, $aggregate_rating, $review_count );
+					$output         .= '</span>';
+
+					$output .= '</div></li>';
 				}
 			} else {
-				$output .= '<p>';
-				$output .= esc_html_e( 'No member has been reviewed yet.', 'bp-member-reviews' );
-				$output .= '</p>';
+				$output .= apply_filters( 'bupr_shortcode_no_members_text', '<p>' . esc_html__( 'No members have been reviewed yet.', 'bp-member-reviews' ) . '</p>' );
 			}
+
+			$output .= '</ul>';
 			$output .= '</div>';
-			return $output;
+
+			return apply_filters( 'bupr_shortcode_output', $output );
 		}
+
 
 		/**
 		 * Sort member list according to max review.
