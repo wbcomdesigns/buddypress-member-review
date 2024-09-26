@@ -195,11 +195,6 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
 
     $reviews = $wpdb->get_results( $query );
 
-    // Log the number of reviews found
-    error_log( 'Recalculate function triggered for user ID: ' . $user_id );
-    error_log( 'Total reviews found: ' . count( $reviews ) );
-    error_log( 'Reviews: ' . print_r( $reviews, true ) );
-
     // Initialize variables to calculate aggregate rating
     $total_rating = 0;
     $review_count = count( $reviews );
@@ -208,9 +203,6 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
         foreach ( $reviews as $review ) {
             // Fetch review ratings from post meta
             $review_ratings = get_post_meta( $review->ID, 'profile_star_rating', true );
-
-            // Log each review being processed
-            error_log( 'Processing Review ID: ' . $review->ID . ' Rating: ' . print_r( $review_ratings, true ) );
 
             // If the ratings are serialized, unserialize and calculate the average
             if ( is_array( $review_ratings ) && ! empty( $review_ratings ) ) {
@@ -223,22 +215,15 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
         // Calculate the aggregate rating
         $aggregate_rating = $total_rating / $review_count;
 
-        // Log the calculated aggregate rating
-        error_log( 'Aggregate rating for user ' . $user_id . ': ' . $aggregate_rating );
-
         // Update user meta with the calculated review count and aggregate rating
         update_user_meta( $user_id, 'bupr_review_count', $review_count );
         update_user_meta( $user_id, 'bupr_aggregate_rating', $aggregate_rating );
 
-        // Log the updated review count
-        error_log( 'Review count for user ' . $user_id . ': ' . $review_count );
     } else {
         // If no reviews are found, reset the user's review count and aggregate rating
         update_user_meta( $user_id, 'bupr_review_count', 0 );
         update_user_meta( $user_id, 'bupr_aggregate_rating', 0 );
 
-        // Log no reviews found
-        error_log( 'No reviews found for user ' . $user_id );
     }
 }
 
