@@ -601,6 +601,10 @@ button.bupr-edit-review-button {
     margin-left: 5px;
 }
 
+/* Disable alignment when legacy template is used */
+body.bp-legacy .bupr-directory-review-parent-container {
+    display: block; /* Disable flexbox alignment */
+}
 
 /* Parent container to center the review block */
 .bupr-directory-review-parent-container {
