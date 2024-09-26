@@ -44,6 +44,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_remove_edit_bulk_actions' ), 10, 1 );
 			// add_action('bp_screens', array($this, 'bupr_view_review_tab_function_to_show_screen'));
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
+			add_action( 'youzify_after_profile_header_user_meta', array( $this, 'bupr_add_review_button_on_member_header' ) );
 
 			/*
 			 * Add review link at member's directory if option admin setting is enabled.
