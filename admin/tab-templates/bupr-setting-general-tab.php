@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 /* admin setting on dashboard */
 global $bupr;
+
 $message = 'Hello [user-name],
 
 We hope this message finds you well.
@@ -37,13 +38,15 @@ Thank you for helping us maintain a vibrant and engaged community.
 Best regards,  
 The [site-name] Team';
 
-// get all user for exclude for review.
-$user_roles = array_reverse( get_editable_roles() );
-$bupr_admin_general   = get_option( 'bupr_admin_general_options' );
 $review_email_subject = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'You Have Received a New Review on [site-name]';
 $review_email_message = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
 $review_approve_email_subject = ( ! empty( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : 'A New Review Requires Your Approval on [site-name]';
 $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_email_message'] ) ) ? $bupr_admin_general['review_approve_email_message'] : $approve_message;
+
+// get all user for exclude for review.
+$user_roles = array_reverse( get_editable_roles() );
+$bupr_admin_general   = get_option( 'bupr_admin_general_options' );
+
 ?>
 <div class="wbcom-tab-content">
 	<div class="wbcom-wrapper-admin">
@@ -66,6 +69,8 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
+								<!-- Hidden field to default the value to 'no' if unchecked -->
+								<input type="hidden" name="bupr_admin_general_options[bupr_multi_reviews]" value="no">
 								<input name="bupr_admin_general_options[bupr_multi_reviews]" type="checkbox" id="bupr-multi-review" <?php checked( esc_attr( $bupr['multi_reviews'] ), 'yes' ); ?> value="yes">
 								<div class="bupr-slider bupr-round"></div>
 							</label>
@@ -88,45 +93,60 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_review_auto_approval">
-								<?php esc_html_e( 'Auto approve reviews ', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Auto approve reviews', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Automatically approve reviews without requiring manual approval.', 'bp-member-reviews' ); ?></p>
+							<p class="description">
+								<?php esc_html_e( 'Automatically approve reviews without requiring manual approval.', 'bp-member-reviews' ); ?>
+							</p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
+								<!-- Hidden field to handle unchecked state -->
+								<input type="hidden" name="bupr_admin_general_options[bupr_auto_approve_reviews]" value="no">
 								<input type="checkbox" id="bupr_review_auto_approval" name="bupr_admin_general_options[bupr_auto_approve_reviews]" <?php checked( esc_attr( $bupr['auto_approve_reviews'] ), 'yes' ); ?> value="yes">
 								<div class="bupr-slider bupr-round"></div>
 							</label>
 						</div>
 					</div>
+
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_member_dir_reviews">
 								<?php esc_html_e( 'Show ratings in member directory', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Display member ratings on the member directory page.', 'bp-member-reviews' ); ?></p>
+							<p class="description">
+								<?php esc_html_e( 'Display member ratings on the member directory page.', 'bp-member-reviews' ); ?>
+							</p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
+								<!-- Hidden field to handle unchecked state -->
+								<input type="hidden" name="bupr_admin_general_options[bupr_member_dir_reviews]" value="no">
 								<input type="checkbox" id="bupr_member_dir_reviews" name="bupr_admin_general_options[bupr_member_dir_reviews]" <?php checked( esc_attr( $bupr['dir_view_ratings'] ), 'yes' ); ?> value="yes">
 								<div class="bupr-slider bupr-round"></div>
 							</label>
 						</div>
 					</div>
+
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_allow_email">
-								<?php esc_html_e( 'Emails ', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Emails', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Send an email notification to members when someone reviews their profile.', 'bp-member-reviews' ); ?></p>
+							<p class="description">
+								<?php esc_html_e( 'Send an email notification to members when someone reviews their profile.', 'bp-member-reviews' ); ?>
+							</p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
+								<!-- Hidden field to handle unchecked state -->
+								<input type="hidden" name="bupr_admin_general_options[bupr_allow_email]" value="no">
 								<input type="checkbox" id="bupr_allow_email" name="bupr_admin_general_options[bupr_allow_email]" <?php checked( esc_attr( $bupr['allow_email'] ), 'yes' ); ?> value="yes">
 								<div class="bupr-slider bupr-round"></div>
 							</label>
 						</div>
 					</div>
+
 					<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
 						<div class="wbcom-settings-section-options-heading">
 							<label>
@@ -200,29 +220,39 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							<label for="bupr_review_notification">
 								<?php esc_html_e( 'BuddyPress Notifications', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Notify members through BuddyPress when they receive a new review.', 'bp-member-reviews' ); ?></p>
+							<p class="description">
+								<?php esc_html_e( 'Notify members through BuddyPress when they receive a new review.', 'bp-member-reviews' ); ?>
+							</p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
+								<!-- Hidden field to handle unchecked state -->
+								<input type="hidden" name="bupr_admin_general_options[bupr_allow_notification]" value="no">
 								<input type="checkbox" id="bupr_review_notification" name="bupr_admin_general_options[bupr_allow_notification]" <?php checked( esc_attr( $bupr['allow_notification'] ), 'yes' ); ?> value="yes">
 								<div class="bupr-slider bupr-round"></div>
 							</label>
 						</div>
 					</div>
+
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_review_update">
 								<?php esc_html_e( 'Update Review', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Allow members to update or modify their reviews.', 'bp-member-reviews' ); ?></p>
+							<p class="description">
+								<?php esc_html_e( 'Allow members to update or modify their reviews.', 'bp-member-reviews' ); ?>
+							</p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
+								<!-- Hidden field to handle unchecked state -->
+								<input type="hidden" name="bupr_admin_general_options[bupr_allow_update]" value="no">
 								<input type="checkbox" id="bupr_review_update" name="bupr_admin_general_options[bupr_allow_update]" <?php checked( esc_attr( $bupr['allow_update'] ), 'yes' ); ?> value="yes">
 								<div class="bupr-slider bupr-round"></div>
 							</label>
 						</div>
 					</div>
+
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="profile_reviews_per_page">
