@@ -38,6 +38,11 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 		public function bupr_review_globals() {
 			global $bupr, $wp_roles;
 
+			// Check if $bupr has already been set to avoid reinitializing it.
+			if ( isset( $bupr ) && is_array( $bupr ) ) {
+				return; // Exit the function to prevent overwriting global variables.
+			}
+
 			// Ensure $wp_roles is set correctly.
 			if ( ! isset( $wp_roles ) || ! is_object( $wp_roles ) || ! isset( $wp_roles->roles ) ) {
 				$wp_roles = wp_roles();

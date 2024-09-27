@@ -113,20 +113,6 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 							</label>
 						</div>
 					</div>
-					<!-- <div class="wbcom-settings-section-wrap">
-						<div class="wbcom-settings-section-options-heading">
-							<label for="bupr_member_dir_add_reviews">
-								<?php // esc_html_e( 'Add view review link at member directory', 'bp-member-reviews' ); ?>
-							</label>
-							<p class="description"><?php // esc_html_e( 'Enable this option for Add Review link at member directory.', 'bp-member-reviews' ); ?></p>
-						</div>
-						<div class="wbcom-settings-section-options">
-							<label class="bupr-switch">
-								<input type="checkbox" id="bupr_member_dir_add_reviews" name="bupr_admin_general_options[bupr_member_dir_add_reviews]" <?php // checked( esc_attr( $bupr['dir_view_review_btn'] ), 'yes' ); ?> value="yes">
-								<div class="bupr-slider bupr-round"></div>
-							</label>
-						</div>
-					</div> -->
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_allow_email">
