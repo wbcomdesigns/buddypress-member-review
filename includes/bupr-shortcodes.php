@@ -268,8 +268,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								}
 								?>
 										<p><?php echo esc_html( $message ); ?> </p>
-							</div>
-						</div>
+								</div> <!-- Close div for success/info message -->
 							<?php
 				}
 			}

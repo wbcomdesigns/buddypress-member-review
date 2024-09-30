@@ -854,7 +854,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				 */
 		public function bupr_reviews_form_to_show_content() {
 			?>
-			<div class="bupr-bp-member-review-no-popup-add-block gfgg">
+			<div class="bupr-bp-member-review-no-popup-add-block">
 			<?php
 			if ( is_user_logged_in() ) {
 				do_action( 'bupr_member_review_form' );
