@@ -164,7 +164,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		public function bupr_get_sort_max_stars( $bupr_rating1, $bupr_rating2 ) {
 			return strcmp( $bupr_rating2['avg_rating'], $bupr_rating1['avg_rating'] );
 		}
-		
 		/**
 		 * Display add review form on front-end.
 		 *
@@ -172,7 +171,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_display_review_form() {
-			global $bp, $bupr;
+			global $bp;
+			global $bupr;
 
 			$login_user           = get_current_user_id();
 			$bupr_spinner_src     = includes_url() . 'images/spinner.gif';
@@ -183,38 +183,43 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$bupr_flag          = false;
 			$bupr_member = array();
 
-			// Setting default query arguments to exclude current user and fetch roles
+			// Setting default query arguments
 			$args = array(
-				'exclude' => array( $login_user ),
-				'fields'  => array( 'ID', 'display_name' ),
-				'number'  => 100, // Limit the number of users retrieved at a time
+				'exclude' => array( get_current_user_id() ), // Exclude current user directly
+				'fields'  => array( 'ID', 'display_name' ),  // Only get ID and display name
+				'number'  => 100, // Optional: Limit the number of users retrieved at a time
 			);
-
+			
 			// Apply a filter to the query arguments
 			$args = apply_filters( 'bupr_member_query_args', $args );
-
+			
 			$user_query = new WP_User_Query( $args );
-
+			
 			if ( ! empty( $user_query->get_results() ) ) {
 				foreach ( $user_query->get_results() as $user ) {
 					$user_info = get_userdata( $user->ID );
 					$bupr_member[] = array(
 						'member_id'    => $user->ID,
 						'member_name'  => $user->display_name,
-						'member_roles' => $user_info->roles,
+						'member_roles' => $user_info->roles, // Fetch roles separately
 					);
 				}
 			}
-
+			
 			// Apply a filter to allow modification of the member array
 			$bupr_member = apply_filters( 'bupr_member_list', $bupr_member );
+			
 
-			// Check if the logged-in user has already posted a review
+
 			$member_args = array(
 				'post_type'      => 'review',
 				'posts_per_page' => -1,
-				'post_status'    => array( 'draft', 'publish' ),
+				'post_status'    => array(
+					'draft',
+					'publish',
+				),
 				'author'         => $login_user,
+				'category'       => 'bp-member',
 				'meta_query'     => array(
 					array(
 						'key'     => 'linked_bp_member',
@@ -225,107 +230,49 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			);
 
 			$reviews_args = new WP_Query( $member_args );
-			$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+			if ( ! bp_is_members_component() && ! bp_is_user() ) {
+				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+			}
 
-			// If the user has posted no reviews, show the form
 			if ( 0 === bp_displayed_user_id() ) {
-				$this->bupr_render_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member );
+				$this->bupr_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member );
 			} else {
-				// If multiple reviews are disabled, check if the user has already posted a review
-				$user_post_count = ( 'no' === $bupr['multi_reviews'] ) ? $reviews_args->post_count : 0;
-
-				// Display form or message based on user review history
-				if ( 0 === $user_post_count ) {
-					$this->bupr_render_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member );
+				if ( 'no' === $bupr['multi_reviews'] ) {
+					$user_post_count = $reviews_args->post_count;
 				} else {
-					// Show message if the user has already posted a review
-					?>
-					<div id="message" class="<?php echo ( 'nouveau' === $bp_template_option ) ? 'success bp-feedback bp-messages bp-template-notice' : 'info'; ?>">
-						<span class="bp-icon" aria-hidden="true"></span>
-						<?php
-						if ( 'publish' === $reviews_args->posts[0]->post_status ) {
-							$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
-						} else {
-							$message = ( 'yes' === $auto_approve_reviews ) ?
-								sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label ) :
-								sprintf( esc_html__( 'Thank you for taking the time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
-						}
+					$user_post_count = 0;
+				}
+				if ( 0 === $user_post_count ) {
+					$this->bupr_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member );
+				} else {
+					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+					if ( 'nouveau' === $bp_template_option ) {
 						?>
-						<p><?php echo esc_html( $message ); ?></p>
-					</div>
-					<?php
+							<div id="message" class="success bp-feedback bp-messages bp-template-notice">
+								<span class="bp-icon" aria-hidden="true"></span>
+					<?php } else { ?>
+								<div id="message" class="info">
+										<?php } ?>
+								<?php
+								if ( 'publish' === $reviews_args->posts[0]->post_status ) {
+									/* translators: %s: */
+									$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
+								} else {
+									if ( 'yes' === $auto_approve_reviews ) {
+										/* translators: %s: */
+										$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
+									} else {
+										/* translators: %s: */
+										$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
+									}
+								}
+								?>
+										<p><?php echo esc_html( $message ); ?> </p>
+								</div> <!-- Close div for success/info message -->
+							<?php
 				}
 			}
 		}
-
-		/**
-		 * Renders the review form when the user is allowed to submit reviews.
-		 *
-		 * @param int    $login_user The current user ID.
-		 * @param string $bupr_spinner_src The spinner image source URL.
-		 * @param bool   $bupr_review_succes Review success flag.
-		 * @param bool   $bupr_flag Review flag.
-		 * @param array  $bupr_member The list of members eligible for review.
-		 */
-		private function bupr_render_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member ) {
-			global $bupr;
-
-			$flag = ( 'yes' === $bupr['anonymous_reviews'] );
-
-			// Check if the theme is BuddyPress Nouveau
-			$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-			?>
-			<div id="message" class="success add_review_msg success_review_msg <?php echo ( 'nouveau' === $bp_template_option ) ? 'bp-feedback bp-messages bp-template-notice' : ''; ?>">
-				<span class="bp-icon" aria-hidden="true"></span>
-				<p></p>
-			</div>
-
-			<?php if ( is_user_logged_in() ) : ?>
-				<?php
-				$user  = wp_get_current_user();
-				$roles = (array) $user->roles;
-
-				// Check if the user role is allowed to post reviews
-				if ( ! in_array( $roles[0], $bupr['exclude_given_members'], true ) ) :
-					?>
-					<div class="bupr_not_give_review">
-						<p><?php echo esc_html( 'Sorry, You have not been given permission to review the user !!!' ); ?></p>
-					</div>
-				<?php else : ?>
-					<form action="" method="POST">
-						<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
-						<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_url( BUPR_PLUGIN_URL ); ?>">
-						<div class="bp-member-add-form">
-							<p><?php printf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></p>
-
-							<?php if ( 0 === bp_displayed_user_id() ) : ?>
-								<p>
-									<select name="bupr_member_id" id="bupr_member_review_id">
-										<option value=""><?php esc_html_e( '--Select--', 'bp-member-reviews' ); ?></option>
-										<?php
-										foreach ( $bupr_member as $user ) {
-											if ( in_array( $user['member_roles'][0], $bupr['add_taken_members'], true ) ) {
-												echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
-											}
-										}
-										?>
-									</select>
-									<br/>
-									<span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
-								</p>
-							<?php endif; ?>
-
-							<!-- Form fields for ratings and reviews -->
-							<!-- ... Rest of the form -->
-
-						</div>
-					</form>
-				<?php endif; ?>
-			<?php endif; ?>
-			</div>
-			<?php
-		}
-
 
 		/**
 		 * Check criteria

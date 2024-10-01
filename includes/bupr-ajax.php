@@ -741,9 +741,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$bupr_rating_criteria = array();
 				if ( ! empty( $member_review_rating_fields ) ) {
 					foreach ( $member_review_rating_fields as $bupr_keys => $bupr_fields ) {
-						if ( 'yes' === $bupr_fields ) {
 							$bupr_rating_criteria[] = $bupr_keys;
-						}
 					}
 				}
 
