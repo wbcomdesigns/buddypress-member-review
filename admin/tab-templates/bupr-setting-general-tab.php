@@ -345,6 +345,20 @@ $bupr_admin_general   = get_option( 'bupr_admin_general_options' );
 							</label>
 						</div>
 					</div>
+					<div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
+							<label for="bupr_enable_review_activity">
+								<?php esc_html_e( 'Enable review activity', 'bp-member-reviews' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Allow users to generate review activity.', 'bp-member-reviews' ); ?></p>
+						</div>
+						<div class="wbcom-settings-section-options">
+							<label class="bupr-switch">
+								<input type="checkbox" id="bupr_enable_review_activity" value="yes" name="bupr_admin_general_options[bupr_enable_review_activity]" <?php checked( esc_attr( $bupr['review_activity'] ), 'yes' ); ?>>
+								<div class="bupr-slider bupr-round"></div>
+							</label>
+						</div>
+					</div>
 				</div>
 				<?php submit_button(); ?>
 			</form>

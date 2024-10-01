@@ -919,6 +919,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_create_review_activity( $review_id, $reviewed_user_id ) {
 			global $bupr, $bp;
+
+			if(isset($bupr['review_activity']) && 'yes' !== $bupr['review_activity'] ){
+				return;
+			}
 			
 			// Apply filter to allow disabling activity creation.
 			$allow_activity = apply_filters( 'bupr_allow_activity_posting', true, $review_id, $reviewed_user_id );
