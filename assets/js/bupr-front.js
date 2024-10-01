@@ -152,10 +152,16 @@ jQuery(document).ready(function () {
               sessionStorage.reloadAfterPageLoad = true;
               var date = new Date();
               date.setTime(date.getTime() + 20 * 1000);
-              jQuery.cookie("response", response, {
-                expires: date,
-              });
-              window.location.reload();
+              // jQuery.cookie("response", response, {
+              //   expires: date,
+              // });
+              jQuery(".add_review_msg").show();
+              jQuery(".add_review_msg p").html(response);
+              setTimeout(() => {
+                jQuery(".add_review_msg p").html('');
+                jQuery(".add_review_msg").hide();
+              }, 2000);
+              // window.location.reload();
             }
           );
         }
@@ -192,10 +198,15 @@ jQuery(document).ready(function () {
             sessionStorage.reloadAfterPageLoad = true;
             var date = new Date();
             date.setTime(date.getTime() + 20 * 1000);
-            jQuery.cookie("response", response, {
-              expires: date,
-            });
-            window.location.reload();
+            // jQuery.cookie("response", response, {
+            //   expires: date,
+            // });
+            jQuery(".add_review_msg").show();
+            jQuery(".add_review_msg p").html(response);
+            setTimeout(() => {
+              jQuery(".add_review_msg p").html('');
+              jQuery(".add_review_msg").hide();
+            }, 200);
           }
         );
       }
