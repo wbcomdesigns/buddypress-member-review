@@ -61,7 +61,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_reviews_filter() {
-			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_SPECIAL_CHARS ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_SPECIAL_CHARS ) === 'bupr_reviews_filter' ) {
+			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_reviews_filter' ) {
 				global $bp,$post;
 				global $allowedtags,$allowedposttags;
 				global $bupr;
@@ -320,7 +320,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_filter_ratings() {
-			if ( filter_input( INPUT_POST, 'action', FILTER_SANITIZE_SPECIAL_CHARS ) && filter_input( INPUT_POST, 'action', FILTER_SANITIZE_SPECIAL_CHARS ) === 'bupr_filter_ratings' ) {
+			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_filter_ratings' ) {
 				global $bupr;
 				$filter = sanitize_text_field( filter_input( INPUT_POST, 'filter' ) );
 				$limit  = sanitize_text_field( filter_input( INPUT_POST, 'limit' ) );
@@ -728,7 +728,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			if ( isset( $_POST['action'] ) && 'bupr_edit_review' === $_POST['action'] ) {
 				global $bupr;
 
-				$review_id             = filter_input( INPUT_POST, 'review', FILTER_SANITIZE_SPECIAL_CHARS );
+				$review_id             = ( isset( $_POST['review'] ) ) ? wp_kses_post( $_POST['review'] ) : '';
 				$review                = get_post( $review_id );
 				$member_review_ratings = get_post_meta( $review_id, 'profile_star_rating', false );
 				$return_review         = array();
@@ -795,8 +795,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			if ( isset( $_POST['action'] ) && 'bupr_update_review' === $_POST['action'] ) {
 				global $bupr;
 
-				$review_id       = filter_input( INPUT_POST, 'review_id', FILTER_SANITIZE_STRING );
-				$review_content  = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_STRING );
+				$review_id       = isset( $_POST['review_id'] ) ? sanitize_text_field( wp_unslash( $_POST['review_id'] ) ) : 0;
+				$review_content  = isset( $_POST['bupr_review_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['bupr_review_desc'] ) ) : '';
 				$critaria_rating = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : '';
 				$old_ratings     = get_post_meta( $review_id, 'profile_star_rating', true );
 
