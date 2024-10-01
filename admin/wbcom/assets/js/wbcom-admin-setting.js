@@ -37,8 +37,6 @@ jQuery(document).ready(function (event) {
     $(document).ready(function () {
         /* Mobile Toggle Menu */
         $(".wb-responsive-menu").off("click").on("click", function (e) {
-            alert('asdfadsf');
-            e.preventDefault();
             if ($(".wbcom-admin-settings-page .nav-tab-wrapper ul").hasClass("wbcom-show-mobile-menu")) {
                 $(".wbcom-admin-settings-page .nav-tab-wrapper ul").removeClass("wbcom-show-mobile-menu");
             } else {
