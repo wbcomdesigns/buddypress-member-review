@@ -667,7 +667,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( 'no' === $bupr['auto_approve_reviews'] ) {
 								if ( 'yes' === $bupr['allow_email'] ) {
 									$bupr_to = get_option('admin_email');									
-									$bupr_subject     = $bupr_admin_general['review_approve_email_subject'];
+									$bupr_subject     = ( isset( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : '';
 									$bupr_subject     = str_replace('[site-name]', $site_name, $bupr_subject);
 									$bupr_review_url  = add_query_arg(
 														array(
@@ -676,7 +676,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 														admin_url( 'edit.php' )
 													);
 									$approve_review_link = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';									
-									$bupr_approve_message = $bupr_admin_general['review_approve_email_message'];									
+									$bupr_approve_message = ( isset( $bupr_admin_general['review_approve_email_message'] ) ) ? $bupr_admin_general['review_approve_email_message'] : '';									
 									$bupr_message = str_replace(
 										array( '[review-aproval-link]', '[site-admin]', '[site-name]' ),
 										array( $approve_review_link, $site_admin, $site_name ),
