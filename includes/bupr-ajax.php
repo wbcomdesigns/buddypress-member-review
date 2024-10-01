@@ -512,9 +512,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 				$bupr_multi_reviews         = $bupr['multi_reviews'];
 				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user' );
-				$current_user         		= wp_get_current_user();
-				$user_name                  = $current_user->display_name;				
-				$review_subject             = filter_input( INPUT_POST, 'bupr_review_title' );
+				$current_user         		= wp_get_current_user();				
+				// $review_subject             = filter_input( INPUT_POST, 'bupr_review_title' );
 				$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc' );
 				$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id' );
 				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter' );
@@ -531,6 +530,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				} else {
 					$user_name      = $current_user->display_name;
 				}
+
+				$review_subject = $user_name. " received a " . bupr_profile_review_tab_singular_slug();
 
 				$bupr_count = 0;
 

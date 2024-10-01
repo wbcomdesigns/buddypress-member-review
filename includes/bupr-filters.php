@@ -30,7 +30,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
-
 			add_action( 'wp', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
 			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
 				add_action( 'bp_before_member_in_header_meta', array( $this, 'bupr_member_average_rating' ) );
@@ -46,6 +45,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			// add_action('bp_screens', array($this, 'bupr_view_review_tab_function_to_show_screen'));
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 			add_action( 'youzify_after_profile_header_user_meta', array( $this, 'bupr_add_review_button_on_member_header' ) );
+			add_action( 'bp_activity_after_save', array( $this, 'bupr_add_activity_meta' ) );
+			add_filter( 'bp_get_activity_action', array( $this, 'bupr_hide_username_in_activity' ), 10, 2 );
 
 			/*
 			 * Add review link at member's directory if option admin setting is enabled.
@@ -933,7 +934,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 
 			// Check if the review activity should be created (based on settings).
-			if ( isset( $bupr['review_activity'] ) && 'yes' === $bupr['review_activity'] ) {
 				// Get the review post data.
 				$review = get_post( $review_id );
 				if ( ! empty( $review ) ) {
@@ -972,7 +972,37 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						'privacy'       => 'public',
 					) );
 				}
+		}
+
+		/**
+		* Saved the user name as anonymous if meta in review.
+		 *
+		* @since    1.0.0
+		* @access   public
+		* @author   Wbcom Designs
+		 */
+		public function bupr_add_activity_meta($activity){
+			$is_anonymous = get_post_meta($activity->item_id, 'bupr_anonymous_review_post',true);
+			$anonymous_user = ( $is_anonymous == 'yes' ) ? esc_html__( 'An anonymous user', 'bp-member-reviews' ) : '';
+			if ( isset( $activity->id ) && !empty( $anonymous_user ) ) {
+				bp_activity_add_meta( $activity->id, 'bupr_user_string', $anonymous_user );
 			}
+		}
+
+		/**
+		* Hide the user name if anonymous text available.
+		 *
+		* @since    1.0.0
+		* @access   public
+		* @author   Wbcom Designs
+		 */
+		public function bupr_hide_username_in_activity( $action, $activity ) {
+			$bupr_user_string = bp_activity_get_meta( $activity->id, 'bupr_user_string' );
+			$user_id = $activity->user_id; 
+			if( ! empty( $bupr_user_string ) ){
+				$action = str_replace( bp_core_get_userlink( $user_id ), $bupr_user_string , $action );
+			}
+			return $action;
 		}
 
 
