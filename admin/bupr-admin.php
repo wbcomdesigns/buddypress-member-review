@@ -364,6 +364,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			$bupr_member_id     = get_post_meta( $post->ID, 'linked_bp_member', true );
 			if ( ( 'publish' === $new_status && 'draft' === $old_status ) && 'review' === $post->post_type ) {
                 do_action( 'bupr_member_review_after_review_insert', $post->ID, $bupr_member_id );
+				do_action( 'bupr_sent_review_notification', $bupr_member_id, $post->ID );
 			}
 		}
 		

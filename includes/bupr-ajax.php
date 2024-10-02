@@ -623,7 +623,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 
 							/* send notification to member if  notification is enable */
-							if ( 'yes' === $bupr['allow_notification'] ) {
+							if ( ( 'yes' === $bupr['allow_notification'] ) && $bupr_reviews_status == 'publish') {
 								do_action( 'bupr_sent_review_notification', $bupr_member_id, $review_id );
 							}
 
