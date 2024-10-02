@@ -330,7 +330,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							<?php
 						} else {
 							?>
-					<form action="" method="POST">
+					<form action="" method="POST" id="bupr_review_form_public">
 						<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
 						<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_url( BUPR_PLUGIN_URL ); ?>">
 						<div class="bp-member-add-form">

@@ -22,7 +22,6 @@ jQuery(document).ready(function () {
     var id = jQuery(this).attr("data-attr");
     var parent_id = jQuery(this).parent().attr("id");
     for (i = 1; i <= id; i++) {
-      console.log(jQuery("#" + parent_id).children("." + i));
       jQuery("#" + parent_id)
         .children("." + i)
         .addClass("fas")
@@ -157,6 +156,7 @@ jQuery(document).ready(function () {
               // });
               jQuery(".add_review_msg").show();
               jQuery(".add_review_msg p").html(response);
+              reset_review_form_data();
               setTimeout(() => {
                 jQuery(".add_review_msg p").html('');
                 jQuery(".add_review_msg").hide();
@@ -202,6 +202,7 @@ jQuery(document).ready(function () {
             //   expires: date,
             // });
             jQuery(".add_review_msg").show();
+            reset_review_form_data();
             jQuery(".add_review_msg p").html(response);
             setTimeout(() => {
               jQuery(".add_review_msg p").html('');
@@ -394,6 +395,22 @@ jQuery(document).ready(function () {
       }
     );
   });
+
+    function reset_review_form_data(){
+      jQuery("#bupr_review_form_public")[0].reset();
+      jQuery(".member_stars").each(function (index) {
+        jQuery(this).parent().children().eq(0).val("not_clicked");
+        var id = jQuery(this).attr("data-attr");
+        var parent_id = jQuery(this).parent().attr("id");
+        for (i = 1; i <= id; i++) {
+          jQuery("#" + parent_id)
+            .children("." + i)
+            .removeClass("fas")
+            .addClass("far");
+        }
+      });
+    }
+
 });
 
 /*----------------------------------------
