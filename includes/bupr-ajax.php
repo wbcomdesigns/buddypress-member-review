@@ -525,13 +525,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				if ( ! empty( $site_admins ) ) {
 					$site_admin = $site_admins[0]->display_name;
 				}
+				$bupr_reviewed_user = get_user_by( 'id', $bupr_member_id );
 				if( isset( $anonymous_review ) && $anonymous_review == 'yes' ) {
 					$user_name      = "An anonymous user";
 				} else {
 					$user_name      = $current_user->display_name;
 				}
+				$bupr_reviewed_user_name = $bupr_reviewed_user->display_name;
 
-				$review_subject = $user_name. " received a " . bupr_profile_review_tab_singular_slug();
+				$review_subject = $bupr_reviewed_user_name. " received a " . bupr_profile_review_tab_singular_slug();
 
 				$bupr_count = 0;
 
