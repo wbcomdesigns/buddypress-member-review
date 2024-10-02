@@ -155,7 +155,7 @@ jQuery(document).ready(function () {
               //   expires: date,
               // });
               jQuery(".add_review_msg").show();
-              jQuery(".add_review_msg p").html(response);
+              jQuery(".add_review_msg p").html(response.data);
               reset_review_form_data();
               setTimeout(() => {
                 jQuery(".add_review_msg p").html('');
@@ -203,7 +203,7 @@ jQuery(document).ready(function () {
             // });
             jQuery(".add_review_msg").show();
             reset_review_form_data();
-            jQuery(".add_review_msg p").html(response);
+            jQuery(".add_review_msg p").html(response.data);
             setTimeout(() => {
               jQuery(".add_review_msg p").html('');
               jQuery(".add_review_msg").hide();
@@ -233,9 +233,9 @@ jQuery(document).ready(function () {
           limit: limit,
         },
         function (response) {
-          var obj = JSON.parse(response);
+          // var obj = JSON.parse(response);
           jQ.addClass("selected");
-          jQ.parent().siblings("#bp-member-rating").html(obj.html);
+          jQ.parent().siblings("#bp-member-rating").html(response.data);
         }
       );
     }

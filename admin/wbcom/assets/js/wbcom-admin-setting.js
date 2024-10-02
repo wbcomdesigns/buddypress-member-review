@@ -60,25 +60,25 @@ jQuery(document).ready(function (event) {
                     nonce: wbcom_plugin_installer_params.nonce,
                 };
                 $.post(ajaxurl, data, function (response) {
-                    if ("paid_extension" == response) {
+                    if ("paid_extension" == response.data) {
                         $("#wbcom-learndash-extension").hide();
                         $("#wbcom-themes-list").hide();
                         $("#wbcom-free-extension").hide();
                         $("#wbcom_paid_extention").show();
                     }
-                    if ("free_extension" == response) {
+                    if ("free_extension" == response.data) {
                         $("#wbcom-free-extension").show();
                         $("#wbcom-learndash-extension").hide();
                         $("#wbcom-themes-list").hide();
                         $("#wbcom_paid_extention").hide();
                     }
-                    if ("learndash_extension" == response) {
+                    if ("learndash_extension" == response.data) {
                         $("#wbcom-learndash-extension").show();
                         $("#wbcom-free-extension").hide();
                         $("#wbcom-themes-list").hide();
                         $("#wbcom_paid_extention").hide();
                     }
-                    if ("our_themes" == response) {
+                    if ("our_themes" == response.data) {
                         $("#wbcom-themes-list").show();
                         $("#wbcom-free-extension").hide();
                         $("#wbcom-learndash-extension").hide();

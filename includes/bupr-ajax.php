@@ -306,9 +306,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					</div>';
 
 				}
-				echo wp_kses_post( stripslashes( $html ) );
-				die;
-
+				if( ! empty( $html ) ){
+					wp_send_json_success(wp_kses_post( stripslashes( $html ) ));
+				}else{
+					wp_send_json_error( $html );
+				}
 			}
 		}
 
@@ -440,8 +442,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$result = array(
 					'html' => $html,
 				);
-				echo json_encode( $result );
-				die;
+				if( ! empty( $html ) ){
+					wp_send_json_success($html);
+				}else{
+					wp_send_json_error( $html );
+				}
 			}
 		}
 
@@ -481,8 +486,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 				do_action( 'gamipress_bp_member_review', $author_id );
 
-				echo 'review-approved-successfully';
-				die;
+				wp_send_json_success('review-approved-successfully');
 			}
 		}
 
@@ -688,15 +692,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 									wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
 								}
 								/* translators: %s: */
-								echo sprintf( esc_html__( 'Thank you for taking time to write this %1$s. Your %1$s will display on members\' profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+								wp_send_json_success(sprintf( esc_html__( 'Thank you for taking time to write this %1$s. Your %1$s will display on members\' profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ));
 							} else {
 								/* translators: %s: */
-								echo sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+								wp_send_json_success( sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ) );
 							}
 						} else {
-							echo '<p class="bupr-error">';
-							esc_html_e( 'Please try again!', 'bp-member-reviews' );
-							echo '</p>';
+							wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'Please try again!', 'bp-member-reviews' ) . '</p>' );
 						}						
 						wp_set_object_terms( $review_id, 'BP Member', 'review_category' );
 						update_post_meta( $review_id, 'linked_bp_member', $bupr_member_id );
@@ -713,13 +715,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 						endif;
 					} else {
-						echo '<p class="bupr-error">';
-						esc_html_e( 'Please select a member.', 'bp-member-reviews' );
-						echo '</p>';
+						wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'Please select a member.', 'bp-member-reviews' ) . '</p>' );
 					}
 				} else {
 					/* translators: %s: */
-					echo sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+					wp_send_json_success( sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ) );
 				}
 				die;
 			}

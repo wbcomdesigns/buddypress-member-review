@@ -41,8 +41,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			$action              = isset( $_POST['action'] ) ? sanitize_text_field( wp_unslash( $_POST['action'] ) ) : '';
 			if ( ! empty( $wbcom_setting_nonce ) && wp_verify_nonce( $wbcom_setting_nonce, 'wbcom_admin_setting_nonce' ) && 'wbcom_addons_cards' === $action ) {
 				$display_extention = isset( $_POST['display_extension'] ) ? sanitize_text_field( wp_unslash( $_POST['display_extension'] ) ) : '';
-				echo esc_html( $display_extention );
-				die;
+				wp_send_json_success( $display_extention );
 			}
 
 		}

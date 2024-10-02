@@ -286,7 +286,7 @@ jQuery(document).ready(
 						'review_id': review_id
 					},
 					function (response) {
-						if (response == 'review-approved-successfully') {
+						if (response.data == 'review-approved-successfully') {
 							window.location.href = window.location.href;
 						} else {
 							console.log("Review not approved!");
