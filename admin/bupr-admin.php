@@ -362,7 +362,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 		public function bupr_generate_activity_review_status_change( $new_status, $old_status, $post ) {
 			$bupr_member_id     = get_post_meta( $post->ID, 'linked_bp_member', true );
-			if ( ( 'publish' === $new_status && 'publish' !== $old_status ) && 'review' === $post->post_type ) {
+			if ( ( 'publish' === $new_status && 'draft' === $old_status ) && 'review' === $post->post_type ) {
                 do_action( 'bupr_member_review_after_review_insert', $post->ID, $bupr_member_id );
 			}
 		}
