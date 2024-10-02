@@ -43,6 +43,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_action( 'admin_init', array( $this, 'bupr_plugin_settings' ) );
 			add_action( 'in_admin_header', array( $this, 'wbcom_hide_all_admin_notices_from_setting_page' ) );
 			add_filter( 'pre_update_option_bupr_admin_settings', array( $this, 'bupr_update_admin_settings' ), 10, 2 );
+			add_action( 'transition_post_status', array( $this, 'bupr_generate_activity_review_status_change' ), 10, 3 );
 			/* Register custom post type review */
 			$bupr_post_types = get_post_types();
 			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
@@ -355,6 +356,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			);
 			register_taxonomy( 'review_category', array( 'review' ), $category_args );
 		}
+
+
+
+
+		public function bupr_generate_activity_review_status_change( $new_status, $old_status, $post ) {
+			$bupr_member_id     = get_post_meta( $post->ID, 'linked_bp_member', true );
+			if ( ( 'publish' === $new_status && 'publish' !== $old_status ) && 'review' === $post->post_type ) {
+                do_action( 'bupr_member_review_after_review_insert', $post->ID, $bupr_member_id );
+			}
+		}
+		
 	}
 	new BUPR_Admin();
 }

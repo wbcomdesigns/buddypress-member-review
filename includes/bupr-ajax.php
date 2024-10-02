@@ -708,7 +708,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
 							
 							 // Recalculate reviews for the reviewed user after meta data is updated
-							 do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
+							 if ( $bupr_reviews_status == 'publish' ) {
+								do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
+							}
 						endif;
 					} else {
 						echo '<p class="bupr-error">';
