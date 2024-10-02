@@ -178,9 +178,9 @@ $bupr_admin_general   = get_option( 'bupr_admin_general_options' );
 							?>
 						</div>					
 					</div>
-					<?php					
+					<?php			
 					if ( ! empty( $bupr_admin_general ) ) {
-						if ( ! array_key_exists( 'bupr_auto_approve_reviews', $bupr_admin_general ) ) {
+						if ( isset($bupr_admin_general['bupr_auto_approve_reviews']) && 'no' === $bupr_admin_general['bupr_auto_approve_reviews'] ) {
 					?>
 					<!-- admin email section -->
 					 <div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
