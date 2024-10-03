@@ -36,7 +36,7 @@ class bupr_members_review_setting extends WP_Widget {
         // Build the SQL query based on the sorting method
         if ( $topMember === 'top-rated' ) {
             // Query for top-rated members (by aggregate rating)
-            $results = $wpdb->get_results(
+            $results = $wpdb->get_results( $wpdb->prepare(
                 "
                 SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
                 FROM $wpdb->usermeta AS um1
@@ -44,12 +44,12 @@ class bupr_members_review_setting extends WP_Widget {
                 WHERE um1.meta_key = 'bupr_aggregate_rating'
                 AND um2.meta_key = 'bupr_review_count'
                 ORDER BY CAST(um1.meta_value AS DECIMAL(10,2)) DESC
-                LIMIT $memberLimit
-                "
+                LIMIT %d
+                ", $memberLimit)
             );
         } elseif ( $topMember === 'top-viewed' ) {
             // Query for most-reviewed members (by review count)
-            $results = $wpdb->get_results(
+            $results = $wpdb->get_results( $wpdb->prepare(
                 "
                 SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
                 FROM $wpdb->usermeta AS um1
@@ -57,8 +57,8 @@ class bupr_members_review_setting extends WP_Widget {
                 WHERE um1.meta_key = 'bupr_aggregate_rating'
                 AND um2.meta_key = 'bupr_review_count'
                 ORDER BY CAST(um2.meta_value AS UNSIGNED) DESC
-                LIMIT $memberLimit
-                "
+                LIMIT %d
+                ", $memberLimit)
             );
         }
 
