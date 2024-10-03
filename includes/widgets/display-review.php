@@ -101,6 +101,7 @@ class bupr_members_review_setting extends WP_Widget {
 
                 // Display review count and consistent rating format (e.g., 5/5 (1 review))
                 echo '</div>';
+                /* translators: %1$s: aggragate rating; %2$s: Review count; %3$s: Reviews. */
                 echo '<span class="bupr-meta">' . sprintf( esc_html__( '%1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ), esc_html__( 'reviews', 'bp-member-reviews' ) ) . '</span>';
                 echo '</div></li>';
             }
