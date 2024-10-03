@@ -30,6 +30,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
         }
 
         $user_id         = bp_displayed_user_id(); // Get the displayed user ID
+        /* translators: %s: Review label; */
         $bupr_title      = isset( $instance['bupr_title'] ) ? apply_filters( 'widget_title', $instance['bupr_title'] ) : sprintf( __( "%s's Ratings", 'bp-member-reviews' ), bp_get_displayed_user_fullname() );
         $rating_limit    = isset( $instance['rating_limit'] ) ? $instance['rating_limit'] : 5;
         $rating_default  = isset( $instance['rating_default'] ) ? $instance['rating_default'] : 'latest';
@@ -114,6 +115,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
 
                     // Display review count and rating (X/5)
                     echo '</div><span class="bupr-meta">';
+                    /* translators: %1$s: average rating; */
                     echo sprintf( esc_html__( '%1$s/5', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
                     echo '</span></div></li>';
 
