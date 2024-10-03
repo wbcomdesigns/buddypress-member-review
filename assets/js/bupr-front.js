@@ -398,7 +398,7 @@ jQuery(document).ready(function () {
 
     function reset_review_form_data(){
       jQuery("#bupr_review_form_public")[0].reset();
-      jQuery("#bupr_review_form_public input[type='hidden']").val(0);
+      jQuery("#bupr_review_form_public .member_rated_stars").val(0);
       jQuery(".member_stars").each(function (index) {
         jQuery(this).parent().children().eq(0).val("not_clicked");
         var id = jQuery(this).attr("data-attr");
