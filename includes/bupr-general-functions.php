@@ -180,7 +180,8 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
     global $wpdb;
 
     // Fetch all reviews for this user using raw SQL
-    $query = $wpdb->prepare(
+
+    $reviews = $wpdb->get_results( $wpdb->prepare(
         "
         SELECT p.ID 
         FROM {$wpdb->posts} p
@@ -191,9 +192,7 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
         AND pm.meta_value = %d
         ",
         $user_id
-    );
-
-    $reviews = $wpdb->get_results( $query );
+    ) );
 
     // Initialize variables to calculate aggregate rating
     $total_rating = 0;
