@@ -129,6 +129,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 					$aggregate_rating = round( $aggregate_rating, 2 );
 					$output         .= '<span class="bupr-meta">';
+					/* translators: %1$s: rating; %2$s: review count */
 					$output         .= apply_filters( 'bupr_shortcode_rating_text', sprintf( esc_html__( 'Rating: %1$s/5 (%2$s reviews)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ) ), $user_id, $aggregate_rating, $review_count );
 					$output         .= '</span>';
 
@@ -369,7 +370,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										?>
 							<div class="multi-review">
 								<div class="bupr-col-4 bupr-criteria-label">
-											<?php esc_html_e( html_entity_decode( $bupr_rating_fields ), 'bp-member-reviews' ); ?>
+											<?php echo esc_html( $bupr_rating_fields ); ?>
 								</div>
 								<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
 									<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo 'not_clicked'; ?>">
@@ -409,10 +410,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								<p class="bupr-hide-subject">
 									<input name="review-subject" id="review_subject" type="text" placeholder="<?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?>" ><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 								</p>
-								<textarea name="review-desc" id="review_desc" placeholder="<?php echo sprintf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
+								<textarea name="review-desc" id="review_desc" placeholder="<?php 
+								/* translators: %s: review label;  */
+								echo sprintf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?>" rows="4" cols="50"></textarea><br/><span class="bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></span>
 							<?php if ( $flag ) { ?>
 									<p>
-										<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php echo sprintf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>
+										<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php 
+											/* translators: %s: review label;  */
+											echo sprintf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>
 									</p>
 			<?php } ?>
 								<p>
