@@ -47,6 +47,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'youzify_after_profile_header_user_meta', array( $this, 'bupr_add_review_button_on_member_header' ) );
 			add_action( 'bp_activity_after_save', array( $this, 'bupr_add_activity_meta' ) );
 			add_filter( 'bp_get_activity_action', array( $this, 'bupr_hide_username_in_activity' ), 10, 2 );
+			add_filter( 'bp_get_activity_user_link', array( $this, 'bupr_change_user_link' ) );
+			add_filter( 'bp_get_activity_avatar', array( $this, 'bupr_change_avatar_image' ));
 
 			/*
 			 * Add review link at member's directory if option admin setting is enabled.
@@ -1025,12 +1027,31 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if( ! empty( $bupr_user_string ) ){
 				$action = str_replace( bp_core_get_userlink( $user_id ), $bupr_user_string , $action );
 			}
-			return $action;
+			return apply_filters( 'bupr_hide_username_in_activity', $action );
 		}
 
+		public function bupr_change_user_link( $user_link_activity ) {
+			global $activities_template;
+			$activity = $activities_template->activity;
+			$is_anonymous = get_post_meta($activity->item_id, 'bupr_anonymous_review_post',true);
+			if( 'yes' === $is_anonymous ){
+			$user_link_activity = '#';
+			}
+			return apply_filters( 'bupr_change_user_link', $user_link_activity );
+		}
 
-
-
+		public function bupr_change_avatar_image( $gravatar_image ) {
+			global $activities_template;
+			$activity = $activities_template->activity;
+			$is_anonymous = get_post_meta($activity->item_id, 'bupr_anonymous_review_post',true);
+			if( 'yes' === $is_anonymous ){
+				$default_avatar = apply_filters( 'bupr_change_default_avatar', 'mystery' );  // Could also use identicon, monsterid, retro, etc.
+				$gravatar_url = 'https://www.gravatar.com/avatar/?s=' . $size . '&d=' . $default_avatar;
+			
+			$gravatar_image =  '<img src="' . esc_url( $gravatar_url ) . '" class="avatar photo" alt="Custom Default Gravatar" />';
+			}
+			return apply_filters( 'bupr_change_avatar_image', $gravatar_image );
+		}
 	}
 			new BUPR_Custom_Hooks();
 }
