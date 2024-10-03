@@ -1042,7 +1042,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$activity = $activities_template->activity;
 			$is_anonymous = get_post_meta($activity->item_id, 'bupr_anonymous_review_post',true);
 			if( 'yes' === $is_anonymous ){
-			$user_link_activity = '#';
+			$user_link_activity = 'javascript:void(0)';
 			}
 			return apply_filters( 'bupr_change_user_link', $user_link_activity );
 		}
