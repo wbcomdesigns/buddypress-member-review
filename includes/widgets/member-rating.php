@@ -66,9 +66,8 @@ class bupr_single_member_rating_widget extends WP_Widget {
             }
         }
 
-        echo $before_widget;
-        echo $before_title . esc_html( $bupr_title ) . $after_title;
-
+        echo $before_widget; // phpcs:ignore.
+        echo $before_title . esc_html( $bupr_title ) . $after_title; // phpcs:ignore.
         // Sorting Logic for Reviews (highest, lowest, latest)
         if ( ! empty( $final_review_arr ) ) {
             if ( 'highest' === $rating_default ) {
@@ -127,7 +126,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
             echo '<p>' . esc_html__( 'No member has been rated yet.', 'bp-member-reviews' ) . '</p>';
         }
 
-        echo $after_widget;
+        echo $after_widget; // phpcs:ignore.
     }
 
     // Function for updating widget options
