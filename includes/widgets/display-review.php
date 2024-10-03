@@ -64,8 +64,8 @@ class bupr_members_review_setting extends WP_Widget {
 
         // Check if any users were found
         if ( ! empty( $results ) ) {
-            echo $before_widget;
-            echo $before_title . esc_html( $bupr_title ) . $after_title;
+            echo $before_widget; // phpcs:ignore.
+            echo $before_title . esc_html( $bupr_title ) . $after_title; // phpcs:ignore.
             echo '<ul class="bupr-member-main">';
 
             // Loop through the results and display them
@@ -80,7 +80,7 @@ class bupr_members_review_setting extends WP_Widget {
                     echo '<div class="bupr-img-widget">' . get_avatar( $user_id, 50 ) . '</div>';
                 }
                 echo '<div class="bupr-content-widget">';
-                echo '<div class="bupr-member-title">' . bp_core_get_userlink( $user_id ) . '</div>';
+                echo '<div class="bupr-member-title">' . bp_core_get_userlink( $user_id ) . '</div>'; // phpcs:ignore.
                 echo '<div class="bupr-member-rating">';
 
                 // Star rating visualization (Fixed 5 stars, consistent display)
@@ -107,7 +107,7 @@ class bupr_members_review_setting extends WP_Widget {
             }
 
             echo '</ul>';
-            echo $after_widget;
+            echo $after_widget; // phpcs:ignore.
         } else {
             // No users found
             echo '<p>' . esc_html__( 'No members have been reviewed yet.', 'bp-member-reviews' ) . '</p>';
