@@ -893,7 +893,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						/* translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link. */
 						'You must <a href="%1$s">login</a> to add a %2$s.'
 						,esc_url( wp_login_url( get_permalink() ) ),
-						strtolower( esc_html( $bupr['review_label'] ) ),
+						esc_html( strtolower( $bupr['review_label'] ) ),
 						); ?></p></div>
 						<?php 
 					} ?>

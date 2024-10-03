@@ -44,10 +44,10 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 */
 		public function bupr_custom_variables() {
 			global $bupr;
-			wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css/bupr-reviews.css' );
-			wp_enqueue_style( 'bupr-font-awesome', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css' );
-			wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css' );
-			wp_enqueue_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js/bupr-front.js', array( 'jquery' ), time(), true );
+			wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css/bupr-reviews.css', array(), BUPR_PLUGIN_VERSION, false);
+			wp_enqueue_style( 'bupr-font-awesome', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
+			wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css', array(), BUPR_PLUGIN_VERSION, false );
+			wp_enqueue_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js/bupr-front.js', array( 'jquery' ), BUPR_PLUGIN_VERSION, true );
 			$title_review   = bupr_profile_review_tab_singular_slug();
 			$cur_name       = bp_get_displayed_user_fullname();
 			$reviews_titles = array(
@@ -69,7 +69,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		public function bupr_styles_method() {
 			global $bupr;
 			$bupr_star_color = $bupr['rating_color'];
-			wp_enqueue_style( 'bupr-rating-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css' );
+			wp_enqueue_style( 'bupr-rating-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css', array(), BUPR_PLUGIN_VERSION, false );
 
 			$custom_css = ".bupr-star-rate {
 			        			color: {$bupr_star_color} !important;
@@ -88,7 +88,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		public function bupr_admin_custom_variables() {
 			
 			if ( ! wp_script_is( 'wbcom-admin-setting-js', 'enqueued' ) ) {
-				wp_enqueue_script( 'wbcom-admin-setting-js', BUPR_PLUGIN_URL . 'admin/wbcom/assets/js/wbcom-admin-setting.js', array( 'jquery' ) );
+				wp_enqueue_script( 'wbcom-admin-setting-js', BUPR_PLUGIN_URL . 'admin/wbcom/assets/js/wbcom-admin-setting.js', array( 'jquery' ) , BUPR_PLUGIN_VERSION, false);
 			}
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
@@ -96,15 +96,15 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					wp_enqueue_script( 'jquery' );
 					wp_enqueue_script( 'jquery-ui-sortable' );
 					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-						wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css' );
+						wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
 					}
 					if ( ! wp_style_is( 'wbcom-select2-css', 'enqueued' ) ) {
-						wp_enqueue_style( 'wbcom-select2-css', BUPR_PLUGIN_URL . 'admin/assets/css/select2.min.css' );
+						wp_enqueue_style( 'wbcom-select2-css', BUPR_PLUGIN_URL . 'admin/assets/css/select2.min.css', array(), BUPR_PLUGIN_VERSION, false );
 					}
 					if ( ! wp_script_is( 'wbcom-select2-js', 'enqueued' ) ) {
-						wp_enqueue_script( 'wbcom-select2-js', BUPR_PLUGIN_URL . 'admin/assets/js/select2.min.js', array( 'jquery' ) );
+						wp_enqueue_script( 'wbcom-select2-js', BUPR_PLUGIN_URL . 'admin/assets/js/select2.min.js', array( 'jquery' ), BUPR_PLUGIN_VERSION, false );
 					}
-					wp_enqueue_script( 'bupr-js-admin', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-admin.js', array( 'jquery' ) );
+					wp_enqueue_script( 'bupr-js-admin', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-admin.js', array( 'jquery' ), BUPR_PLUGIN_VERSION, false );
 
 					wp_localize_script(
 						'bupr-js-admin',
@@ -117,12 +117,12 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 							'nonce'           	  => wp_create_nonce( 'bupr_member_review_ajax' ),
 						)
 					);
-					wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css' );
+					wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css', array(), BUPR_PLUGIN_VERSION, false  );
 					if ( ! wp_script_is( 'wp-color-picker', 'enqueued' ) ) {
 						wp_enqueue_style( 'wp-color-picker' );
 					}
 					/* add wp color picker */
-					wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-color-picker.js', array( 'wp-color-picker' ), false, true );
+					wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL . 'admin/assets/js/bupr-color-picker.js', array( 'wp-color-picker' ), BUPR_PLUGIN_VERSION, false );
 				}
 			}
 		}
