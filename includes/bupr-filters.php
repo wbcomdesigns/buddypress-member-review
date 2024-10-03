@@ -1030,6 +1030,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			return apply_filters( 'bupr_hide_username_in_activity', $action );
 		}
 
+		/**
+		* Change the user url if the activity is of anonymous user.
+		 *
+		* @since    3.2.2
+		* @access   public
+		* @author   Wbcom Designs
+		 */
 		public function bupr_change_user_link( $user_link_activity ) {
 			global $activities_template;
 			$activity = $activities_template->activity;
@@ -1040,6 +1047,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			return apply_filters( 'bupr_change_user_link', $user_link_activity );
 		}
 
+		/**
+		* Change the user gravatar if the activity is of anonymous user.
+		 *
+		* @since    3.2.2
+		* @access   public
+		* @author   Wbcom Designs
+		 */
 		public function bupr_change_avatar_image( $gravatar_image ) {
 			global $activities_template;
 			$activity = $activities_template->activity;
