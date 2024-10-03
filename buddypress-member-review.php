@@ -102,6 +102,7 @@ function bupr_required_plugin_admin_notice() {
 	$bp_plugin   = esc_html__( 'BuddyPress', 'bp-member-reviews' );
 	echo '<div class="error"><p>';
 	printf(
+		 /* translators: %1$s: BuddyPress Member Reviews; %2$s: Buddypress. */
 		esc_html__( '%1$s requires %2$s to be installed and active.', 'bp-member-reviews' ),
 		'<strong>' . esc_html( $plugin_name ) . '</strong>',
 		'<strong>' . esc_html( $bp_plugin ) . '</strong>'
