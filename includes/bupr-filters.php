@@ -871,8 +871,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				<?php } else { ?>
 							<div id="message" class="info">
 							<?php } ?>
-							<p><?php esc_html_e( 'You must login!', 'bp-member-reviews' ); ?>
-							</p>
+							<p><?php echo 'You must <a href="' . wp_login_url( get_permalink() ) . '">login</a> to add a review.'; ?></p>
 							</div>
 						<?php } ?>
 						</div>

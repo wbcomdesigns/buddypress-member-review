@@ -708,10 +708,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 									wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
 								}
 								/* translators: %s: */
-								wp_send_json_success(sprintf( esc_html__( 'Thank you for taking time to write this %1$s. Your %1$s will display on members\' profile after moderator approval.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ));
+								wp_send_json_success(sprintf( esc_html__( 'Thank you for sharing your %s! After admin approval, it will be displayed on members\' profiles.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ));
+								
 							} else {
 								/* translators: %s: */
-								wp_send_json_success( sprintf( esc_html__( 'Thank you for taking the time to write this %1$s!', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ) );
+								wp_send_json_success( sprintf( esc_html__( 'Thank you for sharing your thoughts in this %s!', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ) );
 							}
 						} else {
 							wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'Please try again!', 'bp-member-reviews' ) . '</p>' );
