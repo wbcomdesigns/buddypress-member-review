@@ -114,6 +114,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 							'success_msz' 		  => esc_html__( 'Already Installed & Activated', 'bp-member-reviews' ),
 							'error_msz'   		  => esc_html__( 'There was a problem performing the action.', 'bp-member-reviews' ),
 							'number_validation'   => esc_html__( '* Number input not allowed *', 'bp-member-reviews' ),
+							'nonce'           	  => wp_create_nonce( 'bupr_member_review_ajax' ),
 						)
 					);
 					wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css/bupr-admin.css' );

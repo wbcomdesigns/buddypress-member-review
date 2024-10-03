@@ -870,6 +870,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				 * @author   Wbcom Designs
 				 */
 		public function bupr_reviews_form_to_show_content() {
+			global $bupr;
 			?>
 			<div class="bupr-bp-member-review-no-popup-add-block">
 			<?php
@@ -887,10 +888,16 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				<?php } else { ?>
 							<div id="message" class="info">
 							<?php } ?>
-							<p><?php echo 'You must <a href="' . esc_url( wp_login_url( get_permalink() ) ) . '">login</a> to add a review.'; ?></p>
-							</div>
-						<?php } ?>
-						</div>
+							<p><?php 
+							printf(
+						/* translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link. */
+						'You must <a href="%1$s">login</a> to add a %2$s.'
+						,esc_url( wp_login_url( get_permalink() ) ),
+						strtolower( esc_html( $bupr['review_label'] ) ),
+						); ?></p></div>
+						<?php 
+					} ?>
+					</div>
 			<?php
 		}
 

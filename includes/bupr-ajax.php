@@ -475,18 +475,20 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_approve_review() {
-			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_approve_review') {
-				$rid  =  isset( $_POST['review_id'] ) ? sanitize_text_field( $_POST['review_id'] ) : '';
-				$args = array(
-					'ID'          => $rid,
-					'post_status' => 'publish',
-				);
-				wp_update_post( $args );
-				$author_id = get_post_field( 'post_author', $rid );
-
-				do_action( 'gamipress_bp_member_review', $author_id );
-
-				wp_send_json_success('review-approved-successfully');
+			if(check_ajax_referer('bupr_member_review_ajax','nonce')){
+				if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_approve_review') {
+					$rid  =  isset( $_POST['review_id'] ) ? sanitize_text_field( wp_unslash( $_POST['review_id'] ) ) : '';
+					$args = array(
+						'ID'          => $rid,
+						'post_status' => 'publish',
+					);
+					wp_update_post( $args );
+					$author_id = get_post_field( 'post_author', $rid );
+	
+					do_action( 'gamipress_bp_member_review', $author_id );
+	
+					wp_send_json_success('review-approved-successfully');
+				}
 			}
 		}
 
@@ -736,7 +738,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			if ( isset( $_POST['action'] ) && 'bupr_edit_review' === $_POST['action'] ) {
 				global $bupr;
 
-				$review_id             = ( isset( $_POST['review'] ) ) ? wp_kses_post( $_POST['review'] ) : '';
+				$review_id             = ( isset( $_POST['review'] ) ) ?  sanitize_text_field( wp_unslash( $_POST['review'] ) ) : '';
 				$review                = get_post( $review_id );
 				$member_review_ratings = get_post_meta( $review_id, 'profile_star_rating', false );
 				$return_review         = array();

@@ -283,7 +283,8 @@ jQuery(document).ready(
 					bupr_admin_ajax_object.ajaxurl,
 					{
 						'action': 'bupr_approve_review',
-						'review_id': review_id
+						'review_id': review_id,
+						'nonce' : bupr_admin_ajax_object.nonce,
 					},
 					function (response) {
 						if (response.data == 'review-approved-successfully') {
