@@ -117,8 +117,10 @@ if ( ! empty( $review_id ) ) {
 									<?php echo esc_html( $review_date ); ?>
 								</time>
 						</span>
-						<?php echo '</div>'; ?>
-						<div class="bupr-col-12 description"><?php echo wp_kses( $review->post_content, $allowedposttags ); ?></div>
+						<?php echo '</div>'; 
+						$bupr_post_content = ( is_object( $review ) && ! empty( $review ) && isset( $review->post_content ) ) ? $review->post_content : '';
+						?>
+						<div class="bupr-col-12 description"><?php echo wp_kses( $bupr_post_content, $allowedposttags ); ?></div>
 						<?php
 						// $bupr_rating_criteria = array();
 						// if ( ! empty( $bupr['active_rating_fields'] ) ) {
