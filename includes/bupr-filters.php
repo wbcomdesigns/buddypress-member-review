@@ -1002,7 +1002,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		/**
 		* Saved the user name as anonymous if meta in review.
 		 *
-		* @since    1.0.0
+		* @since    3.2.2
 		* @access   public
 		* @author   Wbcom Designs
 		 */
@@ -1017,7 +1017,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		/**
 		* Hide the user name if anonymous text available.
 		 *
-		* @since    1.0.0
+		* @since    3.2.2
 		* @access   public
 		* @author   Wbcom Designs
 		 */
@@ -1059,6 +1059,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$activity = $activities_template->activity;
 			$is_anonymous = get_post_meta($activity->item_id, 'bupr_anonymous_review_post',true);
 			if( 'yes' === $is_anonymous ){
+				$size = apply_filters( 'bupr_default_avatar_size', 150 );
 				$default_avatar = apply_filters( 'bupr_change_default_avatar', 'mystery' );  // Could also use identicon, monsterid, retro, etc.
 				$gravatar_url = 'https://www.gravatar.com/avatar/?s=' . $size . '&d=' . $default_avatar;
 			
