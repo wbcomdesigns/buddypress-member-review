@@ -329,7 +329,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							?>
 							<li id="bupr-add-review-btn">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-									<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php 
+									 /* translators: %s: Review label; */
+									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</li>
 							<?php
@@ -337,7 +339,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							?>
 							<div id="bupr-add-review-btn">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-									<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php 
+									 /* translators: %s: review label. */
+									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</div>
 							<?php
@@ -355,7 +359,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						?>
 						<li id="bupr-add-review-btn">
 							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-								<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+								<?php 
+								 /* translators: %s: review label. */
+								 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 							</a>
 						</li>
 						<?php
@@ -363,7 +369,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						?>
 						<div id="bupr-add-review-btn">
 							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-								<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+								<?php 
+								 /* translators: %s: review label. */
+								 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 							</a>
 						</div>
 						<?php
@@ -408,7 +416,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								?>
 								<li id="bupr-add-review-btn">
 									<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-										<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+										<?php 
+										 /* translators: %s: review label. */
+										 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 									</a>
 								</li>
 								<?php
@@ -416,7 +426,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								?>
 								<div id="bupr-add-review-btn">
 									<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-										<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+										<?php 
+										 /* translators: %s: review label. */
+										 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 									</a>
 								</div>
 								<?php
@@ -433,7 +445,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							?>
 							<li id="bupr-add-review-btn">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-									<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php 
+									 /* translators: %s: review label. */
+									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</li>
 							<?php
@@ -441,7 +455,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							?>
 							<div id="bupr-add-review-btn">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-									<?php echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php 
+									 /* translators: %s: review label. */
+									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</div>
 							<?php
@@ -947,7 +963,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					// Construct the action text (reviewer to reviewed user).
 					$action = sprintf(
 						apply_filters( 'bupr_member_review_activity_action',
-							__( '%1$s posted a new %2$s to %3$s', 'bp-member-reviews' )
+						/* translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link. */
+						__( '%1$s posted a new %2$s to %3$s', 'bp-member-reviews' )
 						),
 						$reviewer_user_link,
 						strtolower( esc_html( $bupr['review_label'] ) ),
