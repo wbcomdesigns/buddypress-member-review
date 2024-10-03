@@ -66,7 +66,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$meta_key = apply_filters( 'bupr_shortcode_meta_key', $meta_key, $top_member );
 
 			// Query to fetch users based on their aggregate rating or review count
-			$query = $wpdb->prepare(
+			
+			$bupr_user_data = $wpdb->get_results( $wpdb->prepare(
 				"SELECT user_id, meta_value 
 				FROM {$wpdb->usermeta} 
 				WHERE meta_key = %s
@@ -74,9 +75,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				LIMIT %d", 
 				$meta_key, 
 				$member_limit
-			);
-
-			$top_members = apply_filters( 'bupr_shortcode_query_results', $wpdb->get_results( $query ), $meta_key );
+			) );
+			$top_members = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
 
 			$output .= '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting">';
 			$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
