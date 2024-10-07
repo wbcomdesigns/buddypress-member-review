@@ -43,12 +43,7 @@ if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 if ( ! function_exists( 'bupr_plugins_files' ) ) {
 	add_action( 'plugins_loaded', 'bupr_plugins_files' );
 	function bupr_plugins_files() {
-		if ( is_multisite() ) {
-			$active_plugins = get_site_option('active_sitewide_plugins');
-		} else {
-			$active_plugins = get_option('active_plugins');
-		}
-		if ( class_exists( 'BuddyPress' )  && array_key_exists( plugin_basename( __FILE__ ) , $active_plugins )) {
+		if ( class_exists( 'BuddyPress' )  && _is_plugin_active()) {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bupr_admin_page_link' );
 			
 			// List of required files to include.
@@ -72,6 +67,26 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 			}
 		}
 	}
+}
+
+/**
+ * check whether the plugin is active or not.
+ *
+ * @return boolean
+ */
+function _is_plugin_active(){
+	if ( is_multisite() ) {
+		$active_plugins = get_site_option('active_sitewide_plugins');
+		if(array_key_exists( plugin_basename( __FILE__ ) , $active_plugins )){
+			return true;
+		}
+	} else {
+		$active_plugins = get_option('active_plugins');
+		if(in_array( plugin_basename( __FILE__ ) , $active_plugins )){
+			return true;
+		}
+	}
+	return false;
 }
 
 /**
