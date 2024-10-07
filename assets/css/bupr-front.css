@@ -104,6 +104,10 @@
     padding-top: 20px;
 }
 
+.bupr-criteria-label {
+    word-break: break-word;
+}
+
 .bupr-criteria-label span {
     display: inline;
     width: 50%;
@@ -114,6 +118,7 @@
     [class*="bupr-col-"] {
         width: 100%;
     }
+
     .bupr-criteria-label span {
         display: inline;
         width: 100%;
@@ -187,7 +192,6 @@ ul.bupr-member-main li.bupr-members.bupr-hide .bupr-content-widget {
 
 ul.bupr-member-main li.bupr-members .bupr-meta {
     display: block;
-    ;
     font-size: 90%;
     line-height: normal;
     margin-top: 5px;
@@ -243,7 +247,10 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
     transform: scale(1.1);
+    -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s 0s, -webkit-transform 0.25s;
     transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
     z-index: 9999999;
 }
@@ -252,10 +259,13 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 1rem 1.5rem;
     max-width: 30rem;
+    width: -webkit-calc(100% - 30px);
     width: calc(100% - 30px);
     margin: auto;
     border-radius: 8px !important;
@@ -277,14 +287,20 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 .bupr-review-modal-close-button svg:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
     transform: scale(1.1);
+    -webkit-transition: all .3s;
     transition: all .3s;
 }
 
 .bupr-show-modal {
     opacity: 1;
     visibility: visible;
+    -webkit-transform: scale(1.0);
+    -ms-transform: scale(1.0);
     transform: scale(1.0);
+    -webkit-transition: visibility 0s linear 0s, opacity 0.25s 0s, -webkit-transform 0.25s;
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
@@ -562,22 +578,34 @@ button.bupr-edit-review-button {
 .bupr-member-review-wrapper {
     margin: 10px 0;
     text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center; /* Align stars and text vertically */
-    justify-content: flex-start; /* Keep items left-aligned */
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    /* Align stars and text vertically */
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    /* Keep items left-aligned */
 }
 
 .bupr-member-review-stars {
     display: inline-block;
     margin-right: 10px;
-    position: relative; /* For the tooltip */
+    position: relative;
+    /* For the tooltip */
 }
 
 .bupr-member-tooltip::before {
-    content: attr(data-tooltip); /* Get the tooltip content from the custom attribute */
+    content: attr(data-tooltip);
+    /* Get the tooltip content from the custom attribute */
     position: absolute;
     bottom: 150%;
     left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: #333;
     color: #fff;
@@ -587,6 +615,7 @@ button.bupr-edit-review-button {
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
+    -webkit-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -603,12 +632,17 @@ button.bupr-edit-review-button {
 
 /* Disable alignment when legacy template is used, but exclude when body contains 'youzify' */
 body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
-    display: block; /* Disable flexbox alignment */
+    display: block;
+    /* Disable flexbox alignment */
 }
 
 /* Parent container to center the review block */
 .bupr-directory-review-parent-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
     margin: 10px 0;
 }
@@ -617,22 +651,34 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 .bupr-directory-review-wrapper {
     margin: 10px 0;
     text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center; /* Align stars and text vertically */
-    justify-content: flex-start; /* Keep items on a single line */
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    /* Align stars and text vertically */
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    /* Keep items on a single line */
 }
 
 .bupr-directory-review-stars {
     display: inline-block;
     margin-right: 10px;
-    position: relative; /* For the tooltip */
+    position: relative;
+    /* For the tooltip */
 }
 
 .bupr-directory-tooltip::before {
-    content: attr(data-tooltip); /* Get the tooltip content from the custom attribute */
+    content: attr(data-tooltip);
+    /* Get the tooltip content from the custom attribute */
     position: absolute;
     bottom: 150%;
     left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
     transform: translateX(-50%);
     background-color: #333;
     color: #fff;
@@ -642,6 +688,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
+    -webkit-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -701,6 +748,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-bottom: 10px;
 }
@@ -737,20 +785,25 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 /* Adjust spacing for the Add Review button when Youzify is active */
 body[class*="youzify"] #bupr-add-review-btn .add-review.button {
-    padding: 10px 20px; /* Adjust padding */
-    margin-top: 15px;   /* Adjust margin if needed */
+    padding: 10px 20px;
+    /* Adjust padding */
+    margin-top: 15px;
+    /* Adjust margin if needed */
     display: inline-block;
     text-align: center;
-    border-radius: 5px; /* Optional: Add border radius for a rounded look */
-    background-color: #0073aa; /* Optional: Set a background color */
-    color: #fff; /* Optional: Set text color */
+    border-radius: 5px;
+    /* Optional: Add border radius for a rounded look */
+    background-color: #0073aa;
+    /* Optional: Set a background color */
+    color: #fff;
+    /* Optional: Set text color */
 }
 
 /* Optionally, adjust the button's hover state */
 body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
-    background-color: #005177; /* Darken the background on hover */
+    background-color: #005177;
+    /* Darken the background on hover */
 }
-
 
 .olympus-theme .bgr-submit-review,
 .olympus-theme .bgr-submit-review:hover {
@@ -759,20 +812,27 @@ body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
 
 @media only screen and (max-width: 480px) {
     .bupr-members-profiles {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
         align-items: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         gap: 10px;
         float: none;
         width: 100%;
         margin-bottom: 10px;
     }
+
     .bupr-members-profiles .reviewer h4,
     .bupr-members-content {
         margin: 0 !important;
     }
+
     .rating-num {
         margin-left: 0;
     }
+
     .rating-star {
         margin-right: 10px;
     }
@@ -791,7 +851,6 @@ body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
         display: inline-block;
     }
 }
-
 
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
