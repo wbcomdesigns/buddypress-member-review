@@ -43,8 +43,12 @@ if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 if ( ! function_exists( 'bupr_plugins_files' ) ) {
 	add_action( 'plugins_loaded', 'bupr_plugins_files' );
 	function bupr_plugins_files() {
-		$network_active_plugins = get_site_option( 'active_sitewide_plugins' );
-		if ( class_exists( 'BuddyPress' )  && array_key_exists( plugin_basename( __FILE__ ) , $network_active_plugins )) {
+		if ( is_multisite() ) {
+			$active_plugins = get_site_option('active_sitewide_plugins');
+		} else {
+			$active_plugins = get_option('active_plugins');
+		}
+		if ( class_exists( 'BuddyPress' )  && array_key_exists( plugin_basename( __FILE__ ) , $active_plugins )) {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bupr_admin_page_link' );
 			
 			// List of required files to include.
@@ -112,26 +116,28 @@ add_action( 'admin_init', 'bupr_requires_buddypress' );
  * Deactivate the plugin if BuddyPress is not active on multisite.
  */
 function modify_sitewide_plugins($value) {
-    global $current_blog;
-	$current_blog_id = (int) $current_blog->blog_id;
-	$dependent_plugin_basename = 'buddypress/bp-loader.php';
-	if ( !is_network_admin() ) {
-		if( ! array_key_exists( $dependent_plugin_basename, $value ) ){
-			add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-			unset($value[plugin_basename( __FILE__ )]);
-		}else{
-			if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
-				add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
+	if(is_multisite()){
+		global $current_blog;
+		$current_blog_id = (int) $current_blog->blog_id;
+		$dependent_plugin_basename = 'buddypress/bp-loader.php';
+		if ( !is_network_admin() ) {
+			if( ! array_key_exists( $dependent_plugin_basename, $value ) ){
+				add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
 				unset($value[plugin_basename( __FILE__ )]);
-			}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
-				add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
+			}else{
+				if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
+					add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
+					unset($value[plugin_basename( __FILE__ )]);
+				}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
+					add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
+					unset($value[plugin_basename( __FILE__ )]);
+				}
+			}
+		}else{
+			if( ! array_key_exists( $dependent_plugin_basename , $value ) ){
+				add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
 				unset($value[plugin_basename( __FILE__ )]);
 			}
-		}
-	}else{
-		if( ! array_key_exists( $dependent_plugin_basename , $value ) ){
-			add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-			unset($value[plugin_basename( __FILE__ )]);
 		}
 	}
     return $value;
