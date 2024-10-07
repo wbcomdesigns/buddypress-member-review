@@ -137,21 +137,21 @@ function modify_sitewide_plugins($value) {
 		$dependent_plugin_basename = 'buddypress/bp-loader.php';
 		if ( !is_network_admin() ) {
 			if( ! array_key_exists( $dependent_plugin_basename, $value ) ){
-				add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
 				unset($value[plugin_basename( __FILE__ )]);
+				show_admin_notice('bupr_required_plugin_admin_notice');
 			}else{
 				if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
-					add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
 					unset($value[plugin_basename( __FILE__ )]);
+					show_admin_notice('bupr_show_buddypress_root_blog_notice');
 				}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
-					add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
 					unset($value[plugin_basename( __FILE__ )]);
+					show_admin_notice('bupr_show_buddypress_root_blog_notice');
 				}
 			}
 		}else{
 			if( ! array_key_exists( $dependent_plugin_basename , $value ) ){
-				add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
 				unset($value[plugin_basename( __FILE__ )]);
+				show_admin_notice('bupr_required_plugin_admin_notice');
 			}
 		}
 	}
@@ -160,7 +160,15 @@ function modify_sitewide_plugins($value) {
 
 add_filter('site_option_active_sitewide_plugins', 'modify_sitewide_plugins');
 
-
+/**
+ * Show admin notice for plugin when active action is performed.
+ */
+function show_admin_notice($admin_notice){
+	if( isset($_GET['activate']) ) {
+		add_action( 'admin_notices', $admin_notice);
+		unset($_GET['activate']);
+	}
+}
 
 /**
  * Admin notice to indicate BuddyPress is required.
@@ -182,7 +190,7 @@ function bupr_required_plugin_admin_notice() {
  * Show admin notice to inform the user that To-Do List can only be activated on the BuddyPress root blog.
  */
 function bupr_show_buddypress_root_blog_notice() {
-    echo '<div class="notice notice-error is-dismissible">';
+    echo '<div class="notice notice-error error is-dismissible">';
     echo '<p>' . esc_html__( 'Wbcom Designs BP Member Review can only be activated on the BuddyPress root blog.', 'bp-member-reviews' ) . '</p>';
     echo '</div>';
 }
