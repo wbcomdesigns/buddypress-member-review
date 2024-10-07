@@ -542,7 +542,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$bupr_total_rating       = 0;
 			$rate_counter            = 0;
 			$bupr_reviews_count      = count( $reviews );
-			$bupr_total_review_count = '';
+			$bupr_total_review_count = 0;
 
 			if ( 0 !== $bupr_reviews_count ) {
 				foreach ( $reviews as $review ) {
