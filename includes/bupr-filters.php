@@ -306,8 +306,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			global $bp, $bupr;
 			$review_div = 'form';
 			$user_id    = bp_loggedin_user_id();
-			$user_role  = ( !empty( $this->bupr_get_current_user_roles( $user_id ) ) && (!isset($this->bupr_get_current_user_roles( $user_id )[0]) ) ) ? $this->bupr_get_current_user_roles( $user_id )[0] : '';
-
+			$user_role  = ( !empty( $this->bupr_get_current_user_roles( $user_id ) ) ) ? $this->bupr_get_current_user_roles( $user_id )[0] : '';
 			// If user role is excluded from giving reviews, exit early
 			if ( in_array( $user_role, $bupr['exclude_given_members'], true ) ) {
 				return;
