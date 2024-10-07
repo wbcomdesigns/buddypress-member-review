@@ -141,6 +141,14 @@
     clear: both;
 }
 
+.single-headers #bupr-add-review-btn {
+    list-style: none;
+    margin: 10px 10px 0 0;
+}
+
+.single-headers .member-header-actions>#bupr-add-review-btn {
+    margin: 5px 0 10px 2px;
+}
 
 /*--------------------------------------------------------------
 # Widgets

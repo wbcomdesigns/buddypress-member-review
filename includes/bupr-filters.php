@@ -328,21 +328,21 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						// BuddyPress Nouveau template
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
-							<li id="bupr-add-review-btn">
+							<li id="bupr-add-review-btn" class="generic-button">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-									<?php 
-									 /* translators: %s: Review label; */
-									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php
+									/* translators: %s: Review label; */
+									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</li>
 							<?php
 						} else { // BuddyPress legacy or other template
 							?>
-							<div id="bupr-add-review-btn">
+							<div id="bupr-add-review-btn" class="generic-button">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-									<?php 
-									 /* translators: %s: review label. */
-									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php
+									/* translators: %s: review label. */
+									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</div>
 							<?php
@@ -358,21 +358,21 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					// BuddyPress Nouveau template
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
-						<li id="bupr-add-review-btn">
+						<li id="bupr-add-review-btn" class="generic-button">
 							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-								<?php 
-								 /* translators: %s: review label. */
-								 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+								<?php
+								/* translators: %s: review label. */
+								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 							</a>
 						</li>
 						<?php
 					} else { // BuddyPress legacy or other template
 						?>
-						<div id="bupr-add-review-btn">
+						<div id="bupr-add-review-btn" class="generic-button">
 							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button"> <!-- Standard button class -->
-								<?php 
-								 /* translators: %s: review label. */
-								 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+								<?php
+								/* translators: %s: review label. */
+								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 							</a>
 						</div>
 						<?php
@@ -381,59 +381,28 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 		}
 
+		/**
+		 * Members who can only take reviews
+		 */
+		public function bupr_members_right_to_take_review() {
+			global $bp, $bupr;
+			$review_div = 'form';
+			$user_id    = bp_loggedin_user_id();
+			$user_role  = ( !empty( $this->bupr_get_current_user_roles( $user_id ) ) ) ? $this->bupr_get_current_user_roles( $user_id )[0] : '';
+			// Exit early if the user's role is excluded from taking reviews
+			if ( ! in_array( $user_role, $bupr['exclude_given_members'], true ) ) {
+				return;
+			}
 
+			// Check if the displayed user is not the logged-in user
+			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
 
-			/**
-			 * Members who can only take reviews
-			 */
-			public function bupr_members_right_to_take_review() {
-				global $bp, $bupr;
-				$review_div = 'form';
-				$user_id    = bp_loggedin_user_id();
-				$user_role  = ( !empty( $this->bupr_get_current_user_roles( $user_id ) ) ) ? $this->bupr_get_current_user_roles( $user_id )[0] : '';
-				// Exit early if the user's role is excluded from taking reviews
-				if ( ! in_array( $user_role, $bupr['exclude_given_members'], true ) ) {
-					return;
-				}
-				
-				// Check if the displayed user is not the logged-in user
-				if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
-
-					// If add_taken_members is set, process the review logic
-					if ( ! empty( $bupr['add_taken_members'] ) ) {
-						$user_id   = bp_displayed_user_id();
-						$user_role = $this->bupr_get_current_user_roles( $user_id );
-						// Check if the displayed user has the role to take reviews
-						if ( in_array( $user_role[0], $bupr['add_taken_members'], true ) ) {
-
-							// Construct the review URL
-							$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
-							$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-
-							// BuddyPress Nouveau template
-							if ( 'nouveau' === $bp_template_option ) {
-								?>
-								<li id="bupr-add-review-btn">
-									<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-										<?php 
-										 /* translators: %s: review label. */
-										 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
-									</a>
-								</li>
-								<?php
-							} else { // BuddyPress legacy or other template
-								?>
-								<div id="bupr-add-review-btn">
-									<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-										<?php 
-										 /* translators: %s: review label. */
-										 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
-									</a>
-								</div>
-								<?php
-							}
-						}
-					} else { // If add_taken_members is empty, allow reviews for all
+				// If add_taken_members is set, process the review logic
+				if ( ! empty( $bupr['add_taken_members'] ) ) {
+					$user_id   = bp_displayed_user_id();
+					$user_role = $this->bupr_get_current_user_roles( $user_id );
+					// Check if the displayed user has the role to take reviews
+					if ( in_array( $user_role[0], $bupr['add_taken_members'], true ) ) {
 
 						// Construct the review URL
 						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
@@ -442,38 +411,66 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						// BuddyPress Nouveau template
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
-							<li id="bupr-add-review-btn">
+							<li id="bupr-add-review-btn" class="generic-button">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-									<?php 
-									 /* translators: %s: review label. */
-									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php
+									/* translators: %s: review label. */
+									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</li>
 							<?php
 						} else { // BuddyPress legacy or other template
 							?>
-							<div id="bupr-add-review-btn">
+							<div id="bupr-add-review-btn" class="generic-button">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
-									<?php 
-									 /* translators: %s: review label. */
-									 echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+									<?php
+									/* translators: %s: review label. */
+									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
 								</a>
 							</div>
 							<?php
 						}
 					}
+				} else { // If add_taken_members is empty, allow reviews for all
+
+					// Construct the review URL
+					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
+					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
+
+					// BuddyPress Nouveau template
+					if ( 'nouveau' === $bp_template_option ) {
+						?>
+						<li id="bupr-add-review-btn" class="generic-button">
+							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
+								<?php
+								/* translators: %s: review label. */
+								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+							</a>
+						</li>
+						<?php
+					} else { // BuddyPress legacy or other template
+						?>
+						<div id="bupr-add-review-btn" class="generic-button">
+							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review button" show="<?php echo esc_attr( $review_div ); ?>">
+								<?php
+								/* translators: %s: review label. */
+								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
+							</a>
+						</div>
+						<?php
+					}
 				}
 			}
+		}
 
-
-				/**
-				 * Setup Reviews link in admin bar.
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @param    array $wp_admin_nav Member Review add menu array.
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Setup Reviews link in admin bar.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @param    array $wp_admin_nav Member Review add menu array.
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
 			global $bupr;

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 10:50:21+00:00\n"
+"POT-Creation-Date: 2024-10-07 12:18:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1265,10 +1265,10 @@ msgstr ""
 msgid "Member Skills"
 msgstr ""
 
-#: includes/bupr-filters.php:336 includes/bupr-filters.php:346
-#: includes/bupr-filters.php:366 includes/bupr-filters.php:376
-#: includes/bupr-filters.php:423 includes/bupr-filters.php:433
-#: includes/bupr-filters.php:452 includes/bupr-filters.php:462
+#: includes/bupr-filters.php:335 includes/bupr-filters.php:345
+#: includes/bupr-filters.php:365 includes/bupr-filters.php:375
+#: includes/bupr-filters.php:418 includes/bupr-filters.php:428
+#: includes/bupr-filters.php:447 includes/bupr-filters.php:457
 #. translators: %s: Review label;
 #. translators: %s: review label.
 #. translators: %s: review label.
@@ -1280,30 +1280,30 @@ msgstr ""
 msgid "Add %s"
 msgstr ""
 
-#: includes/bupr-filters.php:677
+#: includes/bupr-filters.php:671
 #. translators: %s:
 msgid "View %s"
 msgstr ""
 
-#: includes/bupr-filters.php:681
+#: includes/bupr-filters.php:675
 msgid "Approve"
 msgstr ""
 
-#: includes/bupr-filters.php:778 includes/bupr-filters.php:803
-#: includes/bupr-filters.php:818
+#: includes/bupr-filters.php:772 includes/bupr-filters.php:797
+#: includes/bupr-filters.php:812
 #. translators: Review Label
 #. translators: %s:
 #. translators: %s:
 msgid "Add %1$s"
 msgstr ""
 
-#: includes/bupr-filters.php:976
+#: includes/bupr-filters.php:970
 #. translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user
 #. link.
 msgid "%1$s posted a new %2$s to %3$s"
 msgstr ""
 
-#: includes/bupr-filters.php:1011 includes/bupr-notification.php:50
+#: includes/bupr-filters.php:1005 includes/bupr-notification.php:50
 msgid "An anonymous user"
 msgstr ""
 
