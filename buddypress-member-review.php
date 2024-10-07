@@ -86,13 +86,48 @@ function bupr_admin_page_link( $links ) {
 /**
  * Deactivate the plugin if BuddyPress is not active.
  */
-function bupr_requires_buddypress() {
-	if ( ! class_exists( 'BuddyPress' ) ) {
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-	}
+
+ function bupr_requires_buddypress() {
+        if ( ! class_exists( 'BuddyPress' ) ) {
+            deactivate_plugins( plugin_basename( __FILE__ ) );
+            add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+        }
 }
 add_action( 'admin_init', 'bupr_requires_buddypress' );
+
+
+/**
+ * Deactivate the plugin if BuddyPress is not active on multisite.
+ */
+function modify_sitewide_plugins($value) {
+    global $current_blog;
+	$current_blog_id = (int) $current_blog->blog_id;
+	$dependent_plugin_basename = 'buddypress/bp-loader.php';
+	if ( !is_network_admin() ) {
+		if( ! array_key_exists( $dependent_plugin_basename, $value ) ){
+			add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+			unset($value[plugin_basename( __FILE__ )]);
+		}else{
+			if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
+				add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
+				unset($value[plugin_basename( __FILE__ )]);
+			}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
+				add_action( 'admin_notices', 'bupr_show_buddypress_root_blog_notice' );
+				unset($value[plugin_basename( __FILE__ )]);
+			}
+		}
+	}else{
+		if( ! array_key_exists( $dependent_plugin_basename , $value ) ){
+			add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+			unset($value[plugin_basename( __FILE__ )]);
+		}
+	}
+    return $value;
+}
+
+add_filter('site_option_active_sitewide_plugins', 'modify_sitewide_plugins');
+
+
 
 /**
  * Admin notice to indicate BuddyPress is required.
@@ -111,10 +146,19 @@ function bupr_required_plugin_admin_notice() {
 }
 
 /**
+ * Show admin notice to inform the user that To-Do List can only be activated on the BuddyPress root blog.
+ */
+function bupr_show_buddypress_root_blog_notice() {
+    echo '<div class="notice notice-error is-dismissible">';
+    echo '<p>' . esc_html__( 'Wbcom Designs BP Member Review can only be activated on the BuddyPress root blog.', 'bp-member-reviews' ) . '</p>';
+    echo '</div>';
+}
+
+/**
  * Redirect to plugin settings page after activation.
  */
 function bupr_activation_redirect_settings( $plugin ) {
-	if ( $plugin === plugin_basename( __FILE__ ) && class_exists( 'BuddyPress' ) ) {
+	if ( $plugin === plugin_basename( __FILE__ ) && class_exists( 'BuddyPress' ) && ! is_multisite() ) {
 		wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
 		exit;
 	}
@@ -125,7 +169,7 @@ add_action( 'activated_plugin', 'bupr_activation_redirect_settings' );
  * Perform plugin activation redirect.
  */
 function bp_member_review_do_activation_redirect() {
-	if ( get_transient( '_bp_member_review_is_new_install' ) ) {
+	if ( get_transient( '_bp_member_review_is_new_install' ) && ! is_multisite() ) {
 		delete_transient( '_bp_member_review_is_new_install' );
 		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
 	}
@@ -157,5 +201,4 @@ function bupr_unschedule_review_recalculation() {
     delete_option( 'bupr_current_batch' ); // Clean up the stored batch number
 }
 register_deactivation_hook( __FILE__, 'bupr_unschedule_review_recalculation' );
-
 

@@ -322,9 +322,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					<?php
 					if ( is_user_logged_in() ) {
 						$user  = wp_get_current_user();
-						$roles = (array) $user->roles;
-						if ( ! in_array( $roles[0], $bupr['exclude_given_members'] ) ) {
-							?>
+						$roles = ( isset( $user->roles ) && !empty( $user->roles ) ) ? $user->roles[0] : array();
+						if ( ! in_array( $roles, $bupr['exclude_given_members'] ) ) {
+						?>
 						<div class="bupr_not_give_review">
 								<p><?php echo esc_html( 'Sorry, You have not been given permission to review the user !!!' ); ?></p>
 						</div>
