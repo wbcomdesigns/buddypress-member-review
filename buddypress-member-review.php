@@ -42,7 +42,7 @@ if ( ! function_exists( 'bupr_load_textdomain' ) ) {
  */
 if ( ! function_exists( 'bupr_plugins_files' ) ) {
 	add_action( 'plugins_loaded', 'bupr_plugins_files' );
-	function bupr_plugins_files() {
+	function bupr_plugins_files() {	
 		if ( class_exists( 'BuddyPress' )  && _is_plugin_active()) {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bupr_admin_page_link' );
 			
@@ -77,6 +77,12 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 function _is_plugin_active(){
 	if ( is_multisite() ) {
 		$active_plugins = get_site_option('active_sitewide_plugins');
+		if(empty($active_plugins)){
+			$active_plugins = get_option('active_plugins');
+			if(in_array( plugin_basename( __FILE__ ) , $active_plugins )){
+				return true;
+			}
+		}
 		if(array_key_exists( plugin_basename( __FILE__ ) , $active_plugins )){
 			return true;
 		}
@@ -117,11 +123,11 @@ function bupr_admin_page_link( $links ) {
 			global $current_blog;
 			$current_blog_id = (int) $current_blog->blog_id;
 			$network_active_plugins = get_site_option( 'active_sitewide_plugins' );
-			if ( ! class_exists( 'BuddyPress' ) || !array_key_exists( plugin_basename( __FILE__ ) , $network_active_plugins )) {
+			if ( ! class_exists( 'BuddyPress' ) && !array_key_exists( plugin_basename( __FILE__ ) , $network_active_plugins )) {
 				switch_to_blog( $current_blog_id );
-				deactivate_plugins( plugin_basename( __FILE__ ) );
-				restore_current_blog();
-			}
+				deactivate_plugins( plugin_basename( __FILE__ ) );	
+			} 	
+			restore_current_blog();
 		}
 }
 add_action( 'admin_init', 'bupr_requires_buddypress' );
@@ -136,20 +142,20 @@ function modify_sitewide_plugins($value) {
 		$current_blog_id = (int) $current_blog->blog_id;
 		$dependent_plugin_basename = 'buddypress/bp-loader.php';
 		if ( !is_network_admin() ) {
-			if( ! array_key_exists( $dependent_plugin_basename, $value ) ){
-				unset($value[plugin_basename( __FILE__ )]);
-				show_admin_notice('bupr_required_plugin_admin_notice');
-			}else{
-				if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
+				if( ! class_exists( 'BuddyPress' ) ){
 					unset($value[plugin_basename( __FILE__ )]);
-					show_admin_notice('bupr_show_buddypress_root_blog_notice');
-				}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
-					unset($value[plugin_basename( __FILE__ )]);
-					show_admin_notice('bupr_show_buddypress_root_blog_notice');
+					show_admin_notice('bupr_required_plugin_admin_notice');
+				}else{
+					if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
+						unset($value[plugin_basename( __FILE__ )]);
+						show_admin_notice('bupr_show_buddypress_root_blog_notice');
+					}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
+						unset($value[plugin_basename( __FILE__ )]);
+						show_admin_notice('bupr_show_buddypress_root_blog_notice');
+					}
 				}
-			}
 		}else{
-			if( ! array_key_exists( $dependent_plugin_basename , $value ) ){
+			if( ! class_exists( 'BuddyPress' ) ){
 				unset($value[plugin_basename( __FILE__ )]);
 				show_admin_notice('bupr_required_plugin_admin_notice');
 			}
