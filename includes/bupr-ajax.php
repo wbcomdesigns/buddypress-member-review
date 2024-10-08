@@ -61,7 +61,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_reviews_filter() {
-			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_reviews_filter' ) {
+			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_reviews_filter' ) { // phpcs:ignore.
 				global $bp,$post;
 				global $allowedtags,$allowedposttags;
 				global $bupr;
@@ -322,7 +322,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_filter_ratings() {
-			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_filter_ratings' ) {
+			if ( isset( $_POST['action'] ) && $_POST['action'] === 'bupr_filter_ratings' ) { // phpcs:ignore.
 				global $bupr;
 				$filter = sanitize_text_field( filter_input( INPUT_POST, 'filter' ) );
 				$limit  = sanitize_text_field( filter_input( INPUT_POST, 'limit' ) );

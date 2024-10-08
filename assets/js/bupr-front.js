@@ -252,6 +252,7 @@ jQuery(document).ready(function () {
         {
           action: "bupr_reviews_filter",
           filter: filter,
+          nonce: mail_title.review_nonce,
         },
         function (response) {
           jQuery("#request-review-list").html(response);
