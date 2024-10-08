@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.5.2
-Stable tag: 3.2.0
+Tested up to: 6.6.2
+Stable tag: 3.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ The BuddyPress Member Reviews plugin enhances the Buddypress community by empowe
 
 This plugin offers a customizable review form that supports multiple criteria, each rated up to 5 points. Administrators can add or modify these criteria and adjust their sequence to suit the community's needs. The review form seamlessly integrates into a member's profile page for easy access and can also be displayed on other pages using a shortcode, providing versatility in placement.
 
-To foster a competitive and engaging environment, the BP Member Profile Review plugin introduces a widget to showcase top-rated members, encouraging quality contributions within the community.
+The BuddyPress Member Reviews plugin introduces a widget to showcase top-rated members. This encourages quality contributions within the community and helps foster a competitive and engaging environment.
 
 We've designed this plugin with reliability, scalability, security, and flexibility, ensuring a user-friendly experience that can grow and adapt to your community. Your feedback is invaluable to us, and we welcome any suggestions to enhance this plugin further.
 
@@ -95,6 +95,30 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+= 3.3.0 =
+* Fixes: Resolved avatar and user URL link issue for anonymous reviews.
+* Fixes: Corrected shortcode form issue in BuddyBoss.
+* Fixes: Adjusted pagination for reviews and notifications.
+* Fixes: Addressed review approval notification issue in admin.
+* Fixes: Properly reset review form after submission.
+* Fixes: Corrected issue where reviews could be submitted even in draft status.
+* Fixes: Resolved issue with user name displaying incorrectly in review titles.
+* Fixes: Deprecated warning removed and PHP notices addressed.
+* Improvements: Managed responsive UI for the "Add Review" button on iPad and other mobile views.
+* Improvements: Managed notification display for review count in the WordPress admin bar.
+* Improvements: Added multisite compatibility with proper plugin activation/deactivation checks.
+* Improvements: Enhanced review tab UI for mobile and tablet views.
+* Improvements: Security enhancements, including field validation and review form handling.
+* Improvements: Refined review calculation for individual users.
+* Improvements: Ensured consistent behavior for review activity display settings.
+* Improvements: Code refactoring for better performance and security.
+* Updates: Youzify integration added for displaying reviews on user profile headers.
+* Updates: Included settings and functionality for review activity options.
+* Updates: Standardized button classes for consistent UI design across BuddyPress, BuddyBoss, and Youzify.
+* Updates: Managed tooltip alignment and button styling for different themes (BuddyPress Legacy, BuddyPress Nouveau, and BuddyBoss).
+* Updates: Refined template loading for better GamiPress integration with additional security measures.
+* Updates: PHPCS fixes to maintain code quality and coding standards.
+
 = 3.2.0 =
 * Fix: Resolved an issue where text statuses were not being saved (#171).
 * Fix: Corrected the mobile UI timeline reaction issue for a smoother user experience (#170).
