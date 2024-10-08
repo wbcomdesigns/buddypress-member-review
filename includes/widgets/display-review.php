@@ -36,7 +36,7 @@ class bupr_members_review_setting extends WP_Widget {
         // Build the SQL query based on the sorting method
         if ( $topMember === 'top-rated' ) {
             // Query for top-rated members (by aggregate rating)
-            $results = $wpdb->get_results(
+            $results = $wpdb->get_results( $wpdb->prepare(
                 "
                 SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
                 FROM $wpdb->usermeta AS um1
@@ -44,12 +44,12 @@ class bupr_members_review_setting extends WP_Widget {
                 WHERE um1.meta_key = 'bupr_aggregate_rating'
                 AND um2.meta_key = 'bupr_review_count'
                 ORDER BY CAST(um1.meta_value AS DECIMAL(10,2)) DESC
-                LIMIT $memberLimit
-                "
+                LIMIT %d
+                ", $memberLimit)
             );
         } elseif ( $topMember === 'top-viewed' ) {
             // Query for most-reviewed members (by review count)
-            $results = $wpdb->get_results(
+            $results = $wpdb->get_results( $wpdb->prepare(
                 "
                 SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
                 FROM $wpdb->usermeta AS um1
@@ -57,15 +57,15 @@ class bupr_members_review_setting extends WP_Widget {
                 WHERE um1.meta_key = 'bupr_aggregate_rating'
                 AND um2.meta_key = 'bupr_review_count'
                 ORDER BY CAST(um2.meta_value AS UNSIGNED) DESC
-                LIMIT $memberLimit
-                "
+                LIMIT %d
+                ", $memberLimit)
             );
         }
 
         // Check if any users were found
         if ( ! empty( $results ) ) {
-            echo $before_widget;
-            echo $before_title . esc_html( $bupr_title ) . $after_title;
+            echo $before_widget; // phpcs:ignore.
+            echo $before_title . esc_html( $bupr_title ) . $after_title; // phpcs:ignore.
             echo '<ul class="bupr-member-main">';
 
             // Loop through the results and display them
@@ -80,7 +80,7 @@ class bupr_members_review_setting extends WP_Widget {
                     echo '<div class="bupr-img-widget">' . get_avatar( $user_id, 50 ) . '</div>';
                 }
                 echo '<div class="bupr-content-widget">';
-                echo '<div class="bupr-member-title">' . bp_core_get_userlink( $user_id ) . '</div>';
+                echo '<div class="bupr-member-title">' . bp_core_get_userlink( $user_id ) . '</div>'; // phpcs:ignore.
                 echo '<div class="bupr-member-rating">';
 
                 // Star rating visualization (Fixed 5 stars, consistent display)
@@ -101,12 +101,13 @@ class bupr_members_review_setting extends WP_Widget {
 
                 // Display review count and consistent rating format (e.g., 5/5 (1 review))
                 echo '</div>';
+                /* translators: %1$s: aggragate rating; %2$s: Review count; %3$s: Reviews. */
                 echo '<span class="bupr-meta">' . sprintf( esc_html__( '%1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ), esc_html__( 'reviews', 'bp-member-reviews' ) ) . '</span>';
                 echo '</div></li>';
             }
 
             echo '</ul>';
-            echo $after_widget;
+            echo $after_widget; // phpcs:ignore.
         } else {
             // No users found
             echo '<p>' . esc_html__( 'No members have been reviewed yet.', 'bp-member-reviews' ) . '</p>';

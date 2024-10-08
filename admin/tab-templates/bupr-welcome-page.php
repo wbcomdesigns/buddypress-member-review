@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wbcom-support-info-widgets">
 						<div class="wbcom-support-inner">
 						<h3><span class="dashicons dashicons-sos"></span><?php esc_html_e( 'Support Center', 'bp-member-reviews' ); ?></h3>
-						<p><?php esc_html_e( 'We strive to offer the best customer care via our support center. Once your theme is activated, you can ask us for help anytime.', 'bp-member-reviews' ); ?></p>
+						<p><?php esc_html_e( 'We strive to offer the best customer care via our support center. Once your plugin is activated, you can ask us for help anytime.', 'bp-member-reviews' ); ?></p>
 						<a href="<?php echo esc_url( 'https://wbcomdesigns.com/support/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Get Support', 'bp-member-reviews' ); ?></a>
 					</div>
 					</div>

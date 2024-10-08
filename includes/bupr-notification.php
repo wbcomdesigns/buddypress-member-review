@@ -42,7 +42,7 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_add_review_noti
  */
 function bupr_add_review_notification_format( $action, $item_id, $secondary_item_id, $total_items, $format, $component_action_name, $component_name ) {
 	global $bp, $bupr;
-	$format = 'string';
+
 	if ( 'bupr_add_review_action' === $component_action_name ) {
 		$anonymous_review = get_post_meta( $item_id, 'bupr_anonymous_review_post', true );
 		$user_name        = '';
@@ -75,15 +75,22 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 			$notification_link = bp_core_get_user_domain( $user_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 		}
 
-
 		/* translators: %s: */
 		$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		/* translators: %s: */
 		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
 
+		// Prepare the return value based on the specified format.
 		if ( 'string' === $format ) {
-			$return = sprintf( "<a href='%s' title='%s'>%s</a>", esc_url( $notification_link ), esc_attr( $notification_title ), esc_html( $notification_content ) );
+			// Ensure that the notification content is not empty before creating the link.
+			if ( ! empty( $notification_content ) ) {
+				$return = sprintf( "<a href='%s' title='%s'>%s</a>", esc_url( $notification_link ), esc_attr( $notification_title ), esc_html( $notification_content ) );
+			} else {
+				// Return an empty string if there is no content.
+				$return = '';
+			}
 		} else {
+			// Return an array format.
 			$return = array(
 				'text' => $notification_content,
 				'link' => $notification_link,

@@ -42,8 +42,8 @@ if ( ! function_exists( 'bupr_load_textdomain' ) ) {
  */
 if ( ! function_exists( 'bupr_plugins_files' ) ) {
 	add_action( 'plugins_loaded', 'bupr_plugins_files' );
-	function bupr_plugins_files() {
-		if ( class_exists( 'BuddyPress' ) ) {
+	function bupr_plugins_files() {	
+		if ( class_exists( 'BuddyPress' )  && _is_plugin_active()) {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'bupr_admin_page_link' );
 			
 			// List of required files to include.
@@ -70,6 +70,32 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 }
 
 /**
+ * check whether the plugin is active or not.
+ *
+ * @return boolean
+ */
+function _is_plugin_active(){
+	if ( is_multisite() ) {
+		$active_plugins = get_site_option('active_sitewide_plugins');
+		if(empty($active_plugins)){
+			$active_plugins = get_option('active_plugins');
+			if(in_array( plugin_basename( __FILE__ ) , $active_plugins )){
+				return true;
+			}
+		}
+		if(array_key_exists( plugin_basename( __FILE__ ) , $active_plugins )){
+			return true;
+		}
+	} else {
+		$active_plugins = get_option('active_plugins');
+		if(in_array( plugin_basename( __FILE__ ) , $active_plugins )){
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * Add settings link to plugin action links.
  *
  * @param array $links The plugin setting links array.
@@ -86,13 +112,79 @@ function bupr_admin_page_link( $links ) {
 /**
  * Deactivate the plugin if BuddyPress is not active.
  */
-function bupr_requires_buddypress() {
-	if ( ! class_exists( 'BuddyPress' ) ) {
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-	}
+
+ function bupr_requires_buddypress() {
+		$network_active_plugins = get_site_option( 'active_sitewide_plugins' );
+		if(empty($network_active_plugins)){
+			$network_active_plugins = get_option('active_plugins');
+			$network_active_plugins = array_flip($network_active_plugins);
+		}
+        if ( ! class_exists( 'BuddyPress' ) ) {
+            deactivate_plugins( plugin_basename( __FILE__ ) );
+            add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+        }
+		elseif( is_multisite() ){
+			if ( !is_network_admin() ) {
+				global $current_blog;
+				$current_blog_id = (int) $current_blog->blog_id;
+				switch_to_blog( $current_blog_id );
+				if (!array_key_exists( plugin_basename( __FILE__ ) , $network_active_plugins )) {
+					deactivate_plugins( plugin_basename( __FILE__ ) );	
+				} 	
+				restore_current_blog();
+			}else{
+				if(! array_key_exists( 'buddypress/bp-loader.php' , $network_active_plugins ) ){
+					deactivate_plugins( plugin_basename( __FILE__ ) );	
+					add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+				}
+			}
+		}
 }
 add_action( 'admin_init', 'bupr_requires_buddypress' );
+
+
+/**
+ * Deactivate the plugin if BuddyPress is not active on multisite.
+ */
+function modify_sitewide_plugins($value) {
+	if(is_multisite()){
+		global $current_blog;
+		$current_blog_id = (int) $current_blog->blog_id;
+		$dependent_plugin_basename = 'buddypress/bp-loader.php';
+		if ( !is_network_admin() ) {
+				if( ! class_exists( 'BuddyPress' ) ){
+					unset($value[plugin_basename( __FILE__ )]);
+					show_admin_notice('bupr_required_plugin_admin_notice');
+				}else{
+					if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
+						unset($value[plugin_basename( __FILE__ )]);
+						show_admin_notice('bupr_show_buddypress_root_blog_notice');
+					}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
+						unset($value[plugin_basename( __FILE__ )]);
+						show_admin_notice('bupr_show_buddypress_root_blog_notice');
+					}
+				}
+		}else{
+			if( ! class_exists( 'BuddyPress' ) ){
+				unset($value[plugin_basename( __FILE__ )]);
+				show_admin_notice('bupr_required_plugin_admin_notice');
+			}
+		}
+	}
+    return $value;
+}
+
+add_filter('site_option_active_sitewide_plugins', 'modify_sitewide_plugins');
+
+/**
+ * Show admin notice for plugin when active action is performed.
+ */
+function show_admin_notice($admin_notice){
+	if( isset($_GET['activate']) ) {
+		add_action( 'admin_notices', $admin_notice);
+		unset($_GET['activate']);
+	}
+}
 
 /**
  * Admin notice to indicate BuddyPress is required.
@@ -102,6 +194,7 @@ function bupr_required_plugin_admin_notice() {
 	$bp_plugin   = esc_html__( 'BuddyPress', 'bp-member-reviews' );
 	echo '<div class="error"><p>';
 	printf(
+		 /* translators: %1$s: BuddyPress Member Reviews; %2$s: Buddypress. */
 		esc_html__( '%1$s requires %2$s to be installed and active.', 'bp-member-reviews' ),
 		'<strong>' . esc_html( $plugin_name ) . '</strong>',
 		'<strong>' . esc_html( $bp_plugin ) . '</strong>'
@@ -110,10 +203,19 @@ function bupr_required_plugin_admin_notice() {
 }
 
 /**
+ * Show admin notice to inform the user that To-Do List can only be activated on the BuddyPress root blog.
+ */
+function bupr_show_buddypress_root_blog_notice() {
+    echo '<div class="notice notice-error error is-dismissible">';
+    echo '<p>' . esc_html__( 'Wbcom Designs BP Member Review can only be activated on the BuddyPress root blog.', 'bp-member-reviews' ) . '</p>';
+    echo '</div>';
+}
+
+/**
  * Redirect to plugin settings page after activation.
  */
 function bupr_activation_redirect_settings( $plugin ) {
-	if ( $plugin === plugin_basename( __FILE__ ) && class_exists( 'BuddyPress' ) ) {
+	if ( $plugin === plugin_basename( __FILE__ ) && class_exists( 'BuddyPress' ) && ! is_multisite() ) {
 		wp_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
 		exit;
 	}
@@ -124,7 +226,7 @@ add_action( 'activated_plugin', 'bupr_activation_redirect_settings' );
  * Perform plugin activation redirect.
  */
 function bp_member_review_do_activation_redirect() {
-	if ( get_transient( '_bp_member_review_is_new_install' ) ) {
+	if ( get_transient( '_bp_member_review_is_new_install' ) && ! is_multisite() ) {
 		delete_transient( '_bp_member_review_is_new_install' );
 		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
 	}
@@ -156,5 +258,4 @@ function bupr_unschedule_review_recalculation() {
     delete_option( 'bupr_current_batch' ); // Clean up the stored batch number
 }
 register_deactivation_hook( __FILE__, 'bupr_unschedule_review_recalculation' );
-
 

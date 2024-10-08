@@ -81,6 +81,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Years.
 			$years = intval( ( $seconds ) / YEAR_IN_SECONDS );
 			if ( $years > 1 ) {
+				 /* translators: %s: years. */
 				return sprintf( __( '%s years', 'bp-member-reviews' ), $years );
 			} elseif ( $years > 0 ) {
 				return __( 'a year', 'bp-member-reviews' );
@@ -89,6 +90,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Weeks.
 			$weeks = intval( ( $seconds ) / WEEK_IN_SECONDS );
 			if ( $weeks > 1 ) {
+				 /* translators: %s: weeks. */
 				return sprintf( __( '%s weeks', 'bp-member-reviews' ), $weeks );
 			} elseif ( $weeks > 0 ) {
 				return __( 'a week', 'bp-member-reviews' );
@@ -97,6 +99,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Days.
 			$days = intval( ( $seconds ) / DAY_IN_SECONDS );
 			if ( $days > 1 ) {
+				 /* translators: %s: days. */
 				return sprintf( __( '%s days', 'bp-member-reviews' ), $days );
 			} elseif ( $days > 0 ) {
 				return __( 'a day', 'bp-member-reviews' );
@@ -105,6 +108,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Hours.
 			$hours = intval( ( $seconds ) / HOUR_IN_SECONDS );
 			if ( $hours > 1 ) {
+				 /* translators: %s: hours. */
 				return sprintf( __( '%s hours', 'bp-member-reviews' ), $hours );
 			} elseif ( $hours > 0 ) {
 				return __( 'an hour', 'bp-member-reviews' );
@@ -113,6 +117,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Minutes.
 			$minutes = intval( ( $seconds ) / MINUTE_IN_SECONDS );
 			if ( $minutes > 1 ) {
+				 /* translators: %s: minutes. */
 				return sprintf( __( '%s minutes', 'bp-member-reviews' ), $minutes );
 			} elseif ( $minutes > 0 ) {
 				return __( 'a minute', 'bp-member-reviews' );
@@ -156,7 +161,9 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 						</div>
 						<div class="bp-member-reviews-notice-content">
 							<h3><?php esc_html_e( 'Are you enjoying BuddyPress Member Reviews?', 'bp-member-reviews' ); ?></h3>
-							<p><?php printf( esc_html__( 'We hope you\'re enjoying %1$s! Could you please do us a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?', 'bp-member-reviews' ), esc_html( $this->name ) ); ?></p>
+							<p><?php 
+							 /* translators: %s: Plugin name. */
+							 printf( esc_html__( 'We hope you\'re enjoying %1$s! Could you please do us a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?', 'bp-member-reviews' ), esc_html( $this->name ) ); ?></p>
 						</div>
 						<div class="bp-member-reviews-install-now">
 							<a href="https://wordpress.org/support/plugin/bp-user-profile-reviews/#new-post" class="button button-primary bp-member-reviews-install-button" target="_blank"><?php esc_html_e( 'Leave a Review', 'bp-member-reviews' ); ?></a>

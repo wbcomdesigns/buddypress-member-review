@@ -71,7 +71,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			$multi_reviews           = $bupr_general_settings['bupr_multi_reviews'] ?? 'yes';           // Default to 'yes'
 			$hide_button             = $bupr_general_settings['bupr_hide_review_button'] ?? 'no';       // Default to 'no'
 			$anonymous_reviews       = $bupr_general_settings['bupr_enable_anonymous_reviews'] ?? 'no'; // Default to 'no'
-			$review_activity         = $bupr_general_settings['bupr_enable_review_activity'] ?? 'yes';  // Default to 'yes'
+			$review_activity         = $bupr_general_settings['bupr_enable_review_activity'] ?? 'no';  // Default to 'yes'
 			$review_email_subject    = $bupr_general_settings['review_email_subject'] ?? esc_html__('You have received a new review!', 'bp-member-reviews');
 			$review_email_message    = $bupr_general_settings['review_email_message'] ?? esc_html__('A new review has been submitted on your profile. Log in to see the details.', 'bp-member-reviews');
 

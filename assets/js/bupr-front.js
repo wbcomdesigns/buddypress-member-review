@@ -22,7 +22,6 @@ jQuery(document).ready(function () {
     var id = jQuery(this).attr("data-attr");
     var parent_id = jQuery(this).parent().attr("id");
     for (i = 1; i <= id; i++) {
-      console.log(jQuery("#" + parent_id).children("." + i));
       jQuery("#" + parent_id)
         .children("." + i)
         .addClass("fas")
@@ -152,10 +151,17 @@ jQuery(document).ready(function () {
               sessionStorage.reloadAfterPageLoad = true;
               var date = new Date();
               date.setTime(date.getTime() + 20 * 1000);
-              jQuery.cookie("response", response, {
-                expires: date,
-              });
-              window.location.reload();
+              // jQuery.cookie("response", response, {
+              //   expires: date,
+              // });
+              jQuery(".add_review_msg").show();
+              jQuery(".add_review_msg p").html(response.data);
+              reset_review_form_data();
+              setTimeout(() => {
+                jQuery(".add_review_msg p").html('');
+                jQuery(".add_review_msg").hide();
+              }, 2000);
+              // window.location.reload();
             }
           );
         }
@@ -192,10 +198,16 @@ jQuery(document).ready(function () {
             sessionStorage.reloadAfterPageLoad = true;
             var date = new Date();
             date.setTime(date.getTime() + 20 * 1000);
-            jQuery.cookie("response", response, {
-              expires: date,
-            });
-            window.location.reload();
+            // jQuery.cookie("response", response, {
+            //   expires: date,
+            // });
+            jQuery(".add_review_msg").show();
+            reset_review_form_data();
+            jQuery(".add_review_msg p").html(response.data);
+            setTimeout(() => {
+              jQuery(".add_review_msg p").html('');
+              jQuery(".add_review_msg").hide();
+            }, 200);
           }
         );
       }
@@ -221,9 +233,9 @@ jQuery(document).ready(function () {
           limit: limit,
         },
         function (response) {
-          var obj = JSON.parse(response);
+          // var obj = JSON.parse(response);
           jQ.addClass("selected");
-          jQ.parent().siblings("#bp-member-rating").html(obj.html);
+          jQ.parent().siblings("#bp-member-rating").html(response.data);
         }
       );
     }
@@ -240,6 +252,7 @@ jQuery(document).ready(function () {
         {
           action: "bupr_reviews_filter",
           filter: filter,
+          nonce: mail_title.review_nonce,
         },
         function (response) {
           jQuery("#request-review-list").html(response);
@@ -383,6 +396,23 @@ jQuery(document).ready(function () {
       }
     );
   });
+
+    function reset_review_form_data(){
+      jQuery("#bupr_review_form_public")[0].reset();
+      jQuery("#bupr_review_form_public .member_rated_stars").val(0);
+      jQuery(".member_stars").each(function (index) {
+        jQuery(this).parent().children().eq(0).val("not_clicked");
+        var id = jQuery(this).attr("data-attr");
+        var parent_id = jQuery(this).parent().attr("id");
+        for (i = 1; i <= id; i++) {
+          jQuery("#" + parent_id)
+            .children("." + i)
+            .removeClass("fas")
+            .addClass("far");
+        }
+      });
+    }
+
 });
 
 /*----------------------------------------

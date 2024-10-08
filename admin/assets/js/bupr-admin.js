@@ -1,7 +1,7 @@
 jQuery.noConflict();
 jQuery(document).ready(
-	function () {
-
+	function ($) {
+		"use strict";
 		/*----------------------------------------
 		* Make Draggable admin criteria input fields
 		*-----------------------------------------*/
@@ -283,10 +283,11 @@ jQuery(document).ready(
 					bupr_admin_ajax_object.ajaxurl,
 					{
 						'action': 'bupr_approve_review',
-						'review_id': review_id
+						'review_id': review_id,
+						'nonce' : bupr_admin_ajax_object.nonce,
 					},
 					function (response) {
-						if (response == 'review-approved-successfully') {
+						if (response.data == 'review-approved-successfully') {
 							window.location.href = window.location.href;
 						} else {
 							console.log("Review not approved!");
@@ -295,6 +296,45 @@ jQuery(document).ready(
 				);
 			}
 		);
+
+
+
+		jQuery(document).on(
+			'keyup',
+			'#bupr_member_tab_title',
+			function () {
+				var value = jQuery(this).val();
+				var matches = value.match(/\d+/g);
+				if (matches != null) {
+					$(this).next().text(bupr_admin_ajax_object.number_validation);
+					$(this).parent().append('<span class="wbcom-field-error"></span>');
+					$('#submit').attr("disabled",'disabled');
+				}else{
+					$(this).siblings('wbcom-field-error').remove();
+					$(this).next().text('');
+					$('#submit').removeAttr("disabled",'disabled');
+				}
+			}
+		);
+
+		jQuery(document).on(
+			'keyup',
+			'#bupr_member_tab_title_plural',
+			function () {
+				var value = jQuery(this).val();
+				var matches = value.match(/\d+/g);
+				if (matches != null) {
+					$(this).next().text(bupr_admin_ajax_object.number_validation);
+					$(this).parent().append('<span class="wbcom-field-error"></span>');
+					$('#submit').attr("disabled",'disabled');
+				}else{
+					$(this).siblings('wbcom-field-error').remove();
+					$(this).next().text('');
+					$('#submit').removeAttr("disabled",'disabled');
+				}
+			}
+		);
+		
 
 	}
 );
