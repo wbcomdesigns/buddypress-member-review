@@ -85,7 +85,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			/**
 			 * Global variables for criteria settings.
 			 */
-			$bupr_multi_criteria_allowed = $bupr_criteria_settings['profile_multi_rating_allowed'] ?? '1'; // Enable multi-criteria by default
+			$bupr_multi_criteria_allowed = ( isset( $bupr_criteria_settings['profile_multi_rating_allowed'] ) && ! empty( $bupr_criteria_settings['profile_multi_rating_allowed'] ) ) ? '1' : '0'; // Enable multi-criteria by default
 			$active_rating_fields        = $bupr_criteria_settings['profile_rating_fields'] ?? array();   // Can be configured by admin
 
 			// Define global variables for use throughout the plugin.

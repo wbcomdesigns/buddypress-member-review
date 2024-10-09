@@ -584,7 +584,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					if ( ! empty( $bupr_member_id ) && $bupr_member_id !== 0 ) {
 						$bupr_rated_stars = array();
 						// print_r($bupr_rating_criteria);
-						if ( $bupr['multi_criteria_allowed'] )  {
+						if ( $bupr['multi_criteria_allowed'] && ( count( $bupr_rating_criteria ) === count( $bupr_member_star ) ) )  {
 							$bupr_rated_stars = array_combine( $bupr_rating_criteria, $bupr_member_star );
 						} else {
 							$bupr_rated_stars = $bupr_member_star;
