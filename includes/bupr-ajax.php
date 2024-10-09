@@ -781,10 +781,41 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							}
 							/*star rating end */
 							$review_output .= '</div></div>';
-						}
+						}else {
+							$stars_on  = $bupr_value;
+							$field_counter = 1;
+							$count     = 0;
+							ob_start();
+							?>
+							<div class="multi-review">
+									<div class="bupr-col-4 bupr-criteria-label">
+										<label><?php esc_html_e( 'Rating : ', 'bp-member-reviews' ); ?><small class="rating">*</small></label>
+									</div>
+									<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
+										<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo 'not_clicked'; ?>">
+										<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" data-critaria="<?php echo esc_attr( $field ); ?>" value="0"  value="0">
+												<?php	
+												for( $i = 1; $i <= $stars_on; $i++ ) {
+													echo '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star ' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
+													$count++;
+												}
+												for( $i = 1; $i <= 5; $i++ ) { 
+													if ( $i > $count ) { ?>
+											<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate member-edit-stars <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+										<?php }
+									} ?>
+									</div>
+									<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
+								</div>
+								<input type="hidden" id="member_rating_field_counter" value="1">
+							<?php 
+							$review_output .= ob_get_contents();
+							ob_end_clean();
+						} 
 						$field_counter++;
 					}
 				}
+					
 				/* translators: %s: */
 				$review_output .= '<button type="button" class="btn btn-default" id="bupr_upodate_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
 				$review_output .= '</div>';
