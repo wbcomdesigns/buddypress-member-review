@@ -37,7 +37,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
-
+		
 			add_action( 'admin_menu', array( $this, 'bupr_add_submenu_page_admin_settings' ) );
 			add_action( 'admin_menu', array( $this, 'bupr_get_review_count' ) );
 			add_action( 'admin_init', array( $this, 'bupr_plugin_settings' ) );
@@ -363,66 +363,70 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		public function bupr_generate_activity_review_status_change( $new_status, $old_status, $post ) {
 			global $bupr;
 			$bupr_member_id     = get_post_meta( $post->ID, 'linked_bp_member', true );
-			if ( ( 'publish' === $new_status && 'draft' === $old_status ) && 'review' === $post->post_type ) {
-                do_action( 'bupr_member_review_after_review_insert', $post->ID, $bupr_member_id );
-				do_action( 'bupr_sent_review_notification', $bupr_member_id, $post->ID );
-
-				$bupr_admin_general  = get_option( 'bupr_admin_general_options' );
-				$site_name           = get_bloginfo( 'name' );
-				$site_admins         = get_users( array( 'role' => 'administrator' ) );
-				$anonymous_review 	 = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
-				$bupr_sender_data    = get_userdata($post->post_author);
-				$bupr_sender_email   = $bupr_sender_data->data->user_email;
-				$bupr_reciever_data  = get_userdata($bupr_member_id);
-				$bupr_reciever_email = $bupr_reciever_data->data->user_email;
-				$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
-				$bupr_reciever_login = $bupr_reciever_data->data->user_login;
-				if( isset( $anonymous_review ) && $anonymous_review == 'yes' ) {
-					$user_name      = "An anonymous user";
-				} else {
-					$user_name      = $bupr_sender_data->display_name;
+			if( '' !== $bupr_member_id){
+				if ( ( 'publish' === $new_status && 'draft' === $old_status ) && 'review' === $post->post_type ) {
+					
+					do_action( 'bupr_member_review_after_review_insert', $post->ID, $bupr_member_id );
+					do_action( 'bupr_sent_review_notification', $bupr_member_id, $post->ID );
+	
+					$bupr_admin_general  = get_option( 'bupr_admin_general_options' );
+					$site_name           = get_bloginfo( 'name' );
+					$site_admins         = get_users( array( 'role' => 'administrator' ) );
+					$anonymous_review 	 = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
+					$bupr_sender_data    = get_userdata($post->post_author);
+					$bupr_sender_email   = $bupr_sender_data->data->user_email;
+					$bupr_reciever_data  = get_userdata($bupr_member_id);
+					$bupr_reciever_email = $bupr_reciever_data->data->user_email;
+					$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
+					$bupr_reciever_login = $bupr_reciever_data->data->user_login;
+					if( isset( $anonymous_review ) && $anonymous_review == 'yes' ) {
+						$user_name      = "An anonymous user";
+					} else {
+						$user_name      = $bupr_sender_data->display_name;
+					}
+					$review_subject = $bupr_reciever_name . " received a " . bupr_profile_review_tab_singular_slug();
+					
+					// Check BuddyPress version and use the appropriate function
+					// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
+					if ( function_exists( 'bp_members_get_user_url' ) ) {
+						// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
+						$bupr_review_url = bp_members_get_user_url( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
+					} else {
+						// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
+						$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
+					}
+					$bupr_to = $bupr_reciever_email;
+					// Define a default value for $bupr_subject with translation support
+					$bupr_subject = __('New Review on Your Profile at [site-name]', 'bp-member-reviews');
+					$review_link = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
+					// Check if a custom subject line is set in the settings and update $bupr_subject accordingly
+					if (isset($bupr_admin_general['review_email_subject']) && !empty($bupr_admin_general['review_email_subject'])) {
+						$bupr_subject = $bupr_admin_general['review_email_subject'];
+					}
+	
+					// Replace '[site-name]' placeholder in the subject with the actual site name
+					$bupr_subject = str_replace('[site-name]', $site_name, $bupr_subject);
+	
+					$message = 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team';
+					/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
+					if ( isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] ) ) {
+						$bupr_message = str_replace(
+											array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
+											array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
+											$bupr_admin_general['review_email_message']
+										);
+					}else{
+						$bupr_message = str_replace(
+											array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
+											array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
+											$message
+										);
+					}
+					$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
+					wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
 				}
-				$review_subject = $bupr_reciever_name . " received a " . bupr_profile_review_tab_singular_slug();
-				
-				// Check BuddyPress version and use the appropriate function
-				// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
-				if ( function_exists( 'bp_members_get_user_url' ) ) {
-					// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
-					$bupr_review_url = bp_members_get_user_url( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
-				} else {
-					// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
-					$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
-				}
-				$bupr_to = $bupr_reciever_email;
-				// Define a default value for $bupr_subject with translation support
-				$bupr_subject = __('New Review on Your Profile at [site-name]', 'bp-member-reviews');
-				$review_link = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
-				// Check if a custom subject line is set in the settings and update $bupr_subject accordingly
-				if (isset($bupr_admin_general['review_email_subject']) && !empty($bupr_admin_general['review_email_subject'])) {
-					$bupr_subject = $bupr_admin_general['review_email_subject'];
-				}
-
-				// Replace '[site-name]' placeholder in the subject with the actual site name
-				$bupr_subject = str_replace('[site-name]', $site_name, $bupr_subject);
-
-				$message = 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team';
-				/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
-				if ( isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] ) ) {
-					$bupr_message = str_replace(
-										array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
-										array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
-										$bupr_admin_general['review_email_message']
-									);
-				}else{
-					$bupr_message = str_replace(
-										array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
-										array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
-										$message
-									);
-				}
-				$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
-				wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
 			}
+			
 		}
 		
 	}
