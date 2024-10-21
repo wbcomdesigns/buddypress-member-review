@@ -152,9 +152,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @since 1.0.0
 		 */
 		public function bupr_rating_directory() {
-			
 			global $members_template, $bupr;
-			
 			// Check if we are on the members directory and if the setting is enabled
 			if ( ! bp_is_members_directory() || 'yes' !== $bupr['dir_view_ratings'] ) {
 				return;
@@ -189,14 +187,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$rate                = 0;
 					$reviews_field_count = 0;
 					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
-
 					if ( ! empty( $review_ratings[0] ) ) {
 						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							foreach ( $review_ratings[0] as $field => $value ) {
-								if ( array_key_exists( $field, $bupr['active_rating_fields'] ) ) {
-									$rate += $value;
-									$reviews_field_count++;
-								}
+								$rate += $value;
+								$reviews_field_count++;
 							}
 
 							if ( 0 !== $reviews_field_count ) {
@@ -229,7 +224,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 
 				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-
+				
 				if ( $bupr_avg_rating > 0 ) {
 					?>
 					<!-- Add Parent Container to Keep Alignment Center -->
