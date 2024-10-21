@@ -971,19 +971,24 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					// Ensure the content is safe.
 					$escaped_content = wp_kses_post( $review_content );
 
-					// Add activity to BuddyPress.
-					bp_activity_add( array(
-						'action'        => $action,
-						'content'       => $escaped_content, // No links or ratings, just review content.
-						'component'     => $bp->members->id,
-						'type'          => 'member_review',
-						'user_id'       => $reviewer_user_id,
-						'item_id'       => $review_id,
-						'secondary_item_id' => $reviewed_user_id,
-						'hide_sitewide' => false,
-						'is_spam'       => false,
-						'privacy'       => 'public',
-					) );
+					if(function_exists('bp_activity_add')){
+						// Add activity to BuddyPress.
+						bp_activity_add( array(
+							'action'        => $action,
+							'content'       => $escaped_content, // No links or ratings, just review content.
+							'component'     => $bp->members->id,
+							'type'          => 'member_review',
+							'user_id'       => $reviewer_user_id,
+							'item_id'       => $review_id,
+							'secondary_item_id' => $reviewed_user_id,
+							'hide_sitewide' => false,
+							'is_spam'       => false,
+							'privacy'       => 'public',
+						) );
+					}else{
+						return;
+					}
+					
 				}
 		}
 

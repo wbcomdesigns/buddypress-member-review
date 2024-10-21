@@ -120,14 +120,15 @@ function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 
 	// Bail if somehow this is hooked to an edit action.
 	if ( ! empty( $is_edit ) ) {
-			return;
+		return;
 	}
 
 	// Get autohr information.
 	$current_user = wp_get_current_user();
 	$member_id    = $current_user->ID;
 
-	// Get some reply information.
+	if(function_exists('bp_notifications_add_notification')){
+		// Get some reply information.
 		$args = array(
 			'user_id'           => $bupr_memberid,
 			'item_id'           => $review_id,
@@ -139,7 +140,9 @@ function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 			'allow_duplicate'   => true,
 		);
 		bp_notifications_add_notification( $args );
-
+	}else{
+		return;
+	}
 }
 add_action( 'bupr_sent_review_notification', 'bupr_buddypress_add_notification', 10, 2 );
 
