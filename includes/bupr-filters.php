@@ -852,13 +852,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			bupr_get_template( 'bupr-reviews-tab-template.php' );
 		}
 
-				/**
-				 * Action performed to show the content of add review tab
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Action performed to show the content of add review tab
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_reviews_form_to_show_content() {
 			global $bupr;
 			?>
@@ -866,9 +866,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			<?php
 			if ( is_user_logged_in() ) {
 				do_action( 'bupr_member_review_form' );
-				// $bupr_form = new BUPR_Shortcodes();
-				// echo wp_kses_post( $bupr_form->bupr_display_review_form() );
-				// do_shortcode( '[add_profile_review_form]' );
 			} else {
 				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 				if ( 'nouveau' === $bp_template_option ) {

@@ -27,7 +27,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
-			add_shortcode( 'add_profile_review_form', array( $this, 'bupr_shortcode_review_form' ) );
 			add_shortcode( 'bupr_display_top_members', array( $this, 'bupr_display_top_members_display' ) );
 			add_action( 'bupr_member_review_form', array( $this, 'bupr_display_review_form' ) );
 		}
@@ -209,8 +208,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			
 			// Apply a filter to allow modification of the member array
 			$bupr_member = apply_filters( 'bupr_member_list', $bupr_member );
-			
-
 
 			$member_args = array(
 				'post_type'      => 'review',
@@ -416,10 +413,10 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							<?php if ( $flag ) { ?>
 									<p>
 										<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php 
-											/* translators: %s: review label;  */
-											echo sprintf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>
+										/* translators: %s: review label;  */
+										echo sprintf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>
 									</p>
-			<?php } ?>
+							<?php } ?>
 								<p>
 							<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce' ); ?>
 
@@ -437,18 +434,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							<?php
 						}
 					}
-		}
-
-		/**
-		 * Create shortcode for review form.
-		 *
-		 * @since    1.0.0
-		 * @author   Wbcom Designs
-		 */
-		public function bupr_shortcode_review_form() {
-			ob_start();
-			$this->bupr_display_review_form();
-			return ob_get_clean();
 		}
 	}
 

@@ -22,19 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<input type="hidden" class="bupr-tab-active" value="shortcode"/>
 			</div>
 		</div>
-		
-		<!-- Profile Review Form Shortcode Block -->
-		<div class="wbcom-settings-section-wrap">
-			<div class="wbcom-settings-section-options-heading">
-				<label><?php esc_html_e( 'Profile Review Form Shortcode', 'bp-member-reviews' ); ?></label>
-				<p class="description">
-					<?php esc_html_e( 'Use this shortcode to display the BuddyPress member review form.', 'bp-member-reviews' ); ?>
-				</p>
-			</div>
-			<div class="wbcom-settings-section-options">
-				<code><?php echo esc_html( '[add_profile_review_form]' ); ?></code>
-			</div>
-		</div>
 
 		<!-- Top Rated Members Shortcode Block -->
 		<div class="wbcom-settings-section-wrap">
