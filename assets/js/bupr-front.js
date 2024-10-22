@@ -215,52 +215,6 @@ jQuery(document).ready(function () {
     // }
   });
 
-  // Ratings Widget filter.
-  jQuery(document).on(
-    "click",
-    "#bp-member-rating-list-options > a",
-    function (event) {
-      event.preventDefault();
-      var jQ = jQuery(this);
-      jQ.siblings("a").removeClass("selected");
-      var filter = jQ.attr("attr-val");
-      var limit = jQ.parent().siblings(".member-rating-limit").val();
-      jQuery.post(
-        ajaxurl,
-        {
-          action: "bupr_filter_ratings",
-          filter: filter,
-          limit: limit,
-        },
-        function (response) {
-          // var obj = JSON.parse(response);
-          jQ.addClass("selected");
-          jQ.parent().siblings("#bp-member-rating").html(response.data);
-        }
-      );
-    }
-  );
-
-  // Reviews tab filter.
-  jQuery("#bp-reviews-filter-by").change(function () {
-    var jQ = "";
-    jQuery("#bp-reviews-filter-by option:selected").each(function () {
-      var jQ = jQuery(this);
-      var filter = jQ.val();
-      jQuery.post(
-        ajaxurl,
-        {
-          action: "bupr_reviews_filter",
-          filter: filter,
-          nonce: mail_title.review_nonce,
-        },
-        function (response) {
-          jQuery("#request-review-list").html(response);
-        }
-      );
-    });
-  });
-
   /*----------------------------------------
    * Edit Review Pop form
    *-----------------------------------------*/
