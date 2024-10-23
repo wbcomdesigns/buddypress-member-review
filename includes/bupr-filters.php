@@ -79,6 +79,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 
 			add_action( 'bupr_member_review_after_review_insert', array( $this, 'bupr_create_review_activity' ), 10, 2 );
+			
+			add_action( 'bp_get_activity_content_body', array( $this, 'bupr_added_activity_star_rating' ), 10, 2 );
 		}
 
 		/**
@@ -987,7 +989,45 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					}
 					
 				}
+			}
+
+	/**
+	 * Added member star rating in activity.
+	 *
+	 * @param  string $activity_content Activity Content.
+	 * @param  object $activity Activity Object.
+	 */
+	public function bupr_added_activity_star_rating( $activity_content, $activity ) {
+		global $bgr;
+		$post_id              = $activity->item_id;
+		$review_rating_fields = get_option( 'bupr_admin_settings', true );
+		$review_ratings       = get_post_meta( $post_id, 'profile_star_rating', false );		
+		$review_start         = '';		
+		if ( ! empty( $review_rating_fields['profile_rating_fields'] ) && ! empty( $review_ratings[0] ) ) {			
+			$review_start .= '<div class="bupr-multi-review">';
+			foreach ( $review_rating_fields['profile_rating_fields'] as $review_field => $review_field_val ) {				
+				if ( array_key_exists( $review_field, $review_ratings[0] ) ) {
+					$review_start .= '<div class="multi-review">';
+					$review_start .= '<div class="bgr-col-6">' . esc_html( $review_field ) . '</div>';
+					$review_start .= '<div class="bgr-col-6">';
+					/*** Ratings */
+					$stars_on  = $review_ratings[0][ $review_field ];
+					$stars_off = 5 - $stars_on;
+					for ( $i = 1; $i <= $stars_on; $i++ ) {
+						$review_start .= '<span class="fas fa-star stars bgr-star-rate"></span>';
+
+					}
+					for ( $i = 1; $i <= $stars_off; $i++ ) {
+						$review_start .= '<span class="far fa-star stars bgr-star-rate"></span>';
+					}
+					$review_start .= '</div>';
+					$review_start .= '</div>';
+				}
+			}
+			$review_start .= '</div>';
 		}
+		return $activity_content . $review_start;
+	}
 
 		/**
 		* Saved the user name as anonymous if meta in review.
