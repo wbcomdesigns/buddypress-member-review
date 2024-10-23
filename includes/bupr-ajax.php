@@ -287,7 +287,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 							if ( 'no' === $bupr['auto_approve_reviews'] ) {
 								if ( 'yes' === $bupr['allow_email'] ) {
-									$bupr_to = get_option('admin_email');									
+									$bupr_to = get_option('admin_email');
+									$bupr_admin_general  = get_option( 'bupr_admin_general_options' );									
 									$bupr_subject     = ( isset( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : '';
 									$bupr_subject     = str_replace('[site-name]', $site_name, $bupr_subject);
 									$bupr_review_url  = add_query_arg(
