@@ -976,7 +976,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							'action'        => $action,
 							'content'       => $escaped_content, // No links or ratings, just review content.
 							'component'     => $bp->members->id,
-							'type'          => 'member_review',
+							'type'          => defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review',
 							'user_id'       => $reviewer_user_id,
 							'item_id'       => $review_id,
 							'secondary_item_id' => $reviewed_user_id,
