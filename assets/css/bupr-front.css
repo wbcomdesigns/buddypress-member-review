@@ -657,7 +657,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 /* Directory-specific styles */
 .bupr-directory-review-wrapper {
-    margin: 10px 0;
+    margin: 0;
     text-align: left;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -776,6 +776,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 .description {
     font-style: italic;
+    margin-bottom: 10px;
 }
 
 .description p {

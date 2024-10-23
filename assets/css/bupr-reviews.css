@@ -81,20 +81,24 @@
     display: block;
 }
 
+.bupr-multi-review{
+    margin: 15px;
+}
+
 .multi-review {
     display: inline-block;
     width: 100%;
-    background: #f7f7f7;
-    margin: 10px 0 0;
-    padding: 10px;
-    border-radius: 3px;
+    margin: 0;
+    padding: 10px 0 0;
 }
 
 .multi-review>div {
     padding: 0px;
 }
 
-
+.bupr-directory-tooltip span.bupr-star-rate{
+    font-size: 15px;
+}
 /*--------------------------------------------------------------
 # Model
 --------------------------------------------------------------*/

@@ -69,13 +69,11 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		public function bupr_styles_method() {
 			global $bupr;
 			$bupr_star_color = $bupr['rating_color'];
-			wp_enqueue_style( 'bupr-rating-css', BUPR_PLUGIN_URL . 'assets/css/bupr-front.css', array(), BUPR_PLUGIN_VERSION, false );
-
 			$custom_css = ".bupr-star-rate {
 			        			color: {$bupr_star_color} !important;
 			        		}
 				";
-			wp_add_inline_style( 'bupr-rating-css', $custom_css );
+			wp_add_inline_style( 'bupr-front-css', $custom_css );
 		}
 
 		/**

@@ -998,7 +998,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 	 * @param  object $activity Activity Object.
 	 */
 	public function bupr_added_activity_star_rating( $activity_content, $activity ) {
-		global $bgr;
 		$post_id              = $activity->item_id;
 		$review_rating_fields = get_option( 'bupr_admin_settings', true );
 		$review_ratings       = get_post_meta( $post_id, 'profile_star_rating', false );		
@@ -1008,17 +1007,17 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			foreach ( $review_rating_fields['profile_rating_fields'] as $review_field => $review_field_val ) {				
 				if ( array_key_exists( $review_field, $review_ratings[0] ) ) {
 					$review_start .= '<div class="multi-review">';
-					$review_start .= '<div class="bgr-col-6">' . esc_html( $review_field ) . '</div>';
-					$review_start .= '<div class="bgr-col-6">';
+					$review_start .= '<div class="bupr-col-6">' . esc_html( $review_field ) . '</div>';
+					$review_start .= '<div class="bupr-col-6">';
 					/*** Ratings */
 					$stars_on  = $review_ratings[0][ $review_field ];
 					$stars_off = 5 - $stars_on;
 					for ( $i = 1; $i <= $stars_on; $i++ ) {
-						$review_start .= '<span class="fas fa-star stars bgr-star-rate"></span>';
+						$review_start .= '<span class="fas fa-star stars bupr-star-rate"></span>';
 
 					}
 					for ( $i = 1; $i <= $stars_off; $i++ ) {
-						$review_start .= '<span class="far fa-star stars bgr-star-rate"></span>';
+						$review_start .= '<span class="far fa-star stars bupr-star-rate"></span>';
 					}
 					$review_start .= '</div>';
 					$review_start .= '</div>';
