@@ -147,7 +147,7 @@
 }
 
 .single-headers .bb-enable-cover-img .member-header-actions>#bupr-add-review-btn {
-    margin: 5px 0 10px 2px;
+    margin: 5px 10px 10px 0;
 }
 
 /*--------------------------------------------------------------
@@ -892,6 +892,9 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
         display: -ms-flexbox;
         display: flex;
     }
+    .bupr-member-review-wrapper{
+        justify-content: center;
+    }
 }
 
 @media only screen and (max-width: 420px) {
@@ -904,8 +907,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
 
-.theme-buddyboss-theme .members-directory-wrapper .members .member-review-stars {
+.buddyboss-theme .members-directory-wrapper .members .member-review-stars {
     text-align: center;
+}
+
+.buddyboss-theme .member-header-actions-wrap .member-header-actions.action {
+    display: flex;
+    gap: 10px;
 }
 
 .rating {
