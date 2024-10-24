@@ -782,6 +782,38 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 .description p {
     margin: 0px;
 }
+li#bupr-add-review-btn a.add-review {
+    margin: 0;
+    display: inline-block;
+}
+
+/* Youzify Plugin Support */
+
+body[class*="youzify"] .youzify-head-content .bupr-member-review-wrapper {
+    justify-content: center;
+}
+
+body[class*="youzify"].reviews .youzify-page-main-content .youzify-main-column div#subnav.item-list-tabs{
+    margin: 0;
+}
+
+body[class*="youzify"].reviews .youzify-page-main-content .bupr-bp-member-reviews-block .bp-member-reviews,
+body[class*="youzify"].add-review .youzify-page-main-content .youzify-main-column .bupr-bp-member-review-no-popup-add-block{
+    padding: 30px;
+    border-top: 1px solid #eee;
+    background-color: var(--reign-site-sections-bg-color);
+    background-color: var(--yzfy-card-bg-color);
+    margin: 0;
+}
+
+body[class*="youzify"] .youzify-page-main-content #bupr-reiew-edit button.bupr-edit-review-button,
+body[class*="youzify"].add-review .youzify-page-main-content button#bupr_save_review {
+    color: #fff;x
+}
+
+body[class*="youzify"] .youzify-page-main-content .bupr-bp-member-review-no-popup-add-block #review_desc, #review_desc{
+    margin-top: 15px;
+}
 
 .youzify .bupr-save-reivew-spinner {
     display: none;
@@ -794,17 +826,17 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 /* Adjust spacing for the Add Review button when Youzify is active */
 body[class*="youzify"] #bupr-add-review-btn .add-review.button {
-    padding: 10px 20px;
+    padding: 12px 20px;
     /* Adjust padding */
     margin-top: 15px;
     /* Adjust margin if needed */
     display: inline-block;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 8px;
     /* Optional: Add border radius for a rounded look */
-    background-color: #0073aa;
+    background-color: var(--yzfy-scheme-color) !important;
+    color: var(--yzfy-scheme-text-color) !important;
     /* Optional: Set a background color */
-    color: #fff;
     /* Optional: Set text color */
 }
 
@@ -817,6 +849,10 @@ body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
 .olympus-theme .bgr-submit-review,
 .olympus-theme .bgr-submit-review:hover {
     color: inherit;
+}
+
+body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
+    color: var(--yzfy-scheme-text-color) !important;
 }
 
 @media only screen and (max-width: 480px) {
@@ -844,6 +880,9 @@ body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
 
     .rating-star {
         margin-right: 10px;
+    }
+    body[class*="youzify"] .youzify-page-main-content .bupr-criteria-label{
+        margin-bottom: 10px;
     }
 }
 

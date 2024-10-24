@@ -327,7 +327,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
 							<li id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review"> <!-- Standard button class -->
+								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
 									<?php
 									/* translators: %s: Review label; */
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
@@ -337,7 +337,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						} else { // BuddyPress legacy or other template
 							?>
 							<div id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review"> <!-- Standard button class -->
+								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
 									<?php
 									/* translators: %s: review label. */
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
@@ -357,7 +357,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
 						<li id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review"> <!-- Standard button class -->
+							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
 								<?php
 								/* translators: %s: review label. */
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
@@ -367,7 +367,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					} else { // BuddyPress legacy or other template
 						?>
 						<div id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review"> <!-- Standard button class -->
+							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
 								<?php
 								/* translators: %s: review label. */
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
@@ -410,7 +410,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
 							<li id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show="<?php echo esc_attr( $review_div ); ?>">
+								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
 									<?php
 									/* translators: %s: review label. */
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
@@ -420,7 +420,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						} else { // BuddyPress legacy or other template
 							?>
 							<div id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show="<?php echo esc_attr( $review_div ); ?>">
+								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
 									<?php
 									/* translators: %s: review label. */
 									echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
@@ -439,7 +439,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
 						<li id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show="<?php echo esc_attr( $review_div ); ?>">
+							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
 								<?php
 								/* translators: %s: review label. */
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
@@ -449,7 +449,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					} else { // BuddyPress legacy or other template
 						?>
 						<div id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="add-review" show="<?php echo esc_attr( $review_div ); ?>">
+							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
 								<?php
 								/* translators: %s: review label. */
 								echo sprintf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ); ?>
