@@ -778,15 +778,15 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 			} else {
 				$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-				if ( ! empty( $user_role ) && ! in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
-					return;
+				if ( ! empty( $user_role ) && ! array_intersect( $user_role, $bupr['exclude_given_members'] ) ) {
+					return ; 
 				}
 
 				if ( ! empty( $bupr['add_taken_members'] ) && ! empty( $user_role ) ) {
 					$user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
-					$user_role = ! empty( $user_role[0] ) ? $user_role[0] : array();
+					$user_role = ! empty( $user_role ) ? $user_role : array();
 
-					if ( in_array( $user_role, $bupr['add_taken_members'], true ) ) {
+					if ( array_intersect( $user_role, $bupr['add_taken_members']) ) {
 						bp_core_new_subnav_item(
 							array(
 								/* translators: %s: */
