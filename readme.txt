@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 3.3.0
+Stable tag: 3.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,26 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+= 3.3.1 =
+* Fixed: Multi-user role issue for accepting and writing reviews.
+* Managed: Header action button for BuddyBoss theme.
+* Fixed: Activity actions with Youzify.
+* Managed: UI issues with Youzify.
+* Fixed: No email approval mail sent to admin with BuddyBoss and Youzify.
+* Fixed: Background color issues specific to themes.
+* Managed: Activity review UI and removed extra `bupr-front.css` file.
+* Added: Youzify support.
+* Added: Member star rating in activity content.
+* Removed: `add_review_member_form` shortcode-related functionality.
+* Removed: Unused HTML related to `bupr_review_filter`.
+* Removed: Unused functions in the plugin.
+* Fixed: Review submission issue when BuddyPress components are disabled.
+* Fixed: PHP warnings while approving group reviews.
+* Resolved: Issue with reviews not displaying in specific conditions on the member's directory.
+* Resolved: Issue with average ratings on the member’s profile when the 'allow multiple criteria' option is disabled.
+* Fixed: Single rating edit and save issues.
+* Fixed: Fatal error when disabling multiple criteria or removing all fields.
+
 = 3.3.0 =
 * Fixes: Resolved avatar and user URL link issue for anonymous reviews.
 * Fixes: Corrected shortcode form issue in BuddyBoss.
