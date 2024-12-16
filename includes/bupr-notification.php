@@ -79,7 +79,8 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		/* translators: %s: */
 		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
-
+		$notification_link           = add_query_arg( array( 'referer' => 'user_notification' ), $notification_link );			// for identification of mark as read action 
+		$notification_link           = wp_nonce_url( $notification_link, 'mark-as-read-notification-' . $user_id . '-' . $secondary_item_id );		// for security purpose when mark as read notification.
 		// Prepare the return value based on the specified format.
 		if ( 'string' === $format ) {
 			// Ensure that the notification content is not empty before creating the link.
@@ -146,3 +147,33 @@ function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 }
 add_action( 'bupr_sent_review_notification', 'bupr_buddypress_add_notification', 10, 2 );
 
+add_action( 'bp_actions', 'bupr_buddypress_notification_marked_as_read' );
+
+		/**
+		 * Mark notifications as read when users click on notification.
+		 *
+		 * @since 1.0.0
+		 * @param array $activity Activity Object.
+		 * @author   Wbcom Designs
+		 */
+		function bupr_buddypress_notification_marked_as_read( $activity ) {
+			if ( empty( $_GET['referer'] ) || 'user_notification' != $_GET['referer'] ) {
+				return false;
+			}
+			if ( ! bp_is_user() || ! is_user_logged_in() ) {
+				return false;
+			}
+			$current_user_id = bp_loggedin_user_id();
+			$visitor_id      = bp_displayed_user_id();
+			
+			if ( bp_verify_nonce_request( "mark-as-read-notification-{$current_user_id}-{$visitor_id}" ) ) {
+				BP_Notifications_Notification::update(
+					array( 'is_new' => false ),
+					array(
+						'component_action'  => 'bupr_add_review_action',
+						'user_id'           => $current_user_id,
+						'secondary_item_id' => $visitor_id,
+					)
+				);
+			}
+		}

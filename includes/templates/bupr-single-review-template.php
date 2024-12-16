@@ -10,8 +10,11 @@ defined( 'ABSPATH' ) || exit;
 global $allowedtags,$allowedposttags;
 global $bupr;
 $url = filter_input( INPUT_SERVER, 'REQUEST_URI' );
-preg_match_all( '!\d+!', $url, $matches );
-$review_id = (int) basename( $url );
+if (preg_match('/\/view\/(\d+)\//', $url, $matches)) {
+	$review_id = (int) $matches[1]; // $matches[1] contains the review id which will be after the view parameter.
+}else{
+	$review_id = (int) basename( $url );
+}
 if ( ! empty( $review_id ) ) {
 	$review = get_post( $review_id );
 
