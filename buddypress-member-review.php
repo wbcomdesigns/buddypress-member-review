@@ -154,20 +154,20 @@ function modify_sitewide_plugins($value) {
 		if ( !is_network_admin() ) {
 				if( ! class_exists( 'BuddyPress' ) ){
 					unset($value[plugin_basename( __FILE__ )]);
-					show_admin_notice('bupr_required_plugin_admin_notice');
+					bp_member_review_show_admin_notice('bupr_required_plugin_admin_notice');
 				}else{
 					if(defined( 'BP_ROOT_BLOG' ) && ( BP_ROOT_BLOG != $current_blog_id )){
 						unset($value[plugin_basename( __FILE__ )]);
-						show_admin_notice('bupr_show_buddypress_root_blog_notice');
+						bp_member_review_show_admin_notice('bupr_show_buddypress_root_blog_notice');
 					}elseif(!defined( 'BP_ROOT_BLOG' ) &&  !is_main_site($current_blog_id) ){
 						unset($value[plugin_basename( __FILE__ )]);
-						show_admin_notice('bupr_show_buddypress_root_blog_notice');
+						bp_member_review_show_admin_notice('bupr_show_buddypress_root_blog_notice');
 					}
 				}
 		}else{
 			if( ! class_exists( 'BuddyPress' ) ){
 				unset($value[plugin_basename( __FILE__ )]);
-				show_admin_notice('bupr_required_plugin_admin_notice');
+				bp_member_review_show_admin_notice('bupr_required_plugin_admin_notice');
 			}
 		}
 	}
@@ -179,8 +179,8 @@ add_filter('site_option_active_sitewide_plugins', 'modify_sitewide_plugins');
 /**
  * Show admin notice for plugin when active action is performed.
  */
-function show_admin_notice($admin_notice){
-	if( isset($_GET['activate']) ) {
+function bp_member_review_show_admin_notice($admin_notice){
+	if( isset($_GET['activate']) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		add_action( 'admin_notices', $admin_notice);
 		unset($_GET['activate']);
 	}
