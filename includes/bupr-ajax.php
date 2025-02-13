@@ -306,6 +306,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 									);
 									$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );									
 									wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
+									
+									$site_admin_id = !empty( $site_admins ) ? $site_admins[0]->data->ID : '';
+									if( $site_admin_id ) {
+										do_action( 'bupr_sent_review_notification', $site_admin_id, $review_id );
+									}
+									
 								}
 								/* translators: %s: */
 								wp_send_json_success(sprintf( esc_html__( 'Thank you for sharing your %s! After admin approval, it will be displayed on members\' profiles.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ));

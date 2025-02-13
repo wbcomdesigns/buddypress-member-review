@@ -35,15 +35,17 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_add_review_noti
  * @since    1.0.0
  * @access   public
  * @param    string $action     Action.
- * @param    string $item_id    Item id.
- * @param    string $secondary_item_id       Secondary item id.
+ * @param    string $item_id    Review id.
+ * @param    string $secondary_item_id   Secondary item id.
  * @param    string $format        Format.
  * @author   Wbcom Designs
  */
 function bupr_add_review_notification_format( $action, $item_id, $secondary_item_id, $total_items, $format, $component_action_name, $component_name ) {
 	global $bp, $bupr;
+	$post_status = get_post_status( $item_id ); //getting review status.
 
-	if ( 'bupr_add_review_action' === $component_action_name ) {
+	if ( 'bupr_add_review_action' === $component_action_name  ) {
+		
 		$anonymous_review = get_post_meta( $item_id, 'bupr_anonymous_review_post', true );
 		$user_name        = '';
 		if ( 'yes' === $anonymous_review ) {
@@ -79,6 +81,10 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		/* translators: %s: */
 		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
+		if( 'draft' === $post_status ) {
+			/* translators: %s: */
+			$notification_content = sprintf( esc_html__( '( Pending Approval )  %1$s posted a %2$s.', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
+		}
 		$notification_link           = add_query_arg( array( 'referer' => 'user_notification' ), $notification_link );			// for identification of mark as read action 
 		$notification_link           = wp_nonce_url( $notification_link, 'mark-as-read-notification-' . $user_id . '-' . $secondary_item_id );		// for security purpose when mark as read notification.
 		// Prepare the return value based on the specified format.
