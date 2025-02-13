@@ -149,31 +149,38 @@ add_action( 'bupr_sent_review_notification', 'bupr_buddypress_add_notification',
 
 add_action( 'bp_actions', 'bupr_buddypress_notification_marked_as_read' );
 
-		/**
-		 * Mark notifications as read when users click on notification.
-		 *
-		 * @since 1.0.0
-		 * @param array $activity Activity Object.
-		 * @author   Wbcom Designs
-		 */
-		function bupr_buddypress_notification_marked_as_read( $activity ) {
-			if ( empty( $_GET['referer'] ) || 'user_notification' != $_GET['referer'] ) {
-				return false;
-			}
-			if ( ! bp_is_user() || ! is_user_logged_in() ) {
-				return false;
-			}
-			$current_user_id = bp_loggedin_user_id();
-			$visitor_id      = bp_displayed_user_id();
-			
-			if ( bp_verify_nonce_request( "mark-as-read-notification-{$current_user_id}-{$visitor_id}" ) ) {
-				BP_Notifications_Notification::update(
-					array( 'is_new' => false ),
-					array(
-						'component_action'  => 'bupr_add_review_action',
-						'user_id'           => $current_user_id,
-						'secondary_item_id' => $visitor_id,
-					)
-				);
-			}
-		}
+/**
+ * Mark notifications as read when users click on notification.
+ *
+ * @since 1.0.0
+ * @param array $activity Activity Object.
+ * @author   Wbcom Designs
+ */
+function bupr_buddypress_notification_marked_as_read( $activity ) {
+
+	$current_user_id = bp_loggedin_user_id();
+	$visitor_id      = bp_displayed_user_id();
+
+	$wp_nonce        = isset( $_GET[ '_wpnonce' ] ) ? sanitize_text_field( wp_unslash( $_GET[ '_wpnonce' ] ) ) : '';
+	
+	if ( ! wp_verify_nonce( $wp_nonce , "mark-as-read-notification-{$current_user_id}-{$visitor_id}" ) ) {
+		return false;
+	}
+	
+	if ( empty( $_GET['referer'] ) || 'user_notification' != $_GET['referer'] ) {
+		return false;
+	}
+	if ( ! bp_is_user() || ! is_user_logged_in() ) {
+		return false;
+	}
+	
+	BP_Notifications_Notification::update(
+		array( 'is_new' => false ),
+		array(
+			'component_action'  => 'bupr_add_review_action',
+			'user_id'           => $current_user_id,
+			'secondary_item_id' => $visitor_id,
+		)
+	);
+	
+}
