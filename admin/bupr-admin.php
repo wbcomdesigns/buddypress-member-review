@@ -49,8 +49,74 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
 				add_action( 'init', array( $this, 'bupr_review_cpt' ) );
 				add_action( 'init', array( $this, 'bupr_review_taxonomy_cpt' ) );
+				add_action( 'add_meta_boxes', array( $this, 'bupr_review_add_meta_box_ratings' ) );
 			}
 
+		}
+
+		/**
+		 *	Function to add meta box at custom post type page.
+		 *  @since 3.3.2 
+		 * 
+		 */
+
+		public function bupr_review_add_meta_box_ratings() {
+			add_meta_box(
+				'custom_meta_box_ratings',                                      // $id
+				'Member Ratings',                                               // $title
+				array( $this, 'bupr_review_render_custom_meta_box_ratings' ),   // $callback
+				'review',                                                       // custom post type
+				'side',                  										// $context
+				'low'                     										// $priority
+			);
+		 
+		}
+
+		/**
+		 *  Function to display Member Ratings at custom post type.
+		 *  @since 3.3.2
+		 */
+
+		public function bupr_review_render_custom_meta_box_ratings() {
+			global $post;
+
+			if( empty($post) || 'review' !== $post->post_type ) {
+				return;
+			}
+			
+			$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', true );
+
+			wp_enqueue_style( 'bupr-font-awesome-2', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
+
+			if( ! empty( $member_review_ratings ) && is_array( $member_review_ratings ) ) {
+				
+				foreach ( $member_review_ratings as $field_name => $bupr_value ) {
+					
+					if ( ! empty( $field_name ) ) {
+						echo esc_attr( $field_name );
+					}
+					
+					/*** Star rating Ratings */
+					$stars_on  = $bupr_value;
+					$stars_off = 5 - $stars_on;
+					echo '<div>';
+					for ( $i = 1; $i <= $stars_on; $i++ ) {
+						?>
+						<span class="fas fa-star bupr-star-rate"></span>
+						<?php
+					}
+
+					for ( $i = 1; $i <= $stars_off; $i++ ) {
+						?>
+						<span class="far fa-star stars bupr-star-rate"></span>
+						<?php
+					}
+					/*star rating end */
+					echo '</div>';
+				
+				}
+			}
+			
 		}
 
 		/**

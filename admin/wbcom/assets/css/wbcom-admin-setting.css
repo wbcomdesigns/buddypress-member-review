@@ -1782,5 +1782,8 @@ Media Queries
     }
 
 }
-
+						
+.bupr-star-rate {
+    color : #ff9000 !important;
+}
 /* Media Queries */
