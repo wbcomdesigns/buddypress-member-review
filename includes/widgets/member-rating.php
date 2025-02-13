@@ -123,7 +123,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
             }
             echo '</ul>';
         } else {
-            echo '<p>' . esc_html__( 'No member has been rated yet.', 'bp-member-reviews' ) . '</p>';
+            echo '<p>' . esc_html__( 'The member has not received a rating yet.', 'bp-member-reviews' ) . '</p>';
         }
 
         echo $after_widget; // phpcs:ignore.
