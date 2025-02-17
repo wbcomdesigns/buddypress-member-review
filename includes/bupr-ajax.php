@@ -288,7 +288,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 							if ( 'no' === $bupr['auto_approve_reviews'] ) {
 								if ( 'yes' === $bupr['allow_email'] ) {
 									$bupr_to = get_option('admin_email');
-									$bupr_admin_general  = get_option( 'bupr_admin_general_options' );									
+									$bupr_admin_general  = get_option( 'bupr_admin_general_options' );					
 									$bupr_subject     = ( isset( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : '';
 									$bupr_subject     = str_replace('[site-name]', $site_name, $bupr_subject);
 									$bupr_review_url  = add_query_arg(
@@ -299,13 +299,14 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 													);
 									$approve_review_link = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';									
 									$bupr_approve_message = ( isset( $bupr_admin_general['review_approve_email_message'] ) ) ? $bupr_admin_general['review_approve_email_message'] : '';									
-									$bupr_message = str_replace(
+									$bupr_approve_message = str_replace(
 										array( '[review-aproval-link]', '[site-admin]', '[site-name]' ),
 										array( $approve_review_link, $site_admin, $site_name ),
 										$bupr_approve_message
 									);
-									$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );									
-									wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
+									$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
+									
+									wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_approve_message ), $bupr_header );
 									
 									$site_admin_id = !empty( $site_admins ) ? $site_admins[0]->data->ID : '';
 									if( $site_admin_id ) {
