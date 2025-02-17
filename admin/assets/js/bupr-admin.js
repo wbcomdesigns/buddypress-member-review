@@ -1,3 +1,7 @@
+if (typeof wp !== 'undefined' && wp.i18n) {
+	const { __ } = wp.i18n;
+}
+
 jQuery.noConflict();
 jQuery(document).ready(
 	function ($) {
@@ -290,7 +294,7 @@ jQuery(document).ready(
 						if (response.data == 'review-approved-successfully') {
 							window.location.href = window.location.href;
 						} else {
-							console.log("Review not approved!");
+							console.log( __( "Review not approved!", 'bp-member-reviews' ) );
 						}
 					}
 				);
