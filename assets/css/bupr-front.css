@@ -411,6 +411,12 @@ button.bupr-edit-review-button {
     color: red;
 }
 
+.bupr-review-error-fields {
+    display: none;
+    font-size: 14px;
+    color: red;
+}
+
 
 /*--------------------------------------------------------------
 # Success and Error Message

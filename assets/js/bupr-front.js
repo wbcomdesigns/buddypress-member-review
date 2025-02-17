@@ -121,8 +121,10 @@ jQuery(document).ready(function () {
       var rate_val = jQuery(this).val();
       if (rate_val > 0) {
         empty_rate = empty_rate + 1;
-      } else {
-        jQuery(this).parent().next(".bupr-error-fields").show();
+      }
+
+      if( ! bupr_review_desc.trim() && rate_val == 0 ){
+        jQuery( '.bupr-review-error-fields' ).show();
       }
       rating_exist.push(rate_val);
     });
@@ -131,7 +133,7 @@ jQuery(document).ready(function () {
       if (bupr_member_id == "") {
         jQuery("#bupr_member_review_id").siblings(".bupr-error-fields").show();
       } else {
-        if (jQuery.inArray("0", rating_exist) == -1) {
+        if (jQuery.inArray("0", rating_exist) == -1 || bupr_review_desc ) {
           jQuery(".bupr-save-reivew-spinner").show();
           jQuery.post(
             ajaxurl,
