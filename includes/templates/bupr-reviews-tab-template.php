@@ -49,7 +49,7 @@ $reviews = new WP_Query( $args );
 				<?php
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
-						$reviews->the_post();
+						$reviews->the_post();	
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 						$author_id             = get_post_field( 'post_author', get_the_ID() );
@@ -139,26 +139,33 @@ $reviews = new WP_Query( $args );
 									}
 									if ( ! empty( $member_review_ratings_new ) ) {
 										$aggregate = array_sum( $member_review_ratings_new ) / count( $member_review_ratings_new );
-										echo "<div class='rating-star'>";
-										for ( $i = 0; $i < 5; $i++ ) {
-											if ( floor( $aggregate ) - $i >= 1 ) {
-												?>
-												<span class="fas fa-star bupr-star-rate"></span>
-												<?php
-											} elseif ( $aggregate - $i > 0 ) {
-												?>
-												<span class="fa fa-star-half-o bupr-star-rate"></span>
-												<?php
-											} else {
-												?>
-												<span class="far fa-star stars bupr-star-rate"></span>
-												<?php
+										if ( $aggregate ) {
+											echo "<div class='rating-star'>";
+											for ( $i = 0; $i < 5; $i++ ) {
+												if ( floor( $aggregate ) - $i >= 1 ) {
+													?>
+													<span class="fas fa-star bupr-star-rate"></span>
+													<?php
+												} elseif ( $aggregate - $i > 0 ) {
+													?>
+													<span class="fa fa-star-half-o bupr-star-rate"></span>
+													<?php
+												} else {
+													?>
+													<span class="far fa-star stars bupr-star-rate"></span>
+													<?php
+												}
 											}
+											echo '</div>';
+											echo '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
 										}
-										echo '</div>';
-										echo '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
 									} else {
 										foreach ( $member_review_ratings as $member_review_rating ) {
+											
+											if( 0 == $member_review_rating[0] ) {
+												continue;
+											}
+																				
 											if ( isset( $member_review_rating[0] ) && $member_review_rating[0] !== null ) {
 												echo '<span class="rating-num">' . number_format( $member_review_rating[0], 2 ) . '</span>';
 											}
@@ -206,6 +213,11 @@ $reviews = new WP_Query( $args );
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) {
 
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
+												
+												if( ! $bupr_value ) {
+													continue;
+												}
+
 												if ( $field === 0 ) {
 													$field = '';
 												}

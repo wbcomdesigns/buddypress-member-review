@@ -192,6 +192,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( ! empty( $review_ratings[0] ) ) {
 						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							foreach ( $review_ratings[0] as $field => $value ) {
+								if( 0 == $value ) {
+									continue;
+								}
 								$rate += $value;
 								$reviews_field_count++;
 							}
@@ -248,8 +251,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								?>
 								"></span>
 								<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( $members_template->member->id, false, true ) ); ?>"></span>
-
-								<div class="bupr-directory-review-stars bupr-directory-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter ); ?> reviews">
+								<?php
+									$rating_string  = '';
+									$rating_string = $rate_counter > 1 ? 'ratings' : 'rating';
+								?>
+								<div class="bupr-directory-review-stars bupr-directory-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter.' '.$rating_string );  ?>">
 									<?php
 									// Display the stars
 									for ( $i = 1; $i <= $stars_on; $i++ ) {
@@ -270,7 +276,17 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						</div>
 					</div>
 					<?php
-				}
+				} else {?>
+					<div> 
+						<?php
+						$review_string  = '';
+						$review_string  = $bupr_reviews_count > 1 ? 'reviews' : 'review';
+						?>
+						<span class="bupr-directory-rating-text">
+							<?php echo esc_html( $bupr_reviews_count.' '.$review_string ) ; ?>
+						</span>
+					</div>
+				<?php }
 			}
 		}
 
@@ -546,6 +562,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							
 							foreach ( $review_ratings[0] as $field => $value ) {
+								if( 0  == $value ) {
+									continue;
+								}
 								$rate += $value;
 								$reviews_field_count++;
 								
@@ -600,8 +619,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							?>
 							"></span>
 							<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( bp_displayed_user_id(), false, true ) ); ?>"></span>
-
-							<div class="bupr-member-review-stars bupr-member-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter ); ?> reviews">
+							<?php
+								$rating_string = '';
+								$rating_string = $rate_counter > 1 ? 'ratings' : 'rating';						
+							?>
+							<div class="bupr-member-review-stars bupr-member-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter.' '.$rating_string ); ?> ">
 								<?php
 								// Display the stars
 								for ( $i = 1; $i <= $stars_on; $i++ ) {
@@ -621,20 +643,32 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						</div>
 					</div>
 					<?php
-				}
+				} else {
+					?>
+					<div>
+						<?php
+							$review_string  = '';
+							$review_string  = $bupr_reviews_count > 1 ? 'reviews' : 'review';
+						?>
+						<span class="bupr-member-rating-text">
+							<?php echo esc_html( $bupr_reviews_count.' '.$review_string ) ; ?>
+						</span>
+					</div>
+					
+				<?php }
 			}
 		}
 
 
 
-				/**
-				 * Actions performed to remove edit from bulk options
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @param    array $actions Actions array.
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Actions performed to remove edit from bulk options
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @param    array $actions Actions array.
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_remove_edit_bulk_actions( $actions ) {
 			unset( $actions['edit'] );
 			return $actions;

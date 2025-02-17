@@ -47,7 +47,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
                 ),
             ),
         );
-
+    
         $reviews = get_posts( $bupr_args );
         $final_review_arr = array();
         $final_review_obj = array();
@@ -59,6 +59,9 @@ class bupr_single_member_rating_widget extends WP_Widget {
                 $review_ratings = get_post_meta( $review->ID, 'profile_star_rating', true );
                 if ( is_array( $review_ratings ) && ! empty( $review_ratings ) ) {
                     $total_rating = array_sum( $review_ratings );
+                    if ( $total_rating == 0 ) {
+                        continue;
+                    }
                     $rating_count = count( $review_ratings );
                     $final_review_arr[ $review->ID ] = round( (int) $total_rating / $rating_count, 2 ); // Ensure rating precision
                     $final_review_obj[ $review->ID ] = $review;
