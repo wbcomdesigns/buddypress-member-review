@@ -113,11 +113,6 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				$path      = '/min';
 			}
 			
-			if ( ! wp_script_is( 'wbcom-admin-setting-js', 'enqueued' ) ) {
-				wp_register_script( 'wbcom-admin-setting-js', BUPR_PLUGIN_URL . 'admin/wbcom/assets/js' .$path. '/wbcom-admin-setting'. $extension, array( 'jquery' ) , BUPR_PLUGIN_VERSION, false);
-				wp_enqueue_script( 'wbcom-admin-setting-js' );
-				wp_set_script_translations( 'wbcom-admin-setting-js', 'bp-member-reviews' );
-			}
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
 				if ( ( isset( $_GET['page'] ) && 'bp-member-review-settings' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) { // phpcs:ignore
