@@ -223,7 +223,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 			$page_slug_arr  = array( 'wbcomplugins', 'bp-member-review-settings' );
 
-			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) && isset( $_GET['page'] ) && in_array( $_GET['page'], $page_slug_arr ) ) {
+			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) && isset( $_GET['page'] ) && in_array( $_GET['page'], $page_slug_arr ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = '.js';
@@ -271,7 +271,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 
 			$page_slug_arr  = array( 'wbcomplugins', 'bp-member-review-settings' );
 
-			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) && isset( $_GET['page'] ) && in_array( $_GET['page'], $page_slug_arr ) ) {
+			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) && isset( $_GET['page'] ) && in_array( $_GET['page'], $page_slug_arr ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = is_rtl() ? '.rtl.css' : '.css';
