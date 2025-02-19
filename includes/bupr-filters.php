@@ -30,7 +30,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
-			add_action( 'wp', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
+			add_action( 'bp_setup_nav', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
 			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
 				add_action( 'bp_before_member_in_header_meta', array( $this, 'bupr_member_average_rating' ) );
 			} else {
