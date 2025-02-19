@@ -92,9 +92,12 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 			/* translators: %s: */
 			$notification_content = sprintf( esc_html__( '( Pending Approval )  %1$s posted a %2$s', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
 			$notification_link    = admin_url() . 'post.php?post='.$item_id.'&action=edit';
+
+			do_action( 'bp_actions' ); //do action to mark read pending approval notifications.
 		}
 		$notification_link           = add_query_arg( array( 'referer' => 'user_notification' ), $notification_link );			// for identification of mark as read action 
-		$notification_link           = wp_nonce_url( $notification_link, 'mark-as-read-notification-' . $user_id . '-' . $secondary_item_id );		// for security purpose when mark as read notification.
+		$notification_link           = add_query_arg( array( 'id' => $item_id ), $notification_link );
+		$notification_link           = wp_nonce_url( $notification_link, 'mark-as-read-notification-' . $user_id );		// for security purpose when mark as read notification.
 		// Prepare the return value based on the specified format.
 		if ( 'string' === $format ) {
 			// Ensure that the notification content is not empty before creating the link.
@@ -147,7 +150,7 @@ function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 		$args = array(
 			'user_id'           => $bupr_memberid,
 			'item_id'           => $review_id,
-			'secondary_item_id' => $bupr_memberid,
+			'secondary_item_id' => $member_id,
 			'component_name'    => 'buddypress_member_review',
 			'component_action'  => 'bupr_add_review_action',
 			'date_notified'     => bp_core_current_time(),
@@ -171,20 +174,25 @@ add_action( 'bp_actions', 'bupr_buddypress_notification_marked_as_read' );
  * @author   Wbcom Designs
  */
 function bupr_buddypress_notification_marked_as_read( $activity ) {
-
-	$current_user_id = bp_loggedin_user_id();
-	$visitor_id      = bp_displayed_user_id();
-
-	$wp_nonce        = isset( $_GET[ '_wpnonce' ] ) ? sanitize_text_field( wp_unslash( $_GET[ '_wpnonce' ] ) ) : '';
 	
-	if ( ! wp_verify_nonce( $wp_nonce , "mark-as-read-notification-{$current_user_id}-{$visitor_id}" ) ) {
+	$current_user_id = bp_loggedin_user_id();
+	
+	$wp_nonce        = isset( $_GET[ '_wpnonce' ] ) ? sanitize_text_field( wp_unslash( $_GET[ '_wpnonce' ] ) ) : '';
+	$review_id       = isset( $_GET[ 'id'] ) ? sanitize_text_field( wp_unslash( $_GET[ 'id' ] ) ) : '';
+	$is_user         = bp_is_user();
+
+	if ( ! wp_verify_nonce( $wp_nonce , "mark-as-read-notification-{$current_user_id}" ) ) {
 		return false;
 	}
 	
 	if ( empty( $_GET['referer'] ) || 'user_notification' != $_GET['referer'] ) {
 		return false;
 	}
-	if ( ! bp_is_user() || ! is_user_logged_in() ) {
+	if( isset( $_GET['post'] ) && ( $review_id == $_GET['post'] ) ) { //if redirected to the review edit page assign bp_is_user to mark notification as read. (in case of pending approval)
+		$is_user = (bool)1;
+	}
+	
+	if ( ! $is_user || ! is_user_logged_in() ) {
 		return false;
 	}
 	
@@ -193,7 +201,7 @@ function bupr_buddypress_notification_marked_as_read( $activity ) {
 		array(
 			'component_action'  => 'bupr_add_review_action',
 			'user_id'           => $current_user_id,
-			'secondary_item_id' => $visitor_id,
+			'item_id'           => $review_id
 		)
 	);
 	
