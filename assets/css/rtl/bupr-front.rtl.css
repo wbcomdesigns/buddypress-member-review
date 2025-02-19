@@ -411,6 +411,12 @@ button.bupr-edit-review-button {
     color: red;
 }
 
+.bupr-review-error-fields {
+    display: none;
+    font-size: 14px;
+    color: red;
+}
+
 
 /*--------------------------------------------------------------
 # Success and Error Message
@@ -903,6 +909,11 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-view-personal-li a i::before,
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-add-review-personal-li a i::before {
+    content: "\f005";
+}
+
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
@@ -1340,6 +1351,12 @@ button.bupr-edit-review-button {
 .bupr-error-fields {
     display: none;
     font-size: 12px;
+    color: red;
+}
+
+.bupr-review-error-fields {
+    display: none;
+    font-size: 14px;
     color: red;
 }
 
@@ -1835,6 +1852,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-view-personal-li a i::before,
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-add-review-personal-li a i::before {
+    content: "\f005";
+}
+
+
+
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
@@ -2272,6 +2296,12 @@ button.bupr-edit-review-button {
 .bupr-error-fields {
     display: none;
     font-size: 12px;
+    color: red;
+}
+
+.bupr-review-error-fields {
+    display: none;
+    font-size: 14px;
     color: red;
 }
 
@@ -2767,6 +2797,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-view-personal-li a i::before,
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-add-review-personal-li a i::before {
+    content: "\f005";
+}
+
+
+
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
@@ -3204,6 +3241,12 @@ button.bupr-edit-review-button {
 .bupr-error-fields {
     display: none;
     font-size: 12px;
+    color: red;
+}
+
+.bupr-review-error-fields {
+    display: none;
+    font-size: 14px;
     color: red;
 }
 
@@ -3699,6 +3742,10 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-view-personal-li a i::before {
+    content: "\f005";
+}
+
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
@@ -4136,6 +4183,12 @@ button.bupr-edit-review-button {
 .bupr-error-fields {
     display: none;
     font-size: 12px;
+    color: red;
+}
+
+.bupr-review-error-fields {
+    display: none;
+    font-size: 14px;
     color: red;
 }
 
@@ -4629,6 +4682,10 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     .multi-review {
         display: inline-block;
     }
+}
+
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-view-personal-li a i::before {
+    content: "\f005";
 }
 
 /*--------------------------------------------------------------

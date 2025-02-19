@@ -909,6 +909,11 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-view-personal-li a i::before,
+.youzify-tabs-list-gradient .youzify-default-subnav li#reviews-add-review-personal-li a i::before {
+    content: "\f005";
+}
+
 /*--------------------------------------------------------------
 # BuddyBoss Theme Specific
 --------------------------------------------------------------*/
