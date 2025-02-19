@@ -13,16 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function bupr_filter_notifications_get_registered_components( $component_names = array() ) {
 
-			// Force $component_names to be an array.
+	// Force $component_names to be an array.
 	if ( ! is_array( $component_names ) ) {
-			$component_names = array();
+		$component_names = array();
 	}
 
-			// Add 'buddypress_member_review' component to registered components array.
-			array_push( $component_names, 'buddypress_member_review' );
+	// Add 'buddypress_member_review' component to registered components array.
+	array_push( $component_names, 'buddypress_member_review' );
 
-			// Return component's with 'buddypress_member_review' appended.
-			return $component_names;
+	// Return component's with 'buddypress_member_review' appended.
+	return $component_names;
 }
 add_filter( 'bp_notifications_get_registered_components', 'bupr_filter_notifications_get_registered_components', 10 );
 
@@ -43,7 +43,7 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bupr_add_review_noti
 function bupr_add_review_notification_format( $action, $item_id, $secondary_item_id, $total_items, $format, $component_action_name, $component_name ) {
 	global $bp, $bupr;
 	$post_status = get_post_status( $item_id ); //getting review status.
-
+	
 	if ( 'bupr_add_review_action' === $component_action_name  ) {
 		
 		$anonymous_review = get_post_meta( $item_id, 'bupr_anonymous_review_post', true );
@@ -71,7 +71,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		$linked_member_id = get_post_meta( $item_id, 'linked_bp_member', true );
 		
 		$linked_user_info = get_userdata( $linked_member_id );
-
+		
 		if ( $linked_user_info ) {
 			$linked_user_name = $linked_user_info->display_name;
 		}
@@ -83,7 +83,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 			// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
 			$notification_link = bp_core_get_user_domain( $linked_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 		}
-
+		
 		/* translators: %s: */
 		$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 		/* translators: %s: */
@@ -93,7 +93,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 			$notification_content = sprintf( esc_html__( '( Pending Approval )  %1$s posted a %2$s', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
 			$notification_link    = admin_url() . 'post.php?post='.$item_id.'&action=edit';
 
-			do_action( 'bp_actions' ); //do action to mark read pending approval notifications.
+			bupr_buddypress_notification_marked_as_read(); //function to mark read pending approval notifications.
 		}
 		$notification_link           = add_query_arg( array( 'referer' => 'user_notification' ), $notification_link );			// for identification of mark as read action 
 		$notification_link           = add_query_arg( array( 'id' => $item_id ), $notification_link );
@@ -114,7 +114,7 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 				'link' => $notification_link,
 			);
 		}
-
+		
 		return apply_filters( 'bupr_add_review_notification_format', $return, $user_id, $format );
 
 	}
@@ -173,7 +173,7 @@ add_action( 'bp_actions', 'bupr_buddypress_notification_marked_as_read' );
  * @param array $activity Activity Object.
  * @author   Wbcom Designs
  */
-function bupr_buddypress_notification_marked_as_read( $activity ) {
+function bupr_buddypress_notification_marked_as_read() {
 	
 	$current_user_id = bp_loggedin_user_id();
 	
