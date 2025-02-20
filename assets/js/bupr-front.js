@@ -243,6 +243,12 @@ jQuery(document).ready(function () {
             let review = response.data.review;
             jQuery("#bupr-edit-review").append(review);
             modal.classList.add("bupr-show-modal");
+
+            // Add "bupr-show-modal" class to 'youzify-content' if not already present
+            var youzifyContent = document.querySelector(".youzify-content");
+            if (youzifyContent && !youzifyContent.classList.contains("bupr-youzify-show-modal")) {
+                youzifyContent.classList.add("bupr-youzify-show-modal");
+            }
           }
         }
       );
@@ -256,6 +262,12 @@ jQuery(document).ready(function () {
       event.preventDefault();
       var modal = document.querySelector(".bupr-review-modal");
       modal.classList.remove("bupr-show-modal");
+
+      // Remove "bupr-show-modal" class from 'youzify-content' when modal is closed
+      var youzifyContent = document.querySelector(".youzify-content");
+      if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
+        youzifyContent.classList.remove("bupr-youzify-show-modal");
+      }
     }
   );
 
@@ -263,6 +275,12 @@ jQuery(document).ready(function () {
     var modal = document.querySelector(".bupr-review-modal");
     if (e.target === modal) {
       modal.classList.remove("bupr-show-modal");
+
+      // Remove "bupr-show-modal" class from 'youzify-content' when clicking outside of the modal
+      var youzifyContent = document.querySelector(".youzify-content");
+      if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
+        youzifyContent.classList.remove("bupr-youzify-show-modal");
+      }
     }
   });
 

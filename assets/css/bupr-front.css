@@ -860,11 +860,6 @@ body[class*="youzify"] .youzify-page-main-content .bupr-bp-member-review-no-popu
     display: none;
 }
 
-.youzify .btn,
-.youzify .btn:hover {
-    color: inherit;
-}
-
 /* Adjust spacing for the Add Review button when Youzify is active */
 body[class*="youzify"] #bupr-add-review-btn .add-review.button {
     padding: 12px 20px;
@@ -951,6 +946,14 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 .youzify-tabs-list-gradient .youzify-default-subnav li#reviews-view-personal-li a i::before,
 .youzify-tabs-list-gradient .youzify-default-subnav li#reviews-add-review-personal-li a i::before {
     content: "\f005";
+}
+
+.bupr-youzify-show-modal #youzify-profile-navmenu,
+.bupr-youzify-show-modal .youzify-header-cover>img,
+.bupr-youzify-show-modal .youzify-header-overlay .youzify-header-cover:before,
+.bupr-youzify-show-modal .youzify-header-pattern .youzify-header-cover:after,
+.bupr-youzify-show-modal .youzify-hdr-v1 .youzify-cover-content .youzify-inner-content {
+    z-index: 0;
 }
 
 /*--------------------------------------------------------------
