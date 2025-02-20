@@ -220,7 +220,7 @@ jQuery(document).ready(function () {
   /*----------------------------------------
    * Edit Review Pop form
    *-----------------------------------------*/
-  jQuery(document).on("click", "#bupr-reiew-edit", function (event) {
+  jQuery(document).on("click", "#bupr-review-edit-btn", function (event) {
     event.preventDefault();
     var reviewwrapper = document.getElementById("bupr-edit-review");
     console.log(reviewwrapper);

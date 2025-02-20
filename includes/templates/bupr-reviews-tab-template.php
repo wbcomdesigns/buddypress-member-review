@@ -68,7 +68,7 @@ $reviews = new WP_Query( $args );
 							<?php if ( ! empty( $bupr['allow_update'] ) && 'yes' === $bupr['allow_update'] ) : ?>
 								<?php if ( bp_loggedin_user_id() == $author_id ) : ?>
 									<div id="bupr-reiew-edit" class="bupr-edit-review-button-wrapper" data-review="<?php echo esc_attr( $post->ID ); ?>">
-										<button type="button" class="bupr-edit-review-button">
+										<button type="button" class="bupr-edit-review-button" id="bupr-review-edit-btn" data-review="<?php echo esc_attr( $post->ID ); ?>" >
 										<?php
 										/* translators: %s: */
 										echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) );
