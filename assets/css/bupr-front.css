@@ -317,6 +317,37 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     margin-bottom: 10px;
 }
 
+.bp-member-reviews .bupr-row {
+    position: relative;
+    padding-right: 130px;
+}
+
+.bp-member-reviews .bupr-row .bupr-edit-review-button-wrapper {
+    position: absolute;
+    right: 15px;
+}
+
+@media screen and (max-width: 480px) {
+    .bp-member-reviews .bupr-row {
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        padding-right: 15px;
+    }
+
+    .bp-member-reviews .bupr-row .bupr-edit-review-button-wrapper {
+        position: static;
+        -webkit-box-ordinal-group: 4;
+        -ms-flex-order: 3;
+        order: 3;
+        margin: 15px 0 0;
+    }
+}
+
 button.bupr-edit-review-button {
     padding: 10px !important;
     border-radius: 4px !important;
@@ -788,6 +819,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 .description p {
     margin: 0px;
 }
+
 li#bupr-add-review-btn a.add-review {
     margin: 0;
     display: inline-block;
@@ -796,15 +828,17 @@ li#bupr-add-review-btn a.add-review {
 /* Youzify Plugin Support */
 
 body[class*="youzify"] .youzify-head-content .bupr-member-review-wrapper {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
-body[class*="youzify"].reviews .youzify-page-main-content .youzify-main-column div#subnav.item-list-tabs{
+body[class*="youzify"].reviews .youzify-page-main-content .youzify-main-column div#subnav.item-list-tabs {
     margin: 0;
 }
 
 body[class*="youzify"].reviews .youzify-page-main-content .bupr-bp-member-reviews-block .bp-member-reviews,
-body[class*="youzify"].add-review .youzify-page-main-content .youzify-main-column .bupr-bp-member-review-no-popup-add-block{
+body[class*="youzify"].add-review .youzify-page-main-content .youzify-main-column .bupr-bp-member-review-no-popup-add-block {
     padding: 30px;
     border-top: 1px solid #eee;
     background-color: var(--reign-site-sections-bg-color);
@@ -817,7 +851,8 @@ body[class*="youzify"].add-review .youzify-page-main-content button#bupr_save_re
     color: #fff;
 }
 
-body[class*="youzify"] .youzify-page-main-content .bupr-bp-member-review-no-popup-add-block #review_desc, #review_desc{
+body[class*="youzify"] .youzify-page-main-content .bupr-bp-member-review-no-popup-add-block #review_desc,
+#review_desc {
     margin-top: 15px;
 }
 
@@ -887,7 +922,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     .rating-star {
         margin-right: 10px;
     }
-    body[class*="youzify"] .youzify-page-main-content .bupr-criteria-label{
+
+    body[class*="youzify"] .youzify-page-main-content .bupr-criteria-label {
         margin-bottom: 10px;
     }
 }
@@ -898,7 +934,10 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
         display: -ms-flexbox;
         display: flex;
     }
-    .bupr-member-review-wrapper{
+
+    .bupr-member-review-wrapper {
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
         justify-content: center;
     }
 }
@@ -923,6 +962,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .buddyboss-theme .member-header-actions-wrap .member-header-actions.action {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 10px;
 }
