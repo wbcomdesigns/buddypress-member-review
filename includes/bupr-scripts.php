@@ -45,23 +45,25 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 */
 		public function bupr_public_enqueue_styles() {
 			
-			global $bupr;
+			if( ! bp_is_groups_directory() ) {
+				global $bupr;
 
-			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-				$extension = is_rtl() ? '.rtl.css' : '.css';
-				$path      = is_rtl() ? '/rtl' : '';
-			} else {
-				$extension = is_rtl() ? '.rtl.css' : '.min.css';
-				$path      = is_rtl() ? '/rtl' : '/min';
+				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+					$extension = is_rtl() ? '.rtl.css' : '.css';
+					$path      = is_rtl() ? '/rtl' : '';
+				} else {
+					$extension = is_rtl() ? '.rtl.css' : '.min.css';
+					$path      = is_rtl() ? '/rtl' : '/min';
+				}
+
+				wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css' .$path. '/bupr-reviews'. $extension, array(), BUPR_PLUGIN_VERSION, false );
+				wp_enqueue_style( 'bupr-font-awesome', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
+				wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css' .$path. '/bupr-front'. $extension, array(), BUPR_PLUGIN_VERSION, false );
+
+				$bupr_star_color = $bupr['rating_color'];
+				$custom_css = ".bupr-star-rate { color: {$bupr_star_color} !important; }";
+				wp_add_inline_style( 'bupr-front-css', $custom_css );
 			}
-
-			wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css' .$path. '/bupr-reviews'. $extension, array(), BUPR_PLUGIN_VERSION, false );
-			wp_enqueue_style( 'bupr-font-awesome', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
-			wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css' .$path. '/bupr-front'. $extension, array(), BUPR_PLUGIN_VERSION, false );
-
-			$bupr_star_color = $bupr['rating_color'];
-			$custom_css = ".bupr-star-rate { color: {$bupr_star_color} !important; }";
-			wp_add_inline_style( 'bupr-front-css', $custom_css );
 		}
 
 		
@@ -74,26 +76,29 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 */
 		public function bupr_public_enqueue_scripts() {
 
-			global $bupr;
+			if( ! bp_is_groups_directory() ) {
+				
+				global $bupr;
 			
-			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-				$extension = '.js';
-				$path      = '';
-			} else {
-				$extension = '.min.js';
-				$path      = '/min';
+				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+					$extension = '.js';
+					$path      = '';
+				} else {
+					$extension = '.min.js';
+					$path      = '/min';
+				}
+				wp_register_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js' .$path. '/bupr-front'. $extension, array( 'jquery' ), BUPR_PLUGIN_VERSION, true );
+				wp_enqueue_script( 'bupr-front-js' );
+				$title_review   = bupr_profile_review_tab_singular_slug();
+				$cur_name       = bp_get_displayed_user_fullname();
+				$reviews_titles = array(
+					'cur_username' => $cur_name,
+					'review_title' => $title_review,
+					'review_nonce' => wp_create_nonce('review-nonce'),
+				);
+				wp_localize_script( 'bupr-front-js', 'mail_title', $reviews_titles );
+				wp_set_script_translations( 'bupr-front-js', 'bp-member-reviews' );
 			}
-			wp_register_script( 'bupr-front-js', BUPR_PLUGIN_URL . 'assets/js' .$path. '/bupr-front'. $extension, array( 'jquery' ), BUPR_PLUGIN_VERSION, true );
-			wp_enqueue_script( 'bupr-front-js' );
-			$title_review   = bupr_profile_review_tab_singular_slug();
-			$cur_name       = bp_get_displayed_user_fullname();
-			$reviews_titles = array(
-				'cur_username' => $cur_name,
-				'review_title' => $title_review,
-				'review_nonce' => wp_create_nonce('review-nonce'),
-			);
-			wp_localize_script( 'bupr-front-js', 'mail_title', $reviews_titles );
-			wp_set_script_translations( 'bupr-front-js', 'bp-member-reviews' );
 		}
 
 		/**
@@ -104,7 +109,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_admin_enqueue_scripts() {
-			
+
 			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 				$extension = '.js';
 				$path      = '';
@@ -153,7 +158,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_admin_enqueue_styles() {
-			
+			global $typenow, $bupr;
 			if ( function_exists( 'get_current_screen' ) ) {
 				
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
@@ -177,6 +182,14 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 						wp_enqueue_style( 'wp-color-picker' );
 					}
 				}
+			}
+			
+			if( 'review' === $typenow ) {
+
+				wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css' .$path. '/bupr-front'. $extension, array(), BUPR_PLUGIN_VERSION, false );
+				$bupr_star_color = $bupr['rating_color'];
+				$custom_css = ".bupr-star-rate { color: {$bupr_star_color} !important; }";
+				wp_add_inline_style( 'bupr-front-css', $custom_css );
 			}
 		}
 	}
