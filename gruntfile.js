@@ -153,7 +153,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'assets/css', // Source directory for public CSS
-                        src: ['**/*.css', '!**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
+                        src: ['*.css', '!**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
                         dest: 'assets/css/rtl/', // Destination directory for public RTL CSS
 						ext: '.rtl.css', // Extension for RTL files
                         flatten: true // Prevents creating subdirectories
@@ -161,7 +161,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'admin/assets/css', // Source directory for admin CSS
-                        src: ['**/*.css', '!**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
+                        src: ['*.css', '!**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
                         dest: 'admin/assets/css/rtl/', // Destination directory for admin RTL CSS
 						ext: '.rtl.css', // Extension for RTL files
                         flatten: true // Prevents creating subdirectories
@@ -169,7 +169,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'admin/wbcom/assets/css', // Source directory for admin CSS
-                        src: ['**/*.css', '!**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
+                        src: ['*.css', '!**/*.min.css', '!vendor/**/*.css'], // Source files, excluding vendor CSS
                         dest: 'admin/wbcom/assets/css/rtl/', // Destination directory for admin RTL CSS
 						ext: '.rtl.css', // Extension for RTL files
                         flatten: true // Prevents creating subdirectories
