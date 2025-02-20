@@ -223,7 +223,6 @@ jQuery(document).ready(function () {
   jQuery(document).on("click", "#bupr-review-edit-btn", function (event) {
     event.preventDefault();
     var reviewwrapper = document.getElementById("bupr-edit-review");
-    console.log(reviewwrapper);
     var modal = document.querySelector(".bupr-review-modal");
     var button = jQuery(this);
     var review_id = button.data("review");
