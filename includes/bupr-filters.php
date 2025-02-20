@@ -1006,12 +1006,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 					// Ensure the content is safe.
 					$escaped_content = wp_kses_post( $review_content );
-
+					
 					if(function_exists('bp_activity_add')){
 						// Add activity to BuddyPress.
 						bp_activity_add( array(
 							'action'        => $action,
-							'content'       => $escaped_content, // No links or ratings, just review content.
+							'content'       => !empty( $escaped_content ) ? $escaped_content : 'Ratings', // No links or ratings, just review content.
 							'component'     => $bp->members->id,
 							'type'          => defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review',
 							'user_id'       => $reviewer_user_id,
@@ -1038,27 +1038,31 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		$post_id              = $activity->item_id;
 		$review_rating_fields = get_option( 'bupr_admin_settings', true );
 		$review_ratings       = get_post_meta( $post_id, 'profile_star_rating', false );		
-		$review_start         = '';		
-		if ( ! empty( $review_rating_fields['profile_rating_fields'] ) && ! empty( $review_ratings[0] ) ) {			
+		$review_start         = '';	 
+		if( ! empty( $review_ratings[0] ) && is_array( $review_ratings[0] ) ) {
 			$review_start .= '<div class="bupr-multi-review">';
-			foreach ( $review_rating_fields['profile_rating_fields'] as $review_field => $review_field_val ) {				
-				if ( array_key_exists( $review_field, $review_ratings[0] ) ) {
-					$review_start .= '<div class="multi-review">';
-					$review_start .= '<div class="bupr-col-6">' . esc_html( $review_field ) . '</div>';
-					$review_start .= '<div class="bupr-col-6">';
-					/*** Ratings */
-					$stars_on  = $review_ratings[0][ $review_field ];
-					$stars_off = 5 - $stars_on;
-					for ( $i = 1; $i <= $stars_on; $i++ ) {
-						$review_start .= '<span class="fas fa-star stars bupr-star-rate"></span>';
-
-					}
-					for ( $i = 1; $i <= $stars_off; $i++ ) {
-						$review_start .= '<span class="far fa-star stars bupr-star-rate"></span>';
-					}
-					$review_start .= '</div>';
-					$review_start .= '</div>';
+			foreach ( $review_ratings[0] as $rating_field_name => $ratings ) {
+				if( empty( $ratings ) ) {
+					continue;
 				}
+				$review_start .= '<div class="multi-review">';
+				if ( ! empty( $rating_field_name ) ) {
+					$review_start .= '<div class="bupr-col-6">' . esc_html( $rating_field_name ) . '</div>';
+				}
+				$review_start .= '<div class="bupr-col-6">';
+				
+				/*** Star rating Ratings */
+				$stars_on  = $ratings;
+				$stars_off = 5 - $stars_on;
+				for ( $i = 1; $i <= $stars_on; $i++ ) {
+					$review_start .= '<span class="fas fa-star stars bupr-star-rate"></span>';
+
+				}
+				for ( $i = 1; $i <= $stars_off; $i++ ) {
+					$review_start .= '<span class="far fa-star stars bupr-star-rate"></span>';
+				}
+				$review_start .= '</div>';
+				$review_start .= '</div>';
 			}
 			$review_start .= '</div>';
 		}
