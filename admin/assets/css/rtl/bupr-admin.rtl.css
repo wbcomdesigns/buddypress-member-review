@@ -423,4 +423,13 @@ button.notice-dismiss:before {
     width: 300px;
     margin-left: 10px;
 }
+
+@media screen and (max-width: 480px) {
+    div#setting-error-settings_updated {
+        margin: 0;
+        position: relative;
+        left: auto;
+        right: auto;
+    }
+}
 /*# sourceMappingURL=bupr-admin.rtl.css.map */
