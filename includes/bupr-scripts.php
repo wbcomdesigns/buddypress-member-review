@@ -170,7 +170,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				}
 
 				$screen = get_current_screen();
-				if ( ( isset( $_GET['page'] ) && 'bp-member-review-settings' === $_GET['page'] ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) { // phpcs:ignore
+				if ( ( isset( $_GET['page'] ) && ( 'bp-member-review-settings' === $_GET['page']  ||  'wbcomplugins' === $_GET['page'] ) ) || ( isset( $_GET['post_type'] ) && 'review' === $_GET['post_type'] ) ) { // phpcs:ignore
 					if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
 						wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
 					}

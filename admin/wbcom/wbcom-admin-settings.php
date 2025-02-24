@@ -221,9 +221,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 */
 		public function wbcom_enqueue_admin_scripts() {
 
-			$page_slug_arr  = array( 'wbcomplugins', 'bp-member-review-settings' );
-
-			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) && isset( $_GET['page'] ) && in_array( $_GET['page'], $page_slug_arr ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' )  ) { 
 				
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = '.js';
@@ -253,7 +251,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				wp_enqueue_script( 'wbcom_admin_setting_js' );
 
 				wp_set_script_translations( 'wbcom_admin_setting_js', 'bp-member-reviews' );
-
 			}
 		}
 
@@ -269,10 +266,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), BUPR_PLUGIN_VERSION, false );
 			}
 
-			$page_slug_arr  = array( 'wbcomplugins', 'bp-member-review-settings' );
-
-			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) && isset( $_GET['page'] ) && in_array( $_GET['page'], $page_slug_arr ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				
+			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) { 
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = is_rtl() ? '.rtl.css' : '.css';
 					$path      = is_rtl() ? '/rtl' : '';
@@ -283,7 +277,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				
 				wp_enqueue_style( 'wbcom-admin-setting-css', BUPR_PLUGIN_URL . 'admin/wbcom/assets/css' .$path. '/wbcom-admin-setting'. $extension , array(), BUPR_PLUGIN_VERSION, false );
 			}
-
 		}
 
 		/**
