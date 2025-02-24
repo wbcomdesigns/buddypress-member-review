@@ -1126,15 +1126,22 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_change_avatar_image( $gravatar_image ) {
 			global $activities_template;
-			$activity = $activities_template->activity;
-			$is_anonymous = get_post_meta($activity->item_id, 'bupr_anonymous_review_post',true);
-			if( 'yes' === $is_anonymous ){
-				$size = apply_filters( 'bupr_default_avatar_size', 150 );
-				$default_avatar = apply_filters( 'bupr_change_default_avatar', 'mystery' );  // Could also use identicon, monsterid, retro, etc.
-				$gravatar_url = 'https://www.gravatar.com/avatar/?s=' . $size . '&d=' . $default_avatar;
 			
-			$gravatar_image =  '<img src="' . esc_url( $gravatar_url ) . '" class="avatar photo" alt="Custom Default Gravatar" />';
+			if( isset( $activities_template->activity) && isset( $activities_template->activity->item_id )  ) {
+				$activity = $activities_template->activity;
+				$is_anonymous = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post',true);
+				
+				if( 'yes' === $is_anonymous ){
+					
+					$size = apply_filters( 'bupr_default_avatar_size', 150 );
+					$default_avatar = apply_filters( 'bupr_change_default_avatar', 'mystery' );  // Could also use identicon, monsterid, retro, etc.
+					$gravatar_url = 'https://www.gravatar.com/avatar/?s=' . $size . '&d=' . $default_avatar;
+				
+					$gravatar_image =  '<img src="' . esc_url( $gravatar_url ) . '" class="avatar photo" alt="Custom Default Gravatar" />';
+				}
+				
 			}
+			
 			return apply_filters( 'bupr_change_avatar_image', $gravatar_image );
 		}
 	}
