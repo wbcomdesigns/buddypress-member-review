@@ -73,17 +73,17 @@ jQuery(document).ready(function () {
   });
 
   jQuery("#bupr_member_review_id").on("change", function () {
-    jQuery(this).siblings(".bupr-error-fields").hide();
+    jQuery( '.bupr-review-error-fields' ).hide(); 
   });
 
   jQuery("#review_desc").on("keydown", function () {
-    jQuery(this).siblings(".bupr-error-fields").hide();
+    jQuery( '.bupr-review-error-fields' ).hide();
   });
 
   jQuery(".member_stars").on("click", function () {
-    jQuery(this).parent().next(".bupr-error-fields").hide();
+    jQuery( '.bupr-review-error-fields' ).hide();
   });
-
+  
   /*----------------------------------------
    * Add new review in member profiles
    *-----------------------------------------*/
@@ -128,10 +128,10 @@ jQuery(document).ready(function () {
       }
       rating_exist.push(rate_val);
     });
-
+   
     if (bupr_review_count > 0) {
       if (bupr_member_id == "") {
-        jQuery("#bupr_member_review_id").siblings(".bupr-error-fields").show();
+        jQuery( '.bupr-review-error-fields' ).show();
       } else {
         if (jQuery.inArray("0", rating_exist) == -1 || bupr_review_desc ) {
           jQuery(".bupr-save-reivew-spinner").show();
@@ -171,14 +171,12 @@ jQuery(document).ready(function () {
     } else {
       if (bupr_member_id == "" || bupr_review_desc == "") {
         if (bupr_member_id == "") {
-          jQuery("#bupr_member_review_id")
-            .siblings(".bupr-error-fields")
-            .show();
+          jQuery( '.bupr-review-error-fields' ).show();
           event.preventDefault();
         }
 
         if (bupr_review_desc == "") {
-          jQuery("#review_desc").siblings(".bupr-error-fields").show();
+          jQuery( '.bupr-review-error-fields' ).show();
           event.preventDefault();
         }
       } else {
