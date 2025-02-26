@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: BuddyPress Member Reviews\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-07 19:52:23+00:00\n"
-"PO-Revision-Date: 2025-02-25 13:30+0000\n"
-"Last-Translator: Varun Dubey <varun@wbcomdesigns.com>\n"
-"Language-Team: French (France)\n"
+"PO-Revision-Date: 2025-02-26 06:18+0000\n"
+"Last-Translator: \n"
+"Language-Team: Français\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,16 +21,17 @@ msgstr ""
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Loco-Version: 2.7.1; wp-6.7.2"
 
 #: includes/bupr-filters.php:274 includes/bupr-filters.php:288
 #: includes/bupr-filters.php:644 includes/bupr-filters.php:659
 msgid " review )"
-msgstr "reviessssssssssssssssssssw )"
+msgstr ""
 
 #: includes/bupr-filters.php:274 includes/bupr-filters.php:288
 #: includes/bupr-filters.php:644 includes/bupr-filters.php:659
 msgid " reviews )"
-msgstr "revierrrrrrrrrrrrrws )"
+msgstr ""
 
 #. translators: %s:
 #: includes/bupr-notification.php:90
