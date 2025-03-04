@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.6.2
-Stable tag: 3.3.1
+Tested up to: 6.7.2
+Stable tag: 3.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,26 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+
+= 3.4.0 =
+* Added: Pending approval notifications for admins.  
+* Added: Meta box to display member ratings on the post edit page.  
+* Added: Checks to load scripts and styles only when needed for better performance.  
+* Fixed: String translation issues for better multilingual support.  
+* Fixed: Issue with review button click event.  
+* Fixed: Compatibility issues with BuddyBoss and Youzify.  
+* Fixed: Notification link and "mark as read" function.  
+* Fixed: Console warnings on the activity page.  
+* Fixed: Approval email notifications for admins.  
+* Fixed: Layout issues in the review list by removing extra white spaces.  
+* Updated: Backend settings menu toggle and notice UI for a smoother experience.  
+* Updated: Review and rating display for better readability.  
+* Updated: UI consistency with Youzify for an improved look and feel.  
+* Improved: Performance by minifying CSS and JS, with added RTL support.  
+* Improved: Made the rating field optional when submitting reviews.  
+* Improved: Backend optimization by removing unnecessary logs and outdated translations.  
+
+
 = 3.3.1 =
 * Fixed: Multi-user role issue for accepting and writing reviews.
 * Managed: Header action button for BuddyBoss theme.
