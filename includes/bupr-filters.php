@@ -739,8 +739,26 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				 * @author   Wbcom Designs
 				 */
 		public function bupr_member_profile_reviews_tab() {
-			global $bp;
-			global $bupr;
+			global $bp, $bupr;
+
+			// Default from plugin settings
+			$exclude_given_members = $bupr['exclude_given_members'] ?? array();
+			$add_taken_members     = $bupr['add_taken_members'] ?? array();
+			$review_label          = $bupr['review_label'] ?? esc_html__( 'Review', 'bp-member-reviews' );
+
+			 if ( bupr_bp_classic_activate() ) {
+				global $wp_roles;
+				// Ensure $wp_roles is set correctly.
+				if ( ! isset( $wp_roles ) || ! is_object( $wp_roles ) || ! isset( $wp_roles->roles ) ) {
+					$wp_roles = wp_roles();
+				}
+				// Get all available roles for pre-population.
+				$available_roles = array_keys( $wp_roles->roles );
+				$bupr_general_settings   = get_option( 'bupr_admin_general_options', array() );
+				$exclude_given_members   = $bupr_general_settings['bupr_exc_member'] ?? $available_roles;
+				$add_taken_members       = $bupr_general_settings['bupr_add_member'] ?? $available_roles;				
+			}
+
 			$bp_pages = bp_core_get_directory_pages();
 			add_filter( 'site_url', 'bupr_site_url', 99 );
 			$member_slug = ( isset( $bp_pages->members ) && isset( $bp_pages->members->slug ) ) ? $bp_pages->members->slug : 'members';
@@ -798,16 +816,16 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					'link'            => site_url() . "/$member_slug/$name/$parent_slug/",
 				)
 			);
-
+			
 			// Add subnav to add a review.
 			if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
-				if ( ! empty( $bupr['exclude_given_members'] ) ) {
+				if ( ! empty( $exclude_given_members ) ) {
 					$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-					if ( ! empty( $user_role ) && in_array( $user_role[0], $bupr['exclude_given_members'], true ) && ! bp_loggedin_user_id() ) {
+					if ( ! empty( $user_role ) && in_array( $user_role[0], $exclude_given_members, true ) && ! bp_loggedin_user_id() ) {
 						bp_core_new_subnav_item(
 							array(
 								/* translators: Review Label */
-								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ),
+								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $review_label ) ),
 								'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 								'parent_slug'     => $parent_slug,
@@ -820,15 +838,20 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 			} else {
 				$user_role = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-				if ( ! empty( $user_role ) && ! array_intersect( $user_role, $bupr['exclude_given_members'] ) ) {
+				if ( ! empty( $user_role ) &&
+					! array_intersect(
+						(array) $user_role,
+						isset( $exclude_given_members ) && is_array( $exclude_given_members ) ? $exclude_given_members : []
+					)
+				) {
 					return ; 
 				}
 
-				if ( ! empty( $bupr['add_taken_members'] ) && ! empty( $user_role ) ) {
+				if ( ! empty( $add_taken_members ) && ! empty( $user_role ) ) {
 					$user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
 					$user_role = ! empty( $user_role ) ? $user_role : array();
 
-					if ( array_intersect( $user_role, $bupr['add_taken_members']) ) {
+					if ( array_intersect( $user_role, $add_taken_members) ) {
 						bp_core_new_subnav_item(
 							array(
 								/* translators: %s: */
