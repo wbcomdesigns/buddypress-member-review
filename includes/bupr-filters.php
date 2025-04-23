@@ -274,7 +274,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 									$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
 									?>
 									<span class="bupr-directory-rating-text">
-										<?php echo esc_html( $bupr_avg_rating ) . '/5 ( ' . esc_html( $bupr_reviews_count ) . $review_string; ?>
+										<?php echo esc_html( $bupr_avg_rating ) . '/5 ( ' . esc_html( $bupr_reviews_count ) . esc_html( $review_string ); ?>
 									</span>
 								</div>
 							</div>
@@ -288,7 +288,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
 						?>
 						<span class="bupr-directory-rating-text">
-							<?php echo esc_html( $bupr_reviews_count.' '). $review_string  ; ?>
+							<?php echo esc_html( $bupr_reviews_count.' '). esc_html( $review_string )  ; ?>
 						</span>
 					</div>
 				<?php }
@@ -645,7 +645,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 								?>
 								<span class="bupr-member-rating-text">
-									<?php echo esc_html( $bupr_avg_rating ) . '/5 ( ' . esc_html( $bupr_reviews_count ) . $review_string; ?>
+									<?php echo esc_html( $bupr_avg_rating ) . '/5 ( ' . esc_html( $bupr_reviews_count ) . esc_html( $review_string ); ?>
 								</span>
 							</div>
 						</div>
@@ -659,7 +659,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
 						?>
 						<span class="bupr-member-rating-text">
-							<?php echo esc_html( $bupr_reviews_count.' '). $review_string; ?>
+							<?php echo esc_html( $bupr_reviews_count.' '). esc_html( $review_string ); ?>
 						</span>
 					</div>
 					
