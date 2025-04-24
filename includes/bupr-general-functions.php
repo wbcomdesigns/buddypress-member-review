@@ -331,6 +331,17 @@ function bupr_youzify_activity_action_wall_posts( $action, $activity ){
 }
 add_filter( 'youzify_activity_new_post_action', 'bupr_youzify_activity_action_wall_posts',10, 2 );
 
+/**
+ * Check Bp Classic plugin is activated.
+ */
+function bupr_bp_classic_activate(){
+    if( in_array( 'bp-classic/class-bp-classic.php', get_option( 'active_plugins' ) ) ){
+        return true;
+    } else{
+        return false;
+    }
+}
+
 
 
 

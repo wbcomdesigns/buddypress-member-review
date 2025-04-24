@@ -14,7 +14,7 @@ $enabled_criterias   = array();
 $bupr_admin_settings = get_option( 'bupr_admin_settings', true );
 if ( ! empty( $bupr_admin_settings ) && ! empty( $bupr_admin_settings['profile_rating_fields'] ) ) {
 	$profile_rating_fields    = $bupr_admin_settings['profile_rating_fields'];
-	$enabled_criterias['all'] = esc_html__( 'All Criterias', 'bp-member-reviews' );
+	$enabled_criterias['all'] = esc_html__( 'All Criteria', 'bp-member-reviews' );
 	foreach ( $profile_rating_fields as $criteria => $criteria_setting ) {
 		if ( $criteria_setting == 'yes' ) {
 			$enabled_criterias[ $criteria ] = $criteria;
@@ -52,7 +52,7 @@ $member_types = bp_get_member_types( '', 'objects' );
 							</div>
 							<div class="bupr-admin-col-6 ">
 								<select name="bupr_member_type_criteria[<?php echo esc_attr( $type ); ?>][]" multiple class="bupr_mt_criteria_select">
-									<option value=''><?php esc_html_e( 'Select criterias', 'bp-member-reviews' ); ?></option>
+									<option value=''><?php esc_html_e( 'Select criteria', 'bp-member-reviews' ); ?></option>
 									<?php
 									foreach ( $enabled_criterias as $key => $criteria ) {
 										$_criterias = isset( $bupr_member_type_criteria[ $type ] ) ? $bupr_member_type_criteria[ $type ] : '';

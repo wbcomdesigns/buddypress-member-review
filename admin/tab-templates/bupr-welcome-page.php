@@ -11,20 +11,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="wbcom-welcome-main-wrapper">
 		<div class="wbcom-welcome-head">
 		<h2 class="wbcom-welcome-title"><?php esc_html_e( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?></h2>
-			<p class="wbcom-welcome-description"><?php esc_html_e( 'This plugin allows only site members to add reviews to the BuddyPress members on the site. And if the visitor is not logged in, the visitor can only see the listing of the reviews but can not review.', 'bp-member-reviews' ); ?></p>
-			<p class="wbcom-welcome-description"><?php esc_html_e( 'The review form allows the members to even rate the member’s profile out of 5 points with multiple review criteria. You can add multiple criteria for review. And you can change the positions of those Criteria. Review form shows on the member’s profile but you can show review form on another page just by using shortcode.', 'bp-member-reviews' ); ?></p>
+			<p class="wbcom-welcome-description"><?php esc_html_e( 'This plugin allows only site members to add reviews to the BuddyPress members on the site. If the visitor is not logged in, the visitor can only see the listing of the reviews but cannot review.', 'bp-member-reviews' ); ?></p>
+			<p class="wbcom-welcome-description"><?php esc_html_e( 'The review form allows the members to rate the member’s profile out of 5 points with multiple review criteria. You can add multiple criteria for review. You can change the positions of those Criteria. The review form shows on the member’s profile, but you can show the review form on another page by using a shortcode.', 'bp-member-reviews' ); ?></p>
 		</div><!-- .wbcom-welcome-head -->
 
 		<div class="wbcom-welcome-content">
 			<div class="wbcom-welcome-support-info">
-				<h3><?php esc_html_e( 'Help &amp; Support Resources', 'bp-member-reviews' ); ?></h3>
-				<p><?php esc_html_e( 'Here are all the resources you may need to get help from us. Documentation is usually the best place to start. Should you require help anytime, our customer care team is available to assist you at the support center.', 'bp-member-reviews' ); ?></p>
+				<h3><?php esc_html_e( 'Help & Support Resources', 'bp-member-reviews' ); ?></h3>
+				<p><?php esc_html_e( 'If you need assistance, here are some helpful resources. Our documentation is a great place to start, and our support team is available if you require further help.', 'bp-member-reviews' ); ?></p>
 
 				<div class="wbcom-support-info-wrap">
 					<div class="wbcom-support-info-widgets">
 						<div class="wbcom-support-inner">
 						<h3><span class="dashicons dashicons-book"></span><?php esc_html_e( 'Documentation', 'bp-member-reviews' ); ?></h3>
-						<p><?php esc_html_e( 'We have prepared an extensive guide on BuddyPress Member Reviews to learn all aspects of the plugin. You will find most of your answers here.', 'bp-member-reviews' ); ?></p>
+						<p><?php esc_html_e( 'Explore our detailed guide on BuddyPress Member Review to understand all the features and how to make the most of them.', 'bp-member-reviews' ); ?></p>
 						<a href="<?php echo esc_url( 'https://docs.wbcomdesigns.com/doc_category/buddypress-member-review/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Read Documentation', 'bp-member-reviews' ); ?></a>
 						</div>
 					</div>
@@ -32,14 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wbcom-support-info-widgets">
 						<div class="wbcom-support-inner">
 						<h3><span class="dashicons dashicons-sos"></span><?php esc_html_e( 'Support Center', 'bp-member-reviews' ); ?></h3>
-						<p><?php esc_html_e( 'We strive to offer the best customer care via our support center. Once your plugin is activated, you can ask us for help anytime.', 'bp-member-reviews' ); ?></p>
+						<p><?php esc_html_e( 'Our support team is here to assist you with any questions or issues. Feel free to contact us anytime through our support center.', 'bp-member-reviews' ); ?></p>
 						<a href="<?php echo esc_url( 'https://wbcomdesigns.com/support/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Get Support', 'bp-member-reviews' ); ?></a>
 					</div>
 					</div>
 					<div class="wbcom-support-info-widgets">
 						<div class="wbcom-support-inner">
-						<h3><span class="dashicons dashicons-admin-comments"></span><?php esc_html_e( 'Got Feedback?', 'bp-member-reviews' ); ?></h3>
-						<p><?php esc_html_e( 'We want to hear about your experience with the plugin. We would also love to hear any suggestions you may for future updates.', 'bp-member-reviews' ); ?></p>
+						<h3><span class="dashicons dashicons-admin-comments"></span><?php esc_html_e( 'Share Your Feedback', 'bp-member-reviews' ); ?></h3>
+						<p><?php esc_html_e( 'We\'d love to hear about your experience with the plugin. Your feedback and suggestions help us improve future updates.', 'bp-member-reviews' ); ?></p>
 						<a href="<?php echo esc_url( 'https://wbcomdesigns.com/submit-review/' ); ?>" class="button button-primary button-welcome-support" target="_blank"><?php esc_html_e( 'Send Feedback', 'bp-member-reviews' ); ?></a>
 					</div>
 					</div>

@@ -16,7 +16,7 @@ global $bupr;
 		<h3><?php esc_html_e( 'Display Settings', 'bp-member-reviews' ); ?></h3>
 		<p class="wbcom-welcome-description">
 			<b><?php esc_html_e( 'Note', 'bp-member-reviews' ); ?>:</b>
-			<?php esc_html_e( 'If and only if you have added a criteria for review.', 'bp-member-reviews' ); ?>		</p>
+			<?php esc_html_e( 'This setting is applicable only if you have added a criterion for review.', 'bp-member-reviews' ); ?>		</p>
 	</div>
 	<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
 		<form method="post" action="options.php">
@@ -31,7 +31,7 @@ global $bupr;
 							<?php esc_html_e( 'Review', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( 'Change Labels from BuddyPress tab and review form.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Change labels from the BuddyPress tab and review form.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -41,10 +41,10 @@ global $bupr;
 				<div class="wbcom-settings-section-wrap ">
 					<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Review( Plural )', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Review (Plural)', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( 'This option provides flexibility to change plural of Review.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'This option provides flexibility to change the plural form of "Review".', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -53,16 +53,16 @@ global $bupr;
 				</div>
 			</div>
 			<div class="wbcom-admin-title-section">
-				<h3><?php esc_html_e( 'Colors ', 'bp-member-reviews' ); ?></h3>
+				<h3><?php esc_html_e( 'Colors', 'bp-member-reviews' ); ?></h3>
 			</div>
 			<div class="form-table">
 				<div class="wbcom-settings-section-wrap ">
 					<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Rating color', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Rating Color', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( 'This option lets you to change star rating color.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'This option allows you to change the star rating color.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">

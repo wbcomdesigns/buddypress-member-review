@@ -26,8 +26,8 @@ global $bupr;
 				</g>
 		</svg>
 	</div>
-	<div class="bupr-edit-reiview-form-wrapper">
-		<form id="bupr-edit-reiview-form" action="" method="post">
+	<div class="bupr-edit-review-form-wrapper">
+		<form id="bupr-edit-review-form" action="" method="post">
 			<div id="bupr-edit-review"></div>
 		</form>
 	</div>
