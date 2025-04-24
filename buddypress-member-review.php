@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wbcom Designs - BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/
- * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is exclusive to registered members, ensuring unbiased feedback by preventing users from reviewing their own profiles.
+ * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
  * Version: 3.4.0
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
@@ -194,7 +194,7 @@ function bupr_required_plugin_admin_notice() {
 	$bp_plugin   = esc_html__( 'BuddyPress', 'bp-member-reviews' );
 	echo '<div class="error"><p>';
 	printf(
-		 /* translators: %1$s: BuddyPress Member Reviews; %2$s: Buddypress. */
+		 /* translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress. */
 		esc_html__( '%1$s requires %2$s to be installed and active.', 'bp-member-reviews' ),
 		'<strong>' . esc_html( $plugin_name ) . '</strong>',
 		'<strong>' . esc_html( $bp_plugin ) . '</strong>'

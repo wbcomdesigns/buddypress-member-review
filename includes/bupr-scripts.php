@@ -137,7 +137,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 							'ajaxurl'     		  => admin_url( 'admin-ajax.php' ),
 							'success_msz' 		  => esc_html__( 'Already Installed & Activated', 'bp-member-reviews' ),
 							'error_msz'   		  => esc_html__( 'There was a problem performing the action.', 'bp-member-reviews' ),
-							'number_validation'   => esc_html__( '* Number input not allowed *', 'bp-member-reviews' ),
+							'number_validation'   => esc_html__( '* Number input is not allowed *', 'bp-member-reviews' ),
 							'nonce'           	  => wp_create_nonce( 'bupr_member_review_ajax' ),
 						)
 					);

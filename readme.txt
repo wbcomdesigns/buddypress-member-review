@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-The BuddyPress Member Reviews plugin enhances the Buddypress community by empowering registered users to post reviews on other members' profiles. This feature is exclusive to registered members, preventing users from reviewing their profiles to ensure unbiased feedback. The plugin provides guests a view-only mode, where they can read reviews but not contribute.
+The BuddyPress Member Reviews plugin enhances the BuddyPress community by empowering registered users to post reviews on other members' profiles. This feature is exclusive to registered members, preventing users from reviewing their profiles to ensure unbiased feedback. The plugin provides guests a view-only mode, where they can read reviews but not contribute.
 
 This plugin offers a customizable review form that supports multiple criteria, each rated up to 5 points. Administrators can add or modify these criteria and adjust their sequence to suit the community's needs. The review form seamlessly integrates into a member's profile page for easy access and can also be displayed on other pages using a shortcode, providing versatility in placement.
 

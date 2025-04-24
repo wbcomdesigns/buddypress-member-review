@@ -264,7 +264,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 							<h3><?php esc_html_e( 'Are you enjoying BuddyPress Member Reviews?', 'bp-member-reviews' ); ?></h3>
 							<p><?php 
 							 /* translators: %s: Plugin name. */
-							 printf( esc_html__( 'We hope you\'re enjoying %1$s! Could you please do us a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?', 'bp-member-reviews' ), esc_html( $this->name ) ); ?></p>
+							 printf( esc_html__( 'We hope you\'re enjoying %1$s! If you find it helpful, please consider giving us a 5-star rating on WordPress to help others discover the plugin.', 'bp-member-reviews' ), esc_html( $this->name ) ); ?></p>
 						</div>
 						<div class="bp-member-reviews-install-now">
 							<a href="https://wordpress.org/support/plugin/bp-user-profile-reviews/#new-post" class="button button-primary bp-member-reviews-install-button" target="_blank"><?php esc_html_e( 'Leave a Review', 'bp-member-reviews' ); ?></a>

@@ -399,7 +399,7 @@ msgid "Email Message"
 msgstr "Message de l’e-mail"
 
 #: admin/tab-templates/bupr-setting-general-tab.php:166
-msgid "Please add review email message."
+msgid "Please add a review email message."
 msgstr "Veuillez ajouter un message électronique d'évaluation."
 
 #: admin/tab-templates/bupr-setting-general-tab.php:189
@@ -1373,7 +1373,7 @@ msgstr "Paramètres"
 msgid "BuddyPress"
 msgstr "BuddyPress"
 
-#. translators: %1$s: BuddyPress Member Reviews; %2$s: Buddypress.
+#. translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress.
 #: buddypress-member-review.php:198
 #, fuzzy, php-format
 msgid "%1$s requires %2$s to be installed and active."
@@ -1540,7 +1540,7 @@ msgstr "Il y a eu un problème lors de l'exécution de l'action."
 
 #: includes/bupr-scripts.php:140
 #, fuzzy
-msgid "* Number input not allowed *"
+msgid "* Number input is not allowed *"
 msgstr "* La saisie de nombres n'est pas autorisée *"
 
 #. translators: %1$s: rating; %2$s: review count
@@ -1604,7 +1604,7 @@ msgstr "Envoyer l'évaluation de façon anonyme."
 
 #: includes/bupr-shortcodes.php:420
 #, fuzzy
-msgid "Please fill either rating stars or write a review."
+msgid "Please either select a rating or write a review."
 msgstr "Remplissez les étoiles d'évaluation ou écrivez un commentaire."
 
 #. translators: %s:
@@ -1649,8 +1649,8 @@ msgstr "Malheureusement, aucun %1$s n'a été trouvé."
 
 #: includes/widgets/display-review.php:14
 #, fuzzy
-#| msgid "Display members list according to members reviews "
-msgid "Display members list according to members reviews."
+#| msgid "Display a list of members based on their reviews "
+msgid "Display a list of members based on their reviews."
 msgstr "Affiche la liste des membres classés par les évaluations "
 
 #: includes/widgets/display-review.php:21

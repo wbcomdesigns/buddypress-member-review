@@ -417,7 +417,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									</p>
 							<?php } ?>
 								<p>
-							<div class="bupr-col-12 bupr-review-error-fields">*<?php esc_html_e( 'Please fill either rating stars or write a review.', 'bp-member-reviews' ); ?></div>
+							<div class="bupr-col-12 bupr-review-error-fields">*<?php esc_html_e( 'Please either select a rating or write a review.', 'bp-member-reviews' ); ?></div>
 							<?php wp_nonce_field( 'save-bp-member-review', 'security-nonce' ); ?>
 
 									<button type="button" class="button btn btn-default" id="bupr_save_review" name="submit-review">

@@ -11,7 +11,7 @@ class bupr_members_review_setting extends WP_Widget {
     function __construct() {
         $widget_ops  = array(
             'classname'   => 'bupr_members_review_setting',
-            'description' => esc_html__( 'Display members list according to members reviews.', 'bp-member-reviews' ),
+            'description' => esc_html__( 'Display a list of members based on their reviews.', 'bp-member-reviews' ),
         );
         $control_ops = array(
             'width'   => 280,

@@ -163,7 +163,7 @@ $bupr_admin_general   = get_option( 'bupr_admin_general_options' );
 							<label>
 								<?php esc_html_e( 'Email Message', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Please add review email message.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Please add a review email message.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<?php
