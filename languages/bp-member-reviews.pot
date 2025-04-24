@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-11T07:57:30+00:00\n"
+"POT-Creation-Date: 2025-04-24T11:12:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -99,6 +99,7 @@ msgstr ""
 
 #: admin/bupr-admin.php:297
 #: admin/tab-templates/bupr-setting-display-tab.php:31
+#: includes/bupr-filters.php:747
 #: includes/bupr-general-functions.php:80
 #: includes/class-buprglobals.php:81
 msgid "Review"
@@ -255,7 +256,7 @@ msgid "No thanks / I already have"
 msgstr ""
 
 #: admin/tab-templates/bupr-member-types-criteria-tab.php:17
-msgid "All Criterias"
+msgid "All Criteria"
 msgstr ""
 
 #: admin/tab-templates/bupr-member-types-criteria-tab.php:34
@@ -263,7 +264,7 @@ msgid "Set review criteria according to member types"
 msgstr ""
 
 #: admin/tab-templates/bupr-member-types-criteria-tab.php:55
-msgid "Select criterias"
+msgid "Select criteria"
 msgstr ""
 
 #: admin/tab-templates/bupr-member-types-criteria-tab.php:68
@@ -271,15 +272,15 @@ msgid "Only selected criteria will be available for respective member types."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:27
-msgid "Review Criteria(s)"
+msgid "Review Criteria"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:35
-msgid "Allow Multiple Criteria(s)?"
+msgid "Allow Multiple Criteria?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:37
-msgid "Enable this option,if you want to allow members to be rated by 'Criteria(s)'."
+msgid "Enable this option if you want to allow members to be rated by 'Criteria'."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:66
@@ -291,7 +292,7 @@ msgid "Add Criteria"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:83
-msgid "This option will allow you to add multiple rating criteria. By default, no citeria will be shown until you activate it."
+msgid "This option will allow you to add multiple rating criteria. By default, no criteria will be shown until you activate it."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:16
@@ -303,31 +304,31 @@ msgid "Note"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:19
-msgid "If and only if you have added a criteria for review."
+msgid "This setting is applicable only if you have added a criterion for review."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:34
-msgid "Change Labels from BuddyPress tab and review form."
+msgid "Change labels from the BuddyPress tab and review form."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:44
-msgid "Review( Plural )"
+msgid "Review (Plural)"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:47
-msgid "This option provides flexibility to change plural of Review."
+msgid "This option provides flexibility to change the plural form of \"Review\"."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:56
-msgid "Colors "
+msgid "Colors"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:62
-msgid "Rating color"
+msgid "Rating Color"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-display-tab.php:65
-msgid "This option lets you to change star rating color."
+msgid "This option allows you to change the star rating color."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-general-tab.php:54
@@ -515,27 +516,27 @@ msgid "FAQ(s) "
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:24
-msgid "How can we submit the review to a member profile by using this plugin?"
+msgid "How can we submit a review to a member profile using this plugin?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:28
-msgid "When visiting the \"/members\" section in the site, go for single profile view page, there you can see a menu namely, \"Reviews\" which will allow you to add a profile review only if you are a member."
+msgid "When visiting the \"/members\" section on the site, go to the single profile view page. There you can see a menu named \"Reviews\" which will allow you to add a profile review only if you are a member."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:36
-msgid "How can we add more rating criteria for review form ?"
+msgid "How can we add more rating criteria for the review form?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:40
-msgid "Just go to \"Dashboard->Review->BP member review setting page\" and click add criteria button to add more fields and click save setting button to update review settings."
+msgid "Just go to \"Dashboard->Review->BP member review settings page\" and click the \"Add Criteria\" button to add more fields. Then click the \"Save Settings\" button to update the review settings."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:48
-msgid "What is the Top Members widget and how to use it ?"
+msgid "What is the Top Members widget and how do I use it?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:52
-msgid "Members Review widgets display list of members on site front-end . When you successfully activate BP Member profile review plugin, then you can see Members review widget in the widget section."
+msgid "The Members Review widget displays a list of members on the site front-end. When you successfully activate the BP Member Profile Review plugin, you can see the Members Review widget in the widget section."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:60
@@ -543,11 +544,11 @@ msgid "Can I use the review form on any other page?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:63
-msgid "Yes you can use the review form on other page, just copy shortcode from review setting page and paste it on the other page."
+msgid "Yes, you can use the review form on another page. Just copy the shortcode from the review settings page and paste it on the other page."
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:70
-msgid "What to do if I unable/fail to publish shortcode page after update to WordPress 5.0?"
+msgid "What should I do if I am unable to publish the shortcode page after updating to WordPress 5.0?"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-support-tab.php:73
@@ -560,23 +561,23 @@ msgstr ""
 
 #. translators: %s:
 #: admin/tab-templates/bupr-setting-support-tab.php:85
-msgid "Please visit %1$s for any query related to plugin and BuddyPress."
+msgid "Please visit %1$s for any query related to the plugin and BuddyPress."
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:14
-msgid "This plugin allows only site members to add reviews to the BuddyPress members on the site. And if the visitor is not logged in, the visitor can only see the listing of the reviews but can not review."
+msgid "This plugin allows only site members to add reviews to the BuddyPress members on the site. If the visitor is not logged in, the visitor can only see the listing of the reviews but cannot review."
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:15
-msgid "The review form allows the members to even rate the member’s profile out of 5 points with multiple review criteria. You can add multiple criteria for review. And you can change the positions of those Criteria. Review form shows on the member’s profile but you can show review form on another page just by using shortcode."
+msgid "The review form allows the members to rate the member’s profile out of 5 points with multiple review criteria. You can add multiple criteria for review. You can change the positions of those Criteria. The review form shows on the member’s profile, but you can show the review form on another page by using a shortcode."
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:20
-msgid "Help &amp; Support Resources"
+msgid "Help & Support Resources"
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:21
-msgid "Here are all the resources you may need to get help from us. Documentation is usually the best place to start. Should you require help anytime, our customer care team is available to assist you at the support center."
+msgid "If you need assistance, here are some helpful resources. Our documentation is a great place to start, and our support team is available if you require further help."
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:26
@@ -584,7 +585,7 @@ msgid "Documentation"
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:27
-msgid "We have prepared an extensive guide on BuddyPress Member Reviews to learn all aspects of the plugin. You will find most of your answers here."
+msgid "Explore our detailed guide on BuddyPress Member Review to understand all the features and how to make the most of them."
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:28
@@ -596,7 +597,7 @@ msgid "Support Center"
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:35
-msgid "We strive to offer the best customer care via our support center. Once your plugin is activated, you can ask us for help anytime."
+msgid "Our support team is here to assist you with any questions or issues. Feel free to contact us anytime through our support center."
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:36
@@ -604,11 +605,11 @@ msgid "Get Support"
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:41
-msgid "Got Feedback?"
+msgid "Share Your Feedback"
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:42
-msgid "We want to hear about your experience with the plugin. We would also love to hear any suggestions you may for future updates."
+msgid "We'd love to hear about your experience with the plugin. Your feedback and suggestions help us improve future updates."
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:43
@@ -1256,19 +1257,19 @@ msgid "Support"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:14
-msgid "How can we help you?"
+msgid "How can we assist you?"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:15
-msgid "Our team is here to help you out at anytime. If you have any idea about how we could improve. You can share access to your site on our helpdesk if it can help getting faster."
+msgid "Our team is here to support you at any time. If you have ideas for improvements, feel free to share them. You can also grant us access to your site through our helpdesk for quicker assistance."
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:24
-msgid "Tickets Support"
+msgid "Ticket Support"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:25
-msgid "Open a ticket on our helpdesk, we don't guarantee a fast response but within a week. Except if you've purchased one of our product we'll reply within 24 hours."
+msgid "Open a ticket on our helpdesk. We aim to respond within a week, but if you've purchased one of our products, you'll receive a reply within 24 hours."
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-support-page.php:28
@@ -1402,18 +1403,18 @@ msgstr ""
 
 #. translators: Review Label
 #. translators: %s:
-#: includes/bupr-filters.php:810
-#: includes/bupr-filters.php:835
-#: includes/bupr-filters.php:850
+#: includes/bupr-filters.php:828
+#: includes/bupr-filters.php:858
+#: includes/bupr-filters.php:873
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link.
-#: includes/bupr-filters.php:1005
+#: includes/bupr-filters.php:1028
 msgid "%1$s posted a new %2$s to %3$s"
 msgstr ""
 
-#: includes/bupr-filters.php:1086
+#: includes/bupr-filters.php:1109
 #: includes/bupr-notification.php:52
 msgid "An anonymous user"
 msgstr ""
