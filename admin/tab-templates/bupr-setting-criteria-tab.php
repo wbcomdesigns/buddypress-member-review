@@ -24,7 +24,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 		?>
 		<div class="wbcom-admin-title-section">
 		<h3 class="title">
-			<?php esc_html_e( 'Review Criteria(s)', 'bp-member-reviews' ); ?>
+			<?php esc_html_e( 'Review Criteria', 'bp-member-reviews' ); ?>
 		</h3>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
@@ -32,9 +32,9 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label>
-								<?php esc_html_e( 'Allow Multiple Criteria(s)?', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Allow Multiple Criteria?', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( "Enable this option,if you want to allow members to be rated by 'Criteria(s)'.", 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( "Enable this option if you want to allow members to be rated by 'Criteria'.", 'bp-member-reviews' ); ?></p>
 						</div>
 						<label class="bupr-switch">
 							<input type="checkbox" value='1' name="bupr_admin_settings[profile_multi_rating_allowed]" id="bupr_allow_multiple_criteria" <?php checked( esc_attr( $bupr['multi_criteria_allowed'] ), '1' ); ?>>
@@ -80,7 +80,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 				<div id="bupr-add-criteria-action" class="bupr-admin-row border">
 					<div class="bupr-admin-col-12">
 						<input id="bupr-btnAdd" type="button" value="<?php esc_html_e( 'Add Criteria', 'bp-member-reviews' ); ?>" class="button button-secondary"/>
-						<p class="description"><?php esc_html_e( 'This option will allow you to add multiple rating criteria. By default, no citeria will be shown until you activate it.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'This option will allow you to add multiple rating criteria. By default, no criteria will be shown until you activate it.', 'bp-member-reviews' ); ?></p>
 					</div>
 				</div>
 				</div>
