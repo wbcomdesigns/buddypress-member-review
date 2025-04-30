@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.7.2
-Stable tag: 3.4.0
+Tested up to: 6.8.0
+Stable tag: 3.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,7 +67,7 @@ Need help? Contact us at [Wbcom Designs Support](https://wbcomdesigns.com/suppor
 
 Please visit [Wbcom Designs](https://wbcomdesigns.com/contact/) for support. We're here to help.
 
-= How can we submit a review to a member profile? =
+= How can we submit a review to a member's profile? =
 
 Navigate to the "/members" section and select a profile. Click on the "Reviews" menu to add a review.
 
@@ -95,6 +95,13 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+= 3.5.0 =
+* Added: German (DE) and French (FR) language files for multilingual support.  
+* Updated: Backend setting labels and plugin strings for better clarity.  
+* Updated: Improved grammar and spelling across all language strings.  
+* Fixed: Fatal error when activating with the BuddyPress Classic plugin.  
+* Fixed: PHPCS issues in `bupr-filters.php` for cleaner, standards-compliant code.  
+* Removed: Unused files and `composer.lock` for a lighter plugin footprint.
 
 = 3.4.0 =
 * Added: Pending approval notifications for admins.  
