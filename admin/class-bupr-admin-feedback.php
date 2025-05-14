@@ -58,7 +58,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 		 */
 		public function __construct( $args ) {
 			$this->slug = $args['slug'];
-			$this->name = $args['name'];
+			
 
 			$this->date_option  = $this->slug . '_activation_date';
 			$this->nobug_option = $this->slug . '_no_bug';
@@ -263,6 +263,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 						<div class="bp-member-reviews-notice-content">
 							<h3><?php esc_html_e( 'Are you enjoying BuddyPress Member Reviews?', 'bp-member-reviews' ); ?></h3>
 							<p><?php 
+							$this->name = __( 'BuddyPress Member Reviews', 'bp-member-reviews' );
 							 /* translators: %s: Plugin name. */
 							 printf( esc_html__( 'We hope you\'re enjoying %1$s! If you find it helpful, please consider giving us a 5-star rating on WordPress to help others discover the plugin.', 'bp-member-reviews' ), esc_html( $this->name ) ); ?></p>
 						</div>
@@ -293,7 +294,6 @@ endif;
 new Bupr_Admin_Feedback(
 	array(
 		'slug'       => 'bp_member_review',
-		'name'       => __( 'BuddyPress Member Reviews', 'bp-member-reviews' ),
 		'time_limit' => WEEK_IN_SECONDS, // You can set custom time here.
 	)
 );
