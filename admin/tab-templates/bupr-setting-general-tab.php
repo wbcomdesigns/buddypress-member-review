@@ -37,6 +37,7 @@ Thank you for helping us maintain a vibrant and engaged community.
 
 Best regards,  
 The [site-name] Team';
+$bupr_admin_general   = get_option( 'bupr_admin_general_options' );
 
 $review_email_subject = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'You Have Received a New Review on [site-name]';
 $review_email_message = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
@@ -45,8 +46,6 @@ $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_e
 
 // get all user for exclude for review.
 $user_roles = array_reverse( get_editable_roles() );
-$bupr_admin_general   = get_option( 'bupr_admin_general_options' );
-
 ?>
 <div class="wbcom-tab-content">
 	<div class="wbcom-wrapper-admin">
