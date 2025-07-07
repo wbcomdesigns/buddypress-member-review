@@ -265,4 +265,9 @@
     font-size: 20px;
     color: #e84242;
 }
+
+/* Hide the buddyboss default more  actions button*/
+.members-list li .more-action-button {
+    display: none !important;
+}
 /*# sourceMappingURL=bupr-reviews.rtl.css.map */
