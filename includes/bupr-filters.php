@@ -21,6 +21,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 	 */
 	class BUPR_Custom_Hooks {
 
+		 /**
+		 * Holds user role cache.
+		 *
+		 * @var array
+		 */
+		public $user_role_cache = array();
+
 
 		/**
 		 * Constructor.
@@ -30,7 +37,18 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
-			if( function_exists( 'buddypress' ) && ! buddypress()->buddyboss ) {
+
+			// Init hooks with proper conditional checks
+            $this->init_hooks();
+            
+		}
+
+		  /**
+         * Initialize hooks based on BuddyPress theme and configuration
+         */
+        private function init_hooks() {
+
+				if( function_exists( 'buddypress' ) && ! buddypress()->buddyboss ) {
 				add_action( 'bp_setup_nav', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
 			}
 			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
@@ -57,23 +75,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			 * Add review link at member's directory if option admin setting is enabled.
 			 */
 
-			// Check if BuddyBoss is active first.
-			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
-				// Use BuddyBoss specific action.
-				add_action( 'bp_member_members_list_item', array( $this, 'bupr_rating_directory' ), 50 );
-			} else {
-				// Check the theme package ID to distinguish between BuddyPress Legacy and Nouveau.
-				$theme_package = bp_get_option( '_bp_theme_package_id' );
-
-				if ( 'nouveau' === $theme_package ) {
-					// If BuddyPress Nouveau is active, use the 'bp_directory_members_item_meta' hook.
-					add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
-				} else {
-					// If BuddyPress Legacy is active, use the 'bp_directory_members_item' hook.
-					add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
-				}
-			}
-			
+			  // Directory integration with theme compatibility
+            $this->setup_directory_hooks();
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
 
@@ -85,6 +88,33 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			
 			add_action( 'bp_get_activity_content_body', array( $this, 'bupr_added_activity_star_rating' ), 10, 2 );
 		}
+
+		   /**
+         * Set up directory integration hooks based on active theme.
+         */
+        private function setup_directory_hooks() {
+            // Skip if BuddyPress is not active
+            if (!function_exists('buddypress')) {
+                return;
+            }
+            
+            // Check if BuddyBoss is active first
+            if (buddypress()->buddyboss) {
+                // Use BuddyBoss specific action
+                add_action('bp_member_members_list_item', array($this, 'bupr_rating_directory'), 50);
+            } else {
+                // Check the theme package ID to distinguish between BuddyPress Legacy and Nouveau
+                $theme_package = bp_get_option('_bp_theme_package_id');
+
+                if ('nouveau' === $theme_package) {
+                    // If BuddyPress Nouveau is active, use the 'bp_directory_members_item_meta' hook
+                    add_action('bp_directory_members_item_meta', array($this, 'bupr_rating_directory'), 50);
+                } else {
+                    // If BuddyPress Legacy is active, use the 'bp_directory_members_item' hook
+                    add_action('bp_directory_members_item', array($this, 'bupr_rating_directory'), 50);
+                }
+            }
+        }
 
 		/**
 		 * @bupr_nouveau_link_fix() nav item links.
@@ -120,14 +150,29 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_get_current_user_roles( $user_id ) {
-			if ( is_user_logged_in() ) {
-				$user  = get_userdata( $user_id );
-				$roles = array();
-				if ( is_object( $user ) ) {
-					$roles = $user->roles;
-				}
-				return $roles; // This returns an array.
-			}
+			 // Return empty array if not logged in
+            if (!is_user_logged_in() || empty($user_id)) {
+                return array();
+            }
+
+			 // Check cache first
+            if (isset($this->user_role_cache[$user_id])) {
+                return $this->user_role_cache[$user_id];
+            }
+
+			 // Get user data
+            $user = get_userdata($user_id);
+            $roles = array();
+
+			if (is_object($user) && isset($user->roles)) {
+                $roles = $user->roles;
+            }
+
+			 // Cache the result
+            $this->user_role_cache[$user_id] = $roles;
+
+		
+			return $roles; // This returns an array.
 		}
 
 		/**
@@ -162,137 +207,103 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! bp_is_members_directory() || 'yes' !== $bupr['dir_view_ratings'] ) {
 				return;
 			}
+			$user_id = $members_template->member->id;
+			 // Get cached rating data
+            $bupr_avg_rating = get_user_meta($user_id, 'bupr_aggregate_rating', true);
+            $bupr_reviews_count = get_user_meta($user_id, 'bupr_review_count', true);
+            
+            // If no cached data, skip display
+            if (empty($bupr_avg_rating) && empty($bupr_reviews_count)) {
+                return;
+            }
 
-			$bupr_type       = 'integer';
-			$bupr_avg_rating = 0;
+			 // Convert to proper numeric values
+            $bupr_avg_rating = (float) $bupr_avg_rating;
+            $bupr_reviews_count = (int) $bupr_reviews_count;
 
-			// Gather all the member's ratings
-			$bupr_args = array(
-				'post_type'      => 'review',
-				'posts_per_page' => -1,
-				'post_status'    => 'publish',
-				'category'       => 'bp-member',
-				'meta_query'     => array(
-					array(
-						'key'     => 'linked_bp_member',
-						'value'   => $members_template->member->id,
-						'compare' => '=',
-					),
-				),
-			);
+			// Only display if we have reviews
+            if ($bupr_reviews_count > 0) {
+                $this->render_rating_stars($bupr_avg_rating, $bupr_reviews_count ,$user_id, 'directory');
+            } else {
+                // Display just the review count if no rating
+                $review_string = $bupr_reviews_count > 1 ? esc_html__(' reviews )', 'bp-member-reviews') : esc_html__(' review )', 'bp-member-reviews');
+                echo '<div><span class="bupr-directory-rating-text">' . 
+                    esc_html($bupr_reviews_count . ' ' . $review_string) . 
+                    '</span></div>';
+            }
 
-			$reviews                 = get_posts( $bupr_args );
-			$bupr_total_rating       = 0;
-			$rate_counter            = 0;
-			$bupr_reviews_count      = count( $reviews );
-			$bupr_total_review_count = 0;
+		}
 
-			if ( 0 !== $bupr_reviews_count ) {
-				foreach ( $reviews as $review ) {
-					$rate                = 0;
-					$reviews_field_count = 0;
-					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
-					if ( ! empty( $review_ratings[0] ) ) {
-						if ( ! empty( $bupr['active_rating_fields'] ) ) {
-							foreach ( $review_ratings[0] as $field => $value ) {
-								if( 0 == $value ) {
-									continue;
-								}
-								$rate += $value;
-								$reviews_field_count++;
-							}
 
-							if ( 0 !== $reviews_field_count ) {
-								$bupr_total_rating += (int) $rate / $reviews_field_count;
-								$bupr_total_review_count++;
-								$rate_counter++;
-							}
-						}
-					}
-				}
-
-				if ( 0 !== $bupr_total_review_count ) {
-					$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
-					$bupr_type       = gettype( $bupr_avg_rating );
-				}
-
-				$bupr_stars_on   = '';
-				$stars_off       = '';
-				$stars_half      = '';
-				$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
-
-				if ( $remaining > 0 ) {
-					$stars_on        = intval( $bupr_avg_rating );
-					$stars_half      = 1;
-					$stars_off       = 5 - ( $stars_on + $stars_half );
-				} else {
-					$stars_on   = $bupr_avg_rating;
-					$stars_off  = 5 - $bupr_avg_rating;
-					$stars_half = 0;
-				}
-
-				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-				
-				if ( $bupr_avg_rating > 0 ) {
-					?>
-					<!-- Add Parent Container to Keep Alignment Center -->
-					<div class="bupr-directory-review-parent-container">
-						<div class="bupr-directory-review-wrapper">
-							<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-								<span itemprop="ratingValue" content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
-								<span itemprop="bestRating" content="5"></span>
-								<span itemprop="ratingCount" content="<?php echo esc_attr( $rate_counter ); ?>"></span>
-								<span itemprop="reviewCount" content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
-								<span itemprop="itemReviewed" content="Person"></span>
-								<span itemprop="name" content="
-								<?php
-									if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
-										echo esc_attr( bp_members_get_user_slug( $members_template->member->id ) );
-									} else {
-										echo esc_attr( bp_core_get_username( $members_template->member->id ) );
-									}
-								?>
-								"></span>
-								<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( $members_template->member->id, false, true ) ); ?>"></span>
-								<?php
-									$rating_string  = '';
-									$rating_string = $rate_counter > 1 ? 'ratings' : 'rating';
-								?>
-								<div class="bupr-directory-review-stars bupr-directory-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter.' '.$rating_string );  ?>">
-									<?php
-									// Display the stars
-									for ( $i = 1; $i <= $stars_on; $i++ ) {
-										echo '<span class="fas fa-star bupr-star-rate"></span>';
-									}
-									for ( $i = 1; $i <= $stars_half; $i++ ) {
-										echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
-									}
-									for ( $i = 1; $i <= $stars_off; $i++ ) {
-										echo '<span class="far fa-star bupr-star-rate"></span>';
-									}
-									$review_string = '';
-									$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
-									?>
-									<span class="bupr-directory-rating-text">
-										<?php echo esc_html( $bupr_avg_rating ) . '/5 ( ' . esc_html( $bupr_reviews_count ) . esc_html( $review_string ); ?>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<?php
-				} else {?>
-					<div> 
-						<?php
-						$review_string  = '';
-						$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
-						?>
-						<span class="bupr-directory-rating-text">
-							<?php echo esc_html( $bupr_reviews_count.' '). esc_html( $review_string )  ; ?>
-						</span>
-					</div>
-				<?php }
-			}
+		 /**
+         * Render rating stars with proper HTML.
+         * 
+         * @param float $rating Average rating value
+         * @param int $count Number of reviews
+         * @param string $context Where this is being displayed (profile, directory, etc.)
+         */
+        private function render_rating_stars($rating, $count ,$user_id, $context = 'profile') {
+            // Calculate star display data
+            $stars_on = floor($rating);
+            $stars_half = ($rating - $stars_on >= 0.5) ? 1 : 0;
+            $stars_off = 5 - ($stars_on + $stars_half);
+            
+            // Format rating to 2 decimal places
+            $rating = number_format($rating, 2);
+            
+            // Generate CSS class based on context
+            $wrapper_class = 'bupr-' . $context . '-review-wrapper';
+            $stars_class = 'bupr-' . $context . '-review-stars';
+            $tooltip_class = 'bupr-' . $context . '-tooltip';
+            
+            // Determine the appropriate text for the rating count
+            $rating_string = $count > 1 ? 'ratings' : 'rating';
+            $review_string = $count > 1 ? esc_html__(' reviews )', 'bp-member-reviews') : esc_html__(' review )', 'bp-member-reviews');
+            
+            // Start output buffering for better performance
+            ob_start();
+			?>
+            <div class="<?php echo esc_attr($wrapper_class); ?>">
+                <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                    <span itemprop="ratingValue" content="<?php echo esc_attr($rating); ?>"></span>
+                    <span itemprop="bestRating" content="5"></span>
+                    <span itemprop="ratingCount" content="<?php echo esc_attr($count); ?>"></span>
+                    <span itemprop="reviewCount" content="<?php echo esc_attr($count); ?>"></span>
+                    <span itemprop="itemReviewed" content="Person"></span>
+                    <span itemprop="name" content="<?php 
+                        // Use the appropriate function based on BP version
+                        if (function_exists('bp_get_version') && version_compare(bp_get_version(), '12.0.0', '>=')) {
+                            echo esc_attr(bp_members_get_user_slug($context === 'profile' ? bp_displayed_user_id() : $user_id));
+                        } else {
+                            echo esc_attr(bp_core_get_username($context === 'profile' ? bp_displayed_user_id() : $user_id));
+                        }
+                    ?>"></span>
+                    <span itemprop="url" content="<?php echo esc_url(bp_core_get_userlink($context === 'profile' ? bp_displayed_user_id() : $user_id, false, true)); ?>"></span>
+                    
+                    <div class="<?php echo esc_attr($stars_class); ?> <?php echo esc_attr($tooltip_class); ?>" 
+                         data-tooltip="Average rating: <?php echo esc_attr($rating); ?> based on <?php echo esc_attr($count . ' ' . $rating_string); ?>">
+                        <?php
+                        // Display the stars
+                        for ($i = 1; $i <= $stars_on; $i++) {
+                            echo '<span class="fas fa-star bupr-star-rate"></span>';
+                        }
+                        for ($i = 1; $i <= $stars_half; $i++) {
+                            echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
+                        }
+                        for ($i = 1; $i <= $stars_off; $i++) {
+                            echo '<span class="far fa-star bupr-star-rate"></span>';
+                        }
+                        ?>
+                        <span class="bupr-<?php echo esc_attr($context); ?>-rating-text">
+                            <?php echo esc_html($rating) . '/5 ( ' . esc_html($count) . esc_html($review_string); ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <?php
+            
+            // Output the generated HTML
+            echo ob_get_clean();
 		}
 
 
@@ -533,139 +544,104 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_member_average_rating() {
 			
 			global $bupr;
+			// Only proceed on user profiles
+            if (!bp_is_user()) {
+                return;
+            }
+			 $user_id = bp_displayed_user_id();
 
-			$bupr_type       = 'integer';
-			$bupr_avg_rating = 0;
+			      // Get cached rating data
+            $bupr_avg_rating = get_user_meta($user_id, 'bupr_aggregate_rating', true);
+            $bupr_reviews_count = get_user_meta($user_id, 'bupr_review_count', true);
 
-			// Gather all the member's reviews
-			$bupr_args = array(
-				'post_type'      => 'review',
-				'posts_per_page' => -1,
-				'post_status'    => 'publish',
-				'category'       => 'bp-member',
-				'meta_query'     => array(
-					array(
-						'key'     => 'linked_bp_member',
-						'value'   => bp_displayed_user_id(),
-						'compare' => '=',
-					),
-				),
-			);
+			  // Calculate if necessary or use cached values
+            if ('' === $bupr_avg_rating || '' === $bupr_reviews_count) {
+                $rating_data = $this->calculate_user_rating($user_id);
+                $bupr_avg_rating = $rating_data['average'];
+                $bupr_reviews_count = $rating_data['count'];
+                
+                // Cache the values
+                update_user_meta($user_id, 'bupr_aggregate_rating', $bupr_avg_rating);
+                update_user_meta($user_id, 'bupr_review_count', $bupr_reviews_count);
+            }
 
-			$reviews                 = get_posts( $bupr_args );
-			$bupr_total_rating       = 0;
-			$rate_counter            = 0;
-			$bupr_reviews_count      = count( $reviews );
-			$bupr_total_review_count = 0;
-			if ( 0 !== $bupr_reviews_count ) {
-				foreach ( $reviews as $review ) {
-					$rate                = 0;
-					$reviews_field_count = 0;
-					$review_ratings      = get_post_meta( $review->ID, 'profile_star_rating', false );
-					
-					if ( ! empty( $review_ratings[0] ) ) {
-						if ( ! empty( $bupr['active_rating_fields'] ) ) {
-							
-							foreach ( $review_ratings[0] as $field => $value ) {
-								if( 0  == $value ) {
-									continue;
-								}
-								$rate += $value;
-								$reviews_field_count++;
-								
-							}
+			// Display the rating if there are reviews
+            if ($bupr_reviews_count > 0) {
+                $this->render_rating_stars($bupr_avg_rating, $bupr_reviews_count,$user_id, 'member');
+            } else {
+                $review_string = ' ' . esc_html__('reviews', 'bp-member-reviews');
+                echo '<div><span class="bupr-member-rating-text">' . 
+                    esc_html($bupr_reviews_count . $review_string) . 
+                    '</span></div>';
+            }
 
-							if ( 0 !== $reviews_field_count ) {
-								$bupr_total_rating += (int) $rate / $reviews_field_count;
-								$bupr_total_review_count++;
-								$rate_counter++;
-							}
-						}
-					}
-				}
-				
-				if ( 0 !== $bupr_total_review_count ) {
-					$bupr_avg_rating = $bupr_total_rating / $bupr_total_review_count;
-					$bupr_type       = gettype( $bupr_avg_rating );
-				}
-
-				$bupr_stars_on   = '';
-				$stars_off       = '';
-				$stars_half      = '';
-				$remaining       = $bupr_avg_rating - (int) $bupr_avg_rating;
-
-				if ( $remaining > 0 ) {
-					$stars_on        = intval( $bupr_avg_rating );
-					$stars_half      = 1;
-					$stars_off       = 5 - ( $stars_on + $stars_half );
-				} else {
-					$stars_on   = $bupr_avg_rating;
-					$stars_off  = 5 - $bupr_avg_rating;
-					$stars_half = 0;
-				}
-				$bupr_avg_rating = round( $bupr_avg_rating, 2 );
-				if ( $bupr_avg_rating > 0 ) {
-					?>
-					<!-- Left-aligned container for member profile reviews -->
-					<div class="bupr-member-review-wrapper">
-						<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-							<span itemprop="ratingValue" content="<?php echo esc_attr( $bupr_avg_rating ); ?>"></span>
-							<span itemprop="bestRating" content="5"></span>
-							<span itemprop="ratingCount" content="<?php echo esc_attr( $rate_counter ); ?>"></span>
-							<span itemprop="reviewCount" content="<?php echo esc_attr( $bupr_reviews_count ); ?>"></span>
-							<span itemprop="itemReviewed" content="Person"></span>
-							<span itemprop="name" content="
-							<?php
-								if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
-									echo esc_attr( bp_members_get_user_slug( bp_displayed_user_id() ) );
-								} else {
-									echo esc_attr( bp_core_get_username( bp_displayed_user_id() ) );
-								}
-							?>
-							"></span>
-							<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( bp_displayed_user_id(), false, true ) ); ?>"></span>
-							<?php
-								$rating_string = '';
-								$rating_string = $rate_counter > 1 ? 'ratings' : 'rating';						
-							?>
-							<div class="bupr-member-review-stars bupr-member-tooltip" data-tooltip="Average rating: <?php echo esc_attr( $bupr_avg_rating ); ?> based on <?php echo esc_attr( $rate_counter.' '.$rating_string ); ?> ">
-								<?php
-								// Display the stars
-								for ( $i = 1; $i <= $stars_on; $i++ ) {
-									echo '<span class="fas fa-star bupr-star-rate"></span>';
-								}
-								for ( $i = 1; $i <= $stars_half; $i++ ) {
-									echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
-								}
-								for ( $i = 1; $i <= $stars_off; $i++ ) {
-									echo '<span class="far fa-star bupr-star-rate"></span>';
-								}
-								$review_string = '';
-								$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
-
-								?>
-								<span class="bupr-member-rating-text">
-									<?php echo esc_html( $bupr_avg_rating ) . '/5 ( ' . esc_html( $bupr_reviews_count ) . esc_html( $review_string ); ?>
-								</span>
-							</div>
-						</div>
-					</div>
-					<?php
-				} else {
-					?>
-					<div>
-						<?php
-							$review_string  = '';
-							$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
-						?>
-						<span class="bupr-member-rating-text">
-							<?php echo esc_html( $bupr_reviews_count.' '). esc_html( $review_string ); ?>
-						</span>
-					</div>
-					
-				<?php }
-			}
 		}
+
+		/**
+         * Calculate user rating with optimized database queries.
+         *
+         * @param int $user_id User ID to calculate rating for
+         * @return array Rating data with average and count
+         */
+        private function calculate_user_rating($user_id) {
+            global $wpdb, $bupr;
+            
+            // Use direct SQL for better performance
+            $reviews = $wpdb->get_results($wpdb->prepare(
+                "SELECT p.ID 
+                FROM {$wpdb->posts} p
+                INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+                WHERE p.post_type = 'review'
+                AND p.post_status = 'publish'
+                AND pm.meta_key = 'linked_bp_member'
+                AND pm.meta_value = %d",
+                $user_id
+            ));
+            
+            $total_rating = 0;
+            $review_count = count($reviews);
+            $total_review_count = 0;
+            
+            if ($review_count > 0) {
+                // Get all review IDs
+                $review_ids = wp_list_pluck($reviews, 'ID');
+                
+                // Get all ratings in a single query
+                $review_ratings = array();
+                foreach ($review_ids as $review_id) {
+                    $ratings = get_post_meta($review_id, 'profile_star_rating', true);
+                    if (!empty($ratings) && is_array($ratings)) {
+                        $review_ratings[] = $ratings;
+                    }
+                }
+                
+                // Calculate average rating
+                foreach ($review_ratings as $ratings) {
+                    $rate = 0;
+                    $field_count = 0;
+                    
+                    foreach ($ratings as $field => $value) {
+                        if (0 == $value) {
+                            continue;
+                        }
+                        $rate += $value;
+                        $field_count++;
+                    }
+                    
+                    if ($field_count > 0) {
+                        $total_rating += $rate / $field_count;
+                        $total_review_count++;
+                    }
+                }
+            }
+            
+            $average = ($total_review_count > 0) ? $total_rating / $total_review_count : 0;
+            
+            return array(
+                'average' => $average,
+                'count' => $review_count
+            );
+        }
 
 
 
@@ -969,13 +945,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 		}
 
-				/**
-				 * Action performed to show the content of reviews list tab.
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Action performed to show the content of reviews list tab.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_view_review_tab_function_to_show_content() {
 			bupr_get_template( 'bupr-single-review-template.php' );
 		}
@@ -1012,92 +988,97 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 
 			// Check if the review activity should be created (based on settings).
-				// Get the review post data.
-				$review = get_post( $review_id );
-				if ( ! empty( $review ) ) {
-					// Get the reviewer's (author's) and reviewed user's profile URLs.
-					$reviewer_user_id   = $review->post_author;
-					$reviewer_user_link = bp_core_get_userlink( $reviewer_user_id );
-					$reviewed_user_link = bp_core_get_userlink( $reviewed_user_id );
+			// Get the review post data.
+			$review = get_post( $review_id );
+			if ( ! empty( $review ) ) {
+				// Get the reviewer's (author's) and reviewed user's profile URLs.
+				$reviewer_user_id   = $review->post_author;
+				$reviewer_user_link = bp_core_get_userlink( $reviewer_user_id );
+				$reviewed_user_link = bp_core_get_userlink( $reviewed_user_id );
 
-					// Get the review content.
-					$review_content = $review->post_content;
-
-					// Construct the action text (reviewer to reviewed user).
-					$action = sprintf(
-						apply_filters( 'bupr_member_review_activity_action',
-						/* translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link. */
-						__( '%1$s posted a new %2$s to %3$s', 'bp-member-reviews' )
-						),
-						$reviewer_user_link,
-						strtolower( esc_html( $bupr['review_label'] ) ),
-						$reviewed_user_link
-					);
-
-					// Ensure the content is safe.
-					$escaped_content = wp_kses_post( $review_content );
-					
-					if(function_exists('bp_activity_add')){
-						// Add activity to BuddyPress.
-						bp_activity_add( array(
-							'action'        => $action,
-							'content'       => !empty( $escaped_content ) ? $escaped_content : 'Ratings', // No links or ratings, just review content.
-							'component'     => $bp->members->id,
-							'type'          => defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review',
-							'user_id'       => $reviewer_user_id,
-							'item_id'       => $review_id,
-							'secondary_item_id' => $reviewed_user_id,
-							'hide_sitewide' => false,
-							'is_spam'       => false,
-							'privacy'       => 'public',
-						) );
-					}else{
-						return;
-					}
-					
+				// Get the review content.
+				$review_content = $review->post_content;
+					// Check for anonymous review
+				$is_anonymous = get_post_meta($review_id, 'bupr_anonymous_review_post', true) === 'yes';
+				if ($is_anonymous) {
+					$reviewer_user_link = esc_html__('An anonymous user', 'bp-member-reviews');
 				}
-			}
 
-	/**
-	 * Added member star rating in activity.
-	 *
-	 * @param  string $activity_content Activity Content.
-	 * @param  object $activity Activity Object.
-	 */
-	public function bupr_added_activity_star_rating( $activity_content, $activity ) {
-		$post_id              = $activity->item_id;
-		$review_rating_fields = get_option( 'bupr_admin_settings', true );
-		$review_ratings       = get_post_meta( $post_id, 'profile_star_rating', false );		
-		$review_start         = '';	 
-		if( ! empty( $review_ratings[0] ) && is_array( $review_ratings[0] ) ) {
-			$review_start .= '<div class="bupr-multi-review">';
-			foreach ( $review_ratings[0] as $rating_field_name => $ratings ) {
-				if( empty( $ratings ) ) {
-					continue;
-				}
-				$review_start .= '<div class="multi-review">';
-				if ( ! empty( $rating_field_name ) ) {
-					$review_start .= '<div class="bupr-col-6">' . esc_html( $rating_field_name ) . '</div>';
-				}
-				$review_start .= '<div class="bupr-col-6">';
+				// Construct the action text (reviewer to reviewed user).
+				$action = sprintf(
+					apply_filters( 'bupr_member_review_activity_action',
+					/* translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link. */
+					__( '%1$s posted a new %2$s to %3$s', 'bp-member-reviews' )
+					),
+					$reviewer_user_link,
+					strtolower( esc_html( $bupr['review_label'] ) ),
+					$reviewed_user_link
+				);
+
+				// Ensure the content is safe.
+				$escaped_content = wp_kses_post( $review_content );
 				
-				/*** Star rating Ratings */
-				$stars_on  = $ratings;
-				$stars_off = 5 - $stars_on;
-				for ( $i = 1; $i <= $stars_on; $i++ ) {
-					$review_start .= '<span class="fas fa-star stars bupr-star-rate"></span>';
+				if(function_exists('bp_activity_add')){
+					// Add activity to BuddyPress.
+					bp_activity_add( array(
+						'action'        => $action,
+						'content'       => !empty( $escaped_content ) ? $escaped_content : 'Ratings', // No links or ratings, just review content.
+						'component'     => $bp->members->id,
+						'type'          => defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review',
+						'user_id'       => $reviewer_user_id,
+						'item_id'       => $review_id,
+						'secondary_item_id' => $reviewed_user_id,
+						'hide_sitewide' => false,
+						'is_spam'       => false,
+						'privacy'       => 'public',
+					) );
+				}else{
+					return;
+				}
+				
+			}
+		}
 
+		/**
+		 * Added member star rating in activity.
+		 *
+		 * @param  string $activity_content Activity Content.
+		 * @param  object $activity Activity Object.
+		 */
+		public function bupr_added_activity_star_rating( $activity_content, $activity ) {
+			$post_id              = $activity->item_id;
+			$review_rating_fields = get_option( 'bupr_admin_settings', true );
+			$review_ratings       = get_post_meta( $post_id, 'profile_star_rating', false );		
+			$review_start         = '';	 
+			if( ! empty( $review_ratings[0] ) && is_array( $review_ratings[0] ) ) {
+				$review_start .= '<div class="bupr-multi-review">';
+				foreach ( $review_ratings[0] as $rating_field_name => $ratings ) {
+					if( empty( $ratings ) ) {
+						continue;
+					}
+					$review_start .= '<div class="multi-review">';
+					if ( ! empty( $rating_field_name ) ) {
+						$review_start .= '<div class="bupr-col-6">' . esc_html( $rating_field_name ) . '</div>';
+					}
+					$review_start .= '<div class="bupr-col-6">';
+					
+					/*** Star rating Ratings */
+					$stars_on  = $ratings;
+					$stars_off = 5 - $stars_on;
+					for ( $i = 1; $i <= $stars_on; $i++ ) {
+						$review_start .= '<span class="fas fa-star stars bupr-star-rate"></span>';
+
+					}
+					for ( $i = 1; $i <= $stars_off; $i++ ) {
+						$review_start .= '<span class="far fa-star stars bupr-star-rate"></span>';
+					}
+					$review_start .= '</div>';
+					$review_start .= '</div>';
 				}
-				for ( $i = 1; $i <= $stars_off; $i++ ) {
-					$review_start .= '<span class="far fa-star stars bupr-star-rate"></span>';
-				}
-				$review_start .= '</div>';
 				$review_start .= '</div>';
 			}
-			$review_start .= '</div>';
+			return $activity_content . $review_start;
 		}
-		return $activity_content . $review_start;
-	}
 
 		/**
 		* Saved the user name as anonymous if meta in review.
