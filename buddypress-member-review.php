@@ -49,12 +49,27 @@ function bupr_check_buddypress_compatibility() {
     if (!class_exists('BuddyPress')) {
         return false;
     }
+	 if (!function_exists('bp_get_version')) {
+        return false;
+    }
     
     // Check BuddyPress version
-    $min_bp_version = '6.0.0';
-    if (function_exists('bp_get_version') && version_compare(bp_get_version(), $min_bp_version, '<')) {
-        add_action('admin_notices', 'bupr_outdated_buddypress_notice');
-        return false;
+   
+
+	if ( defined( 'BP_PLATFORM_VERSION' ) ) {
+		 // It's Buddyoss — compare Buddyoss version
+        $min_bb_version = '1.8.0';
+        if ( version_compare( BP_PLATFORM_VERSION, $min_bb_version, '<' ) ) {
+            add_action( 'admin_notices', 'bupr_outdated_buddyboss_notice' );
+            return false;
+        }
+    } else {
+        // It's BuddyPress — compare BuddyPress version
+		 $min_bp_version = '6.0.0';
+        if ( version_compare( bp_get_version(), $min_bp_version, '<' ) ) {
+            add_action( 'admin_notices', 'bupr_outdated_buddypress_notice' );
+            return false;
+        }
     }
     
     return true;
@@ -70,6 +85,18 @@ function bupr_outdated_buddypress_notice() {
         __('%1$s requires BuddyPress version %2$s or higher.', 'bp-member-reviews'),
         '<strong>BuddyPress Member Reviews</strong>',
         '6.0.0'
+    );
+    echo '</p></div>';
+}
+/**
+ * Admin notice for outdated BuddyPress version.
+ */
+function bupr_outdated_buddyboss_notice() {
+    echo '<div class="error"><p>';
+    printf(
+        __('%1$s requires BuddyBoss version %2$s or higher.', 'bp-member-reviews'),
+        '<strong>BuddyPress Member Reviews</strong>',
+        '1.8.0'
     );
     echo '</p></div>';
 }
