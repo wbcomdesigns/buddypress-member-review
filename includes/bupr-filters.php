@@ -518,7 +518,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					array(
 						'parent' => 'my-account-buddypress',
 						'id'     => 'my-account-' . $profile_menu_slug,
-						'title'  => $bupr['review_label_plural'] . ' <span class="count">' . $reviews_count . '</span>',
+						'title'  => $profile_menu_slug . ' <span class="count">' . $reviews_count . '</span>',
 						'href'   => trailingslashit( $base_url ),
 					)
 				);

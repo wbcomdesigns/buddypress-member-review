@@ -67,7 +67,8 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		}
 
 		$user_id = bp_loggedin_user_id();
-		
+		$notification_link = '';
+		$notification_content = '';
 		$linked_member_id = get_post_meta( $item_id, 'linked_bp_member', true );
 		
 		$linked_user_info = get_userdata( $linked_member_id );
@@ -76,18 +77,20 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 			$linked_user_name = $linked_user_info->display_name;
 		}
 		// Check if bp_members_get_user_url() exists and use it; otherwise, fall back to bp_core_get_user_domain().
-		if ( function_exists( 'bp_members_get_user_url' ) ) {
-			// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
-			$notification_link = bp_members_get_user_url( $linked_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
-		} else {
-			// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
-			$notification_link = bp_core_get_user_domain( $linked_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+		if(is_array($bupr)){
+			if ( function_exists( 'bp_members_get_user_url' ) ) {
+				// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
+				$notification_link = bp_members_get_user_url( $linked_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+			} else {
+				// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
+				$notification_link = bp_core_get_user_domain( $linked_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+			}
+			
+			/* translators: %s: */
+			$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+			/* translators: %s: */
+			$notification_content = sprintf( esc_html__( '%1$s posted a %2$s', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) )  );
 		}
-		
-		/* translators: %s: */
-		$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-		/* translators: %s: */
-		$notification_content = sprintf( esc_html__( '%1$s posted a %2$s', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) )  );
 		if( 'draft' === $post_status ) {
 			/* translators: %s: */
 			$notification_content = sprintf( esc_html__( '( Pending Approval )  %1$s posted a %2$s', 'bp-member-reviews' ), esc_html( $user_name ), esc_html( strtolower( $bupr['review_label'] ) ) );
