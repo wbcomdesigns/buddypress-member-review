@@ -709,6 +709,17 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
     /* Keep items on a single line */
 }
 
+.bp-list.grid .bupr-directory-review-wrapper {
+    text-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.bp-list:not(.grid) .bupr-directory-review-wrapper {
+    display: block;
+}
+
 .bupr-directory-review-stars {
     display: inline-block;
     margin-right: 10px;

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-08T12:51:39+05:30\n"
+"POT-Creation-Date: 2025-07-08T12:01:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -93,7 +93,7 @@ msgstr ""
 #: admin/bupr-admin.php:298
 #: admin/bupr-admin.php:299
 #: admin/tab-templates/bupr-setting-general-tab.php:264
-#: includes/bupr-general-functions.php:93
+#: includes/bupr-general-functions.php:103
 #: includes/class-buprglobals.php:82
 msgid "Reviews"
 msgstr ""
@@ -101,7 +101,7 @@ msgstr ""
 #: admin/bupr-admin.php:297
 #: admin/tab-templates/bupr-setting-display-tab.php:31
 #: includes/bupr-filters.php:723
-#: includes/bupr-general-functions.php:80
+#: includes/bupr-general-functions.php:90
 #: includes/class-buprglobals.php:81
 msgid "Review"
 msgstr ""
@@ -1517,11 +1517,17 @@ msgstr ""
 msgid "%1$s posted a new %2$s to %3$s"
 msgstr ""
 
-#: includes/bupr-general-functions.php:131
+#. translators: %s: Template file path that does not exist.
+#: includes/bupr-general-functions.php:75
+#, php-format
+msgid "Template file %s does not exist."
+msgstr ""
+
+#: includes/bupr-general-functions.php:141
 msgid "BuddyPress Member Review"
 msgstr ""
 
-#: includes/bupr-general-functions.php:132
+#: includes/bupr-general-functions.php:142
 msgid "Give Member Review"
 msgstr ""
 
