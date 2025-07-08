@@ -291,10 +291,11 @@ jQuery(document).ready(
 						'nonce' : bupr_admin_ajax_object.nonce,
 					},
 					function (response) {
-						if (response.data == 'review-approved-successfully') {
-							window.location.href = window.location.href;
+						
+						if (response.data.message == 'Review approved successfully.') {
+							window.location.reload();
 						} else {
-							console.log( __( "Review not approved!", 'bp-member-reviews' ) );
+							console.log(response.data.message);
 						}
 					}
 				);
