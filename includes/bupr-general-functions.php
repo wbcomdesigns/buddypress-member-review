@@ -39,6 +39,15 @@ function bupr_locate_template( $template_name, $template_path = '', $default_pat
         $template = $default_path . $template_name;
     endif;
 
+    // Verify the template file exists
+    if (!file_exists($template)) {
+        // Log the error but don't fail completely
+        error_log(sprintf('BuddyPress Member Reviews: Template file %s not found', $template));
+        
+        // Return a default template that should always exist
+        $template = $default_path . 'bupr-reviews-tab-template.php';
+    }
+
     return apply_filters( 'bupr_locate_template', $template, $template_name, $template_path, $default_path );
 }
 
@@ -61,10 +70,11 @@ function bupr_get_template( $template_name, $args = array(), $template_path = ''
 
     $template_file = bupr_locate_template( $template_name, $template_path, $default_path );
 
-    if ( ! file_exists( $template_file ) ) :
-        _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', esc_html( $template_file ) ), '1.0.0' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    if (!file_exists($template_file)) {
+        /* translators: %s: Template file path that does not exist. */
+        trigger_error(sprintf(__('Template file %s does not exist.', 'bp-member-reviews'), esc_html($template_file)), E_USER_NOTICE);
         return;
-    endif;
+    }
 
     include $template_file;
 }
@@ -165,6 +175,13 @@ add_filter( 'gamipress_trigger_get_user_id', 'buddypress_member_review_trigger_g
 add_action( 'bupr_member_review_after_review_insert', 'bupr_handle_review_submission', 10, 2 );
 
 function bupr_handle_review_submission( $review_id, $reviewed_user_id ) {
+    if (empty($review_id) || empty($reviewed_user_id)) {
+        return;
+    }
+    $review = get_post($review_id);
+    if (!$review || 'publish' !== $review->post_status) {
+        return;
+    }
     // Recalculate the review data for the reviewed user
     bupr_recalculate_user_reviews_for_user( $reviewed_user_id );
 }
@@ -176,9 +193,8 @@ function bupr_handle_review_submission( $review_id, $reviewed_user_id ) {
  *
  * @param int $user_id The ID of the user whose reviews need recalculation.
  */
-function bupr_recalculate_user_reviews_for_user( $user_id ) {
+function bupr_recalculate_user_reviews_for_user( $user_id) {
     global $wpdb;
-
     // Fetch all reviews for this user using raw SQL
 
     $reviews = $wpdb->get_results( $wpdb->prepare(
@@ -197,22 +213,40 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
     // Initialize variables to calculate aggregate rating
     $total_rating = 0;
     $review_count = count( $reviews );
+    $rated_reviews_count = 0;
 
     if ( $review_count > 0 ) {
-        foreach ( $reviews as $review ) {
-            // Fetch review ratings from post meta
-            $review_ratings = get_post_meta( $review->ID, 'profile_star_rating', true );
-
-            // If the ratings are serialized, unserialize and calculate the average
-            if ( is_array( $review_ratings ) && ! empty( $review_ratings ) ) {
-                $total_rating += array_sum( $review_ratings ) / count( $review_ratings );
-            } else {
-                $total_rating += (int) $review_ratings;
+        // Collect all review IDs
+        $review_ids = wp_list_pluck($reviews, 'ID');
+        
+        // Prepare the query for all ratings at once
+        $placeholders = implode(',', array_fill(0, count($review_ids), '%d'));
+        $prepare_args = array_merge(
+            array("SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = 'profile_star_rating' AND post_id IN ($placeholders)"),
+            $review_ids
+        );
+        
+        // Get all ratings in a single query
+        $ratings_data = $wpdb->get_results(
+            call_user_func_array(array($wpdb, 'prepare'), $prepare_args),
+            ARRAY_A
+        );
+        
+        // Process each rating
+        foreach ($ratings_data as $rating_data) {
+            $review_ratings = maybe_unserialize($rating_data['meta_value']);
+            
+            if (is_array($review_ratings) && !empty($review_ratings)) {
+                // Calculate average for this review
+                $review_values = array_filter($review_ratings, 'is_numeric');
+                if (!empty($review_values)) {
+                    $total_rating += array_sum($review_values) / count($review_values);
+                    $rated_reviews_count++;
+                }
             }
         }
-
         // Calculate the aggregate rating
-        $aggregate_rating = $total_rating / $review_count;
+          $aggregate_rating = $rated_reviews_count > 0 ? $total_rating / $rated_reviews_count : 0;
 
         // Update user meta with the calculated review count and aggregate rating
         update_user_meta( $user_id, 'bupr_review_count', $review_count );
@@ -238,56 +272,31 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
  * @param int $paged      The current batch number (for pagination).
  */
 function bupr_recalculate_user_reviews_batch( $batch_size = 50, $paged = 1 ) {
-    // Set up user query arguments for pagination
-    $args = array(
-        'number' => $batch_size,
-        'paged'  => $paged,
-    );
+    global $wpdb;
 
-    $users = get_users( $args );
-
-    foreach ( $users as $user ) {
-        $user_id = $user->ID;
-
-        // Fetch all reviews for this user
-        $bupr_args = array(
-            'post_type'   => 'review',
-            'post_status' => 'publish',
-            'meta_query'  => array(
-                array(
-                    'key'     => 'linked_bp_member',
-                    'value'   => $user_id,
-                    'compare' => '=',
-                ),
-            ),
-        );
-        $reviews = get_posts( $bupr_args );
-
-        // Initialize variables to calculate aggregate rating
-        $total_rating = 0;
-        $review_count = count( $reviews );
-
-        if ( $review_count > 0 ) {
-            foreach ( $reviews as $review ) {
-                $review_ratings = get_post_meta( $review->ID, 'profile_star_rating', true );
-
-                if ( is_array( $review_ratings ) && ! empty( $review_ratings ) ) {
-                    $total_rating += array_sum( $review_ratings ) / count( $review_ratings );
-                } else {
-                    $total_rating += (int) $review_ratings;
-                }
-            }
-
-            // Calculate the aggregate rating
-            $aggregate_rating = $total_rating / $review_count;
-
-            // Update user meta
-            update_user_meta( $user_id, 'bupr_review_count', $review_count );
-            update_user_meta( $user_id, 'bupr_aggregate_rating', $aggregate_rating );
+    $processed_count = 0;
+     // Get users who have reviews (more efficient than getting all users)
+    $user_ids = $wpdb->get_col($wpdb->prepare(
+        "SELECT DISTINCT pm.meta_value 
+         FROM {$wpdb->postmeta} pm
+         INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+         WHERE pm.meta_key = 'linked_bp_member'
+         AND p.post_type = 'review'
+         AND p.post_status = 'publish'
+         ORDER BY pm.meta_value ASC
+         LIMIT %d, %d",
+        ($paged - 1) * $batch_size,
+        $batch_size
+    ));
+     // Process each user
+    foreach ($user_ids as $user_id) {
+        if (!empty($user_id) && is_numeric($user_id)) {
+            bupr_recalculate_user_reviews_for_user($user_id);
+            $processed_count++;
         }
     }
 
-    return count( $users ); // Return the number of users processed in this batch
+    return $processed_count;
 }
 
 /**
@@ -312,6 +321,7 @@ function bupr_cron_recalculate_user_reviews_batch() {
     if ( $users_processed < $batch_size ) {
         // If fewer users were processed than the batch size, reset the batch counter
         update_option( 'bupr_current_batch', 1 );
+        do_action('bupr_recalculation_completed');
     } else {
         // Otherwise, move to the next batch
         update_option( 'bupr_current_batch', $paged + 1 );
@@ -335,12 +345,57 @@ add_filter( 'youzify_activity_new_post_action', 'bupr_youzify_activity_action_wa
  * Check Bp Classic plugin is activated.
  */
 function bupr_bp_classic_activate(){
-    if( in_array( 'bp-classic/class-bp-classic.php', get_option( 'active_plugins' ) ) ){
+    if( in_array( 'bp-classic/class-bp-classic.php', (array) get_option( 'active_plugins' ) ) ){
         return true;
     } else{
         return false;
     }
 }
+
+/**
+ * Clear review caches when a review is trashed or deleted.
+ * 
+ * @param int $post_id The post ID being deleted
+ */
+function bupr_clear_review_caches($post_id) {
+    $post_type = get_post_type($post_id);
+    
+    if ('review' !== $post_type) {
+        return;
+    }
+    
+    // Get the reviewed user ID
+    $user_id = get_post_meta($post_id, 'linked_bp_member', true);
+    
+    if ($user_id) {
+        // Clear user meta cache
+        delete_user_meta($user_id, 'bupr_last_calculated');
+        delete_user_meta($user_id, 'bupr_review_count');
+        delete_user_meta($user_id, 'bupr_aggregate_rating');
+        
+        // Clear transients 
+        $transient_keys = array(
+            'bupr_user_reviews_' . $user_id,
+            'bupr_member_reviews_' . $user_id
+        );
+        
+        foreach ($transient_keys as $key_base) {
+            // Clear potential variations of the transient
+            global $wpdb;
+            $wpdb->query($wpdb->prepare(
+                "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+                $wpdb->esc_like('_transient_' . $key_base) . '%'
+            ));
+        }
+        
+        // Force recalculation 
+        bupr_recalculate_user_reviews_for_user($user_id);
+    }
+}
+
+add_action('before_delete_post', 'bupr_clear_review_caches');
+add_action('trashed_post', 'bupr_clear_review_caches');
+add_action('untrashed_post', 'bupr_clear_review_caches');
 
 
 
