@@ -286,7 +286,7 @@ function bp_member_review_show_admin_notice($admin_notice){
  */
 function bupr_required_plugin_admin_notice() {
 	$plugin_name = esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' );
-	$bp_plugin   = esc_html__( 'BuddyPress', 'bp-member-reviews' );
+	$bp_plugin   = esc_html__( 'BuddyPress or BuddyBoss', 'bp-member-reviews' );
 	echo '<div class="error"><p>';
 	printf(
 		 /* translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress. */
