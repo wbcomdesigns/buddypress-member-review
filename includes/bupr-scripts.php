@@ -110,6 +110,10 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					wp_register_style('bupr-font-awesome', '', array('font-awesome'), null);
 				}
 
+				// If BuddyBoss theme is active, load its Font Awesome version
+				if ( get_template() === 'buddyboss-theme') {
+					wp_enqueue_style('bupr-font-awesome-bb-theme', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), '5.4.2');
+				}
 				wp_enqueue_style('bupr-font-awesome');
 				if (isset($bupr['rating_color']) && !empty($bupr['rating_color'])) {
 					$bupr_star_color = $bupr['rating_color'];
