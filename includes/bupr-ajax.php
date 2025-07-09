@@ -152,160 +152,159 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
             }
 			global $bupr;
 			
-			if ( filter_input( INPUT_POST, 'action' ) && filter_input( INPUT_POST, 'action' ) === 'allow_bupr_member_review_update' ) {
-				$bupr_rating_criteria = array();
-				if ( ! empty( $bupr['active_rating_fields'] ) ) {
-					foreach ( $bupr['active_rating_fields'] as $bupr_keys => $bupr_fields ) {
-							$bupr_rating_criteria[] = $bupr_keys;
-					}
-				}
-				
-				$bupr_reviews_status = 'yes' === $bupr['auto_approve_reviews'] ? 'publish' : 'draft';
-
-				$bupr_multi_reviews         = $bupr['multi_reviews'];
-				$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user', FILTER_VALIDATE_INT );
-				$current_user         		= wp_get_current_user();				
-				$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-				$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id', FILTER_VALIDATE_INT );
-				$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_VALIDATE_INT );
-				$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review' );
-				$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'absint', wp_unslash( $_POST['bupr_review_rating'] ) ) : array();
-				$bupr_admin_general         = get_option( 'bupr_admin_general_options' );
-				$site_name                  = get_bloginfo( 'name' );
-				$site_admins                = get_users( array( 'role' => 'administrator' ) );
-				$site_admin = !empty($site_admins) ? $site_admins[0]->display_name : '';
-				if (empty($bupr_member_id)) {
-					wp_send_json_error('<p class="bupr-error">' . esc_html__('Please select a member.', 'bp-member-reviews') . '</p>');
-					return;
-				}
-
-				 // Prevent self-reviews
-				if ($bupr_current_user == $bupr_member_id) {
-					wp_send_json_error('<p class="bupr-error">' . esc_html__('You cannot review your own profile.', 'bp-member-reviews') . '</p>');
-					return;
-				}
-
-				 // Get member info
-				$bupr_reviewed_user = get_user_by('id', $bupr_member_id);
-				if (!$bupr_reviewed_user) {
-					wp_send_json_error('<p class="bupr-error">' . esc_html__('Selected member does not exist.', 'bp-member-reviews') . '</p>');
-					return;
-				}
-				// Set user name (anonymous or actual)
-				$user_name = ('yes' === $anonymous_review) ? __("An anonymous user", 'bp-member-reviews') : $current_user->display_name;
-				
-				$bupr_reviewed_user_name = $bupr_reviewed_user->display_name;
-
-				$review_subject = sprintf(
-                __('%s received a %s', 'bp-member-reviews'),
-                $bupr_reviewed_user_name,
-                bupr_profile_review_tab_singular_slug());
-
-				// Process rating values
-				$bupr_count = 0;
-				$bupr_member_star = array();
-
-				$member_args      = array(
-					'post_type'      => 'review',
-					'posts_per_page' => -1,
-					'post_status'    => array(
-						'draft',
-						'publish',
-					),
-					'author'         => $bupr_current_user,
-					'category'       => 'bp-member',
-					'meta_query'     => array(
-						array(
-							'key'     => 'linked_bp_member',
-							'value'   => $bupr_member_id,
-							'compare' => '=',
-						),
-					),
-				);
-				$reviews_args     = new WP_Query( $member_args );
-
-				if ( 'no' === $bupr['multi_reviews'] ) {
-					$user_post_count = $reviews_args->post_count;
-				} else {
-					$user_post_count = 0;
-				}
-
-				if ( $user_post_count === 0 ) {
-					if ( ! empty( $profile_rated_field_values ) ) {
-						foreach ( $profile_rated_field_values as $bupr_stars_rate ) {
-							if ( $bupr_count === $review_count ) {
-								break;
-							} else {
-								$bupr_stars_rate = max(1, min(5, (int)$bupr_stars_rate));
-								$bupr_member_star[] = $bupr_stars_rate;
-							}
-							$bupr_count++;
-						}
-					}
-
-					$bupr_rated_stars = array();
-					if ( $bupr['multi_criteria_allowed'] && ( count( $bupr_rating_criteria ) === count( $bupr_member_star ) ) )  {
-						$bupr_rated_stars = array_combine( $bupr_rating_criteria, $bupr_member_star );
-					} else {
-						$bupr_rated_stars = $bupr_member_star;
-					}
-
-					$add_review_args = array(
-						'post_type'    => 'review',
-						'post_title'   => $review_subject,
-						'post_content' => $review_desc,
-						'post_status'  => $bupr_reviews_status,
-						'post_author'  => $bupr_current_user,
-					);
-
-					$review_id = wp_insert_post( $add_review_args );
-					// Handle insertion error
-					if (is_wp_error($review_id)) {
-						wp_send_json_error('<p class="bupr-error">' . esc_html__('Error creating review. Please try again.', 'bp-member-reviews') . '</p>');
-						return;
-					}
-
-					// GamiPress integration for published reviews
-					if ( $bupr_reviews_status == 'publish' ) {
-						do_action( 'gamipress_bp_member_review', $bupr_current_user );
-					}
-
-					wp_set_object_terms( $review_id, 'BP Member', 'review_category' );
-					update_post_meta( $review_id, 'linked_bp_member', $bupr_member_id );
-					if ( 'yes' === $bupr['anonymous_reviews'] ) {
-						update_post_meta( $review_id, 'bupr_anonymous_review_post', $anonymous_review );
-					}
-					if ( ! empty( $bupr_rated_stars ) ) :
-						update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
-						
-							// Recalculate reviews for the reviewed user after meta data is updated
-							if ( $bupr_reviews_status == 'publish' ) {
-							do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
-						}
-					endif;
-
-						
-					// Handle notifications and emails
-					$this->send_review_notifications($review_id, $bupr_current_user, $bupr_member_id, $bupr_reviews_status, $anonymous_review, $user_name);
-
-						// Return success message
-					if ('draft' === $bupr_reviews_status) {
-						wp_send_json_success(sprintf(
-							__('Thank you for sharing your %s! After admin approval, it will be displayed on members\' profiles.', 'bp-member-reviews'),
-							esc_html($bupr['review_label'])
-						));
-					} else {
-						wp_send_json_success(sprintf(
-							__('Thank you for sharing your thoughts in this %s!', 'bp-member-reviews'),
-							esc_html(strtolower($bupr['review_label']))
-						));
-					}
-
-				} else {
-					/* translators: %s: */
-					wp_send_json_error( sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ) );
+			$bupr_rating_criteria = array();
+			if ( ! empty( $bupr['active_rating_fields'] ) ) {
+				foreach ( $bupr['active_rating_fields'] as $bupr_keys => $bupr_fields ) {
+						$bupr_rating_criteria[] = $bupr_keys;
 				}
 			}
+			
+			$bupr_reviews_status = 'yes' === $bupr['auto_approve_reviews'] ? 'publish' : 'draft';
+
+			$bupr_multi_reviews         = $bupr['multi_reviews'];
+			$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user', FILTER_VALIDATE_INT );
+			$current_user         		= wp_get_current_user();				
+			$review_desc                = filter_input( INPUT_POST, 'bupr_review_desc', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id', FILTER_VALIDATE_INT );
+			$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_VALIDATE_INT );
+			$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review' );
+			$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'absint', wp_unslash( $_POST['bupr_review_rating'] ) ) : array();
+			$bupr_admin_general         = get_option( 'bupr_admin_general_options' );
+			$site_name                  = get_bloginfo( 'name' );
+			$site_admins                = get_users( array( 'role' => 'administrator' ) );
+			$site_admin = !empty($site_admins) ? $site_admins[0]->display_name : '';
+			if (empty($bupr_member_id)) {
+				wp_send_json_error('<p class="bupr-error">' . esc_html__('Please select a member.', 'bp-member-reviews') . '</p>');
+				return;
+			}
+
+				// Prevent self-reviews
+			if ($bupr_current_user == $bupr_member_id) {
+				wp_send_json_error('<p class="bupr-error">' . esc_html__('You cannot review your own profile.', 'bp-member-reviews') . '</p>');
+				return;
+			}
+
+				// Get member info
+			$bupr_reviewed_user = get_user_by('id', $bupr_member_id);
+			if (!$bupr_reviewed_user) {
+				wp_send_json_error('<p class="bupr-error">' . esc_html__('Selected member does not exist.', 'bp-member-reviews') . '</p>');
+				return;
+			}
+			// Set user name (anonymous or actual)
+			$user_name = ('yes' === $anonymous_review) ? __("An anonymous user", 'bp-member-reviews') : $current_user->display_name;
+			
+			$bupr_reviewed_user_name = $bupr_reviewed_user->display_name;
+
+			$review_subject = sprintf(
+			__('%s received a %s', 'bp-member-reviews'),
+			$bupr_reviewed_user_name,
+			bupr_profile_review_tab_singular_slug());
+
+			// Process rating values
+			$bupr_count = 0;
+			$bupr_member_star = array();
+
+			$member_args      = array(
+				'post_type'      => 'review',
+				'posts_per_page' => -1,
+				'post_status'    => array(
+					'draft',
+					'publish',
+				),
+				'author'         => $bupr_current_user,
+				'category'       => 'bp-member',
+				'meta_query'     => array(
+					array(
+						'key'     => 'linked_bp_member',
+						'value'   => $bupr_member_id,
+						'compare' => '=',
+					),
+				),
+			);
+			$reviews_args     = new WP_Query( $member_args );
+
+			if ( 'no' === $bupr['multi_reviews'] ) {
+				$user_post_count = $reviews_args->post_count;
+			} else {
+				$user_post_count = 0;
+			}
+
+			if ( $user_post_count === 0 ) {
+				if ( ! empty( $profile_rated_field_values ) ) {
+					foreach ( $profile_rated_field_values as $bupr_stars_rate ) {
+						if ( $bupr_count === $review_count ) {
+							break;
+						} else {
+							$bupr_stars_rate = max(1, min(5, (int)$bupr_stars_rate));
+							$bupr_member_star[] = $bupr_stars_rate;
+						}
+						$bupr_count++;
+					}
+				}
+
+				$bupr_rated_stars = array();
+				if ( $bupr['multi_criteria_allowed'] && ( count( $bupr_rating_criteria ) === count( $bupr_member_star ) ) )  {
+					$bupr_rated_stars = array_combine( $bupr_rating_criteria, $bupr_member_star );
+				} else {
+					$bupr_rated_stars = $bupr_member_star;
+				}
+
+				$add_review_args = array(
+					'post_type'    => 'review',
+					'post_title'   => $review_subject,
+					'post_content' => $review_desc,
+					'post_status'  => $bupr_reviews_status,
+					'post_author'  => $bupr_current_user,
+				);
+
+				$review_id = wp_insert_post( $add_review_args );
+				// Handle insertion error
+				if (is_wp_error($review_id)) {
+					wp_send_json_error('<p class="bupr-error">' . esc_html__('Error creating review. Please try again.', 'bp-member-reviews') . '</p>');
+					return;
+				}
+
+				// GamiPress integration for published reviews
+				if ( $bupr_reviews_status == 'publish' ) {
+					do_action( 'gamipress_bp_member_review', $bupr_current_user );
+				}
+
+				wp_set_object_terms( $review_id, 'BP Member', 'review_category' );
+				update_post_meta( $review_id, 'linked_bp_member', $bupr_member_id );
+				if ( 'yes' === $bupr['anonymous_reviews'] ) {
+					update_post_meta( $review_id, 'bupr_anonymous_review_post', $anonymous_review );
+				}
+				if ( ! empty( $bupr_rated_stars ) ) :
+					update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
+					
+						// Recalculate reviews for the reviewed user after meta data is updated
+						if ( $bupr_reviews_status == 'publish' ) {
+						do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );
+					}
+				endif;
+
+					
+				// Handle notifications and emails
+				$this->send_review_notifications($review_id, $bupr_current_user, $bupr_member_id, $bupr_reviews_status, $anonymous_review, $user_name);
+
+					// Return success message
+				if ('draft' === $bupr_reviews_status) {
+					wp_send_json_success(sprintf(
+						__('Thank you for sharing your %s! After admin approval, it will be displayed on members\' profiles.', 'bp-member-reviews'),
+						esc_html($bupr['review_label'])
+					));
+				} else {
+					wp_send_json_success(sprintf(
+						__('Thank you for sharing your thoughts in this %s!', 'bp-member-reviews'),
+						esc_html(strtolower($bupr['review_label']))
+					));
+				}
+
+			} else {
+				/* translators: %s: */
+				wp_send_json_error( sprintf( esc_html__( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ) );
+			}
+			
 		}
 
 		  /**
