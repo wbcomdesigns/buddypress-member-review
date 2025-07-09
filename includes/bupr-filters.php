@@ -48,7 +48,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
          */
         private function init_hooks() {
 
-				if( function_exists( 'buddypress' ) && ! buddypress()->buddyboss ) {
+			if( function_exists( 'buddypress' ) && ! buddypress()->buddyboss ) {
 				add_action( 'bp_setup_nav', array( $this, 'bupr_member_profile_reviews_tab' ), 11 );
 			}
 			if ( function_exists( 'buddypress' ) && buddypress()->buddyboss ) {
@@ -89,9 +89,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'bp_get_activity_content_body', array( $this, 'bupr_added_activity_star_rating' ), 10, 2 );
 		}
 
-		   /**
-         * Set up directory integration hooks based on active theme.
-         */
+		/**
+		 * Set up directory integration hooks based on active theme.
+		 */
         private function setup_directory_hooks() {
             // Skip if BuddyPress is not active
             if (!function_exists('buddypress')) {
@@ -155,11 +155,15 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
                 return array();
             }
 
+			$user_id = absint($user_id);
 			 // Check cache first
             if (isset($this->user_role_cache[$user_id])) {
                 return $this->user_role_cache[$user_id];
             }
 
+			if (!get_userdata($user_id)) {
+				return array();
+			}
 			 // Get user data
             $user = get_userdata($user_id);
             $roles = array();
@@ -333,6 +337,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * Map members who can give review by member role.
 		 */
 		public function bupr_members_right_to_review() {
+			 // Add capability checks
+			if (!current_user_can('read') || !is_user_logged_in()) {
+				return;
+			}
 			global $bp, $bupr;
 			$review_div = 'form';
 			$user_id    = bp_loggedin_user_id();
@@ -586,6 +594,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
         private function calculate_user_rating($user_id) {
             global $wpdb, $bupr;
             
+			// Validate and sanitize input
+			$user_id = absint($user_id);
+			if (!$user_id) {
+				return array('average' => 0, 'count' => 0);
+			}
             // Use direct SQL for better performance
             $reviews = $wpdb->get_results($wpdb->prepare(
                 "SELECT p.ID 
@@ -658,15 +671,15 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			return $actions;
 		}
 
-				/**
-				 * Actions performed to hide row actions
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @param    array $actions Actions array.
-				 * @param    array $post    Posts array.
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Actions performed to hide row actions
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @param    array $actions Actions array.
+		 * @param    array $post    Posts array.
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
 			global $bp;
 			global $bupr;
@@ -693,13 +706,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			return $actions;
 		}
 
-				/**
-				 * Action performed to add taxonomy term for group reviews
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Action performed to add taxonomy term for group reviews
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_add_bp_member_reviews_taxonomy_term() {
 			$termexists = term_exists( 'BP Member', 'review_category' );
 			if ( 0 === $termexists || null === $termexists ) {
@@ -707,13 +720,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 		}
 
-				/**
-				 * Action performed to add a tab for member profile reviews
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Action performed to add a tab for member profile reviews
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_member_profile_reviews_tab() {
 			global $bp, $bupr;
 
@@ -862,37 +875,37 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			remove_filter( 'site_url', 'bupr_site_url', 99 );
 		}
 
-				/**
-				 * Action performed to show screen of reviews listing tab.
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Action performed to show screen of reviews listing tab.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_reviews_tab_function_to_show_screen() {
 			add_action( 'bp_template_content', array( $this, 'bupr_reviews_tab_function_to_show_content' ) );
 			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 		}
 
-				/**
-				 * Action performed to show screen of reviews form tab.
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Action performed to show screen of reviews form tab.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_reviews_form_tab_function_to_show_screen() {
 			add_action( 'bp_template_content', array( $this, 'bupr_reviews_form_to_show_content' ) );
 			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 		}
 
-				/**
-				 * Actions performed to show the content of reviews list tab
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Actions performed to show the content of reviews list tab
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_reviews_tab_function_to_show_content() {
 			bupr_get_template( 'bupr-reviews-tab-template.php' );
 		}
@@ -933,13 +946,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			<?php
 		}
 
-				/**
-				 * Action performed to show screen of single review view tab.
-				 *
-				 * @since    1.0.0
-				 * @access   public
-				 * @author   Wbcom Designs
-				 */
+		/**
+		 * Action performed to show screen of single review view tab.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 * @author   Wbcom Designs
+		 */
 		public function bupr_view_review_tab_function_to_show_screen() {
 			add_action( 'bp_template_content', array( $this, 'bupr_view_review_tab_function_to_show_content' ) );
 			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
