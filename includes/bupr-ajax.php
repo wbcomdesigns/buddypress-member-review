@@ -602,7 +602,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				return;
 			}
 			$review_content  = isset( $_POST['bupr_review_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['bupr_review_desc'] ) ) : '';
-			$critaria_rating = isset( $_POST['bupr_review_rating'] ) ? array_map( 'absint', wp_unslash( $_POST['bupr_review_rating'] ) ) : array();
+			$critaria_rating = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : array();
 			$old_ratings     = get_post_meta( $review_id, 'profile_star_rating', true );
 
 			if (!is_array($old_ratings)) {
