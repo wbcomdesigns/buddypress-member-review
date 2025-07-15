@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members
 Requires at least: 4.0
-Tested up to: 6.8.0
-Stable tag: 3.5.0
+Tested up to: 6.8.1
+Stable tag: 3.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,26 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 
 == Changelog ==
+
+= 3.6.0 =
+* New: Added UI improvements for member reviews on directory page.
+* New: Apply filter added for the review tab to improve extensibility.
+* Improved: Optimized scripts in `includes/bupr-scripts.php`.
+* Improved: Code enhancements in `includes/bupr-general-functions.php` and `includes/bupr-ajax.php`.
+* Improved: UI compatibility and styling fixes for BuddyBoss Theme.
+* Improved: Better handling of plugin settings visibility with BuddyBoss active.
+* Improved: Code cleanup and performance in `includes/bupr-filters.php`.
+* Fixed: Rating stars not visible with BuddyBoss theme.
+* Fixed: Star rating reset issue on editing a review.
+* Fixed: Issue where plugin settings submenu was not visible with BuddyBoss.
+* Fixed: Unable to edit email subject and message content.
+* Fixed: Early load of text domain causing translation issues.
+* Fixed: Validation and indentation issues in `bupr-filters.php`.
+* Fixed: Removed duplicate condition to prevent logic conflict.
+* Fixed: Various minor UI and layout inconsistencies.
+* Updated: Activation notice string improvements.
+* Updated: Grunt configuration for build process.
+
 = 3.5.0 =
 * Added: German (DE) and French (FR) language files for multilingual support.  
 * Updated: Backend setting labels and plugin strings for better clarity.  
