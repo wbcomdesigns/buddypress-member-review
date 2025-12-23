@@ -18,11 +18,24 @@ if (preg_match('/\/view\/(\d+)\//', $url, $matches)) {
 if ( ! empty( $review_id ) ) {
 	$review = get_post( $review_id );
 
+	// Bail if review doesn't exist or is not a review post type.
+	if ( ! $review || 'review' !== $review->post_type ) {
+		echo '<p>' . esc_html__( 'Review not found.', 'bp-member-reviews' ) . '</p>';
+		return;
+	}
+
 	$review_title = $review->post_title;
 	$review_url   = get_permalink( $review_id );
 
-	$author            = $review->post_author;
-	$author_details    = get_userdata( $author );
+	$author         = $review->post_author;
+	$author_details = get_userdata( $author );
+
+	// Bail if author doesn't exist.
+	if ( ! $author_details ) {
+		echo '<p>' . esc_html__( 'Review author not found.', 'bp-member-reviews' ) . '</p>';
+		return;
+	}
+
 	$review_author     = $author_details->data->user_login;
 	$author_id         = $author_details->data->ID;
 	$member_profile    = bp_core_get_userlink( $author_id );
