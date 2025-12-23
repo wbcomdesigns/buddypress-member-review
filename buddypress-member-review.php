@@ -178,7 +178,7 @@ register_activation_hook(__FILE__, 'bupr_plugin_activation');
  * Include required plugin files after BuddyPress is loaded.
  */
 if ( ! function_exists( 'bupr_plugins_files' ) ) {
-	add_action( 'plugin_loaded', 'bupr_plugins_files' );
+	add_action( 'plugins_loaded', 'bupr_plugins_files' );
 	function bupr_plugins_files() {	
 
 		// Only proceed if BuddyPress is compatible
