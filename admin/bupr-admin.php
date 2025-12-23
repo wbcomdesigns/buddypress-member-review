@@ -436,9 +436,15 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					$site_name           = get_bloginfo( 'name' );
 					$site_admins         = get_users( array( 'role' => 'administrator' ) );
 					$anonymous_review 	 = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
-					$bupr_sender_data    = get_userdata($post->post_author);
+					$bupr_sender_data    = get_userdata( $post->post_author );
+					$bupr_reciever_data  = get_userdata( $bupr_member_id );
+
+					// Bail if sender or receiver user data is not found.
+					if ( ! $bupr_sender_data || ! $bupr_reciever_data ) {
+						return;
+					}
+
 					$bupr_sender_email   = $bupr_sender_data->data->user_email;
-					$bupr_reciever_data  = get_userdata($bupr_member_id);
 					$bupr_reciever_email = $bupr_reciever_data->data->user_email;
 					$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
 					$bupr_reciever_login = $bupr_reciever_data->data->user_login;
