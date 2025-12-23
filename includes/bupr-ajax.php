@@ -462,8 +462,17 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 			$review                = get_post( $review_id );
 
-			// Check if current user can edit this review
-			if (get_current_user_id() != $review->post_author && !current_user_can('edit_others_posts')) {
+			// Check if review exists and is valid.
+			if ( ! $review || 'review' !== $review->post_type ) {
+				wp_send_json_error( array(
+					'message' => __( 'Review not found.', 'bp-member-reviews' ),
+					'code'    => 'not_found',
+				) );
+				return;
+			}
+
+			// Check if current user can edit this review.
+			if ( get_current_user_id() !== (int) $review->post_author && ! current_user_can( 'edit_others_posts' ) ) {
 				wp_send_json_error(array(
 					'message' => __('You do not have permission to edit this review.', 'bp-member-reviews'),
 					'code' => 'permission_error'
