@@ -22,7 +22,11 @@ class bupr_single_member_rating_widget extends WP_Widget {
     }
 
     function widget( $args, $instance ) {
-        extract( $args );
+        // Extract widget wrapper variables explicitly instead of using extract().
+        $before_widget = $args['before_widget'];
+        $after_widget  = $args['after_widget'];
+        $before_title  = $args['before_title'];
+        $after_title   = $args['after_title'];
 
         // Check if it's a user profile being viewed
         if ( ! bp_is_user() ) {

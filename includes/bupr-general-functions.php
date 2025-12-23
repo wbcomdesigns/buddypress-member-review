@@ -65,7 +65,8 @@ function bupr_locate_template( $template_name, $template_path = '', $default_pat
  */
 function bupr_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
     if ( is_array( $args ) && ! empty( $args ) ) :
-        extract( $args ); // Extract the args into variables.
+        // phpcs:ignore WordPress.PHP.DontExtract.extract_extract -- Variables needed in template scope.
+        extract( $args, EXTR_SKIP );
     endif;
 
     $template_file = bupr_locate_template( $template_name, $template_path, $default_path );

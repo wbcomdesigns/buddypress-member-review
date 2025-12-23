@@ -23,7 +23,11 @@ class bupr_members_review_setting extends WP_Widget {
 
     /** Display widget */
     function widget( $args, $instance ) {
-        extract( $args );
+        // Extract widget wrapper variables explicitly instead of using extract().
+        $before_widget = $args['before_widget'];
+        $after_widget  = $args['after_widget'];
+        $before_title  = $args['before_title'];
+        $after_title   = $args['after_title'];
 
         global $wpdb;
 
