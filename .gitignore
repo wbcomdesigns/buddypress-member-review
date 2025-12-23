@@ -3,3 +3,5 @@ node_modules/
 *.json
 nbproject
 /nbproject/private/
+CLAUDE.md
+task.md
