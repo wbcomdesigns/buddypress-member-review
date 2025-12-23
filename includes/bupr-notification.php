@@ -70,9 +70,10 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		$notification_link = '';
 		$notification_content = '';
 		$linked_member_id = get_post_meta( $item_id, 'linked_bp_member', true );
-		
+
 		$linked_user_info = get_userdata( $linked_member_id );
-		
+		$linked_user_name = '';
+
 		if ( $linked_user_info ) {
 			$linked_user_name = $linked_user_info->display_name;
 		}
