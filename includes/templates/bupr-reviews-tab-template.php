@@ -92,12 +92,7 @@ $reviews = new WP_Query( $args );
 												)
 											);
 										} elseif ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
-											$size = '';
-											if ( isset( $params['type'] ) && 'thumb' === $params['type'] ) {
-												$size = bp_core_avatar_thumb_width();
-											} else {
-												$size = bp_core_avatar_full_width();
-											}
+											$size = bp_core_avatar_full_width();
 											$avatar_url = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=' . $size;
 										}
 										echo "<img src='" . esc_url( $avatar_url ) . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
