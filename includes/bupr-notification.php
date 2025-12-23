@@ -125,26 +125,15 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 }
 
 /**
- * Hooked into the new reply function, this notification action is responsible
- * for notifying topic and hierarchical reply authors of topic replies.
+ * Add BuddyPress notification when a new review is submitted.
  *
- * @param integer $reply_id
- * @param integer $topic_id
- * @param integer $forum_id
- * @param boolean $anonymous_data
- * @param integer $author_id
- * @param boolean $is_edit
- * @param integer $reply_to
+ * @param integer $bupr_memberid The ID of the member who received the review.
+ * @param integer $review_id     The ID of the review post.
  * @return void
  */
 function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 
-	// Bail if somehow this is hooked to an edit action.
-	if ( ! empty( $is_edit ) ) {
-		return;
-	}
-
-	// Get autohr information.
+	// Get author information.
 	$current_user = wp_get_current_user();
 	$member_id    = $current_user->ID;
 
