@@ -357,7 +357,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				if ( ! empty( $bupr['exclude_given_members'] ) ) {
 
 					// Check if the logged-in user is not excluded from giving reviews
-					if ( ! in_array( $user_role[0], $bupr['exclude_given_members'], true ) ) {
+					if ( ! in_array( $user_role, $bupr['exclude_given_members'], true ) ) {
 
 						// Construct the review URL
 						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
@@ -437,10 +437,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				// If add_taken_members is set, process the review logic
 				if ( ! empty( $bupr['add_taken_members'] ) ) {
-					$user_id   = bp_displayed_user_id();
-					$user_role = $this->bupr_get_current_user_roles( $user_id );
+					$user_id    = bp_displayed_user_id();
+					$user_roles = $this->bupr_get_current_user_roles( $user_id );
+					$user_role  = ! empty( $user_roles ) ? $user_roles[0] : '';
 					// Check if the displayed user has the role to take reviews
-					if ( in_array( $user_role[0], $bupr['add_taken_members'], true ) ) {
+					if ( in_array( $user_role, $bupr['add_taken_members'], true ) ) {
 
 						// Construct the review URL
 						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
@@ -634,7 +635,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
                     $field_count = 0;
                     
                     foreach ($ratings as $field => $value) {
-                        if (0 == $value) {
+                        if ( 0 === (int) $value ) {
                             continue;
                         }
                         $rate += $value;
