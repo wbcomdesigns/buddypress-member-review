@@ -59,10 +59,11 @@ class bupr_single_member_rating_widget extends WP_Widget {
                 $review_ratings = get_post_meta( $review->ID, 'profile_star_rating', true );
                 if ( is_array( $review_ratings ) && ! empty( $review_ratings ) ) {
                     $total_rating = array_sum( $review_ratings );
-                    if ( $total_rating == 0 ) {
+                    $rating_count = count( $review_ratings );
+                    // Skip if no valid ratings to prevent division by zero.
+                    if ( 0 === $total_rating || 0 === $rating_count ) {
                         continue;
                     }
-                    $rating_count = count( $review_ratings );
                     $final_review_arr[ $review->ID ] = round( (int) $total_rating / $rating_count, 2 ); // Ensure rating precision
                     $final_review_obj[ $review->ID ] = $review;
                 }
