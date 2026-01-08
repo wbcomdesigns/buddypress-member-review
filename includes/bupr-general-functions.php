@@ -397,6 +397,16 @@ add_action('before_delete_post', 'bupr_clear_review_caches');
 add_action('trashed_post', 'bupr_clear_review_caches');
 add_action('untrashed_post', 'bupr_clear_review_caches');
 
+/**
+ * Get the default review view slug.
+ *
+ * @return string The review view slug.
+ */
+function bupr_default_review_view_slug() {
 
+    $default_slug = apply_filters( 'bupr_default_subnav_slug', 'view' );
+    return $default_slug;
+
+}
 
 

@@ -693,7 +693,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_title     = $post->post_title;
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
-					$review_url = bp_core_get_userlink( $linked_bp_member, false, true ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
+					$review_url = bp_core_get_userlink( $linked_bp_member, false, true ) . strtolower( $bupr['review_label_plural'] ) . '/' . bupr_default_review_view_slug() . '/' . $post->ID;
 					/* translators: %s: */
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
@@ -787,7 +787,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					'slug'                    => bupr_profile_review_tab_plural_slug(),
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
-					'default_subnav_slug'     => 'view',
+					'default_subnav_slug'     => bupr_default_review_view_slug(),
 					'show_for_displayed_user' => true,
 				);
 				bp_core_new_nav_item( $tab_args );
@@ -799,7 +799,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			bp_core_new_subnav_item(
 				array(
 					'name'            => bupr_profile_review_tab_name(),
-					'slug'            => 'view',
+					'slug'            => bupr_default_review_view_slug(),
 					'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 					'parent_slug'     => $parent_slug,
 					'screen_function' => array( $this, 'bupr_view_review_tab_function_to_show_screen' ),
