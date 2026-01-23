@@ -788,7 +788,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					'slug'                    => bupr_profile_review_tab_plural_slug(),
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
-					'default_subnav_slug'     => 'view',
+					'default_subnav_slug'     => bupr_default_review_view_slug(),
 					'show_for_displayed_user' => true,
 				);
 				bp_core_new_nav_item( $tab_args );
@@ -800,7 +800,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			bp_core_new_subnav_item(
 				array(
 					'name'            => bupr_profile_review_tab_name(),
-					'slug'            => 'view',
+					'slug'            => bupr_default_review_view_slug(),
 					'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
 					'parent_slug'     => $parent_slug,
 					'screen_function' => array( $this, 'bupr_view_review_tab_function_to_show_screen' ),

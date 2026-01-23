@@ -183,7 +183,7 @@ $reviews = new WP_Query( $args );
 								<?php echo '</div>'; ?>
 								<?php
 								$user_id = bp_displayed_user_id();
-								$url     = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/view/' . get_the_id();
+								$url     = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/' . bupr_default_review_view_slug() . '/' . get_the_id();
 								?>
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">
