@@ -86,7 +86,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			
 			$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', true );
 
-			wp_enqueue_style( 'bupr-font-awesome-2', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
+			wp_enqueue_style( 'bupr-font-awesome-2', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), '5.5.0', false );
 
 			if( ! empty( $member_review_ratings ) && is_array( $member_review_ratings ) ) {
 				
@@ -193,15 +193,36 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_settings_section( 'bupr-welcome', ' ', array( $this, 'bupr_admin_welcome_content' ), 'bupr-welcome' );
 
 			$this->plugin_settings_tabs['bupr-general'] = esc_html__( 'General', 'bp-member-reviews' );
-			register_setting( 'bupr_admin_general_options', 'bupr_admin_general_options' );
+			register_setting(
+				'bupr_admin_general_options',
+				'bupr_admin_general_options',
+				array(
+					'type'              => 'array',
+					'sanitize_callback' => array( $this, 'bupr_sanitize_options' ),
+				)
+			);
 			add_settings_section( 'bupr-general', ' ', array( $this, 'bupr_admin_general_content' ), 'bupr-general' );
 			$this->plugin_settings_tabs['bupr-criteria'] = esc_html__( 'Criteria', 'bp-member-reviews' );
-			register_setting( 'bupr_admin_settings', 'bupr_admin_settings' );
+			register_setting(
+				'bupr_admin_settings',
+				'bupr_admin_settings',
+				array(
+					'type'              => 'array',
+					'sanitize_callback' => array( $this, 'bupr_sanitize_options' ),
+				)
+			);
 			add_settings_section( 'bupr-criteria', ' ', array( $this, 'bupr_admin_criteria_content' ), 'bupr-criteria' );
 			$this->plugin_settings_tabs['bupr-shortcode'] = esc_html__( 'Shortcode', 'bp-member-reviews' );
 			add_settings_section( 'bupr-shortcode', ' ', array( $this, 'bupr_admin_shortcode_content' ), 'bupr-shortcode' );
 			$this->plugin_settings_tabs['bupr-display'] = esc_html__( 'Display', 'bp-member-reviews' );
-			register_setting( 'bupr_admin_display_options', 'bupr_admin_display_options' );
+			register_setting(
+				'bupr_admin_display_options',
+				'bupr_admin_display_options',
+				array(
+					'type'              => 'array',
+					'sanitize_callback' => array( $this, 'bupr_sanitize_options' ),
+				)
+			);
 			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
 		}
 
@@ -495,9 +516,37 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
 				}
 			}
-			
+
 		}
-		
+
+		/**
+		 * Sanitize options array recursively.
+		 *
+		 * @param array $options The options to sanitize.
+		 * @return array Sanitized options.
+		 */
+		public function bupr_sanitize_options( $options ) {
+			if ( ! is_array( $options ) ) {
+				return array();
+			}
+
+			$sanitized = array();
+			foreach ( $options as $key => $value ) {
+				$key = sanitize_key( $key );
+				if ( is_array( $value ) ) {
+					$sanitized[ $key ] = $this->bupr_sanitize_options( $value );
+				} elseif ( is_bool( $value ) ) {
+					$sanitized[ $key ] = (bool) $value;
+				} elseif ( is_numeric( $value ) ) {
+					$sanitized[ $key ] = is_float( $value ) ? (float) $value : (int) $value;
+				} else {
+					$sanitized[ $key ] = sanitize_text_field( $value );
+				}
+			}
+
+			return $sanitized;
+		}
+
 	}
 	new BUPR_Admin();
 }

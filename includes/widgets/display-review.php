@@ -132,10 +132,10 @@ class bupr_members_review_setting extends WP_Widget {
     /** Update widget */
     function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
-        $instance['bupr_title'] = strip_tags( $new_instance['bupr_title'] );
+        $instance['bupr_title'] = wp_strip_all_tags( $new_instance['bupr_title'] );
         $instance['bupr_member'] = intval( $new_instance['bupr_member'] );
-        $instance['top_member'] = strip_tags( $new_instance['top_member'] );
-        $instance['avatar'] = strip_tags( $new_instance['avatar'] );
+        $instance['top_member'] = wp_strip_all_tags( $new_instance['top_member'] );
+        $instance['avatar'] = wp_strip_all_tags( $new_instance['avatar'] );
         return $instance;
     }
 

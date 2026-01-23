@@ -50,7 +50,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 						if ( ! empty( $bupr['active_rating_fields'] ) ) {
 							$key = 0;
 							foreach ( $bupr['active_rating_fields'] as $profile_rating_field => $bupr_criteria_setting ) :
-								$key_val = rand();
+								$key_val = wp_rand();
 								if ( function_exists( 'icl_register_string' ) ) {
 									icl_register_string( 'bp-member-reviews', 'rating_field_name_' . $key++, $profile_rating_field );
 								}

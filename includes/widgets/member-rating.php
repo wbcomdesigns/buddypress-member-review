@@ -151,7 +151,7 @@ class bupr_single_member_rating_widget extends WP_Widget {
     // Function for updating widget options
     function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
-        $instance['bupr_title'] = strip_tags( $new_instance['bupr_title'] );
+        $instance['bupr_title'] = wp_strip_all_tags( $new_instance['bupr_title'] );
         $instance['rating_limit'] = $new_instance['rating_limit'];
         $instance['rating_default'] = $new_instance['rating_default'];
         return $instance;

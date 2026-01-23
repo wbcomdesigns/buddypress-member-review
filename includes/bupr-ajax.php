@@ -196,9 +196,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			$bupr_reviewed_user_name = $bupr_reviewed_user->display_name;
 
 			$review_subject = sprintf(
-			__('%s received a %s', 'bp-member-reviews'),
-			$bupr_reviewed_user_name,
-			bupr_profile_review_tab_singular_slug());
+				/* translators: 1: User display name, 2: Review tab name (singular). */
+				__( '%1$s received a %2$s', 'bp-member-reviews' ),
+				$bupr_reviewed_user_name,
+				bupr_profile_review_tab_singular_slug()
+			);
 
 			// Process rating values
 			$bupr_count = 0;
@@ -287,17 +289,23 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				// Handle notifications and emails
 				$this->send_review_notifications($review_id, $bupr_current_user, $bupr_member_id, $bupr_reviews_status, $anonymous_review, $user_name);
 
-					// Return success message
-				if ('draft' === $bupr_reviews_status) {
-					wp_send_json_success(sprintf(
-						__('Thank you for sharing your %s! After admin approval, it will be displayed on members\' profiles.', 'bp-member-reviews'),
-						esc_html($bupr['review_label'])
-					));
+				// Return success message.
+				if ( 'draft' === $bupr_reviews_status ) {
+					wp_send_json_success(
+						sprintf(
+							/* translators: %s: Review label (e.g., "Review"). */
+							__( 'Thank you for sharing your %s! After admin approval, it will be displayed on members\' profiles.', 'bp-member-reviews' ),
+							esc_html( $bupr['review_label'] )
+						)
+					);
 				} else {
-					wp_send_json_success(sprintf(
-						__('Thank you for sharing your thoughts in this %s!', 'bp-member-reviews'),
-						esc_html(strtolower($bupr['review_label']))
-					));
+					wp_send_json_success(
+						sprintf(
+							/* translators: %s: Review label in lowercase (e.g., "review"). */
+							__( 'Thank you for sharing your thoughts in this %s!', 'bp-member-reviews' ),
+							esc_html( strtolower( $bupr['review_label'] ) )
+						)
+					);
 				}
 
 			} else {
@@ -390,8 +398,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
                     admin_url('edit.php')
                 );
                 
-                $approve_review_link = '<a href="' . esc_url($bupr_review_url) . '">' . 
-                    sprintf(__('Review from %s', 'bp-member-reviews'), $user_name) . '</a>';
+                $approve_review_link = '<a href="' . esc_url( $bupr_review_url ) . '">' .
+                    sprintf(
+                        /* translators: %s: User name who submitted the review. */
+                        __( 'Review from %s', 'bp-member-reviews' ),
+                        $user_name
+                    ) . '</a>';
                 
                 $default_approve_message = 'Hello [site-admin],
 
@@ -649,11 +661,14 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				}
 			}
 
-			// Send success response
-			wp_send_json_success(array(
-				'message' => sprintf(__('%s updated successfully.', 'bp-member-reviews'), $bupr['review_label']),
-				'code' => 'success'
-			));
+			// Send success response.
+			wp_send_json_success(
+				array(
+					/* translators: %s: Review label (e.g., "Review"). */
+					'message' => sprintf( __( '%s updated successfully.', 'bp-member-reviews' ), $bupr['review_label'] ),
+					'code'    => 'success',
+				)
+			);
 
 		}
 	}

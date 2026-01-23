@@ -84,10 +84,18 @@ function bupr_get_template( $template_name, $args = array(), $template_path = ''
 
     $template_file = bupr_locate_template( $template_name, $template_path, $default_path );
 
-    if (!file_exists($template_file)) {
-        /* translators: %s: Template file path that does not exist. */
+    if ( ! file_exists( $template_file ) ) {
         if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-            trigger_error(sprintf(__('Template file %s does not exist.', 'bp-member-reviews'), esc_html($template_file)), E_USER_NOTICE);
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- trigger_error output goes to error log, not browser.
+            trigger_error(
+                sprintf(
+                    /* translators: %s: Template file path that does not exist. */
+                    __( 'Template file %s does not exist.', 'bp-member-reviews' ),
+                    esc_html( $template_file )
+                ),
+                E_USER_NOTICE
+            );
+            // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
         }
         return;
     }
@@ -235,18 +243,18 @@ function bupr_recalculate_user_reviews_for_user( $user_id) {
         // Collect all review IDs
         $review_ids = wp_list_pluck($reviews, 'ID');
         
-        // Prepare the query for all ratings at once
-        $placeholders = implode(',', array_fill(0, count($review_ids), '%d'));
-        $prepare_args = array_merge(
-            array("SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = 'profile_star_rating' AND post_id IN ($placeholders)"),
-            $review_ids
+        // Prepare the query for all ratings at once.
+        $placeholders = implode( ',', array_fill( 0, count( $review_ids ), '%d' ) );
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+        $query = $wpdb->prepare(
+            "SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = 'profile_star_rating' AND post_id IN ($placeholders)",
+            ...$review_ids
         );
-        
-        // Get all ratings in a single query
-        $ratings_data = $wpdb->get_results(
-            call_user_func_array(array($wpdb, 'prepare'), $prepare_args),
-            ARRAY_A
-        );
+        // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+
+        // Get all ratings in a single query.
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- Query prepared above, one-time calculation.
+        $ratings_data = $wpdb->get_results( $query, ARRAY_A );
         
         // Process each rating
         foreach ($ratings_data as $rating_data) {

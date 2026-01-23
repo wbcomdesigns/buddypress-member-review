@@ -263,7 +263,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		public function wbcom_enqueue_admin_styles() {
 
 			if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-				wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', array(), BUPR_PLUGIN_VERSION, false );
+				wp_enqueue_style( 'font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/vendor/font-awesome.min.css', array(), '4.7.0', false );
 			}
 
 			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) { 

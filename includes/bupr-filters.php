@@ -305,8 +305,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
                 </div>
             </div>
             <?php
-            
-            // Output the generated HTML
+
+            // Output the generated HTML (all content above is already properly escaped)
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Output is escaped in buffer.
             echo ob_get_clean();
 		}
 

@@ -103,18 +103,17 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				 // Determine file paths based on debug mode and RTL support
 				wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css' .$path. '/bupr-reviews'. $extension, array(), BUPR_PLUGIN_VERSION, false );
 				wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css' .$path. '/bupr-front'. $extension, array(), BUPR_PLUGIN_VERSION, false );
-				// Load Font Awesome from registered WordPress source if available, otherwise use CDN
-				if (!wp_style_is('font-awesome', 'registered')) {
-					wp_register_style('bupr-font-awesome', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), '5.4.2');
+				// Load Font Awesome from registered WordPress source if available, otherwise use bundled version.
+				if ( ! wp_style_is( 'font-awesome', 'registered' ) ) {
+					wp_register_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), '5.5.0' );
 				} else {
-					wp_register_style('bupr-font-awesome', '', array('font-awesome'), null);
+					wp_register_style( 'bupr-font-awesome', '', array( 'font-awesome' ), null );
 				}
 
-				// If BuddyBoss theme is active, load its Font Awesome version
-				if ( get_template() === 'buddyboss-theme') {
-					wp_enqueue_style('bupr-font-awesome-bb-theme', 'https://use.fontawesome.com/releases/v5.4.2/css/all.css', array(), '5.4.2');
+				// If BuddyBoss theme is active, it has its own Font Awesome - skip our version.
+				if ( get_template() !== 'buddyboss-theme' ) {
+					wp_enqueue_style( 'bupr-font-awesome' );
 				}
-				wp_enqueue_style('bupr-font-awesome');
 				if (isset($bupr['rating_color']) && !empty($bupr['rating_color'])) {
 					$bupr_star_color = $bupr['rating_color'];
 					$custom_css = ".bupr-star-rate { color: {$bupr_star_color} !important; }";
@@ -250,7 +249,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 
 				
 				if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-					wp_enqueue_style( 'font-awesome', '//use.fontawesome.com/releases/v5.5.0/css/all.css', array(), BUPR_PLUGIN_VERSION, false );
+					wp_enqueue_style( 'font-awesome', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), '5.5.0', false );
 				}
 				if ( ! wp_style_is( 'wbcom-select2-css', 'enqueued' ) ) {
 					wp_enqueue_style( 'wbcom-select2-css', BUPR_PLUGIN_URL . 'admin/assets/css/vendor/select2.min.css', array(), BUPR_PLUGIN_VERSION, false );
