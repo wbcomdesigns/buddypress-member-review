@@ -9,6 +9,11 @@
  * @package Bp_Job_Manager
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 
 	/**

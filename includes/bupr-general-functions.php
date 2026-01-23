@@ -1,5 +1,16 @@
 <?php
 /**
+ * General functions for BuddyPress Member Reviews.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
  * Locate template.
  *
  * Locate the called template.
@@ -42,8 +53,10 @@ function bupr_locate_template( $template_name, $template_path = '', $default_pat
     // Verify the template file exists
     if (!file_exists($template)) {
         // Log the error but don't fail completely
-        error_log(sprintf('BuddyPress Member Reviews: Template file %s not found', $template));
-        
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log(sprintf('BuddyPress Member Reviews: Template file %s not found', $template));
+        }
+
         // Return a default template that should always exist
         $template = $default_path . 'bupr-reviews-tab-template.php';
     }
@@ -73,7 +86,9 @@ function bupr_get_template( $template_name, $args = array(), $template_path = ''
 
     if (!file_exists($template_file)) {
         /* translators: %s: Template file path that does not exist. */
-        trigger_error(sprintf(__('Template file %s does not exist.', 'bp-member-reviews'), esc_html($template_file)), E_USER_NOTICE);
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            trigger_error(sprintf(__('Template file %s does not exist.', 'bp-member-reviews'), esc_html($template_file)), E_USER_NOTICE);
+        }
         return;
     }
 
@@ -138,14 +153,14 @@ function bupr_profile_review_tab_singular_slug() {
  * @param array $triggers GamiPress triggers.
  * @return array Modified triggers.
  */
-function buddypress_member_review_bp_activity_triggers( $triggers ) {
+function bupr_bp_activity_triggers( $triggers ) {
     $triggers[ __( 'BuddyPress Member Review', 'bp-member-reviews' ) ] = array(
         'gamipress_bp_member_review' => __( 'Give Member Review', 'bp-member-reviews' ),
     );
 
     return $triggers;
 }
-add_filter( 'gamipress_activity_triggers', 'buddypress_member_review_bp_activity_triggers' );
+add_filter( 'gamipress_activity_triggers', 'bupr_bp_activity_triggers' );
 
 /**
  * Get the user ID for the review trigger in GamiPress.
@@ -155,14 +170,14 @@ add_filter( 'gamipress_activity_triggers', 'buddypress_member_review_bp_activity
  * @param array  $args    Trigger arguments.
  * @return int Modified user ID.
  */
-function buddypress_member_review_trigger_get_user_id( $user_id, $trigger, $args ) {
+function bupr_trigger_get_user_id( $user_id, $trigger, $args ) {
     if ( 'gamipress_bp_member_review' === $trigger ) {
         $user_id = $args[0];
     }
 
     return $user_id;
 }
-add_filter( 'gamipress_trigger_get_user_id', 'buddypress_member_review_trigger_get_user_id', 10, 3 );
+add_filter( 'gamipress_trigger_get_user_id', 'bupr_trigger_get_user_id', 10, 3 );
 
 
 /**

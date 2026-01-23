@@ -152,7 +152,7 @@ $reviews = new WP_Query( $args );
 												}
 											}
 											echo '</div>';
-											echo '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
+											echo '<span class="rating-num">' . esc_html( number_format( $aggregate, 2 ) ) . '</span>';
 										}
 									} else {
 										foreach ( $member_review_ratings as $member_review_rating ) {
@@ -162,7 +162,7 @@ $reviews = new WP_Query( $args );
 											}
 																				
 											if ( isset( $member_review_rating[0] ) && $member_review_rating[0] !== null ) {
-												echo '<span class="rating-num">' . number_format( $member_review_rating[0], 2 ) . '</span>';
+												echo '<span class="rating-num">' . esc_html( number_format( $member_review_rating[0], 2 ) ) . '</span>';
 											}
 										}
 									}

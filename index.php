@@ -1,2 +1,10 @@
 <?php
-// Silence is golden.
+/**
+ * Silence is golden.
+ *
+ * @package BuddyPress_Member_Review
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}

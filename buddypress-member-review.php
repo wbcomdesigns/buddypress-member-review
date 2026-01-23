@@ -82,20 +82,22 @@ function bupr_check_buddypress_compatibility() {
 function bupr_outdated_buddypress_notice() {
     echo '<div class="error"><p>';
     printf(
-        __('%1$s requires BuddyPress version %2$s or higher.', 'bp-member-reviews'),
-        '<strong>BuddyPress Member Reviews</strong>',
+        /* translators: %1$s: Plugin name, %2$s: Required version */
+        esc_html__( '%1$s requires BuddyPress version %2$s or higher.', 'bp-member-reviews' ),
+        '<strong>' . esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ) . '</strong>',
         '6.0.0'
     );
     echo '</p></div>';
 }
 /**
- * Admin notice for outdated BuddyPress version.
+ * Admin notice for outdated BuddyBoss version.
  */
 function bupr_outdated_buddyboss_notice() {
     echo '<div class="error"><p>';
     printf(
-        __('%1$s requires BuddyBoss version %2$s or higher.', 'bp-member-reviews'),
-        '<strong>BuddyPress Member Reviews</strong>',
+        /* translators: %1$s: Plugin name, %2$s: Required version */
+        esc_html__( '%1$s requires BuddyBoss version %2$s or higher.', 'bp-member-reviews' ),
+        '<strong>' . esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ) . '</strong>',
         '1.8.0'
     );
     echo '</p></div>';
@@ -107,8 +109,9 @@ function bupr_outdated_buddyboss_notice() {
 function bupr_inactive_members_component_notice() {
     echo '<div class="error"><p>';
     printf(
-        __('%1$s requires the BuddyPress Members component to be active.', 'bp-member-reviews'),
-        '<strong>BuddyPress Member Reviews</strong>'
+        /* translators: %1$s: Plugin name */
+        esc_html__( '%1$s requires the BuddyPress Members component to be active.', 'bp-member-reviews' ),
+        '<strong>' . esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ) . '</strong>'
     );
     echo '</p></div>';
 }
@@ -210,7 +213,9 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 			if (file_exists($file_path)) {
 				include_once $file_path;
 			} else {
-				error_log(sprintf('BuddyPress Member Reviews: Required file %s not found', $file_path));
+				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+					error_log(sprintf('BuddyPress Member Reviews: Required file %s not found', $file_path));
+				}
 			}
 		}
 	}
@@ -273,11 +278,13 @@ add_action( 'admin_init', 'bupr_requires_buddypress' );
 
 /**
  * Show admin notice for plugin when active action is performed.
+ *
+ * @param string $admin_notice The admin notice callback function name.
  */
-function bp_member_review_show_admin_notice($admin_notice){
-	if( isset($_GET['activate']) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		add_action( 'admin_notices', $admin_notice);
-		unset($_GET['activate']);
+function bupr_show_admin_notice( $admin_notice ) {
+	if ( isset( $_GET['activate'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		add_action( 'admin_notices', $admin_notice );
+		unset( $_GET['activate'] );
 	}
 }
 
@@ -312,13 +319,13 @@ add_action( 'activated_plugin', 'bupr_activation_redirect_settings' );
 /**
  * Perform plugin activation redirect.
  */
-function bp_member_review_do_activation_redirect() {
-	if ( get_transient( '_bupr_activation_redirect' ) && ! is_multisite() && bupr_check_buddypress_compatibility()) {
+function bupr_do_activation_redirect() {
+	if ( get_transient( '_bupr_activation_redirect' ) && ! is_multisite() && bupr_check_buddypress_compatibility() ) {
 		delete_transient( '_bupr_activation_redirect' );
 		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
 	}
 }
-add_action( 'admin_init', 'bp_member_review_do_activation_redirect' );
+add_action( 'admin_init', 'bupr_do_activation_redirect' );
 
 /**
  * Translate site URL using WPML for frontend use.

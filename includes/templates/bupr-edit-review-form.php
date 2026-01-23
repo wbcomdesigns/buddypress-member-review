@@ -1,4 +1,14 @@
 <?php
+/**
+ * Edit review form template.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 global $bupr;
 ?>

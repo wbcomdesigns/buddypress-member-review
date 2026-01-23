@@ -1,4 +1,15 @@
 <?php
+/**
+ * Display Review Widget.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 add_action( 'widgets_init', 'bupr_members_review_widget' );
 
 function bupr_members_review_widget() {

@@ -1,3 +1,15 @@
+<?php
+/**
+ * Support page template.
+ *
+ * @package BuddyPress_Member_Reviews
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div class="wrap">
 	<div class="wbcom-bb-plugins-offer-wrapper">
 		<div id="wb_admin_logo">

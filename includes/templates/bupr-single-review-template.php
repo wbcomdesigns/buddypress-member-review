@@ -124,7 +124,7 @@ if ( ! empty( $review_id ) ) {
 									}
 								}
 								echo '</div>';
-								echo '<span class="rating-num">' . number_format( $aggregate, 2 ) . '</span>';
+								echo '<span class="rating-num">' . esc_html( number_format( $aggregate, 2 ) ) . '</span>';
 							}
 						}
 						?>
