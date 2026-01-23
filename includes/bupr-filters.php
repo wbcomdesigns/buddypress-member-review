@@ -694,7 +694,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$review_title     = $post->post_title;
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
-					$review_url = bp_core_get_userlink( $linked_bp_member, false, true ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
+					$review_url = bp_core_get_userlink( $linked_bp_member, false, true ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
 					/* translators: %s: */
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 

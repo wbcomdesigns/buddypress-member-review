@@ -81,10 +81,10 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		if(is_array($bupr)){
 			if ( function_exists( 'bp_members_get_user_url' ) ) {
 				// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
-				$notification_link = bp_members_get_user_url( $linked_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+				$notification_link = bp_members_get_user_url( $linked_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 			} else {
 				// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
-				$notification_link = bp_core_get_user_domain( $linked_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' . $item_id;
+				$notification_link = bp_core_get_user_domain( $linked_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 			}
 			
 			/* translators: %s: */

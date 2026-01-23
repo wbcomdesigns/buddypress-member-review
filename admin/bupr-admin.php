@@ -459,10 +459,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
 					if ( function_exists( 'bp_members_get_user_url' ) ) {
 						// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
-						$bupr_review_url = bp_members_get_user_url( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
+						$bupr_review_url = bp_members_get_user_url( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
 					} else {
 						// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
-						$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . strtolower( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
+						$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' .  $post->ID ;
 					}
 					$bupr_to = $bupr_reciever_email;
 					// Define a default value for $bupr_subject with translation support

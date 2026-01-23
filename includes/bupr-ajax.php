@@ -344,9 +344,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
             if ('publish' === $review_status && 'yes' === $bupr['allow_email']) {
                 // Generate review URL
                 if (function_exists('bp_members_get_user_url')) {
-                    $bupr_review_url = bp_members_get_user_url($member_id) . strtolower($bupr['review_label_plural']) . '/view/' . $review_id;
+                    $bupr_review_url = bp_members_get_user_url($member_id) . sanitize_title($bupr['review_label_plural']) . '/view/' . $review_id;
                 } else {
-                    $bupr_review_url = bp_core_get_user_domain($member_id) . strtolower($bupr['review_label_plural']) . '/view/' . $review_id;
+                    $bupr_review_url = bp_core_get_user_domain($member_id) . sanitize_title($bupr['review_label_plural']) . '/view/' . $review_id;
                 }
                 
                 $review_subject = $bupr_reciever_name . " received a " . bupr_profile_review_tab_singular_slug();
