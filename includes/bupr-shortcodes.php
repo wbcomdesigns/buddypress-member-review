@@ -270,6 +270,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							<?php
 				}
 			}
+			wp_reset_postdata();
 		}
 
 		/**
@@ -404,10 +405,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								<?php } ?>
 								<input type="hidden" id="bupr_member_review_id" value="<?php echo esc_attr( bp_displayed_user_id() ); ?>">
 								<p class="bupr-hide-subject">
+									<label for="review_subject" class="screen-reader-text"><?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?></label>
 									<input name="review-subject" id="review_subject" type="text" placeholder="<?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?>" ><br/>
 								</p>
-								<textarea name="review-desc" id="review_desc" placeholder="<?php 
-								/* translators: %s: review label;  */
+								<label for="review_desc" class="screen-reader-text"><?php
+								/* translators: %s: review label */
+								echo sprintf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>
+								<textarea name="review-desc" id="review_desc" placeholder="<?php
+								/* translators: %s: review label */
 								echo sprintf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?>" rows="4" cols="50"></textarea><br/>
 							<?php if ( $flag ) { ?>
 									<p>
@@ -427,7 +432,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									?>
 									</button>
 									<input type="hidden" value="<?php echo esc_attr( $login_user ); ?>" id="bupr_current_user_id" />
-									<img src="<?php echo esc_url( $bupr_spinner_src ); ?>" class="bupr-save-reivew-spinner" />
+									<img src="<?php echo esc_url( $bupr_spinner_src ); ?>" class="bupr-save-reivew-spinner" alt="<?php esc_attr_e( 'Loading...', 'bp-member-reviews' ); ?>" />
 								</p>
 							</div>
 						</form>

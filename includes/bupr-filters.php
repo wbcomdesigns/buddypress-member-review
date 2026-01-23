@@ -780,6 +780,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			} else {
 				$bupr_notification = '<span class="count">' . 0 . '</span>';
 			}
+			wp_reset_postdata();
 
 			$name = bp_get_displayed_user_username();
 			

@@ -27,7 +27,7 @@ global $bupr;
 			<div class="form-table">	
 				<div class="wbcom-settings-section-wrap ">
 					<div class="wbcom-settings-section-options-heading">
-						<label>
+						<label for="bupr_member_tab_title">
 							<?php esc_html_e( 'Review', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
@@ -40,7 +40,7 @@ global $bupr;
 				</div>
 				<div class="wbcom-settings-section-wrap ">
 					<div class="wbcom-settings-section-options-heading">
-						<label>
+						<label for="bupr_member_tab_title_plural">
 							<?php esc_html_e( 'Review (Plural)', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
@@ -58,7 +58,7 @@ global $bupr;
 			<div class="form-table">
 				<div class="wbcom-settings-section-wrap ">
 					<div class="wbcom-settings-section-options-heading">
-						<label>
+						<label for="bupr_display_color">
 							<?php esc_html_e( 'Rating Color', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">

@@ -230,6 +230,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			} else {
 				$user_post_count = 0;
 			}
+			wp_reset_postdata();
 
 			if ( $user_post_count === 0 ) {
 				if ( ! empty( $profile_rated_field_values ) ) {
