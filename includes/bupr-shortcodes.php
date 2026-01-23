@@ -359,39 +359,21 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								
 
 							<?php
-							$bupr_display_rating = $this->bupr_criteria_is_enable();
-							if ( true == $bupr_display_rating ) {
-								$field_counter = 1;
-								$flage         = true;
-								if ( $bupr['multi_criteria_allowed'] ) {
-									foreach ( $bupr['active_rating_fields'] as $bupr_rating_fields => $bupr_criteria_setting ) :
-										?>
-							<div class="multi-review">
-								<div class="bupr-col-4 bupr-criteria-label">
-											<?php echo esc_html( $bupr_rating_fields ); ?>
-								</div>
-								<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
-									<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
-									<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" value="0">
-											<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
-										<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
-									<?php } ?>
-								</div>
-								<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
-							</div>
-											<?php
-											$field_counter++;
-									endforeach;
-								}
-								?>
-				<input type="hidden" id="member_rating_field_counter" value="<?php echo esc_attr( --$field_counter ); ?>">
-								<?php
-							} else {
-								$field_counter = 1;
-								?>
+							// Only show rating fields if active_rating_fields is not empty.
+							// In Testimonial Mode, active_rating_fields is cleared by the Pro addon.
+							$has_rating_fields = ! empty( $bupr['active_rating_fields'] );
+
+							if ( $has_rating_fields ) {
+								$bupr_display_rating = $this->bupr_criteria_is_enable();
+								if ( true == $bupr_display_rating ) {
+									$field_counter = 1;
+									$flage         = true;
+									if ( $bupr['multi_criteria_allowed'] ) {
+										foreach ( $bupr['active_rating_fields'] as $bupr_rating_fields => $bupr_criteria_setting ) :
+											?>
 								<div class="multi-review">
 									<div class="bupr-col-4 bupr-criteria-label">
-										<label><?php esc_html_e( 'Rating : ', 'bp-member-reviews' ); ?></label>
+												<?php echo esc_html( $bupr_rating_fields ); ?>
 									</div>
 									<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
 										<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
@@ -399,10 +381,40 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 												<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
 											<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 										<?php } ?>
-									</div>										
+									</div>
+									<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
 								</div>
-									<input type="hidden" id="member_rating_field_counter" value="1">
-								<?php } ?>
+												<?php
+												$field_counter++;
+										endforeach;
+									}
+									?>
+					<input type="hidden" id="member_rating_field_counter" value="<?php echo esc_attr( --$field_counter ); ?>">
+									<?php
+								} else {
+									$field_counter = 1;
+									?>
+									<div class="multi-review">
+										<div class="bupr-col-4 bupr-criteria-label">
+											<label><?php esc_html_e( 'Rating : ', 'bp-member-reviews' ); ?></label>
+										</div>
+										<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
+											<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
+											<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" value="0">
+													<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
+												<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+											<?php } ?>
+										</div>
+									</div>
+										<input type="hidden" id="member_rating_field_counter" value="1">
+									<?php
+								}
+							} else {
+								// No rating fields (Testimonial Mode) - just add hidden counter with 0.
+								?>
+								<input type="hidden" id="member_rating_field_counter" value="0">
+								<?php
+							} ?>
 								<input type="hidden" id="bupr_member_review_id" value="<?php echo esc_attr( bp_displayed_user_id() ); ?>">
 								<p class="bupr-hide-subject">
 									<label for="review_subject" class="screen-reader-text"><?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?></label>

@@ -42,6 +42,7 @@ do_action('bupr_after_member_review_list');
 
 ### Filters
 ```php
+apply_filters('bupr_global_settings', $bupr); // Modify global settings at runtime (used by Pro addon)
 apply_filters('bupr_show_profile_review_tab', true);
 apply_filters('bupr_review_tab_name', 'Reviews');
 apply_filters('bupr_shortcode_output', $html, $atts);
@@ -55,6 +56,8 @@ apply_filters('bupr_allow_activity_posting', true);
 | `bupr_approve_review` | Admin approve review |
 | `bupr_edit_review` | Load review for editing |
 | `bupr_update_review` | Save edited review |
+| `bupr_add_owner_reply` | Profile owner reply to review |
+| `bupr_flag_review` | Flag a review as inappropriate |
 
 ## User Meta
 - `bupr_review_count` - Number of reviews received
@@ -64,6 +67,19 @@ apply_filters('bupr_allow_activity_posting', true);
 - `linked_bp_member` - User ID being reviewed
 - `profile_star_rating` - Array of rating values
 - `bupr_anonymous_review_post` - 'yes' if anonymous
+- `bupr_owner_reply` - Profile owner's reply content
+- `bupr_owner_reply_date` - Timestamp of owner reply
+- `bupr_flags` - Array of flag reports [{reporter_id, reason, reason_label, date}]
+- `bupr_flag_status` - 'none'|'flagged'|'resolved'|'dismissed'
+- `bupr_flag_count` - Number of flags
+- `bupr_auto_hidden` - true if review was auto-hidden due to flag threshold
+- `bupr_auto_hidden_date` - Timestamp of auto-hide
+
+## Admin Settings (General Tab)
+New settings for free features:
+- `bupr_enable_owner_replies` - 'yes'|'no' - Enable profile owners to reply (default: yes)
+- `bupr_enable_flagging` - 'yes'|'no' - Enable review flagging (default: yes)
+- `bupr_flag_threshold` - int - Auto-hide reviews after X flags (default: 5, 0 = disabled)
 
 ## Templates (Overridable)
 Copy to `your-theme/review/`:
@@ -75,9 +91,58 @@ Copy to `your-theme/review/`:
 
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-01-24 | fix | Added `bupr_admin_settings_criteria_content` hook for Pro Flexible Criteria builder | bupr-setting-criteria-tab.php:20-35 |
+| 2026-01-24 | fix | Testimonial Mode: Hide rating section completely when `active_rating_fields` is empty | bupr-shortcodes.php:361-417 |
+| 2026-01-24 | fix | Testimonial Mode: Add missing nonce to AJAX call when no rating fields (critical security fix) | bupr-front.js:195 |
+| 2026-01-24 | fix | Added `bupr_global_settings` filter for Pro addon to modify settings at runtime | class-buprglobals.php |
+| 2026-01-24 | fix | Profile header respects `dir_view_ratings` setting (for Testimonial Mode) | bupr-filters.php:572-575 |
+| 2026-01-23 | feature | Admin controls for owner replies, flagging, auto-hide threshold | class-buprglobals.php, bupr-setting-general-tab.php |
+| 2026-01-23 | feature | Pro Features comparison tab in admin | bupr-admin.php, bupr-setting-pro-features-tab.php |
+| 2026-01-23 | feature | Owner Replies - profile owner can respond to reviews | bupr-ajax.php, templates, JS, CSS |
+| 2026-01-23 | feature | Flagging System - users can report inappropriate reviews | bupr-ajax.php, bupr-admin.php, templates, JS, CSS |
+| 2026-01-23 | feature | Pro Addon Plugin created | ../buddypress-member-review-pro/ |
 | 2026-01-23 | fix | Accessibility and data reset fixes | bupr-shortcodes.php, bupr-ajax.php, bupr-filters.php |
 | 2026-01-23 | fix | Security and coding standards for v3.7.0 | Multiple files |
 | 2026-01-23 | docs | Added architecture documentation | docs/architecture/ |
+
+## Pro Addon Plugin
+
+A separate Pro addon is available at `../buddypress-member-review-pro/`:
+
+### Pro Features
+- **Review Modes**: Ratings (default), Testimonials, or Endorsements
+- **Verified Badges**: Trust signals for authentic reviews
+- **REST API**: Full CRUD API at `/wp-json/bupr/v1/`
+- **Flexible Criteria**: Dynamic rating criteria builder
+- **Endorsement Mode**: LinkedIn-style skill endorsements
+
+### Pro Files
+```
+buddypress-member-review-pro/
+├── buddypress-member-review-pro.php  # Main plugin
+├── edd-license/                       # EDD license handling
+├── includes/
+│   ├── class-bupr-pro-features.php   # Feature gate
+│   ├── class-bupr-rest-controller.php # REST API
+│   ├── class-bupr-verified-badges.php # Verified badges
+│   ├── class-bupr-testimonial-mode.php # Testimonial mode
+│   ├── class-bupr-endorsement-mode.php # Endorsements
+│   └── class-bupr-flexible-criteria.php # Criteria builder
+└── admin/
+    └── class-bupr-pro-admin.php       # Pro admin settings
+```
+
+### Pro Feature Checks
+```php
+// Check if Pro is active
+if (BUPR_Pro_Features::is_pro_active()) { ... }
+
+// Check specific feature
+if (BUPR_Pro_Features::feature_enabled('rest_api')) { ... }
+
+// Get current review mode
+$mode = BUPR_Pro_Features::get_review_mode(); // 'ratings'|'testimonials'|'endorsements'
+```
 
 ## Known Issues / TODOs
 

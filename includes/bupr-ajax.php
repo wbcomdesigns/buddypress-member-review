@@ -45,6 +45,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			add_action( 'wp_ajax_bupr_edit_review', array( $this, 'bupr_edit_review' ) );
 			add_action( 'wp_ajax_bupr_update_review', array( $this, 'bupr_update_review' ) );
+
+			// Owner reply actions.
+			add_action( 'wp_ajax_bupr_add_owner_reply', array( $this, 'bupr_add_owner_reply' ) );
+
+			// Flag review actions.
+			add_action( 'wp_ajax_bupr_flag_review', array( $this, 'bupr_flag_review' ) );
 		}
 
 		/**
@@ -719,6 +725,291 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					/* translators: %s: Review label (e.g., "Review"). */
 					'message' => sprintf( __( '%s updated successfully.', 'bp-member-reviews' ), $bupr['review_label'] ),
 					'code'    => 'success',
+				)
+			);
+		}
+
+		/**
+		 * Handle owner reply to a review via AJAX.
+		 *
+		 * @since 3.8.0
+		 * @access public
+		 */
+		public function bupr_add_owner_reply() {
+			global $bupr;
+
+			// Check if owner replies are enabled in settings.
+			$owner_replies_enabled = isset( $bupr['enable_owner_replies'] ) ? $bupr['enable_owner_replies'] : 'yes';
+			if ( 'yes' !== $owner_replies_enabled ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Owner replies are disabled.', 'bp-member-reviews' ),
+						'code'    => 'feature_disabled',
+					)
+				);
+				return;
+			}
+
+			// Verify nonce.
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'review-nonce' ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Security verification failed.', 'bp-member-reviews' ),
+						'code'    => 'security_error',
+					)
+				);
+				return;
+			}
+
+			// Validate review ID.
+			$review_id = isset( $_POST['review_id'] ) ? absint( $_POST['review_id'] ) : 0;
+			if ( empty( $review_id ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Invalid review ID.', 'bp-member-reviews' ),
+						'code'    => 'invalid_review',
+					)
+				);
+				return;
+			}
+
+			// Get the review.
+			$review = get_post( $review_id );
+			if ( ! $review || 'review' !== $review->post_type ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Review not found.', 'bp-member-reviews' ),
+						'code'    => 'not_found',
+					)
+				);
+				return;
+			}
+
+			// Check if user is the profile owner (the member being reviewed).
+			$linked_member_id = get_post_meta( $review_id, 'linked_bp_member', true );
+			$current_user_id  = get_current_user_id();
+
+			if ( (int) $linked_member_id !== $current_user_id && ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'You do not have permission to reply to this review.', 'bp-member-reviews' ),
+						'code'    => 'permission_error',
+					)
+				);
+				return;
+			}
+
+			// Check if reply already exists.
+			$existing_reply = get_post_meta( $review_id, 'bupr_owner_reply', true );
+			if ( ! empty( $existing_reply ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'You have already replied to this review.', 'bp-member-reviews' ),
+						'code'    => 'already_replied',
+					)
+				);
+				return;
+			}
+
+			// Get and validate reply content.
+			$reply_content = isset( $_POST['reply_content'] ) ? sanitize_textarea_field( wp_unslash( $_POST['reply_content'] ) ) : '';
+			if ( empty( trim( $reply_content ) ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Reply content cannot be empty.', 'bp-member-reviews' ),
+						'code'    => 'empty_reply',
+					)
+				);
+				return;
+			}
+
+			// Save the reply.
+			update_post_meta( $review_id, 'bupr_owner_reply', $reply_content );
+			update_post_meta( $review_id, 'bupr_owner_reply_date', current_time( 'timestamp' ) );
+
+			// Get owner info for the response.
+			$owner_data = get_userdata( $current_user_id );
+			$owner_name = $owner_data ? $owner_data->display_name : __( 'Profile Owner', 'bp-member-reviews' );
+			$owner_avatar = bp_core_fetch_avatar(
+				array(
+					'item_id' => $current_user_id,
+					'object'  => 'user',
+					'html'    => false,
+				)
+			);
+
+			// Build the reply HTML.
+			$reply_html = '<div class="bupr-owner-reply">';
+			$reply_html .= '<div class="bupr-reply-header">';
+			$reply_html .= '<img src="' . esc_url( $owner_avatar ) . '" class="avatar avatar-32" alt="' . esc_attr( $owner_name ) . '" width="32" height="32">';
+			$reply_html .= '<span class="bupr-reply-author">' . esc_html( $owner_name ) . '</span>';
+			$reply_html .= '<span class="bupr-reply-badge">' . esc_html__( 'Owner Response', 'bp-member-reviews' ) . '</span>';
+			$reply_html .= '<span class="bupr-reply-date">' . esc_html( date_i18n( get_option( 'date_format' ), current_time( 'timestamp' ) ) ) . '</span>';
+			$reply_html .= '</div>';
+			$reply_html .= '<div class="bupr-reply-content">' . wp_kses_post( wpautop( $reply_content ) ) . '</div>';
+			$reply_html .= '</div>';
+
+			// Trigger notification to the reviewer.
+			$reviewer_id = $review->post_author;
+			do_action( 'bupr_owner_reply_added', $review_id, $current_user_id, $reviewer_id );
+
+			wp_send_json_success(
+				array(
+					'message'    => __( 'Reply added successfully.', 'bp-member-reviews' ),
+					'reply_html' => $reply_html,
+					'code'       => 'success',
+				)
+			);
+		}
+
+		/**
+		 * Handle flagging a review via AJAX.
+		 *
+		 * @since 3.8.0
+		 * @access public
+		 */
+		public function bupr_flag_review() {
+			global $bupr;
+
+			// Check if flagging is enabled in settings.
+			$flagging_enabled = isset( $bupr['enable_flagging'] ) ? $bupr['enable_flagging'] : 'yes';
+			if ( 'yes' !== $flagging_enabled ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Review flagging is disabled.', 'bp-member-reviews' ),
+						'code'    => 'feature_disabled',
+					)
+				);
+				return;
+			}
+
+			// Verify nonce.
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'review-nonce' ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Security verification failed.', 'bp-member-reviews' ),
+						'code'    => 'security_error',
+					)
+				);
+				return;
+			}
+
+			// Must be logged in.
+			if ( ! is_user_logged_in() ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'You must be logged in to flag a review.', 'bp-member-reviews' ),
+						'code'    => 'not_logged_in',
+					)
+				);
+				return;
+			}
+
+			// Validate review ID.
+			$review_id = isset( $_POST['review_id'] ) ? absint( $_POST['review_id'] ) : 0;
+			if ( empty( $review_id ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Invalid review ID.', 'bp-member-reviews' ),
+						'code'    => 'invalid_review',
+					)
+				);
+				return;
+			}
+
+			// Get the review.
+			$review = get_post( $review_id );
+			if ( ! $review || 'review' !== $review->post_type ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Review not found.', 'bp-member-reviews' ),
+						'code'    => 'not_found',
+					)
+				);
+				return;
+			}
+
+			// Get flag reason.
+			$flag_reason = isset( $_POST['flag_reason'] ) ? sanitize_text_field( wp_unslash( $_POST['flag_reason'] ) ) : '';
+			$valid_reasons = array(
+				'spam'        => __( 'Spam or fake review', 'bp-member-reviews' ),
+				'harassment'  => __( 'Harassment or abuse', 'bp-member-reviews' ),
+				'inappropriate' => __( 'Inappropriate content', 'bp-member-reviews' ),
+				'conflict'    => __( 'Conflict of interest', 'bp-member-reviews' ),
+			);
+
+			if ( empty( $flag_reason ) || ! array_key_exists( $flag_reason, $valid_reasons ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Please select a valid reason for flagging.', 'bp-member-reviews' ),
+						'code'    => 'invalid_reason',
+					)
+				);
+				return;
+			}
+
+			$current_user_id = get_current_user_id();
+
+			// Check if user already flagged this review.
+			$existing_flags = get_post_meta( $review_id, 'bupr_flags', true );
+			if ( ! is_array( $existing_flags ) ) {
+				$existing_flags = array();
+			}
+
+			foreach ( $existing_flags as $flag ) {
+				if ( isset( $flag['reporter_id'] ) && (int) $flag['reporter_id'] === $current_user_id ) {
+					wp_send_json_error(
+						array(
+							'message' => __( 'You have already flagged this review.', 'bp-member-reviews' ),
+							'code'    => 'already_flagged',
+						)
+					);
+					return;
+				}
+			}
+
+			// Add the flag.
+			$new_flag = array(
+				'reporter_id' => $current_user_id,
+				'reason'      => $flag_reason,
+				'reason_label' => $valid_reasons[ $flag_reason ],
+				'date'        => current_time( 'timestamp' ),
+			);
+			$existing_flags[] = $new_flag;
+
+			update_post_meta( $review_id, 'bupr_flags', $existing_flags );
+			$flag_count = count( $existing_flags );
+			update_post_meta( $review_id, 'bupr_flag_count', $flag_count );
+			update_post_meta( $review_id, 'bupr_flag_status', 'flagged' );
+
+			// Check auto-hide threshold.
+			$flag_threshold = isset( $bupr['flag_threshold'] ) ? absint( $bupr['flag_threshold'] ) : 5;
+			$auto_hidden    = false;
+			if ( $flag_threshold > 0 && $flag_count >= $flag_threshold ) {
+				// Auto-hide the review by setting it to draft.
+				wp_update_post(
+					array(
+						'ID'          => $review_id,
+						'post_status' => 'draft',
+					)
+				);
+				$auto_hidden = true;
+				update_post_meta( $review_id, 'bupr_auto_hidden', true );
+				update_post_meta( $review_id, 'bupr_auto_hidden_date', current_time( 'timestamp' ) );
+			}
+
+			// Trigger action for admin notification.
+			do_action( 'bupr_review_flagged', $review_id, $current_user_id, $flag_reason );
+
+			$message = $auto_hidden
+				? __( 'Thank you for reporting. This review has been hidden pending admin review.', 'bp-member-reviews' )
+				: __( 'Thank you for reporting. We will review this content.', 'bp-member-reviews' );
+
+			wp_send_json_success(
+				array(
+					'message'     => $message,
+					'code'        => 'success',
+					'auto_hidden' => $auto_hidden,
 				)
 			);
 		}

@@ -37,7 +37,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function __construct() {
-		
+
 			add_action( 'admin_menu', array( $this, 'bupr_add_submenu_page_admin_settings' ) );
 			add_action( 'admin_menu', array( $this, 'bupr_get_review_count' ) );
 			add_action( 'admin_init', array( $this, 'bupr_plugin_settings' ) );
@@ -52,6 +52,21 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				add_action( 'add_meta_boxes', array( $this, 'bupr_review_add_meta_box_ratings' ) );
 			}
 
+			// Flagged reviews admin columns and filters.
+			add_filter( 'manage_review_posts_columns', array( $this, 'bupr_add_flag_column' ) );
+			add_action( 'manage_review_posts_custom_column', array( $this, 'bupr_flag_column_content' ), 10, 2 );
+			add_filter( 'views_edit-review', array( $this, 'bupr_add_flagged_filter_link' ) );
+			add_action( 'pre_get_posts', array( $this, 'bupr_filter_flagged_reviews' ) );
+			add_action( 'add_meta_boxes', array( $this, 'bupr_add_flag_meta_box' ) );
+
+			// Bulk action for flagged reviews.
+			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_add_flag_bulk_actions' ) );
+			add_filter( 'handle_bulk_actions-edit-review', array( $this, 'bupr_handle_flag_bulk_actions' ), 10, 3 );
+			add_action( 'admin_notices', array( $this, 'bupr_flag_bulk_action_notice' ) );
+
+			// Admin-post handlers for flag actions.
+			add_action( 'admin_post_bupr_dismiss_flag', array( $this, 'bupr_handle_dismiss_flag' ) );
+			add_action( 'admin_post_bupr_resolve_flag', array( $this, 'bupr_handle_resolve_flag' ) );
 		}
 
 		/**
@@ -224,6 +239,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				)
 			);
 			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
+
+			// Pro Features tab.
+			$this->plugin_settings_tabs['bupr-pro-features'] = esc_html__( 'Pro Features', 'bp-member-reviews' );
+			add_settings_section( 'bupr-pro-features', ' ', array( $this, 'bupr_admin_pro_features_content' ), 'bupr-pro-features' );
 		}
 
 		public function bupr_admin_welcome_content() {
@@ -243,6 +262,16 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 		public function bupr_admin_display_content() {
 			include 'tab-templates/bupr-setting-display-tab.php';
+		}
+
+		/**
+		 * Display Pro Features tab content.
+		 *
+		 * @since 3.8.0
+		 * @access public
+		 */
+		public function bupr_admin_pro_features_content() {
+			include 'tab-templates/bupr-setting-pro-features-tab.php';
 		}
 
 		/**
@@ -545,6 +574,389 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			}
 
 			return $sanitized;
+		}
+
+		/**
+		 * Add flag column to reviews list table.
+		 *
+		 * @since 3.8.0
+		 * @param array $columns The existing columns.
+		 * @return array Modified columns.
+		 */
+		public function bupr_add_flag_column( $columns ) {
+			$new_columns = array();
+			foreach ( $columns as $key => $value ) {
+				$new_columns[ $key ] = $value;
+				if ( 'title' === $key ) {
+					$new_columns['bupr_flags'] = __( 'Flags', 'bp-member-reviews' );
+				}
+			}
+			return $new_columns;
+		}
+
+		/**
+		 * Display flag column content.
+		 *
+		 * @since 3.8.0
+		 * @param string $column  The column name.
+		 * @param int    $post_id The post ID.
+		 */
+		public function bupr_flag_column_content( $column, $post_id ) {
+			if ( 'bupr_flags' !== $column ) {
+				return;
+			}
+
+			$flag_count  = get_post_meta( $post_id, 'bupr_flag_count', true );
+			$flag_status = get_post_meta( $post_id, 'bupr_flag_status', true );
+
+			if ( empty( $flag_count ) || 0 === (int) $flag_count ) {
+				echo '—';
+				return;
+			}
+
+			$status_class = 'flagged' === $flag_status ? 'bupr-status-flagged' : '';
+			$status_label = '';
+			if ( 'resolved' === $flag_status ) {
+				$status_label = ' <span class="bupr-status-resolved">(' . esc_html__( 'Resolved', 'bp-member-reviews' ) . ')</span>';
+			} elseif ( 'dismissed' === $flag_status ) {
+				$status_label = ' <span class="bupr-status-dismissed">(' . esc_html__( 'Dismissed', 'bp-member-reviews' ) . ')</span>';
+			}
+
+			printf(
+				'<span class="bupr-flag-count %s">%d %s</span>%s',
+				esc_attr( $status_class ),
+				(int) $flag_count,
+				esc_html( _n( 'flag', 'flags', (int) $flag_count, 'bp-member-reviews' ) ),
+				$status_label
+			);
+		}
+
+		/**
+		 * Add flagged filter link to views.
+		 *
+		 * @since 3.8.0
+		 * @param array $views The existing views.
+		 * @return array Modified views.
+		 */
+		public function bupr_add_flagged_filter_link( $views ) {
+			$flagged_count = $this->bupr_get_flagged_reviews_count();
+
+			if ( $flagged_count > 0 ) {
+				$current = isset( $_GET['bupr_flagged'] ) && '1' === $_GET['bupr_flagged'] ? 'current' : '';
+				$views['flagged'] = sprintf(
+					'<a href="%s" class="%s">%s <span class="count">(%d)</span></a>',
+					esc_url( add_query_arg( array( 'post_type' => 'review', 'bupr_flagged' => '1' ), admin_url( 'edit.php' ) ) ),
+					esc_attr( $current ),
+					esc_html__( 'Flagged', 'bp-member-reviews' ),
+					(int) $flagged_count
+				);
+			}
+
+			return $views;
+		}
+
+		/**
+		 * Get count of flagged reviews.
+		 *
+		 * @since 3.8.0
+		 * @return int The count of flagged reviews.
+		 */
+		private function bupr_get_flagged_reviews_count() {
+			global $wpdb;
+			return (int) $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+					INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+					WHERE p.post_type = %s
+					AND p.post_status IN ('publish', 'draft')
+					AND pm.meta_key = 'bupr_flag_status'
+					AND pm.meta_value = 'flagged'",
+					'review'
+				)
+			);
+		}
+
+		/**
+		 * Filter reviews to show only flagged ones.
+		 *
+		 * @since 3.8.0
+		 * @param WP_Query $query The query object.
+		 */
+		public function bupr_filter_flagged_reviews( $query ) {
+			if ( ! is_admin() || ! $query->is_main_query() ) {
+				return;
+			}
+
+			$screen = get_current_screen();
+			if ( ! $screen || 'edit-review' !== $screen->id ) {
+				return;
+			}
+
+			if ( isset( $_GET['bupr_flagged'] ) && '1' === $_GET['bupr_flagged'] ) {
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key'     => 'bupr_flag_status',
+							'value'   => 'flagged',
+							'compare' => '=',
+						),
+					)
+				);
+			}
+		}
+
+		/**
+		 * Add meta box for flag details.
+		 *
+		 * @since 3.8.0
+		 */
+		public function bupr_add_flag_meta_box() {
+			add_meta_box(
+				'bupr_flag_details',
+				__( 'Flag Reports', 'bp-member-reviews' ),
+				array( $this, 'bupr_render_flag_meta_box' ),
+				'review',
+				'side',
+				'default'
+			);
+		}
+
+		/**
+		 * Render the flag meta box content.
+		 *
+		 * @since 3.8.0
+		 */
+		public function bupr_render_flag_meta_box() {
+			global $post;
+
+			$flags       = get_post_meta( $post->ID, 'bupr_flags', true );
+			$flag_status = get_post_meta( $post->ID, 'bupr_flag_status', true );
+
+			if ( empty( $flags ) || ! is_array( $flags ) ) {
+				echo '<p>' . esc_html__( 'No flags reported for this review.', 'bp-member-reviews' ) . '</p>';
+				return;
+			}
+
+			echo '<div class="bupr-flag-reports">';
+			echo '<p><strong>' . esc_html__( 'Status:', 'bp-member-reviews' ) . '</strong> ';
+			switch ( $flag_status ) {
+				case 'flagged':
+					echo '<span style="color: #d63638;">' . esc_html__( 'Pending Review', 'bp-member-reviews' ) . '</span>';
+					break;
+				case 'resolved':
+					echo '<span style="color: #00a32a;">' . esc_html__( 'Resolved', 'bp-member-reviews' ) . '</span>';
+					break;
+				case 'dismissed':
+					echo '<span style="color: #787c82;">' . esc_html__( 'Dismissed', 'bp-member-reviews' ) . '</span>';
+					break;
+				default:
+					echo esc_html__( 'None', 'bp-member-reviews' );
+			}
+			echo '</p>';
+
+			echo '<p><strong>' . esc_html__( 'Total Flags:', 'bp-member-reviews' ) . '</strong> ' . count( $flags ) . '</p>';
+
+			echo '<ul style="margin-left: 15px;">';
+			foreach ( $flags as $flag ) {
+				$reporter = get_userdata( $flag['reporter_id'] );
+				$reporter_name = $reporter ? $reporter->display_name : __( 'Unknown', 'bp-member-reviews' );
+				$date = isset( $flag['date'] ) ? date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $flag['date'] ) : '';
+
+				echo '<li style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #ddd;">';
+				echo '<strong>' . esc_html( $flag['reason_label'] ) . '</strong><br>';
+				echo '<small>' . esc_html__( 'By:', 'bp-member-reviews' ) . ' ' . esc_html( $reporter_name ) . '</small>';
+				if ( $date ) {
+					echo '<br><small>' . esc_html( $date ) . '</small>';
+				}
+				echo '</li>';
+			}
+			echo '</ul>';
+
+			if ( 'flagged' === $flag_status ) {
+				echo '<div style="margin-top: 15px;">';
+				$dismiss_url = wp_nonce_url(
+					add_query_arg(
+						array(
+							'action'    => 'bupr_dismiss_flag',
+							'review_id' => $post->ID,
+						),
+						admin_url( 'admin-post.php' )
+					),
+					'bupr_dismiss_flag_' . $post->ID
+				);
+				$resolve_url = wp_nonce_url(
+					add_query_arg(
+						array(
+							'action'    => 'bupr_resolve_flag',
+							'review_id' => $post->ID,
+						),
+						admin_url( 'admin-post.php' )
+					),
+					'bupr_resolve_flag_' . $post->ID
+				);
+				echo '<a href="' . esc_url( $dismiss_url ) . '" class="button">' . esc_html__( 'Dismiss Flags', 'bp-member-reviews' ) . '</a> ';
+				echo '<a href="' . esc_url( $resolve_url ) . '" class="button button-primary">' . esc_html__( 'Mark Resolved', 'bp-member-reviews' ) . '</a>';
+				echo '</div>';
+			}
+
+			echo '</div>';
+		}
+
+		/**
+		 * Add bulk actions for flagged reviews.
+		 *
+		 * @since 3.8.0
+		 * @param array $actions Existing bulk actions.
+		 * @return array Modified bulk actions.
+		 */
+		public function bupr_add_flag_bulk_actions( $actions ) {
+			$actions['bupr_dismiss_flags'] = __( 'Dismiss Flags', 'bp-member-reviews' );
+			$actions['bupr_resolve_flags'] = __( 'Resolve Flags', 'bp-member-reviews' );
+			return $actions;
+		}
+
+		/**
+		 * Handle bulk actions for flagged reviews.
+		 *
+		 * @since 3.8.0
+		 * @param string $redirect_to The redirect URL.
+		 * @param string $doaction    The action being taken.
+		 * @param array  $post_ids    The posts IDs.
+		 * @return string Modified redirect URL.
+		 */
+		public function bupr_handle_flag_bulk_actions( $redirect_to, $doaction, $post_ids ) {
+			if ( 'bupr_dismiss_flags' !== $doaction && 'bupr_resolve_flags' !== $doaction ) {
+				return $redirect_to;
+			}
+
+			$new_status = 'bupr_dismiss_flags' === $doaction ? 'dismissed' : 'resolved';
+			$updated    = 0;
+
+			foreach ( $post_ids as $post_id ) {
+				$current_status = get_post_meta( $post_id, 'bupr_flag_status', true );
+				if ( 'flagged' === $current_status ) {
+					update_post_meta( $post_id, 'bupr_flag_status', $new_status );
+					$updated++;
+				}
+			}
+
+			return add_query_arg( 'bupr_flags_updated', $updated, $redirect_to );
+		}
+
+		/**
+		 * Display admin notice for bulk action result.
+		 *
+		 * @since 3.8.0
+		 */
+		public function bupr_flag_bulk_action_notice() {
+			if ( ! empty( $_GET['bupr_flags_updated'] ) ) {
+				$count = (int) $_GET['bupr_flags_updated'];
+				printf(
+					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+					sprintf(
+						/* translators: %d: Number of reviews updated */
+						esc_html( _n( '%d review flag status updated.', '%d reviews flag statuses updated.', $count, 'bp-member-reviews' ) ),
+						$count
+					)
+				);
+			}
+
+			// Flag dismissed notice.
+			if ( ! empty( $_GET['bupr_flag_dismissed'] ) ) {
+				printf(
+					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+					esc_html__( 'Review flags have been dismissed.', 'bp-member-reviews' )
+				);
+			}
+
+			// Flag resolved notice.
+			if ( ! empty( $_GET['bupr_flag_resolved'] ) ) {
+				printf(
+					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+					esc_html__( 'Review flags have been marked as resolved.', 'bp-member-reviews' )
+				);
+			}
+		}
+
+		/**
+		 * Handle dismiss flag action from admin-post.
+		 *
+		 * @since 3.8.0
+		 */
+		public function bupr_handle_dismiss_flag() {
+			// Verify nonce.
+			$review_id = isset( $_GET['review_id'] ) ? absint( $_GET['review_id'] ) : 0;
+			if ( ! $review_id || ! wp_verify_nonce( $_GET['_wpnonce'], 'bupr_dismiss_flag_' . $review_id ) ) {
+				wp_die( esc_html__( 'Security check failed.', 'bp-member-reviews' ) );
+			}
+
+			// Check user capabilities.
+			if ( ! current_user_can( 'edit_post', $review_id ) ) {
+				wp_die( esc_html__( 'You do not have permission to perform this action.', 'bp-member-reviews' ) );
+			}
+
+			// Verify the post exists and is a review.
+			$review = get_post( $review_id );
+			if ( ! $review || 'review' !== $review->post_type ) {
+				wp_die( esc_html__( 'Invalid review.', 'bp-member-reviews' ) );
+			}
+
+			// Update flag status to dismissed.
+			update_post_meta( $review_id, 'bupr_flag_status', 'dismissed' );
+
+			// Redirect back to the review edit page.
+			$redirect_url = add_query_arg(
+				array(
+					'post'                => $review_id,
+					'action'              => 'edit',
+					'bupr_flag_dismissed' => 1,
+				),
+				admin_url( 'post.php' )
+			);
+
+			wp_safe_redirect( $redirect_url );
+			exit;
+		}
+
+		/**
+		 * Handle resolve flag action from admin-post.
+		 *
+		 * @since 3.8.0
+		 */
+		public function bupr_handle_resolve_flag() {
+			// Verify nonce.
+			$review_id = isset( $_GET['review_id'] ) ? absint( $_GET['review_id'] ) : 0;
+			if ( ! $review_id || ! wp_verify_nonce( $_GET['_wpnonce'], 'bupr_resolve_flag_' . $review_id ) ) {
+				wp_die( esc_html__( 'Security check failed.', 'bp-member-reviews' ) );
+			}
+
+			// Check user capabilities.
+			if ( ! current_user_can( 'edit_post', $review_id ) ) {
+				wp_die( esc_html__( 'You do not have permission to perform this action.', 'bp-member-reviews' ) );
+			}
+
+			// Verify the post exists and is a review.
+			$review = get_post( $review_id );
+			if ( ! $review || 'review' !== $review->post_type ) {
+				wp_die( esc_html__( 'Invalid review.', 'bp-member-reviews' ) );
+			}
+
+			// Update flag status to resolved.
+			update_post_meta( $review_id, 'bupr_flag_status', 'resolved' );
+
+			// Redirect back to the review edit page.
+			$redirect_url = add_query_arg(
+				array(
+					'post'               => $review_id,
+					'action'             => 'edit',
+					'bupr_flag_resolved' => 1,
+				),
+				admin_url( 'post.php' )
+			);
+
+			wp_safe_redirect( $redirect_url );
+			exit;
 		}
 
 	}

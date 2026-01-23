@@ -75,6 +75,11 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			$review_email_subject    = $bupr_general_settings['review_email_subject'] ?? esc_html__('You have received a new review!', 'bp-member-reviews');
 			$review_email_message    = $bupr_general_settings['review_email_message'] ?? esc_html__('A new review has been submitted on your profile. Log in to see the details.', 'bp-member-reviews');
 
+			// New features settings.
+			$enable_owner_replies    = $bupr_general_settings['bupr_enable_owner_replies'] ?? 'yes';  // Default to 'yes'
+			$enable_flagging         = $bupr_general_settings['bupr_enable_flagging'] ?? 'yes';       // Default to 'yes'
+			$flag_threshold          = $bupr_general_settings['bupr_flag_threshold'] ?? 5;            // Default to 5
+
 			/**
 			 * Global variables for display settings.
 			 */
@@ -108,7 +113,21 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'multi_criteria_allowed' => $bupr_multi_criteria_allowed,
 				'active_rating_fields'   => $active_rating_fields,
 				'review_activity'        => $review_activity,
+				// New features.
+				'enable_owner_replies'   => $enable_owner_replies,
+				'enable_flagging'        => $enable_flagging,
+				'flag_threshold'         => $flag_threshold,
 			);
+
+			/**
+			 * Filter the global settings array.
+			 *
+			 * Allows addons to modify settings like active_rating_fields for different review modes.
+			 *
+			 * @since 3.7.0
+			 * @param array $bupr Global settings array.
+			 */
+			$bupr = apply_filters( 'bupr_global_settings', $bupr );
 		}
 	}
 

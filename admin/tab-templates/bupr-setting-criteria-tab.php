@@ -17,6 +17,24 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 }
 ?>
 <div class="wbcom-tab-content">
+	<?php
+	/**
+	 * Action hook for Pro addon to render enhanced criteria builder.
+	 *
+	 * If Pro addon renders content here, the base form is skipped.
+	 *
+	 * @since 3.7.0
+	 */
+	ob_start();
+	do_action( 'bupr_admin_settings_criteria_content' );
+	$pro_content = ob_get_clean();
+
+	if ( ! empty( trim( $pro_content ) ) ) {
+		// Pro addon provided enhanced criteria builder - use it.
+		echo $pro_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	} else {
+		// Default base plugin criteria form.
+		?>
 	<form method="post" action="options.php">
 		<?php
 		settings_fields( 'bupr_admin_settings' );
@@ -86,6 +104,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 				</div>
 			</div>
 			<?php submit_button(); ?>
-		</div>	
+		</div>
 	</form>
+	<?php } // End else base form. ?>
 </div>

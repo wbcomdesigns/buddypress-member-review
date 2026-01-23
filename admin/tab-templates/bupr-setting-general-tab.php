@@ -358,6 +358,53 @@ $user_roles = array_reverse( get_editable_roles() );
 							</label>
 						</div>
 					</div>
+
+					<!-- Owner Replies Section -->
+					<div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
+							<label for="bupr_enable_owner_replies">
+								<?php esc_html_e( 'Enable owner replies', 'bp-member-reviews' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Allow profile owners to respond once to each review they receive.', 'bp-member-reviews' ); ?></p>
+						</div>
+						<div class="wbcom-settings-section-options">
+							<label class="bupr-switch">
+								<input type="hidden" name="bupr_admin_general_options[bupr_enable_owner_replies]" value="no">
+								<input type="checkbox" id="bupr_enable_owner_replies" value="yes" name="bupr_admin_general_options[bupr_enable_owner_replies]" <?php checked( isset( $bupr['enable_owner_replies'] ) ? esc_attr( $bupr['enable_owner_replies'] ) : 'yes', 'yes' ); ?>>
+								<div class="bupr-slider bupr-round"></div>
+							</label>
+						</div>
+					</div>
+
+					<!-- Flagging Section -->
+					<div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
+							<label for="bupr_enable_flagging">
+								<?php esc_html_e( 'Enable review flagging', 'bp-member-reviews' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Allow users to report inappropriate reviews for admin moderation.', 'bp-member-reviews' ); ?></p>
+						</div>
+						<div class="wbcom-settings-section-options">
+							<label class="bupr-switch">
+								<input type="hidden" name="bupr_admin_general_options[bupr_enable_flagging]" value="no">
+								<input type="checkbox" id="bupr_enable_flagging" value="yes" name="bupr_admin_general_options[bupr_enable_flagging]" <?php checked( isset( $bupr['enable_flagging'] ) ? esc_attr( $bupr['enable_flagging'] ) : 'yes', 'yes' ); ?>>
+								<div class="bupr-slider bupr-round"></div>
+							</label>
+						</div>
+					</div>
+
+					<div class="wbcom-settings-section-wrap">
+						<div class="wbcom-settings-section-options-heading">
+							<label for="bupr_flag_threshold">
+								<?php esc_html_e( 'Auto-hide flag threshold', 'bp-member-reviews' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Automatically hide reviews after this many flags. Set to 0 to disable auto-hide.', 'bp-member-reviews' ); ?></p>
+						</div>
+						<div class="wbcom-settings-section-options">
+							<input id="bupr_flag_threshold" class="small-text" name="bupr_admin_general_options[bupr_flag_threshold]" step="1" min="0" value="<?php echo esc_attr( isset( $bupr['flag_threshold'] ) ? $bupr['flag_threshold'] : 5 ); ?>" type="number">
+							<?php esc_html_e( 'Flags', 'bp-member-reviews' ); ?>
+						</div>
+					</div>
 				</div>
 				<?php submit_button(); ?>
 			</form>

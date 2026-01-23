@@ -192,6 +192,7 @@ jQuery(document).ready(function () {
             bupr_review_rating: bupr_review_rating,
             bupr_field_counter: bupr_review_count,
             bupr_anonymous_review: bupr_anonymous_review,
+            nonce: mail_title.review_nonce,
           },
           function (response) {
             jQuery(".bupr-save-reivew-spinner").hide();
@@ -397,4 +398,146 @@ jQuery(function () {
     jQuery("#review_subject").val("");
     jQuery("#review_desc").val("");
   }
+});
+
+/*----------------------------------------
+ * Owner Reply Functionality
+ *-----------------------------------------*/
+
+// Show reply form
+jQuery(document).on("click", ".bupr-show-reply-form", function (e) {
+  e.preventDefault();
+  var wrapper = jQuery(this).closest(".bupr-reply-form-wrapper");
+  jQuery(this).hide();
+  wrapper.find(".bupr-reply-form").slideDown();
+});
+
+// Cancel reply
+jQuery(document).on("click", ".bupr-cancel-reply", function (e) {
+  e.preventDefault();
+  var wrapper = jQuery(this).closest(".bupr-reply-form-wrapper");
+  wrapper.find(".bupr-reply-form").slideUp(function () {
+    wrapper.find(".bupr-show-reply-form").show();
+    wrapper.find(".bupr-reply-textarea").val("");
+  });
+});
+
+// Submit reply
+jQuery(document).on("click", ".bupr-submit-reply", function (e) {
+  e.preventDefault();
+  var button = jQuery(this);
+  var wrapper = button.closest(".bupr-reply-form-wrapper");
+  var replySection = button.closest(".bupr-reply-section");
+  var reviewId = button.data("review");
+  var replyContent = wrapper.find(".bupr-reply-textarea").val().trim();
+
+  if (!replyContent) {
+    alert(mail_title.reply_empty || "Please enter a reply.");
+    return;
+  }
+
+  button.prop("disabled", true);
+  wrapper.find(".bupr-reply-spinner").show();
+
+  jQuery.post(
+    ajaxurl,
+    {
+      action: "bupr_add_owner_reply",
+      review_id: reviewId,
+      reply_content: replyContent,
+      nonce: mail_title.review_nonce,
+    },
+    function (response) {
+      button.prop("disabled", false);
+      wrapper.find(".bupr-reply-spinner").hide();
+
+      if (response.success) {
+        // Replace the form with the reply
+        wrapper.remove();
+        replySection.html(response.data.reply_html);
+      } else {
+        alert(response.data.message || "Failed to add reply.");
+      }
+    }
+  ).fail(function () {
+    button.prop("disabled", false);
+    wrapper.find(".bupr-reply-spinner").hide();
+    alert("An error occurred. Please try again.");
+  });
+});
+
+/*----------------------------------------
+ * Flag Review Functionality
+ *-----------------------------------------*/
+
+// Open flag modal
+jQuery(document).on("click", ".bupr-flag-button", function (e) {
+  e.preventDefault();
+  var reviewId = jQuery(this).data("review");
+  jQuery("#bupr-flag-review-id").val(reviewId);
+  jQuery('input[name="bupr_flag_reason"]').prop("checked", false);
+  jQuery(".bupr-flag-error").hide().text("");
+  jQuery(".bupr-flag-modal").fadeIn();
+});
+
+// Close flag modal
+jQuery(document).on(
+  "click",
+  ".bupr-flag-modal-close, .bupr-flag-cancel",
+  function (e) {
+    e.preventDefault();
+    jQuery(".bupr-flag-modal").fadeOut();
+  }
+);
+
+// Close modal on outside click
+jQuery(document).on("click", ".bupr-flag-modal", function (e) {
+  if (jQuery(e.target).hasClass("bupr-flag-modal")) {
+    jQuery(".bupr-flag-modal").fadeOut();
+  }
+});
+
+// Submit flag
+jQuery(document).on("click", ".bupr-flag-submit", function (e) {
+  e.preventDefault();
+  var reviewId = jQuery("#bupr-flag-review-id").val();
+  var flagReason = jQuery('input[name="bupr_flag_reason"]:checked').val();
+
+  if (!flagReason) {
+    jQuery(".bupr-flag-error")
+      .text(mail_title.flag_select_reason || "Please select a reason.")
+      .show();
+    return;
+  }
+
+  jQuery(".bupr-flag-submit").prop("disabled", true);
+  jQuery(".bupr-flag-spinner").show();
+
+  jQuery.post(
+    ajaxurl,
+    {
+      action: "bupr_flag_review",
+      review_id: reviewId,
+      flag_reason: flagReason,
+      nonce: mail_title.review_nonce,
+    },
+    function (response) {
+      jQuery(".bupr-flag-submit").prop("disabled", false);
+      jQuery(".bupr-flag-spinner").hide();
+
+      if (response.success) {
+        jQuery(".bupr-flag-modal").fadeOut();
+        // Optionally show success message
+        alert(response.data.message);
+        // Hide the flag button for this review
+        jQuery('.bupr-flag-button[data-review="' + reviewId + '"]').hide();
+      } else {
+        jQuery(".bupr-flag-error").text(response.data.message).show();
+      }
+    }
+  ).fail(function () {
+    jQuery(".bupr-flag-submit").prop("disabled", false);
+    jQuery(".bupr-flag-spinner").hide();
+    jQuery(".bupr-flag-error").text("An error occurred. Please try again.").show();
+  });
 });

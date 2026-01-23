@@ -119,10 +119,13 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					$custom_css = ".bupr-star-rate { color: {$bupr_star_color} !important; }";
 					wp_add_inline_style( 'bupr-front-css', $custom_css );
 				}
+
+				// Enqueue dashicons for flag button.
+				wp_enqueue_style( 'dashicons' );
 			}
 		}
 
-		
+
 		/**
 		 * Actions performed for enqueuing scripts for site front
 		 *

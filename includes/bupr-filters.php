@@ -568,6 +568,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! bp_is_user() ) {
 				return;
 			}
+
+			// Check if rating display is enabled (can be disabled by Testimonial mode).
+			if ( isset( $bupr['dir_view_ratings'] ) && 'yes' !== $bupr['dir_view_ratings'] ) {
+				return;
+			}
+
 			$user_id = bp_displayed_user_id();
 
 					// Get cached rating data
