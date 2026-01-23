@@ -1,0 +1,7 @@
+# Shortcodes Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 2
+
+[x] bupr_display_top_members | includes/bupr-shortcodes.php:30 | status:documented
+[x] wbcom_admin_setting_header | admin/wbcom/wbcom-admin-settings.php:28 | status:documented

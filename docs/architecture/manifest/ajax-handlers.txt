@@ -1,0 +1,10 @@
+# AJAX Handlers Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 5
+
+[x] bupr_approve_review | includes/bupr-ajax.php:37 | status:documented
+[x] allow_bupr_member_review_update | includes/bupr-ajax.php:40 | status:documented
+[x] bupr_edit_review | includes/bupr-ajax.php:46 | status:documented
+[x] bupr_update_review | includes/bupr-ajax.php:47 | status:documented
+[x] wbcom_addons_cards | admin/wbcom/wbcom-admin-settings.php:32 | status:documented

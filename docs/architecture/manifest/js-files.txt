@@ -1,0 +1,10 @@
+# JavaScript Files Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 5
+
+[x] bupr-front.js | assets/js/bupr-front.js | status:documented
+[x] bupr-admin.js | admin/assets/js/bupr-admin.js | status:documented
+[x] bupr-color-picker.js | admin/assets/js/bupr-color-picker.js | status:documented
+[x] wbcom-admin-setting.js | admin/wbcom/assets/js/wbcom-admin-setting.js | status:documented
+[x] gruntfile.js | gruntfile.js | status:documented

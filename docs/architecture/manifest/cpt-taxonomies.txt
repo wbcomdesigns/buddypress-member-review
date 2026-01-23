@@ -1,0 +1,7 @@
+# CPT & Taxonomies Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 2
+
+[x] review (CPT) | admin/bupr-admin.php:353 | status:documented
+[x] review_category (taxonomy) | admin/bupr-admin.php:441 | status:documented

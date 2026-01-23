@@ -1,0 +1,10 @@
+# Admin Pages Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 5
+
+[x] WB Plugins (menu) | admin/bupr-admin.php:178 | status:documented
+[x] General (submenu) | admin/bupr-admin.php:179 | status:documented
+[x] Member Reviews | admin/bupr-admin.php:181 | status:documented
+[x] Support (submenu) | admin/wbcom/wbcom-admin-settings.php:289 | status:documented
+[x] License (submenu) | admin/wbcom/wbcom-admin-settings.php:297 | status:documented

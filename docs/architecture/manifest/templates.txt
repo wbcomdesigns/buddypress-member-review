@@ -1,0 +1,11 @@
+# Templates Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 6
+
+[x] bupr-edit-review-form.php | includes/templates/bupr-edit-review-form.php | status:documented
+[x] bupr-single-review-template.php | includes/templates/bupr-single-review-template.php | status:documented
+[x] bupr-reviews-tab-template.php | includes/templates/bupr-reviews-tab-template.php | status:documented
+[x] wbcom-support-page.php | admin/wbcom/templates/wbcom-support-page.php | status:documented
+[x] wbcom-license-page.php | admin/wbcom/templates/wbcom-license-page.php | status:documented
+[x] wbcom-plugins-page.php | admin/wbcom/templates/wbcom-plugins-page.php | status:documented

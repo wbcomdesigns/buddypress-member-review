@@ -1,0 +1,7 @@
+# Widgets Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 2
+
+[x] bupr_members_review_setting | includes/widgets/display-review.php:19 | status:documented
+[x] bupr_single_member_rating_widget | includes/widgets/member-rating.php:19 | status:documented

@@ -1,0 +1,53 @@
+# Hooks Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 45
+
+## Action Hooks (10)
+[x] bupr_member_review_after_review_insert | action | status:documented
+[x] bupr_recalculation_completed | action | status:documented
+[x] bupr_sent_review_notification | action | status:documented
+[x] bupr_after_member_review_list | action | status:documented
+[x] bupr_before_member_review_list | action | status:documented
+[x] bupr_member_review_form | action | status:documented
+[x] gamipress_bp_member_review | action | status:documented
+[x] wbcom_add_header_menu | action | status:documented
+[x] wbcom_add_plugin_license_code | action | status:documented
+[x] bupr_unschedule_review_recalculation | action | status:documented
+
+## Filter Hooks (35)
+[x] bp_core_template_plugin | filter | status:documented
+[x] bupr_add_review_notification_format | filter | status:documented
+[x] bupr_allow_activity_posting | filter | status:documented
+[x] bupr_change_avatar_image | filter | status:documented
+[x] bupr_change_default_avatar | filter | status:documented
+[x] bupr_change_user_link | filter | status:documented
+[x] bupr_default_avatar_size | filter | status:documented
+[x] bupr_default_subnav_slug | filter | status:documented
+[x] bupr_display_top_members_shortcode_atts | filter | status:documented
+[x] bupr_hide_username_in_activity | filter | status:documented
+[x] bupr_locate_template | filter | status:documented
+[x] bupr_member_list | filter | status:documented
+[x] bupr_member_query_args | filter | status:documented
+[x] bupr_member_review_activity_action | filter | status:documented
+[x] bupr_profile_review_singular_tab_name | filter | status:documented
+[x] bupr_review_tab_name | filter | status:documented
+[x] bupr_review_tab_plural_slug | filter | status:documented
+[x] bupr_review_tab_singular_slug | filter | status:documented
+[x] bupr_shortcode_aggregate_rating | filter | status:documented
+[x] bupr_shortcode_avatar_display | filter | status:documented
+[x] bupr_shortcode_avatar | filter | status:documented
+[x] bupr_shortcode_member_id | filter | status:documented
+[x] bupr_shortcode_member_limit | filter | status:documented
+[x] bupr_shortcode_meta_key | filter | status:documented
+[x] bupr_shortcode_no_members_text | filter | status:documented
+[x] bupr_shortcode_output | filter | status:documented
+[x] bupr_shortcode_query_results | filter | status:documented
+[x] bupr_shortcode_rating_text | filter | status:documented
+[x] bupr_shortcode_review_count | filter | status:documented
+[x] bupr_shortcode_star_empty | filter | status:documented
+[x] bupr_shortcode_star_full | filter | status:documented
+[x] bupr_shortcode_star_half | filter | status:documented
+[x] bupr_shortcode_title | filter | status:documented
+[x] bupr_shortcode_type | filter | status:documented
+[x] bupr_show_profile_review_tab | filter | status:documented

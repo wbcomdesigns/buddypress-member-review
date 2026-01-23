@@ -1,0 +1,40 @@
+# Functions Manifest
+# Generated: 2026-01-23
+# Source: buddypress-member-review
+# Total: 35
+
+[x] bupr_locate_template | includes/bupr-general-functions.php:29 | status:documented
+[x] bupr_get_template | includes/bupr-general-functions.php:79 | status:documented
+[x] bupr_profile_review_singular_tab_name | includes/bupr-general-functions.php:111 | status:documented
+[x] bupr_profile_review_tab_name | includes/bupr-general-functions.php:124 | status:documented
+[x] bupr_profile_review_tab_plural_slug | includes/bupr-general-functions.php:137 | status:documented
+[x] bupr_profile_review_tab_singular_slug | includes/bupr-general-functions.php:150 | status:documented
+[x] bupr_bp_activity_triggers | includes/bupr-general-functions.php:164 | status:documented
+[x] bupr_trigger_get_user_id | includes/bupr-general-functions.php:181 | status:documented
+[x] bupr_handle_review_submission | includes/bupr-general-functions.php:201 | status:documented
+[x] bupr_recalculate_user_reviews_for_user | includes/bupr-general-functions.php:220 | status:documented
+[x] bupr_recalculate_user_reviews_batch | includes/bupr-general-functions.php:298 | status:documented
+[x] bupr_schedule_review_recalculation | includes/bupr-general-functions.php:329 | status:documented
+[x] bupr_cron_recalculate_user_reviews_batch | includes/bupr-general-functions.php:339 | status:documented
+[x] bupr_youzify_activity_action_wall_posts | includes/bupr-general-functions.php:362 | status:documented
+[x] bupr_bp_classic_activate | includes/bupr-general-functions.php:371 | status:documented
+[x] bupr_clear_review_caches | includes/bupr-general-functions.php:384 | status:documented
+[x] bupr_default_review_view_slug | includes/bupr-general-functions.php:429 | status:documented
+[x] bupr_members_review_widget | includes/widgets/display-review.php:15 | status:documented
+[x] bupr_member_rating_widget | includes/widgets/member-rating.php:15 | status:documented
+[x] bupr_filter_notifications_get_registered_components | includes/bupr-notification.php:14 | status:documented
+[x] bupr_add_review_notification_format | includes/bupr-notification.php:43 | status:documented
+[x] bupr_buddypress_add_notification | includes/bupr-notification.php:135 | status:documented
+[x] bupr_buddypress_notification_marked_as_read | includes/bupr-notification.php:169 | status:documented
+[x] bupr_check_buddypress_compatibility | buddypress-member-review.php:47 | status:documented
+[x] bupr_outdated_buddypress_notice | buddypress-member-review.php:82 | status:documented
+[x] bupr_outdated_buddyboss_notice | buddypress-member-review.php:95 | status:documented
+[x] bupr_inactive_members_component_notice | buddypress-member-review.php:109 | status:documented
+[x] bupr_is_plugin_active | buddypress-member-review.php:123 | status:documented
+[x] bupr_plugin_activation | buddypress-member-review.php:142 | status:documented
+[x] bupr_admin_page_link | buddypress-member-review.php:232 | status:documented
+[x] bupr_show_admin_notice | buddypress-member-review.php:284 | status:documented
+[x] bupr_required_plugin_admin_notice | buddypress-member-review.php:294 | status:documented
+[x] bupr_activation_redirect_settings | buddypress-member-review.php:311 | status:documented
+[x] bupr_do_activation_redirect | buddypress-member-review.php:322 | status:documented
+[x] bupr_site_url | buddypress-member-review.php:337 | status:documented
