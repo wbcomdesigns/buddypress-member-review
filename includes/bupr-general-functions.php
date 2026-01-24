@@ -279,6 +279,18 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
 		// Calculate the aggregate rating (protected against division by zero).
 		$aggregate_rating = $rated_reviews_count > 0 ? $total_rating / $rated_reviews_count : 0;
 
+		/**
+		 * Filter the aggregate rating before saving.
+		 * Used by Pro addon to apply weighted averages for flexible criteria.
+		 *
+		 * @since 3.8.0
+		 * @param float $aggregate_rating    The calculated aggregate rating.
+		 * @param int   $user_id             The user ID being recalculated.
+		 * @param array $review_ids          Array of review post IDs.
+		 * @param int   $rated_reviews_count Number of reviews with ratings.
+		 */
+		$aggregate_rating = apply_filters( 'bupr_aggregate_rating', $aggregate_rating, $user_id, $review_ids, $rated_reviews_count );
+
 		// Update user meta with the calculated review count and aggregate rating
 		update_user_meta( $user_id, 'bupr_review_count', $review_count );
 		update_user_meta( $user_id, 'bupr_aggregate_rating', $aggregate_rating );

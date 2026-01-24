@@ -148,6 +148,16 @@ if ( ! empty( $review_id ) ) {
 						?>
 						<div class="bupr-col-12 description"><?php echo wp_kses( $bupr_post_content, $allowedposttags ); ?></div>
 						<?php
+						/**
+						 * Fires after review content is displayed.
+						 * Used by Pro addon to display custom criteria (thumbs/text).
+						 *
+						 * @since 3.8.0
+						 * @param int $review_id The review post ID.
+						 */
+						do_action( 'bupr_after_review_content', $review_id );
+						?>
+						<?php
 						// $bupr_rating_criteria = array();
 						// if ( ! empty( $bupr['active_rating_fields'] ) ) {
 						// foreach ( $bupr['active_rating_fields'] as $bupr_keys => $bupr_fields ) {

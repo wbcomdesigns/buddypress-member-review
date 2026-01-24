@@ -263,6 +263,15 @@ $reviews = new WP_Query( $args );
 												}
 											}
 										}
+
+										/**
+										 * Fires after review content is displayed in the list.
+										 * Used by Pro addon to display custom criteria (thumbs/text).
+										 *
+										 * @since 3.8.0
+										 * @param int $review_id The review post ID.
+										 */
+										do_action( 'bupr_after_review_content', get_the_ID() );
 										?>
 									</div>
 								</div>
