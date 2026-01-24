@@ -112,21 +112,30 @@ $reviews = new WP_Query( $args );
 									<h4>
 										<?php
 										if ( 'yes' === $anonymous_post_review ) {
-											esc_html_e( 'anonymous', 'bp-member-reviews' );
+											$reviewer_name_html = esc_html__( 'anonymous', 'bp-member-reviews' );
 										} else {
-											echo wp_kses( bp_core_get_userlink( $author ), $allowedtags );
+											$reviewer_name_html = wp_kses( bp_core_get_userlink( $author ), $allowedtags );
 										}
+										/**
+										 * Filter the reviewer name HTML.
+										 * Used by Pro addon to add verified badges.
+										 *
+										 * @since 3.8.0
+										 * @param string $reviewer_name_html The reviewer name HTML.
+										 * @param int    $review_id          The review post ID.
+										 */
+										echo apply_filters( 'bupr_reviewer_name_html', $reviewer_name_html, get_the_ID() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										?>
 									</h4>
 								</div>
 							</div>
 
 							<div class="bupr-members-content">
+								<div class="rating-sec">
 								<?php
-
-								if ( ! empty( $member_review_ratings ) ) {
+								// Only show star ratings if there are active rating fields and ratings exist.
+								if ( ! empty( $member_review_ratings ) && ! empty( $bupr['active_rating_fields'] ) ) {
 									$member_review_ratings_new = array();
-									echo "<div class='rating-sec'>";
 									foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
 										if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
 											$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
@@ -156,31 +165,24 @@ $reviews = new WP_Query( $args );
 										}
 									} else {
 										foreach ( $member_review_ratings as $member_review_rating ) {
-											
-											if( 0 == $member_review_rating[0] ) {
+
+											if ( 0 == $member_review_rating[0] ) {
 												continue;
 											}
-																				
+
 											if ( isset( $member_review_rating[0] ) && $member_review_rating[0] !== null ) {
 												echo '<span class="rating-num">' . esc_html( number_format( $member_review_rating[0], 2 ) ) . '</span>';
 											}
 										}
 									}
 								}
-
 								?>
 								<span class="posted-on list">
-										<time class="entry-date published updated">
-											<?php
-											  $review_date = date_i18n( 'M Y', strtotime( $reviews->post->post_date ) );
-											echo sprintf(
-												/* translators: 1: User registered date. */
-												esc_html( $review_date )
-											);
-											?>
-										</time>
+									<time class="entry-date published updated">
+										<?php echo esc_html( date_i18n( 'M Y', strtotime( $reviews->post->post_date ) ) ); ?>
+									</time>
 								</span>
-								<?php echo '</div>'; ?>
+								</div>
 								<?php
 								$user_id = bp_displayed_user_id();
 								$url     = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/' . bupr_default_review_view_slug() . '/' . get_the_id();

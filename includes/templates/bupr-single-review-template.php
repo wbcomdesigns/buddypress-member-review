@@ -89,7 +89,17 @@ if ( ! empty( $review_id ) ) {
 							<img src="<?php echo esc_url( $avatar ); ?>" class="avatar user-<?php echo esc_attr( $author ); ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo esc_attr( $review_author ); ?>" width="50" height="50">
 							<div class="reviewer">
 								<h4>
-									<?php echo wp_kses( $member_profile, $allowedtags ); ?>
+									<?php
+									/**
+									 * Filter the reviewer name HTML.
+									 * Used by Pro addon to add verified badges.
+									 *
+									 * @since 3.8.0
+									 * @param string $member_profile The reviewer name HTML.
+									 * @param int    $review_id      The review post ID.
+									 */
+									echo apply_filters( 'bupr_reviewer_name_html', wp_kses( $member_profile, $allowedtags ), $review_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									?>
 								</h4>
 							</div>
 						</div>

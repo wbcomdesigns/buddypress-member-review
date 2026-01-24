@@ -310,6 +310,16 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					update_post_meta( $review_id, 'profile_star_rating', $bupr_rated_stars );
 				}
 
+				/**
+				 * Hook to save additional review data.
+				 * Used by Pro addon for flexible criteria (thumbs, text fields).
+				 *
+				 * @since 3.8.0
+				 * @param int   $review_id     The review post ID.
+				 * @param array $add_review_args The post arguments used for insertion.
+				 */
+				do_action( 'bupr_before_save_review', $review_id, $add_review_args );
+
 				// Always recalculate reviews for published reviews (fixes race condition).
 				if ( 'publish' === $bupr_reviews_status ) {
 					do_action( 'bupr_member_review_after_review_insert', $review_id, $bupr_member_id );

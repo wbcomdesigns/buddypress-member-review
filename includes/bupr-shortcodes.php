@@ -414,7 +414,16 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								?>
 								<input type="hidden" id="member_rating_field_counter" value="0">
 								<?php
-							} ?>
+							}
+
+							/**
+							 * Hook to add additional fields after rating criteria.
+							 * Used by Pro addon for flexible criteria (thumbs, text fields).
+							 *
+							 * @since 3.8.0
+							 */
+							do_action( 'bupr_after_rating_fields' );
+							?>
 								<input type="hidden" id="bupr_member_review_id" value="<?php echo esc_attr( bp_displayed_user_id() ); ?>">
 								<p class="bupr-hide-subject">
 									<label for="review_subject" class="screen-reader-text"><?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?></label>

@@ -91,6 +91,7 @@ Copy to `your-theme/review/`:
 
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-01-24 | fix | Template consistency: `.rating-sec` now always wraps date, stars conditional inside | bupr-reviews-tab-template.php:124-176 |
 | 2026-01-24 | fix | Pro Features preview now shows only actual Pro features (removed 5 non-existent options) | bupr-setting-pro-features-tab.php |
 | 2026-01-24 | fix | Added `bupr_admin_settings_criteria_content` hook for Pro Flexible Criteria builder | bupr-setting-criteria-tab.php:20-35 |
 | 2026-01-24 | fix | Testimonial Mode: Hide rating section completely when `active_rating_fields` is empty | bupr-shortcodes.php:361-417 |
