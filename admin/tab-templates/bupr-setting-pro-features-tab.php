@@ -110,71 +110,16 @@ $disabled = 'disabled';
 				</div>
 			</div>
 
-			<!-- Verified Badges -->
-			<div class="wbcom-settings-section-wrap">
-				<div class="wbcom-settings-section-options-heading">
-					<label for="bupr_enable_verified_badges">
-						<?php esc_html_e( 'Enable Verified Badges', 'bp-member-reviews' ); ?>
-						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
-						<?php endif; ?>
-					</label>
-					<p class="description"><?php esc_html_e( 'Show a verified badge on reviews marked as verified by admin.', 'bp-member-reviews' ); ?></p>
-				</div>
-				<div class="wbcom-settings-section-options">
-					<label class="bupr-switch">
-						<input type="checkbox" id="bupr_enable_verified_badges" value="yes" checked <?php echo esc_attr( $disabled ); ?>>
-						<div class="bupr-slider bupr-round"></div>
-					</label>
-				</div>
-			</div>
-
-			<!-- Tenure Verification -->
-			<div class="wbcom-settings-section-wrap">
-				<div class="wbcom-settings-section-options-heading">
-					<label for="bupr_enable_tenure_verification">
-						<?php esc_html_e( 'Tenure Verification', 'bp-member-reviews' ); ?>
-						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
-						<?php endif; ?>
-					</label>
-					<p class="description"><?php esc_html_e( 'Auto-verify reviews from members registered for a minimum period.', 'bp-member-reviews' ); ?></p>
-				</div>
-				<div class="wbcom-settings-section-options">
-					<label class="bupr-switch">
-						<input type="checkbox" id="bupr_enable_tenure_verification" value="yes" <?php echo esc_attr( $disabled ); ?>>
-						<div class="bupr-slider bupr-round"></div>
-					</label>
-				</div>
-			</div>
-
-			<!-- Minimum Tenure -->
-			<div class="wbcom-settings-section-wrap">
-				<div class="wbcom-settings-section-options-heading">
-					<label for="bupr_min_tenure_months">
-						<?php esc_html_e( 'Minimum Tenure', 'bp-member-reviews' ); ?>
-						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
-						<?php endif; ?>
-					</label>
-					<p class="description"><?php esc_html_e( 'Minimum months of membership for auto-verification.', 'bp-member-reviews' ); ?></p>
-				</div>
-				<div class="wbcom-settings-section-options">
-					<input type="number" id="bupr_min_tenure_months" class="small-text" value="6" min="1" <?php echo esc_attr( $disabled ); ?>>
-					<?php esc_html_e( 'Months', 'bp-member-reviews' ); ?>
-				</div>
-			</div>
-
 			<!-- REST API -->
 			<div class="wbcom-settings-section-wrap">
 				<div class="wbcom-settings-section-options-heading">
 					<label for="bupr_enable_rest_api">
-						<?php esc_html_e( 'Enable REST API', 'bp-member-reviews' ); ?>
+						<?php esc_html_e( 'REST API', 'bp-member-reviews' ); ?>
 						<?php if ( ! $is_pro_active ) : ?>
 							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
 						<?php endif; ?>
 					</label>
-					<p class="description"><?php esc_html_e( 'Enable the reviews REST API at /wp-json/bupr/v1/ for external integrations.', 'bp-member-reviews' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Full CRUD REST API for reviews integration.', 'bp-member-reviews' ); ?></p>
 				</div>
 				<div class="wbcom-settings-section-options">
 					<label class="bupr-switch">
@@ -184,7 +129,26 @@ $disabled = 'disabled';
 				</div>
 			</div>
 
-			<!-- Flexible Criteria - Enhancement to existing Criteria tab -->
+			<!-- Verified Badges -->
+			<div class="wbcom-settings-section-wrap">
+				<div class="wbcom-settings-section-options-heading">
+					<label for="bupr_enable_verified_badges">
+						<?php esc_html_e( 'Verified Badges', 'bp-member-reviews' ); ?>
+						<?php if ( ! $is_pro_active ) : ?>
+							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
+						<?php endif; ?>
+					</label>
+					<p class="description"><?php esc_html_e( 'Trust signals for authentic reviews.', 'bp-member-reviews' ); ?></p>
+				</div>
+				<div class="wbcom-settings-section-options">
+					<label class="bupr-switch">
+						<input type="checkbox" id="bupr_enable_verified_badges" value="yes" checked <?php echo esc_attr( $disabled ); ?>>
+						<div class="bupr-slider bupr-round"></div>
+					</label>
+				</div>
+			</div>
+
+			<!-- Flexible Criteria -->
 			<div class="wbcom-settings-section-wrap">
 				<div class="wbcom-settings-section-options-heading">
 					<label for="bupr_enable_flexible_criteria">
@@ -193,89 +157,13 @@ $disabled = 'disabled';
 							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
 						<?php endif; ?>
 					</label>
-					<p class="description">
-						<?php
-						printf(
-							/* translators: %s: link to criteria tab */
-							esc_html__( 'Enhance the %s with additional input types (thumbs up/down, text) and weight settings.', 'bp-member-reviews' ),
-							'<a href="' . esc_url( admin_url( 'admin.php?page=bp-member-review-settings&tab=bupr-criteria' ) ) . '">' . esc_html__( 'Criteria tab', 'bp-member-reviews' ) . '</a>'
-						);
-						?>
-					</p>
+					<p class="description"><?php esc_html_e( 'Dynamic rating criteria instead of hardcoded.', 'bp-member-reviews' ); ?></p>
 				</div>
 				<div class="wbcom-settings-section-options">
 					<label class="bupr-switch">
-						<input type="checkbox" id="bupr_enable_flexible_criteria" value="yes" <?php echo esc_attr( $disabled ); ?>>
+						<input type="checkbox" id="bupr_enable_flexible_criteria" value="yes" checked <?php echo esc_attr( $disabled ); ?>>
 						<div class="bupr-slider bupr-round"></div>
 					</label>
-				</div>
-			</div>
-
-			<!-- Criteria Input Types (shown when Flexible Criteria enabled) -->
-			<div class="wbcom-settings-section-wrap">
-				<div class="wbcom-settings-section-options-heading">
-					<label>
-						<?php esc_html_e( 'Available Criteria Types', 'bp-member-reviews' ); ?>
-						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
-						<?php endif; ?>
-					</label>
-					<p class="description"><?php esc_html_e( 'With Flexible Criteria enabled, each criterion in the Criteria tab can use different input types.', 'bp-member-reviews' ); ?></p>
-				</div>
-				<div class="wbcom-settings-section-options">
-					<p style="margin: 0;">
-						<span style="display: inline-block; padding: 5px 10px; background: #f5f5f5; border-radius: 4px; margin-right: 10px;">
-							<span class="dashicons dashicons-star-filled" style="color: #ffc107;"></span>
-							<?php esc_html_e( 'Stars (1-5)', 'bp-member-reviews' ); ?>
-						</span>
-						<span style="display: inline-block; padding: 5px 10px; background: #f5f5f5; border-radius: 4px; margin-right: 10px;">
-							<span class="dashicons dashicons-thumbs-up" style="color: #28a745;"></span>
-							<?php esc_html_e( 'Thumbs', 'bp-member-reviews' ); ?>
-						</span>
-						<span style="display: inline-block; padding: 5px 10px; background: #f5f5f5; border-radius: 4px;">
-							<span class="dashicons dashicons-editor-textcolor" style="color: #667eea;"></span>
-							<?php esc_html_e( 'Text', 'bp-member-reviews' ); ?>
-						</span>
-					</p>
-				</div>
-			</div>
-
-			<!-- Endorsement Skills (for Endorsement Mode) -->
-			<div class="wbcom-settings-section-wrap">
-				<div class="wbcom-settings-section-options-heading">
-					<label for="bupr_allow_custom_skills">
-						<?php esc_html_e( 'Allow Custom Skills', 'bp-member-reviews' ); ?>
-						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
-						<?php endif; ?>
-					</label>
-					<p class="description"><?php esc_html_e( 'Allow members to add their own skills beyond predefined list. Only used in Endorsement mode.', 'bp-member-reviews' ); ?></p>
-				</div>
-				<div class="wbcom-settings-section-options">
-					<label class="bupr-switch">
-						<input type="checkbox" id="bupr_allow_custom_skills" value="yes" checked <?php echo esc_attr( $disabled ); ?>>
-						<div class="bupr-slider bupr-round"></div>
-					</label>
-				</div>
-			</div>
-
-			<!-- Predefined Skills -->
-			<div class="wbcom-settings-section-wrap">
-				<div class="wbcom-settings-section-options-heading">
-					<label for="bupr_predefined_skills">
-						<?php esc_html_e( 'Predefined Skills', 'bp-member-reviews' ); ?>
-						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
-						<?php endif; ?>
-					</label>
-					<p class="description"><?php esc_html_e( 'Enter one skill per line. Only used in Endorsement mode.', 'bp-member-reviews' ); ?></p>
-				</div>
-				<div class="wbcom-settings-section-options">
-					<textarea id="bupr_predefined_skills" rows="5" class="large-text" <?php echo esc_attr( $disabled ); ?>>Leadership
-Communication
-Problem Solving
-Teamwork
-Project Management</textarea>
 				</div>
 			</div>
 
