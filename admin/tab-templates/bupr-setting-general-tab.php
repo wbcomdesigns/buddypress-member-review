@@ -92,7 +92,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_review_auto_approval">
-								<?php esc_html_e( 'Auto approve reviews', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Auto Approve Reviews', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description">
 								<?php esc_html_e( 'Automatically approve reviews without requiring manual approval.', 'bp-member-reviews' ); ?>
@@ -111,7 +111,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_member_dir_reviews">
-								<?php esc_html_e( 'Show ratings in member directory', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Member Directory Ratings', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description">
 								<?php esc_html_e( 'Display member ratings on the member directory page.', 'bp-member-reviews' ); ?>
@@ -130,7 +130,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_allow_email">
-								<?php esc_html_e( 'Emails', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Email Notifications', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description">
 								<?php esc_html_e( 'Send an email notification to members when someone reviews their profile.', 'bp-member-reviews' ); ?>
@@ -162,7 +162,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<label>
 								<?php esc_html_e( 'Email Message', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Please add a review email message.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Enter the message content for review notification emails.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<?php
@@ -185,7 +185,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					 <div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Review Approve Email Subject', 'bp-member-reviews' ); ?>
+									<?php esc_html_e( 'Approval Email Subject', 'bp-member-reviews' ); ?>
 								</label>
 								<p class="description"><?php esc_html_e( 'Enter the subject line for review approval notification emails.', 'bp-member-reviews' ); ?></p>
 							</div>
@@ -196,7 +196,7 @@ $user_roles = array_reverse( get_editable_roles() );
 						<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
 					<div class="wbcom-settings-section-options-heading">
 						<label>
-							<?php esc_html_e( 'Review Approve Email Message', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Approval Email Message', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Enter the message content for review approval notification emails.', 'bp-member-reviews' ); ?></p>
 					</div>
@@ -255,9 +255,9 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="profile_reviews_per_page">
-								<?php esc_html_e( 'Reviews pages show at most', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Reviews Per Page', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Limit the number of reviews displayed per page on the Member Reviews page.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Number of reviews to display per page.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<input id="profile_reviews_per_page" class="small-text" name="bupr_admin_general_options[profile_reviews_per_page]" step="1" min="1" value="<?php echo esc_attr( $bupr['reviews_per_page'] ); ?>" type="number">
@@ -267,9 +267,9 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_exc_member">
-								<?php esc_html_e( 'Select member roles to write reviews', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Reviewer Roles', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Select user roles that are allowed to submit reviews.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Select user roles that can submit reviews.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_exc_member][]" id="bupr_exc_member" class="bupr_excluding_member" multiple>
@@ -298,10 +298,10 @@ $user_roles = array_reverse( get_editable_roles() );
 					</div>
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
-							<label for="bupr_exc_member">
-								<?php esc_html_e( 'User roles to accept reviews', 'bp-member-reviews' ); ?>
+							<label for="bupr_add_member">
+								<?php esc_html_e( 'Reviewee Roles', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Select user roles that are eligible to receive reviews.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Select user roles that can receive reviews.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_add_member][]" id="bupr_add_member" class="bupr_adding_member" multiple>
@@ -333,7 +333,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_enable_anonymous_reviews">
-								<?php esc_html_e( 'Enable anonymous reviews', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Anonymous Reviews', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Allow users to submit reviews anonymously.', 'bp-member-reviews' ); ?></p>
 						</div>
@@ -347,9 +347,9 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_enable_review_activity">
-								<?php esc_html_e( 'Enable review activity', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Activity Stream', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Allow users to generate review activity.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Post reviews to the BuddyPress activity stream.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
@@ -363,7 +363,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_enable_owner_replies">
-								<?php esc_html_e( 'Enable owner replies', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Owner Replies', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Allow profile owners to respond once to each review they receive.', 'bp-member-reviews' ); ?></p>
 						</div>
@@ -380,7 +380,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_enable_flagging">
-								<?php esc_html_e( 'Enable review flagging', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Review Flagging', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Allow users to report inappropriate reviews for admin moderation.', 'bp-member-reviews' ); ?></p>
 						</div>
@@ -396,9 +396,9 @@ $user_roles = array_reverse( get_editable_roles() );
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_flag_threshold">
-								<?php esc_html_e( 'Auto-hide flag threshold', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Auto-Hide Threshold', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Automatically hide reviews after this many flags. Set to 0 to disable auto-hide.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Automatically hide reviews after this many flags. Set to 0 to disable.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<input id="bupr_flag_threshold" class="small-text" name="bupr_admin_general_options[bupr_flag_threshold]" step="1" min="0" value="<?php echo esc_attr( isset( $bupr['flag_threshold'] ) ? $bupr['flag_threshold'] : 5 ); ?>" type="number">

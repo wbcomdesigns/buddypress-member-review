@@ -84,9 +84,9 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label>
-								<?php esc_html_e( 'Allow Multiple Criteria?', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Multiple Criteria', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( "Enable this option if you want to allow members to be rated by 'Criteria'.", 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Rate members by multiple criteria (e.g., Communication, Skills) instead of a single overall rating.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<label class="bupr-switch">
 							<input type="hidden" name="bupr_admin_settings[profile_multi_rating_allowed]" value="0" />

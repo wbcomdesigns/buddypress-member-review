@@ -379,7 +379,7 @@ $disabled = 'disabled';
 							<span class="bupr-pro-badge" style="background: #2A32EF; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
 						<?php endif; ?>
 					</label>
-					<p class="description"><?php esc_html_e( 'Dynamic rating criteria instead of hardcoded.', 'bp-member-reviews' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Custom rating criteria with stars, thumbs, or text fields.', 'bp-member-reviews' ); ?></p>
 				</div>
 				<div class="wbcom-settings-section-options">
 					<label class="bupr-switch">

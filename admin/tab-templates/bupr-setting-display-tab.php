@@ -28,10 +28,10 @@ global $bupr;
 				<div class="wbcom-settings-section-wrap ">
 					<div class="wbcom-settings-section-options-heading">
 						<label for="bupr_member_tab_title">
-							<?php esc_html_e( 'Review', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Review Label', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( 'Change labels from the BuddyPress tab and review form.', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Label used in the profile tab and review form.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">
@@ -41,10 +41,10 @@ global $bupr;
 				<div class="wbcom-settings-section-wrap ">
 					<div class="wbcom-settings-section-options-heading">
 						<label for="bupr_member_tab_title_plural">
-							<?php esc_html_e( 'Review (Plural)', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Reviews Label (Plural)', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description">
-							<?php esc_html_e( 'This option provides flexibility to change the plural form of "Review".', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Plural form of the review label.', 'bp-member-reviews' ); ?>
 						</p>
 					</div>
 					<div class="wbcom-settings-section-options">
