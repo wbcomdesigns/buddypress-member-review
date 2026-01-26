@@ -2,6 +2,8 @@
 
 Add a review and rating system to your BuddyPress community. Members can rate each other using star ratings, write reviews, and build reputation within your community.
 
+> **Video Guide:** Watch the [Installation Guide (40s)](https://wbcomdesigns.com/videos/bp-member-reviews/installation-guide) for a quick visual walkthrough.
+
 ![Reviews on member profile](../images/frontend-reviews-tab.png)
 
 ## Requirements

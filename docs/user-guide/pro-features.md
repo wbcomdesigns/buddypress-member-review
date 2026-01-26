@@ -2,6 +2,8 @@
 
 Unlock the full potential of member reviews with advanced modes, verification, and API access.
 
+> **Video Guide:** Watch the [Pro Features Overview (35s)](https://wbcomdesigns.com/videos/bp-member-reviews/pro-features-guide) for a quick visual tour.
+
 ![Pro Features settings page](../images/pro-features-full-page.png)
 
 ## What Pro Adds to Your Community

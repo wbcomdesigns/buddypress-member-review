@@ -2,6 +2,8 @@
 
 How to moderate, approve, and manage member reviews from the WordPress admin.
 
+> **Video Guide:** Watch the [Admin Guide (35s)](https://wbcomdesigns.com/videos/bp-member-reviews/admin-guide) to see moderation, reports, and owner replies in action.
+
 ## Accessing Reviews
 
 ![Admin reviews list](../images/admin-reviews-list.png)

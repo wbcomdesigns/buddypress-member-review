@@ -2,6 +2,8 @@
 
 Display top-rated or most-reviewed members anywhere on your site using shortcodes.
 
+> **Video Guide:** Watch the [Shortcodes & Widgets Guide (30s)](https://wbcomdesigns.com/videos/bp-member-reviews/shortcodes-guide) for a quick visual walkthrough.
+
 ## Top Members Shortcode
 
 ```

@@ -2,6 +2,8 @@
 
 Show which reviews come from real customers. Build trust with verification badges that separate authentic feedback from noise.
 
+> **Video Guide:** Watch the [Verified Badges Guide (30s)](https://wbcomdesigns.com/videos/bp-member-reviews/verified-badges-guide) for a quick visual walkthrough.
+
 ![Verified badge on review](../images/pro-verified-badge.png)
 
 ## The Problem Verified Badges Solve

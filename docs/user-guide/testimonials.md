@@ -2,6 +2,8 @@
 
 Skip star ratings when words say more. Perfect for courses, membership sites, and communities focused on qualitative feedback.
 
+> **Video Guide:** Watch the [Testimonials Mode Guide (35s)](https://wbcomdesigns.com/videos/bp-member-reviews/testimonials-guide) for a quick visual walkthrough.
+
 ![Testimonials on profile](../images/frontend-reviews-tab.png)
 
 ## The Problem Testimonials Mode Solves

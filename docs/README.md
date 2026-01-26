@@ -78,6 +78,33 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 
 ---
 
+## Video Guides
+
+Watch these short video tutorials to get started quickly.
+
+### Getting Started
+| Video | Duration | Description |
+|-------|----------|-------------|
+| [Installation Guide](https://wbcomdesigns.com/videos/bp-member-reviews/installation-guide) | 40s | Configure settings, permissions, criteria, and display |
+| [Shortcodes & Widgets](https://wbcomdesigns.com/videos/bp-member-reviews/shortcodes-guide) | 30s | Display top members anywhere on your site |
+| [Admin Guide](https://wbcomdesigns.com/videos/bp-member-reviews/admin-guide) | 35s | Moderate reviews, handle reports, owner replies |
+
+### Pro Features
+| Video | Duration | Description |
+|-------|----------|-------------|
+| [Pro Features Overview](https://wbcomdesigns.com/videos/bp-member-reviews/pro-features-guide) | 35s | Three modes, verified badges, and more |
+| [Testimonials Mode](https://wbcomdesigns.com/videos/bp-member-reviews/testimonials-guide) | 35s | Text-only feedback for courses and coaching |
+| [Endorsements Mode](https://wbcomdesigns.com/videos/bp-member-reviews/endorsements-guide) | 35s | LinkedIn-style skill endorsements |
+| [Verified Badges](https://wbcomdesigns.com/videos/bp-member-reviews/verified-badges-guide) | 30s | Trust signals that increase conversions |
+
+### Short Ads
+| Video | Duration | Description |
+|-------|----------|-------------|
+| [Trust Problem Ad](https://wbcomdesigns.com/videos/bp-member-reviews/trust-ad) | 15s | "Who can you trust?" - Community reviews |
+| [Three Modes Ad](https://wbcomdesigns.com/videos/bp-member-reviews/three-modes-ad) | 15s | Ratings, Testimonials, Endorsements |
+
+---
+
 ## Feature Comparison
 
 ### Free Features

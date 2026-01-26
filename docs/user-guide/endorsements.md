@@ -2,6 +2,8 @@
 
 Add LinkedIn's missing feature to BuddyPress. Let members endorse each other's skills and build professional credibility.
 
+> **Video Guide:** Watch the [Endorsements Mode Guide (35s)](https://wbcomdesigns.com/videos/bp-member-reviews/endorsements-guide) for a quick visual walkthrough.
+
 ![Endorse button on profile](../images/endorsement-button-profile.png)
 
 ## The Problem Endorsements Solve
