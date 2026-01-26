@@ -595,7 +595,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			foreach ( $columns as $key => $value ) {
 				$new_columns[ $key ] = $value;
 				if ( 'title' === $key ) {
-					$new_columns['bupr_flags'] = __( 'Flags', 'bp-member-reviews' );
+					$new_columns['bupr_flags'] = __( 'Reports', 'bp-member-reviews' );
 				}
 			}
 			return $new_columns;
@@ -633,7 +633,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				'<span class="bupr-flag-count %s">%d %s</span>%s',
 				esc_attr( $status_class ),
 				(int) $flag_count,
-				esc_html( _n( 'flag', 'flags', (int) $flag_count, 'bp-member-reviews' ) ),
+				esc_html( _n( 'report', 'reports', (int) $flag_count, 'bp-member-reviews' ) ),
 				$status_label
 			);
 		}
@@ -654,7 +654,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					'<a href="%s" class="%s">%s <span class="count">(%d)</span></a>',
 					esc_url( add_query_arg( array( 'post_type' => 'review', 'bupr_flagged' => '1' ), admin_url( 'edit.php' ) ) ),
 					esc_attr( $current ),
-					esc_html__( 'Flagged', 'bp-member-reviews' ),
+					esc_html__( 'Reported', 'bp-member-reviews' ),
 					(int) $flagged_count
 				);
 			}
@@ -721,7 +721,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		public function bupr_add_flag_meta_box() {
 			add_meta_box(
 				'bupr_flag_details',
-				__( 'Flag Reports', 'bp-member-reviews' ),
+				__( 'Report Details', 'bp-member-reviews' ),
 				array( $this, 'bupr_render_flag_meta_box' ),
 				'review',
 				'side',
@@ -741,7 +741,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			$flag_status = get_post_meta( $post->ID, 'bupr_flag_status', true );
 
 			if ( empty( $flags ) || ! is_array( $flags ) ) {
-				echo '<p>' . esc_html__( 'No flags reported for this review.', 'bp-member-reviews' ) . '</p>';
+				echo '<p>' . esc_html__( 'No reports for this review.', 'bp-member-reviews' ) . '</p>';
 				return;
 			}
 
@@ -762,7 +762,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			}
 			echo '</p>';
 
-			echo '<p><strong>' . esc_html__( 'Total Flags:', 'bp-member-reviews' ) . '</strong> ' . count( $flags ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'Total Reports:', 'bp-member-reviews' ) . '</strong> ' . count( $flags ) . '</p>';
 
 			echo '<ul style="margin-left: 15px;">';
 			foreach ( $flags as $flag ) {
@@ -802,7 +802,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					),
 					'bupr_resolve_flag_' . $post->ID
 				);
-				echo '<a href="' . esc_url( $dismiss_url ) . '" class="button">' . esc_html__( 'Dismiss Flags', 'bp-member-reviews' ) . '</a> ';
+				echo '<a href="' . esc_url( $dismiss_url ) . '" class="button">' . esc_html__( 'Dismiss Reports', 'bp-member-reviews' ) . '</a> ';
 				echo '<a href="' . esc_url( $resolve_url ) . '" class="button button-primary">' . esc_html__( 'Mark Resolved', 'bp-member-reviews' ) . '</a>';
 				echo '</div>';
 			}
@@ -818,8 +818,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @return array Modified bulk actions.
 		 */
 		public function bupr_add_flag_bulk_actions( $actions ) {
-			$actions['bupr_dismiss_flags'] = __( 'Dismiss Flags', 'bp-member-reviews' );
-			$actions['bupr_resolve_flags'] = __( 'Resolve Flags', 'bp-member-reviews' );
+			$actions['bupr_dismiss_flags'] = __( 'Dismiss Reports', 'bp-member-reviews' );
+			$actions['bupr_resolve_flags'] = __( 'Resolve Reports', 'bp-member-reviews' );
 			return $actions;
 		}
 
@@ -863,25 +863,25 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
 					sprintf(
 						/* translators: %d: Number of reviews updated */
-						esc_html( _n( '%d review flag status updated.', '%d reviews flag statuses updated.', $count, 'bp-member-reviews' ) ),
+						esc_html( _n( '%d review report status updated.', '%d reviews report statuses updated.', $count, 'bp-member-reviews' ) ),
 						$count
 					)
 				);
 			}
 
-			// Flag dismissed notice.
+			// Report dismissed notice.
 			if ( ! empty( $_GET['bupr_flag_dismissed'] ) ) {
 				printf(
 					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
-					esc_html__( 'Review flags have been dismissed.', 'bp-member-reviews' )
+					esc_html__( 'Review reports have been dismissed.', 'bp-member-reviews' )
 				);
 			}
 
-			// Flag resolved notice.
+			// Report resolved notice.
 			if ( ! empty( $_GET['bupr_flag_resolved'] ) ) {
 				printf(
 					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
-					esc_html__( 'Review flags have been marked as resolved.', 'bp-member-reviews' )
+					esc_html__( 'Review reports have been marked as resolved.', 'bp-member-reviews' )
 				);
 			}
 		}

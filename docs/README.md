@@ -2,6 +2,29 @@
 
 Welcome to the official documentation for BuddyPress Member Reviews, a comprehensive review and rating system for BuddyPress communities.
 
+![Member reviews on profile](images/frontend-reviews-tab.png)
+
+## What You Can Do
+
+### Build Trust in Your Community
+- **Star Ratings** - Members rate each other on customizable criteria
+- **Written Reviews** - Text feedback for detailed testimonials
+- **Verified Badges** - Mark authentic reviews with trust signals (Pro)
+- **Top Members Display** - Showcase highly-rated members
+
+### Keep It Safe
+- **Review Reporting** - Let users report inappropriate content
+- **Auto-Hide** - Reviews hidden after reaching report threshold
+- **Moderation Queue** - Approve reviews before publishing
+- **Anonymous Option** - Let reviewers stay private
+
+### Choose Your Style (Pro)
+- **Ratings Mode** - Traditional star ratings with criteria
+- **Testimonials Mode** - Text-only feedback without stars
+- **Endorsements Mode** - LinkedIn-style skill endorsements
+
+---
+
 ## Download Links
 
 ### Free Version
@@ -36,13 +59,21 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 | [REST API](developer-guide/rest-api.md) | API endpoints (Pro feature) |
 | [Database Schema](developer-guide/database.md) | Post meta and user meta reference |
 
+### Pro Feature Guides
+
+| Guide | What You'll Learn |
+|-------|-------------------|
+| [Testimonials Mode](user-guide/testimonials.md) | Skip stars, collect text feedback |
+| [Endorsements Mode](user-guide/endorsements.md) | LinkedIn-style skill endorsements |
+| [Verified Reviews](user-guide/verified-reviews.md) | Trust badges for authentic feedback |
+| [Pro Overview](user-guide/pro-features.md) | All Pro features at a glance |
+
 ### Reference Files
 
 | File | Description |
 |------|-------------|
 | [FILE_INDEX.md](FILE_INDEX.md) | Complete file listing with purposes |
 | [PLUGIN_ARCHITECTURE.md](architecture/PLUGIN_ARCHITECTURE.md) | Technical architecture reference |
-| [Pro Features Guide](user-guide/pro-features.md) | Pro addon feature documentation |
 | [FAQ](user-guide/faq.md) | Frequently asked questions |
 
 ---
@@ -56,8 +87,8 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 | Star Ratings | 1-5 star ratings with visual display |
 | Multiple Criteria | Configure custom rating criteria (Quality, Communication, etc.) |
 | Owner Replies | Profile owners can respond to reviews |
-| Review Flagging | Users can report inappropriate reviews |
-| Auto-Hide Threshold | Reviews auto-hidden after X flags |
+| Review Reporting | Users can report inappropriate reviews |
+| Auto-Hide Threshold | Reviews auto-hidden after X reports |
 | Email Notifications | Notify members of new reviews |
 | BuddyPress Notifications | In-app notification bell alerts |
 | Anonymous Reviews | Option for reviewers to stay anonymous |
@@ -72,6 +103,8 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 | Moderation Queue | Approve reviews before publishing |
 
 ### Pro Features
+
+![Pro settings page](images/pro-features-full-page.png)
 
 | Feature | Description |
 |---------|-------------|

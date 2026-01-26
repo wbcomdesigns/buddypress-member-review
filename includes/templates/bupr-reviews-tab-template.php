@@ -344,13 +344,14 @@ $reviews = new WP_Query( $args );
 							</div>
 
 							<?php
-							// Flag Section - only show if enabled in settings.
+							// Report Section - only show if enabled in settings.
 							$flagging_enabled = isset( $bupr['enable_flagging'] ) ? $bupr['enable_flagging'] : 'yes';
 							if ( 'yes' === $flagging_enabled && is_user_logged_in() && get_current_user_id() !== (int) $author_id ) :
 							?>
-								<div class="bupr-flag-section">
-									<button type="button" class="bupr-flag-button" data-review="<?php echo esc_attr( get_the_ID() ); ?>" title="<?php esc_attr_e( 'Report this review', 'bp-member-reviews' ); ?>">
-										<span class="dashicons dashicons-flag"></span>
+								<div class="bupr-report-section">
+									<button type="button" class="bupr-report-button" data-review="<?php echo esc_attr( get_the_ID() ); ?>" title="<?php esc_attr_e( 'Report this review', 'bp-member-reviews' ); ?>">
+										<span class="dashicons dashicons-warning"></span>
+										<span class="bupr-report-text"><?php esc_html_e( 'Report', 'bp-member-reviews' ); ?></span>
 									</button>
 								</div>
 							<?php endif; // End flagging enabled check. ?>

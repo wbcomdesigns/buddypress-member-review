@@ -376,11 +376,11 @@ $user_roles = array_reverse( get_editable_roles() );
 						</div>
 					</div>
 
-					<!-- Flagging Section -->
+					<!-- Reporting Section -->
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
 							<label for="bupr_enable_flagging">
-								<?php esc_html_e( 'Review Flagging', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Review Reporting', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Allow users to report inappropriate reviews for admin moderation.', 'bp-member-reviews' ); ?></p>
 						</div>
@@ -398,11 +398,11 @@ $user_roles = array_reverse( get_editable_roles() );
 							<label for="bupr_flag_threshold">
 								<?php esc_html_e( 'Auto-Hide Threshold', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Automatically hide reviews after this many flags. Set to 0 to disable.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Automatically hide reviews after this many reports. Set to 0 to disable.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<input id="bupr_flag_threshold" class="small-text" name="bupr_admin_general_options[bupr_flag_threshold]" step="1" min="0" value="<?php echo esc_attr( isset( $bupr['flag_threshold'] ) ? $bupr['flag_threshold'] : 5 ); ?>" type="number">
-							<?php esc_html_e( 'Flags', 'bp-member-reviews' ); ?>
+							<?php esc_html_e( 'Reports', 'bp-member-reviews' ); ?>
 						</div>
 					</div>
 				</div>

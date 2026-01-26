@@ -4,6 +4,8 @@ How to moderate, approve, and manage member reviews from the WordPress admin.
 
 ## Accessing Reviews
 
+![Admin reviews list](../images/admin-reviews-list.png)
+
 Go to **Reviews** in the WordPress admin sidebar to see all reviews.
 
 ### Review List Columns
@@ -14,7 +16,7 @@ Go to **Reviews** in the WordPress admin sidebar to see all reviews.
 | Rating | Star rating given |
 | Author | Who wrote the review |
 | Member | Who received the review |
-| Flags | Number of times flagged (if any) |
+| Reports | Number of times reported (if any) |
 | Date | When submitted |
 
 ### Filtering Reviews
@@ -25,11 +27,11 @@ Use the dropdown filters to show:
 - **Published** - Live reviews
 - **Pending** - Awaiting approval
 - **Draft** - Saved but not submitted
-- **Flagged** - Reviews reported by users
+- **Reported** - Reviews reported by users
 
 ## Approving Reviews
 
-When **Auto approve reviews** is disabled, new reviews go to Pending status.
+When **Auto Approve Reviews** is disabled, new reviews go to Pending status.
 
 ### Approve a Single Review
 
@@ -59,27 +61,27 @@ When **Auto approve reviews** is disabled, new reviews go to Pending status.
 
 **Note:** Editing a review does not notify the reviewer or the member being reviewed.
 
-## Handling Flagged Reviews
+## Handling Reported Reviews
 
-When members flag a review, you'll see a flag count in the admin list.
+When members report a review, you'll see a report count in the admin list.
 
-### Flag Indicators
+### Report Indicators
 
 | Status | Meaning |
 |--------|---------|
-| No flag icon | Not flagged |
-| Orange flag + count | Has active flags |
-| Auto-hidden badge | Exceeded flag threshold |
+| No indicator | Not reported |
+| Warning icon + count | Has active reports |
+| Auto-hidden badge | Exceeded report threshold |
 
-### Reviewing Flag Reports
+### Reviewing Reports
 
-1. Click on a flagged review to edit
-2. Scroll to the **Flag Reports** meta box
+1. Click on a reported review to edit
+2. Scroll to the **Report Details** meta box
 3. Review each report's reason and reporter
 
-### Flag Reasons
+### Report Reasons
 
-Users can flag reviews for:
+Users can report reviews for:
 
 - Spam or fake review
 - Harassment or abuse
@@ -88,14 +90,14 @@ Users can flag reviews for:
 
 ### Taking Action
 
-After reviewing flags:
+After reviewing reports:
 
 | Action | How | Effect |
 |--------|-----|--------|
-| Dismiss flags | Click "Dismiss Flags" | Clears flag count, review stays live |
+| Dismiss reports | Click "Dismiss Reports" | Clears report count, review stays live |
 | Keep hidden | Leave as-is | Review remains hidden from public |
 | Delete review | Move to Trash | Permanently removes review |
-| Edit content | Modify and update | Fix issues, then dismiss flags |
+| Edit content | Modify and update | Fix issues, then dismiss reports |
 
 ## Owner Replies
 
@@ -138,7 +140,7 @@ Each review stores:
 | Member reviewed | `linked_bp_member` post meta (user ID) |
 | Anonymous status | `bupr_anonymous_review_post` post meta |
 | Owner reply | `bupr_owner_reply` post meta |
-| Flags | `bupr_flags` post meta (array) |
+| Reports | `bupr_flags` post meta (array) |
 
 ## Aggregate Ratings
 
@@ -172,17 +174,17 @@ If ratings seem incorrect:
 
 ### Preventing Spam
 
-1. Keep **Auto approve** disabled initially
-2. Set a reasonable **flag threshold** (3-5)
-3. Restrict review roles to verified members
-4. Disable **anonymous reviews** if abuse occurs
+1. Keep **Auto Approve Reviews** disabled initially
+2. Set a reasonable **Auto-Hide Threshold** (3-5)
+3. Restrict **Reviewer Roles** to verified members
+4. Disable **Anonymous Reviews** if abuse occurs
 
 ### Handling Disputes
 
 When a member disputes a review:
 
-1. Review the flag reports
+1. Review the reports
 2. Check if review violates community guidelines
 3. Consider if content is factual vs. opinion
-4. Either dismiss the flag or remove the review
+4. Either dismiss the reports or remove the review
 5. Optionally notify both parties of your decision

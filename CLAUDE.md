@@ -97,6 +97,12 @@ Copy to `your-theme/review/`:
 
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-01-26 | docs | Add missing user flows: Edit Review modal, Report modal, Owner Reply inline form | getting-started.md |
+| 2026-01-26 | docs | Create standalone feature guides: testimonials.md, endorsements.md, verified-reviews.md | user-guide/ |
+| 2026-01-26 | docs | Rewrite docs with value-first approach (problems solved, use cases, impacts) | All docs |
+| 2026-01-26 | docs | Embed screenshots in all documentation files for feature showcase | getting-started.md, settings.md, pro-features.md, managing-reviews.md, README.md |
+| 2026-01-26 | docs | Update all docs to use "Report" terminology instead of "Flag" | faq.md, settings.md, managing-reviews.md, README.md |
+| 2026-01-26 | ui | Change "Flag" terminology to "Report" for consistency across all modes | bupr-reviews-tab-template.php, bupr-front.css, bupr-front.js, bupr-setting-general-tab.php, bupr-admin.php |
 | 2026-01-26 | ui | Standardize admin labels to Title Case, clearer descriptions | bupr-setting-general-tab.php, bupr-setting-display-tab.php, bupr-setting-criteria-tab.php |
 | 2026-01-26 | docs | QA audit: Fill PRO documentation gaps (admin management, REST API schema, endorsement UX) | pro-features.md, rest-api.md |
 | 2026-01-26 | fix | PHP Warning "Undefined array key 0" when Pro stores ratings with label keys | bupr-reviews-tab-template.php:167-176 |

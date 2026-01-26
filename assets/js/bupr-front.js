@@ -467,11 +467,11 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
 });
 
 /*----------------------------------------
- * Flag Review Functionality
+ * Report Review Functionality
  *-----------------------------------------*/
 
-// Open flag modal
-jQuery(document).on("click", ".bupr-flag-button", function (e) {
+// Open report modal (supports both new .bupr-report-button and legacy .bupr-flag-button)
+jQuery(document).on("click", ".bupr-report-button, .bupr-flag-button", function (e) {
   e.preventDefault();
   var reviewId = jQuery(this).data("review");
   jQuery("#bupr-flag-review-id").val(reviewId);
@@ -528,11 +528,11 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
       if (response.success) {
         jQuery(".bupr-flag-modal").fadeOut();
         // Show inline success message instead of alert
-        var $flagBtn = jQuery('.bupr-flag-button[data-review="' + reviewId + '"]');
-        $flagBtn.replaceWith('<span class="bupr-flag-success"><span class="dashicons dashicons-yes"></span> Reported</span>');
+        var $reportBtn = jQuery('.bupr-report-button[data-review="' + reviewId + '"], .bupr-flag-button[data-review="' + reviewId + '"]');
+        $reportBtn.replaceWith('<span class="bupr-report-success"><span class="dashicons dashicons-yes"></span> Reported</span>');
         // Auto-fade after 3 seconds
         setTimeout(function() {
-          jQuery('.bupr-flag-success').fadeOut();
+          jQuery('.bupr-report-success').fadeOut();
         }, 3000);
       } else {
         jQuery(".bupr-flag-error").text(response.data.message).show();

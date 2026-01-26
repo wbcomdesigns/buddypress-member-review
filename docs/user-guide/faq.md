@@ -126,26 +126,26 @@ Yes. Administrators can see the actual author in the WordPress admin when editin
 
 By default, activity posts include the actual reviewer. To fully anonymize, disable "Enable review activity" in settings.
 
-## Flagging & Moderation
+## Reporting & Moderation
 
-### What are the flag reasons?
+### What are the report reasons?
 
 - Spam or fake review
 - Harassment or abuse
 - Inappropriate content
 - Conflict of interest
 
-### What happens when a review gets flagged?
+### What happens when a review gets reported?
 
-1. Flag count increases
-2. Admin sees a flag indicator in the review list
+1. Report count increases
+2. Admin sees a report indicator in the review list
 3. If threshold is reached, review is auto-hidden
 
-### How do I dismiss flags?
+### How do I dismiss reports?
 
-Edit the flagged review and use the "Dismiss Flags" option in the Flag Reports section.
+Edit the reported review and use the "Dismiss Reports" option in the Report Details section.
 
-### Can flagged reviews be restored?
+### Can reported reviews be restored?
 
 Yes. Auto-hidden reviews are still in the database. Change their status back to Published to restore them.
 
@@ -185,7 +185,7 @@ The "BP Displayed Member Rating Widget" only shows content on BuddyPress member 
 
 ### Do I need Pro for basic reviews?
 
-No. The free version includes full review functionality: star ratings, multiple criteria, owner replies, flagging, notifications, shortcodes, and widgets.
+No. The free version includes full review functionality: star ratings, multiple criteria, owner replies, reporting, notifications, shortcodes, and widgets.
 
 ### Can I upgrade from Free to Pro later?
 

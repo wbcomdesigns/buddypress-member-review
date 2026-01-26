@@ -4,13 +4,15 @@ Complete reference for all BuddyPress Member Reviews settings, located at **Sett
 
 ## General Tab
 
+![General settings tab](../images/admin-settings-general.png)
+
 ### Review Submission
 
 | Setting | Description | Default |
 |---------|-------------|---------|
 | Multiple Reviews | Allow users to submit multiple reviews to the same member | Off |
 | Show Review Button | Display "Add Review" button on member profile headers | On |
-| Auto approve reviews | Publish reviews immediately without admin approval | Off |
+| Auto Approve Reviews | Publish reviews immediately without admin approval | Off |
 | Update Review | Allow members to edit their submitted reviews | Off |
 
 **Recommendation:** Keep auto-approve off for new communities to prevent spam. Once your community is established, you can enable it.
@@ -19,15 +21,15 @@ Complete reference for all BuddyPress Member Reviews settings, located at **Sett
 
 | Setting | Description | Default |
 |---------|-------------|---------|
-| Show ratings in member directory | Display star ratings on the members list page | On |
-| Reviews pages show at most | Number of reviews per page on profile | 10 |
+| Member Directory Ratings | Display star ratings on the members list page | On |
+| Reviews Per Page | Number of reviews per page on profile | 10 |
 
 ### Role Permissions
 
 | Setting | Description |
 |---------|-------------|
-| Select member roles to write reviews | User roles allowed to submit reviews |
-| User roles to accept reviews | User roles that can receive reviews on their profile |
+| Reviewer Roles | User roles allowed to submit reviews |
+| Reviewee Roles | User roles that can receive reviews on their profile |
 
 **Example:** For a freelancer marketplace, allow "Subscriber" to write reviews and "Freelancer" (custom role) to receive them.
 
@@ -35,7 +37,7 @@ Complete reference for all BuddyPress Member Reviews settings, located at **Sett
 
 | Setting | Description | Default |
 |---------|-------------|---------|
-| Emails | Send email when member receives a review | On |
+| Email Notifications | Send email when member receives a review | On |
 | BuddyPress Notifications | Show notification in BuddyPress notification area | On |
 
 ### Email Templates
@@ -55,17 +57,19 @@ Customize email content with these placeholders:
 
 | Setting | Description | Default |
 |---------|-------------|---------|
-| Enable anonymous reviews | Let reviewers hide their identity | Off |
-| Enable review activity | Post reviews to BuddyPress activity stream | On |
-| Enable owner replies | Let profile owners respond to reviews | On |
-| Enable review flagging | Let members report inappropriate reviews | On |
-| Auto-hide flag threshold | Automatically hide after X flags (0 = disabled) | 5 |
+| Anonymous Reviews | Let reviewers hide their identity | Off |
+| Activity Stream | Post reviews to BuddyPress activity stream | On |
+| Owner Replies | Let profile owners respond to reviews | On |
+| Review Reporting | Let members report inappropriate reviews | On |
+| Auto-Hide Threshold | Automatically hide after X reports (0 = disabled) | 5 |
 
 ## Criteria Tab
 
+![Criteria settings tab](../images/admin-settings-criteria.png)
+
 ### Multiple Criteria
 
-Enable **Allow Multiple Criteria** to rate members on specific aspects instead of a single overall rating.
+Enable **Multiple Criteria** to rate members on specific aspects instead of a single overall rating.
 
 ### Adding Criteria
 
@@ -103,12 +107,14 @@ Enable **Allow Multiple Criteria** to rate members on specific aspects instead o
 
 ## Display Tab
 
+![Display settings tab](../images/admin-settings-display.png)
+
 ### Labels
 
 | Setting | Description | Default |
 |---------|-------------|---------|
-| Review | Singular form used throughout the plugin | Review |
-| Review (Plural) | Plural form | Reviews |
+| Review Label | Singular form used throughout the plugin | Review |
+| Reviews Label (Plural) | Plural form | Reviews |
 
 **Use case:** Change to "Testimonial/Testimonials" or "Feedback" to match your community's terminology.
 
@@ -123,6 +129,8 @@ Enable **Allow Multiple Criteria** to rate members on specific aspects instead o
 Reference for the `[bupr_display_top_members]` shortcode. See [Shortcodes Guide](shortcodes.md) for full details.
 
 ## Pro Features Tab
+
+![Pro Features comparison tab](../images/admin-settings-pro-features.png)
 
 Preview of features available in BuddyPress Member Reviews Pro:
 
