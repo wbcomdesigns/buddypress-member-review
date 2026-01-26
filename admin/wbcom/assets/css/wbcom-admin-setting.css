@@ -522,17 +522,17 @@ div#wb_admin_plugin_name span {
     border-radius: 0;
     position: relative;
     vertical-align: bottom;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-inline-start: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 0;
+    padding: 0 5px;
 }
 
 #wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item:first-child {
-    border-left: none;
+    border-inline-start: none;
 }
 
 #wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a {
     font-size: var(--font-size-medium);
-    padding-left: 25px;
-    padding-right: 25px;
     color: #222222;
     -webkit-transition: all .2s ease-out;
     transition: all .2s ease-out;
@@ -1775,24 +1775,6 @@ div#wb_admin_plugin_name span {
     .wbcom_admin_header-wrapper {
         border-radius: 0;
     }
-}
-
-/* Nav item padding */
-#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a {
-    padding-inline-start: 25px;
-    padding-inline-end: 25px;
-    padding-left: 0; /* Reset physical property */
-    padding-right: 0; /* Reset physical property */
-}
-
-/* Nav item border for RTL */
-#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item {
-    border-inline-start: 1px solid rgba(0, 0, 0, 0.1);
-    border-left: 0; /* Reset physical property */
-}
-
-#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item:first-child {
-    border-inline-start: none;
 }
 
 /* Icon margins */
