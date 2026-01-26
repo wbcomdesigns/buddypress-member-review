@@ -403,6 +403,10 @@ span.move-icons {
     content: "\f478" !important;
 }
 
+.nav-tab-wrapper ul .bupr-pro-features a:before {
+    content: "\f527" !important;
+}
+
 div#setting-error-settings_updated {
     position: absolute;
     left: 50px;

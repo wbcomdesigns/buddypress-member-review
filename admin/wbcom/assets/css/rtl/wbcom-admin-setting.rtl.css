@@ -60,9 +60,15 @@ Wbcom Admin Wrapper Style
 .wbcom-admin-title-section h3,
 h4.wbcom-support-section {
     margin-top: 0;
+    margin-bottom: 15px;
     color: var(--primary-color);
     font-size: var(--font-size-large);
     text-transform: capitalize;
+}
+
+.wbcom-admin-title-section {
+    margin-bottom: 10px;
+    padding-top: 5px;
 }
 
 .wbcom-addons-card-details h2,
@@ -516,11 +522,17 @@ div#wb_admin_plugin_name span {
     border-radius: 0;
     position: relative;
     vertical-align: bottom;
+    border-inline-start: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 0;
+    padding: 0 5px;
+}
+
+#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item:first-child {
+    border-inline-start: none;
 }
 
 #wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a {
     font-size: var(--font-size-medium);
-    padding-right: 30px;
     color: #222222;
     -webkit-transition: all .2s ease-out;
     transition: all .2s ease-out;
@@ -637,7 +649,8 @@ div#wb_admin_plugin_name span {
 .wbcom-admin-settings-page .wbcom-tab-content {
     width: 81%;
     background: #fff;
-    padding-right: 30px;
+    padding-inline-start: 30px;
+    padding-right: 20px;
 }
 
 .wbcom-tab-content select,
@@ -1645,5 +1658,214 @@ div.wbcom-faq-panel p {
     .desktop-license-headings {
         display: none;
     }
+}
+
+/* ========== Accessibility Improvements ========== */
+/* Screen reader text utility class */
+.screen-reader-text {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Focus styles for form elements */
+.wbcom-settings-section-options input[type="text"]:focus,
+.wbcom-settings-section-options input[type="number"]:focus,
+.wbcom-settings-section-options input[type="email"]:focus,
+.wbcom-settings-section-options input[type="url"]:focus,
+.wbcom-settings-section-options select:focus,
+.wbcom-settings-section-options textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(42, 50, 239, 0.2);
+    outline: none;
+}
+
+/* Focus indicator for checkboxes and radios */
+.wbcom-settings-section-options input[type="checkbox"]:focus,
+.wbcom-settings-section-options input[type="radio"]:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Focus for toggle switches */
+.wb-switch input:focus + .wb-slider,
+.wb-admin-switch input:focus + label {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Visible focus for buttons */
+.wbcom-settings-section-options .button:focus,
+.wbcom-admin-settings-page .button:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(42, 50, 239, 0.3);
+    outline: none;
+}
+
+/* Fix: Don't remove focus outlines on interactive elements - override previous rules */
+#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a:focus,
+.wbcom-bp-addons-plugins-title-section .wbcom-addons-plugins-links li a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+/* Tab focus improvements */
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -2px;
+}
+
+/* Link focus states */
+.wbcom-tab-content a:focus,
+.wbcom-welcome-support-info a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ========== RTL Support (Logical Properties) ========== */
+/* Ensure CSS logical properties work for RTL layouts */
+
+/* Settings section label margins */
+.wbcom-settings-section-options ul.wbcom-settings-member-retraction li label {
+    margin-inline-start: 8px;
+    margin-right: 0; /* Reset physical property */
+}
+
+/* Select dropdown margins */
+.wbcom-settings-section-options-flex select#my_dashboard_page {
+    margin-inline-end: 15px;
+    margin-left: 0; /* Reset physical property */
+}
+
+/* Links list margins */
+ul.wbcom-addons-plugins-links li {
+    margin: 0;
+    margin-inline-end: var(--spacing-large);
+}
+
+/* Card button margins */
+.wbcom-addons-card-button a.wbcom-addons-button {
+    margin-inline-end: 10px;
+    margin-left: 0; /* Reset physical property */
+}
+
+/* Plugin version badge */
+div#wb_admin_plugin_name span {
+    margin-inline-start: 30px;
+    margin-right: 0; /* Reset physical property */
+}
+
+/* Header border radius - logical properties */
+.wbcom_admin_header-wrapper {
+    border-start-start-radius: 12px;
+    border-start-end-radius: 12px;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+    border-radius: revert; /* Fallback will use physical if logical not supported */
+}
+
+@supports (border-start-start-radius: 12px) {
+    .wbcom_admin_header-wrapper {
+        border-radius: 0;
+    }
+}
+
+/* Icon margins */
+#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a i,
+#wb_admin_header #wb_admin_nav ul li.wb_admin_nav_item a svg {
+    margin-inline-end: 8px;
+    margin-left: 0; /* Reset physical property */
+}
+
+/* Nav tab icon margin */
+.nav-tab-wrapper ul li a.nav-tab:before {
+    margin-inline-end: 8px;
+    margin-left: 0; /* Reset physical property */
+}
+
+/* License table - first/last child padding */
+.wb-license-form-table tr td:first-child {
+    padding-inline-start: 20px;
+    padding-right: 0; /* Reset physical property */
+}
+
+.wb-license-form-table tr td:last-child {
+    padding-inline-end: 20px;
+    padding-left: 0; /* Reset physical property */
+    text-align: end;
+}
+
+.wb-license-form-table thead th:first-child,
+.wb-license-form-table tfoot th:first-child {
+    padding-inline-start: 20px;
+    padding-right: 0; /* Reset physical property */
+}
+
+/* Submit button alignment */
+.wb-license-form-table .submit {
+    text-align: end;
+}
+
+/* Status icon margins */
+.wb-license-form-table td.wb-license-status:before {
+    margin-inline-end: 5px;
+    margin-left: 0; /* Reset physical property */
+}
+
+/* FAQ accordion icon */
+button.wbcom-faq-accordion::after {
+    float: inline-end;
+    inset-inline-end: 15px;
+    left: auto; /* Reset physical property */
+}
+
+/* Toggle icon float */
+.wb-toggle-icon {
+    float: inline-end;
+}
+
+/* Slider toggle - fix position for RTL */
+.wb-slider:before {
+    inset-inline-start: 6px !important;
+    right: auto !important;
+}
+
+/* Checked state uses transform, which is direction-agnostic */
+
+/* ON/OFF text positioning */
+.wbcom-admin-option-wrap .form-table input[type=checkbox]:after,
+.wbcom-admin-option-wrap .form-table input[type=checkbox]:checked::after,
+.wb-slider.wb-round::after {
+    inset-inline-end: 11px;
+    left: auto; /* Reset physical property */
+}
+
+.wbcom-admin-option-wrap .form-table input[type=checkbox]:checked::after,
+.wb-switch input:checked+.wb-slider::after {
+    inset-inline-end: unset;
+    inset-inline-start: 10px;
+    left: auto;
+    right: auto;
+}
+
+/* Mobile responsive RTL fixes */
+@media screen and (max-width: 1189px) {
+    ul.wbcom-addons-plugins-links li {
+        margin: 0;
+        margin-inline-start: var(--spacing-small);
+    }
+}
+
+/* RTL-specific icon flipping */
+[dir="rtl"] .dashicons-arrow-right-alt,
+[dir="rtl"] .dashicons-arrow-left-alt {
+    transform: scaleX(-1);
 }
 /*# sourceMappingURL=wbcom-admin-setting.rtl.css.map */

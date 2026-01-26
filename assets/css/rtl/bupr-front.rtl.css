@@ -996,4 +996,431 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     font-size: 16px;
     font-weight: normal;
 }
+
+/*--------------------------------------------------------------
+# Owner Reply Section
+--------------------------------------------------------------*/
+
+.bupr-reply-section {
+    margin-top: 15px;
+    clear: both;
+}
+
+.bupr-owner-reply {
+    background: linear-gradient(-135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-right: 4px solid #007cba;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px 0 0 8px;
+}
+
+.bupr-reply-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bupr-reply-header img.avatar {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+.bupr-reply-author {
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.bupr-reply-badge {
+    background: #007cba;
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.bupr-reply-date {
+    color: #666;
+    font-size: 12px;
+}
+
+.bupr-reply-content {
+    font-style: italic;
+    color: #333;
+}
+
+.bupr-reply-content p {
+    margin: 0;
+}
+
+.bupr-reply-form-wrapper {
+    margin-top: 10px;
+}
+
+.bupr-show-reply-form {
+    background: transparent;
+    border: 1px dashed #007cba;
+    color: #007cba;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.bupr-show-reply-form:hover {
+    background: #f0f7fc;
+}
+
+.bupr-reply-form {
+    margin-top: 10px;
+}
+
+.bupr-reply-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.bupr-reply-textarea:focus {
+    border-color: #007cba;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
+}
+
+.bupr-reply-actions {
+    margin-top: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 10px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.bupr-submit-reply {
+    background: #007cba;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bupr-submit-reply:hover {
+    background: #005a87;
+}
+
+.bupr-cancel-reply {
+    background: #f0f0f1;
+    color: #50575e;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bupr-cancel-reply:hover {
+    background: #dcdcde;
+}
+
+.bupr-reply-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-top-color: #007cba;
+    border-radius: 50%;
+    -webkit-animation: bupr-spin 1s linear infinite;
+    animation: bupr-spin 1s linear infinite;
+}
+
+/*--------------------------------------------------------------
+# Report Review Section
+--------------------------------------------------------------*/
+
+.bupr-report-section {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+}
+
+.bp-member-reviews .bupr-row {
+    position: relative;
+}
+
+.bupr-report-button {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px 12px;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #666;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+.bupr-report-button:hover {
+    background: #fff0f0;
+    border-color: #dc3232;
+    color: #dc3232;
+}
+
+.bupr-report-button .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+.bupr-report-text {
+    font-weight: 500;
+}
+
+/* Report Success Message */
+.bupr-report-success {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 4px;
+    color: #46b450;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    background: #ecfdf5;
+    border-radius: 4px;
+    border: 1px solid #d4edda;
+}
+
+.bupr-report-success .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+/* Legacy support for old class names */
+.bupr-flag-section { position: absolute; left: 15px; top: 15px; }
+.bupr-flag-button { background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; padding: 6px 12px; }
+.bupr-flag-success { display: inline-flex; align-items: center; gap: 4px; color: #46b450; font-size: 12px; }
+
+/* Flag Modal */
+.bupr-flag-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999999;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.bupr-flag-modal-content {
+    background: #fff;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.bupr-flag-modal-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.bupr-flag-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #1d2327;
+}
+
+.bupr-flag-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    line-height: 1;
+}
+
+.bupr-flag-modal-close:hover {
+    color: #dc3232;
+}
+
+.bupr-flag-modal-body {
+    padding: 20px;
+}
+
+.bupr-flag-modal-body p {
+    margin: 0 0 15px;
+    color: #50575e;
+}
+
+.bupr-flag-reasons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bupr-flag-reason-option {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-transition: background 0.2s;
+    transition: background 0.2s;
+}
+
+.bupr-flag-reason-option:hover {
+    background: #f0f0f1;
+}
+
+.bupr-flag-reason-option input[type="radio"] {
+    margin: 0;
+}
+
+.bupr-flag-modal-footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #ddd;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.bupr-flag-submit {
+    background: #dc3232;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bupr-flag-submit:hover {
+    background: #a00;
+}
+
+.bupr-flag-cancel {
+    background: #f0f0f1;
+    color: #50575e;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bupr-flag-cancel:hover {
+    background: #dcdcde;
+}
+
+.bupr-flag-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-top-color: #dc3232;
+    border-radius: 50%;
+    -webkit-animation: bupr-spin 1s linear infinite;
+    animation: bupr-spin 1s linear infinite;
+}
+
+@-webkit-keyframes bupr-spin {
+    to {
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes bupr-spin {
+    to {
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+
+/* Responsive adjustments for report and reply */
+@media only screen and (max-width: 480px) {
+    .bupr-report-section,
+    .bupr-flag-section {
+        position: static;
+        margin-top: 10px;
+    }
+
+    .bupr-reply-header {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+    }
+
+    .bupr-reply-actions {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+    }
+
+    .bupr-reply-actions button {
+        width: 100%;
+    }
+}
 /*# sourceMappingURL=bupr-front.rtl.css.map */
