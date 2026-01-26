@@ -97,6 +97,7 @@ Copy to `your-theme/review/`:
 
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-01-26 | ui | Standardize admin labels to Title Case, clearer descriptions | bupr-setting-general-tab.php, bupr-setting-display-tab.php, bupr-setting-criteria-tab.php |
 | 2026-01-26 | docs | QA audit: Fill PRO documentation gaps (admin management, REST API schema, endorsement UX) | pro-features.md, rest-api.md |
 | 2026-01-26 | fix | PHP Warning "Undefined array key 0" when Pro stores ratings with label keys | bupr-reviews-tab-template.php:167-176 |
 | 2026-01-24 | fix | Template consistency: `.rating-sec` now always wraps date, stars conditional inside | bupr-reviews-tab-template.php:124-176 |
