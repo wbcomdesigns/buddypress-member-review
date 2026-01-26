@@ -85,16 +85,30 @@ This widget displays top-rated members. Find it in the widgets section after act
 
 == Screenshots ==
 
-1. Member Reviews at member directory.(png|jpg|jpeg|gif).
-2. Review display at member profile.(png|jpg|jpeg|gif).
-3. Review submission at member profile.(png|jpg|jpeg|gif).
-4. Plugin settings- General Options.(png|jpg|jpeg|gif).
-5. Plugin settings- Review Criteria.(png|jpg|jpeg|gif).
-6. Plugin Option to shortcode.(png|jpg|jpeg|gif).
-7. Plugin Option to display.(png|jpg|jpeg|gif).
+1. Member profile header showing star ratings and review count.
+2. Reviews tab displaying submitted reviews with ratings and criteria breakdown.
+3. Add Review form with star rating fields and anonymous option.
+4. General Settings - configure notifications, permissions, and review options.
+5. Criteria Settings - add and manage custom rating criteria.
+6. Display Settings - customize labels and rating colors.
+7. Admin Reviews List - manage, approve, and moderate all reviews.
 
 
 == Changelog ==
+
+= 3.7.0 =
+* New: Owner Replies - profile owners can respond to reviews once.
+* New: Report System - users can report inappropriate reviews with predefined reasons.
+* New: Auto-hide reviews after configurable report threshold (default: 5).
+* New: Admin settings for owner replies, reporting, and auto-hide threshold.
+* New: Pro Features comparison tab showing available upgrades.
+* New: Comprehensive documentation with screenshots in docs/ folder.
+* Improved: Changed "Flag" terminology to "Report" for clarity.
+* Improved: Admin UI with Title Case labels and clearer descriptions.
+* Improved: Security hardening and coding standards compliance.
+* Fixed: PHP Warning for undefined array key when Pro addon uses label-based criteria.
+* Fixed: Template consistency for rating section display across all modes.
+* Updated: Screenshots for WordPress.org plugin page.
 
 = 3.6.0 =
 * New: Added UI improvements for member reviews on directory page.
