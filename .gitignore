@@ -1,7 +1,21 @@
-.DS_Store
+# Dependencies
 node_modules/
-nbproject
-/nbproject/private/
+vendor/
+
+# Build artifacts
+dist/
+*.log
+*.cache
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+nbproject/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dev files
 task.md
-package.json
-package-lock.json
