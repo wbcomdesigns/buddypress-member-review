@@ -10,6 +10,7 @@
 ## Download Links
 - **Wbcom Designs**: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
 - **WordPress.org**: https://wordpress.org/plugins/bp-user-profile-reviews/
+- **Documentation**: https://docs.wbcomdesigns.com/docs/buddypress-member-review/
 - **Support Forum**: https://wordpress.org/support/plugin/bp-user-profile-reviews/
 
 ## Architecture Docs

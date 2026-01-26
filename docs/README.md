@@ -135,11 +135,12 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 
 ### Free Plugin Support
 - [WordPress.org Support Forum](https://wordpress.org/support/plugin/bp-user-profile-reviews/)
-- [Documentation](https://wbcomdesigns.com/downloads/buddypress-member-reviews/)
+- [Online Documentation](https://docs.wbcomdesigns.com/docs/buddypress-member-review/)
 
 ### Pro Plugin Support
 - Priority email support at support@wbcomdesigns.com
 - [Pro Documentation](user-guide/pro-features.md)
+- [Online Docs](https://docs.wbcomdesigns.com/docs/buddypress-member-review/)
 
 ---
 
