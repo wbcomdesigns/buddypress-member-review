@@ -2,6 +2,8 @@
 
 Content for justifying the value of Member Reviews Pro.
 
+**Important:** All statistics and projections are estimates based on typical customer implementations. Actual results vary based on community size, engagement level, and implementation.
+
 ---
 
 ## Value Framework
@@ -136,7 +138,7 @@ Pro Cost: $69/year
 | Task | Frequency | Time | Monthly Hours |
 |------|-----------|------|---------------|
 | Moderating reviews | Weekly | 30 min | 2 hours |
-| Reviewing flagged content | Weekly | 15 min | 1 hour |
+| Reviewing reported content | Weekly | 15 min | 1 hour |
 | Featuring top members | Monthly | 15 min | 0.25 hours |
 | **Total** | | | **3.25 hours** |
 
@@ -211,6 +213,8 @@ Time spent building/maintaining a review system is time not spent on:
 ---
 
 ## Quick Pitch Numbers
+
+*All statistics based on typical customer implementations. Results vary.*
 
 **For Marketplaces:**
 "Marketplaces using reviews see 40% fewer support tickets. At $50/ticket, that's $2,000+/year saved."

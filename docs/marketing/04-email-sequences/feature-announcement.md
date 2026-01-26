@@ -95,7 +95,7 @@ Version 3.7.0 adds a report system to BuddyPress Member Reviews.
 Any member can report an inappropriate review. After enough reports (you set the threshold), reviews are auto-hidden for admin review.
 
 **Why it matters:**
-Your community helps police itself. You spend less time moderating, and inappropriate content gets flagged faster.
+Your community helps police itself. You spend less time moderating, and inappropriate content gets reported faster.
 
 **How to configure:**
 1. Settings > Member Reviews > General

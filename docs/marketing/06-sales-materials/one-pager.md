@@ -34,7 +34,7 @@ BuddyPress Member Reviews adds trust signals to every profile.
 
 **Owner Replies** — Profile owners can respond once to reviews
 
-**Report System** — Community flags inappropriate content
+**Report System** — Community reports inappropriate content
 
 **Moderation Queue** — You control what gets published
 
@@ -75,14 +75,16 @@ BuddyPress Member Reviews adds trust signals to every profile.
 
 ## Compatibility
 
-- WordPress 5.0+
-- BuddyPress 5.0+
+- WordPress 6.0+
+- BuddyPress 12.0+
 - BuddyBoss Platform
 - Youzify
 
 ---
 
 ## Results
+
+*Based on typical customer implementations:*
 
 **Marketplaces:** 40% fewer support tickets about seller quality
 
@@ -112,11 +114,11 @@ All plans include all Pro features. Difference is number of sites.
 
 ## Get Started
 
-**Free:** wordpress.org/plugins/bp-user-profile-reviews/
+**Free:** https://wordpress.org/plugins/bp-user-profile-reviews/
 
-**Pro:** wbcomdesigns.com/downloads/buddypress-member-reviews-pro
+**Pro:** https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 
-**Documentation:** docs.wbcomdesigns.com/docs/buddypress-member-review/
+**Documentation:** https://docs.wbcomdesigns.com/docs/buddypress-member-review/
 
 **Support:** WordPress.org forums (Free) / Direct email (Pro)
 
@@ -125,9 +127,9 @@ All plans include all Pro features. Difference is number of sites.
 ## About Wbcom Designs
 
 WordPress and BuddyPress plugin developers since 2016.
-10,000+ active installations across our plugin suite.
+10,000+ active installations for BuddyPress Member Reviews plugin.
 
-wbcomdesigns.com
+https://wbcomdesigns.com
 
 ---
 

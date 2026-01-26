@@ -98,7 +98,7 @@ Your community can now self-moderate reviews.
 
 Members report inappropriate content → Reviews auto-hide after threshold → Admins review
 
-Less moderation work for you. Faster flagging of bad content.
+Less moderation work for you. Faster reporting of bad content.
 
 Member Reviews 3.7.0 (free)
 ```

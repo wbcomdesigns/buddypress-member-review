@@ -120,10 +120,9 @@ Detailed feature comparison for sales and decision support.
 
 | Platform | Free | Pro |
 |----------|:----:|:---:|
-| WordPress 5.0+ | ✓ | ✓ |
-| WordPress 6.x | ✓ | ✓ |
-| BuddyPress 5.0+ | ✓ | ✓ |
-| BuddyPress 12.x | ✓ | ✓ |
+| WordPress 6.0+ | ✓ | ✓ |
+| WordPress 6.7+ | ✓ | ✓ |
+| BuddyPress 12.0+ | ✓ | ✓ |
 | BuddyBoss Platform | ✓ | ✓ |
 | BuddyBoss Theme | ✓ | ✓ |
 | Youzify | ✓ | ✓ |
@@ -144,7 +143,7 @@ Detailed feature comparison for sales and decision support.
 | `/bupr/v1/reviews/{id}` | PATCH | Update review |
 | `/bupr/v1/reviews/{id}` | DELETE | Delete review |
 | `/bupr/v1/reviews/{id}/reply` | POST | Add owner reply |
-| `/bupr/v1/reviews/{id}/flag` | POST | Flag review |
+| `/bupr/v1/reviews/{id}/report` | POST | Report review |
 | `/bupr/v1/members/{id}/reviews` | GET | Reviews for member |
 | `/bupr/v1/members/{id}/rating` | GET | Member aggregate rating |
 

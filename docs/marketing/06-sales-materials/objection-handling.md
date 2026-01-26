@@ -139,7 +139,7 @@ This is intentional — self-reviews would undermine the trust system."
 
 1. **Moderation queue** — Require admin approval before reviews publish (optional)
 
-2. **Report system** — Any member can flag inappropriate reviews. After X flags (you set the threshold), reviews auto-hide.
+2. **Report system** — Any member can report inappropriate reviews. After X reports (you set the threshold), reviews auto-hide.
 
 3. **Owner replies** — Profile owners can respond once. Dialogue often resolves issues.
 
@@ -222,7 +222,7 @@ Full API documentation is in our docs site."
 
 Stats:
 - 6+ years of continuous development
-- 10,000+ active installations
+- 10,000+ active installations for BuddyPress Member Reviews plugin
 - 4.8/5 rating on WordPress.org
 - Regular updates (usually monthly)
 

@@ -62,7 +62,7 @@ When your BuddyPress community grows past 1,000 members, you can't read every re
 Here's what we built into Member Reviews:
 
 𝟭. 𝗖𝗼𝗺𝗺𝘂𝗻𝗶𝘁𝘆 𝗿𝗲𝗽𝗼𝗿𝘁𝗶𝗻𝗴
-Any member can flag an inappropriate review. You define the reasons: spam, harassment, conflict of interest.
+Any member can report an inappropriate review. You define the reasons: spam, harassment, conflict of interest.
 
 𝟮. 𝗔𝘂𝘁𝗼-𝗵𝗶𝗱𝗲 𝘁𝗵𝗿𝗲𝘀𝗵𝗼𝗹𝗱
 After X reports (you choose), reviews automatically hide. No admin action required until review.
@@ -90,7 +90,7 @@ BuddyPress Member Reviews 3.7.0 is now available.
 
 𝗡𝗲𝘄 𝗳𝗲𝗮𝘁𝘂𝗿𝗲𝘀:
 • Owner Replies — Profile owners can respond to reviews
-• Report System — Community members flag inappropriate content
+• Report System — Community members report inappropriate content
 • Auto-Hide — Reviews hidden after configurable report threshold
 
 𝗪𝗵𝘆 𝗶𝘁 𝗺𝗮𝘁𝘁𝗲𝗿𝘀:

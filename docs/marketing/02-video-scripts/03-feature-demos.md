@@ -90,7 +90,7 @@ Quick feature demos for website, social media, and documentation.
 
 **VISUAL:** Report confirmation
 
-**NARRATOR:** "Submit, and the review is flagged for admin review."
+**NARRATOR:** "Submit, and the review is reported for admin review."
 
 ---
 

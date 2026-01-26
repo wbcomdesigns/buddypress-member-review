@@ -37,7 +37,7 @@
 > BuddyPress Member Reviews lets community members rate, review, and endorse each other — building trust and surfacing your best contributors.
 
 ### Elevator Pitch (30 Seconds)
-> Most BuddyPress communities have a trust problem. Members don't know who's reliable, who's skilled, or who to hire. Our plugin adds member-to-member reviews with star ratings, written feedback, and moderation tools. The Pro version goes further — choose between traditional ratings, text testimonials for courses, or LinkedIn-style endorsements for professional networks. Over 10,000 sites use it to build trust in their communities.
+> Most BuddyPress communities have a trust problem. Members don't know who's reliable, who's skilled, or who to hire. Our plugin adds member-to-member reviews with star ratings, written feedback, and moderation tools. The Pro version goes further — choose between traditional ratings, text testimonials for courses, or LinkedIn-style endorsements for professional networks. Over 10,000 active installations on WordPress.org.
 
 ---
 
@@ -48,7 +48,7 @@
 
 **Solution:** Star ratings and reviews that surface helpful, reliable members.
 
-**Proof:** Used by 10,000+ BuddyPress communities.
+**Proof:** 10,000+ active installations for BuddyPress Member Reviews plugin.
 
 **CTA:** Install free from WordPress.org.
 
@@ -59,9 +59,11 @@
 
 **Solution:** Criteria-based ratings (Quality, Communication, Timeliness) plus verified badges for proven transactions.
 
-**Proof:** Marketplaces report 40% fewer support tickets after implementation.
+**Proof:** Marketplaces report 40% fewer support tickets after implementation.*
 
 **CTA:** Start free, upgrade to Pro for verified badges and API.
+
+*Results based on typical customer implementations.
 
 ---
 
@@ -70,9 +72,11 @@
 
 **Solution:** Testimonials Mode removes stars entirely — students share experiences in their own words.
 
-**Proof:** Course pages with 5+ testimonials convert 2x better than star ratings alone.
+**Proof:** Course pages with 5+ testimonials convert 2x better than star ratings alone.*
 
 **CTA:** Try Testimonials Mode with Pro.
+
+*Results based on typical customer implementations.
 
 ---
 
@@ -81,9 +85,11 @@
 
 **Solution:** Endorsements Mode — members vouch for each other's skills, LinkedIn-style.
 
-**Proof:** Professional communities see 3x more profile engagement with skill endorsements.
+**Proof:** Professional communities see 3x more profile engagement with skill endorsements.*
 
 **CTA:** Upgrade to Pro for Endorsements Mode.
+
+*Results based on typical customer implementations.
 
 ---
 
@@ -124,7 +130,7 @@
 "Without reviews, members judge each other on... what? Profile photos? Trust takes forever to build when you can't see track records."
 
 ### vs. Building Custom
-"You could build this yourself in 200+ hours. Or install a plugin that 10,000 sites already trust."
+"You could build this yourself in 200+ hours. Or install a plugin with 10,000+ active installations."
 
 ---
 

@@ -28,7 +28,7 @@ Optional text feedback accompanies star ratings. Members share specific experien
 Profile owners can respond to reviews once — thank positive reviewers or address concerns professionally.
 
 **Review Reporting**
-Community members flag inappropriate reviews. Auto-hide reviews after reaching a configurable threshold.
+Community members report inappropriate reviews. Auto-hide reviews after reaching a configurable threshold.
 
 **Moderation Queue**
 Approve reviews before publishing. Admins control what appears on profiles.
@@ -46,8 +46,8 @@ Let reviewers stay private when leaving feedback.
 Customize review display by copying templates to your theme's `/review/` folder.
 
 ### Compatibility
-- WordPress 5.0+
-- BuddyPress 5.0+
+- WordPress 6.0+
+- BuddyPress 12.0+
 - BuddyBoss Platform
 - Youzify
 
@@ -123,7 +123,7 @@ Stars, thumbs up/down, or text fields. Weight criteria to calculate weighted ave
 Full CRUD API for mobile apps and external integrations. Get reviews, post reviews, verify reviews — all programmatically.
 
 **Enhanced Admin**
-Stats dashboard, verified/flagged filters, bulk actions, and detailed meta boxes.
+Stats dashboard, verified/reported filters, bulk actions, and detailed meta boxes.
 
 ### Requirements
 - BuddyPress Member Reviews (free) v3.7.0+

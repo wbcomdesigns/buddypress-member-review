@@ -204,5 +204,5 @@ Difference is number of sites.
 **Pro:** Three review modes, verification, flexible criteria, API. Perfect for marketplaces, courses, and professional networks.
 
 **Links:**
-- Free: wordpress.org/plugins/bp-user-profile-reviews/
-- Pro: wbcomdesigns.com/downloads/buddypress-member-reviews-pro
+- Free: https://wordpress.org/plugins/bp-user-profile-reviews/
+- Pro: https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro

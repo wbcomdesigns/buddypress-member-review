@@ -4,9 +4,9 @@ Collected testimonials and templates for gathering more.
 
 ---
 
-## Existing Testimonials
+## Example Testimonials (Templates)
 
-*Note: Add real testimonials as they're collected.*
+**Important:** The testimonials below are example templates showing the desired format and tone. Replace with real customer testimonials as they're collected. Do not publish these as actual customer quotes.
 
 ### Marketplace Owner
 > "We run a freelancer marketplace with 5,000+ members. Reviews reduced our refund requests by 40%. Buyers now know what to expect before purchasing. The verified badges in Pro were worth the upgrade alone."

@@ -74,7 +74,7 @@ LinkedIn-style skill vouching. Perfect for professional networks and expert dire
 | **Multiple Criteria** | Rate on Quality, Communication, Timeliness — you choose |
 | **Written Reviews** | Optional text feedback with every rating |
 | **Owner Replies** | Let members respond to reviews they receive |
-| **Report System** | Community flags inappropriate reviews |
+| **Report System** | Community reports inappropriate reviews |
 | **Email Notifications** | Members notified when reviewed |
 | **Top Members Shortcode** | Showcase highly-rated members anywhere |
 | **Moderation Queue** | Approve reviews before publishing |
@@ -131,14 +131,17 @@ Full REST API for mobile apps and external integrations. All review data accessi
 **Marketplaces**
 "We run a freelancer marketplace. Reviews reduced our refund requests by 40% — buyers know what they're getting."
 — Marketplace owner, 5,000+ members
+*(Results based on typical customer implementations)*
 
 **Course Platforms**
 "Star ratings felt wrong for education. Testimonials Mode lets students share real success stories."
 — Course creator, 12,000+ students
+*(Results based on typical customer implementations)*
 
 **Professional Networks**
 "Endorsements replaced our awkward rating system. Now members actually use profiles to find expertise."
 — Network founder, 3,000+ professionals
+*(Results based on typical customer implementations)*
 
 ---
 
@@ -203,6 +206,9 @@ Yes. Pro is an addon that requires the free base plugin (v3.7.0+).
 **Is there a trial?**
 No trial, but we offer a 14-day refund policy if Pro doesn't meet your needs.
 
+**Can members delete their own reviews?**
+No. Only admins can delete reviews. Members can edit their own reviews if editing is enabled in settings.
+
 ---
 
 ## Final CTA Section
@@ -222,4 +228,4 @@ Download free and add member reviews in under 5 minutes.
 ## Footer Notes
 - Plugin by Wbcom Designs
 - Support: WordPress.org forums (free) / Direct email (Pro)
-- Documentation: docs.wbcomdesigns.com
+- Documentation: https://docs.wbcomdesigns.com/docs/buddypress-member-review/
