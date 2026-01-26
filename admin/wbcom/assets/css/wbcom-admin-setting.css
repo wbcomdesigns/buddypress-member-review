@@ -1784,12 +1784,6 @@ div#wb_admin_plugin_name span {
     margin-right: 0; /* Reset physical property */
 }
 
-/* Tab content padding */
-.wbcom-admin-settings-page .wbcom-tab-content {
-    padding-inline-start: 30px;
-    padding-left: 0; /* Reset physical property */
-}
-
 /* Nav tab icon margin */
 .nav-tab-wrapper ul li a.nav-tab:before {
     margin-inline-end: 8px;
