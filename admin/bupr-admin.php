@@ -227,8 +227,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				)
 			);
 			add_settings_section( 'bupr-criteria', ' ', array( $this, 'bupr_admin_criteria_content' ), 'bupr-criteria' );
-			$this->plugin_settings_tabs['bupr-shortcode'] = esc_html__( 'Shortcode', 'bp-member-reviews' );
-			add_settings_section( 'bupr-shortcode', ' ', array( $this, 'bupr_admin_shortcode_content' ), 'bupr-shortcode' );
 			$this->plugin_settings_tabs['bupr-display'] = esc_html__( 'Display', 'bp-member-reviews' );
 			register_setting(
 				'bupr_admin_display_options',
@@ -254,10 +252,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 		public function bupr_admin_criteria_content() {
 			include 'tab-templates/bupr-setting-criteria-tab.php';
-		}
-
-		public function bupr_admin_shortcode_content() {
-			include 'tab-templates/bupr-setting-shortcode-tab.php';
 		}
 
 		public function bupr_admin_display_content() {

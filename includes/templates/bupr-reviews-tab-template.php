@@ -165,12 +165,12 @@ $reviews = new WP_Query( $args );
 										}
 									} else {
 										foreach ( $member_review_ratings as $member_review_rating ) {
-
-											if ( 0 == $member_review_rating[0] ) {
+											// Skip if numeric key 0 doesn't exist or is zero (Pro stores with label keys).
+											if ( ! isset( $member_review_rating[0] ) || 0 == $member_review_rating[0] ) {
 												continue;
 											}
 
-											if ( isset( $member_review_rating[0] ) && $member_review_rating[0] !== null ) {
+											if ( $member_review_rating[0] !== null ) {
 												echo '<span class="rating-num">' . esc_html( number_format( $member_review_rating[0], 2 ) ) . '</span>';
 											}
 										}
@@ -182,6 +182,17 @@ $reviews = new WP_Query( $args );
 										<?php echo esc_html( date_i18n( 'M Y', strtotime( $reviews->post->post_date ) ) ); ?>
 									</time>
 								</span>
+								<?php
+								/**
+								 * Fires after the review date in review list.
+								 *
+								 * Used by Pro addon to display verified badges inline.
+								 *
+								 * @since 3.7.0
+								 * @param int $review_id The review post ID.
+								 */
+								do_action( 'bupr_after_review_date', get_the_ID() );
+								?>
 								</div>
 								<?php
 								$user_id = bp_displayed_user_id();

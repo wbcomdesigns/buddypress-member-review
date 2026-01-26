@@ -112,30 +112,44 @@ class bupr_single_member_rating_widget extends WP_Widget {
                     echo ( $user_anonymous_review != 'yes' ) ? wp_kses_post( $members_profile ) : esc_html__( 'Anonymous', 'bp-member-reviews' );
                     echo '</div><div class="item-meta">';
 
-                    // Display the star ratings (fixed 5 stars with actual rating filled)
-                    $bupr_avg_rating = $buprValue;
-                    $stars_on        = floor( $bupr_avg_rating );
-                    $stars_half      = ( $bupr_avg_rating - $stars_on >= 0.5 ) ? 1 : 0;
-                    $stars_off       = 5 - ( $stars_on + $stars_half );
+                    /**
+                     * Filter whether to show star ratings in widget.
+                     * Pro addon sets this to false for Testimonial/Endorsement modes.
+                     *
+                     * @since 3.8.0
+                     * @param bool $show_stars Whether to display star ratings. Default true.
+                     */
+                    $show_stars = apply_filters( 'bupr_widget_show_stars', true );
 
-                    // Filled stars
-                    for ( $i = 1; $i <= $stars_on; $i++ ) {
-                        echo '<span class="fas fa-star bupr-star-rate"></span>';
-                    }
-                    // Half star
-                    if ( $stars_half ) {
-                        echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
-                    }
-                    // Empty stars
-                    for ( $i = 1; $i <= $stars_off; $i++ ) {
-                        echo '<span class="far fa-star bupr-star-rate"></span>';
-                    }
+                    if ( $show_stars ) {
+                        // Display the star ratings (fixed 5 stars with actual rating filled).
+                        $bupr_avg_rating = $buprValue;
+                        $stars_on        = floor( $bupr_avg_rating );
+                        $stars_half      = ( $bupr_avg_rating - $stars_on >= 0.5 ) ? 1 : 0;
+                        $stars_off       = 5 - ( $stars_on + $stars_half );
 
-                    // Display review count and rating (X/5)
-                    echo '</div><span class="bupr-meta">';
-                    /* translators: %1$s: average rating; */
-                    echo sprintf( esc_html__( '%1$s/5', 'bp-member-reviews' ), esc_html( $bupr_avg_rating ) );
-                    echo '</span></div></li>';
+                        // Filled stars.
+                        for ( $i = 1; $i <= $stars_on; $i++ ) {
+                            echo '<span class="fas fa-star bupr-star-rate"></span>';
+                        }
+                        // Half star.
+                        if ( $stars_half ) {
+                            echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
+                        }
+                        // Empty stars.
+                        for ( $i = 1; $i <= $stars_off; $i++ ) {
+                            echo '<span class="far fa-star bupr-star-rate"></span>';
+                        }
+
+                        // Display rating (X/5).
+                        echo '</div><span class="bupr-meta">';
+                        /* translators: %1$s: average rating */
+                        echo sprintf( esc_html__( '%1$s/5', 'bp-member-reviews' ), esc_html( $buprValue ) );
+                        echo '</span>';
+                    } else {
+                        echo '</div>';
+                    }
+                    echo '</div></li>';
 
                     $bupr_user_count++;
                 }

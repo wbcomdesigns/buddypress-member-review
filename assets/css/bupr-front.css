@@ -1181,6 +1181,25 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     height: 16px;
 }
 
+/* Flag Success Message */
+.bupr-flag-success {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #46b450;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 8px;
+    background: #ecfdf5;
+    border-radius: 3px;
+}
+
+.bupr-flag-success .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
 /* Flag Modal */
 .bupr-flag-modal {
     position: fixed;

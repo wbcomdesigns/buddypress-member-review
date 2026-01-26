@@ -143,7 +143,17 @@ if ( ! empty( $review_id ) ) {
 									<?php echo esc_html( $review_date ); ?>
 								</time>
 						</span>
-						<?php echo '</div>'; 
+						<?php
+						/**
+						 * Fires after the review date in single review.
+						 *
+						 * Used by Pro addon to display verified badges inline.
+						 *
+						 * @since 3.7.0
+						 * @param int $review_id The review post ID.
+						 */
+						do_action( 'bupr_after_review_date', get_the_ID() );
+						echo '</div>'; 
 						$bupr_post_content = ( is_object( $review ) && ! empty( $review ) && isset( $review->post_content ) ) ? $review->post_content : '';
 						?>
 						<div class="bupr-col-12 description"><?php echo wp_kses( $bupr_post_content, $allowedposttags ); ?></div>

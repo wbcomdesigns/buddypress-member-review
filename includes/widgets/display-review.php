@@ -96,28 +96,50 @@ class bupr_members_review_setting extends WP_Widget {
                 }
                 echo '<div class="bupr-content-widget">';
                 echo '<div class="bupr-member-title">' . bp_core_get_userlink( $user_id ) . '</div>'; // phpcs:ignore.
-                echo '<div class="bupr-member-rating">';
+                /**
+                 * Filter whether to show star ratings in widget.
+                 * Pro addon sets this to false for Testimonial/Endorsement modes.
+                 *
+                 * @since 3.8.0
+                 * @param bool $show_stars Whether to display star ratings. Default true.
+                 */
+                $show_stars = apply_filters( 'bupr_widget_show_stars', true );
 
-                // Star rating visualization (Fixed 5 stars, consistent display)
-                $stars_on = floor( $aggregate_rating );
-                $stars_half = ( $aggregate_rating - $stars_on >= 0.5 ) ? 1 : 0;
-                $stars_off = 5 - ( $stars_on + $stars_half );
+                /**
+                 * Filter the item type label (reviews/testimonials/endorsements).
+                 * Pro addon changes this based on review mode.
+                 *
+                 * @since 3.8.0
+                 * @param string $label The item type label. Default 'reviews'.
+                 */
+                $item_label = apply_filters( 'bupr_item_type_label', __( 'reviews', 'bp-member-reviews' ) );
 
-                // Display stars
-                for ( $i = 0; $i < $stars_on; $i++ ) {
-                    echo '<span class="fas fa-star bupr-star-rate"></span>';
-                }
-                if ( $stars_half ) {
-                    echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
-                }
-                for ( $i = 0; $i < $stars_off; $i++ ) {
-                    echo '<span class="far fa-star bupr-star-rate"></span>';
-                }
+                if ( $show_stars ) {
+                    echo '<div class="bupr-member-rating">';
 
-                // Display review count and consistent rating format (e.g., 5/5 (1 review))
-                echo '</div>';
-                /* translators: %1$s: aggragate rating; %2$s: Review count; %3$s: Reviews. */
-                echo '<span class="bupr-meta">' . sprintf( esc_html__( '%1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ), esc_html__( 'reviews', 'bp-member-reviews' ) ) . '</span>';
+                    // Star rating visualization (Fixed 5 stars, consistent display).
+                    $stars_on   = floor( $aggregate_rating );
+                    $stars_half = ( $aggregate_rating - $stars_on >= 0.5 ) ? 1 : 0;
+                    $stars_off  = 5 - ( $stars_on + $stars_half );
+
+                    // Display stars.
+                    for ( $i = 0; $i < $stars_on; $i++ ) {
+                        echo '<span class="fas fa-star bupr-star-rate"></span>';
+                    }
+                    if ( $stars_half ) {
+                        echo '<span class="fas fa-star-half-alt bupr-star-rate"></span>';
+                    }
+                    for ( $i = 0; $i < $stars_off; $i++ ) {
+                        echo '<span class="far fa-star bupr-star-rate"></span>';
+                    }
+
+                    echo '</div>';
+                    /* translators: %1$s: aggregate rating; %2$s: Review count; %3$s: item type label */
+                    echo '<span class="bupr-meta">' . sprintf( esc_html__( '%1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ), esc_html( $item_label ) ) . '</span>';
+                } else {
+                    /* translators: %1$s: Review count; %2$s: item type label */
+                    echo '<span class="bupr-meta">' . sprintf( esc_html__( '%1$s %2$s', 'bp-member-reviews' ), esc_html( $review_count ), esc_html( $item_label ) ) . '</span>';
+                }
                 echo '</div></li>';
             }
 

@@ -527,10 +527,13 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
 
       if (response.success) {
         jQuery(".bupr-flag-modal").fadeOut();
-        // Optionally show success message
-        alert(response.data.message);
-        // Hide the flag button for this review
-        jQuery('.bupr-flag-button[data-review="' + reviewId + '"]').hide();
+        // Show inline success message instead of alert
+        var $flagBtn = jQuery('.bupr-flag-button[data-review="' + reviewId + '"]');
+        $flagBtn.replaceWith('<span class="bupr-flag-success"><span class="dashicons dashicons-yes"></span> Reported</span>');
+        // Auto-fade after 3 seconds
+        setTimeout(function() {
+          jQuery('.bupr-flag-success').fadeOut();
+        }, 3000);
       } else {
         jQuery(".bupr-flag-error").text(response.data.message).show();
       }

@@ -109,28 +109,55 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					}
 					$output         .= '<div class="bupr-member-title">' . wp_kses_post( $members_profile ) . '</div>';
 
-					// Display star rating (5-star format) and review count
-					$stars_on   = floor( $aggregate_rating );
-					$stars_half = ( $aggregate_rating - $stars_on >= 0.5 ) ? 1 : 0;
-					$stars_off  = 5 - ( $stars_on + $stars_half );
+					/**
+					 * Filter whether to show star ratings in shortcode.
+					 * Pro addon sets this to false for Testimonial/Endorsement modes.
+					 *
+					 * @since 3.8.0
+					 * @param bool $show_stars Whether to display star ratings. Default true.
+					 * @param int  $user_id    The member's user ID.
+					 */
+					$show_stars = apply_filters( 'bupr_shortcode_show_stars', true, $user_id );
 
-					$output .= '<div class="bupr-member-rating">';
-					for ( $i = 1; $i <= $stars_on; $i++ ) {
-						$output .= apply_filters( 'bupr_shortcode_star_full', '<span class="fas fa-star bupr-star-rate"></span>', $user_id, $i );
+					if ( $show_stars ) {
+						// Display star rating (5-star format) and review count.
+						$stars_on   = floor( $aggregate_rating );
+						$stars_half = ( $aggregate_rating - $stars_on >= 0.5 ) ? 1 : 0;
+						$stars_off  = 5 - ( $stars_on + $stars_half );
+
+						$output .= '<div class="bupr-member-rating">';
+						for ( $i = 1; $i <= $stars_on; $i++ ) {
+							$output .= apply_filters( 'bupr_shortcode_star_full', '<span class="fas fa-star bupr-star-rate"></span>', $user_id, $i );
+						}
+						if ( $stars_half ) {
+							$output .= apply_filters( 'bupr_shortcode_star_half', '<span class="fas fa-star-half-alt bupr-star-rate"></span>', $user_id );
+						}
+						for ( $i = 1; $i <= $stars_off; $i++ ) {
+							$output .= apply_filters( 'bupr_shortcode_star_empty', '<span class="far fa-star bupr-star-rate"></span>', $user_id );
+						}
+						$output .= '</div>';
 					}
-					if ( $stars_half ) {
-						$output .= apply_filters( 'bupr_shortcode_star_half', '<span class="fas fa-star-half-alt bupr-star-rate"></span>', $user_id );
-					}
-					for ( $i = 1; $i <= $stars_off; $i++ ) {
-						$output .= apply_filters( 'bupr_shortcode_star_empty', '<span class="far fa-star bupr-star-rate"></span>', $user_id );
-					}
-					$output .= '</div>';
+
+					/**
+					 * Filter the item type label (reviews/testimonials/endorsements).
+					 * Pro addon changes this based on review mode.
+					 *
+					 * @since 3.8.0
+					 * @param string $label The item type label. Default 'reviews'.
+					 */
+					$item_label = apply_filters( 'bupr_item_type_label', __( 'reviews', 'bp-member-reviews' ) );
 
 					$aggregate_rating = round( $aggregate_rating, 2 );
-					$output         .= '<span class="bupr-meta">';
-					/* translators: %1$s: rating; %2$s: review count */
-					$output         .= apply_filters( 'bupr_shortcode_rating_text', sprintf( esc_html__( 'Rating: %1$s/5 (%2$s reviews)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ) ), $user_id, $aggregate_rating, $review_count );
-					$output         .= '</span>';
+					$output          .= '<span class="bupr-meta">';
+
+					if ( $show_stars ) {
+						/* translators: %1$s: rating; %2$s: review count; %3$s: item type label */
+						$output .= apply_filters( 'bupr_shortcode_rating_text', sprintf( esc_html__( 'Rating: %1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ), esc_html( $item_label ) ), $user_id, $aggregate_rating, $review_count );
+					} else {
+						/* translators: %1$s: review count; %2$s: item type label */
+						$output .= apply_filters( 'bupr_shortcode_count_text', sprintf( esc_html__( '%1$s %2$s', 'bp-member-reviews' ), esc_html( $review_count ), esc_html( $item_label ) ), $user_id, $review_count );
+					}
+					$output .= '</span>';
 
 					$output .= '</div></li>';
 				}

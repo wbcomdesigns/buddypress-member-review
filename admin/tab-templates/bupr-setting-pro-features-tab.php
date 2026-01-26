@@ -45,9 +45,101 @@ endif;
 // Pro is not active - show preview.
 $disabled = 'disabled';
 ?>
+<style>
+.bupr-comparison-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 30px;
+	background: #fff;
+	box-shadow: 0 10px 25px rgba(173, 180, 210, 0.20);
+	border-radius: var(--border-radius-large, 12px);
+	overflow: hidden;
+	border: 1px solid rgba(200, 197, 218, 0.35);
+}
+.bupr-comparison-table th,
+.bupr-comparison-table td {
+	padding: 15px 20px;
+	text-align: left;
+	border-bottom: 1px solid rgba(200, 197, 218, 0.30);
+}
+.bupr-comparison-table thead th {
+	background: var(--primary-color, #2A32EF);
+	color: #fff;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+}
+.bupr-comparison-table thead th:first-child {
+	text-align: left;
+}
+.bupr-comparison-table thead th:not(:first-child) {
+	text-align: center;
+	width: 120px;
+}
+.bupr-comparison-table tbody td:not(:first-child) {
+	text-align: center;
+}
+.bupr-comparison-table tbody tr:hover {
+	background: var(--background-light, #F6F7FE);
+}
+.bupr-comparison-table .feature-name {
+	font-weight: 500;
+	color: var(--text-dark, #1d2327);
+}
+.bupr-comparison-table .feature-desc {
+	font-size: 12px;
+	color: var(--text-light, #646F89);
+	margin-top: 4px;
+}
+.bupr-check-yes {
+	color: var(--success-color, #4fb845);
+	font-size: 18px;
+}
+.bupr-check-no {
+	color: #d1d5db;
+	font-size: 18px;
+}
+.bupr-version-badge {
+	display: inline-block;
+	padding: 4px 12px;
+	border-radius: 20px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+.bupr-version-free {
+	background: #E1E6F4;
+	color: var(--secondary-color, #272B41);
+}
+.bupr-version-pro {
+	background: var(--primary-color, #2A32EF);
+	color: #fff;
+}
+.bupr-upgrade-cta {
+	text-align: center;
+	padding: 30px;
+	background: var(--background-light, #F6F7FE);
+	border-radius: var(--border-radius-large, 12px);
+	margin-top: 20px;
+	border: 1px solid rgba(200, 197, 218, 0.35);
+}
+.bupr-upgrade-cta h3 {
+	margin: 0 0 10px;
+	color: var(--text-dark, #1d2327);
+}
+.bupr-upgrade-cta p {
+	margin: 0 0 20px;
+	color: var(--text-light, #646F89);
+}
+.bupr-pro-badge {
+	background: var(--primary-color, #2A32EF) !important;
+}
+</style>
+
 <div class="wbcom-tab-content">
 	<div class="wbcom-admin-title-section">
-		<h3><?php esc_html_e( 'Pro Features', 'bp-member-reviews' ); ?></h3>
+		<h3><?php esc_html_e( 'Free vs Pro Comparison', 'bp-member-reviews' ); ?></h3>
 	</div>
 	<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
 
@@ -65,19 +157,149 @@ $disabled = 'disabled';
 					</a>
 				</p>
 			</div>
-		<?php else : ?>
-			<!-- Pro is NOT active - show upgrade notice -->
-			<div class="wbcom-settings-section-wrap" style="background: #f0f6fc; border-left: 4px solid #667eea; padding: 15px; margin-bottom: 20px;">
-				<p style="margin: 0 0 10px;">
-					<span class="dashicons dashicons-lock" style="color: #667eea;"></span>
-					<strong><?php esc_html_e( 'Pro Features Preview', 'bp-member-reviews' ); ?></strong>
-					<?php esc_html_e( '- These settings are available with the Pro addon.', 'bp-member-reviews' ); ?>
-				</p>
-				<a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews/" target="_blank" class="button button-primary">
-					<?php esc_html_e( 'Get Pro Version', 'bp-member-reviews' ); ?>
-				</a>
-			</div>
-		<?php endif; // End of notice if/else. ?>
+		<?php endif; ?>
+
+		<!-- Feature Comparison Table -->
+		<table class="bupr-comparison-table">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Feature', 'bp-member-reviews' ); ?></th>
+					<th><span class="bupr-version-badge bupr-version-free"><?php esc_html_e( 'Free', 'bp-member-reviews' ); ?></span></th>
+					<th><span class="bupr-version-badge bupr-version-pro"><?php esc_html_e( 'Pro', 'bp-member-reviews' ); ?></span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Free Features -->
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Star Ratings', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( '5-star ratings with multiple criteria', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Reviews Tab on Profile', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Dedicated tab to display member reviews', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Owner Replies', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Profile owners can respond to reviews', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Review Flagging', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Report inappropriate reviews', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Anonymous Reviews', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Submit reviews without revealing identity', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Email Notifications', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Notify members when they receive reviews', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Moderation Controls', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Approve/reject reviews before publishing', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+
+				<!-- Pro Only Features -->
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Testimonial Mode', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Text-only reviews without star ratings', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-minus bupr-check-no"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Endorsement Mode', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'LinkedIn-style skill endorsements with request flow', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-minus bupr-check-no"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Verified Badges', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Trust signals for authentic reviews', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-minus bupr-check-no"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Flexible Criteria Builder', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Custom rating criteria with stars, thumbs, or text', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-minus bupr-check-no"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'REST API', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Full CRUD API for headless/mobile integration', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-minus bupr-check-no"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Auto-Verify by Tenure', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Automatically verify reviews from long-time members', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-minus bupr-check-no"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="feature-name"><?php esc_html_e( 'Custom Skills Management', 'bp-member-reviews' ); ?></div>
+						<div class="feature-desc"><?php esc_html_e( 'Add/remove endorsement skills from admin', 'bp-member-reviews' ); ?></div>
+					</td>
+					<td><span class="dashicons dashicons-minus bupr-check-no"></span></td>
+					<td><span class="dashicons dashicons-yes-alt bupr-check-yes"></span></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<?php if ( ! $is_pro_active ) : ?>
+		<!-- Upgrade CTA -->
+		<div class="bupr-upgrade-cta">
+			<h3><?php esc_html_e( 'Unlock All Pro Features', 'bp-member-reviews' ); ?></h3>
+			<p><?php esc_html_e( 'Get testimonials, endorsements, verified badges, and more with the Pro addon.', 'bp-member-reviews' ); ?></p>
+			<a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews/" target="_blank" class="button button-primary button-hero">
+				<?php esc_html_e( 'Get Pro Version', 'bp-member-reviews' ); ?>
+			</a>
+		</div>
+		<?php endif; ?>
+
+		<h3 style="margin-top: 40px;"><?php esc_html_e( 'Pro Features Preview', 'bp-member-reviews' ); ?></h3>
+		<p class="description" style="margin-bottom: 20px;"><?php esc_html_e( 'These settings become available when you upgrade to Pro.', 'bp-member-reviews' ); ?></p>
 
 		<div class="form-table">
 
@@ -87,7 +309,7 @@ $disabled = 'disabled';
 					<label>
 						<?php esc_html_e( 'Review Mode', 'bp-member-reviews' ); ?>
 						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
+							<span class="bupr-pro-badge" style="background: #2A32EF; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
 						<?php endif; ?>
 					</label>
 					<p class="description"><?php esc_html_e( 'Choose how members can review each other on your site.', 'bp-member-reviews' ); ?></p>
@@ -116,7 +338,7 @@ $disabled = 'disabled';
 					<label for="bupr_enable_rest_api">
 						<?php esc_html_e( 'REST API', 'bp-member-reviews' ); ?>
 						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
+							<span class="bupr-pro-badge" style="background: #2A32EF; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
 						<?php endif; ?>
 					</label>
 					<p class="description"><?php esc_html_e( 'Full CRUD REST API for reviews integration.', 'bp-member-reviews' ); ?></p>
@@ -135,7 +357,7 @@ $disabled = 'disabled';
 					<label for="bupr_enable_verified_badges">
 						<?php esc_html_e( 'Verified Badges', 'bp-member-reviews' ); ?>
 						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
+							<span class="bupr-pro-badge" style="background: #2A32EF; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
 						<?php endif; ?>
 					</label>
 					<p class="description"><?php esc_html_e( 'Trust signals for authentic reviews.', 'bp-member-reviews' ); ?></p>
@@ -154,7 +376,7 @@ $disabled = 'disabled';
 					<label for="bupr_enable_flexible_criteria">
 						<?php esc_html_e( 'Flexible Criteria', 'bp-member-reviews' ); ?>
 						<?php if ( ! $is_pro_active ) : ?>
-							<span class="bupr-pro-badge" style="background: #667eea; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
+							<span class="bupr-pro-badge" style="background: #2A32EF; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"><?php esc_html_e( 'PRO', 'bp-member-reviews' ); ?></span>
 						<?php endif; ?>
 					</label>
 					<p class="description"><?php esc_html_e( 'Dynamic rating criteria instead of hardcoded.', 'bp-member-reviews' ); ?></p>
@@ -167,22 +389,6 @@ $disabled = 'disabled';
 				</div>
 			</div>
 
-		</div>
-
-		<div style="text-align: center; padding: 20px; margin-top: 20px; background: #f9f9f9; border-radius: 4px;">
-			<p>
-				<span class="dashicons dashicons-unlock" style="color: #667eea;"></span>
-				<?php esc_html_e( 'Unlock all Pro features!', 'bp-member-reviews' ); ?>
-			</p>
-			<?php if ( $is_pro_active && ! $is_pro_licensed ) : ?>
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=wbcom-license-page' ) ); ?>" class="button button-primary button-hero">
-					<?php esc_html_e( 'Activate License', 'bp-member-reviews' ); ?>
-				</a>
-			<?php else : ?>
-				<a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews/" target="_blank" class="button button-primary button-hero">
-					<?php esc_html_e( 'Get Pro Version', 'bp-member-reviews' ); ?>
-				</a>
-			<?php endif; ?>
 		</div>
 
 	</div>
