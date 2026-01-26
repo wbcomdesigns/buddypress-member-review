@@ -35,6 +35,11 @@ GET /bupr/v1/reviews
 | `status` | string | publish | Post status |
 | `orderby` | string | date | Sort field (date, rating) |
 | `order` | string | desc | Sort direction (asc, desc) |
+| `verified` | bool | - | Filter by verification status |
+| `flagged` | bool | - | Filter by flag status |
+| `min_rating` | float | - | Minimum aggregate rating (1.0-5.0) |
+| `date_before` | string | - | ISO 8601 date (e.g., 2026-01-26T00:00:00) |
+| `date_after` | string | - | ISO 8601 date (e.g., 2026-01-01T00:00:00) |
 
 **Response:**
 
@@ -197,6 +202,147 @@ POST /bupr/v1/reviews/{id}/flag
 ```
 
 **Valid reasons:** `spam`, `harassment`, `inappropriate`, `conflict`
+
+## Admin Endpoints
+
+These endpoints require administrator capabilities.
+
+### Verify Review
+
+```
+POST /bupr/v1/reviews/{id}/verify
+```
+
+**Response:**
+
+```json
+{
+    "success": true,
+    "review_id": 123,
+    "verified": true,
+    "verified_type": "admin",
+    "verified_date": "2026-01-26T10:30:00",
+    "verified_by": 1
+}
+```
+
+### Approve Review
+
+```
+POST /bupr/v1/reviews/{id}/approve
+```
+
+Changes review status from `pending` to `publish`.
+
+### Feature Review
+
+```
+POST /bupr/v1/reviews/{id}/feature
+```
+
+Marks a review as featured for prominent display.
+
+### Dismiss Flag
+
+```
+POST /bupr/v1/reviews/{id}/dismiss-flag
+```
+
+Dismisses all flags on a review and resets flag status.
+
+**Response:**
+
+```json
+{
+    "success": true,
+    "review_id": 123,
+    "flag_status": "dismissed",
+    "flag_count": 0
+}
+```
+
+## Full Response Schema
+
+Complete response schema for a single review:
+
+```json
+{
+    "id": 123,
+    "title": "Great experience",
+    "content": "Working with John was fantastic...",
+    "author": {
+        "id": 45,
+        "name": "Jane Smith",
+        "avatar": "https://...",
+        "profile_url": "https://yoursite.com/members/jane/"
+    },
+    "member": {
+        "id": 67,
+        "name": "John Doe",
+        "avatar": "https://...",
+        "profile_url": "https://yoursite.com/members/john/"
+    },
+    "ratings": {
+        "communication": 5,
+        "quality": 4,
+        "timeliness": 5,
+        "would_recommend": "up"
+    },
+    "aggregate_rating": 4.67,
+    "date": "2026-01-15T10:30:00",
+    "date_gmt": "2026-01-15T15:30:00",
+    "modified": "2026-01-16T09:15:00",
+    "status": "publish",
+    "is_anonymous": false,
+    "has_reply": true,
+    "reply": {
+        "content": "Thank you for the kind words!",
+        "date": "2026-01-16T09:15:00"
+    },
+    "verified": true,
+    "verified_type": "admin",
+    "verified_date": "2026-01-16T10:00:00",
+    "verified_by": 1,
+    "featured": false,
+    "flag_status": "none",
+    "flag_count": 0,
+    "flags": [],
+    "_links": {
+        "self": [{"href": "/wp-json/bupr/v1/reviews/123"}],
+        "collection": [{"href": "/wp-json/bupr/v1/reviews"}],
+        "author": [{"href": "/wp-json/wp/v2/users/45"}],
+        "member": [{"href": "/wp-json/bupr/v1/members/67"}]
+    }
+}
+```
+
+### Response Field Reference
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | int | Review post ID |
+| `title` | string | Review title |
+| `content` | string | Review text content |
+| `author` | object | Reviewer user data |
+| `member` | object | Reviewed member data |
+| `ratings` | object | Key-value pairs of criteria ratings |
+| `aggregate_rating` | float | Calculated average (1.0-5.0) |
+| `date` | string | ISO 8601 date in site timezone |
+| `date_gmt` | string | ISO 8601 date in GMT |
+| `modified` | string | Last modification date |
+| `status` | string | `publish`, `pending`, `draft`, `trash` |
+| `is_anonymous` | bool | Whether reviewer is anonymous |
+| `has_reply` | bool | Whether owner replied |
+| `reply` | object/null | Reply content and date |
+| `verified` | bool | Pro: Verification status |
+| `verified_type` | string | Pro: `admin`, `tenure`, `transaction` |
+| `verified_date` | string | Pro: When verified |
+| `verified_by` | int | Pro: Admin user ID |
+| `featured` | bool | Pro: Featured flag |
+| `flag_status` | string | `none`, `flagged`, `resolved`, `dismissed` |
+| `flag_count` | int | Number of flags |
+| `flags` | array | Admin only: Flag details |
+| `_links` | object | HAL links for discovery |
 
 ## Error Responses
 
