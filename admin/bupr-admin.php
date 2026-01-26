@@ -319,9 +319,22 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_plugin_settings_tabs() {
 			$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-welcome';
+
+			/**
+			 * Filter admin settings tabs.
+			 *
+			 * Allows Pro addon or other extensions to modify the available tabs.
+			 * For example, Pro can remove 'bupr-criteria' since it has its own criteria builder.
+			 *
+			 * @since 3.7.1
+			 *
+			 * @param array $tabs Array of tab_key => tab_label pairs.
+			 */
+			$tabs = apply_filters( 'bupr_admin_settings_tabs', $this->plugin_settings_tabs );
+
 			// xprofile setup tab.
 			echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
-			foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
+			foreach ( $tabs as $tab_key => $tab_caption ) {
 				$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
 				echo '<li class="' . esc_attr( $tab_key ) . '"><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings' . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
 			}

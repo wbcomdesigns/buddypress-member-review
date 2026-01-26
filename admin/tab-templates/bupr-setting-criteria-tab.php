@@ -15,9 +15,43 @@ $bupr_multi_rating_allowed_class = 'bupr-show-if-allowed';
 if ( '1' == $bupr['multi_criteria_allowed'] ) {
 	$bupr_multi_rating_allowed_class = '';
 }
+
+// Check if Pro is active and not in ratings mode.
+$is_pro_active       = class_exists( 'BUPR_Pro_Features' ) && method_exists( 'BUPR_Pro_Features', 'is_pro_active' ) && BUPR_Pro_Features::is_pro_active();
+$is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is_ratings_mode' ) && ! BUPR_Pro_Features::is_ratings_mode();
 ?>
 <div class="wbcom-tab-content">
 	<?php
+	// If Pro is active but not in ratings mode, show a notice.
+	if ( $is_not_ratings_mode ) :
+		$current_mode = BUPR_Pro_Features::get_review_mode();
+		$mode_label   = 'testimonials' === $current_mode ? __( 'Testimonials', 'bp-member-reviews' ) : __( 'Endorsements', 'bp-member-reviews' );
+		?>
+		<div class="wbcom-admin-title-section">
+			<h3><?php esc_html_e( 'Review Criteria', 'bp-member-reviews' ); ?></h3>
+		</div>
+		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
+			<div class="wbcom-settings-section-wrap" style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px;">
+				<p style="margin: 0;">
+					<span class="dashicons dashicons-info" style="color: #856404;"></span>
+					<strong><?php esc_html_e( 'Rating Criteria Not Available', 'bp-member-reviews' ); ?></strong>
+				</p>
+				<p style="margin: 10px 0 0 0; color: #856404;">
+					<?php
+					printf(
+						/* translators: 1: Current mode label, 2: Link to Pro Features tab */
+						esc_html__( 'Rating criteria are only used in Star Ratings mode. You are currently using %1$s mode. To manage criteria, switch to Star Ratings mode in the %2$s tab.', 'bp-member-reviews' ),
+						'<strong>' . esc_html( $mode_label ) . '</strong>',
+						'<a href="' . esc_url( admin_url( 'admin.php?page=bp-member-review-settings&tab=bupr-pro-features' ) ) . '">' . esc_html__( 'Pro Features', 'bp-member-reviews' ) . '</a>'
+					);
+					?>
+				</p>
+			</div>
+		</div>
+		<?php
+		return; // Stop here, no form needed.
+	endif;
+
 	/**
 	 * Action hook for Pro addon to render enhanced criteria builder.
 	 *
@@ -55,6 +89,7 @@ if ( '1' == $bupr['multi_criteria_allowed'] ) {
 							<p class="description"><?php esc_html_e( "Enable this option if you want to allow members to be rated by 'Criteria'.", 'bp-member-reviews' ); ?></p>
 						</div>
 						<label class="bupr-switch">
+							<input type="hidden" name="bupr_admin_settings[profile_multi_rating_allowed]" value="0" />
 							<input type="checkbox" value='1' name="bupr_admin_settings[profile_multi_rating_allowed]" id="bupr_allow_multiple_criteria" <?php checked( esc_attr( $bupr['multi_criteria_allowed'] ), '1' ); ?>>
 							<div class="bupr-slider bupr-round"></div>
 						</label>

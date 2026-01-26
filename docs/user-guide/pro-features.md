@@ -341,14 +341,16 @@ See the full [REST API documentation](../developer-guide/rest-api.md).
 
 ### How Endorsements Work
 
+**Important:** The "Endorse [Name]" button only appears when Endorsements mode is active in Pro settings. It won't show in Ratings or Testimonials mode.
+
 #### Giving an Endorsement
 
-1. **Visit a profile:** See "Endorse [Name]" button in profile header
+1. **Visit a profile:** See "Endorse [Name]" button in profile header (only on other users' profiles)
 2. **Click button:** Opens skills selection modal
 3. **Select skills:** Check skills you want to endorse (checkboxes)
 4. **Add message (optional):** Write a note explaining your endorsement
 5. **Submit:** Click "Submit Endorsement"
-6. **Confirmation:** Button changes to "Endorsed ✓" badge
+6. **Confirmation:** Success message shown, button disappears (endorsement visible in Endorsements tab)
 
 #### Skills Selection Modal
 
@@ -408,8 +410,8 @@ Profile owners manage pending endorsements via a dedicated subnav tab.
 - Shows count badge: "Pending Requests (3)"
 
 **Tab Location:**
-- Under the main "Endorsements" tab
-- Next to "Add Endorsement" (if visible)
+- Under the main "Endorsements" tab as a subnav item
+- Note: "Add Endorsement" subnav is hidden since endorsements use the header button flow
 
 **Request Display:**
 Each pending request shows:
