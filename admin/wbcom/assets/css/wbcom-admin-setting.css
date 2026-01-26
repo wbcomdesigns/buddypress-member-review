@@ -649,7 +649,8 @@ div#wb_admin_plugin_name span {
 .wbcom-admin-settings-page .wbcom-tab-content {
     width: 81%;
     background: #fff;
-    padding-left: 30px;
+    padding-inline-start: 30px;
+    padding-left: 20px;
 }
 
 .wbcom-tab-content select,
