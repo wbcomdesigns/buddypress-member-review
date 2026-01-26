@@ -7,6 +7,11 @@
 - **WordPress.org Slug**: bp-user-profile-reviews
 - **Prefix**: bupr_
 
+## Download Links
+- **Wbcom Designs**: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
+- **WordPress.org**: https://wordpress.org/plugins/bp-user-profile-reviews/
+- **Support Forum**: https://wordpress.org/support/plugin/bp-user-profile-reviews/
+
 ## Architecture Docs
 Full documentation in `docs/architecture/`:
 - [PLUGIN_ARCHITECTURE.md](docs/architecture/PLUGIN_ARCHITECTURE.md) - Complete reference

@@ -2,6 +2,19 @@
 
 Welcome to the official documentation for BuddyPress Member Reviews, a comprehensive review and rating system for BuddyPress communities.
 
+## Download Links
+
+### Free Version
+- **Wbcom Designs:** [https://wbcomdesigns.com/downloads/buddypress-member-reviews/](https://wbcomdesigns.com/downloads/buddypress-member-reviews/)
+- **WordPress.org:** [https://wordpress.org/plugins/bp-user-profile-reviews/](https://wordpress.org/plugins/bp-user-profile-reviews/)
+
+### Pro Version
+- **Product Page:** [https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro](https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro)
+- **Item Name:** BuddyPress Member Reviews Pro
+- **Item ID:** post=1649751
+
+---
+
 ## Documentation Index
 
 ### For Site Administrators
@@ -23,31 +36,118 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 | [REST API](developer-guide/rest-api.md) | API endpoints (Pro feature) |
 | [Database Schema](developer-guide/database.md) | Post meta and user meta reference |
 
-### Feature Comparison
+### Reference Files
 
-| Feature | Free | Pro |
-|---------|------|-----|
-| Star Ratings | Yes | Yes |
-| Multiple Criteria | Yes | Yes |
-| Owner Replies | Yes | Yes |
-| Review Flagging | Yes | Yes |
-| Email Notifications | Yes | Yes |
-| BuddyPress Notifications | Yes | Yes |
-| Anonymous Reviews | Yes | Yes |
-| Activity Stream | Yes | Yes |
-| Widgets & Shortcodes | Yes | Yes |
-| Testimonial Mode | - | Yes |
-| Endorsement Mode | - | Yes |
-| Verified Badges | - | Yes |
-| Flexible Criteria (Thumbs/Text) | - | Yes |
-| REST API | - | Yes |
+| File | Description |
+|------|-------------|
+| [FILE_INDEX.md](FILE_INDEX.md) | Complete file listing with purposes |
+| [PLUGIN_ARCHITECTURE.md](architecture/PLUGIN_ARCHITECTURE.md) | Technical architecture reference |
+| [Pro Features Guide](user-guide/pro-features.md) | Pro addon feature documentation |
+| [FAQ](user-guide/faq.md) | Frequently asked questions |
 
-## Quick Links
+---
 
-- [WordPress.org Plugin Page](https://wordpress.org/plugins/bp-user-profile-reviews/)
-- [Support Forum](https://wordpress.org/support/plugin/bp-user-profile-reviews/)
-- [Wbcom Designs](https://wbcomdesigns.com/)
+## Feature Comparison
 
-## Version
+### Free Features
 
-This documentation covers version **3.7.0** and later.
+| Feature | Description |
+|---------|-------------|
+| Star Ratings | 1-5 star ratings with visual display |
+| Multiple Criteria | Configure custom rating criteria (Quality, Communication, etc.) |
+| Owner Replies | Profile owners can respond to reviews |
+| Review Flagging | Users can report inappropriate reviews |
+| Auto-Hide Threshold | Reviews auto-hidden after X flags |
+| Email Notifications | Notify members of new reviews |
+| BuddyPress Notifications | In-app notification bell alerts |
+| Anonymous Reviews | Option for reviewers to stay anonymous |
+| Activity Stream | Post reviews to BuddyPress activity feed |
+| Profile Header Ratings | Display aggregate rating on member profiles |
+| Top Members Shortcode | `[bupr_display_top_members]` shortcode |
+| Review Widget | Sidebar widget for recent reviews |
+| Member Rating Widget | Display member's rating on profile |
+| Template Overrides | Customize templates via theme |
+| Role-Based Access | Control who can review and be reviewed |
+| Review Editing | Allow members to edit their reviews |
+| Moderation Queue | Approve reviews before publishing |
+
+### Pro Features
+
+| Feature | Description |
+|---------|-------------|
+| **Review Modes** | |
+| Testimonials Mode | Text-only reviews without star ratings |
+| Endorsements Mode | LinkedIn-style skill endorsement system |
+| **Trust & Verification** | |
+| Verified Badges | Mark authentic reviews with trust signals |
+| Auto-Verify by Tenure | Auto-verify reviews from long-term members |
+| Admin Verification | Manual verification from admin panel |
+| **Advanced Criteria** | |
+| Flexible Criteria Builder | Create criteria with stars, thumbs, or text |
+| Weighted Ratings | Assign weights to criteria for averages |
+| **API & Integration** | |
+| REST API | Full CRUD API for mobile apps and integrations |
+| Webhooks Support | Trigger external services on review events |
+| **Endorsement Features** | |
+| Skill Selection Modal | Choose skills to endorse |
+| Custom Skills | Admin-defined skill list |
+| Pending Requests | Approve/decline endorsement requests |
+
+---
+
+## Quick Start
+
+### Installation
+
+1. Download from [WordPress.org](https://wordpress.org/plugins/bp-user-profile-reviews/)
+2. Upload to `/wp-content/plugins/`
+3. Activate in WordPress admin
+4. Go to **Settings > Member Reviews** to configure
+
+### Basic Configuration
+
+1. **General Tab**: Set auto-approve, notifications, flagging options
+2. **Criteria Tab**: Define rating criteria (Quality, Communication, etc.)
+3. **Display Tab**: Customize star colors, labels, positions
+4. **Shortcode Tab**: Generate shortcodes for your pages
+
+### Pro Addon
+
+1. Purchase from [Wbcom Designs](https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro)
+2. Install alongside the free plugin
+3. Activate and enter license key
+4. Configure review mode in **Settings > Member Reviews > Pro**
+
+---
+
+## Requirements
+
+| Requirement | Minimum | Recommended |
+|-------------|---------|-------------|
+| WordPress | 5.0 | 6.0+ |
+| PHP | 7.4 | 8.0+ |
+| BuddyPress/BuddyBoss | 6.0 | Latest |
+| MySQL | 5.6 | 8.0 |
+
+---
+
+## Support
+
+### Free Plugin Support
+- [WordPress.org Support Forum](https://wordpress.org/support/plugin/bp-user-profile-reviews/)
+- [Documentation](https://wbcomdesigns.com/downloads/buddypress-member-reviews/)
+
+### Pro Plugin Support
+- Priority email support at support@wbcomdesigns.com
+- [Pro Documentation](user-guide/pro-features.md)
+
+---
+
+## Version Information
+
+| Version | Plugin |
+|---------|--------|
+| Free | 3.7.0 |
+| Pro | 1.0.0 |
+
+**Last Documentation Update:** 2026-01-26
