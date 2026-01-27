@@ -28,7 +28,7 @@ Both pages use consistent Wbcom Designs branding:
 | Muted Text | `#767676` | Secondary text |
 | Border | `#e3e3e3` | Dividers, borders |
 | Background | `#f6f6f6` | Light backgrounds |
-| Pro Accent | `#6c5ce7` | Pro features highlight |
+| Pro Accent | `#1d76da` | Pro features highlight |
 | Testimonials | `#00b894` | Testimonials mode color |
 | Endorsements | `#0984e3` | Endorsements mode color |
 

@@ -42,7 +42,7 @@ That's more persuasive than a number.
 
 Switch to Testimonials Mode in one click. Your existing ratings stay saved if you switch back.
 
-Pro starts at $69/year: https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
+Pro starts at $49/year: https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 ```
 
 ---

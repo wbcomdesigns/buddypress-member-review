@@ -94,12 +94,11 @@ Detailed feature comparison for sales and decision support.
 
 | Plan | Sites | Price/Year | Per-Site Cost |
 |------|-------|------------|---------------|
-| Single | 1 | $69 | $69 |
-| 5-License | 5 | $129 | $25.80 |
-| Starter | 25 | $199 | $7.96 |
-| Developer | Unlimited | $299 | $0* |
+| Personal | 1 | $49 | $49 |
+| Professional | 5 | $99 | $19.80 |
+| Agency | Unlimited | $129 | $0* |
 
-*Developer license is unlimited sites.
+*Agency license is unlimited sites.
 
 ---
 

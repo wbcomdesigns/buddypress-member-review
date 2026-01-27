@@ -12,7 +12,7 @@ Common objections and how to address them.
 "What budget were you expecting for a review system?"
 
 **Acknowledge:**
-"I hear you. $69/year is a real cost, especially if you're not sure you need the Pro features."
+"I hear you. $49/year is a real cost, especially if you're not sure you need the Pro features."
 
 **Address:**
 "Here's how I'd think about it:
@@ -334,7 +334,7 @@ That's 100+ developer hours minimum. At $50-100/hour, you're looking at $5,000-1
 
 Plus ongoing maintenance: WordPress updates, BuddyPress compatibility, security patches.
 
-Member Reviews Pro is $69-299/year and does all of that.
+Member Reviews Pro is $49-129/year and does all of that.
 
 Build custom if you need something truly unique. Use a plugin if your needs are standard."
 

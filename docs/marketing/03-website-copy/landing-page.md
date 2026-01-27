@@ -111,10 +111,9 @@ Full REST API for mobile apps and external integrations. All review data accessi
 
 | Plan | Price | Sites | Features |
 |------|-------|-------|----------|
-| Single | $69/yr | 1 site | All Pro features |
-| 5-License | $129/yr | 5 sites | All Pro features |
-| Starter | $199/yr | 25 sites | All Pro features |
-| Developer | $299/yr | Unlimited | All Pro features |
+| Personal | $49/yr | 1 site | All Pro features |
+| Professional | $99/yr | 5 sites | All Pro features |
+| Agency | $129/yr | Unlimited | All Pro features |
 
 ### CTA
 "Get Pro" → wbcomdesigns.com/downloads/buddypress-member-reviews-pro

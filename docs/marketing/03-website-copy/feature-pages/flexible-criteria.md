@@ -215,10 +215,9 @@ Included in all Pro licenses:
 
 | Plan | Sites | Price/Year |
 |------|-------|------------|
-| Single | 1 | $69 |
-| 5-License | 5 | $129 |
-| Starter | 25 | $199 |
-| Developer | Unlimited | $299 |
+| Personal | 1 | $49 |
+| Professional | 5 | $99 |
+| Agency | Unlimited | $129 |
 
 **Purchase Pro:** https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 

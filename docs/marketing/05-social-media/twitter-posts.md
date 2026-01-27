@@ -28,7 +28,7 @@ Star ratings don't fit every community. Course platforms need success stories, n
 
 Testimonials Mode removes ratings. Students share experiences in their own words.
 
-$69/year → wbcomdesigns.com/downloads/buddypress-member-reviews-pro
+$49/year → wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 ```
 
 ---
@@ -126,7 +126,7 @@ Three ways to review members:
 
 Pick what fits your community.
 
-Member Reviews Pro: $69/year
+Member Reviews Pro: $49/year
 ```
 
 ---
@@ -239,7 +239,7 @@ TL;DR:
 → Marketplace at scale? Get Pro for Verified Badges.
 
 Free: wordpress.org/plugins/bp-user-profile-reviews/
-Pro: wbcomdesigns.com ($69/year)
+Pro: wbcomdesigns.com ($49/year)
 ```
 
 ---

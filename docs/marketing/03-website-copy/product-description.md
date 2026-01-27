@@ -132,10 +132,9 @@ Stats dashboard, verified/reported filters, bulk actions, and detailed meta boxe
 ### Pricing
 | Plan | Sites | Price |
 |------|-------|-------|
-| Single | 1 | $69/year |
-| 5-License | 5 | $129/year |
-| Starter | 25 | $199/year |
-| Developer | Unlimited | $299/year |
+| Personal | 1 | $49/year |
+| Professional | 5 | $99/year |
+| Agency | Unlimited | $129/year |
 
 ### CTA
 Add to Cart

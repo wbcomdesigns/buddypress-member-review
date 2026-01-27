@@ -20,8 +20,8 @@
             --bg-light: #f6f6f6;
             --bg-white: #ffffff;
             --success: #28a745;
-            --pro-accent: #6c5ce7;
-            --pro-gradient: linear-gradient(135deg, #6c5ce7 0%, #a855f7 100%);
+            --pro-accent: #1d76da;
+            --pro-gradient: linear-gradient(135deg, #1d76da 0%, #3c8ce6 100%);
             --testimonials-color: #00b894;
             --endorsements-color: #0984e3;
             --verified-color: #fdcb6e;
@@ -440,8 +440,10 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .pricing-card {
@@ -459,9 +461,9 @@
         }
 
         .pricing-card.popular {
-            border-color: var(--pro-accent);
+            border-color: var(--primary);
             transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(108, 92, 231, 0.15);
+            box-shadow: 0 15px 40px rgba(29, 118, 218, 0.15);
         }
 
         .popular-badge {
@@ -947,7 +949,7 @@
                     <p class="hero-subtitle">Not every community needs star ratings. Choose Testimonials for courses, Endorsements for professional networks, or enhanced Ratings for marketplaces.</p>
                     <div class="hero-ctas">
                         <a href="#pricing" class="btn btn-pro btn-large">
-                            Get Pro — Starting $69/yr
+                            Get Pro — Starting $49/yr
                         </a>
                         <a href="https://wordpress.org/plugins/bp-user-profile-reviews/" class="btn btn-outline btn-large">
                             Download Free First
@@ -1093,9 +1095,9 @@
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card">
-                    <h3>Single</h3>
+                    <h3>Personal License</h3>
                     <div class="pricing-sites">1 Site</div>
-                    <div class="pricing-price">$69<span>/yr</span></div>
+                    <div class="pricing-price">$49<span>/yr</span></div>
                     <div class="pricing-period">Billed annually</div>
                     <ul class="pricing-features">
                         <li>All 3 review modes</li>
@@ -1105,14 +1107,14 @@
                         <li>Priority support</li>
                         <li>1 year updates</li>
                     </ul>
-                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Single</a>
+                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Personal</a>
                 </div>
                 <div class="pricing-card popular">
                     <span class="popular-badge">Most Popular</span>
-                    <h3>5-License</h3>
+                    <h3>Professional License</h3>
                     <div class="pricing-sites">5 Sites</div>
-                    <div class="pricing-price">$129<span>/yr</span></div>
-                    <div class="pricing-period">$25.80 per site</div>
+                    <div class="pricing-price">$99<span>/yr</span></div>
+                    <div class="pricing-period">$19.80 per site</div>
                     <ul class="pricing-features">
                         <li>All 3 review modes</li>
                         <li>Verified badges</li>
@@ -1121,27 +1123,12 @@
                         <li>Priority support</li>
                         <li>1 year updates</li>
                     </ul>
-                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-pro">Get 5-License</a>
+                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-pro">Get Professional</a>
                 </div>
                 <div class="pricing-card">
-                    <h3>Starter</h3>
-                    <div class="pricing-sites">25 Sites</div>
-                    <div class="pricing-price">$199<span>/yr</span></div>
-                    <div class="pricing-period">$7.96 per site</div>
-                    <ul class="pricing-features">
-                        <li>All 3 review modes</li>
-                        <li>Verified badges</li>
-                        <li>Flexible criteria</li>
-                        <li>REST API</li>
-                        <li>Priority support</li>
-                        <li>1 year updates</li>
-                    </ul>
-                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Starter</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Developer</h3>
+                    <h3>Agency License</h3>
                     <div class="pricing-sites">Unlimited Sites</div>
-                    <div class="pricing-price">$299<span>/yr</span></div>
+                    <div class="pricing-price">$129<span>/yr</span></div>
                     <div class="pricing-period">Best for agencies</div>
                     <ul class="pricing-features">
                         <li>All 3 review modes</li>
@@ -1151,7 +1138,7 @@
                         <li>Priority support</li>
                         <li>1 year updates</li>
                     </ul>
-                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Developer</a>
+                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Agency</a>
                 </div>
             </div>
         </div>
@@ -1331,7 +1318,7 @@
             <p>Choose the review style that fits your community. Get started today.</p>
             <div class="cta-buttons">
                 <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-white btn-large">
-                    Get Pro — Starting $69/yr
+                    Get Pro — Starting $49/yr
                 </a>
                 <a href="https://wordpress.org/plugins/bp-user-profile-reviews/" class="btn btn-ghost btn-large">
                     Download Free First

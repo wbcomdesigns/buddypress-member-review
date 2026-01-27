@@ -9,10 +9,9 @@ Complete marketing materials for the Free and Pro versions of BuddyPress Member 
 | Version | Price | Sites |
 |---------|-------|-------|
 | Free | $0 | Unlimited |
-| Pro Single | $69/yr | 1 site |
-| Pro 5-License | $129/yr | 5 sites |
-| Pro Starter | $199/yr | 25 sites |
-| Pro Developer | $299/yr | Unlimited |
+| Pro Personal | $49/yr | 1 site |
+| Pro Professional | $99/yr | 5 sites |
+| Pro Agency | $129/yr | Unlimited |
 
 **Product Links:**
 - Free: https://wordpress.org/plugins/bp-user-profile-reviews/

@@ -51,7 +51,7 @@ After Reviews:
 
 Monthly Savings: $150
 Annual Savings: $1,800
-Pro Cost: $69-299/year
+Pro Cost: $49-129/year
 ROI: 500-2,500%
 ```
 
@@ -83,7 +83,7 @@ After Testimonials:
 
 Monthly Increase: $1,000
 Annual Increase: $12,000
-Pro Cost: $69/year
+Pro Cost: $49/year
 ROI: 17,000%+
 ```
 
@@ -118,7 +118,7 @@ For 1,000 member network:
 Value per connection: $50 (networking ROI estimate)
 Monthly Value: $2,000
 Annual Value: $24,000
-Pro Cost: $69/year
+Pro Cost: $49/year
 ```
 
 ---
@@ -171,9 +171,9 @@ Pro Cost: $69/year
 
 **5-Year Custom Cost:** $15,000 + ($4,000 × 5) = **$35,000**
 
-**5-Year Plugin Cost:** $69 × 5 = **$345** (Single license)
+**5-Year Plugin Cost:** $49 × 5 = **$245** (Personal license)
 
-**Savings:** $34,655
+**Savings:** $34,755
 
 ---
 
@@ -226,7 +226,7 @@ Time spent building/maintaining a review system is time not spent on:
 "Professional networks see 3x more profile engagement with endorsements. More engagement = more value."
 
 **General:**
-"Building this yourself costs $15,000+. Plugin is $69/year. That's 200x cheaper."
+"Building this yourself costs $15,000+. Plugin is $49/year. That's 200x cheaper."
 
 ---
 

@@ -113,7 +113,7 @@ That's why we built BuddyPress Member Reviews Pro.
 - **Flexible Criteria** — Stars, thumbs up/down, or text fields
 - **REST API** — Build mobile apps or connect external tools
 
-**Pricing starts at $69/year** for a single site.
+**Pricing starts at $49/year** for a single site.
 
 Check it out: https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 

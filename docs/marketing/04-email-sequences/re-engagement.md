@@ -249,10 +249,9 @@ Use code: COMEBACK25
 
 | Plan | Regular | With Code |
 |------|---------|-----------|
-| Single | $69 | $52 |
-| 5-License | $129 | $97 |
-| Starter | $199 | $149 |
-| Developer | $299 | $224 |
+| Personal | $49 | $37 |
+| Professional | $99 | $74 |
+| Agency | $129 | $97 |
 
 ---
 

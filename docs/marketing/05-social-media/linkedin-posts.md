@@ -48,7 +48,7 @@ That's why we built three review modes:
 
 Same plugin. Different presentation. Choose what fits your community.
 
-BuddyPress Member Reviews Pro — $69/year
+BuddyPress Member Reviews Pro — $49/year
 ```
 
 ### Community Moderation at Scale
@@ -119,7 +119,7 @@ Member Reviews Pro includes all three modes, plus:
 • Full REST API
 • Priority support
 
-Pricing: $69/year (single site) to $299/year (unlimited sites)
+Pricing: $49/year (single site) to $129/year (unlimited sites)
 
 wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 

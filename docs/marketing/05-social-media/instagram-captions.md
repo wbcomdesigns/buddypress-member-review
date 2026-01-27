@@ -107,7 +107,7 @@ When to upgrade:
 **Slide 5:**
 ```
 Free: WordPress.org
-Pro: $69/year
+Pro: $49/year
 
 Link in bio for both.
 ```

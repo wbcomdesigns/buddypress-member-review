@@ -79,7 +79,7 @@ Weighted averages let you prioritize what matters most.
 
 ---
 
-Interested? Pro starts at $69/year: https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
+Interested? Pro starts at $49/year: https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 
 Questions? Reply here.
 
@@ -115,7 +115,7 @@ That's more persuasive than "5 stars."
 
 ---
 
-Try it: $69/year for a single site
+Try it: $49/year for a single site
 https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 
 — Varun
@@ -157,7 +157,7 @@ It's familiar (LinkedIn pioneered it) and appropriate for professional contexts.
 
 ---
 
-Upgrade: $69/year
+Upgrade: $49/year
 https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 
 — Varun
@@ -193,7 +193,7 @@ Pro features are there when you need them — but Free might be all you need.
 
 ---
 
-If you want to explore Pro: $69/year
+If you want to explore Pro: $49/year
 https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 
 Or just keep using Free — it's fully functional.
@@ -224,10 +224,9 @@ Use code: UPGRADE20
 
 | Plan | Regular | With Code |
 |------|---------|-----------|
-| Single (1 site) | $69 | $55 |
-| 5-License | $129 | $103 |
-| Starter (25 sites) | $199 | $159 |
-| Developer (unlimited) | $299 | $239 |
+| Personal (1 site) | $49 | $39 |
+| Professional (5 sites) | $99 | $79 |
+| Agency (unlimited) | $129 | $103 |
 
 **What you get:**
 - Three review modes (Ratings, Testimonials, Endorsements)
