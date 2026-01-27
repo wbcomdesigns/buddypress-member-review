@@ -42,6 +42,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: 16px;
@@ -107,6 +111,16 @@
             color: var(--primary);
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--heading);
+            padding: 5px;
+        }
+
         /* Buttons */
         .btn {
             display: inline-flex;
@@ -164,7 +178,7 @@
         /* Hero Section */
         .hero {
             padding: 80px 0 100px;
-            background: linear-gradient(135deg, #f8f4ff 0%, var(--bg-white) 100%);
+            background: linear-gradient(135deg, #f0f7ff 0%, var(--bg-white) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -277,6 +291,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
+            align-items: stretch;
         }
 
         .mode-card {
@@ -287,6 +302,8 @@
             text-align: center;
             transition: all 0.3s;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .mode-card:hover {
@@ -343,6 +360,7 @@
         .mode-features {
             text-align: left;
             list-style: none;
+            flex: 1;
         }
 
         .mode-features li {
@@ -361,7 +379,7 @@
         }
 
         .mode-best-for {
-            margin-top: 25px;
+            margin-top: auto;
             padding-top: 20px;
             border-top: 1px solid var(--border);
             font-size: 14px;
@@ -382,6 +400,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 30px;
+            align-items: stretch;
         }
 
         .feature-card {
@@ -453,6 +472,7 @@
             gap: 30px;
             max-width: 1000px;
             margin: 0 auto;
+            align-items: stretch;
         }
 
         .pricing-card {
@@ -463,6 +483,8 @@
             text-align: center;
             transition: all 0.3s;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .pricing-card:hover {
@@ -522,6 +544,7 @@
             list-style: none;
             text-align: left;
             margin-bottom: 25px;
+            flex: 1;
         }
 
         .pricing-features li {
@@ -546,6 +569,7 @@
 
         .pricing-card .btn {
             width: 100%;
+            margin-top: auto;
         }
 
         /* Comparison Section */
@@ -611,7 +635,7 @@
         }
 
         .feature-highlight {
-            background: rgba(108, 92, 231, 0.05);
+            background: rgba(29, 118, 218, 0.05);
         }
 
         /* Testimonials */
@@ -624,12 +648,15 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
+            align-items: stretch;
         }
 
         .testimonial-card {
             background: var(--bg-light);
             padding: 35px;
             border-radius: 16px;
+            display: flex;
+            flex-direction: column;
         }
 
         .testimonial-mode {
@@ -663,12 +690,14 @@
             color: var(--heading);
             margin-bottom: 20px;
             line-height: 1.7;
+            flex: 1;
         }
 
         .testimonial-author {
             display: flex;
             align-items: center;
             gap: 15px;
+            margin-top: auto;
         }
 
         .testimonial-avatar {
@@ -704,6 +733,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
+            align-items: stretch;
         }
 
         .faq-item {
@@ -912,6 +942,10 @@
                 display: none;
             }
 
+            .mobile-menu-btn {
+                display: inline-flex !important;
+            }
+
             .cta h2 {
                 font-size: 32px;
             }
@@ -944,6 +978,7 @@
                     <a href="#faq">FAQ</a>
                     <a href="#pricing" class="btn btn-pro">Get Pro</a>
                 </nav>
+                <a href="#pricing" class="mobile-menu-btn btn btn-pro" style="display: none; padding: 10px 20px; font-size: 14px;">Get Pro</a>
             </div>
         </div>
     </header>
