@@ -291,7 +291,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
-            align-items: stretch;
+            align-items: start;
         }
 
         .mode-card {
@@ -302,8 +302,9 @@
             text-align: center;
             transition: all 0.3s;
             position: relative;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-rows: 80px auto 72px 160px auto;
+            gap: 0;
         }
 
         .mode-card:hover {
@@ -331,7 +332,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 25px;
+            margin: 0 auto;
             font-size: 36px;
         }
 
@@ -349,22 +350,21 @@
 
         .mode-card h3 {
             font-size: 24px;
-            margin-bottom: 15px;
+            margin: 25px 0 15px;
             background: transparent;
-            min-height: 1.3em;
+            align-self: start;
         }
 
         .mode-card > p {
             color: var(--muted-text);
             margin-bottom: 25px;
-            min-height: 3em;
+            align-self: start;
         }
 
         .mode-features {
             text-align: left;
             list-style: none;
-            flex: 1;
-            min-height: 180px;
+            align-self: start;
         }
 
         .mode-features li {
@@ -383,11 +383,11 @@
         }
 
         .mode-best-for {
-            margin-top: auto;
             padding-top: 20px;
             border-top: 1px solid var(--border);
             font-size: 14px;
             color: var(--muted-text);
+            align-self: end;
         }
 
         .mode-best-for strong {
