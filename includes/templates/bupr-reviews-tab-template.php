@@ -133,14 +133,30 @@ $reviews = new WP_Query( $args );
 							<div class="bupr-members-content">
 								<div class="rating-sec">
 								<?php
-								// Only show star ratings if there are active rating fields and ratings exist.
-								if ( ! empty( $member_review_ratings ) && ! empty( $bupr['active_rating_fields'] ) ) {
+								// Only show star ratings if ratings exist.
+								if ( ! empty( $member_review_ratings ) ) {
 									$member_review_ratings_new = array();
-									foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
-										if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
-											$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
+
+									// First, try to match with current criteria labels.
+									if ( ! empty( $bupr['active_rating_fields'] ) ) {
+										foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
+											if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
+												$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
+											}
 										}
 									}
+
+									// Fallback: If no matches with current criteria, use ALL stored ratings.
+									// This ensures old reviews created with different criteria labels still display.
+									if ( empty( $member_review_ratings_new ) && ! empty( $member_review_ratings[0] ) && is_array( $member_review_ratings[0] ) ) {
+										foreach ( $member_review_ratings[0] as $rating_label => $rating_value ) {
+											// Only include numeric rating values (1-5 stars).
+											if ( is_numeric( $rating_value ) && $rating_value > 0 && $rating_value <= 5 ) {
+												$member_review_ratings_new[ $rating_label ] = $rating_value;
+											}
+										}
+									}
+
 									if ( ! empty( $member_review_ratings_new ) ) {
 										$aggregate = array_sum( $member_review_ratings_new ) / count( $member_review_ratings_new );
 										if ( $aggregate ) {
@@ -162,17 +178,6 @@ $reviews = new WP_Query( $args );
 											}
 											echo '</div>';
 											echo '<span class="rating-num">' . esc_html( number_format( $aggregate, 2 ) ) . '</span>';
-										}
-									} else {
-										foreach ( $member_review_ratings as $member_review_rating ) {
-											// Skip if numeric key 0 doesn't exist or is zero (Pro stores with label keys).
-											if ( ! isset( $member_review_rating[0] ) || 0 == $member_review_rating[0] ) {
-												continue;
-											}
-
-											if ( $member_review_rating[0] !== null ) {
-												echo '<span class="rating-num">' . esc_html( number_format( $member_review_rating[0], 2 ) ) . '</span>';
-											}
 										}
 									}
 								}

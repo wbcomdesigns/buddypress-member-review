@@ -110,11 +110,25 @@ if ( ! empty( $review_id ) ) {
 						if ( ! empty( $member_review_ratings ) ) {
 							$member_review_ratings_new = array();
 							echo "<div class='rating-sec'>";
+
+							// First, try to match with current criteria labels.
 							foreach ( $bupr_rating_criteria as $bupr_rating_each_criteria ) {
 								if ( array_key_exists( $bupr_rating_each_criteria, $member_review_ratings[0] ) ) {
 									$member_review_ratings_new[ $bupr_rating_each_criteria ] = $member_review_ratings[0][ $bupr_rating_each_criteria ];
 								}
 							}
+
+							// Fallback: If no matches with current criteria, use ALL stored ratings.
+							// This ensures old reviews created with different criteria labels still display.
+							if ( empty( $member_review_ratings_new ) && ! empty( $member_review_ratings[0] ) && is_array( $member_review_ratings[0] ) ) {
+								foreach ( $member_review_ratings[0] as $rating_label => $rating_value ) {
+									// Only include numeric rating values (1-5 stars).
+									if ( is_numeric( $rating_value ) && $rating_value > 0 && $rating_value <= 5 ) {
+										$member_review_ratings_new[ $rating_label ] = $rating_value;
+									}
+								}
+							}
+
 							if ( ! empty( $member_review_ratings_new ) ) {
 								$aggregate = array_sum( $member_review_ratings_new ) / count( $member_review_ratings_new );
 								echo "<div class='rating-star'>";
