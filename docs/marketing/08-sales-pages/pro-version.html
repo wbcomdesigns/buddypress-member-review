@@ -303,8 +303,9 @@
             transition: all 0.3s;
             position: relative;
             display: grid;
-            grid-template-rows: 80px auto 72px 1fr auto;
+            grid-template-rows: 80px 56px 76px 1fr auto;
             gap: 0;
+            align-items: start;
         }
 
         .mode-card:hover {
@@ -335,8 +336,8 @@
             margin: 0 auto;
             font-size: 32px;
             line-height: 1;
-            align-self: start;
             justify-self: center;
+            align-self: center;
         }
 
         .mode-icon svg {
@@ -363,7 +364,7 @@
         .mode-card h3 {
             font-size: 24px;
             margin: 0;
-            padding-top: 25px;
+            padding-top: 20px;
             background: transparent;
             align-self: start;
             justify-self: center;
@@ -372,7 +373,7 @@
         .mode-card > p {
             color: var(--muted-text);
             margin: 0;
-            padding: 15px 0 25px;
+            padding: 10px 0;
             align-self: start;
             justify-self: center;
         }
@@ -380,8 +381,8 @@
         .mode-features {
             text-align: left;
             list-style: none;
-            align-self: start;
             width: 100%;
+            align-self: start;
         }
 
         .mode-features li {
