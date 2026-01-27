@@ -8,13 +8,14 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-global $bp,$post;
-global $allowedtags,$allowedposttags;
+global $bp, $post;
+global $allowedtags, $allowedposttags;
 global $bupr;
 
 $bupr_review_succes = false;
-$current_user       = wp_get_current_user();
-$member_id          = $current_user->ID;
+// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Using local variable for template scope.
+$current_user = wp_get_current_user();
+$member_id    = $current_user->ID;
 
 // Gather all the bp member reviews.
 $args = array(
@@ -49,7 +50,7 @@ $reviews = new WP_Query( $args );
 				<?php
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
-						$reviews->the_post();	
+						$reviews->the_post();
 						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
 						$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 						$author_id             = get_post_field( 'post_author', get_the_ID() );
@@ -66,12 +67,12 @@ $reviews = new WP_Query( $args );
 						?>
 						<div class="bupr-row">
 							<?php if ( ! empty( $bupr['allow_update'] ) && 'yes' === $bupr['allow_update'] ) : ?>
-								<?php if ( bp_loggedin_user_id() == $author_id ) : ?>
+								<?php if ( bp_loggedin_user_id() === (int) $author_id ) : ?>
 									<div id="bupr-reiew-edit" class="bupr-edit-review-button-wrapper" data-review="<?php echo esc_attr( $post->ID ); ?>">
 										<button type="button" class="bupr-edit-review-button" id="bupr-review-edit-btn" data-review="<?php echo esc_attr( $post->ID ); ?>" >
 										<?php
 										/* translators: %s: */
-										echo sprintf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) );
+										printf( esc_html__( 'Edit %s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) );
 										?>
 										</button>
 									</div>
@@ -83,8 +84,10 @@ $reviews = new WP_Query( $args );
 									$author = $reviews->post->post_author;
 									if ( 'yes' === $anonymous_post_review ) {
 										if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) {
+											// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- $type is used locally for avatar function.
+											$type       = 'local';
 											$avatar_url = bp_core_avatar_default(
-												$type   = 'local',
+												$type,
 												array(
 													'height' => 96,
 													'width' => 96,
@@ -92,7 +95,7 @@ $reviews = new WP_Query( $args );
 												)
 											);
 										} elseif ( function_exists( 'buddypress' ) && isset( buddypress()->buddyboss ) ) {
-											$size = bp_core_avatar_full_width();
+											$size       = bp_core_avatar_full_width();
 											$avatar_url = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=' . $size;
 										}
 										echo "<img src='" . esc_url( $avatar_url ) . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
@@ -226,12 +229,12 @@ $reviews = new WP_Query( $args );
 										if ( ! empty( $member_review_rating_fields ) && ! empty( $member_review_ratings[0] ) ) {
 
 											foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
-												
-												if( ! $bupr_value ) {
+
+												if ( ! $bupr_value ) {
 													continue;
 												}
 
-												if ( $field === 0 ) {
+												if ( 0 === $field ) {
 													$field = '';
 												}
 												if ( $member_review_rating_fields ) {
@@ -300,7 +303,7 @@ $reviews = new WP_Query( $args );
 									$linked_member_id = get_post_meta( get_the_ID(), 'linked_bp_member', true );
 									$current_user_id  = get_current_user_id();
 									$can_reply        = ( (int) $linked_member_id === $current_user_id ) && empty( $owner_reply );
-								?>
+									?>
 								<div class="bupr-reply-section" data-review="<?php echo esc_attr( get_the_ID() ); ?>">
 									<?php if ( ! empty( $owner_reply ) ) : ?>
 										<?php
@@ -352,7 +355,7 @@ $reviews = new WP_Query( $args );
 							// Report Section - only show if enabled in settings.
 							$flagging_enabled = isset( $bupr['enable_flagging'] ) ? $bupr['enable_flagging'] : 'yes';
 							if ( 'yes' === $flagging_enabled && is_user_logged_in() && get_current_user_id() !== (int) $author_id ) :
-							?>
+								?>
 								<div class="bupr-report-section">
 									<button type="button" class="bupr-report-button" data-review="<?php echo esc_attr( get_the_ID() ); ?>" title="<?php esc_attr_e( 'Report this review', 'bp-member-reviews' ); ?>">
 										<span class="dashicons dashicons-warning"></span>
@@ -400,7 +403,7 @@ $reviews = new WP_Query( $args );
 						<p>
 							<?php
 							/* translators: %s: */
-							echo sprintf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+							printf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 							?>
 
 						</p>

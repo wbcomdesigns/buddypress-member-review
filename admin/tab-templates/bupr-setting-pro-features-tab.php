@@ -20,7 +20,7 @@ $is_pro_licensed = $is_pro_active && class_exists( 'BUPR_Pro_Features' ) && BUPR
 
 // If Pro is active and licensed, let Pro addon render its settings.
 if ( $is_pro_licensed ) :
-?>
+	?>
 <div class="wbcom-tab-content">
 	<div class="wbcom-admin-title-section">
 		<h3><?php esc_html_e( 'Pro Features', 'bp-member-reviews' ); ?></h3>
@@ -38,7 +38,7 @@ if ( $is_pro_licensed ) :
 		?>
 	</div>
 </div>
-<?php
+	<?php
 	return; // Stop here, Pro addon handles the rest.
 endif;
 

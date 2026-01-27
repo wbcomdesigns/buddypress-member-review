@@ -7,12 +7,12 @@
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-global $allowedtags,$allowedposttags;
+global $allowedtags, $allowedposttags;
 global $bupr;
 $url = filter_input( INPUT_SERVER, 'REQUEST_URI' );
-if (preg_match('/\/view\/(\d+)\//', $url, $matches)) {
+if ( preg_match( '/\/view\/(\d+)\//', $url, $matches ) ) {
 	$review_id = (int) $matches[1]; // $matches[1] contains the review id which will be after the view parameter.
-}else{
+} else {
 	$review_id = (int) basename( $url );
 }
 if ( ! empty( $review_id ) ) {
@@ -48,15 +48,17 @@ if ( ! empty( $review_id ) ) {
 	$member_review_ratings = get_post_meta( $review->ID, 'profile_star_rating', false );
 	/* Hide user avatar and username if it was a anonymous review. */
 	if ( 'yes' === $anonymous_post_review ) {
-			$avatar   = bp_core_avatar_default(
-				$type = 'local',
-				array(
-					'height' => 96,
-					'width'  => 96,
-					'html'   => false,
-				)
-			);
-			$member_profile = esc_html__( 'anonymous', 'bp-member-reviews' );
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- $type is used locally for avatar function.
+		$type           = 'local';
+		$avatar         = bp_core_avatar_default(
+			$type,
+			array(
+				'height' => 96,
+				'width'  => 96,
+				'html'   => false,
+			)
+		);
+		$member_profile = esc_html__( 'anonymous', 'bp-member-reviews' );
 	} else {
 		// Author Thumbnail.
 		$avatar = bp_core_fetch_avatar(
@@ -167,7 +169,7 @@ if ( ! empty( $review_id ) ) {
 						 * @param int $review_id The review post ID.
 						 */
 						do_action( 'bupr_after_review_date', get_the_ID() );
-						echo '</div>'; 
+						echo '</div>';
 						$bupr_post_content = ( is_object( $review ) && ! empty( $review ) && isset( $review->post_content ) ) ? $review->post_content : '';
 						?>
 						<div class="bupr-col-12 description"><?php echo wp_kses( $bupr_post_content, $allowedposttags ); ?></div>
@@ -192,9 +194,9 @@ if ( ! empty( $review_id ) ) {
 
 						if ( ! empty( $bupr['active_rating_fields'] ) && ! empty( $member_review_ratings[0] ) ) :
 							foreach ( $member_review_ratings[0] as $field => $bupr_value ) {
-								if ( $field === 0 ) {
+								if ( 0 === $field ) {
 										$field = '';
-									}
+								}
 								if ( $member_review_rating_fields ) {
 
 									echo '<div class="multi-review inline-content"><div class="bupr-col-6 ">' . esc_attr( $field ) . '</div>';
@@ -221,22 +223,22 @@ if ( ! empty( $review_id ) ) {
 										$stars_on  = $bupr_value;
 										$stars_off = 5 - $stars_on;
 										echo '<div class="bupr-col-4 ">';
-										for ( $i = 1; $i <= $stars_on; $i++ ) {
-											?>
+									for ( $i = 1; $i <= $stars_on; $i++ ) {
+										?>
 											<span class="fas fa-star bupr-star-rate"></span>
-											<?php
-										}
+										<?php
+									}
 
-										for ( $i = 1; $i <= $stars_off; $i++ ) {
-											?>
+									for ( $i = 1; $i <= $stars_off; $i++ ) {
+										?>
 											<span class="far fa-star stars bupr-star-rate"></span>
-											<?php
-										}
+										<?php
+									}
 										/*star rating end */
 
 										echo '</div>';
 										echo '</div>';
-									}
+								}
 							}
 						endif;
 						?>

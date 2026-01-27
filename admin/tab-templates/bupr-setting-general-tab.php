@@ -25,7 +25,7 @@ We appreciate your engagement in our community and value your contributions.
 Best regards,  
 The [site-name] Team';
 
-$approve_message = 'Hello [site-admin],
+$approve_message    = 'Hello [site-admin],
 
 Greetings!
 
@@ -37,10 +37,10 @@ Thank you for helping us maintain a vibrant and engaged community.
 
 Best regards,  
 The [site-name] Team';
-$bupr_admin_general   = get_option( 'bupr_admin_general_options' );
+$bupr_admin_general = get_option( 'bupr_admin_general_options' );
 
-$review_email_subject = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'You Have Received a New Review on [site-name]';
-$review_email_message = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
+$review_email_subject         = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'You Have Received a New Review on [site-name]';
+$review_email_message         = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
 $review_approve_email_subject = ( ! empty( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : 'A New Review Requires Your Approval on [site-name]';
 $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_email_message'] ) ) ? $bupr_admin_general['review_approve_email_message'] : $approve_message;
 
@@ -177,12 +177,12 @@ $user_roles = array_reverse( get_editable_roles() );
 							?>
 						</div>					
 					</div>
-					<?php			
+					<?php
 					if ( ! empty( $bupr_admin_general ) ) {
-						if ( isset($bupr_admin_general['bupr_auto_approve_reviews']) && 'no' === $bupr_admin_general['bupr_auto_approve_reviews'] ) {
-					?>
+						if ( isset( $bupr_admin_general['bupr_auto_approve_reviews'] ) && 'no' === $bupr_admin_general['bupr_auto_approve_reviews'] ) {
+							?>
 					<!-- admin email section -->
-					 <div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
+					<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
 									<?php esc_html_e( 'Approval Email Subject', 'bp-member-reviews' ); ?>
@@ -201,18 +201,21 @@ $user_roles = array_reverse( get_editable_roles() );
 						<p class="description"><?php esc_html_e( 'Enter the message content for review approval notification emails.', 'bp-member-reviews' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
-						<?php						
-						wp_editor(
-							$review_approve_email_message,
-							'review-approve-email-message',
-							array(
-								'media_buttons' => false,
-								'textarea_name' => 'bupr_admin_general_options[review_approve_email_message]',
-							)
-						);
-						?>
+							<?php
+							wp_editor(
+								$review_approve_email_message,
+								'review-approve-email-message',
+								array(
+									'media_buttons' => false,
+									'textarea_name' => 'bupr_admin_general_options[review_approve_email_message]',
+								)
+							);
+							?>
 					</div>
-					<?php } } ?>
+							<?php
+						}
+					}
+					?>
 					<!-- admin email section end -->
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
@@ -274,10 +277,11 @@ $user_roles = array_reverse( get_editable_roles() );
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_exc_member][]" id="bupr_exc_member" class="bupr_excluding_member" multiple>
 								<?php
+								// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- $role is used locally in foreach loop.
 								foreach ( $user_roles as $role => $details ) {
 									$name = translate_user_role( $details['name'] );
 									if ( ! empty( $bupr['exclude_given_members'] ) ) {
-										if ( in_array( $role, $bupr['exclude_given_members'] ) ) {
+										if ( in_array( $role, $bupr['exclude_given_members'], true ) ) {
 											?>
 												<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo esc_html( $name ); ?></option>
 											<?php
@@ -306,10 +310,11 @@ $user_roles = array_reverse( get_editable_roles() );
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_add_member][]" id="bupr_add_member" class="bupr_adding_member" multiple>
 								<?php
+								// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- $role is used locally in foreach loop.
 								foreach ( $user_roles as $role => $details ) {
 									$name = translate_user_role( $details['name'] );
 									if ( ! empty( $bupr['add_taken_members'] ) ) {
-										if ( in_array( $role, $bupr['add_taken_members'] ) ) {
+										if ( in_array( $role, $bupr['add_taken_members'], true ) ) {
 											?>
 												<option value="<?php echo esc_attr( $role ); ?>" <?php echo 'selected = "selected"'; ?>><?php echo esc_html( $name ); ?></option>
 											<?php

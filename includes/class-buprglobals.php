@@ -45,6 +45,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 
 			// Ensure $wp_roles is set correctly.
 			if ( ! isset( $wp_roles ) || ! is_object( $wp_roles ) || ! isset( $wp_roles->roles ) ) {
+				// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Initializing WordPress global when not set.
 				$wp_roles = wp_roles();
 			}
 
@@ -59,39 +60,39 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			/**
 			 * Global variables for general settings.
 			 */
-			$auto_approve_reviews    = $bupr_general_settings['bupr_auto_approve_reviews'] ?? 'yes';  // Default to 'yes'
-			$reviews_per_page        = $bupr_general_settings['profile_reviews_per_page'] ?? 5;        // Default to 5
-			$dir_view_ratings        = $bupr_general_settings['bupr_member_dir_reviews'] ?? 'yes';     // Default to 'yes'
-			$dir_view_review_btn     = $bupr_general_settings['bupr_member_dir_add_reviews'] ?? 'yes'; // Default to 'yes'
-			$allow_email             = $bupr_general_settings['bupr_allow_email'] ?? 'yes';            // Default to 'yes'
-			$allow_notification      = $bupr_general_settings['bupr_allow_notification'] ?? 'yes';     // Default to 'yes'
-			$allow_update            = $bupr_general_settings['bupr_allow_update'] ?? 'yes';           // Default to 'yes'
-			$exclude_given_members   = $bupr_general_settings['bupr_exc_member'] ?? $available_roles;   // Prepopulate with all available roles
-			$add_taken_members       = $bupr_general_settings['bupr_add_member'] ?? $available_roles;   // Prepopulate with all available roles
-			$multi_reviews           = $bupr_general_settings['bupr_multi_reviews'] ?? 'yes';           // Default to 'yes'
-			$hide_button             = $bupr_general_settings['bupr_hide_review_button'] ?? 'no';       // Default to 'no'
-			$anonymous_reviews       = $bupr_general_settings['bupr_enable_anonymous_reviews'] ?? 'no'; // Default to 'no'
-			$review_activity         = $bupr_general_settings['bupr_enable_review_activity'] ?? 'no';  // Default to 'yes'
-			$review_email_subject    = $bupr_general_settings['review_email_subject'] ?? esc_html__('You have received a new review!', 'bp-member-reviews');
-			$review_email_message    = $bupr_general_settings['review_email_message'] ?? esc_html__('A new review has been submitted on your profile. Log in to see the details.', 'bp-member-reviews');
+			$auto_approve_reviews  = $bupr_general_settings['bupr_auto_approve_reviews'] ?? 'yes';  // Default to 'yes'.
+			$reviews_per_page      = $bupr_general_settings['profile_reviews_per_page'] ?? 5;        // Default to 5.
+			$dir_view_ratings      = $bupr_general_settings['bupr_member_dir_reviews'] ?? 'yes';     // Default to 'yes'.
+			$dir_view_review_btn   = $bupr_general_settings['bupr_member_dir_add_reviews'] ?? 'yes'; // Default to 'yes'.
+			$allow_email           = $bupr_general_settings['bupr_allow_email'] ?? 'yes';            // Default to 'yes'.
+			$allow_notification    = $bupr_general_settings['bupr_allow_notification'] ?? 'yes';     // Default to 'yes'.
+			$allow_update          = $bupr_general_settings['bupr_allow_update'] ?? 'yes';           // Default to 'yes'.
+			$exclude_given_members = $bupr_general_settings['bupr_exc_member'] ?? $available_roles;   // Prepopulate with all available roles.
+			$add_taken_members     = $bupr_general_settings['bupr_add_member'] ?? $available_roles;   // Prepopulate with all available roles.
+			$multi_reviews         = $bupr_general_settings['bupr_multi_reviews'] ?? 'yes';           // Default to 'yes'.
+			$hide_button           = $bupr_general_settings['bupr_hide_review_button'] ?? 'no';       // Default to 'no'.
+			$anonymous_reviews     = $bupr_general_settings['bupr_enable_anonymous_reviews'] ?? 'no'; // Default to 'no'.
+			$review_activity       = $bupr_general_settings['bupr_enable_review_activity'] ?? 'no';  // Default to 'no'.
+			$review_email_subject  = $bupr_general_settings['review_email_subject'] ?? esc_html__( 'You have received a new review!', 'bp-member-reviews' );
+			$review_email_message  = $bupr_general_settings['review_email_message'] ?? esc_html__( 'A new review has been submitted on your profile. Log in to see the details.', 'bp-member-reviews' );
 
 			// New features settings.
-			$enable_owner_replies    = $bupr_general_settings['bupr_enable_owner_replies'] ?? 'yes';  // Default to 'yes'
-			$enable_flagging         = $bupr_general_settings['bupr_enable_flagging'] ?? 'yes';       // Default to 'yes'
-			$flag_threshold          = $bupr_general_settings['bupr_flag_threshold'] ?? 5;            // Default to 5
+			$enable_owner_replies = $bupr_general_settings['bupr_enable_owner_replies'] ?? 'yes';  // Default to 'yes'.
+			$enable_flagging      = $bupr_general_settings['bupr_enable_flagging'] ?? 'yes';       // Default to 'yes'.
+			$flag_threshold       = $bupr_general_settings['bupr_flag_threshold'] ?? 5;            // Default to 5.
 
 			/**
 			 * Global variables for display settings.
 			 */
 			$review_label        = $bupr_display_settings['bupr_review_title'] ?? esc_html__( 'Review', 'bp-member-reviews' );
 			$review_label_plural = $bupr_display_settings['bupr_review_title_plural'] ?? esc_html__( 'Reviews', 'bp-member-reviews' );
-			$rating_color        = $bupr_display_settings['bupr_star_color'] ?? '#FFC400'; // Keep yellow color for stars
+			$rating_color        = $bupr_display_settings['bupr_star_color'] ?? '#FFC400'; // Keep yellow color for stars.
 
 			/**
 			 * Global variables for criteria settings.
 			 */
-			$bupr_multi_criteria_allowed = ( isset( $bupr_criteria_settings['profile_multi_rating_allowed'] ) && ! empty( $bupr_criteria_settings['profile_multi_rating_allowed'] ) ) ? '1' : '0'; // Enable multi-criteria by default
-			$active_rating_fields        = $bupr_criteria_settings['profile_rating_fields'] ?? array();   // Can be configured by admin
+			$bupr_multi_criteria_allowed = ( isset( $bupr_criteria_settings['profile_multi_rating_allowed'] ) && ! empty( $bupr_criteria_settings['profile_multi_rating_allowed'] ) ) ? '1' : '0'; // Enable multi-criteria by default.
+			$active_rating_fields        = $bupr_criteria_settings['profile_rating_fields'] ?? array();   // Can be configured by admin.
 
 			// Define global variables for use throughout the plugin.
 			$bupr = array(

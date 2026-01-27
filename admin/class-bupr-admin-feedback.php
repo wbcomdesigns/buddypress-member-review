@@ -63,7 +63,6 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 		 */
 		public function __construct( $args ) {
 			$this->slug = $args['slug'];
-			
 
 			$this->date_option  = $this->slug . '_activation_date';
 			$this->nobug_option = $this->slug . '_no_bug';
@@ -86,7 +85,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Years.
 			$years = intval( ( $seconds ) / YEAR_IN_SECONDS );
 			if ( $years > 1 ) {
-				 /* translators: %s: years. */
+				/* translators: %s: years. */
 				return sprintf( __( '%s years', 'bp-member-reviews' ), $years );
 			} elseif ( $years > 0 ) {
 				return __( 'a year', 'bp-member-reviews' );
@@ -95,7 +94,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Weeks.
 			$weeks = intval( ( $seconds ) / WEEK_IN_SECONDS );
 			if ( $weeks > 1 ) {
-				 /* translators: %s: weeks. */
+				/* translators: %s: weeks. */
 				return sprintf( __( '%s weeks', 'bp-member-reviews' ), $weeks );
 			} elseif ( $weeks > 0 ) {
 				return __( 'a week', 'bp-member-reviews' );
@@ -104,7 +103,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Days.
 			$days = intval( ( $seconds ) / DAY_IN_SECONDS );
 			if ( $days > 1 ) {
-				 /* translators: %s: days. */
+				/* translators: %s: days. */
 				return sprintf( __( '%s days', 'bp-member-reviews' ), $days );
 			} elseif ( $days > 0 ) {
 				return __( 'a day', 'bp-member-reviews' );
@@ -113,7 +112,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Hours.
 			$hours = intval( ( $seconds ) / HOUR_IN_SECONDS );
 			if ( $hours > 1 ) {
-				 /* translators: %s: hours. */
+				/* translators: %s: hours. */
 				return sprintf( __( '%s hours', 'bp-member-reviews' ), $hours );
 			} elseif ( $hours > 0 ) {
 				return __( 'an hour', 'bp-member-reviews' );
@@ -122,7 +121,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 			// Minutes.
 			$minutes = intval( ( $seconds ) / MINUTE_IN_SECONDS );
 			if ( $minutes > 1 ) {
-				 /* translators: %s: minutes. */
+				/* translators: %s: minutes. */
 				return sprintf( __( '%s minutes', 'bp-member-reviews' ), $minutes );
 			} elseif ( $minutes > 0 ) {
 				return __( 'a minute', 'bp-member-reviews' );
@@ -267,10 +266,13 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 						</div>
 						<div class="bp-member-reviews-notice-content">
 							<h3><?php esc_html_e( 'Are you enjoying BuddyPress Member Reviews?', 'bp-member-reviews' ); ?></h3>
-							<p><?php 
+							<p>
+							<?php
 							$this->name = __( 'BuddyPress Member Reviews', 'bp-member-reviews' );
-							 /* translators: %s: Plugin name. */
-							 printf( esc_html__( 'We hope you\'re enjoying %1$s! If you find it helpful, please consider giving us a 5-star rating on WordPress to help others discover the plugin.', 'bp-member-reviews' ), esc_html( $this->name ) ); ?></p>
+							/* translators: %s: Plugin name. */
+							printf( esc_html__( 'We hope you\'re enjoying %1$s! If you find it helpful, please consider giving us a 5-star rating on WordPress to help others discover the plugin.', 'bp-member-reviews' ), esc_html( $this->name ) );
+							?>
+							</p>
 						</div>
 						<div class="bp-member-reviews-install-now">
 							<a href="https://wordpress.org/support/plugin/bp-user-profile-reviews/#new-post" class="button button-primary bp-member-reviews-install-button" target="_blank"><?php esc_html_e( 'Leave a Review', 'bp-member-reviews' ); ?></a>

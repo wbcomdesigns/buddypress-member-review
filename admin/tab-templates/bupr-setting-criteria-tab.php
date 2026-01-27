@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* admin setting on dashboard */
 global $bupr;
 $bupr_multi_rating_allowed_class = 'bupr-show-if-allowed';
-if ( '1' == $bupr['multi_criteria_allowed'] ) {
+if ( '1' === $bupr['multi_criteria_allowed'] ) {
 	$bupr_multi_rating_allowed_class = '';
 }
 
@@ -105,7 +105,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 							foreach ( $bupr['active_rating_fields'] as $profile_rating_field => $bupr_criteria_setting ) :
 								$key_val = wp_rand();
 								if ( function_exists( 'icl_register_string' ) ) {
-									icl_register_string( 'bp-member-reviews', 'rating_field_name_' . $key++, $profile_rating_field );
+									icl_register_string( 'bp-member-reviews', 'rating_field_name_' . ( $key++ ), $profile_rating_field );
 								}
 								?>
 								<div id="bupr-admin-row-criteria" class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
@@ -117,9 +117,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 									<div class="bupr-admin-col-6 buprcriteria">
 										<p class="bupr-delete-tag">
 											<input type="button" value="<?php esc_html_e( 'Delete', 'bp-member-reviews' ); ?>" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
-											<!-- <span class="description">
-											<?php // esc_html_e( 'Remove criteria fields permanently.', 'bp-member-reviews' ); ?>
-											</span> -->
+											<!-- Removed description span. -->
 										</p>
 									</div>
 								</div>

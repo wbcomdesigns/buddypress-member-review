@@ -59,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</p>
 			</div>
 			<div class="wbcom-settings-section-options">
-				<code><?php echo esc_html( "[bupr_display_top_members total_member=5]" ); ?></code>
+				<code><?php echo esc_html( '[bupr_display_top_members total_member=5]' ); ?></code>
 			</div>
 
 			<!-- Type Parameter -->
