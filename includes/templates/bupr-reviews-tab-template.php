@@ -238,7 +238,7 @@ $reviews = new WP_Query( $args );
 													$field = '';
 												}
 												if ( $member_review_rating_fields ) {
-													echo '<div class="multi-review inline-content"><div class="bupr-col-4 bupr-criteria-label">' . esc_attr( $field ) . '</div>';
+													echo '<div class="multi-review inline-content"><div class="bupr-col-4 bupr-criteria-label">' . esc_html( $field ) . '</div>';
 													/*** Star rating Ratings */
 													$stars_on  = $bupr_value;
 													$stars_off = 5 - $stars_on;

@@ -199,7 +199,7 @@ if ( ! empty( $review_id ) ) {
 								}
 								if ( $member_review_rating_fields ) {
 
-									echo '<div class="multi-review inline-content"><div class="bupr-col-6 ">' . esc_attr( $field ) . '</div>';
+									echo '<div class="multi-review inline-content"><div class="bupr-col-6 ">' . esc_html( $field ) . '</div>';
 									/*** Star rating Ratings */
 									$stars_on  = $bupr_value;
 									$stars_off = 5 - $stars_on;

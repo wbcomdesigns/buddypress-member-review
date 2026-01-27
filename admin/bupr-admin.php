@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable WordPress.Files.FileName.InvalidClassFileName
 /**
  * BuddyPress Member Review admin function class file.
  *
@@ -432,7 +432,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 							$key = $this->bupr_recursive_array_search( 'edit.php?post_type=review', $menu );
 
-							if ( ! $key ) {
+							if ( false === $key ) {
 								return;
 							}
 

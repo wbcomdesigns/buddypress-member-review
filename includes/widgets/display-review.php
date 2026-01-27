@@ -73,6 +73,7 @@ class bupr_members_review_setting extends WP_Widget {
 		$avatar       = isset( $instance['avatar'] ) ? $instance['avatar'] : 'Show';
 
 		// Build the SQL query based on the sorting method.
+		$results = array();
 		if ( 'top-rated' === $top_member ) {
 			// Query for top-rated members (by aggregate rating).
 			$results = $wpdb->get_results(

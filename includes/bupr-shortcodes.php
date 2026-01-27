@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable WordPress.Files.FileName.InvalidClassFileName
 /**
  * Class to add reviews shortcode.
  *
@@ -359,7 +359,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					if ( is_user_logged_in() ) {
 						$user  = wp_get_current_user();
 						$roles = ( isset( $user->roles ) && ! empty( $user->roles ) ) ? $user->roles : array();
-						if ( ! array_intersect( $roles, $bupr['exclude_given_members'] ) ) {
+						if ( array_intersect( $roles, $bupr['exclude_given_members'] ) ) {
+							// User's role is in the exclude list - block them.
 							?>
 						<div class="bupr_not_give_review">
 								<p><?php echo esc_html( 'Sorry, You have not been given permission to review the user !!!' ); ?></p>
