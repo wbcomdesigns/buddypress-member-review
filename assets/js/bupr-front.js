@@ -348,6 +348,12 @@ jQuery(document).ready(function () {
       bupr_review_rating[critaria] = jQuery(this).val();
     });
 
+    // Collect endorsed skills (if present - for endorsement mode).
+    var bupr_endorsed_skills = [];
+    jQuery('input[name="bupr_endorsed_skills[]"]:checked').each(function () {
+      bupr_endorsed_skills.push(jQuery(this).val());
+    });
+
     jQuery(".bupr-save-reivew-spinner").show();
     jQuery.post(
       ajaxurl,
@@ -356,6 +362,7 @@ jQuery(document).ready(function () {
         review_id: review_id,
         bupr_review_desc: bupr_review_desc,
         bupr_review_rating: bupr_review_rating,
+        bupr_endorsed_skills: bupr_endorsed_skills,
         nonce: mail_title.review_nonce,
       },
       function (response) {

@@ -121,6 +121,8 @@ Copy to `your-theme/review/`:
 | 2026-01-23 | fix | Accessibility and data reset fixes | bupr-shortcodes.php, bupr-ajax.php, bupr-filters.php |
 | 2026-01-23 | fix | Security and coding standards for v3.7.0 | Multiple files |
 | 2026-01-23 | docs | Added architecture documentation | docs/architecture/ |
+| 2026-01-27 | feature | Added `bupr_edit_review_extra_fields` filter to edit form for Pro addon extensions | bupr-ajax.php:bupr_edit_review() |
+| 2026-01-27 | feature | JS update handler now collects `bupr_endorsed_skills[]` checkboxes for endorsement edit | bupr-front.js:updateReview() |
 
 ## Pro Addon Plugin
 

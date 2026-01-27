@@ -628,6 +628,15 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				}
 			}
 
+			/**
+			 * Filter to add extra fields before the update button in edit form.
+			 *
+			 * @since 3.7.0
+			 * @param string $extra_fields Extra HTML to add (empty by default).
+			 * @param int    $review_id    Review post ID.
+			 */
+			$review_output .= apply_filters( 'bupr_edit_review_extra_fields', '', $review_id );
+
 			/* translators: %s: */
 			$review_output .= '<button type="button" class="button btn btn-default" id="bupr_upodate_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
 			$review_output .= '</div>';
