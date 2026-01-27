@@ -288,24 +288,20 @@
         }
 
         .modes-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
             gap: 30px;
-            align-items: stretch;
+            justify-content: center;
         }
 
         .mode-card {
+            flex: 1;
+            max-width: 380px;
             background: white;
             border: 2px solid var(--border);
             border-radius: 16px;
             padding: 40px 30px;
             text-align: center;
             transition: all 0.3s;
-            position: relative;
-            display: grid;
-            grid-template-rows: 80px 56px 76px 1fr auto;
-            gap: 0;
-            align-items: start;
         }
 
         .mode-card:hover {
@@ -314,36 +310,23 @@
             transform: translateY(-5px);
         }
 
-        .mode-card.ratings {
-            border-top: 4px solid var(--primary);
-        }
-
-        .mode-card.testimonials {
-            border-top: 4px solid var(--testimonials-color);
-        }
-
-        .mode-card.endorsements {
-            border-top: 4px solid var(--endorsements-color);
-        }
+        .mode-card.ratings { border-top: 4px solid var(--primary); }
+        .mode-card.testimonials { border-top: 4px solid var(--testimonials-color); }
+        .mode-card.endorsements { border-top: 4px solid var(--endorsements-color); }
 
         .mode-icon {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
-            font-size: 32px;
-            line-height: 1;
-            justify-self: center;
-            align-self: center;
+            margin-bottom: 24px;
         }
 
         .mode-icon svg {
             width: 36px;
             height: 36px;
-            flex-shrink: 0;
         }
 
         .mode-card.ratings .mode-icon {
@@ -363,26 +346,20 @@
 
         .mode-card h3 {
             font-size: 24px;
-            margin: 0;
-            padding-top: 20px;
-            background: transparent;
-            align-self: start;
-            justify-self: center;
+            margin: 0 0 12px 0;
         }
 
-        .mode-card > p {
+        .mode-card .mode-desc {
             color: var(--muted-text);
-            margin: 0;
-            padding: 10px 0;
-            align-self: start;
-            justify-self: center;
+            margin: 0 0 24px 0;
+            min-height: 48px;
         }
 
         .mode-features {
             text-align: left;
             list-style: none;
-            width: 100%;
-            align-self: start;
+            margin: 0 0 24px 0;
+            padding: 0;
         }
 
         .mode-features li {
@@ -405,7 +382,7 @@
             border-top: 1px solid var(--border);
             font-size: 14px;
             color: var(--muted-text);
-            align-self: end;
+            margin-top: auto;
         }
 
         .mode-best-for strong {
@@ -898,9 +875,13 @@
             }
 
             .modes-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .mode-card {
                 max-width: 500px;
-                margin: 0 auto;
+                width: 100%;
             }
 
             .features-grid {
@@ -1047,7 +1028,7 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </div>
                     <h3>Ratings Mode</h3>
-                    <p>Traditional 5-star reviews with customizable criteria and weighted averages.</p>
+                    <p class="mode-desc">Traditional 5-star reviews with customizable criteria and weighted averages.</p>
                     <ul class="mode-features">
                         <li>1-5 star ratings</li>
                         <li>Multiple criteria (Quality, Speed, etc.)</li>
@@ -1063,7 +1044,7 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
                     </div>
                     <h3>Testimonials Mode</h3>
-                    <p>Text-only feedback without star ratings. Stories over scores.</p>
+                    <p class="mode-desc">Text-only feedback without star ratings. Stories over scores.</p>
                     <ul class="mode-features">
                         <li>No star ratings</li>
                         <li>Text-only testimonials</li>
@@ -1079,7 +1060,7 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                     </div>
                     <h3>Endorsements Mode</h3>
-                    <p>LinkedIn-style skill vouching. Members endorse each other's abilities.</p>
+                    <p class="mode-desc">LinkedIn-style skill vouching. Members endorse each other's abilities.</p>
                     <ul class="mode-features">
                         <li>Skill selection modal</li>
                         <li>Endorsement counts per skill</li>
