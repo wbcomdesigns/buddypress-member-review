@@ -97,6 +97,7 @@ Copy to `your-theme/review/`:
 
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-01-27 | fix | WPCS: Widget files - visibility, snake_case vars, doc blocks, Yoda conditions | display-review.php, member-rating.php |
 | 2026-01-27 | fix | WPCS: Full compliance in all core files - Yoda, strict comparisons, doc blocks, inline comments | buddypress-member-review.php, bupr-notification.php, bupr-general-functions.php, bupr-scripts.php, class-buprglobals.php, templates, admin tabs |
 | 2026-01-27 | fix | Bug fix: Notification mark-as-read type comparison (absint instead of sanitize_text_field) | bupr-notification.php:187,197 |
 | 2026-01-27 | fix | WPCS compliance: Yoda conditions, strict comparisons, output escaping, sanitization | bupr-admin.php, bupr-ajax.php, bupr-filters.php, bupr-shortcodes.php |
