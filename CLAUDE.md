@@ -97,6 +97,7 @@ Copy to `your-theme/review/`:
 
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-01-27 | fix | WPCS compliance: Yoda conditions, strict comparisons, output escaping, sanitization | bupr-admin.php, bupr-ajax.php, bupr-filters.php, bupr-shortcodes.php |
 | 2026-01-26 | docs | Add missing user flows: Edit Review modal, Report modal, Owner Reply inline form | getting-started.md |
 | 2026-01-26 | docs | Create standalone feature guides: testimonials.md, endorsements.md, verified-reviews.md | user-guide/ |
 | 2026-01-26 | docs | Rewrite docs with value-first approach (problems solved, use cases, impacts) | All docs |
