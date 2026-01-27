@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuddyPress Member Reviews Pro - Testimonials, Endorsements, Verified Badges | Wbcom Designs</title>
+    <meta name="description" content="Choose your review style: Ratings, Testimonials, or Endorsements. Add verified badges, flexible criteria, and REST API to your BuddyPress community.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Lora:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1d76da;
+            --primary-hover: #0e62c3;
+            --secondary: #3c8ce6;
+            --heading: #153045;
+            --body-text: #515b67;
+            --muted-text: #767676;
+            --border: #e3e3e3;
+            --bg-light: #f6f6f6;
+            --bg-white: #ffffff;
+            --success: #28a745;
+            --pro-accent: #6c5ce7;
+            --pro-gradient: linear-gradient(135deg, #6c5ce7 0%, #a855f7 100%);
+            --testimonials-color: #00b894;
+            --endorsements-color: #0984e3;
+            --verified-color: #fdcb6e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--body-text);
+            background: var(--bg-white);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--heading);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--heading);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--body-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-pro {
+            background: var(--pro-gradient);
+            color: white;
+        }
+
+        .btn-pro:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-large {
+            padding: 16px 36px;
+            font-size: 18px;
+        }
+
+        .btn-icon {
+            margin-right: 8px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 100px;
+            background: linear-gradient(135deg, #f8f4ff 0%, var(--bg-white) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: var(--pro-gradient);
+            opacity: 0.05;
+            border-radius: 50%;
+        }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--pro-gradient);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: var(--pro-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--muted-text);
+            margin-bottom: 30px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        .hero-trust span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-image {
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.15);
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Modes Section */
+        .modes {
+            padding: 100px 0;
+            background: var(--bg-white);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--muted-text);
+        }
+
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .mode-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .mode-card:hover {
+            border-color: transparent;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .mode-card.ratings {
+            border-top: 4px solid var(--primary);
+        }
+
+        .mode-card.testimonials {
+            border-top: 4px solid var(--testimonials-color);
+        }
+
+        .mode-card.endorsements {
+            border-top: 4px solid var(--endorsements-color);
+        }
+
+        .mode-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 36px;
+        }
+
+        .mode-card.ratings .mode-icon {
+            background: rgba(29, 118, 218, 0.1);
+        }
+
+        .mode-card.testimonials .mode-icon {
+            background: rgba(0, 184, 148, 0.1);
+        }
+
+        .mode-card.endorsements .mode-icon {
+            background: rgba(9, 132, 227, 0.1);
+        }
+
+        .mode-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .mode-card p {
+            color: var(--muted-text);
+            margin-bottom: 25px;
+        }
+
+        .mode-features {
+            text-align: left;
+            list-style: none;
+        }
+
+        .mode-features li {
+            padding: 8px 0;
+            padding-left: 28px;
+            position: relative;
+            font-size: 15px;
+        }
+
+        .mode-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .mode-best-for {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        .mode-best-for strong {
+            color: var(--heading);
+        }
+
+        /* Features Grid */
+        .pro-features {
+            padding: 100px 0;
+            background: var(--bg-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 25px;
+            align-items: start;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--pro-gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+        }
+
+        .feature-content h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .feature-content p {
+            color: var(--muted-text);
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 14px;
+            color: var(--body-text);
+        }
+
+        .feature-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--pro-accent);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: var(--bg-white);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--pro-accent);
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(108, 92, 231, 0.15);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--pro-gradient);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .pricing-sites {
+            font-size: 14px;
+            color: var(--muted-text);
+            margin-bottom: 20px;
+        }
+
+        .pricing-price {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--heading);
+            margin-bottom: 5px;
+        }
+
+        .pricing-price span {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--muted-text);
+        }
+
+        .pricing-period {
+            font-size: 14px;
+            color: var(--muted-text);
+            margin-bottom: 25px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 14px;
+            border-bottom: 1px solid var(--bg-light);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            padding: 100px 0;
+            background: var(--bg-light);
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 18px 25px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            background: var(--heading);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table th.pro-header {
+            background: var(--pro-gradient);
+        }
+
+        .comparison-table th:nth-child(2),
+        .comparison-table th:nth-child(3),
+        .comparison-table td:nth-child(2),
+        .comparison-table td:nth-child(3) {
+            text-align: center;
+            width: 150px;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: var(--bg-light);
+        }
+
+        .check {
+            color: var(--success);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .dash {
+            color: var(--border);
+            font-size: 20px;
+        }
+
+        .feature-highlight {
+            background: rgba(108, 92, 231, 0.05);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--bg-white);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-light);
+            padding: 35px;
+            border-radius: 16px;
+        }
+
+        .testimonial-mode {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-mode.ratings {
+            background: rgba(29, 118, 218, 0.1);
+            color: var(--primary);
+        }
+
+        .testimonial-mode.testimonials {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--testimonials-color);
+        }
+
+        .testimonial-mode.endorsements {
+            background: rgba(9, 132, 227, 0.1);
+            color: var(--endorsements-color);
+        }
+
+        .testimonial-text {
+            font-family: 'Lora', serif;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--heading);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--pro-accent);
+            font-weight: 600;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--heading);
+        }
+
+        .testimonial-role {
+            font-size: 14px;
+            color: var(--muted-text);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background: var(--bg-light);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--heading);
+            margin-bottom: 12px;
+        }
+
+        .faq-answer {
+            color: var(--muted-text);
+            font-size: 15px;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: var(--pro-gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            color: white;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 35px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--pro-accent);
+        }
+
+        .btn-white:hover {
+            background: var(--bg-light);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-ghost:hover {
+            background: white;
+            color: var(--pro-accent);
+        }
+
+        .cta-guarantee {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--heading);
+            color: white;
+            padding: 50px 0 30px;
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand p {
+            opacity: 0.7;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-ctas {
+                justify-content: center;
+            }
+
+            .hero-trust {
+                justify-content: center;
+            }
+
+            .modes-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-card.popular {
+                transform: none;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .feature-icon {
+                margin: 0 auto;
+            }
+
+            .feature-list {
+                text-align: left;
+            }
+
+            .comparison-table {
+                overflow-x: auto;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="https://wbcomdesigns.com" class="logo">
+                    <span>Wbcom</span> Designs
+                </a>
+                <nav class="nav-links">
+                    <a href="#modes">Review Modes</a>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#pricing" class="btn btn-pro">Get Pro</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <span class="hero-badge">Pro Addon</span>
+                    <h1>Reviews That Fit <span>Your Way</span></h1>
+                    <p class="hero-subtitle">Not every community needs star ratings. Choose Testimonials for courses, Endorsements for professional networks, or enhanced Ratings for marketplaces.</p>
+                    <div class="hero-ctas">
+                        <a href="#pricing" class="btn btn-pro btn-large">
+                            Get Pro — Starting $69/yr
+                        </a>
+                        <a href="https://wordpress.org/plugins/bp-user-profile-reviews/" class="btn btn-outline btn-large">
+                            Download Free First
+                        </a>
+                    </div>
+                    <div class="hero-trust">
+                        <span>✓ 14-day refund policy</span>
+                        <span>✓ Requires free plugin</span>
+                        <span>✓ Priority support</span>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="../images/pro-features-full-page.png" alt="BuddyPress Member Reviews Pro - Three Review Modes">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modes Section -->
+    <section class="modes" id="modes">
+        <div class="container">
+            <div class="section-header">
+                <h2>Three Ways to Build Trust</h2>
+                <p>Pick the review style that matches how your community actually works.</p>
+            </div>
+            <div class="modes-grid">
+                <div class="mode-card ratings">
+                    <div class="mode-icon">⭐</div>
+                    <h3>Ratings Mode</h3>
+                    <p>Traditional 5-star reviews with customizable criteria and weighted averages.</p>
+                    <ul class="mode-features">
+                        <li>1-5 star ratings</li>
+                        <li>Multiple criteria (Quality, Speed, etc.)</li>
+                        <li>Weighted averages</li>
+                        <li>Aggregate scores on profiles</li>
+                    </ul>
+                    <div class="mode-best-for">
+                        <strong>Best for:</strong> Marketplaces, service directories, freelancer platforms
+                    </div>
+                </div>
+                <div class="mode-card testimonials">
+                    <div class="mode-icon">💬</div>
+                    <h3>Testimonials Mode</h3>
+                    <p>Text-only feedback without star ratings. Stories over scores.</p>
+                    <ul class="mode-features">
+                        <li>No star ratings</li>
+                        <li>Text-only testimonials</li>
+                        <li>Success stories format</li>
+                        <li>Quotes with attribution</li>
+                    </ul>
+                    <div class="mode-best-for">
+                        <strong>Best for:</strong> Course platforms, coaching sites, membership communities
+                    </div>
+                </div>
+                <div class="mode-card endorsements">
+                    <div class="mode-icon">🏅</div>
+                    <h3>Endorsements Mode</h3>
+                    <p>LinkedIn-style skill vouching. Members endorse each other's abilities.</p>
+                    <ul class="mode-features">
+                        <li>Skill selection modal</li>
+                        <li>Endorsement counts per skill</li>
+                        <li>Custom skill definitions</li>
+                        <li>Pending request approval</li>
+                    </ul>
+                    <div class="mode-best-for">
+                        <strong>Best for:</strong> Professional networks, expert directories, alumni networks
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pro Features -->
+    <section class="pro-features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>More Power for Serious Communities</h2>
+                <p>Pro adds trust signals, flexible input types, and API access.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <div class="feature-content">
+                        <h3>Verified Badges</h3>
+                        <p>Mark reviews from confirmed sources. Build trust with visible authenticity signals.</p>
+                        <ul class="feature-list">
+                            <li>Manual admin verification</li>
+                            <li>Auto-verify by membership tenure</li>
+                            <li>Checkmark badge on reviews</li>
+                            <li>Bulk verify/unverify actions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎛️</div>
+                    <div class="feature-content">
+                        <h3>Flexible Criteria Builder</h3>
+                        <p>Not everything fits a 5-star scale. Choose the input type that works.</p>
+                        <ul class="feature-list">
+                            <li>Stars (1-5 scale)</li>
+                            <li>Thumbs (Up/Down binary)</li>
+                            <li>Text (Short answer)</li>
+                            <li>Weighted averages</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">{}</div>
+                    <div class="feature-content">
+                        <h3>REST API</h3>
+                        <p>Full CRUD API for reviews and member ratings. Build mobile apps or custom integrations.</p>
+                        <ul class="feature-list">
+                            <li>GET/POST/PATCH/DELETE reviews</li>
+                            <li>Member rating aggregates</li>
+                            <li>Filter and pagination</li>
+                            <li>Standard WordPress auth</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎧</div>
+                    <div class="feature-content">
+                        <h3>Priority Support</h3>
+                        <p>Direct email support with same-day response. Skip the forums.</p>
+                        <ul class="feature-list">
+                            <li>Direct email access</li>
+                            <li>Same-day response (business hours)</li>
+                            <li>Setup assistance</li>
+                            <li>Feature requests prioritized</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>All plans include all Pro features. Pick based on how many sites you need.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Single</h3>
+                    <div class="pricing-sites">1 Site</div>
+                    <div class="pricing-price">$69<span>/yr</span></div>
+                    <div class="pricing-period">Billed annually</div>
+                    <ul class="pricing-features">
+                        <li>All 3 review modes</li>
+                        <li>Verified badges</li>
+                        <li>Flexible criteria</li>
+                        <li>REST API</li>
+                        <li>Priority support</li>
+                        <li>1 year updates</li>
+                    </ul>
+                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Single</a>
+                </div>
+                <div class="pricing-card popular">
+                    <span class="popular-badge">Most Popular</span>
+                    <h3>5-License</h3>
+                    <div class="pricing-sites">5 Sites</div>
+                    <div class="pricing-price">$129<span>/yr</span></div>
+                    <div class="pricing-period">$25.80 per site</div>
+                    <ul class="pricing-features">
+                        <li>All 3 review modes</li>
+                        <li>Verified badges</li>
+                        <li>Flexible criteria</li>
+                        <li>REST API</li>
+                        <li>Priority support</li>
+                        <li>1 year updates</li>
+                    </ul>
+                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-pro">Get 5-License</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="pricing-sites">25 Sites</div>
+                    <div class="pricing-price">$199<span>/yr</span></div>
+                    <div class="pricing-period">$7.96 per site</div>
+                    <ul class="pricing-features">
+                        <li>All 3 review modes</li>
+                        <li>Verified badges</li>
+                        <li>Flexible criteria</li>
+                        <li>REST API</li>
+                        <li>Priority support</li>
+                        <li>1 year updates</li>
+                    </ul>
+                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Starter</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Developer</h3>
+                    <div class="pricing-sites">Unlimited Sites</div>
+                    <div class="pricing-price">$299<span>/yr</span></div>
+                    <div class="pricing-period">Best for agencies</div>
+                    <ul class="pricing-features">
+                        <li>All 3 review modes</li>
+                        <li>Verified badges</li>
+                        <li>Flexible criteria</li>
+                        <li>REST API</li>
+                        <li>Priority support</li>
+                        <li>1 year updates</li>
+                    </ul>
+                    <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-outline">Get Developer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Pro Adds</h2>
+                <p>Free covers the basics. Pro unlocks specialized modes and advanced features.</p>
+            </div>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Free</th>
+                            <th class="pro-header">Pro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Star Ratings (1-5)</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Multiple Rating Criteria</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Owner Replies</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Report System + Auto-Hide</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Moderation Queue</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Email Notifications</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Top Members Shortcode</td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr class="feature-highlight">
+                            <td><strong>Testimonials Mode</strong> — Text-only reviews</td>
+                            <td><span class="dash">—</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr class="feature-highlight">
+                            <td><strong>Endorsements Mode</strong> — Skill badges</td>
+                            <td><span class="dash">—</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr class="feature-highlight">
+                            <td><strong>Verified Badges</strong> — Trust signals</td>
+                            <td><span class="dash">—</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr class="feature-highlight">
+                            <td><strong>Flexible Criteria</strong> — Stars, Thumbs, Text</td>
+                            <td><span class="dash">—</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr class="feature-highlight">
+                            <td><strong>REST API</strong> — Full CRUD access</td>
+                            <td><span class="dash">—</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr class="feature-highlight">
+                            <td><strong>Priority Support</strong> — Same-day email</td>
+                            <td><span class="dash">—</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Pro Users Say</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <span class="testimonial-mode testimonials">Testimonials Mode</span>
+                    <p class="testimonial-text">"Star ratings felt wrong for our coaching platform. Testimonials Mode lets clients share their transformation stories. Our conversion rate jumped."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KR</div>
+                        <div>
+                            <div class="testimonial-name">Kate R.</div>
+                            <div class="testimonial-role">Course Creator, 8,000 students</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <span class="testimonial-mode endorsements">Endorsements Mode</span>
+                    <p class="testimonial-text">"We needed LinkedIn-style skill vouching for our professional network. Endorsements Mode was exactly that — members actually use it."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">PJ</div>
+                        <div>
+                            <div class="testimonial-name">Peter J.</div>
+                            <div class="testimonial-role">Network Founder, 2,500 members</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <span class="testimonial-mode ratings">Verified Badges</span>
+                    <p class="testimonial-text">"Verified badges reduced fake reviews and increased buyer confidence. Our marketplace finally feels trustworthy."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ML</div>
+                        <div>
+                            <div class="testimonial-name">Maya L.</div>
+                            <div class="testimonial-role">Marketplace Owner, 5,000 sellers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">Do I need the free plugin first?</div>
+                    <div class="faq-answer">Yes. Pro is an addon that requires the free base plugin (BuddyPress Member Reviews v3.7.0+). Install free from WordPress.org, then install Pro.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I switch between review modes?</div>
+                    <div class="faq-answer">Yes. Change modes in Settings > Member Reviews > Pro. Your existing data is preserved — ratings hide in Testimonials mode but reappear if you switch back.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What happens when my license expires?</div>
+                    <div class="faq-answer">Pro features keep working. You just stop receiving updates and priority support. Renew anytime to resume updates.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is there a trial or demo?</div>
+                    <div class="faq-answer">No trial, but we offer a 14-day refund policy. If Pro doesn't work for your community, contact support within 14 days.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Does it work with BuddyBoss?</div>
+                    <div class="faq-answer">Yes. Fully compatible with BuddyBoss Platform and BuddyBoss Theme, as well as standard BuddyPress and Youzify.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How do I get support?</div>
+                    <div class="faq-answer">Pro users get priority email support at support@wbcomdesigns.com. Same-day response during business hours.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Build Trust Your Way</h2>
+            <p>Choose the review style that fits your community. Get started today.</p>
+            <div class="cta-buttons">
+                <a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro" class="btn btn-white btn-large">
+                    Get Pro — Starting $69/yr
+                </a>
+                <a href="https://wordpress.org/plugins/bp-user-profile-reviews/" class="btn btn-ghost btn-large">
+                    Download Free First
+                </a>
+            </div>
+            <p class="cta-guarantee">14-day refund policy. No questions asked.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <a href="https://wbcomdesigns.com" class="logo" style="color: white;">
+                        <span style="color: var(--secondary);">Wbcom</span> Designs
+                    </a>
+                    <p>WordPress and BuddyPress plugin developers since 2016. Building tools for community builders.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="https://wordpress.org/plugins/bp-user-profile-reviews/">Free Plugin</a></li>
+                        <li><a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro">Pro Addon</a></li>
+                        <li><a href="https://docs.wbcomdesigns.com/docs/buddypress-member-review/">Documentation</a></li>
+                        <li><a href="https://wordpress.org/plugins/bp-user-profile-reviews/#developers">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://wordpress.org/support/plugin/bp-user-profile-reviews/">Free Support</a></li>
+                        <li><a href="https://wbcomdesigns.com/support/">Pro Support</a></li>
+                        <li><a href="https://docs.wbcomdesigns.com/docs/buddypress-member-review/">Docs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="https://wbcomdesigns.com/about/">About</a></li>
+                        <li><a href="https://wbcomdesigns.com/blog/">Blog</a></li>
+                        <li><a href="https://wbcomdesigns.com/contact/">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Wbcom Designs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

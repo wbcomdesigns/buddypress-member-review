@@ -2,6 +2,8 @@
 
 Complete marketing materials for the Free and Pro versions of BuddyPress Member Reviews.
 
+---
+
 ## Quick Reference
 
 | Version | Price | Sites |
@@ -15,6 +17,7 @@ Complete marketing materials for the Free and Pro versions of BuddyPress Member 
 **Product Links:**
 - Free: https://wordpress.org/plugins/bp-user-profile-reviews/
 - Pro: https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
+- Documentation: https://docs.wbcomdesigns.com/docs/buddypress-member-review/
 
 ---
 
@@ -30,11 +33,20 @@ Scripts for YouTube, product demos, and ads.
 - `02-installation-setup.md` — 3:00 setup tutorial script
 - `03-feature-demos.md` — 8 short feature demos (25-40s each)
 - `short-ads.md` — 15s, 30s, 60s promotional scripts
+- `shot-list-template.md` — Production notes, screenshot requirements
 
 ### 03-website-copy/
 Website and marketplace content.
 - `landing-page.md` — Full landing page structure with all sections
 - `product-description.md` — WordPress.org and Wbcom product descriptions
+- `features.md` — Complete feature breakdown (Free + Pro)
+- `faq-content.md` — Frequently asked questions for website
+- `feature-pages/` — Individual Pro feature landing pages:
+  - `testimonials-mode.md` — Text-only reviews feature page
+  - `endorsements-mode.md` — LinkedIn-style skills feature page
+  - `verified-badges.md` — Trust signals feature page
+  - `flexible-criteria.md` — Criteria builder feature page
+  - `rest-api.md` — API documentation and use cases
 
 ### 04-email-sequences/
 Email campaign templates.
@@ -64,6 +76,12 @@ Brand guidelines and research.
 - `messaging-guide.md` — Voice, tone, core messages, words to use/avoid
 - `seo-keywords.md` — Primary/long-tail keywords, meta descriptions, schema markup
 
+### 08-sales-pages/
+Production-ready HTML landing pages.
+- `free-version.html` — Complete landing page for WordPress.org free plugin
+- `pro-version.html` — Complete landing page for Pro addon with pricing
+- `README.md` — Design system documentation, color palette, usage notes
+
 ---
 
 ## Key Messages
@@ -73,10 +91,26 @@ Brand guidelines and research.
 
 **Target:** Community builders who need basic review functionality.
 
+**Key Features:**
+- Star ratings (1-5) with multiple criteria
+- Owner replies to reviews
+- Report system with auto-hide
+- Moderation queue
+- Email and BP notifications
+- Top Members shortcode
+- Template overrides
+
 ### Pro Version
 > "Choose your style: Ratings, Testimonials, or Endorsements. Build trust your way."
 
 **Target:** Professional communities, course platforms, marketplaces.
+
+**Key Features:**
+- Three review modes (Ratings, Testimonials, Endorsements)
+- Verified badges for authentic reviews
+- Flexible criteria builder (stars, thumbs, text)
+- Full REST API
+- Priority support
 
 ---
 
@@ -93,6 +127,19 @@ Member reviews that fit how YOUR community works — whether that's star ratings
 2. **Verified badges** — Real trust signals, not vanity metrics
 3. **BuddyPress-native** — Works with BP, BuddyBoss, Youzify
 4. **Privacy controls** — Anonymous option, role restrictions
+
+---
+
+## Target Personas Summary
+
+| Persona | Community Type | Recommended Mode | Upgrade Trigger |
+|---------|---------------|------------------|-----------------|
+| Community Carl | Hobby/Interest | Ratings (Free) | Top Members shortcode works well |
+| Marketplace Maya | Freelancer/Services | Ratings + Verified (Pro) | REST API for mobile app |
+| Course Creator Kate | Online Education | Testimonials (Pro) | Text-only reviews for courses |
+| Professional Pete | Expert Network | Endorsements (Pro) | LinkedIn-style skill vouching |
+
+See `07-brand-assets/persona-profiles.md` for full profiles.
 
 ---
 
@@ -114,9 +161,66 @@ Reference images in `../images/`:
 
 ---
 
+## Content Checklist
+
+### Website Copy
+- [x] Landing page
+- [x] Product descriptions (WordPress.org, Wbcom)
+- [x] Features overview
+- [x] FAQ content
+- [x] Pro feature pages (5 pages)
+
+### Video Content
+- [x] Product overview script
+- [x] Installation tutorial script
+- [x] Feature demo scripts
+- [x] Short ad scripts (15s, 30s, 60s)
+- [x] Shot list / production notes
+
+### Email Campaigns
+- [x] Welcome sequence (4 emails)
+- [x] Free-to-Pro upgrade (use-case based)
+- [x] Feature announcements
+- [x] Re-engagement / win-back
+
+### Social Media
+- [x] Twitter/X posts
+- [x] LinkedIn posts
+- [x] Facebook posts
+- [x] Instagram captions
+
+### Sales Materials
+- [x] One-pager
+- [x] Objection handling guide
+- [x] Feature comparison chart
+- [x] Testimonial templates
+- [x] ROI calculator content
+
+### Brand Assets
+- [x] Persona profiles (4 personas)
+- [x] Messaging guide
+- [x] SEO keywords
+
+### Sales Pages (HTML)
+- [x] Free version landing page
+- [x] Pro version landing page
+- [x] Consistent Wbcom Designs branding
+- [x] Responsive design (mobile-friendly)
+
+---
+
 ## Usage Notes
 
 1. **Always check pricing** before publishing — verify at wbcomdesigns.com
 2. **Screenshots** are from real product — update when UI changes
 3. **No excessive claims** — stick to documented features
 4. **Test links** before publishing campaigns
+5. **Tone check** — human, helpful, no buzzwords
+6. **One emoji max** per content piece (or none)
+
+---
+
+## Last Updated
+
+**Date:** 2026-01-27
+**Version:** Free 3.7.0 / Pro 1.0.0
