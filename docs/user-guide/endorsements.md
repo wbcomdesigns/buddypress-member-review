@@ -31,10 +31,18 @@ Instead of star ratings → **Skill tags with endorsement counts**
 ### Endorsement Display
 Instead of review text → **Skills endorsed with optional message**
 
-> Endorsed **Leadership, Communication, Project Management**
->
-> "Sarah led our entire product launch. Calm under pressure, clear communicator."
-> — **Mike Rodriguez**
+Each endorsement shows:
+- Date and "Verified Endorsement" badge (if verified)
+- Message text (truncated to 150 characters)
+- **Skill badges** — blue pill-shaped tags for each endorsed skill
+- Endorser name and avatar
+
+```
+January 27, 2026 | ✓ Verified Endorsement
+"Sarah led our entire product launch. Calm under pressure..."
+[Leadership] [Communication] [Project Management]
+— Mike Rodriguez
+```
 
 ---
 
@@ -356,6 +364,15 @@ POST /wp-json/bupr/v1/endorsements/{id}/decline
 ### Can I endorse someone multiple times?
 
 No. Each member can endorse another member once. You can edit your endorsement to add/remove skills.
+
+### How do I edit my endorsement?
+
+Click the Edit button on your endorsement. The edit modal shows:
+- Text message field (pre-filled with existing message)
+- Skill checkboxes (pre-checked with currently endorsed skills)
+- Update button to save changes
+
+Changes are saved instantly via AJAX.
 
 ### What happens to existing reviews when I switch to Endorsements?
 
