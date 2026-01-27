@@ -335,11 +335,14 @@
             margin: 0 auto;
             font-size: 32px;
             line-height: 1;
+            align-self: start;
+            justify-self: center;
         }
 
         .mode-icon svg {
             width: 36px;
             height: 36px;
+            flex-shrink: 0;
         }
 
         .mode-card.ratings .mode-icon {
@@ -359,21 +362,26 @@
 
         .mode-card h3 {
             font-size: 24px;
-            margin: 25px 0 15px;
+            margin: 0;
+            padding-top: 25px;
             background: transparent;
             align-self: start;
+            justify-self: center;
         }
 
         .mode-card > p {
             color: var(--muted-text);
-            margin-bottom: 25px;
+            margin: 0;
+            padding: 15px 0 25px;
             align-self: start;
+            justify-self: center;
         }
 
         .mode-features {
             text-align: left;
             list-style: none;
             align-self: start;
+            width: 100%;
         }
 
         .mode-features li {
