@@ -44,12 +44,16 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			// Extract shortcode attributes
 			$atts = shortcode_atts(
-				apply_filters( 'bupr_display_top_members_shortcode_atts', array(
-					'title'        => '',
-					'total_member' => 5,
-					'type'         => 'top rated',
-					'avatar'       => 'show',
-				), $attrs ),
+				apply_filters(
+					'bupr_display_top_members_shortcode_atts',
+					array(
+						'title'        => '',
+						'total_member' => 5,
+						'type'         => 'top rated',
+						'avatar'       => 'show',
+					),
+					$attrs
+				),
 				$attrs
 			);
 
@@ -65,17 +69,19 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$meta_key = apply_filters( 'bupr_shortcode_meta_key', $meta_key, $top_member );
 
 			// Query to fetch users based on their aggregate rating or review count
-			
-			$bupr_user_data = $wpdb->get_results( $wpdb->prepare(
-				"SELECT user_id, meta_value 
+
+			$bupr_user_data = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT user_id, meta_value 
 				FROM {$wpdb->usermeta} 
 				WHERE meta_key = %s
 				ORDER BY CAST(meta_value AS DECIMAL(10,2)) DESC 
-				LIMIT %d", 
-				$meta_key, 
-				$member_limit
-			) );
-			$top_members = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
+				LIMIT %d",
+					$meta_key,
+					$member_limit
+				)
+			);
+			$top_members    = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
 
 			$output .= '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting">';
 			$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
@@ -107,7 +113,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						// Fallback to the older BuddyPress function
 						$members_profile = bp_core_get_userlink( $user_id );
 					}
-					$output         .= '<div class="bupr-member-title">' . wp_kses_post( $members_profile ) . '</div>';
+					$output .= '<div class="bupr-member-title">' . wp_kses_post( $members_profile ) . '</div>';
 
 					/**
 					 * Filter whether to show star ratings in shortcode.
@@ -208,7 +214,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			$bupr_review_succes = false;
 			$bupr_flag          = false;
-			$bupr_member = array();
+			$bupr_member        = array();
 
 			// Setting default query arguments
 			$args = array(
@@ -216,15 +222,15 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				'fields'  => array( 'ID', 'display_name' ),  // Only get ID and display name
 				'number'  => 100, // Optional: Limit the number of users retrieved at a time
 			);
-			
+
 			// Apply a filter to the query arguments
 			$args = apply_filters( 'bupr_member_query_args', $args );
-			
+
 			$user_query = new WP_User_Query( $args );
-			
+
 			if ( ! empty( $user_query->get_results() ) ) {
 				foreach ( $user_query->get_results() as $user ) {
-					$user_info = get_userdata( $user->ID );
+					$user_info     = get_userdata( $user->ID );
 					$bupr_member[] = array(
 						'member_id'    => $user->ID,
 						'member_name'  => $user->display_name,
@@ -232,7 +238,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					);
 				}
 			}
-			
+
 			// Apply a filter to allow modification of the member array
 			$bupr_member = apply_filters( 'bupr_member_list', $bupr_member );
 
@@ -282,14 +288,12 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								if ( 'publish' === $reviews_args->posts[0]->post_status ) {
 									/* translators: %s: */
 									$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
-								} else {
-									if ( 'yes' === $auto_approve_reviews ) {
+								} elseif ( 'yes' === $auto_approve_reviews ) {
 										/* translators: %s: */
 										$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
-									} else {
-										/* translators: %s: */
-										$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
-									}
+								} else {
+									/* translators: %s: */
+									$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
 								}
 								?>
 										<p><?php echo esc_html( $message ); ?> </p>
@@ -347,9 +351,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					<?php
 					if ( is_user_logged_in() ) {
 						$user  = wp_get_current_user();
-						$roles = ( isset( $user->roles ) && !empty( $user->roles ) ) ? $user->roles : array();
+						$roles = ( isset( $user->roles ) && ! empty( $user->roles ) ) ? $user->roles : array();
 						if ( ! array_intersect( $roles, $bupr['exclude_given_members'] ) ) {
-						?>
+							?>
 						<div class="bupr_not_give_review">
 								<p><?php echo esc_html( 'Sorry, You have not been given permission to review the user !!!' ); ?></p>
 						</div>
@@ -363,7 +367,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							<p>
 							<?php
 							/* translators: %s: */
-							echo sprintf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+							printf( esc_html__( 'Fill in details to submit %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 							?>
 							</p>
 							<?php if ( 0 === bp_displayed_user_id() ) { ?>
@@ -373,10 +377,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								<?php
 								// if ( ! empty( $bupr_member ) ) {
 								foreach ( $bupr_member as $user ) {
-									if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && isset( $user['member_roles'][0] ) && in_array( $user['member_roles'][0], $bupr['add_taken_members'] ) ) {
+									if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && isset( $user['member_roles'][0] ) && in_array( $user['member_roles'][0], $bupr['add_taken_members'], true ) ) {
 										echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
 									}
-								// }
 								}
 								?>
 									</select><br/>
@@ -392,7 +395,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 							if ( $has_rating_fields ) {
 								$bupr_display_rating = $this->bupr_criteria_is_enable();
-								if ( true == $bupr_display_rating ) {
+								if ( true === $bupr_display_rating ) {
 									$field_counter = 1;
 									$flage         = true;
 									if ( $bupr['multi_criteria_allowed'] ) {
@@ -412,7 +415,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
 								</div>
 												<?php
-												$field_counter++;
+												++$field_counter;
 										endforeach;
 									}
 									?>
@@ -456,17 +459,26 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									<label for="review_subject" class="screen-reader-text"><?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?></label>
 									<input name="review-subject" id="review_subject" type="text" placeholder="<?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?>" ><br/>
 								</p>
-								<label for="review_desc" class="screen-reader-text"><?php
+								<label for="review_desc" class="screen-reader-text">
+								<?php
 								/* translators: %s: review label */
-								echo sprintf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>
-								<textarea name="review-desc" id="review_desc" placeholder="<?php
+								printf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+								?>
+								</label>
+								<textarea name="review-desc" id="review_desc" placeholder="
+								<?php
 								/* translators: %s: review label */
-								echo sprintf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?>" rows="4" cols="50"></textarea><br/>
+								printf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+								?>
+								" rows="4" cols="50"></textarea><br/>
 							<?php if ( $flag ) { ?>
 									<p>
-										<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value"><?php 
+										<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value">
+										<?php
 										/* translators: %s: review label;  */
-										echo sprintf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) ); ?></label>
+										printf( esc_html__( 'Send %s anonymously.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+										?>
+										</label>
 									</p>
 							<?php } ?>
 								<p>
@@ -476,7 +488,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									<button type="button" class="button btn btn-default" id="bupr_save_review" name="submit-review">
 									<?php
 									/* translators: %s: */
-									echo sprintf( esc_html__( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
+									printf( esc_html__( 'Submit %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 									?>
 									</button>
 									<input type="hidden" value="<?php echo esc_attr( $login_user ); ?>" id="bupr_current_user_id" />

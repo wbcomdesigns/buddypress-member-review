@@ -79,7 +79,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
 
-			if ( in_array( 'bp-rewrites/class-bp-rewrites.php', get_option( 'active_plugins' ) ) ) {
+			if ( in_array( 'bp-rewrites/class-bp-rewrites.php', (array) get_option( 'active_plugins' ), true ) ) {
 				add_filter( 'bp_nouveau_get_nav_link', array( $this, 'bupr_nouveau_link_fix' ), 10, 2 );
 			}
 
@@ -273,15 +273,15 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<span itemprop="itemReviewed" content="Person"></span>
 					<span itemprop="name" content="
 					<?php
-						// Use the appropriate function based on BP version
+						// Use the appropriate function based on BP version.
 					if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
-						echo esc_attr( bp_members_get_user_slug( $context === 'profile' ? bp_displayed_user_id() : $user_id ) );
+						echo esc_attr( bp_members_get_user_slug( 'profile' === $context ? bp_displayed_user_id() : $user_id ) );
 					} else {
-						echo esc_attr( bp_core_get_username( $context === 'profile' ? bp_displayed_user_id() : $user_id ) );
+						echo esc_attr( bp_core_get_username( 'profile' === $context ? bp_displayed_user_id() : $user_id ) );
 					}
 					?>
 					"></span>
-					<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( $context === 'profile' ? bp_displayed_user_id() : $user_id, false, true ) ); ?>"></span>
+					<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( 'profile' === $context ? bp_displayed_user_id() : $user_id, false, true ) ); ?>"></span>
 					
 					<div class="<?php echo esc_attr( $stars_class ); ?> <?php echo esc_attr( $tooltip_class ); ?>" 
 						data-tooltip="Average rating: <?php echo esc_attr( $rating ); ?> based on <?php echo esc_attr( $count . ' ' . $rating_string ); ?>">
@@ -1137,7 +1137,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_add_activity_meta( $activity ) {
 			$is_anonymous   = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true );
-			$anonymous_user = ( $is_anonymous == 'yes' ) ? esc_html__( 'An anonymous user', 'bp-member-reviews' ) : '';
+			$anonymous_user = ( 'yes' === $is_anonymous ) ? esc_html__( 'An anonymous user', 'bp-member-reviews' ) : '';
 			if ( isset( $activity->id ) && ! empty( $anonymous_user ) ) {
 				bp_activity_add_meta( $activity->id, 'bupr_user_string', $anonymous_user );
 			}

@@ -62,7 +62,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_filter_review_post( $data ) {
-			if ( $data['post_type'] === 'review' ) {
+			if ( 'review' === $data['post_type'] ) {
 				$post_date             = $data['post_date'];
 				$post_date_gmt         = get_gmt_from_date( $post_date );
 				$data['post_date_gmt'] = $post_date_gmt;
@@ -254,7 +254,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 			wp_reset_postdata();
 
-			if ( $user_post_count === 0 ) {
+			if ( 0 === $user_post_count ) {
 				if ( ! empty( $profile_rated_field_values ) ) {
 					foreach ( $profile_rated_field_values as $bupr_stars_rate ) {
 						if ( $bupr_count === $review_count ) {
@@ -847,8 +847,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			update_post_meta( $review_id, 'bupr_owner_reply_date', current_time( 'timestamp' ) );
 
 			// Get owner info for the response.
-			$owner_data = get_userdata( $current_user_id );
-			$owner_name = $owner_data ? $owner_data->display_name : __( 'Profile Owner', 'bp-member-reviews' );
+			$owner_data   = get_userdata( $current_user_id );
+			$owner_name   = $owner_data ? $owner_data->display_name : __( 'Profile Owner', 'bp-member-reviews' );
 			$owner_avatar = bp_core_fetch_avatar(
 				array(
 					'item_id' => $current_user_id,
@@ -858,7 +858,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			);
 
 			// Build the reply HTML.
-			$reply_html = '<div class="bupr-owner-reply">';
+			$reply_html  = '<div class="bupr-owner-reply">';
 			$reply_html .= '<div class="bupr-reply-header">';
 			$reply_html .= '<img src="' . esc_url( $owner_avatar ) . '" class="avatar avatar-32" alt="' . esc_attr( $owner_name ) . '" width="32" height="32">';
 			$reply_html .= '<span class="bupr-reply-author">' . esc_html( $owner_name ) . '</span>';
@@ -949,12 +949,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 
 			// Get flag reason.
-			$flag_reason = isset( $_POST['flag_reason'] ) ? sanitize_text_field( wp_unslash( $_POST['flag_reason'] ) ) : '';
+			$flag_reason   = isset( $_POST['flag_reason'] ) ? sanitize_text_field( wp_unslash( $_POST['flag_reason'] ) ) : '';
 			$valid_reasons = array(
-				'spam'        => __( 'Spam or fake review', 'bp-member-reviews' ),
-				'harassment'  => __( 'Harassment or abuse', 'bp-member-reviews' ),
+				'spam'          => __( 'Spam or fake review', 'bp-member-reviews' ),
+				'harassment'    => __( 'Harassment or abuse', 'bp-member-reviews' ),
 				'inappropriate' => __( 'Inappropriate content', 'bp-member-reviews' ),
-				'conflict'    => __( 'Conflict of interest', 'bp-member-reviews' ),
+				'conflict'      => __( 'Conflict of interest', 'bp-member-reviews' ),
 			);
 
 			if ( empty( $flag_reason ) || ! array_key_exists( $flag_reason, $valid_reasons ) ) {
@@ -988,11 +988,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 
 			// Add the flag.
-			$new_flag = array(
-				'reporter_id' => $current_user_id,
-				'reason'      => $flag_reason,
+			$new_flag         = array(
+				'reporter_id'  => $current_user_id,
+				'reason'       => $flag_reason,
 				'reason_label' => $valid_reasons[ $flag_reason ],
-				'date'        => current_time( 'timestamp' ),
+				'date'         => current_time( 'timestamp' ),
 			);
 			$existing_flags[] = $new_flag;
 
