@@ -97,6 +97,8 @@ Copy to `your-theme/review/`:
 
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-01-27 | fix | WPCS: Full compliance in all core files - Yoda, strict comparisons, doc blocks, inline comments | buddypress-member-review.php, bupr-notification.php, bupr-general-functions.php, bupr-scripts.php, class-buprglobals.php, templates, admin tabs |
+| 2026-01-27 | fix | Bug fix: Notification mark-as-read type comparison (absint instead of sanitize_text_field) | bupr-notification.php:187,197 |
 | 2026-01-27 | fix | WPCS compliance: Yoda conditions, strict comparisons, output escaping, sanitization | bupr-admin.php, bupr-ajax.php, bupr-filters.php, bupr-shortcodes.php |
 | 2026-01-26 | docs | Add missing user flows: Edit Review modal, Report modal, Owner Reply inline form | getting-started.md |
 | 2026-01-26 | docs | Create standalone feature guides: testimonials.md, endorsements.md, verified-reviews.md | user-guide/ |
