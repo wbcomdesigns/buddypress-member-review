@@ -21,11 +21,11 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 
 		/**
-		 * plugin_settings_tabs
+		 * Plugin settings tabs.
 		 *
 		 * @since    1.0.0
-		 * @access    public
-		 * @var mixed   $plugin_settings_tabs
+		 * @access   public
+		 * @var mixed $plugin_settings_tabs
 		 */
 		public $plugin_settings_tabs;
 
@@ -76,12 +76,12 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_review_add_meta_box_ratings() {
 			add_meta_box(
-				'custom_meta_box_ratings',                                      // $id
-				'Member Ratings',                                               // $title
-				array( $this, 'bupr_review_render_custom_meta_box_ratings' ),   // $callback
-				'review',                                                       // custom post type
-				'side',                                                         // $context
-				'low'                                                           // $priority
+				'custom_meta_box_ratings',
+				'Member Ratings',
+				array( $this, 'bupr_review_render_custom_meta_box_ratings' ),
+				'review',
+				'side',
+				'low'
 			);
 		}
 
@@ -152,6 +152,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
+		 *
+		 * @param array $new_value The new option value.
+		 * @param array $old_value The old option value (unused).
+		 * @return array The modified option value.
 		 */
 		public function bupr_update_admin_settings( $new_value, $old_value ) {
 			if ( ! empty( $new_value ) && array_key_exists( 'rating_field_name', $new_value ) ) {
@@ -160,7 +164,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				$criteria_arr   = array();
 				if ( ! empty( $rating_fields ) && isset( $rating_fields ) ) {
 					foreach ( $rating_fields as $key => $fname ) {
-						// Check if $fname is not empty before adding it to the array
+						// Check if $fname is not empty before adding it to the array.
 						if ( ! empty( trim( $fname ) ) ) {
 							if ( array_key_exists( $key, $rating_display ) ) {
 								$criteria_arr[ $fname ] = 'yes';
@@ -239,17 +243,42 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_settings_section( 'bupr-pro-features', ' ', array( $this, 'bupr_admin_pro_features_content' ), 'bupr-pro-features' );
 		}
 
+		/**
+		 * Display Welcome tab content.
+		 *
+		 * @since 1.0.9
+		 * @access public
+		 */
 		public function bupr_admin_welcome_content() {
 			include 'tab-templates/bupr-welcome-page.php';
 		}
+
+		/**
+		 * Display General settings tab content.
+		 *
+		 * @since 1.0.9
+		 * @access public
+		 */
 		public function bupr_admin_general_content() {
 			include 'tab-templates/bupr-setting-general-tab.php';
 		}
 
+		/**
+		 * Display Criteria settings tab content.
+		 *
+		 * @since 1.0.9
+		 * @access public
+		 */
 		public function bupr_admin_criteria_content() {
 			include 'tab-templates/bupr-setting-criteria-tab.php';
 		}
 
+		/**
+		 * Display Display settings tab content.
+		 *
+		 * @since 1.0.9
+		 * @access public
+		 */
 		public function bupr_admin_display_content() {
 			include 'tab-templates/bupr-setting-display-tab.php';
 		}
@@ -332,7 +361,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 			foreach ( $tabs as $tab_key => $tab_caption ) {
 				$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-				echo '<li class="' . esc_attr( $tab_key ) . '"><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings' . '&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
+				echo '<li class="' . esc_attr( $tab_key ) . '"><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
 			}
 			echo '</div></ul></div>';
 		}
@@ -386,12 +415,13 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		}
 
 		/**
-		 * [bupr_get_review_count description] Function count
+		 * Get review count and display in admin menu.
 		 *
-		 * @return [type] [Count on Review menu item ]
+		 * @since 1.0.0
+		 * @access public
 		 */
 		public function bupr_get_review_count() {
-			global $bupr, $menu;
+			global $bupr, $menu; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Intentional WordPress admin menu modification.
 			if ( 'yes' !== $bupr['auto_approve_reviews'] ) {
 
 				foreach ( $menu as $each_menu ) {
@@ -406,6 +436,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 								return;
 							}
 
+							// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Intentional WordPress admin menu modification.
 							$menu[ $key ][0] .= sprintf(
 								'<span class="awaiting-mod update-plugins count-%1$s"><span class="plugin-count">%1$s</span></span>',
 								$count
@@ -417,11 +448,14 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		}
 
 		/**
-		 * [bupr_recursive_array_search description]
+		 * Recursively search for a value in an array.
 		 *
-		 * @param  [sting] $needle
-		 * @param  [array] $haystack
-		 * @return [number]  [Return array key.]
+		 * @since 1.0.0
+		 * @access public
+		 *
+		 * @param string $needle   The value to search for.
+		 * @param array  $haystack The array to search in.
+		 * @return int|false The array key if found, false otherwise.
 		 */
 		public function bupr_recursive_array_search( $needle, $haystack ) {
 			foreach ( $haystack as $key => $value ) {
@@ -472,9 +506,16 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			register_taxonomy( 'review_category', array( 'review' ), $category_args );
 		}
 
-
-
-
+		/**
+		 * Generate activity when review status changes from draft to publish.
+		 *
+		 * @since 1.0.0
+		 * @access public
+		 *
+		 * @param string  $new_status The new post status.
+		 * @param string  $old_status The old post status.
+		 * @param WP_Post $post       The post object.
+		 */
 		public function bupr_generate_activity_review_status_change( $new_status, $old_status, $post ) {
 			global $bupr;
 			$bupr_member_id = get_post_meta( $post->ID, 'linked_bp_member', true );
@@ -507,7 +548,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					}
 					$review_subject = $bupr_reciever_name . ' received a ' . bupr_profile_review_tab_singular_slug();
 
-					// Check BuddyPress version and use the appropriate function
+					// Check BuddyPress version and use the appropriate function.
 					// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
 					if ( function_exists( 'bp_members_get_user_url' ) ) {
 						// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
@@ -517,15 +558,15 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
 					}
 					$bupr_to = $bupr_reciever_email;
-					// Define a default value for $bupr_subject with translation support
+					// Define a default value for $bupr_subject with translation support.
 					$bupr_subject = __( 'New Review on Your Profile at [site-name]', 'bp-member-reviews' );
 					$review_link  = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
-					// Check if a custom subject line is set in the settings and update $bupr_subject accordingly
+					// Check if a custom subject line is set in the settings and update $bupr_subject accordingly.
 					if ( isset( $bupr_admin_general['review_email_subject'] ) && ! empty( $bupr_admin_general['review_email_subject'] ) ) {
 						$bupr_subject = $bupr_admin_general['review_email_subject'];
 					}
 
-					// Replace '[site-name]' placeholder in the subject with the actual site name
+					// Replace '[site-name]' placeholder in the subject with the actual site name.
 					$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
 					$message = 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team';

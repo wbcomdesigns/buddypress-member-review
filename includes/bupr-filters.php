@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class to serve filter Calls.
  *
@@ -38,7 +37,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function __construct() {
 
-			// Init hooks with proper conditional checks
+			// Init hooks with proper conditional checks.
 			$this->init_hooks();
 		}
 
@@ -62,7 +61,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_action( 'init', array( $this, 'bupr_add_bp_member_reviews_taxonomy_term' ) );
 			add_filter( 'post_row_actions', array( $this, 'bupr_bp_member_reviews_row_actions' ), 10, 2 );
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_remove_edit_bulk_actions' ), 10, 1 );
-			// add_action('bp_screens', array($this, 'bupr_view_review_tab_function_to_show_screen'));
+			// Commented out: add_action for bp_screens review tab display.
 			add_action( 'bp_member_header_actions', array( $this, 'bupr_add_review_button_on_member_header' ) );
 			add_action( 'youzify_after_profile_header_user_meta', array( $this, 'bupr_add_review_button_on_member_header' ) );
 			add_action( 'bp_activity_after_save', array( $this, 'bupr_add_activity_meta' ) );
@@ -74,7 +73,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			 * Add review link at member's directory if option admin setting is enabled.
 			 */
 
-				// Directory integration with theme compatibility
+				// Directory integration with theme compatibility.
 			$this->setup_directory_hooks();
 			add_action( 'init', array( $this, 'bupr_set_default_rating_criteria' ) );
 			add_action( 'bupr_after_member_review_list', array( $this, 'bupr_edit_review_form_modal' ) );
@@ -92,31 +91,31 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * Set up directory integration hooks based on active theme.
 		 */
 		private function setup_directory_hooks() {
-			// Skip if BuddyPress is not active
+			// Skip if BuddyPress is not active.
 			if ( ! function_exists( 'buddypress' ) ) {
 				return;
 			}
 
-			// Check if BuddyBoss is active first
+			// Check if BuddyBoss is active first.
 			if ( buddypress()->buddyboss ) {
-				// Use BuddyBoss specific action
+				// Use BuddyBoss specific action.
 				add_action( 'bp_member_members_list_item', array( $this, 'bupr_rating_directory' ), 50 );
 			} else {
-				// Check the theme package ID to distinguish between BuddyPress Legacy and Nouveau
+				// Check the theme package ID to distinguish between BuddyPress Legacy and Nouveau.
 				$theme_package = bp_get_option( '_bp_theme_package_id' );
 
 				if ( 'nouveau' === $theme_package ) {
-					// If BuddyPress Nouveau is active, use the 'bp_directory_members_item_meta' hook
+					// If BuddyPress Nouveau is active, use the bp_directory_members_item_meta hook.
 					add_action( 'bp_directory_members_item_meta', array( $this, 'bupr_rating_directory' ), 50 );
 				} else {
-					// If BuddyPress Legacy is active, use the 'bp_directory_members_item' hook
+					// If BuddyPress Legacy is active, use the bp_directory_members_item hook.
 					add_action( 'bp_directory_members_item', array( $this, 'bupr_rating_directory' ), 50 );
 				}
 			}
 		}
 
 		/**
-		 * @bupr_nouveau_link_fix() nav item links.
+		 * Fix nav item links for BP Rewrites compatibility.
 		 *
 		 * @param string $link     The URL for the nav item.
 		 * @param object $nav_item The nav item object.
@@ -147,15 +146,18 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @since    2.3.0
 		 * @access   public
 		 * @author   Wbcom Designs
+		 *
+		 * @param int $user_id The user ID to get roles for.
+		 * @return array Array of user roles.
 		 */
 		public function bupr_get_current_user_roles( $user_id ) {
-			// Return empty array if not logged in
+			// Return empty array if not logged in.
 			if ( ! is_user_logged_in() || empty( $user_id ) ) {
 				return array();
 			}
 
 			$user_id = absint( $user_id );
-			// Check cache first
+			// Check cache first.
 			if ( isset( $this->user_role_cache[ $user_id ] ) ) {
 				return $this->user_role_cache[ $user_id ];
 			}
@@ -163,7 +165,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! get_userdata( $user_id ) ) {
 				return array();
 			}
-			// Get user data
+			// Get user data.
 			$user  = get_userdata( $user_id );
 			$roles = array();
 
@@ -171,10 +173,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$roles = $user->roles;
 			}
 
-			// Cache the result
+			// Cache the result.
 			$this->user_role_cache[ $user_id ] = $roles;
 
-			return $roles; // This returns an array.
+			return $roles;
 		}
 
 		/**
@@ -205,29 +207,29 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_rating_directory() {
 			global $members_template, $bupr;
-			// Check if we are on the members directory and if the setting is enabled
+			// Check if we are on the members directory and if the setting is enabled.
 			if ( ! bp_is_members_directory() || 'yes' !== $bupr['dir_view_ratings'] ) {
 				return;
 			}
 			$user_id = $members_template->member->id;
-			// Get cached rating data
+			// Get cached rating data.
 			$bupr_avg_rating    = get_user_meta( $user_id, 'bupr_aggregate_rating', true );
 			$bupr_reviews_count = get_user_meta( $user_id, 'bupr_review_count', true );
 
-			// If no cached data, skip display
+			// If no cached data, skip display.
 			if ( empty( $bupr_avg_rating ) && empty( $bupr_reviews_count ) ) {
 				return;
 			}
 
-			// Convert to proper numeric values
+			// Convert to proper numeric values.
 			$bupr_avg_rating    = (float) $bupr_avg_rating;
 			$bupr_reviews_count = (int) $bupr_reviews_count;
 
-			// Only display if we have reviews
+			// Only display if we have reviews.
 			if ( $bupr_reviews_count > 0 ) {
 				$this->render_rating_stars( $bupr_avg_rating, $bupr_reviews_count, $user_id, 'directory' );
 			} else {
-				// Display just the review count if no rating
+				// Display just the review count if no rating.
 				$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
 				echo '<div><span class="bupr-directory-rating-text">' .
 					esc_html( $bupr_reviews_count . ' ' . $review_string ) .
@@ -239,29 +241,30 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		/**
 		 * Render rating stars with proper HTML.
 		 *
-		 * @param float  $rating Average rating value
-		 * @param int    $count Number of reviews
-		 * @param string $context Where this is being displayed (profile, directory, etc.)
+		 * @param float  $rating  Average rating value.
+		 * @param int    $count   Number of reviews.
+		 * @param int    $user_id User ID for the rating display.
+		 * @param string $context Where this is being displayed (profile, directory, etc).
 		 */
 		private function render_rating_stars( $rating, $count, $user_id, $context = 'profile' ) {
-			// Calculate star display data
+			// Calculate star display data.
 			$stars_on   = floor( $rating );
 			$stars_half = ( $rating - $stars_on >= 0.5 ) ? 1 : 0;
 			$stars_off  = 5 - ( $stars_on + $stars_half );
 
-			// Format rating to 2 decimal places
+			// Format rating to 2 decimal places.
 			$rating = number_format( $rating, 2 );
 
-			// Generate CSS class based on context
+			// Generate CSS class based on context.
 			$wrapper_class = 'bupr-' . $context . '-review-wrapper';
 			$stars_class   = 'bupr-' . $context . '-review-stars';
 			$tooltip_class = 'bupr-' . $context . '-tooltip';
 
-			// Determine the appropriate text for the rating count
+			// Determine the appropriate text for the rating count.
 			$rating_string = $count > 1 ? 'ratings' : 'rating';
 			$review_string = $count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
 
-			// Start output buffering for better performance
+			// Start output buffering for better performance.
 			ob_start();
 			?>
 			<div class="<?php echo esc_attr( $wrapper_class ); ?>">
@@ -273,7 +276,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<span itemprop="itemReviewed" content="Person"></span>
 					<span itemprop="name" content="
 					<?php
-						// Use the appropriate function based on BP version.
+					// phpcs:ignore Squiz.Commenting.InlineComment.NotEmpty -- Multiline version check logic.
 					if ( function_exists( 'bp_get_version' ) && version_compare( bp_get_version(), '12.0.0', '>=' ) ) {
 						echo esc_attr( bp_members_get_user_slug( 'profile' === $context ? bp_displayed_user_id() : $user_id ) );
 					} else {
@@ -286,7 +289,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<div class="<?php echo esc_attr( $stars_class ); ?> <?php echo esc_attr( $tooltip_class ); ?>" 
 						data-tooltip="Average rating: <?php echo esc_attr( $rating ); ?> based on <?php echo esc_attr( $count . ' ' . $rating_string ); ?>">
 						<?php
-						// Display the stars
+						// Display the stars.
 						for ( $i = 1; $i <= $stars_on; $i++ ) {
 							echo '<span class="fas fa-star bupr-star-rate"></span>';
 						}
@@ -305,8 +308,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			</div>
 			<?php
 
-			// Output the generated HTML (all content above is already properly escaped)
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Output is escaped in buffer.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Output is escaped in buffer.
 			echo ob_get_clean();
 		}
 
@@ -337,7 +339,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * Map members who can give review by member role.
 		 */
 		public function bupr_members_right_to_review() {
-			// Add capability checks
+			// Add capability checks.
 			if ( ! current_user_can( 'read' ) || ! is_user_logged_in() ) {
 				return;
 			}
@@ -349,40 +351,41 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$user_roles = $this->bupr_get_current_user_roles( $user_id );
 			$user_role  = ( is_array( $user_roles ) && ! empty( $user_roles ) ) ? $user_roles[0] : '';
 
-			// If user role is excluded from giving reviews, exit early
+			// If user role is excluded from giving reviews, exit early.
 			if ( ! empty( $bupr['exclude_given_members'] ) && in_array( $user_role, $bupr['exclude_given_members'], true ) ) {
 				return;
 			}
 
-			// Check if the displayed user is not the logged-in user
+			// Check if the displayed user is not the logged-in user.
 			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
 
-				// If exclude_given_members is not empty, process logic
+				// If exclude_given_members is not empty, process logic.
 				if ( ! empty( $bupr['exclude_given_members'] ) ) {
 
-					// Check if the logged-in user is not excluded from giving reviews
+					// Check if the logged-in user is not excluded from giving reviews.
 					if ( ! in_array( $user_role, $bupr['exclude_given_members'], true ) ) {
 
-						// Construct the review URL
+						// Construct the review URL.
 						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
 						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 
-						// BuddyPress Nouveau template
+						// BuddyPress Nouveau template.
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
 							<li id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
+								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review">
 									<?php
-									/* translators: %s: Review label; */
+									/* translators: %s: Review label. */
 									printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 									?>
 								</a>
 							</li>
 							<?php
-						} else { // BuddyPress legacy or other template
+						} else {
+							// BuddyPress legacy or other template.
 							?>
 							<div id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
+								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review">
 									<?php
 									/* translators: %s: review label. */
 									printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
@@ -392,17 +395,18 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 						}
 					}
-				} else { // If exclude_given_members is empty, allow review submission for all members
+				} else {
+					// If exclude_given_members is empty, allow review submission for all members.
 
-					// Construct the review URL
+					// Construct the review URL.
 					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 
-					// BuddyPress Nouveau template
+					// BuddyPress Nouveau template.
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
 						<li id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
+							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review">
 								<?php
 								/* translators: %s: review label. */
 								printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
@@ -410,10 +414,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							</a>
 						</li>
 						<?php
-					} else { // BuddyPress legacy or other template
+					} else {
+						// BuddyPress legacy or other template.
 						?>
 						<div id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review"> <!-- Standard button class -->
+							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review">
 						<?php
 						/* translators: %s: review label. */
 						printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
@@ -427,34 +432,34 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Members who can only take reviews
+		 * Members who can only take reviews.
 		 */
 		public function bupr_members_right_to_take_review() {
 			global $bp, $bupr;
 			$review_div = 'form';
 			$user_id    = bp_loggedin_user_id();
 			$user_role  = ( ! empty( $this->bupr_get_current_user_roles( $user_id ) ) ) ? $this->bupr_get_current_user_roles( $user_id )[0] : '';
-			// Exit early if the user's role is excluded from taking reviews
+			// Exit early if the user's role is excluded from taking reviews.
 			if ( ! in_array( $user_role, $bupr['exclude_given_members'], true ) ) {
 				return;
 			}
 
-			// Check if the displayed user is not the logged-in user
+			// Check if the displayed user is not the logged-in user.
 			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
 
-				// If add_taken_members is set, process the review logic
+				// If add_taken_members is set, process the review logic.
 				if ( ! empty( $bupr['add_taken_members'] ) ) {
 					$user_id    = bp_displayed_user_id();
 					$user_roles = $this->bupr_get_current_user_roles( $user_id );
 					$user_role  = ! empty( $user_roles ) ? $user_roles[0] : '';
-					// Check if the displayed user has the role to take reviews
+					// Check if the displayed user has the role to take reviews.
 					if ( in_array( $user_role, $bupr['add_taken_members'], true ) ) {
 
-						// Construct the review URL
+						// Construct the review URL.
 						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
 						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 
-						// BuddyPress Nouveau template
+						// BuddyPress Nouveau template.
 						if ( 'nouveau' === $bp_template_option ) {
 							?>
 							<li id="bupr-add-review-btn" class="generic-button">
@@ -466,7 +471,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								</a>
 							</li>
 							<?php
-						} else { // BuddyPress legacy or other template
+						} else {
+							// BuddyPress legacy or other template.
 							?>
 							<div id="bupr-add-review-btn" class="generic-button">
 								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
@@ -479,13 +485,14 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<?php
 						}
 					}
-				} else { // If add_taken_members is empty, allow reviews for all
+				} else {
+					// If add_taken_members is empty, allow reviews for all.
 
-					// Construct the review URL
+					// Construct the review URL.
 					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
 					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
 
-					// BuddyPress Nouveau template
+					// BuddyPress Nouveau template.
 					if ( 'nouveau' === $bp_template_option ) {
 						?>
 						<li id="bupr-add-review-btn" class="generic-button">
@@ -497,7 +504,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							</a>
 						</li>
 						<?php
-					} else { // BuddyPress legacy or other template
+					} else {
+						// BuddyPress legacy or other template.
 						?>
 						<div id="bupr-add-review-btn" class="generic-button">
 							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
@@ -564,7 +572,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_member_average_rating() {
 
 			global $bupr;
-			// Only proceed on user profiles
+			// Only proceed on user profiles.
 			if ( ! bp_is_user() ) {
 				return;
 			}
@@ -576,22 +584,22 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			$user_id = bp_displayed_user_id();
 
-					// Get cached rating data
+			// Get cached rating data.
 			$bupr_avg_rating    = get_user_meta( $user_id, 'bupr_aggregate_rating', true );
 			$bupr_reviews_count = get_user_meta( $user_id, 'bupr_review_count', true );
 
-				// Calculate if necessary or use cached values
+			// Calculate if necessary or use cached values.
 			if ( '' === $bupr_avg_rating || '' === $bupr_reviews_count ) {
 				$rating_data        = $this->calculate_user_rating( $user_id );
 				$bupr_avg_rating    = $rating_data['average'];
 				$bupr_reviews_count = $rating_data['count'];
 
-				// Cache the values
+				// Cache the values.
 				update_user_meta( $user_id, 'bupr_aggregate_rating', $bupr_avg_rating );
 				update_user_meta( $user_id, 'bupr_review_count', $bupr_reviews_count );
 			}
 
-			// Display the rating if there are reviews
+			// Display the rating if there are reviews.
 			if ( $bupr_reviews_count > 0 ) {
 				$this->render_rating_stars( $bupr_avg_rating, $bupr_reviews_count, $user_id, 'member' );
 			} else {
@@ -605,13 +613,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		/**
 		 * Calculate user rating with optimized database queries.
 		 *
-		 * @param int $user_id User ID to calculate rating for
-		 * @return array Rating data with average and count
+		 * @param int $user_id User ID to calculate rating for.
+		 * @return array Rating data with average and count.
 		 */
 		private function calculate_user_rating( $user_id ) {
 			global $wpdb, $bupr;
 
-			// Validate and sanitize input
+			// Validate and sanitize input.
 			$user_id = absint( $user_id );
 			if ( ! $user_id ) {
 				return array(
@@ -619,7 +627,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					'count'   => 0,
 				);
 			}
-			// Use direct SQL for better performance
+			// Use direct SQL for better performance.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 			$reviews = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT p.ID 
@@ -638,10 +647,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$total_review_count = 0;
 
 			if ( $review_count > 0 ) {
-				// Get all review IDs
+				// Get all review IDs.
 				$review_ids = wp_list_pluck( $reviews, 'ID' );
 
-				// Get all ratings in a single query
+				// Get all ratings in a single query.
 				$review_ratings = array();
 				foreach ( $review_ids as $review_id ) {
 					$ratings = get_post_meta( $review_id, 'profile_star_rating', true );
@@ -650,7 +659,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					}
 				}
 
-				// Calculate average rating
+				// Calculate average rating.
 				foreach ( $review_ratings as $ratings ) {
 					$rate        = 0;
 					$field_count = 0;
@@ -681,12 +690,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 
 		/**
-		 * Actions performed to remove edit from bulk options
+		 * Actions performed to remove edit from bulk options.
 		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @param    array $actions Actions array.
 		 * @author   Wbcom Designs
+		 * @return   array Modified actions array.
 		 */
 		public function bupr_remove_edit_bulk_actions( $actions ) {
 			unset( $actions['edit'] );
@@ -694,13 +704,14 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Actions performed to hide row actions
+		 * Actions performed to hide row actions.
 		 *
 		 * @since    1.0.0
 		 * @access   public
-		 * @param    array $actions Actions array.
-		 * @param    array $post    Posts array.
+		 * @param    array  $actions Actions array.
+		 * @param    object $post    Post object.
 		 * @author   Wbcom Designs
+		 * @return   array Modified actions array.
 		 */
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
 			global $bp;
@@ -716,7 +727,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$linked_bp_member = get_post_meta( $post->ID, 'linked_bp_member', true );
 
 					$review_url = bp_core_get_userlink( $linked_bp_member, false, true ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
-					/* translators: %s: */
+					/* translators: %s: Review label. */
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
@@ -729,7 +740,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Action performed to add taxonomy term for group reviews
+		 * Action performed to add taxonomy term for group reviews.
 		 *
 		 * @since    1.0.0
 		 * @access   public
@@ -743,7 +754,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		}
 
 		/**
-		 * Action performed to add a tab for member profile reviews
+		 * Action performed to add a tab for member profile reviews.
 		 *
 		 * @since    1.0.0
 		 * @access   public
@@ -752,7 +763,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_member_profile_reviews_tab() {
 			global $bp, $bupr;
 
-			// Default from plugin settings
+			// Default from plugin settings.
 			$exclude_given_members = $bupr['exclude_given_members'] ?? array();
 			$add_taken_members     = $bupr['add_taken_members'] ?? array();
 			$review_label          = $bupr['review_label'] ?? esc_html__( 'Review', 'bp-member-reviews' );
@@ -761,6 +772,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				global $wp_roles;
 				// Ensure $wp_roles is set correctly.
 				if ( ! isset( $wp_roles ) || ! is_object( $wp_roles ) || ! isset( $wp_roles->roles ) ) {
+					// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Initializing WordPress global when not set.
 					$wp_roles = wp_roles();
 				}
 				// Get all available roles for pre-population.
@@ -774,7 +786,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_filter( 'site_url', 'bupr_site_url', 99 );
 			$member_slug = ( isset( $bp_pages->members ) && isset( $bp_pages->members->slug ) ) ? $bp_pages->members->slug : 'members';
 
-			/* count member's review */
+			// Count member's review.
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			$bupr_args = array(
 				'post_type'      => 'review',
 				'posts_per_page' => -1,
@@ -838,7 +851,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( ! empty( $user_role ) && in_array( $user_role[0], $exclude_given_members, true ) && ! bp_loggedin_user_id() ) {
 						bp_core_new_subnav_item(
 							array(
-								/* translators: Review Label */
+								/* translators: %1$s: Review Label. */
 								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $review_label ) ),
 								'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
@@ -868,7 +881,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					if ( array_intersect( $user_role, $add_taken_members ) ) {
 						bp_core_new_subnav_item(
 							array(
-								/* translators: %s: */
+								/* translators: %1$s: Review label. */
 								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
 								'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
 								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
@@ -883,7 +896,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 					bp_core_new_subnav_item(
 						array(
-							/* translators: %s: */
+							/* translators: %1$s: Review label. */
 							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
 							'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
 							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
@@ -996,6 +1009,12 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			bupr_get_template( 'bupr-single-review-template.php' );
 		}
 
+		/**
+		 * Display edit review form modal.
+		 *
+		 * @since    1.0.0
+		 * @access   public
+		 */
 		public function bupr_edit_review_form_modal() {
 			if ( is_user_logged_in() ) {
 				bupr_get_template( 'bupr-edit-review-form.php' );
@@ -1038,7 +1057,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 				// Get the review content.
 				$review_content = $review->post_content;
-					// Check for anonymous review
+				// Check for anonymous review.
 				$is_anonymous = get_post_meta( $review_id, 'bupr_anonymous_review_post', true ) === 'yes';
 				if ( $is_anonymous ) {
 					$reviewer_user_link = esc_html__( 'An anonymous user', 'bp-member-reviews' );
@@ -1090,8 +1109,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		/**
 		 * Added member star rating in activity.
 		 *
-		 * @param  string $activity_content Activity Content.
-		 * @param  object $activity Activity Object.
+		 * @param string $activity_content Activity Content.
+		 * @param object $activity         Activity Object.
+		 * @return string Modified activity content.
 		 */
 		public function bupr_added_activity_star_rating( $activity_content, $activity ) {
 			$post_id              = $activity->item_id;
@@ -1110,7 +1130,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					}
 					$review_start .= '<div class="bupr-col-6">';
 
-					/*** Star rating Ratings */
+					// Star rating display.
 					$stars_on  = $ratings;
 					$stars_off = 5 - $stars_on;
 					for ( $i = 1; $i <= $stars_on; $i++ ) {
@@ -1134,6 +1154,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @since    3.2.2
 		 * @access   public
 		 * @author   Wbcom Designs
+		 *
+		 * @param object $activity Activity object.
 		 */
 		public function bupr_add_activity_meta( $activity ) {
 			$is_anonymous   = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true );
@@ -1149,6 +1171,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @since    3.2.2
 		 * @access   public
 		 * @author   Wbcom Designs
+		 *
+		 * @param string $action   The activity action text.
+		 * @param object $activity Activity object.
+		 * @return string Modified action text.
 		 */
 		public function bupr_hide_username_in_activity( $action, $activity ) {
 			$bupr_user_string = bp_activity_get_meta( $activity->id, 'bupr_user_string' );
@@ -1165,6 +1191,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @since    3.2.2
 		 * @access   public
 		 * @author   Wbcom Designs
+		 *
+		 * @param string $user_link_activity User profile link.
+		 * @return string Modified user link.
 		 */
 		public function bupr_change_user_link( $user_link_activity ) {
 			global $activities_template;
@@ -1182,6 +1211,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @since    3.2.2
 		 * @access   public
 		 * @author   Wbcom Designs
+		 *
+		 * @param string $gravatar_image Gravatar image HTML.
+		 * @return string Modified gravatar image HTML.
 		 */
 		public function bupr_change_avatar_image( $gravatar_image ) {
 			global $activities_template;

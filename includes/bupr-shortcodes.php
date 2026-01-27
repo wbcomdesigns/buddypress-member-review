@@ -37,12 +37,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 *
 		 * @since    1.0.9
 		 * @author   Wbcom Designs
+		 * @param    array $attrs Shortcode attributes.
+		 * @return   string HTML output for top members display.
 		 */
 		public function bupr_display_top_members_display( $attrs ) {
 
 			global $wpdb;
 
-			// Extract shortcode attributes
+			// Extract shortcode attributes.
 			$atts = shortcode_atts(
 				apply_filters(
 					'bupr_display_top_members_shortcode_atts',
@@ -64,12 +66,11 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			$output = '';
 
-			// Determine the meta key based on the sorting type (top rated or most reviewed)
+			// Determine the meta key based on the sorting type (top rated or most reviewed).
 			$meta_key = ( 'top rated' === $top_member ) ? 'bupr_aggregate_rating' : 'bupr_review_count';
 			$meta_key = apply_filters( 'bupr_shortcode_meta_key', $meta_key, $top_member );
 
-			// Query to fetch users based on their aggregate rating or review count
-
+			// Query to fetch users based on their aggregate rating or review count.
 			$bupr_user_data = $wpdb->get_results(
 				$wpdb->prepare(
 					"SELECT user_id, meta_value 
@@ -87,30 +88,30 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
 			$output .= '<ul class="bupr-member-main">';
 
-			// Display each top member
+			// Display each top member.
 			if ( ! empty( $top_members ) ) {
 				foreach ( $top_members as $member ) {
 					$user_id = apply_filters( 'bupr_shortcode_member_id', $member->user_id );
 
-					// Get user's aggregate rating and review count from meta
+					// Get user's aggregate rating and review count from meta.
 					$aggregate_rating = get_user_meta( $user_id, 'bupr_aggregate_rating', true );
 					$review_count     = get_user_meta( $user_id, 'bupr_review_count', true );
 
 					$aggregate_rating = apply_filters( 'bupr_shortcode_aggregate_rating', ( ! empty( $aggregate_rating ) ? round( $aggregate_rating, 2 ) : 0 ), $user_id );
 					$review_count     = apply_filters( 'bupr_shortcode_review_count', ( ! empty( $review_count ) ? $review_count : 0 ), $user_id );
 
-					// Display avatar and user link
+					// Display avatar and user link.
 					$output .= '<li class="bupr-members">';
 					if ( 'show' === $avatar_display ) {
 						$output .= apply_filters( 'bupr_shortcode_avatar_display', '<div class="bupr-img-widget">' . get_avatar( $user_id, 50 ) . '</div>', $user_id );
 					}
 					$output .= '<div class="bupr-content-widget">';
-					// Get user profile link based on available BuddyPress function
+					// Get user profile link based on available BuddyPress function.
 					if ( function_exists( 'bp_members_get_user_slug' ) ) {
-						// Use the BuddyPress v12.0.0+ function if it exists
+						// Use the BuddyPress v12.0.0+ function if it exists.
 						$members_profile = bp_members_get_user_slug( $user_id );
 					} else {
-						// Fallback to the older BuddyPress function
+						// Fallback to the older BuddyPress function.
 						$members_profile = bp_core_get_userlink( $user_id );
 					}
 					$output .= '<div class="bupr-member-title">' . wp_kses_post( $members_profile ) . '</div>';
@@ -183,6 +184,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 *
 		 * @since    1.0.9
 		 * @author   Wbcom Designs
+		 * @param    array $bupr_rating1 First rating array to compare.
+		 * @param    array $bupr_rating2 Second rating array to compare.
+		 * @return   int Comparison result.
 		 */
 		public function bupr_get_sort_max_review( $bupr_rating1, $bupr_rating2 ) {
 			return strcmp( $bupr_rating2['max_review'], $bupr_rating1['max_review'] );
@@ -193,6 +197,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 		 *
 		 * @since    1.0.9
 		 * @author   Wbcom Designs
+		 * @param    array $bupr_rating1 First rating array to compare.
+		 * @param    array $bupr_rating2 Second rating array to compare.
+		 * @return   int Comparison result.
 		 */
 		public function bupr_get_sort_max_stars( $bupr_rating1, $bupr_rating2 ) {
 			return strcmp( $bupr_rating2['avg_rating'], $bupr_rating1['avg_rating'] );
@@ -216,14 +223,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$bupr_flag          = false;
 			$bupr_member        = array();
 
-			// Setting default query arguments
+			// Setting default query arguments.
 			$args = array(
-				'exclude' => array( get_current_user_id() ), // Exclude current user directly
-				'fields'  => array( 'ID', 'display_name' ),  // Only get ID and display name
-				'number'  => 100, // Optional: Limit the number of users retrieved at a time
+				'exclude' => array( get_current_user_id() ), // Exclude current user directly.
+				'fields'  => array( 'ID', 'display_name' ),  // Only get ID and display name.
+				'number'  => 100, // Optional: Limit the number of users retrieved at a time.
 			);
 
-			// Apply a filter to the query arguments
+			// Apply a filter to the query arguments.
 			$args = apply_filters( 'bupr_member_query_args', $args );
 
 			$user_query = new WP_User_Query( $args );
@@ -234,12 +241,12 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					$bupr_member[] = array(
 						'member_id'    => $user->ID,
 						'member_name'  => $user->display_name,
-						'member_roles' => $user_info->roles, // Fetch roles separately
+						'member_roles' => $user_info->roles, // Fetch roles separately.
 					);
 				}
 			}
 
-			// Apply a filter to allow modification of the member array
+			// Apply a filter to allow modification of the member array.
 			$bupr_member = apply_filters( 'bupr_member_list', $bupr_member );
 
 			$member_args = array(
@@ -375,7 +382,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 									<select name="bupr_member_id" id="bupr_member_review_id">
 										<option value=""><?php esc_html_e( '--Select--', 'bp-member-reviews' ); ?></option>
 								<?php
-								// if ( ! empty( $bupr_member ) ) {
 								foreach ( $bupr_member as $user ) {
 									if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && isset( $user['member_roles'][0] ) && in_array( $user['member_roles'][0], $bupr['add_taken_members'], true ) ) {
 										echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
