@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-26T07:37:08+00:00\n"
+"POT-Creation-Date: 2026-02-03T08:56:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -74,282 +74,290 @@ msgstr ""
 msgid "Pro Features"
 msgstr ""
 
-#: admin/bupr-admin.php:290
-#: admin/class-bupr-admin-feedback.php:266
+#: admin/bupr-admin.php:315
+#: admin/class-bupr-admin-feedback.php:265
 #: admin/class-bupr-admin-feedback.php:271
 #: admin/tab-templates/bupr-welcome-page.php:13
 #: admin/wbcom/templates/wbcom-license-page.php:21
 #: admin/wbcom/templates/wbcom-plugins-page.php:584
-#: buddypress-member-review.php:87
-#: buddypress-member-review.php:100
-#: buddypress-member-review.php:114
-#: buddypress-member-review.php:295
+#: buddypress-member-review.php:90
+#: buddypress-member-review.php:103
+#: buddypress-member-review.php:117
+#: buddypress-member-review.php:296
 msgid "BuddyPress Member Reviews"
 msgstr ""
 
 #. translators: %s:
-#: admin/bupr-admin.php:294
+#: admin/bupr-admin.php:319
 #: admin/wbcom/templates/wbcom-license-page.php:25
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: admin/bupr-admin.php:353
-#: admin/bupr-admin.php:355
-#: admin/bupr-admin.php:356
-#: admin/tab-templates/bupr-setting-general-tab.php:264
+#: admin/bupr-admin.php:378
+#: admin/bupr-admin.php:380
+#: admin/bupr-admin.php:381
+#: admin/tab-templates/bupr-setting-general-tab.php:267
 #: includes/bupr-general-functions.php:127
-#: includes/class-buprglobals.php:87
+#: includes/class-buprglobals.php:88
 msgid "Reviews"
 msgstr ""
 
-#: admin/bupr-admin.php:354
-#: includes/bupr-filters.php:758
+#: admin/bupr-admin.php:379
+#: includes/bupr-filters.php:732
 #: includes/bupr-general-functions.php:114
-#: includes/class-buprglobals.php:86
+#: includes/class-buprglobals.php:87
 msgid "Review"
 msgstr ""
 
-#: admin/bupr-admin.php:357
-#: admin/bupr-admin.php:358
+#: admin/bupr-admin.php:382
+#: admin/bupr-admin.php:383
 msgid "Add New Review"
 msgstr ""
 
-#: admin/bupr-admin.php:359
+#: admin/bupr-admin.php:384
 msgid "New Review"
 msgstr ""
 
-#: admin/bupr-admin.php:360
+#: admin/bupr-admin.php:385
 msgid "View Reviews"
 msgstr ""
 
-#: admin/bupr-admin.php:361
+#: admin/bupr-admin.php:386
 msgid "All Reviews"
 msgstr ""
 
-#: admin/bupr-admin.php:362
+#: admin/bupr-admin.php:387
 msgid "Search Reviews"
 msgstr ""
 
-#: admin/bupr-admin.php:363
+#: admin/bupr-admin.php:388
 msgid "Parent Review:"
 msgstr ""
 
-#: admin/bupr-admin.php:364
+#: admin/bupr-admin.php:389
 msgid "No Review Found"
 msgstr ""
 
-#: admin/bupr-admin.php:365
+#: admin/bupr-admin.php:390
 msgid "No Review Found In Trash"
 msgstr ""
 
-#: admin/bupr-admin.php:457
+#: admin/bupr-admin.php:486
 msgctxt "taxonomy general name"
 msgid "Reviews Category"
 msgstr ""
 
-#: admin/bupr-admin.php:458
+#: admin/bupr-admin.php:487
 msgctxt "taxonomy singular name"
 msgid "Review Category"
 msgstr ""
 
-#: admin/bupr-admin.php:459
+#: admin/bupr-admin.php:488
 msgid "Search Categories"
 msgstr ""
 
-#: admin/bupr-admin.php:460
+#: admin/bupr-admin.php:489
 msgid "All Categories"
 msgstr ""
 
-#: admin/bupr-admin.php:461
+#: admin/bupr-admin.php:490
 msgid "Parent Category"
 msgstr ""
 
-#: admin/bupr-admin.php:462
+#: admin/bupr-admin.php:491
 msgid "Parent Category:"
 msgstr ""
 
-#: admin/bupr-admin.php:463
+#: admin/bupr-admin.php:492
 msgid "Edit Category"
 msgstr ""
 
-#: admin/bupr-admin.php:464
+#: admin/bupr-admin.php:493
 msgid "Update Category"
 msgstr ""
 
-#: admin/bupr-admin.php:465
+#: admin/bupr-admin.php:494
 msgid "Add Category"
 msgstr ""
 
-#: admin/bupr-admin.php:466
+#: admin/bupr-admin.php:495
 msgid "New Category Name"
 msgstr ""
 
-#: admin/bupr-admin.php:467
+#: admin/bupr-admin.php:496
 msgid "Category"
 msgstr ""
 
-#: admin/bupr-admin.php:526
+#: admin/bupr-admin.php:545
+#: includes/bupr-ajax.php:216
+#: includes/bupr-filters.php:1027
+#: includes/bupr-filters.php:1126
+#: includes/bupr-notification.php:65
+msgid "An anonymous user"
+msgstr ""
+
+#: admin/bupr-admin.php:562
 #: includes/bupr-ajax.php:403
 msgid "New Review on Your Profile at [site-name]"
 msgstr ""
 
-#: admin/bupr-admin.php:598
-#: admin/tab-templates/bupr-setting-general-tab.php:405
+#: admin/bupr-admin.php:633
+#: admin/tab-templates/bupr-setting-general-tab.php:410
 msgid "Reports"
 msgstr ""
 
-#: admin/bupr-admin.php:627
-#: admin/bupr-admin.php:755
+#: admin/bupr-admin.php:662
+#: admin/bupr-admin.php:801
 msgid "Resolved"
 msgstr ""
 
-#: admin/bupr-admin.php:629
-#: admin/bupr-admin.php:758
+#: admin/bupr-admin.php:664
+#: admin/bupr-admin.php:804
 msgid "Dismissed"
 msgstr ""
 
-#: admin/bupr-admin.php:636
+#: admin/bupr-admin.php:671
 msgid "report"
 msgid_plural "reports"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/bupr-admin.php:657
+#: admin/bupr-admin.php:701
 msgid "Reported"
 msgstr ""
 
-#: admin/bupr-admin.php:724
+#: admin/bupr-admin.php:770
 msgid "Report Details"
 msgstr ""
 
-#: admin/bupr-admin.php:744
+#: admin/bupr-admin.php:790
 msgid "No reports for this review."
 msgstr ""
 
-#: admin/bupr-admin.php:749
+#: admin/bupr-admin.php:795
 msgid "Status:"
 msgstr ""
 
-#: admin/bupr-admin.php:752
+#: admin/bupr-admin.php:798
 msgid "Pending Review"
 msgstr ""
 
-#: admin/bupr-admin.php:761
+#: admin/bupr-admin.php:807
 msgid "None"
 msgstr ""
 
-#: admin/bupr-admin.php:765
+#: admin/bupr-admin.php:811
 msgid "Total Reports:"
 msgstr ""
 
-#: admin/bupr-admin.php:770
+#: admin/bupr-admin.php:816
 msgid "Unknown"
 msgstr ""
 
-#: admin/bupr-admin.php:775
+#: admin/bupr-admin.php:821
 msgid "By:"
 msgstr ""
 
-#: admin/bupr-admin.php:805
-#: admin/bupr-admin.php:821
+#: admin/bupr-admin.php:851
+#: admin/bupr-admin.php:867
 msgid "Dismiss Reports"
 msgstr ""
 
-#: admin/bupr-admin.php:806
+#: admin/bupr-admin.php:852
 msgid "Mark Resolved"
 msgstr ""
 
-#: admin/bupr-admin.php:822
+#: admin/bupr-admin.php:868
 msgid "Resolve Reports"
 msgstr ""
 
 #. translators: %d: Number of reviews updated
-#: admin/bupr-admin.php:866
+#: admin/bupr-admin.php:914
 #, php-format
 msgid "%d review report status updated."
 msgid_plural "%d reviews report statuses updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/bupr-admin.php:876
+#: admin/bupr-admin.php:925
 msgid "Review reports have been dismissed."
 msgstr ""
 
-#: admin/bupr-admin.php:884
+#: admin/bupr-admin.php:934
 msgid "Review reports have been marked as resolved."
 msgstr ""
 
-#: admin/bupr-admin.php:898
-#: admin/bupr-admin.php:938
+#: admin/bupr-admin.php:949
+#: admin/bupr-admin.php:990
 msgid "Security check failed."
 msgstr ""
 
-#: admin/bupr-admin.php:903
-#: admin/bupr-admin.php:943
+#: admin/bupr-admin.php:954
+#: admin/bupr-admin.php:995
 msgid "You do not have permission to perform this action."
 msgstr ""
 
-#: admin/bupr-admin.php:909
-#: admin/bupr-admin.php:949
+#: admin/bupr-admin.php:960
+#: admin/bupr-admin.php:1001
 msgid "Invalid review."
 msgstr ""
 
 #. translators: %s: years.
-#: admin/class-bupr-admin-feedback.php:90
+#: admin/class-bupr-admin-feedback.php:89
 #, php-format
 msgid "%s years"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:92
+#: admin/class-bupr-admin-feedback.php:91
 msgid "a year"
 msgstr ""
 
 #. translators: %s: weeks.
-#: admin/class-bupr-admin-feedback.php:99
+#: admin/class-bupr-admin-feedback.php:98
 #, php-format
 msgid "%s weeks"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:101
+#: admin/class-bupr-admin-feedback.php:100
 msgid "a week"
 msgstr ""
 
 #. translators: %s: days.
-#: admin/class-bupr-admin-feedback.php:108
+#: admin/class-bupr-admin-feedback.php:107
 #, php-format
 msgid "%s days"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:110
+#: admin/class-bupr-admin-feedback.php:109
 msgid "a day"
 msgstr ""
 
 #. translators: %s: hours.
-#: admin/class-bupr-admin-feedback.php:117
+#: admin/class-bupr-admin-feedback.php:116
 #, php-format
 msgid "%s hours"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:119
+#: admin/class-bupr-admin-feedback.php:118
 msgid "an hour"
 msgstr ""
 
 #. translators: %s: minutes.
-#: admin/class-bupr-admin-feedback.php:126
+#: admin/class-bupr-admin-feedback.php:125
 #, php-format
 msgid "%s minutes"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:128
+#: admin/class-bupr-admin-feedback.php:127
 msgid "a minute"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:131
+#: admin/class-bupr-admin-feedback.php:130
 msgid "a moment"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:269
+#: admin/class-bupr-admin-feedback.php:268
 msgid "Are you enjoying BuddyPress Member Reviews?"
 msgstr ""
 
@@ -359,11 +367,11 @@ msgstr ""
 msgid "We hope you're enjoying %1$s! If you find it helpful, please consider giving us a 5-star rating on WordPress to help others discover the plugin."
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:276
+#: admin/class-bupr-admin-feedback.php:278
 msgid "Leave a Review"
 msgstr ""
 
-#: admin/class-bupr-admin-feedback.php:277
+#: admin/class-bupr-admin-feedback.php:279
 msgid "No thanks / I already have"
 msgstr ""
 
@@ -420,11 +428,11 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-criteria-tab.php:135
+#: admin/tab-templates/bupr-setting-criteria-tab.php:133
 msgid "Add Criteria"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-criteria-tab.php:136
+#: admin/tab-templates/bupr-setting-criteria-tab.php:134
 msgid "This option allows you to add multiple rating criteria. By default, no criteria are shown until you activate them."
 msgstr ""
 
@@ -545,85 +553,85 @@ msgstr ""
 msgid "Enter the message content for review approval notification emails."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:220
+#: admin/tab-templates/bupr-setting-general-tab.php:223
 msgid "BuddyPress Notifications"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:223
+#: admin/tab-templates/bupr-setting-general-tab.php:226
 msgid "Notify members through BuddyPress when they receive a new review."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:239
+#: admin/tab-templates/bupr-setting-general-tab.php:242
 msgid "Update Review"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:242
+#: admin/tab-templates/bupr-setting-general-tab.php:245
 msgid "Allow members to update or modify their reviews."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:258
+#: admin/tab-templates/bupr-setting-general-tab.php:261
 msgid "Reviews Per Page"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:260
+#: admin/tab-templates/bupr-setting-general-tab.php:263
 msgid "Number of reviews to display per page."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:270
+#: admin/tab-templates/bupr-setting-general-tab.php:273
 msgid "Reviewer Roles"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:272
+#: admin/tab-templates/bupr-setting-general-tab.php:275
 msgid "Select user roles that can submit reviews."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:302
+#: admin/tab-templates/bupr-setting-general-tab.php:306
 msgid "Reviewee Roles"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:304
+#: admin/tab-templates/bupr-setting-general-tab.php:308
 msgid "Select user roles that can receive reviews."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:336
+#: admin/tab-templates/bupr-setting-general-tab.php:341
 #: admin/tab-templates/bupr-setting-pro-features-tab.php:207
 msgid "Anonymous Reviews"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:338
+#: admin/tab-templates/bupr-setting-general-tab.php:343
 msgid "Allow users to submit reviews anonymously."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:350
+#: admin/tab-templates/bupr-setting-general-tab.php:355
 msgid "Activity Stream"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:352
+#: admin/tab-templates/bupr-setting-general-tab.php:357
 msgid "Post reviews to the BuddyPress activity stream."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:366
+#: admin/tab-templates/bupr-setting-general-tab.php:371
 #: admin/tab-templates/bupr-setting-pro-features-tab.php:191
 msgid "Owner Replies"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:368
+#: admin/tab-templates/bupr-setting-general-tab.php:373
 msgid "Allow profile owners to respond once to each review they receive."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:383
+#: admin/tab-templates/bupr-setting-general-tab.php:388
 msgid "Review Reporting"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:385
+#: admin/tab-templates/bupr-setting-general-tab.php:390
 msgid "Allow users to report inappropriate reviews for admin moderation."
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:399
+#: admin/tab-templates/bupr-setting-general-tab.php:404
 msgid "Auto-Hide Threshold"
 msgstr ""
 
-#: admin/tab-templates/bupr-setting-general-tab.php:401
+#: admin/tab-templates/bupr-setting-general-tab.php:406
 msgid "Automatically hide reviews after this many reports. Set to 0 to disable."
 msgstr ""
 
@@ -1666,44 +1674,44 @@ msgid "Our Plugins"
 msgstr ""
 
 #: admin/wbcom/wbcom-admin-settings.php:380
-#: buddypress-member-review.php:234
+#: buddypress-member-review.php:239
 msgid "Settings"
 msgstr ""
 
 #. translators: %1$s: Plugin name, %2$s: Required version
-#: buddypress-member-review.php:86
+#: buddypress-member-review.php:89
 #, php-format
 msgid "%1$s requires BuddyPress version %2$s or higher."
 msgstr ""
 
 #. translators: %1$s: Plugin name, %2$s: Required version
-#: buddypress-member-review.php:99
+#: buddypress-member-review.php:102
 #, php-format
 msgid "%1$s requires BuddyBoss version %2$s or higher."
 msgstr ""
 
 #. translators: %1$s: Plugin name
-#: buddypress-member-review.php:113
+#: buddypress-member-review.php:116
 #, php-format
 msgid "%1$s requires the BuddyPress Members component to be active."
 msgstr ""
 
-#: buddypress-member-review.php:154
-#: includes/bupr-filters.php:193
+#: buddypress-member-review.php:157
+#: includes/bupr-filters.php:195
 msgid "Member Response"
 msgstr ""
 
-#: buddypress-member-review.php:155
-#: includes/bupr-filters.php:194
+#: buddypress-member-review.php:158
+#: includes/bupr-filters.php:196
 msgid "Member Skills"
 msgstr ""
 
-#: buddypress-member-review.php:296
+#: buddypress-member-review.php:297
 msgid "BuddyPress or BuddyBoss"
 msgstr ""
 
 #. translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress.
-#: buddypress-member-review.php:300
+#: buddypress-member-review.php:301
 #, php-format
 msgid "%1$s requires %2$s to be installed and active."
 msgstr ""
@@ -1711,9 +1719,9 @@ msgstr ""
 #: includes/bupr-ajax.php:84
 #: includes/bupr-ajax.php:159
 #: includes/bupr-ajax.php:495
-#: includes/bupr-ajax.php:660
-#: includes/bupr-ajax.php:767
-#: includes/bupr-ajax.php:900
+#: includes/bupr-ajax.php:669
+#: includes/bupr-ajax.php:776
+#: includes/bupr-ajax.php:909
 msgid "Security verification failed."
 msgstr ""
 
@@ -1723,16 +1731,16 @@ msgstr ""
 
 #: includes/bupr-ajax.php:105
 #: includes/bupr-ajax.php:518
-#: includes/bupr-ajax.php:682
-#: includes/bupr-ajax.php:779
-#: includes/bupr-ajax.php:923
+#: includes/bupr-ajax.php:691
+#: includes/bupr-ajax.php:788
+#: includes/bupr-ajax.php:932
 msgid "Invalid review ID."
 msgstr ""
 
 #: includes/bupr-ajax.php:116
 #: includes/bupr-ajax.php:530
-#: includes/bupr-ajax.php:791
-#: includes/bupr-ajax.php:935
+#: includes/bupr-ajax.php:800
+#: includes/bupr-ajax.php:944
 #: includes/templates/bupr-single-review-template.php:23
 msgid "Review not found."
 msgstr ""
@@ -1743,7 +1751,7 @@ msgstr ""
 
 #: includes/bupr-ajax.php:169
 #: includes/bupr-ajax.php:506
-#: includes/bupr-ajax.php:670
+#: includes/bupr-ajax.php:679
 msgid "Invalid request."
 msgstr ""
 
@@ -1757,13 +1765,6 @@ msgstr ""
 
 #: includes/bupr-ajax.php:212
 msgid "Selected member does not exist."
-msgstr ""
-
-#: includes/bupr-ajax.php:216
-#: includes/bupr-filters.php:1044
-#: includes/bupr-filters.php:1140
-#: includes/bupr-notification.php:52
-msgid "An anonymous user"
 msgstr ""
 
 #. translators: 1: User display name, 2: Review tab name (singular).
@@ -1790,7 +1791,7 @@ msgstr ""
 
 #. translators: %s:
 #: includes/bupr-ajax.php:351
-#: includes/bupr-shortcodes.php:284
+#: includes/bupr-shortcodes.php:297
 #, php-format
 msgid "You already posted a %1$s for this member."
 msgstr ""
@@ -1810,157 +1811,155 @@ msgid "You do not have permission to edit this review."
 msgstr ""
 
 #: includes/bupr-ajax.php:601
-#: includes/bupr-shortcodes.php:426
+#: includes/bupr-shortcodes.php:437
 msgid "Rating : "
 msgstr ""
 
 #: includes/bupr-ajax.php:620
-#: includes/bupr-shortcodes.php:383
-#: includes/bupr-shortcodes.php:412
+#: includes/bupr-shortcodes.php:394
+#: includes/bupr-shortcodes.php:423
 msgid "This field is required."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-ajax.php:632
+#: includes/bupr-ajax.php:641
 #, php-format
 msgid "Update %s"
 msgstr ""
 
-#: includes/bupr-ajax.php:643
+#: includes/bupr-ajax.php:652
 msgid "Unable to load review form."
 msgstr ""
 
 #. translators: %s: Review label (e.g., "Review").
-#: includes/bupr-ajax.php:736
+#: includes/bupr-ajax.php:745
 #, php-format
 msgid "%s updated successfully."
 msgstr ""
 
-#: includes/bupr-ajax.php:756
+#: includes/bupr-ajax.php:765
 msgid "Owner replies are disabled."
 msgstr ""
 
-#: includes/bupr-ajax.php:805
+#: includes/bupr-ajax.php:814
 msgid "You do not have permission to reply to this review."
 msgstr ""
 
-#: includes/bupr-ajax.php:817
+#: includes/bupr-ajax.php:826
 msgid "You have already replied to this review."
 msgstr ""
 
-#: includes/bupr-ajax.php:829
+#: includes/bupr-ajax.php:838
 msgid "Reply content cannot be empty."
 msgstr ""
 
-#: includes/bupr-ajax.php:842
-#: includes/templates/bupr-reviews-tab-template.php:303
+#: includes/bupr-ajax.php:851
+#: includes/templates/bupr-reviews-tab-template.php:311
 msgid "Profile Owner"
 msgstr ""
 
-#: includes/bupr-ajax.php:856
-#: includes/templates/bupr-reviews-tab-template.php:316
+#: includes/bupr-ajax.php:865
+#: includes/templates/bupr-reviews-tab-template.php:324
 msgid "Owner Response"
 msgstr ""
 
-#: includes/bupr-ajax.php:868
+#: includes/bupr-ajax.php:877
 msgid "Reply added successfully."
 msgstr ""
 
-#: includes/bupr-ajax.php:889
+#: includes/bupr-ajax.php:898
 msgid "Review flagging is disabled."
 msgstr ""
 
-#: includes/bupr-ajax.php:911
+#: includes/bupr-ajax.php:920
 msgid "You must be logged in to flag a review."
 msgstr ""
 
-#: includes/bupr-ajax.php:945
-#: includes/templates/bupr-reviews-tab-template.php:425
+#: includes/bupr-ajax.php:954
+#: includes/templates/bupr-reviews-tab-template.php:433
 msgid "Spam or fake review"
 msgstr ""
 
-#: includes/bupr-ajax.php:946
-#: includes/templates/bupr-reviews-tab-template.php:429
+#: includes/bupr-ajax.php:955
+#: includes/templates/bupr-reviews-tab-template.php:437
 msgid "Harassment or abuse"
 msgstr ""
 
-#: includes/bupr-ajax.php:947
-#: includes/templates/bupr-reviews-tab-template.php:433
+#: includes/bupr-ajax.php:956
+#: includes/templates/bupr-reviews-tab-template.php:441
 msgid "Inappropriate content"
 msgstr ""
 
-#: includes/bupr-ajax.php:948
-#: includes/templates/bupr-reviews-tab-template.php:437
+#: includes/bupr-ajax.php:957
+#: includes/templates/bupr-reviews-tab-template.php:445
 msgid "Conflict of interest"
 msgstr ""
 
-#: includes/bupr-ajax.php:954
+#: includes/bupr-ajax.php:963
 msgid "Please select a valid reason for flagging."
 msgstr ""
 
-#: includes/bupr-ajax.php:973
+#: includes/bupr-ajax.php:982
 msgid "You have already flagged this review."
 msgstr ""
 
-#: includes/bupr-ajax.php:1015
+#: includes/bupr-ajax.php:1024
 msgid "Thank you for reporting. This review has been hidden pending admin review."
 msgstr ""
 
-#: includes/bupr-ajax.php:1016
+#: includes/bupr-ajax.php:1025
 msgid "Thank you for reporting. We will review this content."
 msgstr ""
 
-#: includes/bupr-filters.php:231
-#: includes/bupr-filters.php:262
+#: includes/bupr-filters.php:233
+#: includes/bupr-filters.php:265
 msgid " reviews )"
 msgstr ""
 
-#: includes/bupr-filters.php:231
-#: includes/bupr-filters.php:262
+#: includes/bupr-filters.php:233
+#: includes/bupr-filters.php:265
 msgid " review )"
 msgstr ""
 
-#. translators: %s: Review label;
+#. translators: %s: Review label.
 #. translators: %s: review label.
-#: includes/bupr-filters.php:377
-#: includes/bupr-filters.php:388
-#: includes/bupr-filters.php:408
-#: includes/bupr-filters.php:419
-#: includes/bupr-filters.php:464
-#: includes/bupr-filters.php:475
-#: includes/bupr-filters.php:495
-#: includes/bupr-filters.php:506
+#: includes/bupr-filters.php:374
+#: includes/bupr-filters.php:386
+#: includes/bupr-filters.php:432
+#: includes/bupr-filters.php:444
+#: includes/bupr-filters.php:465
+#: includes/bupr-filters.php:477
 #, php-format
 msgid "Add %s"
 msgstr ""
 
-#: includes/bupr-filters.php:598
-#: includes/bupr-shortcodes.php:148
-#: includes/widgets/display-review.php:115
+#: includes/bupr-filters.php:569
+#: includes/bupr-shortcodes.php:155
+#: includes/widgets/display-review.php:146
 msgid "reviews"
 msgstr ""
 
-#. translators: %s:
-#: includes/bupr-filters.php:720
+#. translators: %s: Review label.
+#: includes/bupr-filters.php:694
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: includes/bupr-filters.php:724
+#: includes/bupr-filters.php:698
 msgid "Approve"
 msgstr ""
 
-#. translators: Review Label
-#. translators: %s:
-#: includes/bupr-filters.php:842
-#: includes/bupr-filters.php:872
-#: includes/bupr-filters.php:887
+#. translators: %1$s: Review Label.
+#. translators: %1$s: Review label.
+#: includes/bupr-filters.php:821
+#: includes/bupr-filters.php:849
+#: includes/bupr-filters.php:864
 #, php-format
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link.
-#: includes/bupr-filters.php:1052
+#: includes/bupr-filters.php:1035
 #, php-format
 msgid "%1$s posted a new %2$s to %3$s"
 msgstr ""
@@ -1980,171 +1979,171 @@ msgid "Give Member Review"
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-notification.php:91
+#: includes/bupr-notification.php:104
 #, php-format
 msgid "A new %s posted."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-notification.php:93
+#: includes/bupr-notification.php:106
 #, php-format
 msgid "%1$s posted a %2$s"
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-notification.php:97
+#: includes/bupr-notification.php:110
 #, php-format
 msgid "( Pending Approval )  %1$s posted a %2$s"
 msgstr ""
 
-#: includes/bupr-scripts.php:212
+#: includes/bupr-scripts.php:213
 msgid "Already Installed & Activated"
 msgstr ""
 
-#: includes/bupr-scripts.php:213
+#: includes/bupr-scripts.php:214
 msgid "There was a problem performing the action."
 msgstr ""
 
-#: includes/bupr-scripts.php:214
+#: includes/bupr-scripts.php:215
 msgid "* Number input is not allowed *"
 msgstr ""
 
 #. translators: %1$s: rating; %2$s: review count; %3$s: item type label
-#: includes/bupr-shortcodes.php:155
+#: includes/bupr-shortcodes.php:162
 #, php-format
 msgid "Rating: %1$s/5 (%2$s %3$s)"
 msgstr ""
 
 #. translators: %1$s: review count; %2$s: item type label
 #. translators: %1$s: Review count; %2$s: item type label
-#: includes/bupr-shortcodes.php:158
-#: includes/widgets/display-review.php:141
+#: includes/bupr-shortcodes.php:165
+#: includes/widgets/display-review.php:172
 #, php-format
 msgid "%1$s %2$s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:165
-#: includes/widgets/display-review.php:150
+#: includes/bupr-shortcodes.php:172
+#: includes/widgets/display-review.php:181
 msgid "No members have been reviewed yet."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:288
+#: includes/bupr-shortcodes.php:300
 #, php-format
 msgid "Thank you for taking time to write this wonderful %1$s."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:291
+#: includes/bupr-shortcodes.php:303
 #, php-format
 msgid "Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator's approval."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:366
+#: includes/bupr-shortcodes.php:379
 #, php-format
 msgid "Fill in details to submit %s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:372
+#: includes/bupr-shortcodes.php:385
 msgid "--Select--"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:456
-#: includes/bupr-shortcodes.php:457
+#: includes/bupr-shortcodes.php:467
+#: includes/bupr-shortcodes.php:468
 msgid "Review Subject"
 msgstr ""
 
 #. translators: %s: review label
-#: includes/bupr-shortcodes.php:461
-#: includes/bupr-shortcodes.php:464
+#: includes/bupr-shortcodes.php:473
+#: includes/bupr-shortcodes.php:479
 #, php-format
 msgid "Enter your %s"
 msgstr ""
 
 #. translators: %s: review label;
-#: includes/bupr-shortcodes.php:469
+#: includes/bupr-shortcodes.php:487
 #, php-format
 msgid "Send %s anonymously."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:473
+#: includes/bupr-shortcodes.php:493
 msgid "Please either select a rating or write a review."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:479
+#: includes/bupr-shortcodes.php:499
 #, php-format
 msgid "Submit %s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:483
+#: includes/bupr-shortcodes.php:503
 msgid "Loading..."
 msgstr ""
 
-#: includes/class-buprglobals.php:75
+#: includes/class-buprglobals.php:76
 msgid "You have received a new review!"
 msgstr ""
 
-#: includes/class-buprglobals.php:76
+#: includes/class-buprglobals.php:77
 msgid "A new review has been submitted on your profile. Log in to see the details."
 msgstr ""
 
 #. translators: %s:
-#: includes/templates/bupr-reviews-tab-template.php:74
+#: includes/templates/bupr-reviews-tab-template.php:75
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:115
-#: includes/templates/bupr-single-review-template.php:59
+#: includes/templates/bupr-reviews-tab-template.php:118
+#: includes/templates/bupr-single-review-template.php:61
 msgid "anonymous"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:213
+#: includes/templates/bupr-reviews-tab-template.php:221
 msgid "read more..."
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:326
+#: includes/templates/bupr-reviews-tab-template.php:334
 msgid "Reply to this review"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:329
+#: includes/templates/bupr-reviews-tab-template.php:337
 msgid "Write your response..."
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:332
+#: includes/templates/bupr-reviews-tab-template.php:340
 msgid "Submit Reply"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:335
-#: includes/templates/bupr-reviews-tab-template.php:444
+#: includes/templates/bupr-reviews-tab-template.php:343
+#: includes/templates/bupr-reviews-tab-template.php:452
 msgid "Cancel"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:352
+#: includes/templates/bupr-reviews-tab-template.php:360
 msgid "Report this review"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:354
+#: includes/templates/bupr-reviews-tab-template.php:362
 msgid "Report"
 msgstr ""
 
 #. translators: %s:
-#: includes/templates/bupr-reviews-tab-template.php:398
+#: includes/templates/bupr-reviews-tab-template.php:406
 #, php-format
 msgid "Unfortunately, there are no %1$s found."
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:416
+#: includes/templates/bupr-reviews-tab-template.php:424
 msgid "Report Review"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:420
+#: includes/templates/bupr-reviews-tab-template.php:428
 msgid "Please select a reason for reporting this review:"
 msgstr ""
 
-#: includes/templates/bupr-reviews-tab-template.php:443
+#: includes/templates/bupr-reviews-tab-template.php:451
 msgid "Submit Report"
 msgstr ""
 
@@ -2152,100 +2151,100 @@ msgstr ""
 msgid "Review author not found."
 msgstr ""
 
-#: includes/widgets/display-review.php:25
+#: includes/widgets/display-review.php:43
 msgid "Display a list of members based on their reviews."
 msgstr ""
 
-#: includes/widgets/display-review.php:32
+#: includes/widgets/display-review.php:50
 msgid "BP Member Review Widget"
 msgstr ""
 
-#: includes/widgets/display-review.php:46
+#: includes/widgets/display-review.php:70
 msgid "Top Rated Members"
 msgstr ""
 
 #. translators: %1$s: aggregate rating; %2$s: Review count; %3$s: item type label
-#: includes/widgets/display-review.php:138
+#: includes/widgets/display-review.php:169
 #, php-format
 msgid "%1$s/5 (%2$s %3$s)"
 msgstr ""
 
-#: includes/widgets/display-review.php:167
+#: includes/widgets/display-review.php:209
 msgid "Top Members"
 msgstr ""
 
-#: includes/widgets/display-review.php:180
+#: includes/widgets/display-review.php:222
 msgid "Enter Title"
 msgstr ""
 
-#: includes/widgets/display-review.php:184
+#: includes/widgets/display-review.php:226
 msgid "Display Members"
 msgstr ""
 
-#: includes/widgets/display-review.php:191
+#: includes/widgets/display-review.php:233
 msgid "Top Rated "
 msgstr ""
 
-#: includes/widgets/display-review.php:196
+#: includes/widgets/display-review.php:238
 msgid "Most Reviewed"
 msgstr ""
 
-#: includes/widgets/display-review.php:202
+#: includes/widgets/display-review.php:244
 msgid "Display Avatar "
 msgstr ""
 
-#: includes/widgets/member-rating.php:25
+#: includes/widgets/member-rating.php:38
 msgid "Display ratings for the displayed member."
 msgstr ""
 
-#: includes/widgets/member-rating.php:32
+#: includes/widgets/member-rating.php:45
 msgid "BP Displayed Member Rating Widget"
 msgstr ""
 
 #. translators: %s: Review label;
-#: includes/widgets/member-rating.php:49
+#: includes/widgets/member-rating.php:69
 #, php-format
 msgid "%s's Ratings"
 msgstr ""
 
-#: includes/widgets/member-rating.php:112
+#: includes/widgets/member-rating.php:132
 msgid "Anonymous"
 msgstr ""
 
 #. translators: %1$s: average rating
-#: includes/widgets/member-rating.php:147
+#: includes/widgets/member-rating.php:167
 #, php-format
 msgid "%1$s/5"
 msgstr ""
 
-#: includes/widgets/member-rating.php:159
+#: includes/widgets/member-rating.php:179
 msgid "The member has not received a rating yet."
 msgstr ""
 
-#: includes/widgets/member-rating.php:177
+#: includes/widgets/member-rating.php:208
 msgid "Member Ratings"
 msgstr ""
 
-#: includes/widgets/member-rating.php:187
+#: includes/widgets/member-rating.php:218
 msgid "Enter Title:"
 msgstr ""
 
-#: includes/widgets/member-rating.php:191
+#: includes/widgets/member-rating.php:222
 msgid "Number of Ratings to Show:"
 msgstr ""
 
-#: includes/widgets/member-rating.php:195
+#: includes/widgets/member-rating.php:226
 msgid "Default Sorting:"
 msgstr ""
 
-#: includes/widgets/member-rating.php:197
+#: includes/widgets/member-rating.php:228
 msgid "Latest"
 msgstr ""
 
-#: includes/widgets/member-rating.php:198
+#: includes/widgets/member-rating.php:229
 msgid "Highest"
 msgstr ""
 
-#: includes/widgets/member-rating.php:199
+#: includes/widgets/member-rating.php:230
 msgid "Lowest"
 msgstr ""

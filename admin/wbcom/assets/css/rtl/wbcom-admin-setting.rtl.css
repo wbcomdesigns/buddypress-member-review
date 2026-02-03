@@ -1852,7 +1852,7 @@ button.wbcom-faq-accordion::after {
     inset-inline-end: unset;
     inset-inline-start: 10px;
     left: auto;
-    right: auto;
+    /* Note: left should NOT be reset to auto here, as it breaks ON text positioning */
 }
 
 /* Mobile responsive RTL fixes */
