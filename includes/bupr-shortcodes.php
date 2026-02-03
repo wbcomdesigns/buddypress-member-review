@@ -357,10 +357,11 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					</div>
 					<?php
 					if ( is_user_logged_in() ) {
-						$user  = wp_get_current_user();
-						$roles = ( isset( $user->roles ) && ! empty( $user->roles ) ) ? $user->roles : array();
-						if ( array_intersect( $roles, $bupr['exclude_given_members'] ) ) {
-							// User's role is in the exclude list - block them.
+						$user          = wp_get_current_user();
+						$roles         = ( isset( $user->roles ) && ! empty( $user->roles ) ) ? $user->roles : array();
+						$allowed_roles = isset( $bupr['exclude_given_members'] ) && is_array( $bupr['exclude_given_members'] ) ? $bupr['exclude_given_members'] : array();
+						if ( ! empty( $allowed_roles ) && ! array_intersect( $roles, $allowed_roles ) ) {
+							// User's role is NOT in the allowed reviewer roles list - block them.
 							?>
 						<div class="bupr_not_give_review">
 								<p><?php echo esc_html( 'Sorry, You have not been given permission to review the user !!!' ); ?></p>
