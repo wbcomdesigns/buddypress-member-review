@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-03T12:09:46+00:00\n"
+"POT-Creation-Date: 2026-02-10T06:03:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -2056,28 +2056,28 @@ msgstr ""
 
 #. translators: %s: review label
 #: includes/bupr-shortcodes.php:473
-#: includes/bupr-shortcodes.php:479
+#: includes/bupr-shortcodes.php:478
 #, php-format
 msgid "Enter your %s"
 msgstr ""
 
 #. translators: %s: review label;
-#: includes/bupr-shortcodes.php:487
+#: includes/bupr-shortcodes.php:486
 #, php-format
 msgid "Send %s anonymously."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:493
+#: includes/bupr-shortcodes.php:492
 msgid "Please either select a rating or write a review."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:499
+#: includes/bupr-shortcodes.php:498
 #, php-format
 msgid "Submit %s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:503
+#: includes/bupr-shortcodes.php:502
 msgid "Loading..."
 msgstr ""
 
