@@ -319,7 +319,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 .bp-member-reviews .bupr-row {
     position: relative;
-    padding-left: 130px;
+    padding-left: 160px;
 }
 
 .bp-member-reviews .bupr-row .bupr-edit-review-button-wrapper {
@@ -992,7 +992,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bp-member-add-form button#bupr_save_review {
     display: inline-block;
-    max-width: 160px;
+    max-width: 180px;
     font-size: 16px;
     font-weight: normal;
 }
