@@ -63,6 +63,32 @@ Your data is safe when switching modes:
 
 This flexibility lets you experiment with different modes to find what resonates with your community.
 
+## Featured Testimonials Shortcode
+
+Showcase your best testimonials anywhere on your site using the `[bupr_featured_testimonials]` shortcode.
+
+```
+[bupr_featured_testimonials]
+```
+
+**Parameters:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `count` | `5` | Number of featured testimonials |
+| `columns` | `3` | Grid columns (2, 3, or 4) |
+| `orderby` | `date` | Sort field |
+| `order` | `DESC` | Sort order |
+
+**Note:** Only shows testimonials marked as "Featured" by admin.
+
+**Examples:**
+
+```
+[bupr_featured_testimonials count="6" columns="3"]
+[bupr_featured_testimonials count="4" columns="2" order="ASC"]
+```
+
 ## Configuration Tips
 
 **Moderation:** Enable review moderation to curate high-quality testimonials before they go live.

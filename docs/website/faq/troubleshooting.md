@@ -416,6 +416,47 @@ Widget DOES NOT work on: homepage, posts, pages
 
 ---
 
+## Widget Shows "No reviews found"
+
+### Symptom
+
+The BP Displayed Member Rating Widget shows nothing or "No reviews found".
+
+### Possible Causes
+
+**1. Not on a Profile Page**
+
+The widget only renders on BuddyPress member profile pages.
+
+**Solution:**
+
+Make sure you are viewing a BuddyPress member profile page — the widget only renders on profile pages.
+
+**2. No Published Reviews**
+
+The displayed member must have published (approved) reviews.
+
+**Solution:**
+
+```bash
+Go to Reviews → All Reviews in WordPress admin
+Check that the displayed member has reviews with status "Published"
+```
+
+**3. Widget Setting Misconfigured**
+
+The widget's "Number of Reviews" setting may be set to 0.
+
+**Solution:**
+
+```bash
+Go to Appearance → Widgets
+Find the BP Displayed Member Rating Widget
+Check that "Number of Reviews" is set to a number greater than 0
+```
+
+---
+
 ## Permission Errors
 
 ### Symptom

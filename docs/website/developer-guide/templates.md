@@ -16,23 +16,11 @@ This ensures your customizations are preserved during plugin updates.
 
 ## Available Templates
 
-### Main Templates
-
 | Template | Purpose |
 |----------|---------|
-| `bupr-reviews-tab-template.php` | Reviews tab content on member profile |
+| `bupr-reviews-tab-template.php` | Reviews tab content on member profile (review list) |
 | `bupr-single-review-template.php` | Individual review display |
-| `bupr-edit-review-form.php` | Edit review form |
-| `bupr-review-form.php` | New review submission form |
-| `bupr-review-list.php` | Review list wrapper |
-
-### Partial Templates
-
-| Template | Purpose |
-|----------|---------|
-| `bupr-rating-stars.php` | Star rating display |
-| `bupr-aggregate-rating.php` | Aggregate rating summary |
-| `bupr-review-actions.php` | Review action buttons (edit, delete, reply) |
+| `bupr-edit-review-form.php` | Edit review modal form |
 
 ---
 

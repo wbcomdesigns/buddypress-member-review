@@ -15,7 +15,6 @@ The Pro version adds professional-grade features for community sites, business d
 - **Flexible Criteria** - Advanced multi-criteria management with custom weighting
 - **Member Skills** - Track and display member skills with ratings
 - **REST API** - Integrate reviews with external apps and services
-- **Admin Dashboard** - Enhanced review management and analytics
 - **Priority Support** - Fast email support with priority handling
 - **Regular Updates** - New features and improvements
 
@@ -39,8 +38,6 @@ The Pro version adds professional-grade features for community sites, business d
 | **Member skills tracking** | ✗ | ✓ |
 | **Skills shortcode** | ✗ | ✓ |
 | **REST API endpoints** | ✗ | ✓ |
-| **Enhanced admin dashboard** | ✗ | ✓ |
-| **Review analytics** | ✗ | ✓ |
 | **Priority support** | ✗ | ✓ |
 
 ## Review Modes
@@ -187,43 +184,6 @@ Requires WordPress REST API authentication:
 - Automated review imports
 - Analytics dashboards
 
-## Enhanced Admin Dashboard
-
-Pro adds a comprehensive review management dashboard with analytics and quick actions.
-
-**Dashboard Features:**
-
-**Review Statistics:**
-- Total reviews count
-- Pending approval count
-- Average site rating
-- Reviews per day/week/month
-- Top-rated members
-
-**Quick Actions:**
-- Approve pending reviews
-- View flagged reviews
-- Export review data
-- Bulk moderation tools
-
-**Analytics Charts:**
-- Reviews over time
-- Rating distribution
-- Top reviewers
-- Most reviewed members
-- Criteria rating breakdown
-
-**Accessing Dashboard:**
-
-Go to **Reviews > Dashboard** in WordPress admin.
-
-**Customization:**
-
-- Drag to reorder dashboard widgets
-- Hide/show widgets via screen options
-- Set date ranges for analytics
-- Export data as CSV
-
 ## Priority Support
 
 Pro license includes fast, priority email support.
@@ -314,7 +274,7 @@ Your existing data is preserved:
 **After Activating Pro:**
 
 1. Visit **Settings > BP Member Review**
-2. New Pro tabs appear (Review Mode, Skills, API, Dashboard)
+2. New Pro tabs appear (Review Mode, Skills, API)
 3. Configure Pro features as needed
 4. All existing features continue working
 
@@ -327,7 +287,6 @@ Each Pro feature has dedicated documentation:
 - **Criteria Weighting:** Advanced multi-criteria configuration
 - **Member Skills:** Skills tracking and display
 - **REST API:** API endpoints and authentication
-- **Admin Dashboard:** Using the analytics dashboard
 
 ## Frequently Asked Questions
 

@@ -15,32 +15,24 @@ The reviews list displays these columns:
 | Column | Description |
 |--------|-------------|
 | **Title** | Review title or first line of content |
-| **Rating** | Star rating given (1-5 stars) |
+| **Reports** | Flag count and status label (e.g., "3 flags - Flagged") |
 | **Author** | Member who wrote the review |
-| **Reviewed Member** | Member who received the review |
-| **Reports** | Number of times flagged by users |
 | **Date** | When the review was submitted |
-| **Status** | Pending, Approved, Hidden, or Trash |
 
 ## Review Statuses
 
-**Pending**
+Reviews use standard WordPress post statuses:
+
+**Draft (Pending Approval)**
 - Awaiting admin approval
 - Not visible on member profiles
 - Displayed when **Auto Approve** is disabled
-- Shows with a yellow highlight
 
-**Approved**
+**Published (Approved)**
 - Visible on member profiles
 - Appears in activity stream (if enabled)
 - Counts toward member ratings
 - Default status when auto-approve is enabled
-
-**Hidden**
-- Not visible on member profiles
-- Still in database (not deleted)
-- Can be restored by changing status to Approved
-- Useful for temporarily removing problematic reviews
 
 **Trash**
 - Moved to trash (recoverable for 30 days)
@@ -52,24 +44,20 @@ The reviews list displays these columns:
 
 Use the filter options at the top of the list:
 
-**By Status:**
+**By Status (view tabs):**
 - All (default)
-- Pending
-- Approved
-- Hidden
+- Published
+- Draft
 - Trash
+- **Reported** - A dedicated view tab that shows only flagged reviews, with a count badge showing the number of reported reviews
 
 **By Date:**
 - All dates (default)
 - Specific month and year
 
-**By Member:**
-- Use the search box to find reviews by member name
-- Search by reviewer or reviewed member
+**Draft Count Badge:**
 
-**By Rating:**
-- Filter by star rating (1-5 stars)
-- Useful for finding low or high ratings
+When **Auto Approve** is disabled, a count badge appears next to the **Reviews** admin menu item showing the number of pending (draft) reviews. This provides at-a-glance visibility into how many reviews are awaiting approval.
 
 ## Approving Reviews
 
@@ -83,7 +71,7 @@ Use the filter options at the top of the list:
 **Quick Edit Method:**
 
 1. Click **Quick Edit** under the review title
-2. Change **Status** to **Approved**
+2. Change **Status** to **Published**
 3. Click **Update**
 
 ### Bulk Approval
@@ -93,7 +81,7 @@ Approve multiple reviews at once:
 1. Check the boxes next to reviews you want to approve
 2. Select **Edit** from the **Bulk Actions** dropdown
 3. Click **Apply**
-4. In the bulk edit panel, change **Status** to **Approved**
+4. In the bulk edit panel, change **Status** to **Published**
 5. Click **Update**
 
 ## Editing Reviews
@@ -110,7 +98,7 @@ Approve multiple reviews at once:
 - Review content
 - Star rating
 - Criteria ratings (if multiple criteria enabled)
-- Status (Pending, Approved, Hidden)
+- Status (Draft, Published)
 - Reviewed member (reassign to different member)
 - Date submitted
 
@@ -154,13 +142,13 @@ If the review is acceptable:
 3. The review remains visible
 4. Report count resets to zero
 
-**2. Hide Review Temporarily**
+**2. Revert Review to Draft**
 
 If the review needs investigation:
-1. Change status to **Hidden**
+1. Change status to **Draft**
 2. The review disappears from member profiles
 3. Reports remain visible in admin
-4. You can approve again later
+4. You can publish it again later
 
 **3. Delete Review**
 
@@ -185,14 +173,13 @@ Reviews automatically hide when they reach the **Flag Threshold** set in **Setti
 **Default:** 5 flags
 
 **What Happens:**
-- Review status changes to **Hidden** automatically
+- Review status changes to **Draft** automatically
 - Review disappears from member profile
-- Admin receives notification (if enabled)
 - Review remains in admin for review
 
 **To Restore:**
 1. Review the flagged content
-2. If acceptable, change status to **Approved**
+2. If acceptable, change status to **Published**
 3. Dismiss reports
 4. The review reappears on the profile
 
@@ -208,12 +195,21 @@ Perform actions on multiple reviews at once:
 
 **Edit**
 - Change status for multiple reviews
-- Reassign reviews to different members
 - Modify dates
 
 **Move to Trash**
 - Delete multiple reviews at once
 - Recoverable for 30 days
+
+**Dismiss Reports**
+- Dismiss all reports on selected reviews
+- Resets flag count and status to "none"
+- Reviews remain published and visible
+
+**Resolve Reports**
+- Mark reports on selected reviews as resolved
+- Sets flag status to "resolved"
+- Reviews remain in their current status
 
 **Restore** (when viewing Trash)
 - Restore multiple trashed reviews
@@ -242,7 +238,7 @@ Understanding all review data stored in the database:
 - Reviewed member ID
 - Review author ID
 - Submission date
-- Status (pending, approved, hidden)
+- Status (draft, published)
 
 **Multi-Criteria Fields (if enabled):**
 - Individual criterion ratings
@@ -265,26 +261,9 @@ Member aggregate ratings (overall ratings shown on profiles) update automaticall
 - A review is deleted or trashed
 - A review status changes
 
-### Manual Rating Recalculation
+### Rating Recalculation
 
-If ratings appear incorrect:
-
-1. Go to **Settings > BP Member Review > General**
-2. Scroll to **Rating Management**
-3. Click **Recalculate All Member Ratings**
-4. Wait for the process to complete
-
-**This recalculates:**
-- Overall member ratings
-- Individual criteria averages
-- Review counts
-- Top members rankings
-
-**When to Recalculate:**
-- After bulk editing many reviews
-- After importing reviews from another system
-- If ratings appear inconsistent
-- After database issues or migration
+Aggregate ratings recalculate automatically whenever reviews are approved, edited, deleted, or have their status changed. No manual recalculation tool is needed.
 
 ## Best Practices
 
@@ -357,11 +336,10 @@ Check that:
 **Rating count doesn't match review count**
 
 This can happen when:
-- Some reviews are in Pending or Hidden status
+- Some reviews are in Draft (pending) status
 - Reviews are in Trash
-- Database needs rating recalculation
 
-**Solution:** Use the **Recalculate All Member Ratings** tool.
+Aggregate ratings recalculate automatically when review statuses change. If counts still seem off, check that no reviews are stuck in Draft or Trash status.
 
 **Can't edit or delete reviews**
 
@@ -376,11 +354,11 @@ Verify:
 Check that:
 - **Enable Review Flag/Report** is enabled in settings
 - Members are logged in (only logged-in members can flag)
-- The review is in Approved status (can't flag hidden reviews)
+- The review is in Published status (can only flag visible reviews)
 
 ## Related Documentation
 
 - [Admin Settings Reference](admin-settings.md) - Configure review approval and moderation
-- [Pro Features Overview](pro-features.md) - Enhanced admin dashboard in Pro
+- [Pro Features Overview](pro-features.md) - Review modes, verified badges, and more
 - [Shortcodes](../shortcodes-widgets/shortcodes.md) - Display approved reviews
 - [Widgets](../shortcodes-widgets/widgets.md) - Show reviews in sidebars

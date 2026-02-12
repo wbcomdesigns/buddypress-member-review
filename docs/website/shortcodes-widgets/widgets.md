@@ -11,9 +11,9 @@ Display your top-rated or most-reviewed members in any widget area.
 | Setting | Options | Description |
 |---------|---------|-------------|
 | **Title** | Text field | Widget heading (appears above member list) |
-| **Display** | Dropdown | `Top Rated` or `Most Reviewed` |
+| **Display** | Radio buttons | `top-rated` (Top Rated) or `top-viewed` (labeled "Most Reviewed") |
 | **Number of Members** | Number | How many members to show (1-20) |
-| **Show Avatar** | Checkbox | Display member profile pictures |
+| **Show Avatar** | Select dropdown | `Show` or `Hide` — controls member profile picture display |
 
 ### Configuration Steps
 
@@ -22,9 +22,9 @@ Display your top-rated or most-reviewed members in any widget area.
 3. Drag the widget to your desired widget area (sidebar, footer, etc.)
 4. Configure the settings:
    - Enter a title (e.g., "Top Community Members")
-   - Select display type (Top Rated or Most Reviewed)
+   - Select display type via radio buttons (Top Rated or Most Reviewed)
    - Set the number of members to display
-   - Check "Show Avatar" if you want profile pictures
+   - Choose "Show" or "Hide" for avatar display
 5. Click **Save**
 
 ### Example Configurations
@@ -33,13 +33,13 @@ Display your top-rated or most-reviewed members in any widget area.
 - Title: "Community Stars"
 - Display: Top Rated
 - Number: 5
-- Show Avatar: Checked
+- Show Avatar: Show
 
 **Footer - Most Reviewed Members:**
 - Title: "Most Popular Members"
 - Display: Most Reviewed
 - Number: 3
-- Show Avatar: Unchecked
+- Show Avatar: Hide
 
 ### Where to Use
 
@@ -68,9 +68,9 @@ Show reviews for the currently displayed member profile. This widget is contextu
 
 | Setting | Options | Description |
 |---------|---------|-------------|
-| **Title** | Text field | Widget heading with `[user-name]` placeholder support |
+| **Title** | Text field | Widget heading (default: `Member Ratings`). On the frontend, if the title is empty, it falls back to displaying the member's full name dynamically. |
 | **Number of Reviews** | Number | How many reviews to display (1-20) |
-| **Sort By** | Dropdown | `Newest`, `Oldest`, `Highest Rated`, or `Lowest Rated` |
+| **Sort By** | Dropdown | `Newest` (`latest`), `Highest Rated` (`highest`), or `Lowest Rated` (`lowest`) |
 
 ### Configuration Steps
 
@@ -78,29 +78,20 @@ Show reviews for the currently displayed member profile. This widget is contextu
 2. Find **BP Displayed Member Rating** in the widget list
 3. Add to a widget area that appears on member profiles
 4. Configure settings:
-   - Enter title with optional `[user-name]` placeholder
+   - Enter a title (e.g., "Member Ratings")
    - Set number of reviews to display
-   - Choose sorting method
+   - Choose sorting method (Newest, Highest Rated, or Lowest Rated)
 5. Click **Save**
-
-### Using the [user-name] Placeholder
-
-The `[user-name]` placeholder dynamically inserts the displayed member's name:
-
-**Examples:**
-- `Reviews for [user-name]` → "Reviews for John Doe"
-- `[user-name]'s Ratings` → "John Doe's Ratings"
-- `What people say about [user-name]` → "What people say about John Doe"
 
 ### Example Configurations
 
 **Profile Sidebar - Recent Reviews:**
-- Title: "Reviews for [user-name]"
+- Title: "Member Ratings"
 - Number: 5
 - Sort By: Newest
 
 **Profile Page - Top Reviews:**
-- Title: "[user-name]'s Best Reviews"
+- Title: "Best Reviews"
 - Number: 3
 - Sort By: Highest Rated
 
@@ -147,20 +138,25 @@ Target these classes for custom styling:
 
 **BP Member Review Widget:**
 ```css
-.bupr-member-review-widget { }       /* Main widget container */
-.bupr-widget-member-item { }         /* Individual member item */
-.bupr-widget-avatar { }              /* Avatar image */
-.bupr-widget-member-name { }         /* Member name link */
-.bupr-widget-rating { }              /* Rating display */
+.bupr-member-main { }       /* The <ul> list */
+.bupr-members { }           /* Each <li> item */
+.bupr-img-widget { }        /* Avatar wrapper */
+.bupr-content-widget { }    /* Content wrapper */
+.bupr-member-title { }      /* Member name */
+.bupr-member-rating { }     /* Star rating area */
+.bupr-meta { }              /* Rating text */
 ```
 
 **BP Displayed Member Rating Widget:**
 ```css
-.bupr-displayed-member-widget { }    /* Main widget container */
-.bupr-widget-review-item { }         /* Individual review */
-.bupr-widget-reviewer { }            /* Reviewer name */
-.bupr-widget-review-rating { }       /* Review rating */
-.bupr-widget-review-content { }      /* Review text */
+#bp-member-rating { }       /* The <ul> list (ID selector) */
+.vcard { }                  /* Each <li> item */
+.item-avatar { }            /* Avatar wrapper */
+.item { }                   /* Content area */
+.item-title { }             /* Reviewer name */
+.item-meta { }              /* Meta info */
+.bupr-star-rate { }         /* Star rating display */
+.bupr-meta { }              /* Rating text */
 ```
 
 ### Custom CSS

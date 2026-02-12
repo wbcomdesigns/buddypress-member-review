@@ -110,7 +110,7 @@ Show a member's endorsed skills anywhere using the shortcode:
 | Parameter | Description | Default |
 |-----------|-------------|---------|
 | `user_id` | Display skills for specific user | Current profile user |
-| `limit` | Maximum skills to show | All skills |
+| `limit` | Maximum skills to show | `10` |
 
 **Examples:**
 

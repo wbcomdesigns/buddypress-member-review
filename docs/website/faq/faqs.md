@@ -32,7 +32,14 @@ Result: Only these roles can submit reviews
 
 ### Is BuddyPress Member Reviews compatible with BuddyBoss?
 
-Yes. The plugin works with both BuddyPress and BuddyBoss Platform. All features are fully compatible.
+Yes. The plugin fully supports BuddyBoss Platform. It automatically detects BuddyBoss and adapts its hooks and styling. Specifically:
+
+- Profile header ratings use BuddyBoss-specific hooks
+- Member directory integration adapts to BuddyBoss layout
+- Font Awesome icons are not loaded separately (BuddyBoss includes its own)
+- Minimum BuddyBoss Platform version required: check plugin requirements
+
+No special configuration is needed — just activate both plugins.
 
 ### Does it work with Multisite?
 
@@ -74,6 +81,42 @@ The aggregate rating is automatically recalculated when a review is deleted. The
 ### Can I require admin approval for all reviews?
 
 Yes. In **General Settings**, disable "Auto-approve reviews". All reviews will be pending until you publish them.
+
+### Can I require both text and star rating?
+
+By default, reviews require either a star rating OR written text (at least one). There is no built-in setting to require both. If you need to enforce both, you can add custom JavaScript validation:
+
+```php
+add_action( 'wp_footer', function() {
+    if ( ! bp_is_user() ) return;
+    ?>
+    <script>
+    jQuery(document).on('click', '#bupr_save_review', function(e) {
+        var hasRating = jQuery.inArray("0", jQuery('input[name="star_rating[]"]').map(function(){ return jQuery(this).val(); }).get()) === -1;
+        var hasText = jQuery.trim(jQuery('#bupr_review_desc').val()) !== '';
+        if (!hasRating || !hasText) {
+            e.preventDefault();
+            alert('Please provide both a star rating and written review.');
+        }
+    });
+    </script>
+    <?php
+} );
+```
+
+### How do I backup or export review data?
+
+Reviews are stored as a WordPress custom post type, so you can use standard WordPress export:
+
+1. Go to **Tools > Export**
+2. Select **Reviews** from the dropdown
+3. Click **Download Export File**
+
+This creates an XML file you can import on another site via **Tools > Import**. For database-level backup, the review data is in the `wp_posts` table (where `post_type = 'review'`) and `wp_postmeta` table.
+
+### Can I change the rating scale (e.g., 10 stars instead of 5)?
+
+The plugin uses a fixed 5-star rating scale. This cannot be changed via settings or filters. The 5-star scale is an industry standard that users instantly understand.
 
 ---
 
@@ -185,6 +228,46 @@ add_filter( 'bupr_show_profile_review_tab', function( $show ) {
     }
     return $show;
 } );
+```
+
+### Can I embed the review form on a regular WordPress page?
+
+The review form requires a BuddyPress member profile context to know which member is being reviewed. It cannot be embedded on arbitrary WordPress pages via shortcode. To display reviews on non-profile pages, use the `[bupr_display_top_members]` shortcode to show top-rated members, or the Pro `[bupr_featured_testimonials]` shortcode to showcase featured testimonials.
+
+### How do I change the Reviews tab position on the profile?
+
+The tab position can be adjusted with a filter:
+
+```php
+add_filter( 'bupr_show_profile_review_tab', '__return_true' );
+// To change position, remove the default nav and re-add at desired position:
+add_action( 'bp_setup_nav', function() {
+    bp_core_remove_nav_item( 'reviews' );
+    bp_core_new_nav_item( array(
+        'name'                => __( 'Reviews', 'bp-member-reviews' ),
+        'slug'                => 'reviews',
+        'position'            => 30, // Change this number
+        'screen_function'     => 'bupr_screen_reviews',
+        'default_subnav_slug' => 'my-reviews',
+    ) );
+}, 100 );
+```
+
+### How do I customize star size with CSS?
+
+Add custom CSS to your theme or via Appearance > Customize > Additional CSS:
+
+```css
+/* Change star size */
+.bupr-star-rate .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+/* Change star spacing */
+.bupr-star-rate .dashicons {
+    margin-right: 2px;
+}
 ```
 
 ### How do I customize the review layout?
@@ -358,17 +441,17 @@ Pro adds advanced workflows and verification features.
 
 ### Can I upgrade from free to Pro later?
 
-Yes. Your existing reviews, ratings, and settings are preserved. Simply install Pro and activate your license key.
+Yes. Your existing reviews, ratings, and settings are preserved. The Pro addon works **alongside** the free plugin — do not deactivate the free version.
 
 **Upgrade process:**
 
 ```bash
-1. Purchase Pro license
-2. Download Pro plugin
-3. Deactivate free version
-4. Upload and activate Pro version
-5. Enter license key
-6. All data is preserved
+1. Keep the free plugin active
+2. Download the Pro addon from your account
+3. Go to Plugins > Add New > Upload Plugin
+4. Install and activate the Pro addon
+5. Configure Pro features at Settings > Member Reviews > Pro Features tab
+6. All existing data is preserved
 ```
 
 ---

@@ -4,7 +4,28 @@ Complete reference of actions and filters available in BuddyPress Member Reviews
 
 ## Actions
 
-### `bupr_member_review_after_review_insert`
+### Review Lifecycle
+
+#### `bupr_before_save_review`
+
+Fires before a review is saved to the database. Use this to validate or modify data before insertion.
+
+**Location:** `includes/bupr-ajax.php`
+
+**Example:**
+
+```php
+add_action( 'bupr_before_save_review', function() {
+    // Perform custom validation before review is saved
+    if ( ! current_user_can( 'publish_posts' ) ) {
+        wp_send_json_error( 'You do not have permission to submit reviews.' );
+    }
+} );
+```
+
+---
+
+#### `bupr_member_review_after_review_insert`
 
 Fires after a new review is created.
 
@@ -33,7 +54,7 @@ add_action( 'bupr_member_review_after_review_insert', function( $review_id, $mem
 
 ---
 
-### `bupr_sent_review_notification`
+#### `bupr_sent_review_notification`
 
 Fires after review notification is sent.
 
@@ -55,7 +76,65 @@ add_action( 'bupr_sent_review_notification', function( $member_id, $review_id ) 
 
 ---
 
-### `bupr_before_member_review_list`
+#### `bupr_owner_reply_added`
+
+Fires after a profile owner submits a reply to a review.
+
+**Location:** `includes/bupr-ajax.php`
+
+**Example:**
+
+```php
+add_action( 'bupr_owner_reply_added', function() {
+    // Notify the original reviewer that the profile owner replied
+    error_log( 'Owner reply was added to a review.' );
+} );
+```
+
+---
+
+#### `bupr_review_flagged`
+
+Fires after a review is flagged/reported by a user.
+
+**Location:** `includes/bupr-ajax.php`
+
+**Example:**
+
+```php
+add_action( 'bupr_review_flagged', function() {
+    // Send alert to admin when a review is reported
+    wp_mail(
+        get_option( 'admin_email' ),
+        'Review Flagged',
+        'A review has been flagged for moderation.'
+    );
+} );
+```
+
+---
+
+#### `bupr_recalculation_completed`
+
+Fires after batch rating recalculation finishes for all members.
+
+**Location:** `includes/bupr-general-functions.php`
+
+**Example:**
+
+```php
+add_action( 'bupr_recalculation_completed', function() {
+    // Clear custom caches after ratings are recalculated
+    wp_cache_flush_group( 'bupr_ratings' );
+    error_log( 'Rating recalculation completed.' );
+} );
+```
+
+---
+
+### Template Hooks
+
+#### `bupr_before_member_review_list`
 
 Fires before the review list on member profile.
 
@@ -69,7 +148,7 @@ add_action( 'bupr_before_member_review_list', function() {
 
 ---
 
-### `bupr_after_member_review_list`
+#### `bupr_after_member_review_list`
 
 Fires after the review list on member profile.
 
@@ -83,7 +162,7 @@ add_action( 'bupr_after_member_review_list', function() {
 
 ---
 
-### `bupr_after_review_content`
+#### `bupr_after_review_content`
 
 Fires after individual review content. Used by Pro for skill tags.
 
@@ -101,7 +180,7 @@ add_action( 'bupr_after_review_content', function() {
 
 ---
 
-### `bupr_after_review_date`
+#### `bupr_after_review_date`
 
 Fires after review date display. Used by Pro for verified badges.
 
@@ -111,16 +190,55 @@ Fires after review date display. Used by Pro for verified badges.
 add_action( 'bupr_after_review_date', function() {
     global $bupr_review;
     if ( get_post_meta( $bupr_review->ID, 'custom_verified', true ) ) {
-        echo '<span class="verified-badge">✓ Verified Purchase</span>';
+        echo '<span class="verified-badge">Verified Purchase</span>';
     }
 } );
 ```
 
 ---
 
+#### `bupr_after_rating_fields`
+
+Fires after rating star fields in the review form. Used by the Pro addon to add additional form elements.
+
+**Location:** `includes/bupr-shortcodes.php`
+
+**Example:**
+
+```php
+add_action( 'bupr_after_rating_fields', function() {
+    echo '<div class="custom-field-group">';
+    echo '<label for="custom_note">Additional Notes</label>';
+    echo '<textarea name="custom_note" id="custom_note"></textarea>';
+    echo '</div>';
+} );
+```
+
+---
+
+### GamiPress Integration
+
+#### `gamipress_bp_member_review`
+
+GamiPress integration trigger that fires when a review is submitted. Use this to award points or achievements through GamiPress.
+
+**Location:** `includes/bupr-ajax.php`
+
+**Example:**
+
+```php
+// This hook is consumed by GamiPress automatically when the
+// BuddyPress Member Reviews integration is active.
+// No manual setup needed if GamiPress is installed.
+```
+
+---
+
 ## Filters
 
-### `bupr_global_settings`
+### Settings & Configuration
+
+#### `bupr_global_settings`
 
 Modify plugin settings at runtime. Used by Pro for mode switching.
 
@@ -151,7 +269,9 @@ add_filter( 'bupr_global_settings', function( $bupr ) {
 
 ---
 
-### `bupr_show_profile_review_tab`
+### Profile Tab
+
+#### `bupr_show_profile_review_tab`
 
 Control whether reviews tab appears on profile.
 
@@ -178,7 +298,7 @@ add_filter( 'bupr_show_profile_review_tab', function( $show ) {
 
 ---
 
-### `bupr_review_tab_name`
+#### `bupr_review_tab_name`
 
 Change the reviews tab label.
 
@@ -200,31 +320,57 @@ add_filter( 'bupr_review_tab_name', function( $name ) {
 
 ---
 
-### `bupr_shortcode_output`
+#### `bupr_profile_review_singular_tab_name`
 
-Modify shortcode output HTML.
+Change the singular form of the reviews tab name (used when the tab count is 1).
+
+**Location:** `includes/bupr-general-functions.php`
 
 **Parameters:**
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `$html` | string | Shortcode output HTML |
-| `$atts` | array | Shortcode attributes |
+| `$name` | string | Singular tab name |
 
-**Returns:** `string` Modified HTML
+**Returns:** `string` Modified singular tab name
 
 **Example:**
 
 ```php
-add_filter( 'bupr_shortcode_output', function( $html, $atts ) {
-    // Wrap shortcode output in custom container
-    return '<div class="custom-reviews-wrapper">' . $html . '</div>';
-}, 10, 2 );
+add_filter( 'bupr_profile_review_singular_tab_name', function( $name ) {
+    return 'Testimonial';
+} );
 ```
 
 ---
 
-### `bupr_allow_activity_posting`
+#### `bupr_default_subnav_slug`
+
+Change the default subnav slug for the reviews tab on BuddyPress profiles.
+
+**Location:** `includes/bupr-general-functions.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$slug` | string | Default subnav slug |
+
+**Returns:** `string` Modified subnav slug
+
+**Example:**
+
+```php
+add_filter( 'bupr_default_subnav_slug', function( $slug ) {
+    return 'my-custom-subnav';
+} );
+```
+
+---
+
+### Activity Stream
+
+#### `bupr_allow_activity_posting`
 
 Enable or disable activity stream posts for reviews.
 
@@ -251,7 +397,396 @@ add_filter( 'bupr_allow_activity_posting', function( $allow ) {
 
 ---
 
-### `bupr_review_form_fields`
+#### `bupr_member_review_activity_action`
+
+Customize the activity stream action text displayed for review activities.
+
+**Location:** `includes/bupr-filters.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$action` | string | Activity action text |
+
+**Returns:** `string` Modified action text
+
+**Example:**
+
+```php
+add_filter( 'bupr_member_review_activity_action', function( $action ) {
+    // Replace default activity text with custom wording
+    return str_replace( 'posted a review', 'shared feedback about', $action );
+} );
+```
+
+---
+
+### Anonymous Reviews
+
+#### `bupr_change_user_link`
+
+Modify the user link for anonymous reviews displayed in the activity stream.
+
+**Location:** `includes/bupr-filters.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$link` | string | User profile link HTML |
+
+**Returns:** `string` Modified link HTML
+
+**Example:**
+
+```php
+add_filter( 'bupr_change_user_link', function( $link ) {
+    return '<span class="anonymous-label">Anonymous Member</span>';
+} );
+```
+
+---
+
+#### `bupr_change_avatar_image`
+
+Modify the avatar image for anonymous reviews in the activity stream.
+
+**Location:** `includes/bupr-filters.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$avatar` | string | Avatar image HTML |
+
+**Returns:** `string` Modified avatar HTML
+
+**Example:**
+
+```php
+add_filter( 'bupr_change_avatar_image', function( $avatar ) {
+    // Use a custom anonymous avatar image
+    return '<img src="' . esc_url( get_stylesheet_directory_uri() . '/images/anon-avatar.png' ) . '" class="avatar" width="50" height="50" />';
+} );
+```
+
+---
+
+#### `bupr_default_avatar_size`
+
+Change the avatar size used for anonymous review avatars. Default is 50.
+
+**Location:** `includes/bupr-filters.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$size` | int | Avatar size in pixels (default: 50) |
+
+**Returns:** `int` Modified avatar size
+
+**Example:**
+
+```php
+add_filter( 'bupr_default_avatar_size', function( $size ) {
+    return 80;
+} );
+```
+
+---
+
+#### `bupr_change_default_avatar`
+
+Change the default avatar type used for anonymous reviews. Default is `'mystery'`.
+
+**Location:** `includes/bupr-filters.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$type` | string | Avatar type (default: 'mystery') |
+
+**Returns:** `string` Modified avatar type
+
+**Example:**
+
+```php
+add_filter( 'bupr_change_default_avatar', function( $type ) {
+    return 'blank'; // Use a blank avatar instead of mystery person
+} );
+```
+
+---
+
+### Review Display
+
+#### `bupr_aggregate_rating`
+
+Modify the calculated aggregate (average) rating for a member. Useful for weighting or adjusting ratings.
+
+**Location:** `includes/bupr-general-functions.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$rating` | float | Calculated aggregate rating |
+
+**Returns:** `float` Modified aggregate rating
+
+**Example:**
+
+```php
+add_filter( 'bupr_aggregate_rating', function( $rating ) {
+    // Round to nearest half star
+    return round( $rating * 2 ) / 2;
+} );
+```
+
+---
+
+#### `bupr_reviewer_name_html`
+
+Modify the reviewer name HTML displayed in the review list.
+
+**Location:** `includes/templates/bupr-reviews-tab-template.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$html` | string | Reviewer name HTML |
+
+**Returns:** `string` Modified HTML
+
+**Example:**
+
+```php
+add_filter( 'bupr_reviewer_name_html', function( $html ) {
+    // Add a custom badge next to reviewer names
+    return $html . ' <span class="reviewer-badge">Member</span>';
+} );
+```
+
+---
+
+### Shortcode & Widget
+
+#### `bupr_shortcode_output`
+
+Modify shortcode output HTML.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$html` | string | Shortcode output HTML |
+| `$atts` | array | Shortcode attributes |
+
+**Returns:** `string` Modified HTML
+
+**Example:**
+
+```php
+add_filter( 'bupr_shortcode_output', function( $html, $atts ) {
+    // Wrap shortcode output in custom container
+    return '<div class="custom-reviews-wrapper">' . $html . '</div>';
+}, 10, 2 );
+```
+
+---
+
+#### `bupr_display_top_members_shortcode_atts`
+
+Modify the default shortcode attributes for `[bupr_display_top_members]`.
+
+**Location:** `includes/bupr-shortcodes.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$atts` | array | Shortcode default attributes |
+
+**Returns:** `array` Modified attributes
+
+**Example:**
+
+```php
+add_filter( 'bupr_display_top_members_shortcode_atts', function( $atts ) {
+    // Change default number of members shown
+    $atts['count'] = 10;
+    return $atts;
+} );
+```
+
+---
+
+#### `bupr_shortcode_show_stars`
+
+Control whether star ratings are displayed in shortcode output.
+
+**Location:** `includes/bupr-shortcodes.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$show` | bool | Whether to show stars |
+
+**Returns:** `bool` Modified visibility
+
+**Example:**
+
+```php
+add_filter( 'bupr_shortcode_show_stars', function( $show ) {
+    // Hide stars on specific pages
+    if ( is_page( 'testimonials' ) ) {
+        return false;
+    }
+    return $show;
+} );
+```
+
+---
+
+#### `bupr_item_type_label`
+
+Change the "reviews" label text used in shortcode and widget output.
+
+**Location:** `includes/bupr-shortcodes.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$label` | string | Label text (default: 'reviews') |
+
+**Returns:** `string` Modified label
+
+**Example:**
+
+```php
+add_filter( 'bupr_item_type_label', function( $label ) {
+    return 'testimonials';
+} );
+```
+
+---
+
+#### `bupr_widget_show_stars`
+
+Control whether star ratings are displayed in widget output (both Member Rating and Display Review widgets).
+
+**Location:** `admin/widget/member-rating.php`, `admin/widget/display-review.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$show` | bool | Whether to show stars |
+
+**Returns:** `bool` Modified visibility
+
+**Example:**
+
+```php
+add_filter( 'bupr_widget_show_stars', function( $show ) {
+    return false; // Hide stars in all review widgets
+} );
+```
+
+---
+
+#### `bupr_member_query_args`
+
+Modify the WP_User_Query arguments used to populate the member dropdown in the review form.
+
+**Location:** `includes/bupr-shortcodes.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$args` | array | WP_User_Query arguments |
+
+**Returns:** `array` Modified query arguments
+
+**Example:**
+
+```php
+add_filter( 'bupr_member_query_args', function( $args ) {
+    // Only show members with a specific role in the dropdown
+    $args['role'] = 'vendor';
+    return $args;
+} );
+```
+
+---
+
+#### `bupr_member_list`
+
+Modify the member list array used for the review form dropdown after the query runs.
+
+**Location:** `includes/bupr-shortcodes.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$members` | array | Array of user objects |
+
+**Returns:** `array` Modified member list
+
+**Example:**
+
+```php
+add_filter( 'bupr_member_list', function( $members ) {
+    // Remove current user from the dropdown
+    return array_filter( $members, function( $member ) {
+        return $member->ID !== get_current_user_id();
+    } );
+} );
+```
+
+---
+
+### Asset Loading
+
+#### `bupr_should_load_assets`
+
+Control when plugin CSS and JS assets are loaded on the frontend. Return `false` to prevent loading on the current page.
+
+**Location:** `includes/bupr-scripts.php`
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `$load` | bool | Whether to load assets (default: true) |
+
+**Returns:** `bool` Modified loading decision
+
+**Example:**
+
+```php
+add_filter( 'bupr_should_load_assets', function( $load ) {
+    // Only load assets on BuddyPress pages and pages with review shortcodes
+    if ( ! is_buddypress() && ! has_shortcode( get_post()->post_content ?? '', 'bupr_display_top_members' ) ) {
+        return false;
+    }
+    return $load;
+} );
+```
+
+---
+
+### Form & Edit
+
+#### `bupr_review_form_fields`
 
 > **Note:** This is a Pro-only hook (added by the Pro addon).
 
@@ -287,7 +822,7 @@ add_filter( 'bupr_review_form_fields', function( $fields ) {
 
 ---
 
-### `bupr_review_template`
+#### `bupr_review_template`
 
 > **Note:** This is a Pro-only hook (added by the Pro addon).
 
@@ -316,7 +851,7 @@ add_filter( 'bupr_review_template', function( $template ) {
 
 ---
 
-### `bupr_edit_review_extra_fields`
+#### `bupr_edit_review_extra_fields`
 
 Add custom fields to edit review form.
 

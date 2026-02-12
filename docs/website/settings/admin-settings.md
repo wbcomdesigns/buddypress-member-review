@@ -10,22 +10,22 @@ Complete guide to all BuddyPress Member Reviews plugin settings. Access settings
 
 **Enable Multi Reviews**
 - **Option:** Yes/No
-- **Default:** No
+- **Default:** Yes
 - **Description:** Allow members to submit multiple reviews for the same person. When disabled, each member can only review another member once.
 
 **Display Submit Review Button**
 - **Option:** Yes/No
-- **Default:** Yes
+- **Default:** No
 - **Description:** Show the "Submit Review" button on member profiles. Disable to hide the review form (useful if you want to limit who can submit reviews).
 
 **Auto Approve Member Review**
 - **Option:** Yes/No
-- **Default:** No
+- **Default:** Yes
 - **Description:** Automatically approve reviews when submitted. When disabled, reviews require admin approval before appearing on profiles.
 
 **Enable Review Update**
 - **Option:** Yes/No
-- **Default:** No
+- **Default:** Yes
 - **Description:** Allow members to edit their own reviews after submission. Works with both single and multi-review modes.
 
 ### Display Settings
@@ -42,17 +42,17 @@ Complete guide to all BuddyPress Member Reviews plugin settings. Access settings
 
 ### User Role Permissions
 
-**Exclude User Roles From Reviewing**
+**Select Member Roles to Write Reviews**
 - **Option:** Multi-select dropdown
 - **Options:** Administrator, Editor, Author, Contributor, Subscriber, Custom Roles
-- **Default:** None
-- **Description:** Prevent specific user roles from submitting reviews. Useful for excluding staff or moderators from the review system.
+- **Default:** All roles selected
+- **Description:** Choose which user roles are allowed to submit reviews. Only selected roles can write reviews on member profiles.
 
-**Exclude User Roles From Being Reviewed**
+**User Roles to Accept Reviews**
 - **Option:** Multi-select dropdown
 - **Options:** Administrator, Editor, Author, Contributor, Subscriber, Custom Roles
-- **Default:** None
-- **Description:** Hide the review system from profiles of specific user roles. Common use: exclude administrators from receiving reviews.
+- **Default:** All roles selected
+- **Description:** Choose which user roles can receive reviews on their profiles. Only members with selected roles will have the review section visible on their profile.
 
 ### Email Notification Settings
 
@@ -63,8 +63,8 @@ Complete guide to all BuddyPress Member Reviews plugin settings. Access settings
 
 **Review Notification Email Subject**
 - **Field:** Text
-- **Default:** "You have received a new review"
-- **Description:** Subject line for review notification emails.
+- **Default:** "You Have Received a New Review on [site-name]"
+- **Description:** Subject line for review notification emails. Use `[site-name]` to dynamically insert your website name.
 
 **Review Notification Email Message**
 - **Field:** Textarea
@@ -91,6 +91,32 @@ Thanks,
 [site-name]
 ```
 
+### Approval Email Settings
+
+These settings appear when **Auto Approve Member Review** is set to No. They control the email sent to the site administrator when a new review requires manual approval.
+
+**Approval Email Subject**
+- **Field:** Text
+- **Default:** "A New Review Requires Your Approval on [site-name]"
+- **Description:** Subject line for the admin notification email when a review is submitted and awaits approval.
+
+**Approval Email Message**
+- **Field:** Textarea
+- **Default:** Pre-formatted message
+- **Description:** Email body sent to the site administrator for review approval. Use placeholders for dynamic content.
+
+**Available Placeholders:**
+- `[review-aproval-link]` - Link to the admin approval page for the review
+- `[site-admin]` - Site administrator name
+- `[site-name]` - Your website name
+
+### BuddyPress Notifications
+
+**BuddyPress Notifications**
+- **Option:** Yes/No
+- **Default:** Yes
+- **Description:** Enable or disable BuddyPress notifications when someone receives a review. When enabled, members see a notification in their BuddyPress notification dropdown alerting them about new reviews on their profile.
+
 ### Privacy and Moderation Settings
 
 **Enable Anonymous Review**
@@ -100,7 +126,7 @@ Thanks,
 
 **Post Review to Activity Stream**
 - **Option:** Yes/No
-- **Default:** Yes
+- **Default:** No
 - **Description:** Create an activity post when a review is submitted. Shows in the BuddyPress activity feed.
 
 **Enable Review Owner Reply**
@@ -196,14 +222,14 @@ Thanks,
 
 **Star Rating Color**
 - **Field:** Color picker
-- **Default:** #FFB800 (Gold)
+- **Default:** #FFC400 (Gold)
 - **Description:** Color used for filled star ratings throughout your site. Affects member profiles, directories, widgets, and shortcodes.
 
 **Color Selection Tips:**
 - Use your brand color for consistency
 - Ensure sufficient contrast with backgrounds
 - Test on both light and dark areas
-- Common choices: Gold (#FFB800), Orange (#FF9800), Blue (#2196F3), Red (#F44336)
+- Common choices: Gold (#FFC400), Orange (#FF9800), Blue (#2196F3), Red (#F44336)
 
 ## Shortcode Tab
 

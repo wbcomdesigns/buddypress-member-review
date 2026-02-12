@@ -18,23 +18,23 @@ This displays the top 5 members with their ratings using default settings.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `title` | string | "Top Members" | Heading displayed above the member list |
-| `total_member` | number | 5 | Number of members to display (1-50) |
-| `type` | string | "top_rated" | Sort type: `top_rated` or `most_reviewed` |
-| `avatar` | string | "yes" | Show member avatars: `yes` or `no` |
+| `title` | string | `""` | Heading displayed above the member list |
+| `total_member` | number | 5 | Number of members to show |
+| `type` | string | `"top rated"` | Sort type: `top rated` or `most reviewed` |
+| `avatar` | string | `"show"` | Show member avatars: `show` or `hide` |
 
 ### Examples
 
 **Display top 10 rated members:**
 
 ```
-[bupr_display_top_members total_member="10" type="top_rated"]
+[bupr_display_top_members total_member="10" type="top rated"]
 ```
 
 **Show most reviewed members without avatars:**
 
 ```
-[bupr_display_top_members title="Most Reviewed" total_member="8" type="most_reviewed" avatar="no"]
+[bupr_display_top_members title="Most Reviewed" total_member="8" type="most reviewed" avatar="hide"]
 ```
 
 **Custom title with specific count:**
@@ -84,12 +84,15 @@ The functionality remains the same—only the terminology changes to match your 
 The shortcode generates these CSS classes for custom styling:
 
 ```css
-.bupr-top-members-wrap { }        /* Main container */
-.bupr-top-members-title { }       /* Title heading */
-.bupr-top-member-item { }         /* Individual member item */
-.bupr-member-avatar { }           /* Avatar wrapper */
-.bupr-member-details { }          /* Name and rating container */
-.bupr-member-rating { }           /* Rating display */
+.bupr-shortcode-top-members-contents { } /* Outer wrapper div */
+.bupr_members_review_setting { }         /* Additional wrapper class */
+.bupr-member-main { }                    /* The <ul> list */
+.bupr-members { }                        /* Each <li> item */
+.bupr-img-widget { }                     /* Avatar wrapper */
+.bupr-content-widget { }                 /* Content wrapper */
+.bupr-member-title { }                   /* Member name link */
+.bupr-member-rating { }                  /* Star rating area */
+.bupr-meta { }                           /* Rating text ("X/5 (Y reviews)") */
 ```
 
 Add custom CSS in **Appearance > Customize > Additional CSS** or your theme's stylesheet.
@@ -108,7 +111,7 @@ Display a member's skills with ratings using the `[bupr_member_skills]` shortcod
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `user_id` | number | Current user | WordPress user ID of the member |
+| `user_id` | number | Displayed profile user | WordPress user ID of the member (uses `bp_displayed_user_id()`; returns 0 on non-BuddyPress pages) |
 | `limit` | number | 10 | Maximum number of skills to display |
 
 ### Examples
@@ -148,6 +151,49 @@ Target these CSS classes for custom styling:
 .bupr-skill-item { }              /* Individual skill */
 .bupr-skill-name { }              /* Skill name */
 .bupr-skill-rating { }            /* Skill rating */
+```
+
+## Featured Testimonials Shortcode (Pro)
+
+Display featured testimonials in a responsive grid using the `[bupr_featured_testimonials]` shortcode. This shortcode is available in the Pro version and requires Testimonials mode to be active.
+
+### Basic Usage
+
+```
+[bupr_featured_testimonials]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `count` | number | 5 | Number of featured testimonials |
+| `columns` | number | 3 | Grid columns (2, 3, or 4) |
+| `orderby` | string | `"date"` | Sort field (date, title, etc.) |
+| `order` | string | `"DESC"` | Sort order: `ASC` or `DESC` |
+
+### How It Works
+
+Only reviews that have been marked with the "Featured" flag by an admin will appear. This gives you full control over which testimonials are showcased on your site.
+
+### Examples
+
+**Display 6 featured testimonials in 2 columns:**
+
+```
+[bupr_featured_testimonials count="6" columns="2"]
+```
+
+**Show latest 3 featured testimonials in a 3-column grid:**
+
+```
+[bupr_featured_testimonials count="3" columns="3" order="DESC"]
+```
+
+**Oldest featured testimonials first:**
+
+```
+[bupr_featured_testimonials orderby="date" order="ASC"]
 ```
 
 ## Troubleshooting
