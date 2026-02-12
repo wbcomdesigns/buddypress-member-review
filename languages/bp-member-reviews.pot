@@ -21,7 +21,7 @@ msgstr ""
 
 #. Plugin URI of the plugin
 #: buddypress-member-review.php
-msgid "https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/"
+msgid "https://wbcomdesigns.com/downloads/buddypress-member-reviews/"
 msgstr ""
 
 #. Description of the plugin

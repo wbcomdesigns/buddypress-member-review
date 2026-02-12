@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Wbcom Designs - BuddyPress Member Reviews
- * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/
+ * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
  * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
  * Version: 3.7.0
  * Author: Wbcom Designs

@@ -292,7 +292,7 @@ $disabled = 'disabled';
 		<div class="bupr-upgrade-cta">
 			<h3><?php esc_html_e( 'Unlock All Pro Features', 'bp-member-reviews' ); ?></h3>
 			<p><?php esc_html_e( 'Get testimonials, endorsements, verified badges, and more with the Pro addon.', 'bp-member-reviews' ); ?></p>
-			<a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews/" target="_blank" class="button button-primary button-hero">
+			<a href="https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro/" target="_blank" class="button button-primary button-hero">
 				<?php esc_html_e( 'Get Pro Version', 'bp-member-reviews' ); ?>
 			</a>
 		</div>

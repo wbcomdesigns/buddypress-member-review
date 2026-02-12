@@ -1773,8 +1773,8 @@ msgstr "Wbcom Designs - BuddyPress Commentaires des membres"
 
 #. Plugin URI of the plugin/theme
 #, fuzzy
-msgid "https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/"
-msgstr "https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/"
+msgid "https://wbcomdesigns.com/downloads/buddypress-member-reviews/"
+msgstr "https://wbcomdesigns.com/downloads/buddypress-member-reviews/"
 
 #. Description of the plugin/theme
 #, fuzzy

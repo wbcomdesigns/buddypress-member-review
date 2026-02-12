@@ -1738,8 +1738,8 @@ msgid "Wbcom Designs - BuddyPress Member Reviews"
 msgstr "Wbcom Designs - BuddyPress Mitgliederbewertungen"
 
 #. Plugin URI of the plugin/theme
-msgid "https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/"
-msgstr "https://wbcomdesigns.com/downloads/buddypress-user-profile-reviews/"
+msgid "https://wbcomdesigns.com/downloads/buddypress-member-reviews/"
+msgstr "https://wbcomdesigns.com/downloads/buddypress-member-reviews/"
 
 #. Description of the plugin/theme
 msgid ""
