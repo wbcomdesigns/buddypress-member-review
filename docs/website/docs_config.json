@@ -4,8 +4,8 @@
     "slug": "buddypress-member-review",
     "short_id": "bpmr",
     "parent_category_id": {
-      "local": null,
-      "live": null
+      "local": 75,
+      "live": 126
     }
   },
   "categories": [
