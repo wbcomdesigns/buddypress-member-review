@@ -473,7 +473,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								printf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 								?>
 								</label>
-								<textarea name="review-desc" id="review_desc" placeholder="<?php
+								<textarea name="review-desc" id="review_desc" placeholder="
+								<?php
 								/* translators: %s: review label */
 								printf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 								?>

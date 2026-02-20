@@ -3,7 +3,7 @@
  * Plugin Name: Wbcom Designs - BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
  * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
- * Version: 3.7.0
+ * Version: 3.7.1
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version and path constants.
  */
-define( 'BUPR_PLUGIN_VERSION', '3.7.0' );
+define( 'BUPR_PLUGIN_VERSION', '3.7.1' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BUPR_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -39,7 +39,6 @@ if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 		$domain = 'bp-member-reviews';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 		load_textdomain( $domain, BUPR_PLUGIN_PATH . 'languages/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, false, dirname( BUPR_PLUGIN_BASENAME ) . '/languages' );
 	}
 }
 

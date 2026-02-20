@@ -1,10 +1,11 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName -- Legacy file name.
 /**
  * Class to add top header pages of wbcom plugin and additional features.
  *
  * @author   Wbcom Designs
  * @package  BuddyPress_Member_Reviews
  */
+
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
@@ -44,7 +45,6 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				$display_extention = isset( $_POST['display_extension'] ) ? sanitize_text_field( wp_unslash( $_POST['display_extension'] ) ) : '';
 				wp_send_json_success( $display_extention );
 			}
-
 		}
 
 		/**
@@ -221,8 +221,8 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 */
 		public function wbcom_enqueue_admin_scripts() {
 
-			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' )  ) { 
-				
+			if ( ! wp_script_is( 'wbcom_admin_setting_js', 'enqueued' ) ) {
+
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = '.js';
 					$path      = '';
@@ -232,11 +232,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				}
 
 				wp_register_script(
-					$handle    = 'wbcom_admin_setting_js',
-					$src       = BUPR_PLUGIN_URL . 'admin/wbcom/assets/js' .$path. '/wbcom-admin-setting'. $extension,
-					$deps      = array( 'jquery' ),
-					$ver       = time(),
-					$in_footer = true
+					'wbcom_admin_setting_js',
+					BUPR_PLUGIN_URL . 'admin/wbcom/assets/js' . $path . '/wbcom-admin-setting' . $extension,
+					array( 'jquery' ),
+					time(),
+					true
 				);
 				wp_localize_script(
 					'wbcom_admin_setting_js',
@@ -266,7 +266,7 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 				wp_enqueue_style( 'font-awesome', BUPR_PLUGIN_URL . 'admin/assets/css/vendor/font-awesome.min.css', array(), '4.7.0', false );
 			}
 
-			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) { 
+			if ( ! wp_style_is( 'wbcom-admin-setting-css', 'enqueued' ) ) {
 				if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 					$extension = is_rtl() ? '.rtl.css' : '.css';
 					$path      = is_rtl() ? '/rtl' : '';
@@ -274,8 +274,8 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 					$extension = is_rtl() ? '.rtl.css' : '.min.css';
 					$path      = is_rtl() ? '/rtl' : '/min';
 				}
-				
-				wp_enqueue_style( 'wbcom-admin-setting-css', BUPR_PLUGIN_URL . 'admin/wbcom/assets/css' .$path. '/wbcom-admin-setting'. $extension , array(), BUPR_PLUGIN_VERSION, false );
+
+				wp_enqueue_style( 'wbcom-admin-setting-css', BUPR_PLUGIN_URL . 'admin/wbcom/assets/css' . $path . '/wbcom-admin-setting' . $extension, array(), BUPR_PLUGIN_VERSION, false );
 			}
 		}
 
@@ -349,8 +349,11 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_admin_setting_header_html() {
-			$page          = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
-			$plugin_active = $theme_active = $support_active = $settings_active = '';
+			$page            = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
+			$plugin_active   = '';
+			$theme_active    = '';
+			$support_active  = '';
+			$settings_active = '';
 			switch ( $page ) {
 				case 'wbcom-plugins-page':
 					$plugin_active = 'is_active';
@@ -399,9 +402,15 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 			</div>
 			<?php
 		}
-
 	}
 
+	// phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed
+
+	/**
+	 * Initiate Wbcom plugin manager.
+	 *
+	 * @return void
+	 */
 	function instantiate_wbcom_plugin_manager() {
 		new Wbcom_Admin_Settings();
 	}

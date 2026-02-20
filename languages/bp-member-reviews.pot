@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wbcom Designs - BuddyPress Member Reviews 3.7.0\n"
+"Project-Id-Version: Wbcom Designs - BuddyPress Member Reviews 3.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddypress-member-review\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-10T06:26:50+00:00\n"
+"POT-Creation-Date: 2026-02-19T14:05:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -77,13 +77,13 @@ msgstr ""
 #: admin/bupr-admin.php:315
 #: admin/class-bupr-admin-feedback.php:265
 #: admin/class-bupr-admin-feedback.php:271
-#: admin/tab-templates/bupr-welcome-page.php:13
+#: admin/tab-templates/bupr-welcome-page.php:15
 #: admin/wbcom/templates/wbcom-license-page.php:21
 #: admin/wbcom/templates/wbcom-plugins-page.php:584
-#: buddypress-member-review.php:90
-#: buddypress-member-review.php:103
-#: buddypress-member-review.php:117
-#: buddypress-member-review.php:296
+#: buddypress-member-review.php:89
+#: buddypress-member-review.php:102
+#: buddypress-member-review.php:116
+#: buddypress-member-review.php:295
 msgid "BuddyPress Member Reviews"
 msgstr ""
 
@@ -933,60 +933,60 @@ msgid "Where do I ask for support?"
 msgstr ""
 
 #. translators: %s:
-#: admin/tab-templates/bupr-setting-support-tab.php:85
+#: admin/tab-templates/bupr-setting-support-tab.php:86
 #, php-format
 msgid "Please visit %1$s for any query related to the plugin and BuddyPress."
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:14
+#: admin/tab-templates/bupr-welcome-page.php:16
 msgid "This plugin allows only site members to add reviews to the BuddyPress members on the site. If the visitor is not logged in, the visitor can only see the listing of the reviews but cannot review."
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:15
+#: admin/tab-templates/bupr-welcome-page.php:17
 msgid "The review form allows the members to rate the member’s profile out of 5 points with multiple review criteria. You can add multiple criteria for review. You can change the positions of those Criteria. The review form shows on the member’s profile, but you can show the review form on another page by using a shortcode."
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:20
+#: admin/tab-templates/bupr-welcome-page.php:22
 msgid "Help & Support Resources"
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:21
+#: admin/tab-templates/bupr-welcome-page.php:23
 msgid "If you need assistance, here are some helpful resources. Our documentation is a great place to start, and our support team is available if you require further help."
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:26
+#: admin/tab-templates/bupr-welcome-page.php:28
 msgid "Documentation"
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:27
+#: admin/tab-templates/bupr-welcome-page.php:29
 msgid "Explore our detailed guide on BuddyPress Member Review to understand all the features and how to make the most of them."
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:28
+#: admin/tab-templates/bupr-welcome-page.php:30
 msgid "Read Documentation"
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:34
+#: admin/tab-templates/bupr-welcome-page.php:36
 msgid "Support Center"
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:35
+#: admin/tab-templates/bupr-welcome-page.php:37
 msgid "Our support team is here to assist you with any questions or issues. Feel free to contact us anytime through our support center."
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:36
+#: admin/tab-templates/bupr-welcome-page.php:38
 msgid "Get Support"
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:41
+#: admin/tab-templates/bupr-welcome-page.php:43
 msgid "Share Your Feedback"
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:42
+#: admin/tab-templates/bupr-welcome-page.php:44
 msgid "We'd love to hear about your experience with the plugin. Your feedback and suggestions help us improve future updates."
 msgstr ""
 
-#: admin/tab-templates/bupr-welcome-page.php:43
+#: admin/tab-templates/bupr-welcome-page.php:45
 msgid "Send Feedback"
 msgstr ""
 
@@ -1626,7 +1626,7 @@ msgstr ""
 #: admin/wbcom/templates/wbcom-support-page.php:21
 #: admin/wbcom/wbcom-admin-settings.php:307
 #: admin/wbcom/wbcom-admin-settings.php:308
-#: admin/wbcom/wbcom-admin-settings.php:393
+#: admin/wbcom/wbcom-admin-settings.php:396
 msgid "Support"
 msgstr ""
 
@@ -1669,49 +1669,49 @@ msgstr ""
 
 #: admin/wbcom/wbcom-admin-settings.php:291
 #: admin/wbcom/wbcom-admin-settings.php:292
-#: admin/wbcom/wbcom-admin-settings.php:386
+#: admin/wbcom/wbcom-admin-settings.php:389
 msgid "Our Plugins"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:380
-#: buddypress-member-review.php:239
+#: admin/wbcom/wbcom-admin-settings.php:383
+#: buddypress-member-review.php:238
 msgid "Settings"
 msgstr ""
 
 #. translators: %1$s: Plugin name, %2$s: Required version
-#: buddypress-member-review.php:89
+#: buddypress-member-review.php:88
 #, php-format
 msgid "%1$s requires BuddyPress version %2$s or higher."
 msgstr ""
 
 #. translators: %1$s: Plugin name, %2$s: Required version
-#: buddypress-member-review.php:102
+#: buddypress-member-review.php:101
 #, php-format
 msgid "%1$s requires BuddyBoss version %2$s or higher."
 msgstr ""
 
 #. translators: %1$s: Plugin name
-#: buddypress-member-review.php:116
+#: buddypress-member-review.php:115
 #, php-format
 msgid "%1$s requires the BuddyPress Members component to be active."
 msgstr ""
 
-#: buddypress-member-review.php:157
+#: buddypress-member-review.php:156
 #: includes/bupr-filters.php:195
 msgid "Member Response"
 msgstr ""
 
-#: buddypress-member-review.php:158
+#: buddypress-member-review.php:157
 #: includes/bupr-filters.php:196
 msgid "Member Skills"
 msgstr ""
 
-#: buddypress-member-review.php:297
+#: buddypress-member-review.php:296
 msgid "BuddyPress or BuddyBoss"
 msgstr ""
 
 #. translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress.
-#: buddypress-member-review.php:301
+#: buddypress-member-review.php:300
 #, php-format
 msgid "%1$s requires %2$s to be installed and active."
 msgstr ""
@@ -2056,28 +2056,28 @@ msgstr ""
 
 #. translators: %s: review label
 #: includes/bupr-shortcodes.php:473
-#: includes/bupr-shortcodes.php:478
+#: includes/bupr-shortcodes.php:479
 #, php-format
 msgid "Enter your %s"
 msgstr ""
 
 #. translators: %s: review label;
-#: includes/bupr-shortcodes.php:486
+#: includes/bupr-shortcodes.php:487
 #, php-format
 msgid "Send %s anonymously."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:492
+#: includes/bupr-shortcodes.php:493
 msgid "Please either select a rating or write a review."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:498
+#: includes/bupr-shortcodes.php:499
 #, php-format
 msgid "Submit %s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:502
+#: includes/bupr-shortcodes.php:503
 msgid "Loading..."
 msgstr ""
 

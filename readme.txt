@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members, reviews, ratings, community
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 3.7.0
+Stable tag: 3.7.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -148,6 +148,11 @@ Pro adds three review modes (Ratings, Testimonials, Endorsements), verified badg
 7. Admin Reviews List - manage and moderate all reviews
 
 == Changelog ==
+
+= 3.7.1 =
+* Fixed: WordPress Coding Standards compliance across all PHP files
+* Fixed: Removed deprecated load_plugin_textdomain call
+* Fixed: Plugin Check compatibility improvements
 
 = 3.7.0 =
 * New: Owner Replies - profile owners can respond to reviews once
