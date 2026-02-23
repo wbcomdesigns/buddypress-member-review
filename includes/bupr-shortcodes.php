@@ -100,20 +100,24 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					$aggregate_rating = apply_filters( 'bupr_shortcode_aggregate_rating', ( ! empty( $aggregate_rating ) ? round( $aggregate_rating, 2 ) : 0 ), $user_id );
 					$review_count     = apply_filters( 'bupr_shortcode_review_count', ( ! empty( $review_count ) ? $review_count : 0 ), $user_id );
 
+					// Get user profile link using bp_core_get_user_domain() which works across all BP versions.
+					$user_domain     = function_exists( 'bp_core_get_user_domain' ) ? bp_core_get_user_domain( $user_id ) : '';
+					$user_nicename  = get_the_author_meta( 'user_nicename', $user_id );
+					$profile_url    = ! empty( $user_domain ) ? $user_domain : home_url( '/members/' . $user_nicename . '/' );
+
+					// Get global settings for review tab URL.
+					global $bupr;
+					$review_tab_slug = isset( $bupr['review_label_plural'] ) ? sanitize_title( $bupr['review_label_plural'] ) : 'reviews';
+					$reviews_url     = $profile_url . $review_tab_slug . '/';
+
 					// Display avatar and user link.
 					$output .= '<li class="bupr-members">';
 					if ( 'show' === $avatar_display ) {
 						$output .= apply_filters( 'bupr_shortcode_avatar_display', '<div class="bupr-img-widget">' . get_avatar( $user_id, 50 ) . '</div>', $user_id );
 					}
 					$output .= '<div class="bupr-content-widget">';
-					// Get user profile link based on available BuddyPress function.
-					if ( function_exists( 'bp_members_get_user_slug' ) ) {
-						// Use the BuddyPress v12.0.0+ function if it exists.
-						$members_profile = bp_members_get_user_slug( $user_id );
-					} else {
-						// Fallback to the older BuddyPress function.
-						$members_profile = bp_core_get_userlink( $user_id );
-					}
+					$display_name   = bp_core_get_username( $user_id );
+					$members_profile = '<a href="' . esc_url( $profile_url ) . '">' . esc_html( $display_name ) . '</a>';
 					$output .= '<div class="bupr-member-title">' . wp_kses_post( $members_profile ) . '</div>';
 
 					/**
@@ -159,10 +163,12 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 					if ( $show_stars ) {
 						/* translators: %1$s: rating; %2$s: review count; %3$s: item type label */
-						$output .= apply_filters( 'bupr_shortcode_rating_text', sprintf( esc_html__( 'Rating: %1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), esc_html( $review_count ), esc_html( $item_label ) ), $user_id, $aggregate_rating, $review_count );
+						$review_count_link = '<a href="' . esc_url( $reviews_url ) . '" class="bupr-review-count-link">' . esc_html( $review_count ) . '</a>';
+						$output .= apply_filters( 'bupr_shortcode_rating_text', sprintf( esc_html__( 'Rating: %1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), $review_count_link, esc_html( $item_label ) ), $user_id, $aggregate_rating, $review_count );
 					} else {
 						/* translators: %1$s: review count; %2$s: item type label */
-						$output .= apply_filters( 'bupr_shortcode_count_text', sprintf( esc_html__( '%1$s %2$s', 'bp-member-reviews' ), esc_html( $review_count ), esc_html( $item_label ) ), $user_id, $review_count );
+						$review_count_link = '<a href="' . esc_url( $reviews_url ) . '" class="bupr-review-count-link">' . esc_html( $review_count ) . '</a>';
+						$output .= apply_filters( 'bupr_shortcode_count_text', sprintf( esc_html__( '%1$s %2$s', 'bp-member-reviews' ), $review_count_link, esc_html( $item_label ) ), $user_id, $review_count );
 					}
 					$output .= '</span>';
 
