@@ -1423,4 +1423,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
         width: 100%;
     }
 }
+
+/* Hide empty feedback message in Add Review form */
+.add-review #message.bp-feedback:has(>p:empty) {
+    display: none !important;
+}
+
+.add-review div#message.add_review_msg {
+    display: flex !important;
+}
 /*# sourceMappingURL=bupr-front.rtl.css.map */
