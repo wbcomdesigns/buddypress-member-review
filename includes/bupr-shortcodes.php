@@ -113,7 +113,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					// Display avatar and user link.
 					$output .= '<li class="bupr-members">';
 					if ( 'show' === $avatar_display ) {
-						$output .= apply_filters( 'bupr_shortcode_avatar_display', '<div class="bupr-img-widget">' . get_avatar( $user_id, 50 ) . '</div>', $user_id );
+						$output .= apply_filters( 'bupr_shortcode_avatar_display', '<div class="bupr-img-widget"><a href="' . esc_url( $profile_url ) . '">' . get_avatar( $user_id, 50 ) . '</a></div>', $user_id );
 					}
 					$output .= '<div class="bupr-content-widget">';
 					$display_name   = bp_core_get_username( $user_id );
