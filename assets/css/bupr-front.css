@@ -1432,3 +1432,101 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 .add-review div#message.add_review_msg {
     display: flex !important;
 }
+
+/* ========== Top Members List [bupr_display_top_members] ========== */
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting ul.bupr-member-main .bupr-members {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-members:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Avatar */
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-img-widget img {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-members:hover .bupr-img-widget img {
+    transform: scale(1.05);
+}
+
+/* Content area */
+.bupr-shortcode-top-members-contents.bupr_members_review_setting ul.bupr-member-main li.bupr-members .bupr-content-widget {
+    flex: 1;
+    margin-left: 0;
+}
+
+/* Member Name */
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-title a {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-title a:hover {
+    color: #4f46e5;
+}
+
+/* Rating + Meta Row */
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 6px;
+}
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-star-rate {
+    font-size: 14px;
+}
+
+/* Rating Text */
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #777;
+}
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta a {
+    font-weight: 600;
+    text-decoration: none;
+    color: #111;
+}
+
+.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta a:hover {
+    color: #4f46e5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .bupr-shortcode-top-members-contents.bupr_members_review_setting ul.bupr-member-main .bupr-members {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
