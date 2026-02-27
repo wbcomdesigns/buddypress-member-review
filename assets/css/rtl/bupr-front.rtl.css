@@ -1,6 +1,7 @@
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
+# CSS Custom Properties (with fallbacks)
 # Global
 # Widgets
 # Review Tab
@@ -14,11 +15,62 @@
 
 
 /*--------------------------------------------------------------
+# CSS Custom Properties (with fallbacks)
+--------------------------------------------------------------*/
+:root {
+    --bupr-primary-color: #007cba;
+    --bupr-primary-hover: #005a87;
+    --bupr-success-color: #46b450;
+    --bupr-success-bg: #dff2bf;
+    --bupr-success-bg-hsl: hsl(103, 44%, 89%);
+    --bupr-error-color: #dc3232;
+    --bupr-error-bg: #f0c6c6;
+    --bupr-error-bg-hsl: hsl(0, 43%, 91%);
+    --bupr-text-primary: #1d2327;
+    --bupr-text-secondary: #50575e;
+    --bupr-text-muted: #666;
+    --bupr-text-light: #777;
+    --bupr-text-lightness: #555;
+    --bupr-bg-white: #fff;
+    --bupr-bg-light: #f8f9fa;
+    --bupr-bg-lighter: #f0f0f1;
+    --bupr-bg-lightest: #f9f9f9;
+    --bupr-border-color: #ddd;
+    --bupr-border-light: #eee;
+    --bupr-border-muted: hsl(0, 0%, 50%);
+    --bupr-border-dark: rgba(0, 0, 0, 0.1);
+    --bupr-rating-active: #4278F5;
+    --bupr-rating-inactive: #bbcefb;
+    --bupr-rating-readonly: #729bf8;
+    --bupr-tooltip-bg: #333;
+    --bupr-tooltip-text: #fff;
+    --bupr-accent-color: #4f46e5;
+    --bupr-primary-light: #f0f7fc;
+    --bupr-error-light: #fff0f0;
+}
+
+/* Dark theme support - Theme Variables with Fallbacks */
+html.dark-mode,
+body.dark-scheme {
+    --bupr-bg-white: var(--reign-site-sections-bg-color, var(--color-theme-white-box, #fff));
+	--bupr-text-primary: var(--reign-site-headings-color, var(--global-title-color, #1a1a1a));
+	--bupr-text-secondary: var(--reign-site-body-text-color, var(--global-font-color, #50575e));
+    --bupr-text-muted: var(--reign-site-body-text-color, var(--global-font-color, #666));
+	--bupr-text-light: var(--reign-site-body-text-color, var(--global-font-color, #777));
+	--bupr-border-color: var(--reign-site-border-color, var(--global-border-color, #ddd));
+	--bupr-border-light: var(--reign-site-border-color, var(--global-border-color, #eee));
+    --bupr-border-muted: var(--reign-site-border-color, var(--global-border-color, hsl(0, 0%, 50%)));
+    --bupr-border-dark: var(--reign-site-border-color, var(--global-border-color, rgba(0, 0, 0, 0.1)));
+	--bupr-bg-light: var(--reign-site-secondary-bg-color, var(--global-body-lightcolor, #f8f9fa));
+	--bupr-bg-lighter: var(--reign-site-secondary-bg-color, var(--global-body-lightcolor, #f0f0f1));
+}
+
+/*--------------------------------------------------------------
 # Global
 --------------------------------------------------------------*/
 
-.stars {
-    display: inline-block;
+.sel {
+    color: var(--bupr-error-color, #dc3232);
 }
 
 [class*="bupr-col-"] {
@@ -76,7 +128,7 @@
 
 .bupr-row {
     clear: both;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--bupr-border-dark, rgba(0, 0, 0, 0.1));
     overflow: hidden;
     padding: 15px 0;
     display: block !important;
@@ -94,7 +146,7 @@
 .bp-nouveau .bupr-row {
     margin-bottom: 20px;
     padding: 15px;
-    background: #fff;
+    background: var(--bupr-bg-white, #fff);
     border: 0;
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.16);
 }
@@ -124,10 +176,6 @@
         width: 100%;
         clear: right;
     }
-}
-
-.sel {
-    color: red;
 }
 
 .bupr-accept-button,
@@ -270,7 +318,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     -webkit-transform: translate(50%, -50%);
     -ms-transform: translate(50%, -50%);
     transform: translate(50%, -50%);
-    background-color: white;
+    background-color: var(--bupr-bg-white, white);
     padding: 1rem 1.5rem;
     max-width: 30rem;
     width: -webkit-calc(100% - 30px);
@@ -390,18 +438,18 @@ button.bupr-edit-review-button {
 }
 
 .bupr-posts-pagination span {
-    border: 1px solid hsl(0, 0%, 50%);
+    border: 1px solid var(--bupr-border-muted, hsl(0, 0%, 50%));
     border-radius: 5px;
     margin: 0 5px;
     padding: 5px 10px;
 }
 
 .bupr-posts-pagination .page-numbers {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--bupr-border-dark, rgba(0, 0, 0, 0.1));
     border-radius: 3px;
     margin: 0px 0px;
     padding: 0;
-    background: #fff;
+    background: var(--bupr-bg-white, #fff);
     display: inline-block;
     height: 32px;
     width: 32px;
@@ -439,13 +487,13 @@ button.bupr-edit-review-button {
 .bupr-error-fields {
     display: none;
     font-size: 12px;
-    color: red;
+    color: var(--bupr-error-color, #dc3232);
 }
 
 .bupr-review-error-fields {
     display: none;
     font-size: 14px;
-    color: red;
+    color: var(--bupr-error-color, #dc3232);
 }
 
 
@@ -454,10 +502,10 @@ button.bupr-edit-review-button {
 --------------------------------------------------------------*/
 
 .bupr-success {
-    background-color: hsl(103, 44%, 89%);
-    border-color: hsl(92, 44%, 85%);
+    background-color: var(--bupr-success-bg-hsl, hsl(103, 44%, 89%));
+    border-color: var(--bupr-success-bg-hsl, hsl(92, 44%, 85%));
     border-radius: 5px;
-    color: hsl(121, 33%, 35%);
+    color: var(--bupr-success-color, #46b450);
     margin-top: 10px;
     padding: 10px;
     width: 100%;
@@ -467,9 +515,9 @@ button.bupr-edit-review-button {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    background-color: hsl(0, 43%, 91%);
-    border-color: hsl(350, 44%, 86%);
-    color: hsl(1, 44%, 46%);
+    background-color: var(--bupr-error-bg-hsl, hsl(0, 43%, 91%));
+    border-color: var(--bupr-error-bg-hsl, hsl(350, 44%, 86%));
+    color: var(--bupr-error-color, #dc3232);
     margin-top: 10px;
 }
 
@@ -488,21 +536,21 @@ button.bupr-edit-review-button {
     width: 28px;
     height: 28px;
     float: right;
-    border: 2px solid #bbcefb;
-    background-color: white;
+    border: 2px solid var(--bupr-rating-inactive, #bbcefb);
+    background-color: var(--bupr-bg-white, white);
     margin: 2px;
     text-decoration: none;
     font-size: 12px;
     font-weight: 400;
     line-height: 2;
     text-align: center;
-    color: #bbcefb;
+    color: var(--bupr-rating-inactive, #bbcefb);
     font-weight: 600;
 }
 
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-selected {
-    border: 2px solid #4278F5;
-    color: #4278F5;
+    border: 2px solid var(--bupr-rating-active, #4278F5);
+    color: var(--bupr-rating-active, #4278F5);
 }
 
 .br-theme-bars-square .br-readonly a {
@@ -510,14 +558,14 @@ button.bupr-edit-review-button {
 }
 
 .br-theme-bars-square .br-readonly a.bupr-square-selected {
-    border: 2px solid #729bf8;
-    color: #729bf8;
+    border: 2px solid var(--bupr-rating-readonly, #729bf8);
+    color: var(--bupr-rating-readonly, #729bf8);
 }
 
 @media print {
     .br-theme-bars-square .bupr-rating-widget a {
-        border: 2px solid #b3b3b3;
-        color: #b3b3b3;
+        border: 2px solid var(--bupr-text-muted, #b3b3b3);
+        color: var(--bupr-text-muted, #b3b3b3);
     }
 }
 
@@ -527,17 +575,15 @@ button.bupr-edit-review-button {
 --------------------------------------------------------------*/
 
 .br-theme-bars-square .br-readonly a.bupr-square-half {
-    border-top: 2px solid #729bf8;
-    color: #729bf8;
-    border-right: 2px solid #729bf8;
-    color: #729bf8;
+    border-top: 2px solid var(--bupr-rating-readonly, #729bf8);
+    color: var(--bupr-rating-readonly, #729bf8);
+    border-right: 2px solid var(--bupr-rating-readonly, #729bf8);
 }
 
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-half {
-    border-top: 2px solid #4278F5;
-    color: #4278F5;
-    border-right: 2px solid #4278F5;
-    color: #4278F5;
+    border-top: 2px solid var(--bupr-rating-active, #4278F5);
+    color: var(--bupr-rating-active, #4278F5);
+    border-right: 2px solid var(--bupr-rating-active, #4278F5);
 }
 
 .item-header-content .activity {
@@ -553,8 +599,8 @@ button.bupr-edit-review-button {
 }
 
 .success_review_msg {
-    color: #4F8A10;
-    background-color: #DFF2BF;
+    color: var(--bupr-success-color, #4F8A10);
+    background-color: var(--bupr-success-bg, #DFF2BF);
     font-weight: 700;
     margin-top: 3px;
     text-decoration: none;
@@ -645,15 +691,14 @@ button.bupr-edit-review-button {
 
 .bupr-member-tooltip::before {
     content: attr(data-tooltip);
-    /* Get the tooltip content from the custom attribute */
     position: absolute;
     bottom: 150%;
     right: 50%;
     -webkit-transform: translateX(50%);
     -ms-transform: translateX(50%);
     transform: translateX(50%);
-    background-color: #333;
-    color: #fff;
+    background-color: var(--bupr-tooltip-bg, #333);
+    color: var(--bupr-tooltip-text, #fff);
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;
@@ -671,7 +716,7 @@ button.bupr-edit-review-button {
 
 .bupr-member-rating-text {
     font-size: 14px;
-    color: #555;
+    color: var(--bupr-text-lightness, #555);
     margin-right: 5px;
 }
 
@@ -729,15 +774,14 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 .bupr-directory-tooltip::before {
     content: attr(data-tooltip);
-    /* Get the tooltip content from the custom attribute */
     position: absolute;
     bottom: 150%;
     right: 50%;
     -webkit-transform: translateX(50%);
     -ms-transform: translateX(50%);
     transform: translateX(50%);
-    background-color: #333;
-    color: #fff;
+    background-color: var(--bupr-tooltip-bg, #333);
+    color: var(--bupr-tooltip-text, #fff);
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;
@@ -755,7 +799,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 .bupr-directory-rating-text {
     font-size: 14px;
-    color: #555;
+    color: var(--bupr-text-lightness, #555);
     margin-right: 5px;
 }
 
@@ -851,7 +895,7 @@ body[class*="youzify"].reviews .youzify-page-main-content .youzify-main-column d
 body[class*="youzify"].reviews .youzify-page-main-content .bupr-bp-member-reviews-block .bp-member-reviews,
 body[class*="youzify"].add-review .youzify-page-main-content .youzify-main-column .bupr-bp-member-review-no-popup-add-block {
     padding: 30px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--bupr-border-light, #eee);
     background-color: var(--reign-site-sections-bg-color);
     background-color: var(--yzfy-card-bg-color);
     margin: 0;
@@ -859,7 +903,7 @@ body[class*="youzify"].add-review .youzify-page-main-content .youzify-main-colum
 
 body[class*="youzify"] .youzify-page-main-content #bupr-reiew-edit button.bupr-edit-review-button,
 body[class*="youzify"].add-review .youzify-page-main-content button#bupr_save_review {
-    color: #fff;
+    color: var(--bupr-bg-white, #fff);
 }
 
 body[class*="youzify"] .youzify-page-main-content .bupr-bp-member-review-no-popup-add-block #review_desc,
@@ -889,8 +933,7 @@ body[class*="youzify"] #bupr-add-review-btn .add-review.button {
 
 /* Optionally, adjust the button's hover state */
 body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
-    background-color: #005177;
-    /* Darken the background on hover */
+    background-color: var(--bupr-primary-hover, #005177);
 }
 
 .olympus-theme .bgr-submit-review,
@@ -983,7 +1026,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .rating {
-    color: red;
+    color: var(--bupr-error-color, red);
 }
 
 #bupr-reiew-edit button.bupr-edit-review-button {
@@ -1007,8 +1050,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-owner-reply {
-    background: linear-gradient(-135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-right: 4px solid #007cba;
+    background: linear-gradient(-135deg, var(--bupr-bg-light, #f8f9fa) 0%, var(--bupr-bg-lighter, #e9ecef) 100%);
+    border-right: 4px solid var(--bupr-primary-color, #007cba);
     padding: 15px;
     margin-top: 10px;
     border-radius: 8px 0 0 8px;
@@ -1035,12 +1078,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-reply-author {
     font-weight: 600;
-    color: #1d2327;
+    color: var(--bupr-text-primary, #1d2327);
 }
 
 .bupr-reply-badge {
-    background: #007cba;
-    color: #fff;
+    background: var(--bupr-primary-color, #007cba);
+    color: var(--bupr-bg-white, #fff);
     font-size: 11px;
     padding: 3px 8px;
     border-radius: 12px;
@@ -1049,13 +1092,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-reply-date {
-    color: #666;
+    color: var(--bupr-text-muted, #666);
     font-size: 12px;
 }
 
 .bupr-reply-content {
     font-style: italic;
-    color: #333;
+    color: var(--bupr-text-primary, #333);
 }
 
 .bupr-reply-content p {
@@ -1068,8 +1111,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-show-reply-form {
     background: transparent;
-    border: 1px dashed #007cba;
-    color: #007cba;
+    border: 1px dashed var(--bupr-primary-color, #007cba);
+    color: var(--bupr-primary-color, #007cba);
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 4px;
@@ -1077,7 +1120,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-show-reply-form:hover {
-    background: #f0f7fc;
+    background: var(--bupr-primary-light, #f0f7fc);
 }
 
 .bupr-reply-form {
@@ -1087,14 +1130,14 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 .bupr-reply-textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--bupr-border-color, #ddd);
     border-radius: 4px;
     resize: vertical;
     min-height: 80px;
 }
 
 .bupr-reply-textarea:focus {
-    border-color: #007cba;
+    border-color: var(--bupr-primary-color, #007cba);
     outline: none;
     box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
 }
@@ -1111,8 +1154,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-submit-reply {
-    background: #007cba;
-    color: #fff;
+    background: var(--bupr-primary-color, #007cba);
+    color: var(--bupr-bg-white, #fff);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -1120,12 +1163,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-submit-reply:hover {
-    background: #005a87;
+    background: var(--bupr-primary-hover, #005a87);
 }
 
 .bupr-cancel-reply {
-    background: #f0f0f1;
-    color: #50575e;
+    background: var(--bupr-bg-lighter, #f0f0f1);
+    color: var(--bupr-text-secondary, #50575e);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -1133,14 +1176,14 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-cancel-reply:hover {
-    background: #dcdcde;
+    background: var(--bupr-bg-lighter, #dcdcde);
 }
 
 .bupr-reply-spinner {
     width: 20px;
     height: 20px;
-    border: 2px solid #ddd;
-    border-top-color: #007cba;
+    border: 2px solid var(--bupr-border-color, #ddd);
+    border-top-color: var(--bupr-primary-color, #007cba);
     border-radius: 50%;
     -webkit-animation: bupr-spin 1s linear infinite;
     animation: bupr-spin 1s linear infinite;
@@ -1161,8 +1204,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-report-button {
-    background: #f8f9fa;
-    border: 1px solid #ddd;
+    background: var(--bupr-bg-light, #f8f9fa);
+    border: 1px solid var(--bupr-border-color, #ddd);
     border-radius: 4px;
     cursor: pointer;
     padding: 6px 12px;
@@ -1174,15 +1217,15 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     align-items: center;
     gap: 5px;
     font-size: 12px;
-    color: #666;
+    color: var(--bupr-text-muted, #666);
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
 }
 
 .bupr-report-button:hover {
-    background: #fff0f0;
-    border-color: #dc3232;
-    color: #dc3232;
+    background: var(--bupr-error-light, #fff0f0);
+    border-color: var(--bupr-error-color, #dc3232);
+    color: var(--bupr-error-color, #dc3232);
 }
 
 .bupr-report-button .dashicons {
@@ -1204,13 +1247,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     -ms-flex-align: center;
     align-items: center;
     gap: 4px;
-    color: #46b450;
+    color: var(--bupr-success-color, #46b450);
     font-size: 12px;
     font-weight: 500;
     padding: 6px 12px;
-    background: #ecfdf5;
+    background: var(--bupr-success-bg, #ecfdf5);
     border-radius: 4px;
-    border: 1px solid #d4edda;
+    border: 1px solid var(--bupr-success-bg, #d4edda);
 }
 
 .bupr-report-success .dashicons {
@@ -1221,8 +1264,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 /* Legacy support for old class names */
 .bupr-flag-section { position: absolute; left: 15px; top: 15px; }
-.bupr-flag-button { background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; padding: 6px 12px; }
-.bupr-flag-success { display: inline-flex; align-items: center; gap: 4px; color: #46b450; font-size: 12px; }
+.bupr-flag-button { background: var(--bupr-bg-light, #f8f9fa); border: 1px solid var(--bupr-border-color, #ddd); border-radius: 4px; cursor: pointer; padding: 6px 12px; }
+.bupr-flag-success { display: inline-flex; align-items: center; gap: 4px; color: var(--bupr-success-color, #46b450); font-size: 12px; }
 
 /* Flag Modal */
 .bupr-flag-modal {
@@ -1245,7 +1288,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-modal-content {
-    background: #fff;
+    background: var(--bupr-bg-white, #fff);
     border-radius: 8px;
     max-width: 400px;
     width: 90%;
@@ -1263,13 +1306,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     -ms-flex-align: center;
     align-items: center;
     padding: 15px 20px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--bupr-border-color, #ddd);
 }
 
 .bupr-flag-modal-header h3 {
     margin: 0;
     font-size: 18px;
-    color: #1d2327;
+    color: var(--bupr-text-primary, #1d2327);
 }
 
 .bupr-flag-modal-close {
@@ -1277,12 +1320,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
+    color: var(--bupr-text-muted, #666);
     line-height: 1;
 }
 
 .bupr-flag-modal-close:hover {
-    color: #dc3232;
+    color: var(--bupr-error-color, #dc3232);
 }
 
 .bupr-flag-modal-body {
@@ -1291,7 +1334,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-flag-modal-body p {
     margin: 0 0 15px;
-    color: #50575e;
+    color: var(--bupr-text-secondary, #50575e);
 }
 
 .bupr-flag-reasons {
@@ -1314,7 +1357,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     align-items: center;
     gap: 10px;
     padding: 10px 15px;
-    background: #f9f9f9;
+    background: var(--bupr-bg-lightest, #f9f9f9);
     border-radius: 4px;
     cursor: pointer;
     -webkit-transition: background 0.2s;
@@ -1322,7 +1365,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-reason-option:hover {
-    background: #f0f0f1;
+    background: var(--bupr-bg-lighter, #f0f0f1);
 }
 
 .bupr-flag-reason-option input[type="radio"] {
@@ -1335,15 +1378,15 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     display: flex;
     gap: 10px;
     padding: 15px 20px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--bupr-border-color, #ddd);
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
 }
 
 .bupr-flag-submit {
-    background: #dc3232;
-    color: #fff;
+    background: var(--bupr-error-color, #dc3232);
+    color: var(--bupr-bg-white, #fff);
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -1351,12 +1394,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-submit:hover {
-    background: #a00;
+    background: var(--bupr-error-color, #a00);
 }
 
 .bupr-flag-cancel {
-    background: #f0f0f1;
-    color: #50575e;
+    background: var(--bupr-bg-lighter, #f0f0f1);
+    color: var(--bupr-text-secondary, #50575e);
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -1364,14 +1407,14 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-cancel:hover {
-    background: #dcdcde;
+    background: var(--bupr-bg-lighter, #dcdcde);
 }
 
 .bupr-flag-spinner {
     width: 20px;
     height: 20px;
-    border: 2px solid #ddd;
-    border-top-color: #dc3232;
+    border: 2px solid var(--bupr-border-color, #ddd);
+    border-top-color: var(--bupr-error-color, #dc3232);
     border-radius: 50%;
     -webkit-animation: bupr-spin 1s linear infinite;
     animation: bupr-spin 1s linear infinite;
@@ -1450,7 +1493,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     gap: 20px;
     padding: 20px;
     border-radius: 16px;
-    background: #ffffff;
+    background: var(--bupr-bg-white, #ffffff);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     position: relative;
@@ -1484,13 +1527,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 .bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-title a {
     font-size: 18px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--bupr-text-primary, #1a1a1a);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-title a:hover {
-    color: #4f46e5;
+    color: var(--bupr-accent-color, #4f46e5);
 }
 
 /* Rating + Meta Row */
@@ -1510,17 +1553,17 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     display: block;
     margin-top: 6px;
     font-size: 13px;
-    color: #777;
+    color: var(--bupr-text-light, #777);
 }
 
 .bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta a {
     font-weight: 600;
     text-decoration: none;
-    color: #111;
+    color: var(--bupr-text-primary, #111);
 }
 
 .bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta a:hover {
-    color: #4f46e5;
+    color: var(--bupr-accent-color, #4f46e5);
 }
 
 /* Responsive */

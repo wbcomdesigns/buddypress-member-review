@@ -6,6 +6,36 @@
 # Success and Error Message
 --------------------------------------------------------------*/
 
+/*--------------------------------------------------------------
+# CSS Custom Properties (with fallback values)
+--------------------------------------------------------------*/
+:root {
+    --bupr-color-primary: #007cba;
+    --bupr-color-success-bg: hsl(103, 44%, 89%);
+    --bupr-color-success-border: hsl(93, 44%, 85%);
+    --bupr-color-success-text: hsl(121, 33%, 35%);
+    --bupr-color-error-bg: hsl(0, 43%, 91%);
+    --bupr-color-error-border: hsl(350, 44%, 86%);
+    --bupr-color-error-text: hsl(1, 44%, 46%);
+    --bupr-color-text: #1a1a1a;
+    --bupr-color-text-light: #666;
+    --bupr-color-border: #e3e3e3;
+    --bupr-color-bg: #fff;
+    --bupr-color-bg-light: #f0f0f0;
+    --bupr-color-bg-modal-header: #C5C5C5;
+    --bupr-color-danger: #e84242;
+}
+
+/* Dark theme support - Theme Variables with Fallbacks */
+html.dark-mode,
+body.dark-scheme {
+    --bupr-color-bg: var(--reign-site-sections-bg-color, var(--color-theme-white-box, #fff));
+	--bupr-color-text: var(--reign-site-headings-color, var(--global-title-color, #1a1a1a));
+	--bupr-color-text-light: var(--reign-site-body-text-color, var(--global-font-color, #666));
+	--bupr-color-border: var(--reign-site-border-color, var(--global-border-color, #e3e3e3));
+	--bupr-color-bg-light: var(--reign-site-secondary-bg-color, var(--global-body-lightcolor, #f0f0f0));
+	--bupr-color-bg-modal-header: var(--reign-site-secondary-bg-color, var(--global-body-lightcolor, #f0f0f1));
+}
 
 /*--------------------------------------------------------------
 # Global
@@ -40,7 +70,7 @@
     padding-right: 10px !important;
     max-width: 300px;
     width: 100%;
-    border: 1px #e3e3e3 solid;
+    border: 1px var(--bupr-color-border, #e3e3e3) solid;
     font-family: inherit;
 }
 
@@ -137,7 +167,7 @@
 .modal-content {
     animation-duration: 0.4s;
     animation-name: animatetop;
-    background-color: hsl(0, 0%, 100%);
+    background-color: var(--bupr-color-bg, hsl(0, 0%, 100%));
     border: 1px solid hsl(0, 0%, 53%);
     box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, 0.2), 0 6px 20px 0 hsla(0, 0%, 0%, 0.19);
     margin: auto;
@@ -176,7 +206,7 @@
 /* The Close Button */
 
 .close {
-    color: hsl(0, 0%, 100%);
+    color: var(--bupr-color-bg, hsl(0, 0%, 100%));
     float: left;
     font-size: 27px;
     font-weight: bold;
@@ -187,15 +217,15 @@
 
 .close:hover,
 .close:focus {
-    color: #000;
+    color: var(--bupr-color-text, #000);
     text-decoration: none;
     cursor: pointer;
 }
 
 .modal-header {
     padding: 19px 24px 6px 0;
-    background-color: #C5C5C5;
-    color: white;
+    background-color: var(--bupr-color-bg-modal-header, #C5C5C5);
+    color: var(--bupr-color-bg, #fff);
     position: relative;
 }
 
@@ -209,7 +239,7 @@
 
 .bupr-fields {
     display: none;
-    color: red;
+    color: var(--bupr-color-danger, red);
 }
 
 
@@ -221,18 +251,18 @@
     width: 90%;
     padding: 10px;
     border-radius: 5px;
-    background-color: hsl(103, 44%, 89%);
-    border-color: hsl(93, 44%, 85%);
-    color: hsl(121, 33%, 35%);
+    background-color: var(--bupr-color-success-bg, hsl(103, 44%, 89%));
+    border-color: var(--bupr-color-success-border, hsl(93, 44%, 85%));
+    color: var(--bupr-color-success-text, hsl(121, 33%, 35%));
 }
 
 .bupr-error {
     width: 90%;
     padding: 10px;
     border-radius: 5px;
-    background-color: hsl(0, 43%, 91%);
-    border-color: hsl(350, 44%, 86%);
-    color: hsl(1, 44%, 46%);
+    background-color: var(--bupr-color-error-bg, hsl(0, 43%, 91%));
+    border-color: var(--bupr-color-error-border, hsl(350, 44%, 86%));
+    color: var(--bupr-color-error-text, hsl(1, 44%, 46%));
 }
 
 .bupr-review-description a {
@@ -243,11 +273,11 @@
 
 #bupr_review_success_msg .modal-content {
     min-height: 200px;
-    background-color: #f0f0f0;
+    background-color: var(--bupr-color-bg-light, #f0f0f0);
 }
 
 #bupr_review_success_msg .modal-header {
-    background-color: #f0f0f0;
+    background-color: var(--bupr-color-bg-light, #f0f0f0);
 }
 
 #bupr_review_success_msg p {
@@ -256,14 +286,14 @@
 }
 
 #bupr_review_success_msg .close {
-    color: #000;
+    color: var(--bupr-color-text, #000);
 }
 
 .bupr_not_give_review p {
     padding: 10px;
     font-weight: 500;
     font-size: 20px;
-    color: #e84242;
+    color: var(--bupr-color-danger, #e84242);
 }
 
 /* Hide the buddyboss default more  actions button*/
