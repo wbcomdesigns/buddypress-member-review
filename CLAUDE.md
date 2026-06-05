@@ -1,227 +1,93 @@
 # Plugin: BuddyPress Member Reviews
 
-## Quick Reference
-- **Main File**: buddypress-member-review.php
-- **Version**: 3.7.0
-- **Text Domain**: bp-member-reviews
-- **WordPress.org Slug**: bp-user-profile-reviews
-- **Prefix**: bupr_
+> **READ FIRST:** [`audit/manifest.json`](audit/manifest.json) is the canonical inventory —
+> 7 AJAX handlers, 2 admin-post handlers, 6 admin pages, 8 settings option keys, 2 shortcodes,
+> 1 CPT (`review`) + 1 taxonomy (`review_category`), 2 widgets, 1 cron hook, 0 REST/0 DB tables,
+> 31 fired hooks. **Use this before grepping.** See also
+> [`audit/FEATURE_AUDIT.md`](audit/FEATURE_AUDIT.md), [`audit/CODE_FLOWS.md`](audit/CODE_FLOWS.md),
+> [`audit/wppqa-baseline-2026-06-05/SUMMARY.md`](audit/wppqa-baseline-2026-06-05/SUMMARY.md).
+> Interactive graph: `cd audit && python3 -m http.server 8765` -> http://localhost:8765/graph.html
+> Refresh via `/wp-plugin-onboard --refresh` after non-trivial changes.
 
-## Download Links
-- **Wbcom Designs**: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
-- **WordPress.org**: https://wordpress.org/plugins/bp-user-profile-reviews/
-- **Documentation**: https://docs.wbcomdesigns.com/docs/buddypress-member-review/
-- **Support Forum**: https://wordpress.org/support/plugin/bp-user-profile-reviews/
+> **Development conventions:** follow the `/wp-plugin-development` skill for ALL work here —
+> the 16 critical admin rules, Part 6 Admin UI patterns, design tokens, escaping/security rules,
+> and dev hygiene (no native alert/confirm, Lucide icons, 3-breakpoint discipline). This plugin
+> currently uses the OLD admin wrapper and predates several of those conventions (see below).
 
-## Architecture Docs
-Full documentation in `docs/architecture/`:
-- [PLUGIN_ARCHITECTURE.md](docs/architecture/PLUGIN_ARCHITECTURE.md) - Complete reference
-- [manifest/](docs/architecture/manifest/) - Index files
+## Quick reference
+- **Main file**: `buddypress-member-review.php`
+- **Version**: `3.7.1`  | **Dev branch**: `3.7.1`
+- **Namespace**: none — procedural functions + prefixed classes (`BUPR_*`, `Wbcom_Admin_Settings`)
+- **Prefix**: `bupr_`  | **Text domain**: `bp-member-reviews`  | **WP.org slug**: `bp-user-profile-reviews`
+- **Extends**: null. **Extended by**: `buddypress-member-review-pro` (separate repo, hook-only coupling).
+- **Requires**: BuddyPress >= 6.0.0 OR BuddyBoss >= 1.8.0, members component active.
 
-## Key Entry Points
+## Admin-UI wrapper classification: **OLD**
+This plugin uses the **OLD Wbcom admin wrapper**: `admin/wbcom/wbcom-admin-settings.php`
+(class `Wbcom_Admin_Settings`). Evidence:
+- `admin/wbcom/wbcom-admin-settings.php` present (the OLD wrapper marker file).
+- No `includes/shared-admin/class-wbcom-shared-dashboard.php` (INTERMEDIATE) and no
+  `includes/admin/views/shell.php` (NEW).
+- Settings page is the legacy tab-based UI: `BUPR_Admin::bupr_plugin_settings_tabs()` renders
+  `nav-tab` anchors; tabs registered via `add_settings_section` / `register_setting` and
+  shown with `settings_fields()` + `do_settings_sections()`.
 
-### Main Classes/Files
-- **Main plugin**: `buddypress-member-review.php` - Initialization, activation hooks
-- **Admin**: `admin/bupr-admin.php` - Settings, CPT registration
-- **AJAX**: `includes/bupr-ajax.php` - All AJAX handlers
-- **Filters**: `includes/bupr-filters.php` - Profile tabs, display logic
-- **Shortcodes**: `includes/bupr-shortcodes.php` - `[bupr_display_top_members]`
+### Admin menu registration
+- Top-level **`wbcomplugins`** ("WB Plugins") — `add_menu_page`, `manage_options`, icon
+  `dashicons-lightbulb`, pos 59. Registered in `admin/bupr-admin.php:193` on `admin_menu`
+  (only if `$GLOBALS['admin_page_hooks']['wbcomplugins']` is empty — shared across Wbcom plugins).
+- **`bp-member-review-settings`** ("Member Reviews") — `add_submenu_page` of `wbcomplugins`,
+  `manage_options`, callback `BUPR_Admin::bupr_admin_options_page`. **PRIMARY settings page.**
+  Hook: `admin_menu` (`BUPR_Admin::bupr_add_submenu_page_admin_settings`, `admin/bupr-admin.php:191-197`).
+- Wrapper submenus (`Wbcom_Admin_Settings::wbcom_admin_additional_pages`, `admin_menu` pri 999,
+  `admin/wbcom/wbcom-admin-settings.php:288`): `wbcom-plugins-page`, `wbcom-themes-page`,
+  `wbcom-support-page` — all `manage_options`.
 
-### Frontend Flow
-1. `assets/js/bupr-front.js` - Review submission, editing, star ratings
-2. `includes/templates/bupr-reviews-tab-template.php` - Review list
-3. `includes/templates/bupr-single-review-template.php` - Single review
+### Settings options read/written
+- `bupr_admin_general_options` (array, 20 subkeys) — registered `admin/bupr-admin.php:211`.
+- `bupr_admin_settings` (array — criteria) — registered `admin/bupr-admin.php:221`.
+- `bupr_admin_display_options` (array — labels + star color) — registered `admin/bupr-admin.php:231`.
+- Standalone: `bupr_plugin_version`, `bupr_current_batch`, `bupr_member_type_criteria` (Pro,
+  read-only in free), `bupr_pro_options.review_mode` (Pro-persisted), transient `_bupr_activation_redirect`.
+- All hydrated into global `$bupr` by `BUPRGlobals` (includes/class-buprglobals.php). Full map: manifest `settings`.
 
-## Custom Post Type
-- **CPT**: `review` (registered at `admin/bupr-admin.php:353`)
-- **Taxonomy**: `review_category`
+## Key entry points
+- Main / bootstrap: `buddypress-member-review.php`
+- Globals: `includes/class-buprglobals.php` (global `$bupr`, `bupr_global_settings` filter)
+- Admin: `admin/bupr-admin.php` (settings, CPT, flag/report tooling)
+- OLD wrapper: `admin/wbcom/wbcom-admin-settings.php`
+- AJAX: `includes/bupr-ajax.php` (class `BUPR_AJAX`)
+- BP integration / profile tabs: `includes/bupr-filters.php` (class `BUPR_Custom_Hooks`)
+- Shortcodes + front form: `includes/bupr-shortcodes.php`
+- Notifications: `includes/bupr-notification.php`
+- Helpers + cron + recalc: `includes/bupr-general-functions.php`
+- Assets: `includes/bupr-scripts.php`
 
-## Hooks (Most Used)
+## Architecture notes
+Procedural + thin per-concern classes; no DI/container/REST in free. State = CPT `review`
+(author = reviewer, `linked_bp_member` meta = reviewed user) + cached aggregate usermeta
+(`bupr_review_count`, `bupr_aggregate_rating`). Pro coupling is hook-only via `bupr_*` filters
+(`bupr_global_settings`, `bupr_admin_settings_tabs`, `bupr_after_rating_fields`,
+`bupr_before_save_review`, `bupr_aggregate_rating`, `bupr_shortcode_show_stars`, ...).
 
-### Actions
-```php
-do_action('bupr_member_review_after_review_insert', $review_id, $member_id);
-do_action('bupr_sent_review_notification', $member_id, $review_id);
-do_action('bupr_before_member_review_list');
-do_action('bupr_after_member_review_list');
-```
+## Open findings (from wppqa baseline + onboarding read)
+1. **(high)** `bupr_update_review` (`includes/bupr-ajax.php:665`) verifies the front nonce but has
+   NO ownership/`edit_post` check before `wp_update_post` — any logged-in user with the nonce can
+   update any review by ID. (Sibling `bupr_edit_review` at :538 does check ownership.)
+2. **(medium)** Cron `bupr_cron_recalculate_user_reviews_batch` scheduled with conflicting intervals:
+   `daily` at activation (`buddypress-member-review.php:170`) vs `hourly` on `wp`
+   (`includes/bupr-general-functions.php:365`).
+3. **(medium)** Native `alert()` x3 in `assets/js/bupr-front.js:442,466,472` (admin-ux Rule 10);
+   plus `Wbcom_Admin_Settings::wbcom_themes_submenu_page_callback` includes
+   `templates/wbcom-themes-page.php` which is absent from the repo.
 
-### Filters
-```php
-apply_filters('bupr_global_settings', $bupr); // Modify global settings at runtime (used by Pro addon)
-apply_filters('bupr_show_profile_review_tab', true);
-apply_filters('bupr_review_tab_name', 'Reviews');
-apply_filters('bupr_shortcode_output', $html, $atts);
-apply_filters('bupr_allow_activity_posting', true);
-```
+(False positive, already triaged: nonce-no-cap on `wp_allow_bupr_my_member` bupr-ajax.php:156 —
+public/nopriv submission endpoint, nonce-only by design.)
 
-## AJAX Handlers
-| Action | Purpose |
-|--------|---------|
-| `allow_bupr_member_review_update` | Submit new review |
-| `bupr_approve_review` | Admin approve review |
-| `bupr_edit_review` | Load review for editing |
-| `bupr_update_review` | Save edited review |
-| `bupr_add_owner_reply` | Profile owner reply to review |
-| `bupr_flag_review` | Flag a review as inappropriate |
+## Build
+`grunt` (gruntfile.js) — JS/CSS minification + RTL generation. `npm install` first.
 
-## User Meta
-- `bupr_review_count` - Number of reviews received
-- `bupr_aggregate_rating` - Average rating (1-5)
-
-## Post Meta
-- `linked_bp_member` - User ID being reviewed
-- `profile_star_rating` - Array of rating values
-- `bupr_anonymous_review_post` - 'yes' if anonymous
-- `bupr_owner_reply` - Profile owner's reply content
-- `bupr_owner_reply_date` - Timestamp of owner reply
-- `bupr_flags` - Array of flag reports [{reporter_id, reason, reason_label, date}]
-- `bupr_flag_status` - 'none'|'flagged'|'resolved'|'dismissed'
-- `bupr_flag_count` - Number of flags
-- `bupr_auto_hidden` - true if review was auto-hidden due to flag threshold
-- `bupr_auto_hidden_date` - Timestamp of auto-hide
-
-## Admin Settings (General Tab)
-New settings for free features:
-- `bupr_enable_owner_replies` - 'yes'|'no' - Enable profile owners to reply (default: yes)
-- `bupr_enable_flagging` - 'yes'|'no' - Enable review flagging (default: yes)
-- `bupr_flag_threshold` - int - Auto-hide reviews after X flags (default: 5, 0 = disabled)
-
-## Templates (Overridable)
-Copy to `your-theme/review/`:
-- `bupr-reviews-tab-template.php`
-- `bupr-single-review-template.php`
-- `bupr-edit-review-form.php`
-
-## Recent Changes
-
+## Recent changes
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
-| 2026-01-27 | fix | WPCS: Widget files - visibility, snake_case vars, doc blocks, Yoda conditions | display-review.php, member-rating.php |
-| 2026-01-27 | fix | WPCS: Full compliance in all core files - Yoda, strict comparisons, doc blocks, inline comments | buddypress-member-review.php, bupr-notification.php, bupr-general-functions.php, bupr-scripts.php, class-buprglobals.php, templates, admin tabs |
-| 2026-01-27 | fix | Bug fix: Notification mark-as-read type comparison (absint instead of sanitize_text_field) | bupr-notification.php:187,197 |
-| 2026-01-27 | fix | WPCS compliance: Yoda conditions, strict comparisons, output escaping, sanitization | bupr-admin.php, bupr-ajax.php, bupr-filters.php, bupr-shortcodes.php |
-| 2026-01-26 | docs | Add missing user flows: Edit Review modal, Report modal, Owner Reply inline form | getting-started.md |
-| 2026-01-26 | docs | Create standalone feature guides: testimonials.md, endorsements.md, verified-reviews.md | user-guide/ |
-| 2026-01-26 | docs | Rewrite docs with value-first approach (problems solved, use cases, impacts) | All docs |
-| 2026-01-26 | docs | Embed screenshots in all documentation files for feature showcase | getting-started.md, settings.md, pro-features.md, managing-reviews.md, README.md |
-| 2026-01-26 | docs | Update all docs to use "Report" terminology instead of "Flag" | faq.md, settings.md, managing-reviews.md, README.md |
-| 2026-01-26 | ui | Change "Flag" terminology to "Report" for consistency across all modes | bupr-reviews-tab-template.php, bupr-front.css, bupr-front.js, bupr-setting-general-tab.php, bupr-admin.php |
-| 2026-01-26 | ui | Standardize admin labels to Title Case, clearer descriptions | bupr-setting-general-tab.php, bupr-setting-display-tab.php, bupr-setting-criteria-tab.php |
-| 2026-01-26 | docs | QA audit: Fill PRO documentation gaps (admin management, REST API schema, endorsement UX) | pro-features.md, rest-api.md |
-| 2026-01-26 | fix | PHP Warning "Undefined array key 0" when Pro stores ratings with label keys | bupr-reviews-tab-template.php:167-176 |
-| 2026-01-24 | fix | Template consistency: `.rating-sec` now always wraps date, stars conditional inside | bupr-reviews-tab-template.php:124-176 |
-| 2026-01-24 | fix | Pro Features preview now shows only actual Pro features (removed 5 non-existent options) | bupr-setting-pro-features-tab.php |
-| 2026-01-24 | fix | Added `bupr_admin_settings_criteria_content` hook for Pro Flexible Criteria builder | bupr-setting-criteria-tab.php:20-35 |
-| 2026-01-24 | fix | Testimonial Mode: Hide rating section completely when `active_rating_fields` is empty | bupr-shortcodes.php:361-417 |
-| 2026-01-24 | fix | Testimonial Mode: Add missing nonce to AJAX call when no rating fields (critical security fix) | bupr-front.js:195 |
-| 2026-01-24 | fix | Added `bupr_global_settings` filter for Pro addon to modify settings at runtime | class-buprglobals.php |
-| 2026-01-24 | fix | Profile header respects `dir_view_ratings` setting (for Testimonial Mode) | bupr-filters.php:572-575 |
-| 2026-01-23 | feature | Admin controls for owner replies, flagging, auto-hide threshold | class-buprglobals.php, bupr-setting-general-tab.php |
-| 2026-01-23 | feature | Pro Features comparison tab in admin | bupr-admin.php, bupr-setting-pro-features-tab.php |
-| 2026-01-23 | feature | Owner Replies - profile owner can respond to reviews | bupr-ajax.php, templates, JS, CSS |
-| 2026-01-23 | feature | Flagging System - users can report inappropriate reviews | bupr-ajax.php, bupr-admin.php, templates, JS, CSS |
-| 2026-01-23 | feature | Pro Addon Plugin created | ../buddypress-member-review-pro/ |
-| 2026-01-23 | fix | Accessibility and data reset fixes | bupr-shortcodes.php, bupr-ajax.php, bupr-filters.php |
-| 2026-01-23 | fix | Security and coding standards for v3.7.0 | Multiple files |
-| 2026-01-23 | docs | Added architecture documentation | docs/architecture/ |
-| 2026-01-27 | feature | Added `bupr_edit_review_extra_fields` filter to edit form for Pro addon extensions | bupr-ajax.php:bupr_edit_review() |
-| 2026-01-27 | feature | JS update handler now collects `bupr_endorsed_skills[]` checkboxes for endorsement edit | bupr-front.js:updateReview() |
-
-## Pro Addon Plugin
-
-A separate Pro addon is available at `../buddypress-member-review-pro/`:
-
-### Pro Features
-- **Review Modes**: Ratings (default), Testimonials, or Endorsements
-- **Verified Badges**: Trust signals for authentic reviews
-- **REST API**: Full CRUD API at `/wp-json/bupr/v1/`
-- **Flexible Criteria**: Dynamic rating criteria builder
-- **Endorsement Mode**: LinkedIn-style skill endorsements
-
-### Pro Files
-```
-buddypress-member-review-pro/
-├── buddypress-member-review-pro.php  # Main plugin
-├── edd-license/                       # EDD license handling
-├── includes/
-│   ├── class-bupr-pro-features.php   # Feature gate
-│   ├── class-bupr-rest-controller.php # REST API
-│   ├── class-bupr-verified-badges.php # Verified badges
-│   ├── class-bupr-testimonial-mode.php # Testimonial mode
-│   ├── class-bupr-endorsement-mode.php # Endorsements
-│   └── class-bupr-flexible-criteria.php # Criteria builder
-└── admin/
-    └── class-bupr-pro-admin.php       # Pro admin settings
-```
-
-### Pro Feature Checks
-```php
-// Check if Pro is active
-if (BUPR_Pro_Features::is_pro_active()) { ... }
-
-// Check specific feature
-if (BUPR_Pro_Features::feature_enabled('rest_api')) { ... }
-
-// Get current review mode
-$mode = BUPR_Pro_Features::get_review_mode(); // 'ratings'|'testimonials'|'endorsements'
-```
-
-## Known Issues / TODOs
-
-### Critical (from code review)
-1. **Race condition in rating calculation** - `bupr-ajax.php:284-287` - Recalculation only fires if ratings exist
-2. **Double review bypass** - Users can submit while review is in draft status
-3. **Anonymous user ID leakage** - Activity stores real user_id for anonymous reviews
-
-### High Priority
-1. **Silent email failures** - wp_mail() return not checked in multiple locations
-2. **Missing cache invalidation** - Post status transitions don't trigger recalc
-3. **No user-facing delete** - Users cannot remove their own reviews
-
-### Moderate
-1. **N+1 queries in shortcode** - Performance issue with many members
-2. **Page reload after edit** - Should be AJAX-only
-3. **Deprecated FILTER_SANITIZE_FULL_SPECIAL_CHARS** - PHP 8.1+ warnings
-
-## Development Notes
-
-### Running Tests
-```bash
-# No automated tests currently exist
-# Manual testing required
-```
-
-### Common Tasks
-
-**Add new rating criteria:**
-Settings > Member Reviews > Criteria Tab
-
-**Override template:**
-Copy `includes/templates/*.php` to `theme/review/`
-
-**Disable activity posting:**
-```php
-add_filter('bupr_allow_activity_posting', '__return_false');
-```
-
-**Hide reviews tab for certain users:**
-```php
-add_filter('bupr_show_profile_review_tab', function($show, $user_id) {
-    // Your logic here
-    return $show;
-}, 10, 2);
-```
-
-## Build Commands
-```bash
-# Grunt for JS minification (if configured)
-npm install
-grunt
-```
-
-## File Counts
-- PHP files: ~25
-- JS files: 5
-- CSS files: 4
-- Templates: 6
+| 2026-06-05 | docs | Onboarding: regenerated audit/ (manifest, FEATURE_AUDIT, CODE_FLOWS, graph, wppqa baseline) + READ-FIRST CLAUDE.md | audit/, CLAUDE.md |

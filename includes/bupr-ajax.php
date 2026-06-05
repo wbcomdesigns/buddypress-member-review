@@ -694,6 +694,39 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 				return;
 			}
+
+			// Validate the target is an actual review post.
+			$review = get_post( $review_id );
+			if ( ! $review || 'review' !== $review->post_type ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Review not found.', 'bp-member-reviews' ),
+						'code'    => 'not_found',
+					)
+				);
+				return;
+			}
+
+			/*
+			 * Ownership / capability gate.
+			 *
+			 * SECURITY (3.8.0): previously this handler verified only the
+			 * front nonce, so any logged-in member who could obtain the
+			 * shared `review-nonce` could update ANY review by ID. Mirror the
+			 * exact ownership check the sibling bupr_edit_review() already
+			 * enforces: the reviewer who authored it, or a user who can edit
+			 * others' posts (editor/admin).
+			 */
+			if ( get_current_user_id() !== (int) $review->post_author && ! current_user_can( 'edit_others_posts' ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'You do not have permission to edit this review.', 'bp-member-reviews' ),
+						'code'    => 'permission_error',
+					)
+				);
+				return;
+			}
+
 			$review_content  = isset( $_POST['bupr_review_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['bupr_review_desc'] ) ) : '';
 			$critaria_rating = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : array();
 			$old_ratings     = get_post_meta( $review_id, 'profile_star_rating', true );

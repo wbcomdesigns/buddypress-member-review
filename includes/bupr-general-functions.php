@@ -358,14 +358,20 @@ function bupr_recalculate_user_reviews_batch( $batch_size = 50, $paged = 1 ) {
 }
 
 /**
- * Schedule a cron job for recalculating user reviews in batches.
+ * Schedule the batch review-recalculation cron.
+ *
+ * Single source of truth for the schedule (3.8.0). The activation hook no
+ * longer schedules this event, and the legacy `wp`-hook hourly registration
+ * has been replaced by this guarded `init` registration at the `daily`
+ * interval — so the hook is registered exactly once, at one interval, with
+ * a deterministic outcome regardless of activation vs. upgrade path.
  */
 function bupr_schedule_review_recalculation() {
 	if ( ! wp_next_scheduled( 'bupr_cron_recalculate_user_reviews_batch' ) ) {
-		wp_schedule_event( time(), 'hourly', 'bupr_cron_recalculate_user_reviews_batch' );
+		wp_schedule_event( time(), 'daily', 'bupr_cron_recalculate_user_reviews_batch' );
 	}
 }
-add_action( 'wp', 'bupr_schedule_review_recalculation' );
+add_action( 'init', 'bupr_schedule_review_recalculation' );
 
 /**
  * Perform batch recalculation via cron job.

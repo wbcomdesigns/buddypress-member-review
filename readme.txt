@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members, reviews, ratings, community
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 3.7.1
+Stable tag: 3.8.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -148,6 +148,12 @@ Pro adds three review modes (Ratings, Testimonials, Endorsements), verified badg
 7. Admin Reviews List - manage and moderate all reviews
 
 == Changelog ==
+
+= 3.8.0 =
+* Improved: Rebuilt the admin settings screen with the modern Wbcom card-panel UI (sidebar navigation, overview dashboard) — same settings, clearer layout.
+* Security: The review update endpoint now enforces an ownership/capability check, so members can only edit their own reviews.
+* Fixed: The review-recalculation cron is now scheduled once on a single daily interval (removed a conflicting daily/hourly double registration).
+* Improved: Replaced native browser alerts on the review front end with accessible toast notifications.
 
 = 3.7.1 =
 * Fixed: WordPress Coding Standards compliance across all PHP files
