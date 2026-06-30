@@ -1465,3 +1465,42 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 .bupr-front-toast--error {
     background: #dc2626;
 }
+
+/*--------------------------------------------------------------
+# Dark mode
+# BuddyX, BuddyX Pro and Reign expose dark mode as html[data-bx-mode="dark"]
+# (.buddyx-dark-theme on older builds). The review cards, edit/flag popups,
+# the submit confirmation and pagination are hard-coded light surfaces, so
+# they are restyled here to stay readable on a dark background.
+--------------------------------------------------------------*/
+[data-bx-mode="dark"] .bp-nouveau .bupr-row,
+.buddyx-dark-theme .bp-nouveau .bupr-row {
+    background: #1e1e1e;
+    color: #e6e6e6;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
+}
+
+[data-bx-mode="dark"] .bupr-review-modal-content,
+[data-bx-mode="dark"] .bupr-flag-modal-content,
+[data-bx-mode="dark"] #bupr-add-review-modal .modal-content,
+.buddyx-dark-theme .bupr-review-modal-content,
+.buddyx-dark-theme .bupr-flag-modal-content,
+.buddyx-dark-theme #bupr-add-review-modal .modal-content {
+    background-color: #1e1e1e;
+    color: #e6e6e6;
+}
+
+[data-bx-mode="dark"] #bupr_review_success_msg .modal-content,
+[data-bx-mode="dark"] #bupr_review_success_msg .modal-header,
+.buddyx-dark-theme #bupr_review_success_msg .modal-content,
+.buddyx-dark-theme #bupr_review_success_msg .modal-header {
+    background-color: #1e1e1e;
+    color: #e6e6e6;
+}
+
+[data-bx-mode="dark"] .bupr-posts-pagination .page-numbers,
+.buddyx-dark-theme .bupr-posts-pagination .page-numbers {
+    background: #272727;
+    color: #e6e6e6;
+    border-color: rgba(255, 255, 255, 0.15);
+}
