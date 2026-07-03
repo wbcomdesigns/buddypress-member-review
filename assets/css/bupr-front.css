@@ -1468,39 +1468,201 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 /*--------------------------------------------------------------
 # Dark mode
-# BuddyX, BuddyX Pro and Reign expose dark mode as html[data-bx-mode="dark"]
-# (.buddyx-dark-theme on older builds). The review cards, edit/flag popups,
-# the submit confirmation and pagination are hard-coded light surfaces, so
-# they are restyled here to stay readable on a dark background.
+# BuddyX 5.1+ / BuddyX Pro / Reign expose dark mode as
+# html[data-bx-mode="dark"], or html[data-bx-mode="auto"] combined with the
+# OS-level prefers-color-scheme. Older builds toggle body.buddyx-dark-theme
+# (LearnDash focus mode), body.dark-mode (legacy BuddyX) or body.dark-scheme
+# (Reign customizer). Each trigger only sets the --bupr-* tokens below; the
+# component rules that consume them are written once and fall back to the
+# exact light values, so light mode is unchanged. Token values ride the
+# theme's --bx-color-* palette when present.
 --------------------------------------------------------------*/
-[data-bx-mode="dark"] .bp-nouveau .bupr-row,
-.buddyx-dark-theme .bp-nouveau .bupr-row {
-    background: #1e1e1e;
-    color: #e6e6e6;
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
+html[data-bx-mode="dark"],
+body.buddyx-dark-theme,
+body.dark-mode,
+body.dark-scheme {
+    --bupr-card-bg: var(--bx-color-bg-elevated, #1e1e1e);
+    --bupr-chip-bg: var(--bx-color-bg-muted, #272727);
+    --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #313131);
+    --bupr-field-bg: var(--bx-color-bg, #161616);
+    --bupr-text: var(--bx-color-fg, #e6e6e6);
+    --bupr-text-muted: var(--bx-color-fg-muted, #a6a6a6);
+    --bupr-text-subtle: var(--bx-color-fg-subtle, #8a8a8a);
+    --bupr-border: var(--bx-color-border, rgba(255, 255, 255, 0.15));
+    --bupr-reply-bg: var(--bx-color-bg-muted, #232323);
+    --bupr-reply-hover-bg: rgba(0, 124, 186, 0.15);
+    --bupr-success-bg: rgba(70, 180, 80, 0.15);
+    --bupr-success-fg: #7fd58b;
+    --bupr-success-border: rgba(70, 180, 80, 0.4);
+    --bupr-danger-bg: rgba(220, 50, 50, 0.15);
+    --bupr-danger-fg: #ff8a8a;
+    --bupr-danger-border: rgba(220, 50, 50, 0.4);
 }
 
-[data-bx-mode="dark"] .bupr-review-modal-content,
-[data-bx-mode="dark"] .bupr-flag-modal-content,
-[data-bx-mode="dark"] #bupr-add-review-modal .modal-content,
-.buddyx-dark-theme .bupr-review-modal-content,
-.buddyx-dark-theme .bupr-flag-modal-content,
-.buddyx-dark-theme #bupr-add-review-modal .modal-content {
-    background-color: #1e1e1e;
-    color: #e6e6e6;
+@media (prefers-color-scheme: dark) {
+    html[data-bx-mode="auto"] {
+        --bupr-card-bg: var(--bx-color-bg-elevated, #1e1e1e);
+        --bupr-chip-bg: var(--bx-color-bg-muted, #272727);
+        --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #313131);
+        --bupr-field-bg: var(--bx-color-bg, #161616);
+        --bupr-text: var(--bx-color-fg, #e6e6e6);
+        --bupr-text-muted: var(--bx-color-fg-muted, #a6a6a6);
+        --bupr-text-subtle: var(--bx-color-fg-subtle, #8a8a8a);
+        --bupr-border: var(--bx-color-border, rgba(255, 255, 255, 0.15));
+        --bupr-reply-bg: var(--bx-color-bg-muted, #232323);
+        --bupr-reply-hover-bg: rgba(0, 124, 186, 0.15);
+        --bupr-success-bg: rgba(70, 180, 80, 0.15);
+        --bupr-success-fg: #7fd58b;
+        --bupr-success-border: rgba(70, 180, 80, 0.4);
+        --bupr-danger-bg: rgba(220, 50, 50, 0.15);
+        --bupr-danger-fg: #ff8a8a;
+        --bupr-danger-border: rgba(220, 50, 50, 0.4);
+    }
 }
 
-[data-bx-mode="dark"] #bupr_review_success_msg .modal-content,
-[data-bx-mode="dark"] #bupr_review_success_msg .modal-header,
-.buddyx-dark-theme #bupr_review_success_msg .modal-content,
-.buddyx-dark-theme #bupr_review_success_msg .modal-header {
-    background-color: #1e1e1e;
-    color: #e6e6e6;
+/* Review rows: dividers + inherited text. Fallbacks equal the light values. */
+.bupr-row {
+    border-color: var(--bupr-border, rgba(0, 0, 0, 0.1));
 }
 
-[data-bx-mode="dark"] .bupr-posts-pagination .page-numbers,
-.buddyx-dark-theme .bupr-posts-pagination .page-numbers {
-    background: #272727;
-    color: #e6e6e6;
-    border-color: rgba(255, 255, 255, 0.15);
+/* Review cards (profile tab + nouveau listings). */
+.bp-nouveau .bupr-row {
+    background: var(--bupr-card-bg, #fff);
+    color: var(--bupr-text, inherit);
+}
+
+/* Edit / flag / add-review popups. */
+.bupr-review-modal-content,
+#bupr-add-review-modal .modal-content {
+    background-color: var(--bupr-card-bg, white);
+    color: var(--bupr-text, inherit);
+}
+
+.bupr-flag-modal-content {
+    background: var(--bupr-card-bg, #fff);
+    color: var(--bupr-text, inherit);
+}
+
+/* Submit confirmation popup. */
+#bupr_review_success_msg .modal-content,
+#bupr_review_success_msg .modal-header {
+    background-color: var(--bupr-card-bg, #f0f0f0);
+    color: var(--bupr-text, inherit);
+}
+
+/* Flag modal chrome. */
+.bupr-flag-modal-header,
+.bupr-flag-modal-footer {
+    border-color: var(--bupr-border, #ddd);
+}
+
+.bupr-flag-modal-header h3 {
+    color: var(--bupr-text, #1d2327);
+}
+
+.bupr-flag-modal-close {
+    color: var(--bupr-text-muted, #666);
+}
+
+.bupr-flag-modal-body p {
+    color: var(--bupr-text-muted, #50575e);
+}
+
+.bupr-flag-reason-option {
+    background: var(--bupr-chip-bg, #f9f9f9);
+    color: var(--bupr-text, inherit);
+}
+
+.bupr-flag-reason-option:hover {
+    background: var(--bupr-chip-bg-hover, #f0f0f1);
+}
+
+/* Neutral (cancel) buttons in flag modal + reply form. */
+.bupr-flag-cancel,
+.bupr-cancel-reply {
+    background: var(--bupr-chip-bg, #f0f0f1);
+    color: var(--bupr-text, #50575e);
+}
+
+.bupr-flag-cancel:hover,
+.bupr-cancel-reply:hover {
+    background: var(--bupr-chip-bg-hover, #dcdcde);
+}
+
+/* Owner reply block. */
+.bupr-owner-reply {
+    background: var(--bupr-reply-bg, linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%));
+}
+
+.bupr-reply-author {
+    color: var(--bupr-text, #1d2327);
+}
+
+.bupr-reply-content {
+    color: var(--bupr-text-muted, #333);
+}
+
+.bupr-reply-date {
+    color: var(--bupr-text-subtle, #666);
+}
+
+.bupr-reply-textarea {
+    background: var(--bupr-field-bg, #fff);
+    color: var(--bupr-text, inherit);
+    border-color: var(--bupr-border, #ddd);
+}
+
+.bupr-show-reply-form:hover {
+    background: var(--bupr-reply-hover-bg, #f0f7fc);
+}
+
+/* Report / flag trigger buttons. */
+.bupr-report-button,
+.bupr-flag-button {
+    background: var(--bupr-chip-bg, #f8f9fa);
+    border-color: var(--bupr-border, #ddd);
+    color: var(--bupr-text-muted, #666);
+}
+
+.bupr-report-button:hover {
+    background: var(--bupr-danger-bg, #fff0f0);
+    border-color: #dc3232;
+    color: var(--bupr-danger-fg, #dc3232);
+}
+
+/* Report success chip. */
+.bupr-report-success {
+    background: var(--bupr-success-bg, #ecfdf5);
+    border-color: var(--bupr-success-border, #d4edda);
+    color: var(--bupr-success-fg, #46b450);
+}
+
+/* Inline success / error notices (add-review form + submit confirmation). */
+.bupr-success {
+    background-color: var(--bupr-success-bg, hsl(103, 44%, 89%));
+    border-color: var(--bupr-success-border, hsl(92, 44%, 85%));
+    color: var(--bupr-success-fg, hsl(121, 33%, 35%));
+}
+
+.success_review_msg {
+    background-color: var(--bupr-success-bg, #DFF2BF);
+    color: var(--bupr-success-fg, #4F8A10);
+}
+
+.bupr-error {
+    background-color: var(--bupr-danger-bg, hsl(0, 43%, 91%));
+    border-color: var(--bupr-danger-border, hsl(350, 44%, 86%));
+    color: var(--bupr-danger-fg, hsl(1, 44%, 46%));
+}
+
+/* Rating widget squares. */
+.br-theme-bars-square .bupr-rating-widget a {
+    background-color: var(--bupr-chip-bg, white);
+}
+
+/* Pagination chips. */
+.bupr-posts-pagination .page-numbers {
+    background: var(--bupr-chip-bg, #fff);
+    color: var(--bupr-text, inherit);
+    border-color: var(--bupr-border, rgba(0, 0, 0, 0.1));
 }
