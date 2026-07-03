@@ -821,7 +821,7 @@
 	align-items: flex-start;
 	justify-content: space-between;
 	gap: 16px;
-	padding: 16px 0;
+	padding: 16px 20px;
 	border-bottom: 1px solid var(--bupr-admin-surface-2);
 }
 
