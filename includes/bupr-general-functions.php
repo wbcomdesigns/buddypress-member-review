@@ -428,6 +428,12 @@ function bupr_clear_review_caches( $post_id ) {
 		return;
 	}
 
+	// Delete this review's BuddyPress notifications so they don't linger as
+	// actor-less "posted a review" entries linking nowhere once it's gone.
+	if ( function_exists( 'bupr_delete_review_notifications' ) ) {
+		bupr_delete_review_notifications( $post_id );
+	}
+
 	// Get the reviewed user ID.
 	$user_id = get_post_meta( $post_id, 'linked_bp_member', true );
 

@@ -152,6 +152,29 @@ function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 	$member_id    = $current_user->ID;
 
 	if ( function_exists( 'bp_notifications_add_notification' ) ) {
+
+		// Dedupe: a single review must notify a given recipient only once.
+		// The status-transition path (draft->publish on approval) and the
+		// submission path can both fire `bupr_sent_review_notification` for the
+		// same review, and a re-save/re-approve can fire it again. Bail if a
+		// notification already exists for this (review, recipient, action),
+		// ignoring secondary_item_id/is_new so a read-but-present notification
+		// still blocks a duplicate.
+		if ( class_exists( 'BP_Notifications_Notification' ) ) {
+			$existing = BP_Notifications_Notification::get(
+				array(
+					'user_id'          => $bupr_memberid,
+					'item_id'          => $review_id,
+					'component_name'   => 'buddypress_member_review',
+					'component_action' => 'bupr_add_review_action',
+				)
+			);
+
+			if ( ! empty( $existing ) ) {
+				return;
+			}
+		}
+
 		// Get some reply information.
 		$args = array(
 			'user_id'           => $bupr_memberid,
@@ -161,7 +184,7 @@ function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 			'component_action'  => 'bupr_add_review_action',
 			'date_notified'     => bp_core_current_time(),
 			'is_new'            => 1,
-			'allow_duplicate'   => true,
+			'allow_duplicate'   => false,
 		);
 		bp_notifications_add_notification( $args );
 	} else {
@@ -169,6 +192,36 @@ function bupr_buddypress_add_notification( $bupr_memberid, $review_id ) {
 	}
 }
 add_action( 'bupr_sent_review_notification', 'bupr_buddypress_add_notification', 10, 2 );
+
+/**
+ * Delete all BuddyPress notifications tied to a review.
+ *
+ * Called when a review is trashed or permanently deleted so its notifications
+ * do not linger. Orphaned notifications render actor-less ("posted a review")
+ * and link nowhere once the underlying review is gone.
+ *
+ * @since 3.8.0
+ *
+ * @param int $review_id The review post ID.
+ * @return void
+ */
+function bupr_delete_review_notifications( $review_id ) {
+	$review_id = absint( $review_id );
+
+	if ( ! $review_id || ! class_exists( 'BP_Notifications_Notification' ) ) {
+		return;
+	}
+
+	// Removes the notification for every recipient (reviewed member + the
+	// admin approval notice) in one query, keyed on the review item id.
+	BP_Notifications_Notification::delete(
+		array(
+			'item_id'          => $review_id,
+			'component_name'   => 'buddypress_member_review',
+			'component_action' => 'bupr_add_review_action',
+		)
+	);
+}
 
 add_action( 'bp_actions', 'bupr_buddypress_notification_marked_as_read' );
 
