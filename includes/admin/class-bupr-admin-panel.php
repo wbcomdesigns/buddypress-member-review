@@ -99,6 +99,17 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 				}
 			}
 
+			/*
+			 * Discover — ecosystem cross-promotion (read-only display view).
+			 * Added AFTER the legacy `bupr_admin_settings_tabs` round-trip so the
+			 * Pro addon's tab-removal filter can never accidentally drop it.
+			 */
+			$tabs['discover'] = array(
+				'label' => __( 'Discover', 'bp-member-reviews' ),
+				'icon'  => 'dashicons-products',
+				'group' => 'discover',
+			);
+
 			/**
 			 * Filter the card-panel settings tabs (rich descriptors).
 			 *
@@ -409,6 +420,10 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 				),
 				'bupr-pro-features' => array(
 					'view'  => 'settings-pro-features',
+					'group' => '',
+				),
+				'discover'          => array(
+					'view'  => 'discover',
 					'group' => '',
 				),
 			);

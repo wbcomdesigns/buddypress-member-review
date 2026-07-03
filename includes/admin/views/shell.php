@@ -62,6 +62,7 @@ $bupr_version = defined( 'BUPR_PLUGIN_VERSION' ) ? BUPR_PLUGIN_VERSION : '';
 				$bupr_printed_groups = array();
 				$bupr_group_labels   = array(
 					'settings' => esc_html__( 'Settings', 'bp-member-reviews' ),
+					'discover' => esc_html__( 'More Tools', 'bp-member-reviews' ),
 				);
 				foreach ( $bupr_tabs as $bupr_slug => $bupr_tab ) {
 					$bupr_group = isset( $bupr_tab['group'] ) ? $bupr_tab['group'] : 'main';
