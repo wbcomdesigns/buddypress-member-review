@@ -87,6 +87,16 @@ Premium plugins:
 - **[BuddyPress Status & Reaction](https://wbcomdesigns.com/downloads/buddypress-status/)**
 - **[BuddyPress Profanity](https://wbcomdesigns.com/downloads/buddypress-profanity/)**
 
+== More Free Tools from Wbcom Designs ==
+
+Member Reviews gives your community its reputation layer - the trust signals members earn from each other. These free tools from Wbcom Designs give you the rest of the stack to build that community on, from the network itself to the courses and directories that keep people coming back.
+
+* **[BuddyNext](https://wbcomdesigns.com/downloads/buddynext/)** - A no-cost community platform with activity streams, member spaces, profiles, private messaging, directories, and built-in moderation.
+* **[Jetonomy](https://wbcomdesigns.com/downloads/jetonomy/)** - Free forums, Q&A boards, and idea spaces that self-moderate through trust levels and stay fast well past 100,000 topics.
+* **[Mediaverse](https://wbcomdesigns.com/downloads/mediaverse/)** - A photo and video space with albums, reactions, follows, direct messages, and AI-assisted moderation out of the box.
+* **[Listora](https://wbcomdesigns.com/downloads/listora/)** - A directory builder with 10 listing types, member ratings, map views, and frontend submissions your visitors can post themselves.
+* **[Learnomy](https://wbcomdesigns.com/downloads/learnomy/)** - A free LMS to build and sell courses, auto-grade quizzes, award certificates, and take payments.
+
 == Installation ==
 
 1. Upload `buddypress-member-review` to `/wp-content/plugins/`
