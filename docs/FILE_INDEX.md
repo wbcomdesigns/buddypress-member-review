@@ -40,7 +40,6 @@
 | `bupr-setting-shortcode-tab.php` | Shortcode generator and reference |
 | `bupr-setting-support-tab.php` | Support links and resources |
 | `bupr-setting-pro-features-tab.php` | Pro version feature preview |
-| `bupr-member-types-criteria-tab.php` | Member type specific criteria (Pro) |
 | `bupr-welcome-page.php` | Welcome/activation page |
 
 ### Admin Assets

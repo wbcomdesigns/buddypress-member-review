@@ -49,7 +49,7 @@
     { "key": "bupr_pro_options", "group": "(rendered in free Pro-features tab; saved by Pro addon)", "type": "array", "registered_at": "admin/tab-templates/bupr-setting-pro-features-tab.php (field name only)", "subkeys": ["review_mode"], "note": "Field emitted in free Pro-features preview tab; actual register_setting + persistence handled by the Pro addon, not by free." },
     { "key": "bupr_plugin_version", "group": "(standalone option)", "type": "string", "written_at": "buddypress-member-review.php:166 (activation)", "controls": "Stores installed plugin version." },
     { "key": "bupr_current_batch", "group": "(standalone option)", "type": "int", "read_write_at": "includes/bupr-general-functions.php:375,381,385; deleted on deactivation buddypress-member-review.php:357", "controls": "Cron pagination cursor for batch aggregate-rating recalculation." },
-    { "key": "bupr_member_type_criteria", "group": "(standalone option, read-only in free)", "type": "array", "read_at": "admin/tab-templates/bupr-member-types-criteria-tab.php (get_option)", "note": "Member-type criteria; populated by Pro addon. Free reads but does not write." },
+    { "key": "bupr_member_type_criteria", "group": "(standalone option, Pro-owned)", "type": "array", "read_at": "(none in free — orphaned admin template removed in 3.8.0)", "note": "Member-type criteria; populated and read by the Pro addon only. Free neither reads nor writes since the dead bupr-member-types-criteria-tab.php template (unregistered options.php form) was deleted." },
     { "key": "_bupr_activation_redirect", "group": "(transient)", "type": "bool", "written_at": "buddypress-member-review.php:174", "controls": "One-shot transient to redirect to settings after activation." }
   ],
   "shortcodes": [

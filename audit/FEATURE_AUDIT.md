@@ -47,7 +47,7 @@ Registered settings (`register_setting` in `admin/bupr-admin.php`):
 - `bupr_admin_settings` (criteria: `profile_multi_rating_allowed`, `profile_rating_fields`)
 - `bupr_admin_display_options` (`bupr_review_title`, `_plural`, `bupr_star_color`)
 Other options: `bupr_plugin_version`, `bupr_current_batch` (cron cursor),
-`bupr_member_type_criteria` (Pro-populated, read-only in free), `bupr_pro_options.review_mode`
+`bupr_member_type_criteria` (Pro-owned; free no longer reads it since the orphaned admin template was removed in 3.8.0), `bupr_pro_options.review_mode`
 (field rendered in free preview tab; persisted by Pro). Full read/write map in manifest `settings`.
 
 ## 5. Shortcodes (2)
