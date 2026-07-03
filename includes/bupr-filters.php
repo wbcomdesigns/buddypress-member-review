@@ -560,6 +560,22 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				// Cache the values.
 				update_user_meta( $user_id, 'bupr_aggregate_rating', $bupr_avg_rating );
 				update_user_meta( $user_id, 'bupr_review_count', $bupr_reviews_count );
+			} elseif ( (int) $bupr_reviews_count > 0 && ( '' === (string) $bupr_avg_rating || (float) $bupr_avg_rating <= 0 )
+				&& false === get_transient( 'bupr_drift_checked_' . $user_id ) ) {
+				// Defensive guard against drifted meta (positive count but an
+				// empty/zero aggregate) - e.g. orphaned meta left by review
+				// deletions on pre-3.8 installs, which renders "0.00/5 (1
+				// review)" with no reviews. Lazily rebuild from the real posts.
+				// Throttled per user so a member with a legitimately unrated
+				// review does not recalc on every profile view.
+				$rating_data        = $this->calculate_user_rating( $user_id );
+				$bupr_avg_rating    = $rating_data['average'];
+				$bupr_reviews_count = $rating_data['count'];
+
+				update_user_meta( $user_id, 'bupr_aggregate_rating', $bupr_avg_rating );
+				update_user_meta( $user_id, 'bupr_review_count', $bupr_reviews_count );
+
+				set_transient( 'bupr_drift_checked_' . $user_id, 1, DAY_IN_SECONDS );
 			}
 
 			// Display the rating if there are reviews.

@@ -165,6 +165,12 @@ function bupr_plugin_activation() {
 	// Set plugin version in options.
 	update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
 
+	// Fresh installs have no reviews yet, so there is no drifted count/aggregate
+	// meta to repair. Mark the one-time repair migration done so it is skipped.
+	if ( ! get_option( 'bupr_meta_repair_v1_done' ) ) {
+		update_option( 'bupr_meta_repair_v1_done', 'yes' );
+	}
+
 	// The recalculation cron is scheduled in exactly one place — the
 	// guarded `bupr_schedule_review_recalculation()` on `init`
 	// (includes/bupr-general-functions.php). It runs on the next request
