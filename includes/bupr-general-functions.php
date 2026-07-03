@@ -456,12 +456,30 @@ function bupr_clear_review_caches( $post_id ) {
 
 		// Force recalculation.
 		bupr_recalculate_user_reviews_for_user( $user_id );
+
+		// The aggregate meta changed, so the top-members leaderboard is stale.
+		bupr_flush_top_members_cache();
 	}
 }
 
 add_action( 'before_delete_post', 'bupr_clear_review_caches' );
 add_action( 'trashed_post', 'bupr_clear_review_caches' );
 add_action( 'untrashed_post', 'bupr_clear_review_caches' );
+
+/**
+ * Flush the cached [bupr_display_top_members] shortcode results.
+ *
+ * The shortcode caches its CAST()-ordered usermeta query in transients keyed
+ * by a version salt (see BUPR_Shortcodes::bupr_display_top_members_display()).
+ * Bumping the salt invalidates every attribute variation in O(1); the stale
+ * transients then expire naturally via their TTL.
+ *
+ * @since 3.8.0
+ */
+function bupr_flush_top_members_cache() {
+	update_option( 'bupr_top_members_cache_ver', (string) microtime( true ), false );
+}
+add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
 
 /**
  * Handle review status transitions to trigger cache invalidation.
@@ -494,6 +512,9 @@ function bupr_handle_review_status_transition( $new_status, $old_status, $post )
 	$status_triggers = array( 'publish', 'draft', 'pending', 'trash' );
 	if ( in_array( $new_status, $status_triggers, true ) || in_array( $old_status, $status_triggers, true ) ) {
 		bupr_recalculate_user_reviews_for_user( $user_id );
+
+		// The aggregate meta changed, so the top-members leaderboard is stale.
+		bupr_flush_top_members_cache();
 	}
 }
 add_action( 'transition_post_status', 'bupr_handle_review_status_transition', 10, 3 );

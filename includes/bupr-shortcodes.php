@@ -70,19 +70,36 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$meta_key = ( 'top rated' === $top_member ) ? 'bupr_aggregate_rating' : 'bupr_review_count';
 			$meta_key = apply_filters( 'bupr_shortcode_meta_key', $meta_key, $top_member );
 
-			// Query to fetch users based on their aggregate rating or review count.
-			$bupr_user_data = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT user_id, meta_value 
-				FROM {$wpdb->usermeta} 
-				WHERE meta_key = %s
-				ORDER BY CAST(meta_value AS DECIMAL(10,2)) DESC 
-				LIMIT %d",
-					$meta_key,
-					$member_limit
-				)
-			);
-			$top_members    = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
+			/*
+			 * The CAST() in ORDER BY defeats the usermeta meta_key index, forcing a
+			 * filesort of every row carrying the meta key. Cache the result set in a
+			 * short-lived transient so the query runs at most once per TTL per
+			 * attribute combination. The version salt is bumped by
+			 * bupr_flush_top_members_cache() whenever aggregate rating/review-count
+			 * meta changes (review status transition, trash/delete, batch recalc),
+			 * which invalidates all variations at once.
+			 */
+			$cache_salt = (string) get_option( 'bupr_top_members_cache_ver', '1' );
+			$cache_key  = 'bupr_top_members_' . md5( $cache_salt . '|' . $meta_key . '|' . (int) $member_limit );
+
+			$bupr_user_data = get_transient( $cache_key );
+			if ( false === $bupr_user_data ) {
+				// Query to fetch users based on their aggregate rating or review count.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Result cached in the transient above.
+				$bupr_user_data = $wpdb->get_results(
+					$wpdb->prepare(
+						"SELECT user_id, meta_value
+					FROM {$wpdb->usermeta}
+					WHERE meta_key = %s
+					ORDER BY CAST(meta_value AS DECIMAL(10,2)) DESC
+					LIMIT %d",
+						$meta_key,
+						$member_limit
+					)
+				);
+				set_transient( $cache_key, $bupr_user_data, 15 * MINUTE_IN_SECONDS );
+			}
+			$top_members = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
 
 			$output .= '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting">';
 			$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
