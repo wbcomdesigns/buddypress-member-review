@@ -56,7 +56,7 @@ $bupr_ecosystem = array(
 <div class="bupr-card">
 	<div class="bupr-card__head">
 		<p class="bupr-card__title"><?php esc_html_e( 'More Free Tools from Wbcom Designs', 'bp-member-reviews' ); ?></p>
-		<p class="bupr-card__desc"><?php esc_html_e( 'Member Reviews adds the reputation layer to your community. These free plugins from Wbcom Designs give you the rest of the stack — the network itself, forums, media, directories, and courses.', 'bp-member-reviews' ); ?></p>
+		<p class="bupr-card__desc"><?php esc_html_e( 'Member Reviews adds the reputation layer to your community. These free plugins from Wbcom Designs give you the rest of the stack: the network itself, forums, media, directories, and courses.', 'bp-member-reviews' ); ?></p>
 	</div>
 	<div class="bupr-card__body">
 		<div class="bupr-discover-grid">
