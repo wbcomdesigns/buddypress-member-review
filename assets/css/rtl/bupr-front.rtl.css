@@ -1095,8 +1095,16 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-reply-textarea:focus {
     border-color: #007cba;
-    outline: none;
     box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
+}
+
+.bupr-reply-textarea:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.bupr-reply-textarea:focus-visible {
+    outline: 2px solid var(--bupr-focus, #007cba);
+    outline-offset: 2px;
 }
 
 .bupr-reply-actions {

@@ -148,7 +148,7 @@ $user_roles = array_reverse( get_editable_roles() );
 
 					<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
 						<div class="wbcom-settings-section-options-heading">
-							<label>
+							<label for="review_deny_email_subject">
 								<?php esc_html_e( 'Email Subject', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Enter the subject line for review notification emails.', 'bp-member-reviews' ); ?></p>
@@ -159,7 +159,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					</div>
 					<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
 						<div class="wbcom-settings-section-options-heading">
-							<label>
+							<label for="review-email-message">
 								<?php esc_html_e( 'Email Message', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Enter the message content for review notification emails.', 'bp-member-reviews' ); ?></p>
@@ -184,7 +184,7 @@ $user_roles = array_reverse( get_editable_roles() );
 					<!-- admin email section -->
 					<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
 							<div class="wbcom-settings-section-options-heading">
-								<label>
+								<label for="review_approve_email_subject">
 									<?php esc_html_e( 'Approval Email Subject', 'bp-member-reviews' ); ?>
 								</label>
 								<p class="description"><?php esc_html_e( 'Enter the subject line for review approval notification emails.', 'bp-member-reviews' ); ?></p>
@@ -195,7 +195,7 @@ $user_roles = array_reverse( get_editable_roles() );
 						</div>
 						<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
 					<div class="wbcom-settings-section-options-heading">
-						<label>
+						<label for="review-approve-email-message">
 							<?php esc_html_e( 'Approval Email Message', 'bp-member-reviews' ); ?>
 						</label>
 						<p class="description"><?php esc_html_e( 'Enter the message content for review approval notification emails.', 'bp-member-reviews' ); ?></p>

@@ -349,6 +349,6 @@ jQuery(document).ready(
  *-----------------------------------------*/
 function GetDynamicTextBox(value) {
 	var rand_num = Math.random();
-	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " /></div>' +
-		'<div class="bupr-admin-col-6"><input type="button" value="Remove" class="bupr-remove button button-secondary" /></div></div>'
+	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " aria-label="Review criteria name" /></div>' +
+		'<div class="bupr-admin-col-6"><input type="button" value="Remove" aria-label="Remove this review criteria" class="bupr-remove button button-secondary" /></div></div>'
 }

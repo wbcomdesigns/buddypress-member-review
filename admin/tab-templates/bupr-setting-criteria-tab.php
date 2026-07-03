@@ -83,7 +83,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 			<div class="form-table">
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">
-							<label>
+							<label for="bupr_allow_multiple_criteria">
 								<?php esc_html_e( 'Multiple Criteria', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Rate members by multiple criteria (e.g., Communication, Skills) instead of a single overall rating.', 'bp-member-reviews' ); ?></p>
@@ -111,12 +111,12 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 								<div id="bupr-admin-row-criteria" class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
 									<div class="bupr-admin-col-6">
 										<span class="move-icons">&equiv;</span>
-										<input name="bupr_admin_settings[rating_field_name][<?php echo esc_attr( $key_val ); ?>]" class="buprDynamicTextBox" type="text" value="<?php echo esc_attr( $profile_rating_field ); ?>" />
+										<input name="bupr_admin_settings[rating_field_name][<?php echo esc_attr( $key_val ); ?>]" class="buprDynamicTextBox" type="text" value="<?php echo esc_attr( $profile_rating_field ); ?>" aria-label="<?php esc_attr_e( 'Review criteria name', 'bp-member-reviews' ); ?>" />
 									</div>
 
 									<div class="bupr-admin-col-6 buprcriteria">
 										<p class="bupr-delete-tag">
-											<input type="button" value="<?php esc_html_e( 'Delete', 'bp-member-reviews' ); ?>" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
+											<input type="button" value="<?php esc_attr_e( 'Delete', 'bp-member-reviews' ); ?>" aria-label="<?php esc_attr_e( 'Delete this review criteria', 'bp-member-reviews' ); ?>" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
 											<!-- Removed description span. -->
 										</p>
 									</div>
@@ -130,7 +130,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 
 				<div id="bupr-add-criteria-action" class="bupr-admin-row border">
 					<div class="bupr-admin-col-12">
-						<input id="bupr-btnAdd" type="button" value="<?php esc_html_e( 'Add Criteria', 'bp-member-reviews' ); ?>" class="button button-secondary"/>
+						<input id="bupr-btnAdd" type="button" value="<?php esc_attr_e( 'Add Criteria', 'bp-member-reviews' ); ?>" aria-label="<?php esc_attr_e( 'Add a new review criteria', 'bp-member-reviews' ); ?>" class="button button-secondary"/>
 						<p class="description"><?php esc_html_e( 'This option allows you to add multiple rating criteria. By default, no criteria are shown until you activate them.', 'bp-member-reviews' ); ?></p>
 					</div>
 				</div>
