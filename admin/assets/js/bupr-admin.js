@@ -291,11 +291,11 @@ jQuery(document).ready(
 						'nonce' : bupr_admin_ajax_object.nonce,
 					},
 					function (response) {
-						
-						if (response.data.message == 'Review approved successfully.') {
+						// Branch on the stable response code, never the translated message.
+						if (response && response.success && response.data && 'review-approved-successfully' === response.data.code) {
 							window.location.reload();
 						} else {
-							console.log(response.data.message);
+							console.log(response && response.data ? response.data.message : response);
 						}
 					}
 				);
