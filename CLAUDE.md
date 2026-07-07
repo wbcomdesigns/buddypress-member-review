@@ -80,10 +80,15 @@ All three findings from the 2026-06-05 wppqa baseline are **fixed in the 3.8.0 c
    in the card-panel migration.
 
 Still open (minor, from `AUDIT-VERDICT.md` 2026-07-03):
-- `wp_enqueue_style()` passes literal `false` for `$media` in 7 call sites
-  (`admin/bupr-admin.php:97`; `includes/bupr-scripts.php:104,105,255,258,260,268`).
-- Hardcoded non-translatable in-flight label `'Approving..'` in `admin/assets/js/bupr-admin.js`.
+- `wp_enqueue_style()` passes literal `false` for `$media` in several call sites
+  (`admin/bupr-admin.php:97`; `includes/bupr-scripts.php`). Note line numbers shifted
+  after the 3.7.1 UX pass removed the `bupr-reviews-css` enqueue.
+- ~~Hardcoded non-translatable `'Approving..'`~~ — fixed 2026-07-07 (localized via
+  `bupr_admin_ajax_object.approving_text`).
 - PHPStan has no WordPress stubs configured (baseline noise, not a code signal).
+- Data model (flagged 2026-07-07, not yet ticketed): submitting a review can create a
+  duplicate reviewer→reviewee pair instead of updating the existing review. Confirm
+  whether single-review-per-reviewer is the intended constraint.
 
 (False positive, already triaged: nonce-no-cap on `wp_allow_bupr_my_member` bupr-ajax.php:156 —
 public/nopriv submission endpoint, nonce-only by design.)
@@ -94,6 +99,7 @@ public/nopriv submission endpoint, nonce-only by design.)
 ## Recent changes
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-07-07 | ux/a11y | Resolved the 12 UX/design-system audit cards (Member Reviews Bugs column): `:root` light `--bupr-*` token block (light now themeable); merged legacy `bupr-reviews.css` into `bupr-front.css` (tokenized + logical props + focus-visible) and dequeued it (now a stub); dropped the dead `.modal`/`.close`/`#bupr_review_success_msg` system; RTL logical properties (46 physical→`*-inline-*`/`inset-inline-end`); breakpoints 480/768/1024; stripped `!important` except 3 Youzify overrides; theme-following `&times;` modal-close button (fixes hardcoded-black SVG invisible on dark); FA star widget made a keyboard-operable ARIA radiogroup; `:focus-visible`/`:disabled`/`:active` states; admin dark token scale gated behind explicit dark-admin class (not `prefers-color-scheme` — WP admin core is light); localized `'Approving…'`. Browser-verified on BuddyX 5.1.3 (light/dark/RTL/390px, keyboard rating + submit, admin). | assets/css/bupr-front.css (+min/rtl), assets/css/admin.css (+min/rtl), assets/css/bupr-reviews.css (stub), includes/bupr-scripts.php, includes/templates/bupr-edit-review-form.php, assets/js/bupr-front.js (+min), admin/assets/js/bupr-admin.js (+min) |
 | 2026-07-03 | bug-fix | Approve Review admin AJAX success check now branches on the stable `response.data.code` (`review-approved-successfully`) instead of the translated message — approve flow no longer hangs on non-English installs | admin/assets/js/bupr-admin.js (+min) |
 | 2026-07-03 | a11y | `:focus-visible` outline restored for `.bupr-reply-textarea`; label[for]/aria-label added to unlabeled settings inputs (email subject/message fields, Multiple Criteria switch, dynamic criteria rows + JS row generator) | assets/css/bupr-front.css (+min/rtl), admin/tab-templates/bupr-setting-{general,criteria}-tab.php, admin/assets/js/bupr-admin.js |
 | 2026-07-03 | refactor | Deleted orphaned `bupr-member-types-criteria-tab.php` (dead template with unregistered options.php form); manifest/FILE_INDEX synced | admin/tab-templates/, audit/manifest.json, docs/FILE_INDEX.md |
