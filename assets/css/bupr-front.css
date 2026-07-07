@@ -270,36 +270,57 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: var(--bupr-card-bg, #fff);
+    color: var(--bupr-text, inherit);
     padding: 1rem 1.5rem;
     max-width: 30rem;
     width: -webkit-calc(100% - 30px);
     width: calc(100% - 30px);
     margin: auto;
-    border-radius: 8px !important;
+    border-radius: 8px;
 }
 
-.bupr-review-modal-close-button {
+/* Scoped under the modal ID so the reset wins over theme button chrome (e.g. BuddyX #buddypress button) without !important. */
+#bupr-edit-review-modal .bupr-review-modal-close-button {
     float: right;
-    width: 1.5rem;
-    padding-bottom: 10px;
-    line-height: 1.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    line-height: 1.75rem;
+    font-size: 1.5rem;
     text-align: center;
+    text-transform: none;
+    text-shadow: none;
+    letter-spacing: normal;
     cursor: pointer;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    color: var(--bupr-text-muted, #666);
     border-radius: 0.25rem;
+    -webkit-transition: background-color .2s, color .2s, -webkit-transform .2s;
+    transition: background-color .2s, color .2s, transform .2s;
 }
 
-.bupr-review-modal-close-button svg {
-    width: 24px;
-    height: 24px;
-}
-
-.bupr-review-modal-close-button svg:hover {
+#bupr-edit-review-modal .bupr-review-modal-close-button:hover {
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     transform: scale(1.1);
-    -webkit-transition: all .3s;
-    transition: all .3s;
+    background: var(--bupr-chip-bg-hover, rgba(0, 0, 0, 0.06));
+    color: var(--bupr-text, #1d2327);
+}
+
+#bupr-edit-review-modal .bupr-review-modal-close-button:active {
+    -webkit-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+#bupr-edit-review-modal .bupr-review-modal-close-button:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
 }
 
 .bupr-show-modal {
@@ -488,7 +509,7 @@ button.bupr-edit-review-button {
     width: 28px;
     height: 28px;
     float: left;
-    border: 2px solid #bbcefb;
+    border: 2px solid #8a9bc4;
     background-color: white;
     margin: 2px;
     text-decoration: none;
@@ -496,13 +517,18 @@ button.bupr-edit-review-button {
     font-weight: 400;
     line-height: 2;
     text-align: center;
-    color: #bbcefb;
+    color: #5a6b96;
     font-weight: 600;
 }
 
+.br-theme-bars-square .bupr-rating-widget a:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
+}
+
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-selected {
-    border: 2px solid #4278F5;
-    color: #4278F5;
+    border: 2px solid #1a56db;
+    color: #1a56db;
 }
 
 .br-theme-bars-square .br-readonly a {
@@ -510,8 +536,8 @@ button.bupr-edit-review-button {
 }
 
 .br-theme-bars-square .br-readonly a.bupr-square-selected {
-    border: 2px solid #729bf8;
-    color: #729bf8;
+    border: 2px solid #2c5fd0;
+    color: #2c5fd0;
 }
 
 @media print {
@@ -527,17 +553,17 @@ button.bupr-edit-review-button {
 --------------------------------------------------------------*/
 
 .br-theme-bars-square .br-readonly a.bupr-square-half {
-    border-top: 2px solid #729bf8;
-    color: #729bf8;
-    border-left: 2px solid #729bf8;
-    color: #729bf8;
+    border-top: 2px solid #2c5fd0;
+    color: #2c5fd0;
+    border-left: 2px solid #2c5fd0;
+    color: #2c5fd0;
 }
 
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-half {
-    border-top: 2px solid #4278F5;
-    color: #4278F5;
-    border-left: 2px solid #4278F5;
-    color: #4278F5;
+    border-top: 2px solid #1a56db;
+    color: #1a56db;
+    border-left: 2px solid #1a56db;
+    color: #1a56db;
 }
 
 .item-header-content .activity {

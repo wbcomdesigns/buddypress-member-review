@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-03T09:36:24+00:00\n"
+"POT-Creation-Date: 2026-07-06T13:38:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -49,7 +49,7 @@ msgid "Reviews"
 msgstr ""
 
 #: admin/bupr-admin.php:178
-#: includes/bupr-filters.php:732
+#: includes/bupr-filters.php:748
 #: includes/bupr-general-functions.php:114
 #: includes/class-buprglobals.php:87
 msgid "Review"
@@ -136,8 +136,8 @@ msgstr ""
 
 #: admin/bupr-admin.php:344
 #: includes/bupr-ajax.php:216
-#: includes/bupr-filters.php:1027
-#: includes/bupr-filters.php:1126
+#: includes/bupr-filters.php:1043
+#: includes/bupr-filters.php:1142
 #: includes/bupr-notification.php:65
 msgid "An anonymous user"
 msgstr ""
@@ -312,8 +312,8 @@ msgstr ""
 #: buddypress-member-review.php:89
 #: buddypress-member-review.php:102
 #: buddypress-member-review.php:116
-#: buddypress-member-review.php:303
-#: includes/admin/class-bupr-admin-panel.php:146
+#: buddypress-member-review.php:309
+#: includes/admin/class-bupr-admin-panel.php:157
 #: includes/admin/views/shell.php:28
 msgid "BuddyPress Member Reviews"
 msgstr ""
@@ -915,7 +915,7 @@ msgid "If you need assistance, here are some helpful resources. Our documentatio
 msgstr ""
 
 #: admin/tab-templates/bupr-welcome-page.php:28
-#: includes/admin/views/shell.php:88
+#: includes/admin/views/shell.php:89
 msgid "Documentation"
 msgstr ""
 
@@ -979,17 +979,17 @@ msgstr ""
 msgid "Member Skills"
 msgstr ""
 
-#: buddypress-member-review.php:246
+#: buddypress-member-review.php:252
 #: includes/admin/views/shell.php:64
 msgid "Settings"
 msgstr ""
 
-#: buddypress-member-review.php:304
+#: buddypress-member-review.php:310
 msgid "BuddyPress or BuddyBoss"
 msgstr ""
 
 #. translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress.
-#: buddypress-member-review.php:308
+#: buddypress-member-review.php:314
 #, php-format
 msgid "%1$s requires %2$s to be installed and active."
 msgstr ""
@@ -1010,33 +1010,95 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: includes/admin/class-bupr-admin-panel.php:134
-#: includes/admin/class-bupr-admin-panel.php:135
+#: includes/admin/class-bupr-admin-panel.php:108
+msgid "Discover"
+msgstr ""
+
+#: includes/admin/class-bupr-admin-panel.php:145
+#: includes/admin/class-bupr-admin-panel.php:146
 #: includes/admin/views/hub.php:55
 msgid "WB Plugins"
 msgstr ""
 
-#: includes/admin/class-bupr-admin-panel.php:147
+#: includes/admin/class-bupr-admin-panel.php:158
 #: includes/admin/views/shell.php:56
 msgid "Member Reviews"
 msgstr ""
 
-#: includes/admin/class-bupr-admin-panel.php:331
+#: includes/admin/class-bupr-admin-panel.php:342
 msgid "Settings saved."
 msgstr ""
 
-#: includes/admin/class-bupr-admin-panel.php:332
+#: includes/admin/class-bupr-admin-panel.php:343
 msgid "Are you sure? This cannot be undone."
 msgstr ""
 
-#: includes/admin/class-bupr-admin-panel.php:333
+#: includes/admin/class-bupr-admin-panel.php:344
 msgid "Continue"
 msgstr ""
 
-#: includes/admin/class-bupr-admin-panel.php:334
+#: includes/admin/class-bupr-admin-panel.php:345
 #: includes/templates/bupr-reviews-tab-template.php:343
 #: includes/templates/bupr-reviews-tab-template.php:452
 msgid "Cancel"
+msgstr ""
+
+#: includes/admin/views/discover.php:24
+msgid "BuddyNext"
+msgstr ""
+
+#: includes/admin/views/discover.php:26
+msgid "Launch a full social network on WordPress with feeds, member spaces, profiles, and private messaging."
+msgstr ""
+
+#: includes/admin/views/discover.php:30
+msgid "Jetonomy"
+msgstr ""
+
+#: includes/admin/views/discover.php:32
+msgid "Run discussion forums and Q&A boards that police themselves with trust levels and scale to huge topic counts."
+msgstr ""
+
+#: includes/admin/views/discover.php:36
+msgid "Mediaverse"
+msgstr ""
+
+#: includes/admin/views/discover.php:38
+msgid "Give members a place to share photos and video, react, follow each other, and chat one to one."
+msgstr ""
+
+#: includes/admin/views/discover.php:42
+msgid "Listora"
+msgstr ""
+
+#: includes/admin/views/discover.php:44
+msgid "Build any kind of searchable directory with multiple listing types, ratings, maps, and self-serve submissions."
+msgstr ""
+
+#: includes/admin/views/discover.php:48
+msgid "Learnomy"
+msgstr ""
+
+#: includes/admin/views/discover.php:50
+msgid "Publish and sell online courses, grade quizzes automatically, and hand learners a certificate at the end."
+msgstr ""
+
+#: includes/admin/views/discover.php:58
+msgid "More Free Tools from Wbcom Designs"
+msgstr ""
+
+#: includes/admin/views/discover.php:59
+msgid "Member Reviews adds the reputation layer to your community. These free plugins from Wbcom Designs give you the rest of the stack: the network itself, forums, media, directories, and courses."
+msgstr ""
+
+#: includes/admin/views/discover.php:71
+msgid "Get it free"
+msgstr ""
+
+#. translators: %s: product name.
+#: includes/admin/views/discover.php:76
+#, php-format
+msgid "%s (opens in a new tab)"
 msgstr ""
 
 #. translators: %d: active Wbcom plugin count
@@ -1212,11 +1274,15 @@ msgstr ""
 msgid "Member Reviews navigation"
 msgstr ""
 
-#: includes/admin/views/shell.php:85
+#: includes/admin/views/shell.php:65
+msgid "More Tools"
+msgstr ""
+
+#: includes/admin/views/shell.php:86
 msgid "Resources"
 msgstr ""
 
-#: includes/admin/views/shell.php:90
+#: includes/admin/views/shell.php:91
 msgid "(opens in a new tab)"
 msgstr ""
 
@@ -1439,33 +1505,33 @@ msgstr ""
 msgid "Add %s"
 msgstr ""
 
-#: includes/bupr-filters.php:569
+#: includes/bupr-filters.php:585
 #: includes/bupr-shortcodes.php:172
 #: includes/widgets/display-review.php:146
 msgid "reviews"
 msgstr ""
 
 #. translators: %s: Review label.
-#: includes/bupr-filters.php:694
+#: includes/bupr-filters.php:710
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: includes/bupr-filters.php:698
+#: includes/bupr-filters.php:714
 msgid "Approve"
 msgstr ""
 
 #. translators: %1$s: Review Label.
 #. translators: %1$s: Review label.
-#: includes/bupr-filters.php:821
-#: includes/bupr-filters.php:849
-#: includes/bupr-filters.php:864
+#: includes/bupr-filters.php:837
+#: includes/bupr-filters.php:865
+#: includes/bupr-filters.php:880
 #, php-format
 msgid "Add %1$s"
 msgstr ""
 
 #. translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link.
-#: includes/bupr-filters.php:1035
+#: includes/bupr-filters.php:1051
 #, php-format
 msgid "%1$s posted a new %2$s to %3$s"
 msgstr ""
@@ -1512,6 +1578,10 @@ msgstr ""
 
 #: includes/bupr-scripts.php:215
 msgid "* Number input is not allowed *"
+msgstr ""
+
+#: includes/bupr-scripts.php:216
+msgid "Approving…"
 msgstr ""
 
 #. translators: %1$s: rating; %2$s: review count; %3$s: item type label
@@ -1593,6 +1663,10 @@ msgstr ""
 
 #: includes/class-buprglobals.php:77
 msgid "A new review has been submitted on your profile. Log in to see the details."
+msgstr ""
+
+#: includes/templates/bupr-edit-review-form.php:17
+msgid "Close"
 msgstr ""
 
 #. translators: %s:

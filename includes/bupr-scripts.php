@@ -213,6 +213,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 						'success_msz'       => esc_html__( 'Already Installed & Activated', 'bp-member-reviews' ),
 						'error_msz'         => esc_html__( 'There was a problem performing the action.', 'bp-member-reviews' ),
 						'number_validation' => esc_html__( '* Number input is not allowed *', 'bp-member-reviews' ),
+						'approving_text'    => esc_html__( 'Approving…', 'bp-member-reviews' ),
 						'nonce'             => wp_create_nonce( 'bupr_member_review_ajax' ),
 					)
 				);

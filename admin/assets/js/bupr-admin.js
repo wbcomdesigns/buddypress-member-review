@@ -282,7 +282,7 @@ jQuery(document).ready(
 			'.bupr-approve-review',
 			function () {
 				var review_id = jQuery(this).data('rid');
-				jQuery(this).html('Approving..');
+				jQuery(this).html(bupr_admin_ajax_object.approving_text);
 				jQuery.post(
 					bupr_admin_ajax_object.ajaxurl,
 					{
