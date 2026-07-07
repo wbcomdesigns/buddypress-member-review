@@ -591,3 +591,106 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
     jQuery(".bupr-flag-error").text("An error occurred. Please try again.").show();
   });
 });
+
+/*----------------------------------------
+ * ACCESS-1: keyboard + screen-reader support for the star rating widget.
+ * Progressive enhancement - the widget is JS-driven already. Turns the
+ * .bupr-criteria-content group into an ARIA radiogroup and each star
+ * (.member_stars / .member-edit-stars) into an operable radio: focusable,
+ * arrow-key navigable, Enter/Space selectable, with aria-checked kept in
+ * sync with the existing hidden-input value. Covers AJAX-injected edit
+ * stars via a MutationObserver.
+ *-----------------------------------------*/
+jQuery(function ($) {
+  var A = window.bupr_a11y || { rate_label: 'Rate %d out of 5', group_label: 'Rating' };
+  var STAR = '.member_stars, .member-edit-stars';
+
+  function groupValue($group) {
+    return parseInt($group.find('.bupr-star-member-rating').val(), 10) || 0;
+  }
+
+  function starIndex($star) {
+    return parseInt($star.attr('data-attr'), 10) || 0;
+  }
+
+  function syncGroup($group) {
+    var val = groupValue($group);
+    var $stars = $group.find(STAR);
+    var focusTarget = val > 0 ? val : 1;
+    $stars.each(function () {
+      var i = starIndex($(this));
+      $(this)
+        .attr('aria-checked', i === val ? 'true' : 'false')
+        .attr('tabindex', i === focusTarget ? '0' : '-1');
+    });
+  }
+
+  function enhance(group) {
+    var $group = $(group);
+    if ($group.data('buprA11y')) {
+      syncGroup($group);
+      return;
+    }
+    $group.attr('role', 'radiogroup');
+    if (!$group.attr('aria-label')) {
+      var lbl = $group.closest('.multi-review').find('.bupr-criteria-label').first().text().trim();
+      $group.attr('aria-label', lbl ? lbl : A.group_label);
+    }
+    $group.find(STAR).each(function () {
+      var i = starIndex($(this));
+      $(this).attr('role', 'radio').attr('aria-label', A.rate_label.replace('%d', i));
+    });
+    $group.data('buprA11y', true);
+    syncGroup($group);
+  }
+
+  function enhanceAll() {
+    $(STAR).each(function () {
+      var $group = $(this).closest('.bupr-criteria-content');
+      if ($group.length) {
+        enhance($group);
+      }
+    });
+  }
+
+  enhanceAll();
+
+  if (window.MutationObserver) {
+    var mo = new MutationObserver(function () { enhanceAll(); });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Keep aria-checked in sync after a mouse click (existing handlers set the value).
+  $(document).on('click', STAR, function () {
+    syncGroup($(this).closest('.bupr-criteria-content'));
+  });
+
+  // Keyboard operation.
+  $(document).on('keydown', STAR, function (e) {
+    var $star = $(this);
+    var $group = $star.closest('.bupr-criteria-content');
+    var $stars = $group.find(STAR);
+    var idx = $stars.index($star);
+    var key = e.key;
+    var move = null;
+
+    if (key === 'Enter' || key === ' ' || key === 'Spacebar') {
+      e.preventDefault();
+      $star.trigger('click');
+      syncGroup($group);
+      $star.attr('tabindex', '0').focus();
+      return;
+    }
+    if (key === 'ArrowRight' || key === 'ArrowUp') { move = Math.min($stars.length - 1, idx + 1); }
+    else if (key === 'ArrowLeft' || key === 'ArrowDown') { move = Math.max(0, idx - 1); }
+    else if (key === 'Home') { move = 0; }
+    else if (key === 'End') { move = $stars.length - 1; }
+    else { return; }
+
+    e.preventDefault();
+    var $next = $stars.eq(move);
+    $next.trigger('click');
+    syncGroup($group);
+    $next.attr('tabindex', '0').focus();
+  });
+});

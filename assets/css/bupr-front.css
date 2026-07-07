@@ -22,7 +22,7 @@
 }
 
 [class*="bupr-col-"] {
-    float: left;
+    float: inline-start;
     padding: 10px 0;
 }
 
@@ -79,7 +79,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     overflow: hidden;
     padding: 15px 0;
-    display: block !important;
+    display: block;
 }
 
 .bupr-row:first-child {
@@ -122,7 +122,7 @@
     .bupr-criteria-label span {
         display: inline;
         width: 100%;
-        clear: left;
+        clear: inline-start;
     }
 }
 
@@ -132,8 +132,8 @@
 
 .bupr-accept-button,
 .bupr-deny-button {
-    float: left;
-    margin-right: 5px;
+    float: inline-start;
+    margin-inline-end: 5px;
 }
 
 .bupr-pagination {
@@ -186,16 +186,16 @@ ul.bupr-member-main {
 ul.bupr-member-main li.bupr-members img.avatar {
     width: 50px;
     height: 50px;
-    float: left;
+    float: inline-start;
 }
 
 .widget ul#bp-member-rating .item,
 ul.bupr-member-main li.bupr-members .bupr-content-widget {
-    margin-left: 70px;
+    margin-inline-start: 70px;
 }
 
 ul.bupr-member-main li.bupr-members.bupr-hide .bupr-content-widget {
-    margin-left: 0px;
+    margin-inline-start: 0px;
 }
 
 ul.bupr-member-main li.bupr-members .bupr-meta {
@@ -218,8 +218,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 .bupr-members-profiles {
     text-align: center;
     width: 80px;
-    float: left;
-    text-align: left;
+    float: inline-start;
+    text-align: start;
 }
 
 .bupr-members-profiles img.avatar {
@@ -234,11 +234,11 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 .bupr-members-content {
-    margin-left: 100px;
+    margin-inline-start: 100px;
 }
 
 .bupr-members-content .review-subject h4 {
-    margin: 5px 0px !important;
+    margin: 5px 0px;
 }
 
 
@@ -282,7 +282,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 /* Scoped under the modal ID so the reset wins over theme button chrome (e.g. BuddyX #buddypress button) without !important. */
 #bupr-edit-review-modal .bupr-review-modal-close-button {
-    float: right;
+    float: inline-end;
     width: 1.75rem;
     height: 1.75rem;
     min-width: 0;
@@ -334,30 +334,30 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 .bupr-edit-review-button-wrapper {
-    text-align: right;
+    text-align: end;
     margin-bottom: 10px;
 }
 
 .bp-member-reviews .bupr-row {
     position: relative;
-    padding-right: 160px;
+    padding-inline-end: 160px;
 }
 
 .bp-member-reviews .bupr-row .bupr-edit-review-button-wrapper {
     position: absolute;
-    right: 15px;
+    inset-inline-end: 15px;
 }
 
 @media screen and (max-width: 480px) {
     .bp-member-reviews .bupr-row {
-        display: -webkit-box !important;
-        display: -ms-flexbox !important;
-        display: flex !important;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
         -webkit-box-orient: vertical;
         -webkit-box-direction: normal;
         -ms-flex-direction: column;
         flex-direction: column;
-        padding-right: 15px;
+        padding-inline-end: 15px;
     }
 
     .bp-member-reviews .bupr-row .bupr-edit-review-button-wrapper {
@@ -370,8 +370,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 button.bupr-edit-review-button {
-    padding: 10px !important;
-    border-radius: 4px !important;
+    padding: 10px;
+    border-radius: 4px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -381,7 +381,7 @@ button.bupr-edit-review-button {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    margin-left: auto;
+    margin-inline-start: auto;
 }
 
 .bupr-review-modal-content button#bupr_upodate_review {
@@ -407,7 +407,7 @@ button.bupr-edit-review-button {
 
 .bupr-posts-pagination {
     margin: 15px 0;
-    text-align: right;
+    text-align: end;
 }
 
 .bupr-posts-pagination span {
@@ -443,7 +443,7 @@ button.bupr-edit-review-button {
 }
 
 .no-count {
-    margin-left: 3px;
+    margin-inline-start: 3px;
 }
 
 #bupr_success_review p {
@@ -452,8 +452,8 @@ button.bupr-edit-review-button {
 
 .bupr-save-reivew-spinner {
     display: none;
-    float: left;
-    margin-left: 10px;
+    float: inline-start;
+    margin-inline-start: 10px;
     margin-top: 8px
 }
 
@@ -508,7 +508,7 @@ button.bupr-edit-review-button {
     display: block;
     width: 28px;
     height: 28px;
-    float: left;
+    float: inline-start;
     border: 2px solid #8a9bc4;
     background-color: white;
     margin: 2px;
@@ -570,10 +570,6 @@ button.bupr-edit-review-button {
     margin-bottom: 10px;
 }
 
-.modal-header h2 {
-    margin: 0px !important;
-}
-
 .bupr-hide-subject {
     display: none;
 }
@@ -593,7 +589,7 @@ button.bupr-edit-review-button {
     margin: 0;
 }
 
-@media(min-width: 768px) and (max-width: 1068px) {
+@media(min-width: 768px) and (max-width: 1024px) {
     #bupr-add-review-modal .modal-content {
         min-width: 380px;
     }
@@ -604,7 +600,7 @@ button.bupr-edit-review-button {
 }
 
 .bupr-star-rate {
-    margin-right: 0px;
+    margin-inline-end: 0px;
 }
 
 .bupr-bp-member-review-no-popup-add-block #review_desc,
@@ -617,8 +613,8 @@ button.bupr-edit-review-button {
     width: 100%;
     margin: 0;
     max-width: 160px;
-    height: auto !important;
-    float: left;
+    height: auto;
+    float: inline-start;
 }
 
 .bp-member-add-form:after {
@@ -648,7 +644,7 @@ button.bupr-edit-review-button {
 /* Left-aligned review container for single member profile */
 .bupr-member-review-wrapper {
     margin: 10px 0;
-    text-align: left;
+    text-align: start;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -664,7 +660,7 @@ button.bupr-edit-review-button {
 
 .bupr-member-review-stars {
     display: inline-block;
-    margin-right: 10px;
+    margin-inline-end: 10px;
     position: relative;
     /* For the tooltip */
 }
@@ -675,9 +671,9 @@ button.bupr-edit-review-button {
     position: absolute;
     bottom: 150%;
     left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
     background-color: #333;
     color: #fff;
     padding: 5px 10px;
@@ -698,7 +694,7 @@ button.bupr-edit-review-button {
 .bupr-member-rating-text {
     font-size: 14px;
     color: #555;
-    margin-left: 5px;
+    margin-inline-start: 5px;
 }
 
 /* Disable alignment when legacy template is used, but exclude when body contains 'youzify' */
@@ -721,7 +717,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 /* Directory-specific styles */
 .bupr-directory-review-wrapper {
     margin: 0;
-    text-align: left;
+    text-align: start;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -748,7 +744,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 .bupr-directory-review-stars {
     display: inline-block;
-    margin-right: 10px;
+    margin-inline-end: 10px;
     position: relative;
     /* For the tooltip */
 }
@@ -759,9 +755,9 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
     position: absolute;
     bottom: 150%;
     left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
     background-color: #333;
     color: #fff;
     padding: 5px 10px;
@@ -782,7 +778,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 .bupr-directory-rating-text {
     font-size: 14px;
     color: #555;
-    margin-left: 5px;
+    margin-inline-start: 5px;
 }
 
 
@@ -812,7 +808,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 }
 
 .bb-grid .widget.buddypress div.item-options#bp-member-rating-list-options a {
-    margin-right: 1.25rem;
+    margin-inline-end: 1.25rem;
     margin-top: 10px;
 }
 
@@ -944,15 +940,15 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
     .bupr-members-profiles .reviewer h4,
     .bupr-members-content {
-        margin: 0 !important;
+        margin: 0;
     }
 
     .rating-num {
-        margin-left: 0;
+        margin-inline-start: 0;
     }
 
     .rating-star {
-        margin-right: 10px;
+        margin-inline-end: 10px;
     }
 
     body[class*="youzify"] .youzify-page-main-content .bupr-criteria-label {
@@ -974,7 +970,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
-@media only screen and (max-width: 420px) {
+@media only screen and (max-width: 480px) {
     .multi-review {
         display: inline-block;
     }
@@ -1013,7 +1009,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 #bupr-reiew-edit button.bupr-edit-review-button {
-    padding: 6px 15px !important;
+    padding: 6px 15px;
 }
 
 .bp-member-add-form button#bupr_save_review {
@@ -1186,7 +1182,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-report-section {
     position: absolute;
-    right: 15px;
+    inset-inline-end: 15px;
     top: 15px;
 }
 
@@ -1254,7 +1250,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 /* Legacy support for old class names */
-.bupr-flag-section { position: absolute; right: 15px; top: 15px; }
+.bupr-flag-section { position: absolute; inset-inline-end: 15px; top: 15px; }
 .bupr-flag-button { background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; padding: 6px 12px; }
 .bupr-flag-success { display: inline-flex; align-items: center; gap: 4px; color: #46b450; font-size: 12px; }
 
@@ -1461,7 +1457,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 /* ─── Front-end toast (replaces native alert(), 3.8.0) ─────────────── */
 .bupr-front-toast-host {
     position: fixed;
-    right: 24px;
+    inset-inline-end: 24px;
     bottom: 24px;
     z-index: 100000;
     display: flex;
@@ -1498,6 +1494,35 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-front-toast--error {
     background: #dc2626;
+}
+
+/*--------------------------------------------------------------
+# Design tokens (light default)
+# Light mode reads these --bupr-* tokens the same way dark mode does, so a
+# theme/site can override any surface by setting --bupr-* (or the underlying
+# --bx-color-*). Values equal the historical light hex fallbacks, so this
+# block changes nothing visually on its own - it just makes light mode
+# themeable instead of hardcoded. The dark-mode block below re-points the
+# same tokens to the dark palette.
+--------------------------------------------------------------*/
+:root {
+    --bupr-card-bg: var(--bx-color-bg-elevated, #fff);
+    --bupr-chip-bg: var(--bx-color-bg-muted, #f9f9f9);
+    --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #f0f0f1);
+    --bupr-field-bg: var(--bx-color-bg, #fff);
+    --bupr-text: var(--bx-color-fg, #1d2327);
+    --bupr-text-muted: var(--bx-color-fg-muted, #50575e);
+    --bupr-text-subtle: var(--bx-color-fg-subtle, #666);
+    --bupr-border: var(--bx-color-border, rgba(0, 0, 0, 0.1));
+    --bupr-reply-bg: var(--bx-color-bg-muted, #f8f9fa);
+    --bupr-reply-hover-bg: #f0f7fc;
+    --bupr-success-bg: #ecfdf5;
+    --bupr-success-fg: #46b450;
+    --bupr-success-border: #d4edda;
+    --bupr-danger-bg: #fff0f0;
+    --bupr-danger-fg: #dc3232;
+    --bupr-danger-border: #f5c6cb;
+    --bupr-focus: #2271b1;
 }
 
 /*--------------------------------------------------------------
@@ -1699,4 +1724,180 @@ body.dark-scheme {
     background: var(--bupr-chip-bg, #fff);
     color: var(--bupr-text, inherit);
     border-color: var(--bupr-border, rgba(0, 0, 0, 0.1));
+}
+
+/*--------------------------------------------------------------
+# Merged from legacy bupr-reviews.css (3.8.0 consolidation)
+# The old file mixed live review-list/add-form styles with a dead modal
+# system (.modal/.close/@keyframes animatetop/#bupr_review_success_msg/
+# .review-types/.bupr-success) that no template renders. Only the live
+# rules are kept here, ported to --bupr-* tokens + logical properties +
+# focus-visible. bupr-reviews.css is now a deprecation stub and no longer
+# enqueued (see includes/bupr-scripts.php).
+--------------------------------------------------------------*/
+#bp-member-reviews-list {
+    width: 100%;
+}
+
+.bp-member-reviews {
+    margin-top: 25px;
+}
+
+.bp-member-add-form textarea {
+    width: 100%;
+    padding: 10px;
+    background: var(--bupr-field-bg, #fff);
+    color: var(--bupr-text, inherit);
+    border-color: var(--bupr-border, #ddd);
+}
+
+.bp-member-add-form input {
+    width: 100%;
+    margin-inline-end: 5px;
+}
+
+.bp-member-add-form button {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+#bupr_member_review_id {
+    padding: 10px;
+    padding-inline-start: 10px;
+    max-width: 300px;
+    width: 100%;
+    border: 1px var(--bupr-border, #e3e3e3) solid;
+    background: var(--bupr-field-bg, #fff);
+    color: var(--bupr-text, inherit);
+    font-family: inherit;
+}
+
+.bp-member-add-form p {
+    text-align: start;
+    margin: 10px 0;
+}
+
+.bp-member-add-form p button {
+    width: 100%;
+}
+
+/* Add float to the shared .bupr-criteria-label span (definition above adds size). */
+.bupr-criteria-label span {
+    float: inline-start;
+}
+
+.bupr-add-review {
+    margin-inline-start: 5px;
+}
+
+.bupr-bp-member-review-no-popup-add-block {
+    display: block;
+}
+
+.bupr-multi-review {
+    margin: 15px;
+}
+
+.multi-review {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0 0;
+    background: transparent;
+}
+
+.multi-review > div {
+    padding: 0px;
+}
+
+.bupr-directory-tooltip span.bupr-star-rate {
+    font-size: 15px;
+}
+
+.bupr-error {
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--bupr-danger-bg, hsl(0, 43%, 91%));
+    border-color: var(--bupr-danger-border, hsl(350, 44%, 86%));
+    color: var(--bupr-danger-fg, hsl(1, 44%, 46%));
+}
+
+.bupr-review-description a {
+    margin: 10px 0;
+    display: inline-block;
+    text-decoration: underline;
+}
+
+.bupr_not_give_review p {
+    padding: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    color: #e84242;
+}
+
+/* Hide the BuddyBoss default more-actions button on the reviews list. */
+.members-list li .more-action-button {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+# Interactive states (STATE-1)
+# Consistent keyboard :focus-visible, :disabled and :active press feedback
+# for every interactive control. Focus rings use the --bupr-focus token.
+--------------------------------------------------------------*/
+.bupr-pagination a:focus-visible,
+.bupr-edit-review-button:focus-visible,
+.bupr-report-button:focus-visible,
+.bupr-flag-submit:focus-visible,
+.bupr-flag-cancel:focus-visible,
+.bupr-flag-modal-close:focus-visible,
+.bupr-submit-reply:focus-visible,
+.bupr-flag-reason-option:focus-visible,
+.bp-member-add-form button:focus-visible,
+#bupr_save_review:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
+}
+
+.bupr-edit-review-button:active,
+.bupr-report-button:active,
+.bupr-flag-submit:active,
+.bupr-flag-cancel:active,
+.bupr-submit-reply:active,
+.bp-member-add-form button:active,
+#bupr_save_review:active {
+    -webkit-transform: translateY(1px);
+    transform: translateY(1px);
+}
+
+.bupr-flag-reason-option:active {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+}
+
+.bupr-edit-review-button:disabled,
+.bupr-report-button:disabled,
+.bupr-flag-submit:disabled,
+.bupr-flag-cancel:disabled,
+.bupr-submit-reply:disabled,
+.bp-member-add-form button:disabled,
+#bupr_save_review:disabled,
+.bupr-edit-review-button[disabled],
+.bp-member-add-form button[disabled],
+#bupr_save_review[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    -webkit-transform: none;
+    transform: none;
+    pointer-events: none;
+}
+
+/* ACCESS-1: keyboard focus ring for the star rating radios. */
+.member_stars:focus-visible,
+.member-edit-stars:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
+    border-radius: 2px;
 }

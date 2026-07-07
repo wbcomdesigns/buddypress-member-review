@@ -50,6 +50,37 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   Dark mode (ADMIN-1)
+   Full dark token scale for the admin panel. Gated behind an EXPLICIT
+   dark-admin signal (WP's is-dark-theme / the "Dark" admin color scheme
+   body.admin-color-dark) rather than prefers-color-scheme. Rationale: WP
+   admin core has no dark mode in 6.x/7.0, so keying off the OS preference
+   alone flips this panel dark while the surrounding WP admin chrome (and,
+   in testing, some card surfaces) stay light - a mixed, low-contrast
+   result. The opt-in keeps a normal admin cohesively light today and
+   adopts dark uniformly the moment a real dark admin context sets the class.
+   ═══════════════════════════════════════════════════════════ */
+body.is-dark-theme .bupr-admin,
+body.admin-color-dark .bupr-admin {
+	--bupr-admin-white: #1e1e2e;
+	--bupr-admin-surface-1: #181825;
+	--bupr-admin-surface-2: #11111b;
+	--bupr-admin-border: #313244;
+	--bupr-admin-border-strong: #45475a;
+	--bupr-admin-text: #e4e6eb;
+	--bupr-admin-text-2: #b8bcc8;
+	--bupr-admin-text-3: #9399a8;
+	--bupr-admin-text-4: #c8ccd8;
+	--bupr-admin-text-muted: #7f8496;
+	--bupr-admin-accent-light: #1e293b;
+	--bupr-admin-success-light: #14311f;
+	--bupr-admin-warn-light: #3a2f10;
+	--bupr-admin-danger-light: #3a1518;
+	--bupr-admin-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+	--bupr-admin-shadow-hover: 0 4px 6px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
    Page wrapper + page header
    ═══════════════════════════════════════════════════════════ */
 

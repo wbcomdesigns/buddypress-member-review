@@ -101,7 +101,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					$path      = is_rtl() ? '/rtl' : '/min';
 				}
 				// Determine file paths based on debug mode and RTL support.
-				wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css' . $path . '/bupr-reviews' . $extension, array(), BUPR_PLUGIN_VERSION, false );
+				// Legacy bupr-reviews.css was merged into bupr-front.css in the 3.8.0 consolidation; no longer enqueued.
 				wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css' . $path . '/bupr-front' . $extension, array(), BUPR_PLUGIN_VERSION, false );
 				// Load Font Awesome from registered WordPress source if available, otherwise use bundled version.
 				if ( ! wp_style_is( 'font-awesome', 'registered' ) ) {
@@ -161,6 +161,15 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					'review_nonce' => wp_create_nonce( 'review-nonce' ),
 				);
 				wp_localize_script( 'bupr-front-js', 'mail_title', $reviews_titles );
+				wp_localize_script(
+					'bupr-front-js',
+					'bupr_a11y',
+					array(
+						/* translators: %d: star position (1-5) in the rating group. */
+						'rate_label'  => esc_html__( 'Rate %d out of 5', 'bp-member-reviews' ),
+						'group_label' => esc_html__( 'Rating', 'bp-member-reviews' ),
+					)
+				);
 				wp_set_script_translations( 'bupr-front-js', 'bp-member-reviews' );
 			}
 		}
