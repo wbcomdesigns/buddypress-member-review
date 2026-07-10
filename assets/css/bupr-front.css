@@ -114,7 +114,7 @@
     height: 40px;
 }
 
-@media(max-width: 767px) {
+@media only screen and (max-width: 768px) {
     [class*="bupr-col-"] {
         width: 100%;
     }
@@ -348,7 +348,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     inset-inline-end: 15px;
 }
 
-@media screen and (max-width: 480px) {
+@media only screen and (max-width: 480px) {
     .bp-member-reviews .bupr-row {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -474,16 +474,6 @@ button.bupr-edit-review-button {
 # Success and Error Message
 --------------------------------------------------------------*/
 
-.bupr-success {
-    background-color: hsl(103, 44%, 89%);
-    border-color: hsl(92, 44%, 85%);
-    border-radius: 5px;
-    color: hsl(121, 33%, 35%);
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
 .bupr-error {
     width: 100%;
     padding: 10px;
@@ -554,15 +544,13 @@ button.bupr-edit-review-button {
 
 .br-theme-bars-square .br-readonly a.bupr-square-half {
     border-top: 2px solid #2c5fd0;
-    color: #2c5fd0;
-    border-left: 2px solid #2c5fd0;
+    border-inline-start: 2px solid #2c5fd0;
     color: #2c5fd0;
 }
 
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-half {
     border-top: 2px solid #1a56db;
-    color: #1a56db;
-    border-left: 2px solid #1a56db;
+    border-inline-start: 2px solid #1a56db;
     color: #1a56db;
 }
 
@@ -587,16 +575,6 @@ button.bupr-edit-review-button {
 .success_review_msg p {
     padding: 10px 15px;
     margin: 0;
-}
-
-@media(min-width: 768px) and (max-width: 1024px) {
-    #bupr-add-review-modal .modal-content {
-        min-width: 380px;
-    }
-}
-
-#bupr-add-review-modal .bupr-criteria-label span {
-    height: 35px;
 }
 
 .bupr-star-rate {
@@ -1030,10 +1008,11 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-owner-reply {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-left: 4px solid #007cba;
+    border-inline-start: 4px solid #007cba;
     padding: 15px;
     margin-top: 10px;
-    border-radius: 0 8px 8px 0;
+    border-start-end-radius: 8px;
+    border-end-end-radius: 8px;
 }
 
 .bupr-reply-header {
@@ -1528,13 +1507,14 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 /*--------------------------------------------------------------
 # Dark mode
 # BuddyX 5.1+ / BuddyX Pro / Reign expose dark mode as
-# html[data-bx-mode="dark"], or html[data-bx-mode="auto"] combined with the
-# OS-level prefers-color-scheme. Older builds toggle body.buddyx-dark-theme
+# html[data-bx-mode="dark"]. Older builds toggle body.buddyx-dark-theme
 # (LearnDash focus mode), body.dark-mode (legacy BuddyX) or body.dark-scheme
-# (Reign customizer). Each trigger only sets the --bupr-* tokens below; the
-# component rules that consume them are written once and fall back to the
-# exact light values, so light mode is unchanged. Token values ride the
-# theme's --bx-color-* palette when present.
+# (Reign customizer). Dark mode is keyed ONLY off these explicit class/attr
+# signals - never the OS-level prefers-color-scheme (owner standing decision:
+# the theme, not the OS, owns the dark toggle). Each trigger only sets the
+# --bupr-* tokens below; the component rules that consume them are written
+# once and fall back to the exact light values, so light mode is unchanged.
+# Reign exposes no --bx-color-* vars, so every dark fallback is a dark literal.
 --------------------------------------------------------------*/
 html[data-bx-mode="dark"],
 body.buddyx-dark-theme,
@@ -1558,27 +1538,6 @@ body.dark-scheme {
     --bupr-danger-border: rgba(220, 50, 50, 0.4);
 }
 
-@media (prefers-color-scheme: dark) {
-    html[data-bx-mode="auto"] {
-        --bupr-card-bg: var(--bx-color-bg-elevated, #1e1e1e);
-        --bupr-chip-bg: var(--bx-color-bg-muted, #272727);
-        --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #313131);
-        --bupr-field-bg: var(--bx-color-bg, #161616);
-        --bupr-text: var(--bx-color-fg, #e6e6e6);
-        --bupr-text-muted: var(--bx-color-fg-muted, #a6a6a6);
-        --bupr-text-subtle: var(--bx-color-fg-subtle, #8a8a8a);
-        --bupr-border: var(--bx-color-border, rgba(255, 255, 255, 0.15));
-        --bupr-reply-bg: var(--bx-color-bg-muted, #232323);
-        --bupr-reply-hover-bg: rgba(0, 124, 186, 0.15);
-        --bupr-success-bg: rgba(70, 180, 80, 0.15);
-        --bupr-success-fg: #7fd58b;
-        --bupr-success-border: rgba(70, 180, 80, 0.4);
-        --bupr-danger-bg: rgba(220, 50, 50, 0.15);
-        --bupr-danger-fg: #ff8a8a;
-        --bupr-danger-border: rgba(220, 50, 50, 0.4);
-    }
-}
-
 /* Review rows: dividers + inherited text. Fallbacks equal the light values. */
 .bupr-row {
     border-color: var(--bupr-border, rgba(0, 0, 0, 0.1));
@@ -1590,22 +1549,14 @@ body.dark-scheme {
     color: var(--bupr-text, inherit);
 }
 
-/* Edit / flag / add-review popups. */
-.bupr-review-modal-content,
-#bupr-add-review-modal .modal-content {
+/* Edit / flag review popups. */
+.bupr-review-modal-content {
     background-color: var(--bupr-card-bg, white);
     color: var(--bupr-text, inherit);
 }
 
 .bupr-flag-modal-content {
     background: var(--bupr-card-bg, #fff);
-    color: var(--bupr-text, inherit);
-}
-
-/* Submit confirmation popup. */
-#bupr_review_success_msg .modal-content,
-#bupr_review_success_msg .modal-header {
-    background-color: var(--bupr-card-bg, #f0f0f0);
     color: var(--bupr-text, inherit);
 }
 
@@ -1697,12 +1648,6 @@ body.dark-scheme {
 }
 
 /* Inline success / error notices (add-review form + submit confirmation). */
-.bupr-success {
-    background-color: var(--bupr-success-bg, hsl(103, 44%, 89%));
-    border-color: var(--bupr-success-border, hsl(92, 44%, 85%));
-    color: var(--bupr-success-fg, hsl(121, 33%, 35%));
-}
-
 .success_review_msg {
     background-color: var(--bupr-success-bg, #DFF2BF);
     color: var(--bupr-success-fg, #4F8A10);

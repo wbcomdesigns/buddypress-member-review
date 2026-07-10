@@ -3,9 +3,10 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members, reviews, ratings, community
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Stable tag: 3.8.0
 Requires PHP: 7.4
+Requires Plugins: buddypress
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,11 +160,21 @@ Pro adds three review modes (Ratings, Testimonials, Endorsements), verified badg
 
 == Changelog ==
 
-= 3.8.0 =
-* Improved: Rebuilt the admin settings screen with the modern Wbcom card-panel UI (sidebar navigation, overview dashboard) — same settings, clearer layout.
-* Security: The review update endpoint now enforces an ownership/capability check, so members can only edit their own reviews.
-* Fixed: The review-recalculation cron is now scheduled once on a single daily interval (removed a conflicting daily/hourly double registration).
-* Improved: Replaced native browser alerts on the review front end with accessible toast notifications.
+= 3.8.0 - July 2026 =
+
+Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
+
+* New      - Rebuilt the admin settings screen with the Wbcom card-panel UI: sidebar navigation, an overview dashboard, and a Discover tab. Same settings, clearer layout.
+* Improve  - Front-end review styles now run on one design-token system in both light and dark, so themes and site owners can recolor any surface from a single variable.
+* Improve  - Consolidated the review stylesheets into one file and removed the dead legacy modal system, duplicate rules, and unused selectors.
+* Improve  - Normalized responsive breakpoints and added disabled, active, and keyboard focus states to interactive controls.
+* Improve  - Star rating input is now a keyboard-operable ARIA radiogroup (arrow keys, Enter/Space) with accessible labels and higher-contrast colors.
+* Improve  - Dark mode is keyed only off the theme's explicit dark signal (BuddyX/Reign), never the OS setting, and the modal close button now follows the theme color instead of a hardcoded black icon.
+* Improve  - Converted directional CSS to logical properties for correct right-to-left rendering.
+* Improve  - Replaced native browser alerts on the review front end with accessible toast notifications.
+* Fix      - Localized the admin review-approval progress label ("Approving...") so it translates on non-English sites.
+* Fix      - The review-recalculation cron is scheduled once on a single daily interval (removed a conflicting double registration).
+* Security - The review update endpoint now enforces an ownership/capability check, so members can only edit their own reviews.
 
 = 3.7.1 =
 * Fixed: WordPress Coding Standards compliance across all PHP files
