@@ -150,13 +150,12 @@ Pro adds three review modes (Ratings, Testimonials, Endorsements), verified badg
 
 == Screenshots ==
 
-1. Member profile header showing star ratings and review count
-2. Reviews tab with submitted reviews and criteria breakdown
-3. Add Review form with star ratings and anonymous option
-4. General Settings - notifications, permissions, moderation
-5. Criteria Settings - add and manage rating criteria
-6. Display Settings - customize labels and colors
-7. Admin Reviews List - manage and moderate all reviews
+1. Member Reviews tab with per-criteria star ratings and the aggregate profile score
+2. Reviews tab in BuddyX dark mode
+3. Add Review form with the keyboard-operable star rating widget and criteria
+4. Reviews tab on mobile - rows, criteria, and buttons stack cleanly
+5. Admin General Settings - moderation, notifications, roles, and reporting
+6. Admin Discover tab - more free tools from Wbcom Designs
 
 == Changelog ==
 
