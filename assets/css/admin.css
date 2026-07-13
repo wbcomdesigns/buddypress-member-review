@@ -289,11 +289,14 @@ body.admin-color-dark .bupr-admin {
 	color: var(--bupr-admin-accent);
 }
 
-.bupr-snav-link__ext {
+/* Qualified on purpose: our own `.bupr-snav-link .dashicons` rule (0,2,0) sizes every
+   icon in the nav at 16px and outranks a bare `.bupr-snav-link__ext` (0,1,0). This used
+   to be forced with !important; winning on specificity is the honest fix. */
+.bupr-snav-link .dashicons.bupr-snav-link__ext {
 	margin-inline-start: auto;
-	width: 14px !important;
-	height: 14px !important;
-	font-size: 14px !important;
+	width: 14px;
+	height: 14px;
+	font-size: 14px;
 }
 
 .bupr-snav-divider {
@@ -568,7 +571,7 @@ body.admin-color-dark .bupr-admin {
 }
 
 .bupr-empty-state__icon {
-	display: flex !important;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 64px;
