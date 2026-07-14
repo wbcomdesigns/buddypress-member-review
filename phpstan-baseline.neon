@@ -1,0 +1,499 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: admin/bupr-admin.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: admin/bupr-admin.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 1
+			path: admin/bupr-admin.php
+
+		-
+			message: '#^Parameter \#1 \$user_id of function get_userdata expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/bupr-admin.php
+
+		-
+			message: '#^Parameter \#2 \$args of function register_post_type expects array\{label\?\: string, labels\?\: array\<string\>, description\?\: string, public\?\: bool, hierarchical\?\: bool, exclude_from_search\?\: bool, publicly_queryable\?\: bool, show_ui\?\: bool, \.\.\.\}, array\{labels\: array\{name\: string, singular_name\: string, menu_name\: string, name_admin_bar\: string, add_new\: string, add_new_item\: string, new_item\: string, view_item\: string, \.\.\.\}, public\: true, menu_icon\: ''dashicons…'', publicly_queryable\: true, show_ui\: true, show_in_menu\: true, query_var\: true, rewrite\: array\{slug\: ''review'', with_front\: false\}, \.\.\.\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/bupr-admin.php
+
+		-
+			message: '#^Parameter \#5 \$media of function wp_enqueue_style expects string, false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/bupr-admin.php
+
+		-
+			message: '#^Variable \$rating_fields in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: admin/bupr-admin.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''BUPR_Pro_Features'' and ''is_pro_active'' will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: admin/tab-templates/bupr-setting-criteria-tab.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''BUPR_Pro_Features'' and ''is_ratings_mode'' will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: admin/tab-templates/bupr-setting-criteria-tab.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/tab-templates/bupr-setting-criteria-tab.php
+
+		-
+			message: '#^Negated boolean expression is always true\.$#'
+			identifier: booleanNot.alwaysTrue
+			count: 1
+			path: admin/tab-templates/bupr-setting-pro-features-tab.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
+			identifier: constant.notFound
+			count: 3
+			path: includes/admin/class-bupr-admin-panel.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: includes/admin/class-bupr-admin-panel.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/admin/views/discover.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/admin/views/settings-criteria.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/admin/views/settings-display.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/admin/views/settings-general.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/admin/views/settings-pro-features.php
+
+		-
+			message: '#^Call to function is_wp_error\(\) with int\<0, max\> will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Parameter \#1 \$data of function esc_sql expects array\|string, int\<min, \-1\>\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Parameter \#1 \$postarr of function wp_update_post expects array\{ID\?\: int, post_author\?\: int, post_date\?\: string, post_date_gmt\?\: string, post_content\?\: string, post_content_filtered\?\: string, post_title\?\: string, post_excerpt\?\: string, \.\.\.\}, array\{ID\: string, post_content\: string, post_status\: ''publish''\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int given\.$#'
+			identifier: argument.type
+			count: 4
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, 5\> given\.$#'
+			identifier: argument.type
+			count: 6
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 6
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<min, \-1\>\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 31
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Variable \$review in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: includes/bupr-ajax.php
+
+		-
+			message: '#^Access to an undefined property BP_Nouveau\:\:\$current_nav_item\.$#'
+			identifier: property.notFound
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Access to an undefined property BP_Nouveau\:\:\$displayed_nav\.$#'
+			identifier: property.notFound
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Access to an undefined property BuddyPress\:\:\$buddyboss\.$#'
+			identifier: property.notFound
+			count: 3
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Action callback returns string but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Call to function is_object\(\) with WP_User will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<min, 0\> and 1 is always false\.$#'
+			identifier: greater.alwaysFalse
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int given\.$#'
+			identifier: argument.type
+			count: 2
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Parameter \#1 \$user_id of function bp_core_get_userlink expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Property WP_User\:\:\$roles \(array\<string\>\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Result of && is always true\.$#'
+			identifier: booleanAnd.alwaysTrue
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between 0 and array\{term_id\: string, term_taxonomy_id\: string\}\|null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Variable \$bupr_reviews in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: includes/bupr-filters.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: includes/bupr-general-functions.php
+
+		-
+			message: '#^Call to function is_array\(\) with non\-empty\-array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: includes/bupr-general-functions.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/bupr-general-functions.php
+
+		-
+			message: '#^Action callback returns bool\|void but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: includes/bupr-notification.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: includes/bupr-notification.php
+
+		-
+			message: '#^Parameter \#1 \$post of function get_post_status expects int\|WP_Post\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-notification.php
+
+		-
+			message: '#^Parameter \#1 \$post_id of function get_post_meta expects int, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: includes/bupr-notification.php
+
+		-
+			message: '#^Parameter \#1 \$user_id of function get_userdata expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-notification.php
+
+		-
+			message: '#^Parameter \#2 \$post of function get_post_field expects int\|WP_Post\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-notification.php
+
+		-
+			message: '#^Variable \$notification_title might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: includes/bupr-notification.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			identifier: constant.notFound
+			count: 10
+			path: includes/bupr-scripts.php
+
+		-
+			message: '#^Parameter \#5 \$media of function wp_enqueue_style expects string, false given\.$#'
+			identifier: argument.type
+			count: 5
+			path: includes/bupr-scripts.php
+
+		-
+			message: '#^Variable \$extension might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: includes/bupr-scripts.php
+
+		-
+			message: '#^Variable \$is_review_page might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: includes/bupr-scripts.php
+
+		-
+			message: '#^Variable \$path might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: includes/bupr-scripts.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#1 \$login_user of method BUPR_Shortcodes\:\:bupr_review_form\(\) expects string, int\<0, max\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int given\.$#'
+			identifier: argument.type
+			count: 5
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<0, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, 5\> given\.$#'
+			identifier: argument.type
+			count: 8
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 4
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#3 \$bupr_review_succes of method BUPR_Shortcodes\:\:bupr_review_form\(\) expects string, false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Parameter \#4 \$bupr_flag of method BUPR_Shortcodes\:\:bupr_review_form\(\) expects int, false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Property WP_User\:\:\$roles \(array\<string\>\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: includes/bupr-shortcodes.php
+
+		-
+			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/templates/bupr-reviews-tab-template.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 1
+			path: includes/templates/bupr-reviews-tab-template.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\|false given\.$#'
+			identifier: argument.type
+			count: 4
+			path: includes/templates/bupr-reviews-tab-template.php
+
+		-
+			message: '#^Parameter \#1 \$user_id of function bp_core_get_userlink expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/templates/bupr-reviews-tab-template.php
+
+		-
+			message: '#^Variable \$avatar_url might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: includes/templates/bupr-reviews-tab-template.php
+
+		-
+			message: '#^Call to function is_object\(\) with WP_Post will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: includes/templates/bupr-single-review-template.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<min, \-1\>\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: includes/templates/bupr-single-review-template.php
+
+		-
+			message: '#^Parameter \#1 \$user_id of function get_userdata expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/templates/bupr-single-review-template.php
+
+		-
+			message: '#^Parameter \#2 \$timestamp_with_offset of function date_i18n expects bool\|int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/templates/bupr-single-review-template.php
+
+		-
+			message: '#^Property WP_Post\:\:\$post_content \(string\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: includes/templates/bupr-single-review-template.php
+
+		-
+			message: '#^Result of && is always true\.$#'
+			identifier: booleanAnd.alwaysTrue
+			count: 2
+			path: includes/templates/bupr-single-review-template.php
+
+		-
+			message: '#^Variable \$review in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: includes/templates/bupr-single-review-template.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/widgets/display-review.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, int given\.$#'
+			identifier: argument.type
+			count: 2
+			path: includes/widgets/display-review.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/widgets/member-rating.php
+
+		-
+			message: '#^Parameter \#1 \$user_id of function bp_core_get_userlink expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/widgets/member-rating.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between 0 and int\<1, max\> will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: includes/widgets/member-rating.php
