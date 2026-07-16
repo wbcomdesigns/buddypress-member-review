@@ -1,9 +1,9 @@
 # Plugin: BuddyPress Member Reviews
 
 > **READ FIRST:** [`audit/manifest.json`](audit/manifest.json) is the canonical inventory —
-> 7 AJAX handlers, 2 admin-post handlers, 6 admin pages, 8 settings option keys, 2 shortcodes,
-> 1 CPT (`review`) + 1 taxonomy (`review_category`), 2 widgets, 1 cron hook, 0 REST/0 DB tables,
-> 31 fired hooks. **Use this before grepping.** See also
+> 6 AJAX handlers, 2 admin-post handlers, 2 admin pages, 11 settings/option keys, 1 shortcode,
+> 1 CPT (`review`) + 1 taxonomy (`review_category`), 2 meta boxes, 2 widgets, 2 cron hooks,
+> 0 blocks/0 REST/0 DB tables, 62 fired hooks. **Use this before grepping.** See also
 > [`audit/FEATURE_AUDIT.md`](audit/FEATURE_AUDIT.md), [`audit/CODE_FLOWS.md`](audit/CODE_FLOWS.md),
 > [`audit/wppqa-baseline-2026-06-05/SUMMARY.md`](audit/wppqa-baseline-2026-06-05/SUMMARY.md).
 > Interactive graph: `cd audit && python3 -m http.server 8765` -> http://localhost:8765/graph.html
@@ -36,17 +36,22 @@ cycle (commit `b4bcd2a`). Evidence:
   creates it (`BUPR_Admin_Panel::add_menu`, guarded by `$GLOBALS['admin_page_hooks']`).
 - **`bp-member-review-settings`** ("Member Reviews") — `add_submenu_page` of `wbcomplugins`,
   `manage_options`, `BUPR_Admin_Panel::render_page`
-  (`includes/admin/class-bupr-admin-panel.php:128-152`). **PRIMARY settings page.**
+  (`includes/admin/class-bupr-admin-panel.php:155-162`). **PRIMARY settings page.**
+- Tabs (`BUPR_Admin_Panel::get_tabs`, `:52-121`): Overview, General, Criteria, Display,
+  Pro Features, Discover.
 
 ### Settings options read/written
-- `bupr_admin_general_options` (array, 20 subkeys) — `BUPR_Admin_Panel::OPTION_GENERAL`,
-  registered `includes/admin/class-bupr-admin-panel.php:177-184`.
-- `bupr_admin_settings` (array — criteria) — `OPTION_CRITERIA`, registered `:186-192`.
-- `bupr_admin_display_options` (array — labels + star color) — `OPTION_DISPLAY`, registered `:194-200`.
+- `bupr_admin_general_options` (array, 19 subkeys) — `BUPR_Admin_Panel::OPTION_GENERAL`,
+  registered `includes/admin/class-bupr-admin-panel.php:189-196`.
+- `bupr_admin_settings` (array — criteria) — `OPTION_CRITERIA`, registered `:197-204`.
+- `bupr_admin_display_options` (array — labels + star color) — `OPTION_DISPLAY`, registered `:205-212`.
 - Standalone: `bupr_plugin_version`, `bupr_current_batch`, `bupr_top_members_cache_ver`
-  (cache salt for the top-members shortcode transient), `bupr_member_type_criteria` (Pro-owned;
-  free neither reads nor writes since the orphaned member-types tab template was deleted in 3.8.0),
-  `bupr_pro_options.review_mode` (Pro-persisted), transient `_bupr_activation_redirect`.
+  (cache salt for the top-members shortcode transient), `bupr_meta_repair_v1_done` +
+  `bupr_meta_repair_paged` (one-time meta-drift repair gate + cursor),
+  `bupr_pro_options.review_mode` (Pro-persisted), transients `_bupr_activation_redirect`
+  and `bupr_drift_checked_{user_id}` (24h per-user directory drift-check throttle).
+  `bupr_member_type_criteria` is Pro-owned and has **zero** references in free (dropped from
+  the manifest in the 2026-07-16 refresh).
 - All hydrated into global `$bupr` by `BUPRGlobals` (includes/class-buprglobals.php). Full map: manifest `settings`.
 
 ## Key entry points

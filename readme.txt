@@ -2,119 +2,162 @@
 Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members, reviews, ratings, community
-Requires at least: 6.9
+Requires at least: 6.1
 Tested up to: 7.0
 Stable tag: 3.8.0
 Requires PHP: 7.4
-Requires Plugins: buddypress
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: bp-member-reviews
+Domain Path: /languages
 
-Let BuddyPress members review and rate each other. Build trust in your community with star ratings, multiple criteria, and review moderation.
+Let members review and rate each other on their profiles. Build trust with star ratings, custom criteria, moderation, and directory ratings.
 
 == Description ==
 
-**Build trust between members with peer reviews.**
+**BuddyPress Member Reviews** gives your community a reputation layer. Registered members post reviews on other members' profiles, rate them against criteria you define, and the plugin rolls those scores into an aggregate rating shown on the profile and on the members directory.
 
-BuddyPress Member Reviews lets registered members post reviews on other members' profiles. Rate members using customizable criteria, display aggregate ratings, and moderate feedback - all from your WordPress dashboard.
+It needs BuddyPress 6.0+ or BuddyBoss Platform 1.8+ with the Members component active. Everything is controlled from one settings screen: who can review whom, whether reviews are auto-approved or moderated, what the criteria are called, and how the whole thing is labelled.
 
-[vimeo https://vimeo.com/556813504]
+= What you get =
 
-= What You Can Do =
+**Reviews and ratings on member profiles**
+* A Reviews tab on every member profile, with per-criteria star ratings and an aggregate score.
+* Rate members against criteria you define. Two are seeded on activation, "Member Response" and "Member Skills", and you can rename, remove, or add your own.
+* Members can edit their own reviews after posting, when the "Allow update" setting is on.
+* Profile owners can reply to reviews left about them, once per review.
+* Self-reviews are blocked, so scores stay honest.
+* Optional anonymous reviews for members who want to give feedback privately.
 
-**For Members:**
-- Write reviews with star ratings (1-5 stars)
-- Rate using multiple criteria (Communication, Skills, etc.)
-- Submit reviews anonymously when enabled
-- Reply to reviews on your own profile
-- Report inappropriate reviews
+**Ratings on the members directory**
+* Show each member's star rating right on the members directory, on by default.
+* An "Add Review" button on directory entries so members can review without opening the profile first, also on by default.
+* Both are individually switchable in General settings.
 
-**For Admins:**
-- Create custom rating criteria
-- Require approval before reviews go live
-- Auto-hide reviews after X reports
-- Send email notifications for new reviews
-- Display top-rated members in a widget
+**Moderation you control**
+* Auto Approve Reviews is ON by default, so reviews go live immediately. Turn it OFF to hold every new review as a draft until an admin approves it.
+* Members can report inappropriate reviews.
+* Reviews auto-hide once they pass a report threshold you set.
+* A Report Details meta box on each review in the admin, with dismiss and resolve actions plus a flagged-reviews filter and bulk actions on the Reviews list.
+* Reviewer and reviewee role gating: choose which roles may leave reviews and which roles may receive them.
 
-= Key Features =
+**Notifications**
+* BuddyPress notifications when a member receives a review.
+* Email notifications for new reviews, and pending-approval alerts for admins.
+* Both can be switched off independently.
 
-- **Multiple Criteria** - Rate members on Communication, Reliability, or any criteria you create
-- **Owner Replies** - Profile owners can respond to reviews once
-- **Report System** - Members can report inappropriate reviews
-- **Anonymous Reviews** - Let members submit feedback privately
-- **Review Moderation** - Approve reviews before they appear
-- **Top Members Widget** - Showcase highest-rated members
-- **Shortcode Support** - Display reviews anywhere with `[bupr_display_top_members]`
-- **BuddyBoss Compatible** - Works with BuddyBoss Platform and Theme
+**Activity stream**
+* Publish reviews to the BuddyPress activity stream so the community sees new feedback as it happens. Off by default, switch it on in General settings.
 
-= Need More? =
+**Display anywhere**
+* Two widgets: "BP Member Review Widget" (top rated or most reviewed members) and "BP Displayed Member Rating Widget" (the rating of the member whose profile is being viewed).
+* The `[bupr_display_top_members]` shortcode for a top-rated or top-reviewed list on any page or post.
+* Customize the review labels and star color, including the singular and plural label used for the profile tab.
 
-**[BuddyPress Member Review Pro](https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro/)** adds three review modes, verified badges, and a REST API:
+= Perfect For =
 
-- **Testimonials Mode** - Text-only reviews without star ratings
-- **Endorsements Mode** - LinkedIn-style skill endorsements
-- **Verified Badges** - Mark trusted reviews with visual badges
-- **Flexible Criteria** - Stars, thumbs up/down, or text responses
-- **REST API** - Build mobile apps or custom integrations
-- **Weighted Ratings** - Control how criteria affect aggregate scores
+* Freelance and service marketplaces where members hire each other
+* Coaching, mentoring, and tutoring communities
+* Membership sites that need visible trust signals
+* Any BuddyPress or BuddyBoss community where reputation matters
 
-[Learn more about Pro](https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro/)
+= Premium Support =
+
+Our dedicated support team is ready to help you get the most out of this plugin. Whether you need help with setup, customization, or troubleshooting, we're here to assist.
+
+= Documentation =
+
+* **[Documentation and Support](https://docs.wbcomdesigns.com/)** - Setup walkthrough, settings reference, and usage guides
+
+= Translations =
+
+* English (default)
+* German (de_DE) and French (fr_FR) translations included
+* Ready for translation in your language with included POT file
+* WPML compatible (wpml-config.xml included)
+* RTL language support included
 
 = Links =
 
-- [Plugin Page](https://wbcomdesigns.com/downloads/buddypress-member-reviews/)
-- [Documentation](https://docs.wbcomdesigns.com/docs/buddypress-member-review/)
-- [Support](https://wbcomdesigns.com/support/)
+* [Plugin Homepage](https://wbcomdesigns.com/downloads/buddypress-member-reviews/)
+* [Documentation](https://docs.wbcomdesigns.com/)
+* [Support](https://wbcomdesigns.com/support/)
+* [Request Features](https://wbcomdesigns.com/contact/)
 
-= Theme Recommendation =
+= Compatibility =
 
-**[BuddyX Theme](https://wordpress.org/themes/buddyx/)** - Free BuddyPress theme with built-in support for Member Reviews.
+* WordPress 6.1 and higher
+* PHP 7.4 and higher (8.0+ recommended)
+* BuddyPress 6.0+ or BuddyBoss Platform 1.8+ required, with the Members component active
+* Works with the block editor and classic editor. The two widgets are classic WP_Widget classes, so on a block theme add them through the Legacy Widget block.
+* Tested with popular themes including BuddyX, Reign, BuddyBoss Theme and Youzify
 
-= More BuddyPress Plugins =
+= What's New in 3.8.0 =
 
-Free plugins by Wbcom Designs:
-
-- **[BuddyPress Group Reviews](https://wordpress.org/plugins/review-buddypress-groups/)** - Rate and review groups
-- **[BuddyPress Activity Social Share](https://wordpress.org/plugins/bp-activity-social-share/)** - Share activities on social networks
-- **[Private Community with BP Lock](https://wordpress.org/plugins/lock-my-bp/)** - Make your community private
-- **[BuddyPress Job Manager](https://wordpress.org/plugins/bp-job-manager/)** - Job listings in BuddyPress
-- **[Check-ins for BuddyPress](https://wordpress.org/plugins/bp-check-in/)** - Location check-ins
-- **[Shortcodes for BuddyPress](https://wordpress.org/plugins/shortcodes-for-buddypress/)** - Display members and activity anywhere
-
-Premium plugins:
-
-- **[BuddyPress Hashtags](https://wbcomdesigns.com/downloads/buddypress-hashtags/)**
-- **[BuddyPress Polls](https://wbcomdesigns.com/downloads/buddypress-polls/)**
-- **[BuddyPress Status & Reaction](https://wbcomdesigns.com/downloads/buddypress-status/)**
-- **[BuddyPress Profanity](https://wbcomdesigns.com/downloads/buddypress-profanity/)**
+The admin settings screen is rebuilt on the Wbcom card-panel UI with sidebar navigation, an overview dashboard, and a Discover tab. On the front end, the review styles now run on one design-token system across light and dark, the star rating input is a keyboard-operable ARIA radiogroup, and directional CSS has moved to logical properties for correct right-to-left rendering. This release also closes a security gap: the review update endpoint now enforces an ownership and capability check, so members can only edit their own reviews.
 
 == More Free Tools from Wbcom Designs ==
 
-Member Reviews gives your community its reputation layer - the trust signals members earn from each other. These free tools from Wbcom Designs give you the rest of the stack to build that community on, from the network itself to the courses and directories that keep people coming back.
+Member Reviews gives your community its reputation layer, the trust signals members earn from each other. These other free tools from Wbcom Designs give you the rest of the stack that reputation is built on, from the theme and the network itself to forums, media, events, gamification, directories, jobs, and courses.
 
-* **[BuddyNext](https://wbcomdesigns.com/downloads/buddynext/)** - A no-cost community platform with activity streams, member spaces, profiles, private messaging, directories, and built-in moderation.
-* **[Jetonomy](https://wbcomdesigns.com/downloads/jetonomy/)** - Free forums, Q&A boards, and idea spaces that self-moderate through trust levels and stay fast well past 100,000 topics.
-* **[Mediaverse](https://wbcomdesigns.com/downloads/mediaverse/)** - A photo and video space with albums, reactions, follows, direct messages, and AI-assisted moderation out of the box.
-* **[Listora](https://wbcomdesigns.com/downloads/listora/)** - A directory builder with 10 listing types, member ratings, map views, and frontend submissions your visitors can post themselves.
-* **[Learnomy](https://wbcomdesigns.com/downloads/learnomy/)** - A free LMS to build and sell courses, auto-grade quizzes, award certificates, and take payments.
+* **[BuddyX](https://wbcomdesigns.com/downloads/buddyx-theme/)** - A free, fast community theme for BuddyPress, BuddyBoss and PeepSo with a modern layout and dark mode.
+* **[BuddyNext](https://wbcomdesigns.com/downloads/buddynext/)** - Stand up a complete WordPress community with activity streams, member spaces, profiles, direct messaging, and built-in moderation.
+* **[Jetonomy](https://wbcomdesigns.com/downloads/jetonomy/)** - Add forums, question-and-answer boards, and idea spaces that stay tidy through trust-based auto-moderation even past 100,000 topics.
+* **[Mediaverse](https://wbcomdesigns.com/downloads/mediaverse/)** - Let members build photo and video albums, react, follow each other, and message privately while AI moderation keeps things clean.
+* **[Eventonomy](https://wbcomdesigns.com/downloads/eventonomy/)** - Run community events with RSVPs, calendars, and front-end submissions.
+* **[WB Gamification](https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/)** - Reward members with points, badges, and leaderboards to keep engagement high.
+* **[Listora](https://wbcomdesigns.com/downloads/listora/)** - Publish searchable directories across ten listing types with reviews, maps, and member-submitted entries from the front end.
+* **[WP Career Board](https://wbcomdesigns.com/downloads/wp-career-board/)** - Add a job board with front-end listings, applications, and employer profiles.
+* **[Learnomy](https://wbcomdesigns.com/downloads/learnomy/)** - Build and sell online courses, auto-grade quizzes, collect payments, and award certificates when learners finish.
 
 == Installation ==
 
-1. Upload `buddypress-member-review` to `/wp-content/plugins/`
-2. Activate through the Plugins menu
-3. Go to **Reviews > Settings** to configure
+= Automatic Installation (Recommended) =
 
-= Quick Setup =
+1. Log in to your WordPress admin dashboard
+2. Navigate to Plugins > Add New
+3. Search for "BuddyPress Member Reviews"
+4. Click "Install Now" on the Wbcom Designs - BuddyPress Member Reviews plugin
+5. After installation, click "Activate"
+6. Go to **WB Plugins > Member Reviews** to configure the plugin
 
-1. **General Tab** - Enable notifications and set permissions
-2. **Criteria Tab** - Add rating criteria (Communication, Skills, etc.)
-3. **Display Tab** - Customize labels and colors
+= Manual Installation =
+
+1. Download the plugin ZIP file
+2. Log in to your WordPress admin dashboard
+3. Navigate to Plugins > Add New > Upload Plugin
+4. Choose the downloaded ZIP file and click "Install Now"
+5. After installation, click "Activate Plugin"
+6. Configure settings at **WB Plugins > Member Reviews**
+
+= Post-Installation Setup =
+
+After activating the plugin, we recommend:
+
+1. Visit **WB Plugins > Member Reviews > General**. Reviews are auto-approved out of the box: if you want to read every review before it goes live, turn **Auto Approve Reviews** off now.
+2. On the same tab, set who may leave reviews and who may receive them, and switch email and BuddyPress notifications on or off. Directory ratings and the directory "Add Review" button are on by default here too.
+3. Open the **Criteria** tab. Two criteria are seeded on activation, "Member Response" and "Member Skills". Rename them or add your own to fit your community.
+4. Open the **Display** tab to set the review labels and star color. The plural label also drives the profile tab and its URL slug, so pick it before members start sharing links.
+5. Visit any member profile and use the Reviews tab to post a test review, then check it appears on the members directory.
+6. See the [documentation](https://docs.wbcomdesigns.com/) for detailed instructions.
+
+= Requirements =
+
+* WordPress 6.1 or higher
+* PHP 7.4 or higher
+* BuddyPress 6.0+ or BuddyBoss Platform 1.8+, with the Members component active
 
 == Frequently Asked Questions ==
 
+= Is BuddyPress required? =
+
+Yes. The plugin needs BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher, with the Members component active. Reviews live on member profiles, so there is no standalone mode.
+
 = How do members submit reviews? =
 
-Members visit another member's profile and click the "Reviews" tab. They'll see an "Add Review" button to submit their rating.
+Members open another member's profile and click the Reviews tab, then use the "Add Review" button. If directory ratings are enabled, they can also start a review straight from the members directory.
+
+Note that "Reviews" is just the default label. If you rename the plural label under Display settings, the tab and its URL slug change to match.
 
 = Can members review themselves? =
 
@@ -122,31 +165,75 @@ No. The plugin prevents self-reviews to ensure honest feedback.
 
 = How do I add custom rating criteria? =
 
-Go to **Reviews > Settings > Criteria Tab**. Add criteria like "Communication," "Reliability," or any label that fits your community.
+Go to **WB Plugins > Member Reviews > Criteria**. Two criteria ship as defaults, "Member Response" and "Member Skills". Add, rename, or remove them freely, for example "Communication" or "Reliability".
 
 = Can I require approval before reviews appear? =
 
-Yes. Enable "Admin Approval Required" in General Settings. Reviews stay in draft until you approve them.
+Yes, but note the default is the other way round. **Auto Approve Reviews** is ON by default, so out of the box reviews publish immediately with no moderation. To review every submission first, go to **WB Plugins > Member Reviews > General** and turn **Auto Approve Reviews** off. New reviews then stay as drafts until you approve them from the Reviews screen.
+
+= Can members edit a review after posting it? =
+
+Yes, when the "Allow update" setting is enabled. Members can only edit their own reviews.
+
+= Can I control who reviews whom? =
+
+Yes. General settings has two role selectors: one for the roles allowed to leave reviews, and one for the roles whose members can be reviewed.
+
+= Do reviews post to the activity stream? =
+
+They can. Enable the review activity setting in General settings and each new review publishes to the BuddyPress activity stream. It is off by default.
+
+= How do notifications work? =
+
+Members get a BuddyPress notification when they receive a review, and an email if email notifications are enabled. Admins get a pending-approval alert when moderation is on. Notifications and emails are separate switches, so you can run one without the other.
+
+= What happens when a review is reported? =
+
+Reported reviews are flagged in the admin. You can filter the Reviews list to flagged items only, open a review to read its Report Details meta box, then dismiss or resolve the report, individually or in bulk. Reviews auto-hide once they pass the report threshold you set.
 
 = Does it work with BuddyBoss? =
 
-Yes. Tested with BuddyBoss Platform and BuddyBoss Theme.
+Yes. BuddyBoss Platform 1.8 and higher is supported, and the plugin is tested with the BuddyBoss Theme.
 
 = How do I display top-rated members? =
 
-Use the "Top Members" widget in any widget area, or use the `[bupr_display_top_members]` shortcode.
+Two ways. Add the **BP Member Review Widget** to a widget area for a top-rated or most-reviewed list, or use the `[bupr_display_top_members]` shortcode on any page or post. There is also a **BP Displayed Member Rating Widget** that shows the rating of the member whose profile is being viewed.
+
+On a block theme, add either widget through the Legacy Widget block.
+
+= What attributes does the shortcode accept? =
+
+`[bupr_display_top_members]` accepts four attributes:
+
+* `title` - heading shown above the list. Defaults to empty.
+* `total_member` - how many members to list. Defaults to 5.
+* `type` - `top rated` (by aggregate rating) or `top reviewed` (by review count). Defaults to `top rated`.
+* `avatar` - `show` or `hide` member avatars. Defaults to `show`.
+
+For example: `[bupr_display_top_members title="Most Reviewed" type="top reviewed" total_member="10" avatar="hide"]`
 
 = Can members reply to reviews about them? =
 
-Yes. Profile owners can reply to reviews once. Enable this in General Settings.
+Yes. Profile owners can reply to each review once. Enable this in General settings.
 
-= What's the difference between Free and Pro? =
+= Is the plugin translation ready? =
 
-Free includes star ratings, multiple criteria, owner replies, and review moderation.
+Yes. German and French translations ship with the plugin, and a POT file is included so you can translate into any language. The plugin is WPML compatible and includes RTL support.
 
-Pro adds three review modes (Ratings, Testimonials, Endorsements), verified badges, flexible criteria types (thumbs, text), weighted ratings, and a REST API.
+= Where can I get support? =
 
-[Compare Free vs Pro](https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro/)
+We offer comprehensive support through multiple channels:
+* [Documentation](https://docs.wbcomdesigns.com/) - Free guides for every Wbcom plugin
+* [Support](https://wbcomdesigns.com/support/) - Get help from our team
+* [Contact us](https://wbcomdesigns.com/contact/) - Report bugs and request features
+
+= Will this work with my theme? =
+
+The plugin has been tested with popular BuddyPress and BuddyBoss themes including BuddyX, Reign, BuddyBoss Theme, and Youzify. It follows BuddyPress template standards, so it should work with any properly coded BuddyPress-compatible theme.
+
+= How often is the plugin updated? =
+
+We regularly update the plugin to ensure compatibility with the latest versions of WordPress, BuddyPress, and BuddyBoss. Security patches are released promptly when needed.
 
 == Screenshots ==
 
@@ -185,11 +272,10 @@ Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
 * New: Report System - users can report inappropriate reviews
 * New: Auto-hide reviews after configurable report threshold
 * New: Admin settings for owner replies, reporting, and auto-hide
-* New: Pro Features comparison tab
 * Improved: Changed "Flag" to "Report" terminology
 * Improved: Admin UI with clearer labels
 * Improved: Security hardening
-* Fixed: PHP Warning for undefined array key with Pro addon
+* Fixed: PHP Warning for undefined array key
 * Fixed: Template consistency across all modes
 
 = 3.6.0 =
@@ -234,9 +320,10 @@ Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
 * Improved: Security enhancements
 * Updated: BuddyPress, BuddyBoss, Youzify integration
 
-[View full changelog](https://wordpress.org/plugins/bp-user-profile-reviews/#developers)
-
 == Upgrade Notice ==
+
+= 3.8.0 =
+Security update: the review update endpoint now enforces an ownership check, so members can only edit their own reviews. Also includes the rebuilt admin settings screen and a front-end accessibility, dark-mode and RTL pass. Recommended for all users.
 
 = 3.7.0 =
 New features: Owner Replies and Report System. Security improvements included. Recommended update for all users.
