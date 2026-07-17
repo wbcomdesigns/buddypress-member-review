@@ -282,7 +282,7 @@ jQuery(document).ready(
 			'.bupr-approve-review',
 			function () {
 				var review_id = jQuery(this).data('rid');
-				jQuery(this).html('Approving..');
+				jQuery(this).html(bupr_admin_ajax_object.approving_text);
 				jQuery.post(
 					bupr_admin_ajax_object.ajaxurl,
 					{
@@ -291,11 +291,11 @@ jQuery(document).ready(
 						'nonce' : bupr_admin_ajax_object.nonce,
 					},
 					function (response) {
-						
-						if (response.data.message == 'Review approved successfully.') {
+						// Branch on the stable response code, never the translated message.
+						if (response && response.success && response.data && 'review-approved-successfully' === response.data.code) {
 							window.location.reload();
 						} else {
-							console.log(response.data.message);
+							console.log(response && response.data ? response.data.message : response);
 						}
 					}
 				);
@@ -349,6 +349,17 @@ jQuery(document).ready(
  *-----------------------------------------*/
 function GetDynamicTextBox(value) {
 	var rand_num = Math.random();
-	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " /></div>' +
-		'<div class="bupr-admin-col-6"><input type="button" value="Remove" class="bupr-remove button button-secondary" /></div></div>'
+	var i18n = window.bupr_admin_ajax_object || {};
+	// English literals are fallbacks only; the translated values come from wp_localize_script.
+	var placeholder = i18n.criteria_placeholder || 'Add Review criteria eg. Member Response. ';
+	var ariaLabel = i18n.criteria_aria_label || 'Review criteria name';
+	var removeLabel = i18n.criteria_remove || 'Remove';
+	var removeAria = i18n.criteria_remove_aria || 'Remove this review criteria';
+
+	function attr(text) {
+		return jQuery('<div/>').text(text).html();
+	}
+
+	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + attr(value) + '" placeholder="' + attr(placeholder) + '" aria-label="' + attr(ariaLabel) + '" /></div>' +
+		'<div class="bupr-admin-col-6"><input type="button" value="' + attr(removeLabel) + '" aria-label="' + attr(removeAria) + '" class="bupr-remove button button-secondary" /></div></div>'
 }

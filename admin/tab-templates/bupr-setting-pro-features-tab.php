@@ -43,99 +43,12 @@ if ( $is_pro_licensed ) :
 endif;
 
 // Pro is not active - show preview.
+// NOTE: comparison-table + upgrade-CTA styles were relocated to
+// assets/css/admin.css during the 3.8.0 card-panel migration (skill
+// gate F1: no inline <style> in PHP). The .bupr-* classes below are
+// styled there.
 $disabled = 'disabled';
 ?>
-<style>
-.bupr-comparison-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-bottom: 30px;
-	background: #fff;
-	box-shadow: 0 10px 25px rgba(173, 180, 210, 0.20);
-	border-radius: var(--border-radius-large, 12px);
-	overflow: hidden;
-	border: 1px solid rgba(200, 197, 218, 0.35);
-}
-.bupr-comparison-table th,
-.bupr-comparison-table td {
-	padding: 15px 20px;
-	text-align: left;
-	border-bottom: 1px solid rgba(200, 197, 218, 0.30);
-}
-.bupr-comparison-table thead th {
-	background: var(--primary-color, #2A32EF);
-	color: #fff;
-	font-weight: 600;
-	text-transform: uppercase;
-	font-size: 12px;
-	letter-spacing: 0.5px;
-}
-.bupr-comparison-table thead th:first-child {
-	text-align: left;
-}
-.bupr-comparison-table thead th:not(:first-child) {
-	text-align: center;
-	width: 120px;
-}
-.bupr-comparison-table tbody td:not(:first-child) {
-	text-align: center;
-}
-.bupr-comparison-table tbody tr:hover {
-	background: var(--background-light, #F6F7FE);
-}
-.bupr-comparison-table .feature-name {
-	font-weight: 500;
-	color: var(--text-dark, #1d2327);
-}
-.bupr-comparison-table .feature-desc {
-	font-size: 12px;
-	color: var(--text-light, #646F89);
-	margin-top: 4px;
-}
-.bupr-check-yes {
-	color: var(--success-color, #4fb845);
-	font-size: 18px;
-}
-.bupr-check-no {
-	color: #d1d5db;
-	font-size: 18px;
-}
-.bupr-version-badge {
-	display: inline-block;
-	padding: 4px 12px;
-	border-radius: 20px;
-	font-size: 11px;
-	font-weight: 600;
-	text-transform: uppercase;
-}
-.bupr-version-free {
-	background: #E1E6F4;
-	color: var(--secondary-color, #272B41);
-}
-.bupr-version-pro {
-	background: var(--primary-color, #2A32EF);
-	color: #fff;
-}
-.bupr-upgrade-cta {
-	text-align: center;
-	padding: 30px;
-	background: var(--background-light, #F6F7FE);
-	border-radius: var(--border-radius-large, 12px);
-	margin-top: 20px;
-	border: 1px solid rgba(200, 197, 218, 0.35);
-}
-.bupr-upgrade-cta h3 {
-	margin: 0 0 10px;
-	color: var(--text-dark, #1d2327);
-}
-.bupr-upgrade-cta p {
-	margin: 0 0 20px;
-	color: var(--text-light, #646F89);
-}
-.bupr-pro-badge {
-	background: var(--primary-color, #2A32EF) !important;
-}
-</style>
 
 <div class="wbcom-tab-content">
 	<div class="wbcom-admin-title-section">

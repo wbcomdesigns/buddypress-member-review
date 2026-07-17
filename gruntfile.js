@@ -19,6 +19,12 @@ module.exports = function (grunt) {
                     expand: true,
                     src: [
                         '**',
+                        // Dev-only tooling (PHPStan + stubs). Never ship these.
+                        '!vendor/**',
+                        '!composer.json',
+                        '!composer.lock',
+                        '!phpstan.neon',
+                        '!phpstan-baseline.neon',
                         '!node_modules/**',
                         '!dist/**',
                         '!.git/**',
@@ -126,15 +132,6 @@ module.exports = function (grunt) {
                     ext: '.min.css',
                 }],
             },
-            wbcom: {
-                files: [{
-                    expand: true,
-                    cwd: 'admin/wbcom/assets/css',
-                    src: ['*.css', '!*.min.css', '!vendor/*.css'],
-                    dest: 'admin/wbcom/assets/css/min',
-                    ext: '.min.css',
-                }],
-            },
         },
 
         // Task for JavaScript minification
@@ -160,18 +157,6 @@ module.exports = function (grunt) {
                     cwd: 'admin/assets/js',
                     src: ['*.js', '!*.min.js', '!vendor/*.js'],
                     dest: 'admin/assets/js/min',
-                    ext: '.min.js',
-                }],
-            },
-            wbcom: {
-                options: {
-                    mangle: false,
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'admin/wbcom/assets/js',
-                    src: ['*.js', '!*.min.js', '!vendor/*.js'],
-                    dest: 'admin/wbcom/assets/js/min',
                     ext: '.min.js',
                 }],
             },
@@ -226,14 +211,6 @@ module.exports = function (grunt) {
                         cwd: 'admin/assets/css',
                         src: ['*.css', '!**/*.min.css', '!vendor/**/*.css'],
                         dest: 'admin/assets/css/rtl/',
-                        ext: '.rtl.css',
-                        flatten: true
-                    },
-                    {
-                        expand: true,
-                        cwd: 'admin/wbcom/assets/css',
-                        src: ['*.css', '!**/*.min.css', '!vendor/**/*.css'],
-                        dest: 'admin/wbcom/assets/css/rtl/',
                         ext: '.rtl.css',
                         flatten: true
                     }

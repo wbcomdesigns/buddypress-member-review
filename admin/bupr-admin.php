@@ -21,15 +21,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 
 		/**
-		 * Plugin settings tabs.
-		 *
-		 * @since    1.0.0
-		 * @access   public
-		 * @var mixed $plugin_settings_tabs
-		 */
-		public $plugin_settings_tabs;
-
-		/**
 		 * Constructor.
 		 *
 		 * @since    1.0.0
@@ -38,10 +29,14 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function __construct() {
 
-			add_action( 'admin_menu', array( $this, 'bupr_add_submenu_page_admin_settings' ) );
+			// Admin menu, settings page, settings registration, and notice
+			// suppression are owned by BUPR_Admin_Panel (the card-panel
+			// admin) as of 3.8.0. This class is retained for its non-UI
+			// service logic: the review CPT + taxonomy, the rating meta box,
+			// the flag/report tooling + admin-post handlers, the pending-count
+			// menu badge, the review->activity/email transition, the criteria
+			// pre-update transform, and the shared sanitizer the panel calls.
 			add_action( 'admin_menu', array( $this, 'bupr_get_review_count' ) );
-			add_action( 'admin_init', array( $this, 'bupr_plugin_settings' ) );
-			add_action( 'in_admin_header', array( $this, 'wbcom_hide_all_admin_notices_from_setting_page' ) );
 			add_filter( 'pre_update_option_bupr_admin_settings', array( $this, 'bupr_update_admin_settings' ), 10, 2 );
 			add_action( 'transition_post_status', array( $this, 'bupr_generate_activity_review_status_change' ), 10, 3 );
 			/* Register custom post type review */
@@ -77,7 +72,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		public function bupr_review_add_meta_box_ratings() {
 			add_meta_box(
 				'custom_meta_box_ratings',
-				'Member Ratings',
+				__( 'Member Ratings', 'bp-member-reviews' ),
 				array( $this, 'bupr_review_render_custom_meta_box_ratings' ),
 				'review',
 				'side',
@@ -132,22 +127,11 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		}
 
 		/**
-		 * Hide all notices from the setting page.
+		 * Transform the criteria builder rows into profile_rating_fields.
 		 *
-		 * @return void
-		 */
-		public function wbcom_hide_all_admin_notices_from_setting_page() {
-			$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'bp-member-review-settings' );
-			$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
-
-			if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
-				remove_all_actions( 'admin_notices' );
-				remove_all_actions( 'all_admin_notices' );
-			}
-		}
-
-		/**
-		 * Actions performed on loading admin_menu.
+		 * Hooked to pre_update_option_bupr_admin_settings (registered in the
+		 * constructor). Runs AFTER the panel's sanitize_criteria(), so the
+		 * raw rating_field_name[] rows are still present here.
 		 *
 		 * @since    1.0.0
 		 * @access   public
@@ -179,191 +163,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				}
 			}
 			return $new_value;
-		}
-
-		/**
-		 * Actions performed on loading admin_menu.
-		 *
-		 * @since    1.0.0
-		 * @access   public
-		 * @author   Wbcom Designs
-		 */
-		public function bupr_add_submenu_page_admin_settings() {
-			if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
-				add_menu_page( esc_html__( 'WB Plugins', 'bp-member-reviews' ), esc_html__( 'WB Plugins', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins', array( $this, 'bupr_admin_options_page' ), 'dashicons-lightbulb', 59 );
-				add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'bp-member-reviews' ), esc_html__( 'General', 'bp-member-reviews' ), 'manage_options', 'wbcomplugins' );
-			}
-			add_submenu_page( 'wbcomplugins', esc_html__( 'Admin Settings For Reviews', 'bp-member-reviews' ), esc_html__( 'Member Reviews', 'bp-member-reviews' ), 'manage_options', 'bp-member-review-settings', array( $this, 'bupr_admin_options_page' ) );
-		}
-
-		/**
-		 * Actions performed on loading plugin settings
-		 *
-		 * @since    1.0.9
-		 * @access   public
-		 * @author   Wbcom Designs
-		 */
-		public function bupr_plugin_settings() {
-			$this->plugin_settings_tabs['bupr-welcome'] = esc_html__( 'Welcome', 'bp-member-reviews' );
-			add_settings_section( 'bupr-welcome', ' ', array( $this, 'bupr_admin_welcome_content' ), 'bupr-welcome' );
-
-			$this->plugin_settings_tabs['bupr-general'] = esc_html__( 'General', 'bp-member-reviews' );
-			register_setting(
-				'bupr_admin_general_options',
-				'bupr_admin_general_options',
-				array(
-					'type'              => 'array',
-					'sanitize_callback' => array( $this, 'bupr_sanitize_options' ),
-				)
-			);
-			add_settings_section( 'bupr-general', ' ', array( $this, 'bupr_admin_general_content' ), 'bupr-general' );
-			$this->plugin_settings_tabs['bupr-criteria'] = esc_html__( 'Criteria', 'bp-member-reviews' );
-			register_setting(
-				'bupr_admin_settings',
-				'bupr_admin_settings',
-				array(
-					'type'              => 'array',
-					'sanitize_callback' => array( $this, 'bupr_sanitize_options' ),
-				)
-			);
-			add_settings_section( 'bupr-criteria', ' ', array( $this, 'bupr_admin_criteria_content' ), 'bupr-criteria' );
-			$this->plugin_settings_tabs['bupr-display'] = esc_html__( 'Display', 'bp-member-reviews' );
-			register_setting(
-				'bupr_admin_display_options',
-				'bupr_admin_display_options',
-				array(
-					'type'              => 'array',
-					'sanitize_callback' => array( $this, 'bupr_sanitize_options' ),
-				)
-			);
-			add_settings_section( 'bupr-display', ' ', array( $this, 'bupr_admin_display_content' ), 'bupr-display' );
-
-			// Pro Features tab.
-			$this->plugin_settings_tabs['bupr-pro-features'] = esc_html__( 'Pro Features', 'bp-member-reviews' );
-			add_settings_section( 'bupr-pro-features', ' ', array( $this, 'bupr_admin_pro_features_content' ), 'bupr-pro-features' );
-		}
-
-		/**
-		 * Display Welcome tab content.
-		 *
-		 * @since 1.0.9
-		 * @access public
-		 */
-		public function bupr_admin_welcome_content() {
-			include 'tab-templates/bupr-welcome-page.php';
-		}
-
-		/**
-		 * Display General settings tab content.
-		 *
-		 * @since 1.0.9
-		 * @access public
-		 */
-		public function bupr_admin_general_content() {
-			include 'tab-templates/bupr-setting-general-tab.php';
-		}
-
-		/**
-		 * Display Criteria settings tab content.
-		 *
-		 * @since 1.0.9
-		 * @access public
-		 */
-		public function bupr_admin_criteria_content() {
-			include 'tab-templates/bupr-setting-criteria-tab.php';
-		}
-
-		/**
-		 * Display Display settings tab content.
-		 *
-		 * @since 1.0.9
-		 * @access public
-		 */
-		public function bupr_admin_display_content() {
-			include 'tab-templates/bupr-setting-display-tab.php';
-		}
-
-		/**
-		 * Display Pro Features tab content.
-		 *
-		 * @since 3.8.0
-		 * @access public
-		 */
-		public function bupr_admin_pro_features_content() {
-			include 'tab-templates/bupr-setting-pro-features-tab.php';
-		}
-
-		/**
-		 * Actions performed to create a submenu page content.
-		 *
-		 * @since    1.0.0
-		 * @access public
-		 */
-		public function bupr_admin_options_page() {
-			global $allowedposttags;
-			$tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-welcome';
-			?>
-			<div class="wrap">
-				<div class="wbcom-bb-plugins-offer-wrapper">
-					<div id="wb_admin_logo">
-					</div>
-				</div>
-				<div class="wbcom-wrap">
-					<div class="blpro-header">
-						<div class="wbcom_admin_header-wrapper">
-							<div id="wb_admin_plugin_name">
-								<?php esc_html_e( 'BuddyPress Member Reviews', 'bp-member-reviews' ); ?>
-								<span>
-								<?php
-								/* translators: %s: */
-								printf( esc_html__( 'Version %s', 'bp-member-reviews' ), esc_attr( BUPR_PLUGIN_VERSION ) );
-								?>
-								</span>
-							</div>
-							<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-						</div>
-					</div>
-					<div class="wbcom-admin-settings-page">
-						<?php
-						settings_errors();
-						$this->bupr_plugin_settings_tabs();
-						settings_fields( $tab );
-						do_settings_sections( $tab );
-						?>
-					</div>
-				</div>
-			</div>
-			<?php
-		}
-
-		/**
-		 * Actions performed to create tabs on the sub menu page.
-		 *
-		 * @since    1.0.0
-		 * @access public
-		 */
-		public function bupr_plugin_settings_tabs() {
-			$current_tab = filter_input( INPUT_GET, 'tab' ) ? filter_input( INPUT_GET, 'tab' ) : 'bupr-welcome';
-
-			/**
-			 * Filter admin settings tabs.
-			 *
-			 * Allows Pro addon or other extensions to modify the available tabs.
-			 * For example, Pro can remove 'bupr-criteria' since it has its own criteria builder.
-			 *
-			 * @since 3.7.1
-			 *
-			 * @param array $tabs Array of tab_key => tab_label pairs.
-			 */
-			$tabs = apply_filters( 'bupr_admin_settings_tabs', $this->plugin_settings_tabs );
-
-			// xprofile setup tab.
-			echo '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
-			foreach ( $tabs as $tab_key => $tab_caption ) {
-				$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
-				echo '<li class="' . esc_attr( $tab_key ) . '"><a class="nav-tab ' . esc_attr( $active ) . '" id="' . esc_attr( $tab_key ) . '-tab" href="?page=bp-member-review-settings&tab=' . esc_attr( $tab_key ) . '">' . esc_attr( $tab_caption ) . '</a></li>';
-			}
-			echo '</div></ul></div>';
 		}
 
 		/**
@@ -546,7 +345,12 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					} else {
 						$user_name = $bupr_sender_data->display_name;
 					}
-					$review_subject = $bupr_reciever_name . ' received a ' . bupr_profile_review_tab_singular_slug();
+					$review_subject = sprintf(
+						/* translators: 1: User display name, 2: Review tab name (singular). */
+						__( '%1$s received a %2$s', 'bp-member-reviews' ),
+						$bupr_reciever_name,
+						bupr_profile_review_tab_singular_slug()
+					);
 
 					// Check BuddyPress version and use the appropriate function.
 					// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
@@ -569,8 +373,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					// Replace '[site-name]' placeholder in the subject with the actual site name.
 					$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
-					$message = 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team';
-					/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
+					/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
+					$message = __( 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team', 'bp-member-reviews' );
 					if ( isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] ) ) {
 						$bupr_message = str_replace(
 							array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),

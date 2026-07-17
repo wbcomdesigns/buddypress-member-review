@@ -394,7 +394,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 					$bupr_review_url = bp_core_get_user_domain( $member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $review_id;
 				}
 
-				$review_subject = $bupr_reciever_name . ' received a ' . bupr_profile_review_tab_singular_slug();
+				$review_subject = sprintf(
+					/* translators: 1: User display name, 2: Review tab name (singular). */
+					__( '%1$s received a %2$s', 'bp-member-reviews' ),
+					$bupr_reciever_name,
+					bupr_profile_review_tab_singular_slug()
+				);
 				$review_link    = '<a href="' . esc_url( $bupr_review_url ) . '">' . esc_html( $review_subject ) . '</a>';
 
 				// Set email subject.
@@ -405,7 +410,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
 				// Set email message.
-				$default_message = 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team';
+				/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
+				$default_message = __( 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team', 'bp-member-reviews' );
 
 				$bupr_message = isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] )
 					? $bupr_admin_general['review_email_message']
@@ -445,7 +451,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$user_name
 					) . '</a>';
 
-				$default_approve_message = 'Hello [site-admin],
+				/* translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim. */
+				$default_approve_message = __(
+					'Hello [site-admin],
 
 				Greetings!
 
@@ -455,8 +463,10 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 				Thank you for helping us maintain a vibrant and engaged community.
 
-				Best regards,  
-				The [site-name] Team';
+				Best regards,
+				The [site-name] Team',
+					'bp-member-reviews'
+				);
 
 				$bupr_approve_message = isset( $bupr_admin_general['review_approve_email_message'] )
 					? $bupr_admin_general['review_approve_email_message']
@@ -694,6 +704,39 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 				return;
 			}
+
+			// Validate the target is an actual review post.
+			$review = get_post( $review_id );
+			if ( ! $review || 'review' !== $review->post_type ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Review not found.', 'bp-member-reviews' ),
+						'code'    => 'not_found',
+					)
+				);
+				return;
+			}
+
+			/*
+			 * Ownership / capability gate.
+			 *
+			 * SECURITY (3.8.0): previously this handler verified only the
+			 * front nonce, so any logged-in member who could obtain the
+			 * shared `review-nonce` could update ANY review by ID. Mirror the
+			 * exact ownership check the sibling bupr_edit_review() already
+			 * enforces: the reviewer who authored it, or a user who can edit
+			 * others' posts (editor/admin).
+			 */
+			if ( get_current_user_id() !== (int) $review->post_author && ! current_user_can( 'edit_others_posts' ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'You do not have permission to edit this review.', 'bp-member-reviews' ),
+						'code'    => 'permission_error',
+					)
+				);
+				return;
+			}
+
 			$review_content  = isset( $_POST['bupr_review_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['bupr_review_desc'] ) ) : '';
 			$critaria_rating = isset( $_POST['bupr_review_rating'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bupr_review_rating'] ) ) : array();
 			$old_ratings     = get_post_meta( $review_id, 'profile_star_rating', true );

@@ -1,7 +1,6 @@
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
-# CSS Custom Properties (with fallbacks)
 # Global
 # Widgets
 # Review Tab
@@ -15,66 +14,15 @@
 
 
 /*--------------------------------------------------------------
-# CSS Custom Properties (with fallbacks)
---------------------------------------------------------------*/
-:root {
-    --bupr-primary-color: #007cba;
-    --bupr-primary-hover: #005a87;
-    --bupr-success-color: #46b450;
-    --bupr-success-bg: #dff2bf;
-    --bupr-success-bg-hsl: hsl(103, 44%, 89%);
-    --bupr-error-color: #dc3232;
-    --bupr-error-bg: #f0c6c6;
-    --bupr-error-bg-hsl: hsl(0, 43%, 91%);
-    --bupr-text-primary: #1d2327;
-    --bupr-text-secondary: #50575e;
-    --bupr-text-muted: #666;
-    --bupr-text-light: #777;
-    --bupr-text-lightness: #555;
-    --bupr-bg-white: #fff;
-    --bupr-bg-light: #f8f9fa;
-    --bupr-bg-lighter: #f0f0f1;
-    --bupr-bg-lightest: #f9f9f9;
-    --bupr-border-color: #ddd;
-    --bupr-border-light: #eee;
-    --bupr-border-muted: hsl(0, 0%, 50%);
-    --bupr-border-dark: rgba(0, 0, 0, 0.1);
-    --bupr-rating-active: #4278F5;
-    --bupr-rating-inactive: #bbcefb;
-    --bupr-rating-readonly: #729bf8;
-    --bupr-tooltip-bg: #333;
-    --bupr-tooltip-text: #fff;
-    --bupr-accent-color: #4f46e5;
-    --bupr-primary-light: #f0f7fc;
-    --bupr-error-light: #fff0f0;
-}
-
-/* Dark theme support - Theme Variables with Fallbacks */
-html.dark-mode,
-body.dark-scheme {
-    --bupr-bg-white: var(--reign-site-sections-bg-color, var(--color-theme-white-box, #fff));
-	--bupr-text-primary: var(--reign-site-headings-color, var(--global-title-color, #1a1a1a));
-	--bupr-text-secondary: var(--reign-site-body-text-color, var(--global-font-color, #50575e));
-    --bupr-text-muted: var(--reign-site-body-text-color, var(--global-font-color, #666));
-	--bupr-text-light: var(--reign-site-body-text-color, var(--global-font-color, #777));
-	--bupr-border-color: var(--reign-site-border-color, var(--global-border-color, #ddd));
-	--bupr-border-light: var(--reign-site-border-color, var(--global-border-color, #eee));
-    --bupr-border-muted: var(--reign-site-border-color, var(--global-border-color, hsl(0, 0%, 50%)));
-    --bupr-border-dark: var(--reign-site-border-color, var(--global-border-color, rgba(0, 0, 0, 0.1)));
-	--bupr-bg-light: var(--reign-site-secondary-bg-color, var(--global-body-lightcolor, #f8f9fa));
-	--bupr-bg-lighter: var(--reign-site-secondary-bg-color, var(--global-body-lightcolor, #f0f0f1));
-}
-
-/*--------------------------------------------------------------
 # Global
 --------------------------------------------------------------*/
 
-.sel {
-    color: var(--bupr-error-color, #dc3232);
+.stars {
+    display: inline-block;
 }
 
 [class*="bupr-col-"] {
-    float: right;
+    float: inline-start;
     padding: 10px 0;
 }
 
@@ -128,10 +76,10 @@ body.dark-scheme {
 
 .bupr-row {
     clear: both;
-    border-bottom: 1px solid var(--bupr-border-dark, rgba(0, 0, 0, 0.1));
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     overflow: hidden;
     padding: 15px 0;
-    display: block !important;
+    display: block;
 }
 
 .bupr-row:first-child {
@@ -146,7 +94,7 @@ body.dark-scheme {
 .bp-nouveau .bupr-row {
     margin-bottom: 20px;
     padding: 15px;
-    background: var(--bupr-bg-white, #fff);
+    background: #fff;
     border: 0;
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.16);
 }
@@ -166,7 +114,7 @@ body.dark-scheme {
     height: 40px;
 }
 
-@media(max-width: 767px) {
+@media only screen and (max-width: 768px) {
     [class*="bupr-col-"] {
         width: 100%;
     }
@@ -174,14 +122,18 @@ body.dark-scheme {
     .bupr-criteria-label span {
         display: inline;
         width: 100%;
-        clear: right;
+        clear: inline-start;
     }
+}
+
+.sel {
+    color: red;
 }
 
 .bupr-accept-button,
 .bupr-deny-button {
-    float: right;
-    margin-left: 5px;
+    float: inline-start;
+    margin-inline-end: 5px;
 }
 
 .bupr-pagination {
@@ -234,16 +186,16 @@ ul.bupr-member-main {
 ul.bupr-member-main li.bupr-members img.avatar {
     width: 50px;
     height: 50px;
-    float: right;
+    float: inline-start;
 }
 
 .widget ul#bp-member-rating .item,
 ul.bupr-member-main li.bupr-members .bupr-content-widget {
-    margin-right: 70px;
+    margin-inline-start: 70px;
 }
 
 ul.bupr-member-main li.bupr-members.bupr-hide .bupr-content-widget {
-    margin-right: 0px;
+    margin-inline-start: 0px;
 }
 
 ul.bupr-member-main li.bupr-members .bupr-meta {
@@ -266,8 +218,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 .bupr-members-profiles {
     text-align: center;
     width: 80px;
-    float: right;
-    text-align: right;
+    float: inline-start;
+    text-align: start;
 }
 
 .bupr-members-profiles img.avatar {
@@ -282,11 +234,11 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 .bupr-members-content {
-    margin-right: 100px;
+    margin-inline-start: 100px;
 }
 
 .bupr-members-content .review-subject h4 {
-    margin: 5px 0px !important;
+    margin: 5px 0px;
 }
 
 
@@ -318,36 +270,57 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
     -webkit-transform: translate(50%, -50%);
     -ms-transform: translate(50%, -50%);
     transform: translate(50%, -50%);
-    background-color: var(--bupr-bg-white, white);
+    background-color: var(--bupr-card-bg, #fff);
+    color: var(--bupr-text, inherit);
     padding: 1rem 1.5rem;
     max-width: 30rem;
     width: -webkit-calc(100% - 30px);
     width: calc(100% - 30px);
     margin: auto;
-    border-radius: 8px !important;
+    border-radius: 8px;
 }
 
-.bupr-review-modal-close-button {
-    float: left;
-    width: 1.5rem;
-    padding-bottom: 10px;
-    line-height: 1.5rem;
+/* Scoped under the modal ID so the reset wins over theme button chrome (e.g. BuddyX #buddypress button) without !important. */
+#bupr-edit-review-modal .bupr-review-modal-close-button {
+    float: inline-end;
+    width: 1.75rem;
+    height: 1.75rem;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    line-height: 1.75rem;
+    font-size: 1.5rem;
     text-align: center;
+    text-transform: none;
+    text-shadow: none;
+    letter-spacing: normal;
     cursor: pointer;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    color: var(--bupr-text-muted, #666);
     border-radius: 0.25rem;
+    -webkit-transition: background-color .2s, color .2s, -webkit-transform .2s;
+    transition: background-color .2s, color .2s, transform .2s;
 }
 
-.bupr-review-modal-close-button svg {
-    width: 24px;
-    height: 24px;
-}
-
-.bupr-review-modal-close-button svg:hover {
+#bupr-edit-review-modal .bupr-review-modal-close-button:hover {
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     transform: scale(1.1);
-    -webkit-transition: all .3s;
-    transition: all .3s;
+    background: var(--bupr-chip-bg-hover, rgba(0, 0, 0, 0.06));
+    color: var(--bupr-text, #1d2327);
+}
+
+#bupr-edit-review-modal .bupr-review-modal-close-button:active {
+    -webkit-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+#bupr-edit-review-modal .bupr-review-modal-close-button:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
 }
 
 .bupr-show-modal {
@@ -361,30 +334,30 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 .bupr-edit-review-button-wrapper {
-    text-align: left;
+    text-align: end;
     margin-bottom: 10px;
 }
 
 .bp-member-reviews .bupr-row {
     position: relative;
-    padding-left: 160px;
+    padding-inline-end: 160px;
 }
 
 .bp-member-reviews .bupr-row .bupr-edit-review-button-wrapper {
     position: absolute;
-    left: 15px;
+    inset-inline-end: 15px;
 }
 
-@media screen and (max-width: 480px) {
+@media only screen and (max-width: 480px) {
     .bp-member-reviews .bupr-row {
-        display: -webkit-box !important;
-        display: -ms-flexbox !important;
-        display: flex !important;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
         -webkit-box-orient: vertical;
         -webkit-box-direction: normal;
         -ms-flex-direction: column;
         flex-direction: column;
-        padding-left: 15px;
+        padding-inline-end: 15px;
     }
 
     .bp-member-reviews .bupr-row .bupr-edit-review-button-wrapper {
@@ -397,8 +370,8 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 }
 
 button.bupr-edit-review-button {
-    padding: 10px !important;
-    border-radius: 4px !important;
+    padding: 10px;
+    border-radius: 4px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -408,7 +381,7 @@ button.bupr-edit-review-button {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    margin-right: auto;
+    margin-inline-start: auto;
 }
 
 .bupr-review-modal-content button#bupr_upodate_review {
@@ -434,22 +407,22 @@ button.bupr-edit-review-button {
 
 .bupr-posts-pagination {
     margin: 15px 0;
-    text-align: left;
+    text-align: end;
 }
 
 .bupr-posts-pagination span {
-    border: 1px solid var(--bupr-border-muted, hsl(0, 0%, 50%));
+    border: 1px solid hsl(0, 0%, 50%);
     border-radius: 5px;
     margin: 0 5px;
     padding: 5px 10px;
 }
 
 .bupr-posts-pagination .page-numbers {
-    border: 1px solid var(--bupr-border-dark, rgba(0, 0, 0, 0.1));
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     margin: 0px 0px;
     padding: 0;
-    background: var(--bupr-bg-white, #fff);
+    background: #fff;
     display: inline-block;
     height: 32px;
     width: 32px;
@@ -470,7 +443,7 @@ button.bupr-edit-review-button {
 }
 
 .no-count {
-    margin-right: 3px;
+    margin-inline-start: 3px;
 }
 
 #bupr_success_review p {
@@ -479,21 +452,21 @@ button.bupr-edit-review-button {
 
 .bupr-save-reivew-spinner {
     display: none;
-    float: right;
-    margin-right: 10px;
+    float: inline-start;
+    margin-inline-start: 10px;
     margin-top: 8px
 }
 
 .bupr-error-fields {
     display: none;
     font-size: 12px;
-    color: var(--bupr-error-color, #dc3232);
+    color: red;
 }
 
 .bupr-review-error-fields {
     display: none;
     font-size: 14px;
-    color: var(--bupr-error-color, #dc3232);
+    color: red;
 }
 
 
@@ -501,23 +474,13 @@ button.bupr-edit-review-button {
 # Success and Error Message
 --------------------------------------------------------------*/
 
-.bupr-success {
-    background-color: var(--bupr-success-bg-hsl, hsl(103, 44%, 89%));
-    border-color: var(--bupr-success-bg-hsl, hsl(92, 44%, 85%));
-    border-radius: 5px;
-    color: var(--bupr-success-color, #46b450);
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
 .bupr-error {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    background-color: var(--bupr-error-bg-hsl, hsl(0, 43%, 91%));
-    border-color: var(--bupr-error-bg-hsl, hsl(350, 44%, 86%));
-    color: var(--bupr-error-color, #dc3232);
+    background-color: hsl(0, 43%, 91%);
+    border-color: hsl(350, 44%, 86%);
+    color: hsl(1, 44%, 46%);
     margin-top: 10px;
 }
 
@@ -535,22 +498,27 @@ button.bupr-edit-review-button {
     display: block;
     width: 28px;
     height: 28px;
-    float: right;
-    border: 2px solid var(--bupr-rating-inactive, #bbcefb);
-    background-color: var(--bupr-bg-white, white);
+    float: inline-start;
+    border: 2px solid #8a9bc4;
+    background-color: white;
     margin: 2px;
     text-decoration: none;
     font-size: 12px;
     font-weight: 400;
     line-height: 2;
     text-align: center;
-    color: var(--bupr-rating-inactive, #bbcefb);
+    color: #5a6b96;
     font-weight: 600;
 }
 
+.br-theme-bars-square .bupr-rating-widget a:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
+}
+
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-selected {
-    border: 2px solid var(--bupr-rating-active, #4278F5);
-    color: var(--bupr-rating-active, #4278F5);
+    border: 2px solid #1a56db;
+    color: #1a56db;
 }
 
 .br-theme-bars-square .br-readonly a {
@@ -558,14 +526,14 @@ button.bupr-edit-review-button {
 }
 
 .br-theme-bars-square .br-readonly a.bupr-square-selected {
-    border: 2px solid var(--bupr-rating-readonly, #729bf8);
-    color: var(--bupr-rating-readonly, #729bf8);
+    border: 2px solid #2c5fd0;
+    color: #2c5fd0;
 }
 
 @media print {
     .br-theme-bars-square .bupr-rating-widget a {
-        border: 2px solid var(--bupr-text-muted, #b3b3b3);
-        color: var(--bupr-text-muted, #b3b3b3);
+        border: 2px solid #b3b3b3;
+        color: #b3b3b3;
     }
 }
 
@@ -575,23 +543,19 @@ button.bupr-edit-review-button {
 --------------------------------------------------------------*/
 
 .br-theme-bars-square .br-readonly a.bupr-square-half {
-    border-top: 2px solid var(--bupr-rating-readonly, #729bf8);
-    color: var(--bupr-rating-readonly, #729bf8);
-    border-right: 2px solid var(--bupr-rating-readonly, #729bf8);
+    border-top: 2px solid #2c5fd0;
+    border-inline-start: 2px solid #2c5fd0;
+    color: #2c5fd0;
 }
 
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-half {
-    border-top: 2px solid var(--bupr-rating-active, #4278F5);
-    color: var(--bupr-rating-active, #4278F5);
-    border-right: 2px solid var(--bupr-rating-active, #4278F5);
+    border-top: 2px solid #1a56db;
+    border-inline-start: 2px solid #1a56db;
+    color: #1a56db;
 }
 
 .item-header-content .activity {
     margin-bottom: 10px;
-}
-
-.modal-header h2 {
-    margin: 0px !important;
 }
 
 .bupr-hide-subject {
@@ -599,8 +563,8 @@ button.bupr-edit-review-button {
 }
 
 .success_review_msg {
-    color: var(--bupr-success-color, #4F8A10);
-    background-color: var(--bupr-success-bg, #DFF2BF);
+    color: #4F8A10;
+    background-color: #DFF2BF;
     font-weight: 700;
     margin-top: 3px;
     text-decoration: none;
@@ -613,18 +577,8 @@ button.bupr-edit-review-button {
     margin: 0;
 }
 
-@media(min-width: 768px) and (max-width: 1068px) {
-    #bupr-add-review-modal .modal-content {
-        min-width: 380px;
-    }
-}
-
-#bupr-add-review-modal .bupr-criteria-label span {
-    height: 35px;
-}
-
 .bupr-star-rate {
-    margin-left: 0px;
+    margin-inline-end: 0px;
 }
 
 .bupr-bp-member-review-no-popup-add-block #review_desc,
@@ -637,8 +591,8 @@ button.bupr-edit-review-button {
     width: 100%;
     margin: 0;
     max-width: 160px;
-    height: auto !important;
-    float: right;
+    height: auto;
+    float: inline-start;
 }
 
 .bp-member-add-form:after {
@@ -668,7 +622,7 @@ button.bupr-edit-review-button {
 /* Left-aligned review container for single member profile */
 .bupr-member-review-wrapper {
     margin: 10px 0;
-    text-align: right;
+    text-align: start;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -684,21 +638,22 @@ button.bupr-edit-review-button {
 
 .bupr-member-review-stars {
     display: inline-block;
-    margin-left: 10px;
+    margin-inline-end: 10px;
     position: relative;
     /* For the tooltip */
 }
 
 .bupr-member-tooltip::before {
     content: attr(data-tooltip);
+    /* Get the tooltip content from the custom attribute */
     position: absolute;
     bottom: 150%;
     right: 50%;
-    -webkit-transform: translateX(50%);
-    -ms-transform: translateX(50%);
-    transform: translateX(50%);
-    background-color: var(--bupr-tooltip-bg, #333);
-    color: var(--bupr-tooltip-text, #fff);
+    -webkit-transform: translate(50%, 0);
+    -ms-transform: translate(50%, 0);
+    transform: translate(50%, 0);
+    background-color: #333;
+    color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;
@@ -716,8 +671,8 @@ button.bupr-edit-review-button {
 
 .bupr-member-rating-text {
     font-size: 14px;
-    color: var(--bupr-text-lightness, #555);
-    margin-right: 5px;
+    color: #555;
+    margin-inline-start: 5px;
 }
 
 /* Disable alignment when legacy template is used, but exclude when body contains 'youzify' */
@@ -740,7 +695,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 /* Directory-specific styles */
 .bupr-directory-review-wrapper {
     margin: 0;
-    text-align: right;
+    text-align: start;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -767,21 +722,22 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 .bupr-directory-review-stars {
     display: inline-block;
-    margin-left: 10px;
+    margin-inline-end: 10px;
     position: relative;
     /* For the tooltip */
 }
 
 .bupr-directory-tooltip::before {
     content: attr(data-tooltip);
+    /* Get the tooltip content from the custom attribute */
     position: absolute;
     bottom: 150%;
     right: 50%;
-    -webkit-transform: translateX(50%);
-    -ms-transform: translateX(50%);
-    transform: translateX(50%);
-    background-color: var(--bupr-tooltip-bg, #333);
-    color: var(--bupr-tooltip-text, #fff);
+    -webkit-transform: translate(50%, 0);
+    -ms-transform: translate(50%, 0);
+    transform: translate(50%, 0);
+    background-color: #333;
+    color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;
@@ -799,8 +755,8 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 .bupr-directory-rating-text {
     font-size: 14px;
-    color: var(--bupr-text-lightness, #555);
-    margin-right: 5px;
+    color: #555;
+    margin-inline-start: 5px;
 }
 
 
@@ -830,7 +786,7 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 }
 
 .bb-grid .widget.buddypress div.item-options#bp-member-rating-list-options a {
-    margin-left: 1.25rem;
+    margin-inline-end: 1.25rem;
     margin-top: 10px;
 }
 
@@ -895,7 +851,7 @@ body[class*="youzify"].reviews .youzify-page-main-content .youzify-main-column d
 body[class*="youzify"].reviews .youzify-page-main-content .bupr-bp-member-reviews-block .bp-member-reviews,
 body[class*="youzify"].add-review .youzify-page-main-content .youzify-main-column .bupr-bp-member-review-no-popup-add-block {
     padding: 30px;
-    border-top: 1px solid var(--bupr-border-light, #eee);
+    border-top: 1px solid #eee;
     background-color: var(--reign-site-sections-bg-color);
     background-color: var(--yzfy-card-bg-color);
     margin: 0;
@@ -903,7 +859,7 @@ body[class*="youzify"].add-review .youzify-page-main-content .youzify-main-colum
 
 body[class*="youzify"] .youzify-page-main-content #bupr-reiew-edit button.bupr-edit-review-button,
 body[class*="youzify"].add-review .youzify-page-main-content button#bupr_save_review {
-    color: var(--bupr-bg-white, #fff);
+    color: #fff;
 }
 
 body[class*="youzify"] .youzify-page-main-content .bupr-bp-member-review-no-popup-add-block #review_desc,
@@ -933,7 +889,8 @@ body[class*="youzify"] #bupr-add-review-btn .add-review.button {
 
 /* Optionally, adjust the button's hover state */
 body[class*="youzify"] #bupr-add-review-btn .add-review.button:hover {
-    background-color: var(--bupr-primary-hover, #005177);
+    background-color: #005177;
+    /* Darken the background on hover */
 }
 
 .olympus-theme .bgr-submit-review,
@@ -961,15 +918,15 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
     .bupr-members-profiles .reviewer h4,
     .bupr-members-content {
-        margin: 0 !important;
+        margin: 0;
     }
 
     .rating-num {
-        margin-right: 0;
+        margin-inline-start: 0;
     }
 
     .rating-star {
-        margin-left: 10px;
+        margin-inline-end: 10px;
     }
 
     body[class*="youzify"] .youzify-page-main-content .bupr-criteria-label {
@@ -991,7 +948,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
-@media only screen and (max-width: 420px) {
+@media only screen and (max-width: 480px) {
     .multi-review {
         display: inline-block;
     }
@@ -1026,11 +983,11 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .rating {
-    color: var(--bupr-error-color, red);
+    color: red;
 }
 
 #bupr-reiew-edit button.bupr-edit-review-button {
-    padding: 6px 15px !important;
+    padding: 6px 15px;
 }
 
 .bp-member-add-form button#bupr_save_review {
@@ -1050,11 +1007,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-owner-reply {
-    background: linear-gradient(-135deg, var(--bupr-bg-light, #f8f9fa) 0%, var(--bupr-bg-lighter, #e9ecef) 100%);
-    border-right: 4px solid var(--bupr-primary-color, #007cba);
+    background: linear-gradient(-135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-inline-start: 4px solid #007cba;
     padding: 15px;
     margin-top: 10px;
-    border-radius: 8px 0 0 8px;
+    border-start-end-radius: 8px;
+    border-end-end-radius: 8px;
 }
 
 .bupr-reply-header {
@@ -1078,12 +1036,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-reply-author {
     font-weight: 600;
-    color: var(--bupr-text-primary, #1d2327);
+    color: #1d2327;
 }
 
 .bupr-reply-badge {
-    background: var(--bupr-primary-color, #007cba);
-    color: var(--bupr-bg-white, #fff);
+    background: #007cba;
+    color: #fff;
     font-size: 11px;
     padding: 3px 8px;
     border-radius: 12px;
@@ -1092,13 +1050,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-reply-date {
-    color: var(--bupr-text-muted, #666);
+    color: #666;
     font-size: 12px;
 }
 
 .bupr-reply-content {
     font-style: italic;
-    color: var(--bupr-text-primary, #333);
+    color: #333;
 }
 
 .bupr-reply-content p {
@@ -1111,8 +1069,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-show-reply-form {
     background: transparent;
-    border: 1px dashed var(--bupr-primary-color, #007cba);
-    color: var(--bupr-primary-color, #007cba);
+    border: 1px dashed #007cba;
+    color: #007cba;
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 4px;
@@ -1120,7 +1078,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-show-reply-form:hover {
-    background: var(--bupr-primary-light, #f0f7fc);
+    background: #f0f7fc;
 }
 
 .bupr-reply-form {
@@ -1130,16 +1088,24 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 .bupr-reply-textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid var(--bupr-border-color, #ddd);
+    border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
     min-height: 80px;
 }
 
 .bupr-reply-textarea:focus {
-    border-color: var(--bupr-primary-color, #007cba);
-    outline: none;
+    border-color: #007cba;
     box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
+}
+
+.bupr-reply-textarea:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.bupr-reply-textarea:focus-visible {
+    outline: 2px solid var(--bupr-focus, #007cba);
+    outline-offset: 2px;
 }
 
 .bupr-reply-actions {
@@ -1154,8 +1120,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-submit-reply {
-    background: var(--bupr-primary-color, #007cba);
-    color: var(--bupr-bg-white, #fff);
+    background: #007cba;
+    color: #fff;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -1163,12 +1129,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-submit-reply:hover {
-    background: var(--bupr-primary-hover, #005a87);
+    background: #005a87;
 }
 
 .bupr-cancel-reply {
-    background: var(--bupr-bg-lighter, #f0f0f1);
-    color: var(--bupr-text-secondary, #50575e);
+    background: #f0f0f1;
+    color: #50575e;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -1176,14 +1142,14 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-cancel-reply:hover {
-    background: var(--bupr-bg-lighter, #dcdcde);
+    background: #dcdcde;
 }
 
 .bupr-reply-spinner {
     width: 20px;
     height: 20px;
-    border: 2px solid var(--bupr-border-color, #ddd);
-    border-top-color: var(--bupr-primary-color, #007cba);
+    border: 2px solid #ddd;
+    border-top-color: #007cba;
     border-radius: 50%;
     -webkit-animation: bupr-spin 1s linear infinite;
     animation: bupr-spin 1s linear infinite;
@@ -1195,7 +1161,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-report-section {
     position: absolute;
-    left: 15px;
+    inset-inline-end: 15px;
     top: 15px;
 }
 
@@ -1204,8 +1170,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-report-button {
-    background: var(--bupr-bg-light, #f8f9fa);
-    border: 1px solid var(--bupr-border-color, #ddd);
+    background: #f8f9fa;
+    border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
     padding: 6px 12px;
@@ -1217,15 +1183,15 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     align-items: center;
     gap: 5px;
     font-size: 12px;
-    color: var(--bupr-text-muted, #666);
+    color: #666;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
 }
 
 .bupr-report-button:hover {
-    background: var(--bupr-error-light, #fff0f0);
-    border-color: var(--bupr-error-color, #dc3232);
-    color: var(--bupr-error-color, #dc3232);
+    background: #fff0f0;
+    border-color: #dc3232;
+    color: #dc3232;
 }
 
 .bupr-report-button .dashicons {
@@ -1247,13 +1213,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     -ms-flex-align: center;
     align-items: center;
     gap: 4px;
-    color: var(--bupr-success-color, #46b450);
+    color: #46b450;
     font-size: 12px;
     font-weight: 500;
     padding: 6px 12px;
-    background: var(--bupr-success-bg, #ecfdf5);
+    background: #ecfdf5;
     border-radius: 4px;
-    border: 1px solid var(--bupr-success-bg, #d4edda);
+    border: 1px solid #d4edda;
 }
 
 .bupr-report-success .dashicons {
@@ -1263,9 +1229,9 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 /* Legacy support for old class names */
-.bupr-flag-section { position: absolute; left: 15px; top: 15px; }
-.bupr-flag-button { background: var(--bupr-bg-light, #f8f9fa); border: 1px solid var(--bupr-border-color, #ddd); border-radius: 4px; cursor: pointer; padding: 6px 12px; }
-.bupr-flag-success { display: inline-flex; align-items: center; gap: 4px; color: var(--bupr-success-color, #46b450); font-size: 12px; }
+.bupr-flag-section { position: absolute; inset-inline-end: 15px; top: 15px; }
+.bupr-flag-button { background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; padding: 6px 12px; }
+.bupr-flag-success { display: inline-flex; align-items: center; gap: 4px; color: #46b450; font-size: 12px; }
 
 /* Flag Modal */
 .bupr-flag-modal {
@@ -1288,7 +1254,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-modal-content {
-    background: var(--bupr-bg-white, #fff);
+    background: #fff;
     border-radius: 8px;
     max-width: 400px;
     width: 90%;
@@ -1306,13 +1272,13 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     -ms-flex-align: center;
     align-items: center;
     padding: 15px 20px;
-    border-bottom: 1px solid var(--bupr-border-color, #ddd);
+    border-bottom: 1px solid #ddd;
 }
 
 .bupr-flag-modal-header h3 {
     margin: 0;
     font-size: 18px;
-    color: var(--bupr-text-primary, #1d2327);
+    color: #1d2327;
 }
 
 .bupr-flag-modal-close {
@@ -1320,12 +1286,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: var(--bupr-text-muted, #666);
+    color: #666;
     line-height: 1;
 }
 
 .bupr-flag-modal-close:hover {
-    color: var(--bupr-error-color, #dc3232);
+    color: #dc3232;
 }
 
 .bupr-flag-modal-body {
@@ -1334,7 +1300,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-flag-modal-body p {
     margin: 0 0 15px;
-    color: var(--bupr-text-secondary, #50575e);
+    color: #50575e;
 }
 
 .bupr-flag-reasons {
@@ -1357,7 +1323,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     align-items: center;
     gap: 10px;
     padding: 10px 15px;
-    background: var(--bupr-bg-lightest, #f9f9f9);
+    background: #f9f9f9;
     border-radius: 4px;
     cursor: pointer;
     -webkit-transition: background 0.2s;
@@ -1365,7 +1331,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-reason-option:hover {
-    background: var(--bupr-bg-lighter, #f0f0f1);
+    background: #f0f0f1;
 }
 
 .bupr-flag-reason-option input[type="radio"] {
@@ -1378,15 +1344,15 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     display: flex;
     gap: 10px;
     padding: 15px 20px;
-    border-top: 1px solid var(--bupr-border-color, #ddd);
+    border-top: 1px solid #ddd;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
 }
 
 .bupr-flag-submit {
-    background: var(--bupr-error-color, #dc3232);
-    color: var(--bupr-bg-white, #fff);
+    background: #dc3232;
+    color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -1394,12 +1360,12 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-submit:hover {
-    background: var(--bupr-error-color, #a00);
+    background: #a00;
 }
 
 .bupr-flag-cancel {
-    background: var(--bupr-bg-lighter, #f0f0f1);
-    color: var(--bupr-text-secondary, #50575e);
+    background: #f0f0f1;
+    color: #50575e;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -1407,14 +1373,14 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-flag-cancel:hover {
-    background: var(--bupr-bg-lighter, #dcdcde);
+    background: #dcdcde;
 }
 
 .bupr-flag-spinner {
     width: 20px;
     height: 20px;
-    border: 2px solid var(--bupr-border-color, #ddd);
-    border-top-color: var(--bupr-error-color, #dc3232);
+    border: 2px solid #ddd;
+    border-top-color: #dc3232;
     border-radius: 50%;
     -webkit-animation: bupr-spin 1s linear infinite;
     animation: bupr-spin 1s linear infinite;
@@ -1467,110 +1433,418 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     }
 }
 
-/* Hide empty feedback message in Add Review form */
-.add-review #message.bp-feedback:has(>p:empty) {
-    display: none !important;
-}
-
-.add-review div#message.add_review_msg {
-    display: flex !important;
-}
-
-/* ========== Top Members List [bupr_display_top_members] ========== */
-
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-main {
+/* ─── Front-end toast (replaces native alert(), 3.8.0) ─────────────── */
+.bupr-front-toast-host {
+    position: fixed;
+    inset-inline-end: 24px;
+    bottom: 24px;
+    z-index: 100000;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
+    gap: 8px;
+    pointer-events: none;
 }
 
-.bupr-shortcode-top-members-contents.bupr_members_review_setting ul.bupr-member-main .bupr-members {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    border-radius: 16px;
-    background: var(--bupr-bg-white, #ffffff);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-members:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-}
-
-/* Avatar */
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-img-widget img {
-    width: 60px;
-    height: 60px;
-    border-radius: 14px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-members:hover .bupr-img-widget img {
-    transform: scale(1.05);
-}
-
-/* Content area */
-.bupr-shortcode-top-members-contents.bupr_members_review_setting ul.bupr-member-main li.bupr-members .bupr-content-widget {
-    flex: 1;
-    margin-right: 0;
-}
-
-/* Member Name */
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-title a {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--bupr-text-primary, #1a1a1a);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-title a:hover {
-    color: var(--bupr-accent-color, #4f46e5);
-}
-
-/* Rating + Meta Row */
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-member-rating {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 6px;
-}
-
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-star-rate {
+.bupr-front-toast {
+    background: #1e293b;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 6px;
     font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    min-width: 220px;
+    max-width: 360px;
+    pointer-events: auto;
+    transform: translateY(8px);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
 }
 
-/* Rating Text */
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta {
+.bupr-front-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.bupr-front-toast--success {
+    background: #16a34a;
+}
+
+.bupr-front-toast--error {
+    background: #dc2626;
+}
+
+/*--------------------------------------------------------------
+# Design tokens (light default)
+# Light mode reads these --bupr-* tokens the same way dark mode does, so a
+# theme/site can override any surface by setting --bupr-* (or the underlying
+# --bx-color-*). Values equal the historical light hex fallbacks, so this
+# block changes nothing visually on its own - it just makes light mode
+# themeable instead of hardcoded. The dark-mode block below re-points the
+# same tokens to the dark palette.
+--------------------------------------------------------------*/
+:root {
+    --bupr-card-bg: var(--bx-color-bg-elevated, #fff);
+    --bupr-chip-bg: var(--bx-color-bg-muted, #f9f9f9);
+    --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #f0f0f1);
+    --bupr-field-bg: var(--bx-color-bg, #fff);
+    --bupr-text: var(--bx-color-fg, #1d2327);
+    --bupr-text-muted: var(--bx-color-fg-muted, #50575e);
+    --bupr-text-subtle: var(--bx-color-fg-subtle, #666);
+    --bupr-border: var(--bx-color-border, rgba(0, 0, 0, 0.1));
+    --bupr-reply-bg: var(--bx-color-bg-muted, #f8f9fa);
+    --bupr-reply-hover-bg: #f0f7fc;
+    --bupr-success-bg: #ecfdf5;
+    --bupr-success-fg: #46b450;
+    --bupr-success-border: #d4edda;
+    --bupr-danger-bg: #fff0f0;
+    --bupr-danger-fg: #dc3232;
+    --bupr-danger-border: #f5c6cb;
+    --bupr-focus: #2271b1;
+}
+
+/*--------------------------------------------------------------
+# Dark mode
+# BuddyX 5.1+ / BuddyX Pro / Reign expose dark mode as
+# html[data-bx-mode="dark"]. Older builds toggle body.buddyx-dark-theme
+# (LearnDash focus mode), body.dark-mode (legacy BuddyX) or body.dark-scheme
+# (Reign customizer). Dark mode is keyed ONLY off these explicit class/attr
+# signals - never the OS-level prefers-color-scheme (owner standing decision:
+# the theme, not the OS, owns the dark toggle). Each trigger only sets the
+# --bupr-* tokens below; the component rules that consume them are written
+# once and fall back to the exact light values, so light mode is unchanged.
+# Reign exposes no --bx-color-* vars, so every dark fallback is a dark literal.
+--------------------------------------------------------------*/
+html[data-bx-mode="dark"],
+body.buddyx-dark-theme,
+body.dark-mode,
+body.dark-scheme {
+    --bupr-card-bg: var(--bx-color-bg-elevated, #1e1e1e);
+    --bupr-chip-bg: var(--bx-color-bg-muted, #272727);
+    --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #313131);
+    --bupr-field-bg: var(--bx-color-bg, #161616);
+    --bupr-text: var(--bx-color-fg, #e6e6e6);
+    --bupr-text-muted: var(--bx-color-fg-muted, #a6a6a6);
+    --bupr-text-subtle: var(--bx-color-fg-subtle, #8a8a8a);
+    --bupr-border: var(--bx-color-border, rgba(255, 255, 255, 0.15));
+    --bupr-reply-bg: var(--bx-color-bg-muted, #232323);
+    --bupr-reply-hover-bg: rgba(0, 124, 186, 0.15);
+    --bupr-success-bg: rgba(70, 180, 80, 0.15);
+    --bupr-success-fg: #7fd58b;
+    --bupr-success-border: rgba(70, 180, 80, 0.4);
+    --bupr-danger-bg: rgba(220, 50, 50, 0.15);
+    --bupr-danger-fg: #ff8a8a;
+    --bupr-danger-border: rgba(220, 50, 50, 0.4);
+}
+
+/* Review rows: dividers + inherited text. Fallbacks equal the light values. */
+.bupr-row {
+    border-color: var(--bupr-border, rgba(0, 0, 0, 0.1));
+}
+
+/* Review cards (profile tab + nouveau listings). */
+.bp-nouveau .bupr-row {
+    background: var(--bupr-card-bg, #fff);
+    color: var(--bupr-text, inherit);
+}
+
+/* Edit / flag review popups. */
+.bupr-review-modal-content {
+    background-color: var(--bupr-card-bg, white);
+    color: var(--bupr-text, inherit);
+}
+
+.bupr-flag-modal-content {
+    background: var(--bupr-card-bg, #fff);
+    color: var(--bupr-text, inherit);
+}
+
+/* Flag modal chrome. */
+.bupr-flag-modal-header,
+.bupr-flag-modal-footer {
+    border-color: var(--bupr-border, #ddd);
+}
+
+.bupr-flag-modal-header h3 {
+    color: var(--bupr-text, #1d2327);
+}
+
+.bupr-flag-modal-close {
+    color: var(--bupr-text-muted, #666);
+}
+
+.bupr-flag-modal-body p {
+    color: var(--bupr-text-muted, #50575e);
+}
+
+.bupr-flag-reason-option {
+    background: var(--bupr-chip-bg, #f9f9f9);
+    color: var(--bupr-text, inherit);
+}
+
+.bupr-flag-reason-option:hover {
+    background: var(--bupr-chip-bg-hover, #f0f0f1);
+}
+
+/* Neutral (cancel) buttons in flag modal + reply form. */
+.bupr-flag-cancel,
+.bupr-cancel-reply {
+    background: var(--bupr-chip-bg, #f0f0f1);
+    color: var(--bupr-text, #50575e);
+}
+
+.bupr-flag-cancel:hover,
+.bupr-cancel-reply:hover {
+    background: var(--bupr-chip-bg-hover, #dcdcde);
+}
+
+/* Owner reply block. */
+.bupr-owner-reply {
+    background: var(--bupr-reply-bg, linear-gradient(-135deg, #f8f9fa 0%, #e9ecef 100%));
+}
+
+.bupr-reply-author {
+    color: var(--bupr-text, #1d2327);
+}
+
+.bupr-reply-content {
+    color: var(--bupr-text-muted, #333);
+}
+
+.bupr-reply-date {
+    color: var(--bupr-text-subtle, #666);
+}
+
+.bupr-reply-textarea {
+    background: var(--bupr-field-bg, #fff);
+    color: var(--bupr-text, inherit);
+    border-color: var(--bupr-border, #ddd);
+}
+
+.bupr-show-reply-form:hover {
+    background: var(--bupr-reply-hover-bg, #f0f7fc);
+}
+
+/* Report / flag trigger buttons. */
+.bupr-report-button,
+.bupr-flag-button {
+    background: var(--bupr-chip-bg, #f8f9fa);
+    border-color: var(--bupr-border, #ddd);
+    color: var(--bupr-text-muted, #666);
+}
+
+.bupr-report-button:hover {
+    background: var(--bupr-danger-bg, #fff0f0);
+    border-color: #dc3232;
+    color: var(--bupr-danger-fg, #dc3232);
+}
+
+/* Report success chip. */
+.bupr-report-success {
+    background: var(--bupr-success-bg, #ecfdf5);
+    border-color: var(--bupr-success-border, #d4edda);
+    color: var(--bupr-success-fg, #46b450);
+}
+
+/* Inline success / error notices (add-review form + submit confirmation). */
+.success_review_msg {
+    background-color: var(--bupr-success-bg, #DFF2BF);
+    color: var(--bupr-success-fg, #4F8A10);
+}
+
+.bupr-error {
+    background-color: var(--bupr-danger-bg, hsl(0, 43%, 91%));
+    border-color: var(--bupr-danger-border, hsl(350, 44%, 86%));
+    color: var(--bupr-danger-fg, hsl(1, 44%, 46%));
+}
+
+/* Rating widget squares. */
+.br-theme-bars-square .bupr-rating-widget a {
+    background-color: var(--bupr-chip-bg, white);
+}
+
+/* Pagination chips. */
+.bupr-posts-pagination .page-numbers {
+    background: var(--bupr-chip-bg, #fff);
+    color: var(--bupr-text, inherit);
+    border-color: var(--bupr-border, rgba(0, 0, 0, 0.1));
+}
+
+/*--------------------------------------------------------------
+# Merged from legacy bupr-reviews.css (3.8.0 consolidation)
+# The old file mixed live review-list/add-form styles with a dead modal
+# system (.modal/.close/@keyframes animatetop/#bupr_review_success_msg/
+# .review-types/.bupr-success) that no template renders. Only the live
+# rules are kept here, ported to --bupr-* tokens + logical properties +
+# focus-visible. bupr-reviews.css is now a deprecation stub and no longer
+# enqueued (see includes/bupr-scripts.php).
+--------------------------------------------------------------*/
+#bp-member-reviews-list {
+    width: 100%;
+}
+
+.bp-member-reviews {
+    margin-top: 25px;
+}
+
+.bp-member-add-form textarea {
+    width: 100%;
+    padding: 10px;
+    background: var(--bupr-field-bg, #fff);
+    color: var(--bupr-text, inherit);
+    border-color: var(--bupr-border, #ddd);
+}
+
+.bp-member-add-form input {
+    width: 100%;
+    margin-inline-end: 5px;
+}
+
+.bp-member-add-form button {
+    width: 100%;
     display: block;
-    margin-top: 6px;
-    font-size: 13px;
-    color: var(--bupr-text-light, #777);
+    margin: 0 auto;
 }
 
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta a {
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--bupr-text-primary, #111);
+#bupr_member_review_id {
+    padding: 10px;
+    padding-inline-start: 10px;
+    max-width: 300px;
+    width: 100%;
+    border: 1px var(--bupr-border, #e3e3e3) solid;
+    background: var(--bupr-field-bg, #fff);
+    color: var(--bupr-text, inherit);
+    font-family: inherit;
 }
 
-.bupr-shortcode-top-members-contents.bupr_members_review_setting .bupr-meta a:hover {
-    color: var(--bupr-accent-color, #4f46e5);
+.bp-member-add-form p {
+    text-align: start;
+    margin: 10px 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .bupr-shortcode-top-members-contents.bupr_members_review_setting ul.bupr-member-main .bupr-members {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+.bp-member-add-form p button {
+    width: 100%;
 }
+
+/* Add float to the shared .bupr-criteria-label span (definition above adds size). */
+.bupr-criteria-label span {
+    float: inline-start;
+}
+
+.bupr-add-review {
+    margin-inline-start: 5px;
+}
+
+.bupr-bp-member-review-no-popup-add-block {
+    display: block;
+}
+
+.bupr-multi-review {
+    margin: 15px;
+}
+
+.multi-review {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0 0;
+    background: transparent;
+}
+
+.multi-review > div {
+    padding: 0px;
+}
+
+.bupr-directory-tooltip span.bupr-star-rate {
+    font-size: 15px;
+}
+
+.bupr-error {
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--bupr-danger-bg, hsl(0, 43%, 91%));
+    border-color: var(--bupr-danger-border, hsl(350, 44%, 86%));
+    color: var(--bupr-danger-fg, hsl(1, 44%, 46%));
+}
+
+.bupr-review-description a {
+    margin: 10px 0;
+    display: inline-block;
+    text-decoration: underline;
+}
+
+.bupr_not_give_review p {
+    padding: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    color: #e84242;
+}
+
+/* Hide the BuddyBoss default more-actions button on the reviews list. */
+.members-list li .more-action-button {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+# Interactive states (STATE-1)
+# Consistent keyboard :focus-visible, :disabled and :active press feedback
+# for every interactive control. Focus rings use the --bupr-focus token.
+--------------------------------------------------------------*/
+.bupr-pagination a:focus-visible,
+.bupr-edit-review-button:focus-visible,
+.bupr-report-button:focus-visible,
+.bupr-flag-submit:focus-visible,
+.bupr-flag-cancel:focus-visible,
+.bupr-flag-modal-close:focus-visible,
+.bupr-submit-reply:focus-visible,
+.bupr-flag-reason-option:focus-visible,
+.bp-member-add-form button:focus-visible,
+#bupr_save_review:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
+}
+
+.bupr-edit-review-button:active,
+.bupr-report-button:active,
+.bupr-flag-submit:active,
+.bupr-flag-cancel:active,
+.bupr-submit-reply:active,
+.bp-member-add-form button:active,
+#bupr_save_review:active {
+    -webkit-transform: translateY(1px);
+    transform: translateY(1px);
+}
+
+.bupr-flag-reason-option:active {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+}
+
+.bupr-edit-review-button:disabled,
+.bupr-report-button:disabled,
+.bupr-flag-submit:disabled,
+.bupr-flag-cancel:disabled,
+.bupr-submit-reply:disabled,
+.bp-member-add-form button:disabled,
+#bupr_save_review:disabled,
+.bupr-edit-review-button[disabled],
+.bp-member-add-form button[disabled],
+#bupr_save_review[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    -webkit-transform: none;
+    transform: none;
+    pointer-events: none;
+}
+
+/* ACCESS-1: keyboard focus ring for the star rating radios. */
+.member_stars:focus-visible,
+.member-edit-stars:focus-visible {
+    outline: 2px solid var(--bupr-focus, #2271b1);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 /*# sourceMappingURL=bupr-front.rtl.css.map */

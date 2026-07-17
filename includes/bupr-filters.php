@@ -230,9 +230,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$this->render_rating_stars( $bupr_avg_rating, $bupr_reviews_count, $user_id, 'directory' );
 			} else {
 				// Display just the review count if no rating.
-				$review_string = $bupr_reviews_count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
+				$review_string = sprintf(
+					/* translators: %s: Number of reviews. */
+					_n( '%s review', '%s reviews', $bupr_reviews_count, 'bp-member-reviews' ),
+					number_format_i18n( $bupr_reviews_count )
+				);
 				echo '<div><span class="bupr-directory-rating-text">' .
-					esc_html( $bupr_reviews_count . ' ' . $review_string ) .
+					esc_html( $review_string ) .
 					'</span></div>';
 			}
 		}
@@ -260,9 +264,20 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			$stars_class   = 'bupr-' . $context . '-review-stars';
 			$tooltip_class = 'bupr-' . $context . '-tooltip';
 
-			// Determine the appropriate text for the rating count.
-			$rating_string = $count > 1 ? 'ratings' : 'rating';
-			$review_string = $count > 1 ? esc_html__( ' reviews )', 'bp-member-reviews' ) : esc_html__( ' review )', 'bp-member-reviews' );
+			// Whole-phrase strings so translators control word order and plural rules.
+			$tooltip_text = sprintf(
+				/* translators: 1: Average rating value (e.g. "4.50"). 2: Number of ratings. */
+				_n( 'Average rating: %1$s based on %2$s rating', 'Average rating: %1$s based on %2$s ratings', $count, 'bp-member-reviews' ),
+				$rating,
+				number_format_i18n( $count )
+			);
+
+			$rating_text = sprintf(
+				/* translators: 1: Average rating value out of 5 (e.g. "4.50"). 2: Number of reviews. */
+				_n( '%1$s/5 ( %2$s review )', '%1$s/5 ( %2$s reviews )', $count, 'bp-member-reviews' ),
+				$rating,
+				number_format_i18n( $count )
+			);
 
 			// Start output buffering for better performance.
 			ob_start();
@@ -287,7 +302,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					<span itemprop="url" content="<?php echo esc_url( bp_core_get_userlink( 'profile' === $context ? bp_displayed_user_id() : $user_id, false, true ) ); ?>"></span>
 
 					<div class="<?php echo esc_attr( $stars_class ); ?> <?php echo esc_attr( $tooltip_class ); ?>"
-						data-tooltip="Average rating: <?php echo esc_attr( $rating ); ?> based on <?php echo esc_attr( $count . ' ' . $rating_string ); ?>">
+						data-tooltip="<?php echo esc_attr( $tooltip_text ); ?>">
 						<?php
 						// Display the stars.
 						for ( $i = 1; $i <= $stars_on; $i++ ) {
@@ -301,7 +316,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						}
 						?>
 						<span class="bupr-<?php echo esc_attr( $context ); ?>-rating-text">
-							<?php echo esc_html( $rating ) . '/5 ( ' . esc_html( $count ) . esc_html( $review_string ); ?>
+							<?php echo esc_html( $rating_text ); ?>
 						</span>
 					</div>
 				</div>
@@ -560,15 +575,35 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				// Cache the values.
 				update_user_meta( $user_id, 'bupr_aggregate_rating', $bupr_avg_rating );
 				update_user_meta( $user_id, 'bupr_review_count', $bupr_reviews_count );
+			} elseif ( (int) $bupr_reviews_count > 0 && ( '' === (string) $bupr_avg_rating || (float) $bupr_avg_rating <= 0 )
+				&& false === get_transient( 'bupr_drift_checked_' . $user_id ) ) {
+				// Defensive guard against drifted meta (positive count but an
+				// empty/zero aggregate) - e.g. orphaned meta left by review
+				// deletions on pre-3.8 installs, which renders "0.00/5 (1
+				// review)" with no reviews. Lazily rebuild from the real posts.
+				// Throttled per user so a member with a legitimately unrated
+				// review does not recalc on every profile view.
+				$rating_data        = $this->calculate_user_rating( $user_id );
+				$bupr_avg_rating    = $rating_data['average'];
+				$bupr_reviews_count = $rating_data['count'];
+
+				update_user_meta( $user_id, 'bupr_aggregate_rating', $bupr_avg_rating );
+				update_user_meta( $user_id, 'bupr_review_count', $bupr_reviews_count );
+
+				set_transient( 'bupr_drift_checked_' . $user_id, 1, DAY_IN_SECONDS );
 			}
 
 			// Display the rating if there are reviews.
 			if ( $bupr_reviews_count > 0 ) {
 				$this->render_rating_stars( $bupr_avg_rating, $bupr_reviews_count, $user_id, 'member' );
 			} else {
-				$review_string = ' ' . esc_html__( 'reviews', 'bp-member-reviews' );
+				$review_string = sprintf(
+					/* translators: %s: Number of reviews. */
+					_n( '%s review', '%s reviews', $bupr_reviews_count, 'bp-member-reviews' ),
+					number_format_i18n( $bupr_reviews_count )
+				);
 				echo '<div><span class="bupr-member-rating-text">' .
-					esc_html( $bupr_reviews_count . $review_string ) .
+					esc_html( $review_string ) .
 					'</span></div>';
 			}
 		}
@@ -1192,7 +1227,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$default_avatar = apply_filters( 'bupr_change_default_avatar', 'mystery' );  // Could also use identicon, monsterid, retro, etc.
 					$gravatar_url   = 'https://www.gravatar.com/avatar/?s=' . $size . '&d=' . $default_avatar;
 
-					$gravatar_image = '<img src="' . esc_url( $gravatar_url ) . '" class="avatar photo" alt="Custom Default Gravatar" />';
+					$gravatar_image = '<img src="' . esc_url( $gravatar_url ) . '" class="avatar photo" alt="' . esc_attr__( 'Custom Default Gravatar', 'bp-member-reviews' ) . '" />';
 				}
 			}
 

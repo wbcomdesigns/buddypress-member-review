@@ -358,14 +358,20 @@ function bupr_recalculate_user_reviews_batch( $batch_size = 50, $paged = 1 ) {
 }
 
 /**
- * Schedule a cron job for recalculating user reviews in batches.
+ * Schedule the batch review-recalculation cron.
+ *
+ * Single source of truth for the schedule (3.8.0). The activation hook no
+ * longer schedules this event, and the legacy `wp`-hook hourly registration
+ * has been replaced by this guarded `init` registration at the `daily`
+ * interval — so the hook is registered exactly once, at one interval, with
+ * a deterministic outcome regardless of activation vs. upgrade path.
  */
 function bupr_schedule_review_recalculation() {
 	if ( ! wp_next_scheduled( 'bupr_cron_recalculate_user_reviews_batch' ) ) {
-		wp_schedule_event( time(), 'hourly', 'bupr_cron_recalculate_user_reviews_batch' );
+		wp_schedule_event( time(), 'daily', 'bupr_cron_recalculate_user_reviews_batch' );
 	}
 }
-add_action( 'wp', 'bupr_schedule_review_recalculation' );
+add_action( 'init', 'bupr_schedule_review_recalculation' );
 
 /**
  * Perform batch recalculation via cron job.
@@ -385,6 +391,152 @@ function bupr_cron_recalculate_user_reviews_batch() {
 		update_option( 'bupr_current_batch', $paged + 1 );
 	}
 }
+
+/**
+ * Process one batch of the stale-meta repair migration.
+ *
+ * Unlike bupr_recalculate_user_reviews_batch() (which walks members that
+ * currently HAVE published reviews), this walks members that carry the cached
+ * `bupr_review_count` usermeta. That set includes orphans whose reviews were
+ * deleted under pre-3.8 versions - before delete-time invalidation existed -
+ * leaving a stale non-zero count with a 0 aggregate. Recalculating each rebuilds
+ * the count/aggregate from the actual review posts (0/0 for a true orphan).
+ *
+ * @since 3.8.0
+ *
+ * @param int $batch_size Users to process per batch.
+ * @param int $paged      1-based batch number.
+ * @return int Number of users processed in this batch.
+ */
+function bupr_meta_repair_process_batch( $batch_size = 50, $paged = 1 ) {
+	global $wpdb;
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time migration over an indexed meta_key.
+	$user_ids = $wpdb->get_col(
+		$wpdb->prepare(
+			"SELECT user_id FROM {$wpdb->usermeta}
+			 WHERE meta_key = 'bupr_review_count'
+			 ORDER BY user_id ASC
+			 LIMIT %d, %d",
+			( $paged - 1 ) * $batch_size,
+			$batch_size
+		)
+	);
+
+	foreach ( $user_ids as $user_id ) {
+		if ( is_numeric( $user_id ) ) {
+			bupr_recalculate_user_reviews_for_user( (int) $user_id );
+		}
+	}
+
+	return count( $user_ids );
+}
+
+/**
+ * Count members carrying the cached review-count usermeta.
+ *
+ * Used to decide whether the one-time repair migration runs inline (small base)
+ * or is deferred to Action Scheduler / WP-Cron (large base).
+ *
+ * @since 3.8.0
+ *
+ * @return int Number of users with the `bupr_review_count` usermeta.
+ */
+function bupr_meta_repair_count_members() {
+	global $wpdb;
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time migration count over an indexed meta_key.
+	return (int) $wpdb->get_var(
+		"SELECT COUNT(*) FROM {$wpdb->usermeta} WHERE meta_key = 'bupr_review_count'"
+	);
+}
+
+/**
+ * One-time migration: repair stale review count/aggregate usermeta.
+ *
+ * Reviews deleted under pre-3.8 versions left orphaned `bupr_review_count` /
+ * `bupr_aggregate_rating` usermeta (e.g. count stuck at 1 while the aggregate is
+ * 0), so a profile renders "0.00/5 (1 review)" with no reviews. Current delete
+ * paths invalidate correctly, but nothing repaired meta that had already drifted
+ * on existing installs. This runs exactly once per install to rebuild them.
+ *
+ * Gate is the `bupr_meta_repair_v1_done` flag (set here on completion, and set
+ * up-front on fresh activations which have no drift). Deliberately NOT gated on
+ * the stored plugin version, since an install may already be on 3.8.0 yet still
+ * carry drift caused by an earlier version.
+ *
+ * @since 3.8.0
+ *
+ * @return void
+ */
+function bupr_maybe_run_meta_repair_migration() {
+	if ( 'yes' === get_option( 'bupr_meta_repair_v1_done' ) ) {
+		return;
+	}
+
+	$batch_size = 50;
+
+	// Large base: defer to the background so admin_init is never blocked.
+	if ( bupr_meta_repair_count_members() > ( $batch_size * 5 ) ) {
+		update_option( 'bupr_meta_repair_paged', 1 );
+		bupr_schedule_meta_repair_batch();
+
+		// Mark done so the migration is kicked off exactly once; the scheduled
+		// chain owns completion (leaderboard flush) from here.
+		update_option( 'bupr_meta_repair_v1_done', 'yes' );
+		return;
+	}
+
+	// Small base: repair inline right now.
+	$paged = 1;
+	do {
+		$processed = bupr_meta_repair_process_batch( $batch_size, $paged );
+		++$paged;
+	} while ( $processed >= $batch_size );
+
+	bupr_flush_top_members_cache();
+	update_option( 'bupr_meta_repair_v1_done', 'yes' );
+}
+add_action( 'admin_init', 'bupr_maybe_run_meta_repair_migration' );
+
+/**
+ * Queue the next meta-repair batch, preferring Action Scheduler.
+ *
+ * @since 3.8.0
+ *
+ * @return void
+ */
+function bupr_schedule_meta_repair_batch() {
+	if ( function_exists( 'as_enqueue_async_action' ) ) {
+		as_enqueue_async_action( 'bupr_meta_repair_batch', array(), 'bupr-member-review' );
+	} else {
+		wp_schedule_single_event( time() + MINUTE_IN_SECONDS, 'bupr_meta_repair_batch' );
+	}
+}
+
+/**
+ * Process one deferred meta-repair batch, then reschedule until complete.
+ *
+ * @since 3.8.0
+ *
+ * @return void
+ */
+function bupr_run_meta_repair_batch() {
+	$batch_size = 50;
+	$paged      = (int) get_option( 'bupr_meta_repair_paged', 1 );
+
+	$processed = bupr_meta_repair_process_batch( $batch_size, $paged );
+
+	if ( $processed >= $batch_size ) {
+		update_option( 'bupr_meta_repair_paged', $paged + 1 );
+		bupr_schedule_meta_repair_batch();
+	} else {
+		// Done: the leaderboard reflects the rebuilt aggregates now.
+		delete_option( 'bupr_meta_repair_paged' );
+		bupr_flush_top_members_cache();
+	}
+}
+add_action( 'bupr_meta_repair_batch', 'bupr_run_meta_repair_batch' );
 
 /**
  * Update the activity action with youzify.
@@ -422,6 +574,12 @@ function bupr_clear_review_caches( $post_id ) {
 		return;
 	}
 
+	// Delete this review's BuddyPress notifications so they don't linger as
+	// actor-less "posted a review" entries linking nowhere once it's gone.
+	if ( function_exists( 'bupr_delete_review_notifications' ) ) {
+		bupr_delete_review_notifications( $post_id );
+	}
+
 	// Get the reviewed user ID.
 	$user_id = get_post_meta( $post_id, 'linked_bp_member', true );
 
@@ -450,12 +608,30 @@ function bupr_clear_review_caches( $post_id ) {
 
 		// Force recalculation.
 		bupr_recalculate_user_reviews_for_user( $user_id );
+
+		// The aggregate meta changed, so the top-members leaderboard is stale.
+		bupr_flush_top_members_cache();
 	}
 }
 
 add_action( 'before_delete_post', 'bupr_clear_review_caches' );
 add_action( 'trashed_post', 'bupr_clear_review_caches' );
 add_action( 'untrashed_post', 'bupr_clear_review_caches' );
+
+/**
+ * Flush the cached [bupr_display_top_members] shortcode results.
+ *
+ * The shortcode caches its CAST()-ordered usermeta query in transients keyed
+ * by a version salt (see BUPR_Shortcodes::bupr_display_top_members_display()).
+ * Bumping the salt invalidates every attribute variation in O(1); the stale
+ * transients then expire naturally via their TTL.
+ *
+ * @since 3.8.0
+ */
+function bupr_flush_top_members_cache() {
+	update_option( 'bupr_top_members_cache_ver', (string) microtime( true ), false );
+}
+add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
 
 /**
  * Handle review status transitions to trigger cache invalidation.
@@ -488,6 +664,9 @@ function bupr_handle_review_status_transition( $new_status, $old_status, $post )
 	$status_triggers = array( 'publish', 'draft', 'pending', 'trash' );
 	if ( in_array( $new_status, $status_triggers, true ) || in_array( $old_status, $status_triggers, true ) ) {
 		bupr_recalculate_user_reviews_for_user( $user_id );
+
+		// The aggregate meta changed, so the top-members leaderboard is stale.
+		bupr_flush_top_members_cache();
 	}
 }
 add_action( 'transition_post_status', 'bupr_handle_review_status_transition', 10, 3 );

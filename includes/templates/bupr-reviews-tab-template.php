@@ -98,7 +98,7 @@ $reviews = new WP_Query( $args );
 											$size       = bp_core_avatar_full_width();
 											$avatar_url = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=' . $size;
 										}
-										echo "<img src='" . esc_url( $avatar_url ) . "' class='avatar avatar-96 photo' alt='Profile Photo' width='96' height='96'></img>";
+										echo "<img src='" . esc_url( $avatar_url ) . "' class='avatar avatar-96 photo' alt='" . esc_attr__( 'Profile Photo', 'bp-member-reviews' ) . "' width='96' height='96'></img>";
 									} else {
 
 										echo bp_core_fetch_avatar( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

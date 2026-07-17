@@ -11,7 +11,7 @@
 }
 
 .wbcom-wrap .notice.notice-error.is-dismissible.learndash-license-is-dismissible {
-    display: none !important;
+    display: none;
 }
 
 .bupr-admin-settings-spinner {
@@ -20,7 +20,7 @@
 }
 
 .bupr-btn-ajax {
-    color: #66c6e4 !important;
+    color: #66c6e4;
 }
 
 #bupr_settings_updated {
@@ -34,7 +34,7 @@
 }
 
 .bupr-remove {
-    margin: 10px 0px !important;
+    margin: 10px 0px;
 }
 
 .bupr-widget-class p {
@@ -142,21 +142,21 @@
 .bupr-criteria .bupr-delete-tag input[type=button],
 #bupr-add-criteria-action input#bupr-btnAdd,
 #bupr-admin-row-criteria input.bupr-remove.button.button-secondary {
-    padding: 12px 30px !important;
+    padding: 12px 30px;
     font-size: 15px;
     background: #ee1313;
-    margin-left: 35px !important;
+    margin-left: 35px;
     text-shadow: none;
     font-weight: 600;
-    width: auto !important;
+    width: auto;
     color: #fff;
     line-height: 1;
     border: 0;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
     box-shadow: 0px 8px 20px rgba(32, 53, 85, 0.35);
-    border-radius: 12px !important;
-    height: auto !important;
+    border-radius: 12px;
+    height: auto;
 }
 
 .bupr-criteria .bupr-delete-tag input[type=button]:hover,
@@ -165,7 +165,7 @@
 }
 
 #bupr-add-criteria-action input#bupr-btnAdd {
-    padding: 16px 30px !important;
+    padding: 16px 30px;
     margin-bottom: 10px;
     margin-top: 10px;
     background: #08c462;
@@ -319,8 +319,8 @@ button.bupr-accordion.active::after {
 
 /* custom css for switch */
 .bupr-switch-custom {
-    margin: 0 10px !important;
-    margin-top: 6px !important;
+    margin: 0 10px;
+    margin-top: 6px;
 }
 
 .buprcriteria .bupr-switch {
@@ -329,13 +329,13 @@ button.bupr-accordion.active::after {
 
 @media(max-width: 781px) {
     .buprcriteria input:checked+.bupr-slider::before {
-        -webkit-transform: translateX(-35px) !important;
-        -ms-transform: translateX(-35px) !important;
-        transform: translateX(-35px) !important;
+        -webkit-transform: translateX(-35px);
+        -ms-transform: translateX(-35px);
+        transform: translateX(-35px);
     }
 
     .buprcriteria .bupr-switch {
-        width: 70px !important;
+        width: 70px;
         margin-left: 0;
     }
 }
@@ -346,11 +346,11 @@ button.bupr-accordion.active::after {
 }
 
 .bupr-criteria-remove-button {
-    border-radius: 20px !important;
-    height: 34px !important;
-    margin: 0 !important;
-    padding: 2px !important;
-    width: 70px !important;
+    border-radius: 20px;
+    height: 34px;
+    margin: 0;
+    padding: 2px;
+    width: 70px;
 }
 
 .bupr-criteria-remove-button::hover {
@@ -388,23 +388,23 @@ span.move-icons {
 }
 
 .nav-tab-wrapper ul .bupr-general a:before {
-    content: "\f111" !important;
+    content: "\f111";
 }
 
 .nav-tab-wrapper ul .bupr-criteria a:before {
-    content: "\f155" !important;
+    content: "\f155";
 }
 
 .nav-tab-wrapper ul .bupr-shortcode a:before {
-    content: "\f150" !important;
+    content: "\f150";
 }
 
 .nav-tab-wrapper ul .bupr-display a:before {
-    content: "\f478" !important;
+    content: "\f478";
 }
 
 .nav-tab-wrapper ul .bupr-pro-features a:before {
-    content: "\f527" !important;
+    content: "\f527";
 }
 
 div#setting-error-settings_updated {
@@ -420,7 +420,7 @@ div#setting-error-settings_updated {
 }
 
 button.notice-dismiss:before {
-    color: red !important;
+    color: red;
 }
 
 .wbcom-settings-section-options input#profile_reviews_per_page {

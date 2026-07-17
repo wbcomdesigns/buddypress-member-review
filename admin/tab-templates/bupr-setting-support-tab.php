@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div id="bupr-settings-tbl" class="bupr-table">
 			<div class="bupr-admin-row border">
 				<div class="bupr-admin-col-12">
-				   <button class="bupr-accordion">
+					<button class="bupr-accordion">
 					<?php esc_html_e( 'How can we submit a review to a member profile using this plugin?', 'bp-member-reviews' ); ?>
 					</button>
 					<div class="panel">
@@ -80,9 +80,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php esc_html_e( 'Where do I ask for support?', 'bp-member-reviews' ); ?>
 					</button>
 					<div class="panel">
-						<p><?php
-						 /* translators: %s: */
-						echo sprintf( esc_html__( 'Please visit %1$s for any query related to the plugin and BuddyPress.', 'bp-member-reviews' ), '<a href="https://wbcomdesigns.com/contact" rel="nofollow" target="_blank"> Wbcom Designs </a>' ); ?>
+						<p>
+						<?php
+						/* translators: %s: */
+						printf( esc_html__( 'Please visit %1$s for any query related to the plugin and BuddyPress.', 'bp-member-reviews' ), '<a href="https://wbcomdesigns.com/contact" rel="nofollow" target="_blank"> Wbcom Designs </a>' );
+						?>
 						</p>
 					</div>
 				</div>

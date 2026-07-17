@@ -3,7 +3,9 @@
  * Plugin Name: Wbcom Designs - BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
  * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
- * Version: 3.7.0
+ * Version: 3.8.0
+ * Requires at least: 6.1
+ * Requires PHP: 7.4
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
@@ -20,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version and path constants.
  */
-define( 'BUPR_PLUGIN_VERSION', '3.7.0' );
+define( 'BUPR_PLUGIN_VERSION', '3.8.0' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BUPR_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -39,7 +41,6 @@ if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 		$domain = 'bp-member-reviews';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 		load_textdomain( $domain, BUPR_PLUGIN_PATH . 'languages/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, false, dirname( BUPR_PLUGIN_BASENAME ) . '/languages' );
 	}
 }
 
@@ -166,10 +167,18 @@ function bupr_plugin_activation() {
 	// Set plugin version in options.
 	update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
 
-	// Schedule review data recalculation.
-	if ( ! wp_next_scheduled( 'bupr_cron_recalculate_user_reviews_batch' ) ) {
-		wp_schedule_event( time(), 'daily', 'bupr_cron_recalculate_user_reviews_batch' );
+	// Fresh installs have no reviews yet, so there is no drifted count/aggregate
+	// meta to repair. Mark the one-time repair migration done so it is skipped.
+	if ( ! get_option( 'bupr_meta_repair_v1_done' ) ) {
+		update_option( 'bupr_meta_repair_v1_done', 'yes' );
 	}
+
+	// The recalculation cron is scheduled in exactly one place — the
+	// guarded `bupr_schedule_review_recalculation()` on `init`
+	// (includes/bupr-general-functions.php). It runs on the next request
+	// after activation, so we do NOT also schedule it here (which used to
+	// register the same hook at a different interval — a conflicting
+	// double registration fixed in 3.8.0).
 
 	// Set transient for redirect to settings page.
 	set_transient( '_bupr_activation_redirect', true, 30 );
@@ -202,9 +211,9 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 		// List of required files to include.
 		$include_files = array(
 			'includes/class-buprglobals.php',
-			'admin/wbcom/wbcom-admin-settings.php',
 			'includes/bupr-scripts.php',
 			'admin/bupr-admin.php',
+			'includes/admin/class-bupr-admin-panel.php',
 			'admin/class-bupr-admin-feedback.php',
 			'includes/bupr-filters.php',
 			'includes/bupr-shortcodes.php',
@@ -222,6 +231,12 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 			} elseif ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					error_log( sprintf( 'BuddyPress Member Reviews: Required file %s not found', $file_path ) );
 			}
+		}
+
+		// Boot the card-panel admin (menu, settings, render). Replaces the
+		// legacy admin/wbcom/ wrapper removed in 3.8.0.
+		if ( is_admin() && class_exists( 'BUPR_Admin_Panel' ) ) {
+			( new BUPR_Admin_Panel() )->register();
 		}
 	}
 }

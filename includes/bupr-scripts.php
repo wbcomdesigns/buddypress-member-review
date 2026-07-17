@@ -34,8 +34,32 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'bupr_public_enqueue_styles' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'bupr_admin_enqueue_scripts' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'bupr_admin_enqueue_styles' ) );
+			add_filter( 'load_script_textdomain_relative_path', array( $this, 'bupr_filter_script_translation_relative_path' ), 10, 2 );
 		}
 
+		/**
+		 * Point JED lookups at the unminified script path.
+		 *
+		 * Outside SCRIPT_DEBUG the scripts are served from assets/js/min/ and
+		 * admin/assets/js/min/. Core strips a trailing ".min.js" when it hashes the
+		 * path for the JED filename, but it does NOT strip the "/min/" directory
+		 * segment - so it looks for a hash of "assets/js/min/bupr-front.js" while
+		 * wp i18n make-json keys the file on "assets/js/bupr-front.js". The two
+		 * never match and every wp.i18n string silently falls back to English in
+		 * production.
+		 *
+		 * @since   3.8.0
+		 * @param   string $relative Relative path core will hash.
+		 * @param   string $src      Full script URL.
+		 * @return  string
+		 */
+		public function bupr_filter_script_translation_relative_path( $relative, $src ) {
+			if ( ! is_string( $relative ) || false === strpos( $src, 'buddypress-member-review/' ) ) {
+				return $relative;
+			}
+			// "assets/js/min/bupr-front.js" -> "assets/js/bupr-front.js".
+			return preg_replace( '#/min/([^/]+)$#', '/$1', $relative );
+		}
 
 		/**
 		 * Determine if scripts should be loaded on current page.
@@ -101,7 +125,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					$path      = is_rtl() ? '/rtl' : '/min';
 				}
 				// Determine file paths based on debug mode and RTL support.
-				wp_enqueue_style( 'bupr-reviews-css', BUPR_PLUGIN_URL . 'assets/css' . $path . '/bupr-reviews' . $extension, array(), BUPR_PLUGIN_VERSION, false );
+				// Legacy bupr-reviews.css was merged into bupr-front.css in the 3.8.0 consolidation; no longer enqueued.
 				wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css' . $path . '/bupr-front' . $extension, array(), BUPR_PLUGIN_VERSION, false );
 				// Load Font Awesome from registered WordPress source if available, otherwise use bundled version.
 				if ( ! wp_style_is( 'font-awesome', 'registered' ) ) {
@@ -156,12 +180,29 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				$title_review   = bupr_profile_review_tab_singular_slug();
 				$cur_name       = bp_get_displayed_user_fullname();
 				$reviews_titles = array(
-					'cur_username' => $cur_name,
-					'review_title' => $title_review,
-					'review_nonce' => wp_create_nonce( 'review-nonce' ),
+					'cur_username'       => $cur_name,
+					'review_title'       => $title_review,
+					'review_nonce'       => wp_create_nonce( 'review-nonce' ),
+					/* translators: 1: Reviewed member's display name. 2: Singular review label (e.g. "review"). */
+					'review_title_format' => esc_html__( '%1$s received a %2$s', 'bp-member-reviews' ),
+					'search_placeholder' => esc_html__( 'Enter Keywords....', 'bp-member-reviews' ),
+					'reply_empty'        => esc_html__( 'Please enter a reply.', 'bp-member-reviews' ),
+					'reply_failed'       => esc_html__( 'Failed to add reply.', 'bp-member-reviews' ),
+					'flag_select_reason' => esc_html__( 'Please select a reason.', 'bp-member-reviews' ),
+					'reported'           => esc_html__( 'Reported', 'bp-member-reviews' ),
+					'generic_error'      => esc_html__( 'An error occurred. Please try again.', 'bp-member-reviews' ),
 				);
 				wp_localize_script( 'bupr-front-js', 'mail_title', $reviews_titles );
-				wp_set_script_translations( 'bupr-front-js', 'bp-member-reviews' );
+				wp_localize_script(
+					'bupr-front-js',
+					'bupr_a11y',
+					array(
+						/* translators: %d: star position (1-5) in the rating group. */
+						'rate_label'  => esc_html__( 'Rate %d out of 5', 'bp-member-reviews' ),
+						'group_label' => esc_html__( 'Rating', 'bp-member-reviews' ),
+					)
+				);
+				wp_set_script_translations( 'bupr-front-js', 'bp-member-reviews', BUPR_PLUGIN_PATH . 'languages' );
 			}
 		}
 
@@ -213,7 +254,13 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 						'success_msz'       => esc_html__( 'Already Installed & Activated', 'bp-member-reviews' ),
 						'error_msz'         => esc_html__( 'There was a problem performing the action.', 'bp-member-reviews' ),
 						'number_validation' => esc_html__( '* Number input is not allowed *', 'bp-member-reviews' ),
+						'approving_text'    => esc_html__( 'Approving…', 'bp-member-reviews' ),
 						'nonce'             => wp_create_nonce( 'bupr_member_review_ajax' ),
+						// Strings for the JS-generated criteria row (mirrors admin/tab-templates/bupr-setting-criteria-tab.php).
+						'criteria_placeholder'  => esc_attr__( 'Add Review criteria eg. Member Response. ', 'bp-member-reviews' ),
+						'criteria_aria_label'   => esc_attr__( 'Review criteria name', 'bp-member-reviews' ),
+						'criteria_remove'       => esc_attr__( 'Remove', 'bp-member-reviews' ),
+						'criteria_remove_aria'  => esc_attr__( 'Remove this review criteria', 'bp-member-reviews' ),
 					)
 				);
 
@@ -221,7 +268,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					/* add wp color picker */
 					wp_enqueue_script( 'bupr-color-picker', BUPR_PLUGIN_URL . 'admin/assets/js' . $path . '/bupr-color-picker' . $extension, array( 'wp-color-picker' ), BUPR_PLUGIN_VERSION, false );
 				}
-				wp_set_script_translations( 'bupr-js-admin', 'bp-member-reviews' );
+				wp_set_script_translations( 'bupr-js-admin', 'bp-member-reviews', BUPR_PLUGIN_PATH . 'languages' );
 			}
 		}
 

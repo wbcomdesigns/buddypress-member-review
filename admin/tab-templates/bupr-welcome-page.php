@@ -1,10 +1,12 @@
 <?php
 /**
  * This file is used for rendering and saving plugin welcome settings.
+ *
+ * @package BuddyPress_Member_Reviews
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-	// Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 ?>
 <div class="wbcom-tab-content">

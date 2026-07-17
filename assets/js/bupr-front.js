@@ -1,3 +1,37 @@
+/**
+ * buprFrontToast — lightweight, accessible toast for the review front end.
+ *
+ * Replaces the three native alert() calls (skill Part 6 rules 10 + 12: no
+ * browser alert()/confirm()). Self-contained so it works in every BuddyPress
+ * theme without a dependency. Tones: 'info' | 'success' | 'error'.
+ */
+window.buprFrontToast = function (message, tone) {
+  tone = tone || "info";
+  var host = document.querySelector(".bupr-front-toast-host");
+  if (!host) {
+    host = document.createElement("div");
+    host.className = "bupr-front-toast-host";
+    document.body.appendChild(host);
+  }
+  var el = document.createElement("div");
+  el.className = "bupr-front-toast bupr-front-toast--" + tone;
+  el.setAttribute("role", "status");
+  el.setAttribute("aria-live", "polite");
+  el.textContent = String(message);
+  host.appendChild(el);
+  window.requestAnimationFrame(function () {
+    el.classList.add("bupr-front-toast--visible");
+  });
+  window.setTimeout(function () {
+    el.classList.remove("bupr-front-toast--visible");
+    window.setTimeout(function () {
+      if (el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+    }, 250);
+  }, 3600);
+};
+
 jQuery(document).ready(function () {
   jQuery(".add_review_msg").hide();
   jQuery(document).on("click", "#bupr-add-review-btn a", function (e) {
@@ -9,7 +43,7 @@ jQuery(document).ready(function () {
    *-----------------------------------------*/
   jQuery('.dataTables_filter input[type="search"]').attr(
     "placeholder",
-    "Enter Keywords...."
+    mail_title.search_placeholder || "Enter Keywords...."
   );
 
   /*----------------------------------------
@@ -92,8 +126,12 @@ jQuery(document).ready(function () {
     var rating_exist = [];
     var bupr_member_id = jQuery("#bupr_member_review_id").val();
     var bupr_current_user = jQuery("#bupr_current_user_id").val();
-    var bupr_review_title =
-      mail_title.cur_username + " received a " + mail_title.review_title;
+    // Whole-phrase format string so translators control word order (no concatenation).
+    var bupr_review_title = (
+      mail_title.review_title_format || "%1$s received a %2$s"
+    )
+      .replace("%1$s", mail_title.cur_username)
+      .replace("%2$s", mail_title.review_title);
     var bupr_review_desc = jQuery("#review_desc").val();
     var bupr_review_count = jQuery("#member_rating_field_counter").val();
     var bupr_review_rating = {};
@@ -439,7 +477,10 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
   var replyContent = wrapper.find(".bupr-reply-textarea").val().trim();
 
   if (!replyContent) {
-    alert(mail_title.reply_empty || "Please enter a reply.");
+    window.buprFrontToast(
+      mail_title.reply_empty || "Please enter a reply.",
+      "error"
+    );
     return;
   }
 
@@ -463,13 +504,21 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
         wrapper.remove();
         replySection.html(response.data.reply_html);
       } else {
-        alert(response.data.message || "Failed to add reply.");
+        window.buprFrontToast(
+          (response.data && response.data.message) ||
+            mail_title.reply_failed ||
+            "Failed to add reply.",
+          "error"
+        );
       }
     }
   ).fail(function () {
     button.prop("disabled", false);
     wrapper.find(".bupr-reply-spinner").hide();
-    alert("An error occurred. Please try again.");
+    window.buprFrontToast(
+      mail_title.generic_error || "An error occurred. Please try again.",
+      "error"
+    );
   });
 });
 
@@ -536,7 +585,8 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
         jQuery(".bupr-flag-modal").fadeOut();
         // Show inline success message instead of alert
         var $reportBtn = jQuery('.bupr-report-button[data-review="' + reviewId + '"], .bupr-flag-button[data-review="' + reviewId + '"]');
-        $reportBtn.replaceWith('<span class="bupr-report-success"><span class="dashicons dashicons-yes"></span> Reported</span>');
+        var reportedLabel = jQuery('<div/>').text(mail_title.reported || "Reported").html();
+        $reportBtn.replaceWith('<span class="bupr-report-success"><span class="dashicons dashicons-yes"></span> ' + reportedLabel + '</span>');
         // Auto-fade after 3 seconds
         setTimeout(function() {
           jQuery('.bupr-report-success').fadeOut();
@@ -548,6 +598,111 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
   ).fail(function () {
     jQuery(".bupr-flag-submit").prop("disabled", false);
     jQuery(".bupr-flag-spinner").hide();
-    jQuery(".bupr-flag-error").text("An error occurred. Please try again.").show();
+    jQuery(".bupr-flag-error")
+      .text(mail_title.generic_error || "An error occurred. Please try again.")
+      .show();
+  });
+});
+
+/*----------------------------------------
+ * ACCESS-1: keyboard + screen-reader support for the star rating widget.
+ * Progressive enhancement - the widget is JS-driven already. Turns the
+ * .bupr-criteria-content group into an ARIA radiogroup and each star
+ * (.member_stars / .member-edit-stars) into an operable radio: focusable,
+ * arrow-key navigable, Enter/Space selectable, with aria-checked kept in
+ * sync with the existing hidden-input value. Covers AJAX-injected edit
+ * stars via a MutationObserver.
+ *-----------------------------------------*/
+jQuery(function ($) {
+  var A = window.bupr_a11y || { rate_label: 'Rate %d out of 5', group_label: 'Rating' };
+  var STAR = '.member_stars, .member-edit-stars';
+
+  function groupValue($group) {
+    return parseInt($group.find('.bupr-star-member-rating').val(), 10) || 0;
+  }
+
+  function starIndex($star) {
+    return parseInt($star.attr('data-attr'), 10) || 0;
+  }
+
+  function syncGroup($group) {
+    var val = groupValue($group);
+    var $stars = $group.find(STAR);
+    var focusTarget = val > 0 ? val : 1;
+    $stars.each(function () {
+      var i = starIndex($(this));
+      $(this)
+        .attr('aria-checked', i === val ? 'true' : 'false')
+        .attr('tabindex', i === focusTarget ? '0' : '-1');
+    });
+  }
+
+  function enhance(group) {
+    var $group = $(group);
+    if ($group.data('buprA11y')) {
+      syncGroup($group);
+      return;
+    }
+    $group.attr('role', 'radiogroup');
+    if (!$group.attr('aria-label')) {
+      var lbl = $group.closest('.multi-review').find('.bupr-criteria-label').first().text().trim();
+      $group.attr('aria-label', lbl ? lbl : A.group_label);
+    }
+    $group.find(STAR).each(function () {
+      var i = starIndex($(this));
+      $(this).attr('role', 'radio').attr('aria-label', A.rate_label.replace('%d', i));
+    });
+    $group.data('buprA11y', true);
+    syncGroup($group);
+  }
+
+  function enhanceAll() {
+    $(STAR).each(function () {
+      var $group = $(this).closest('.bupr-criteria-content');
+      if ($group.length) {
+        enhance($group);
+      }
+    });
+  }
+
+  enhanceAll();
+
+  if (window.MutationObserver) {
+    var mo = new MutationObserver(function () { enhanceAll(); });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Keep aria-checked in sync after a mouse click (existing handlers set the value).
+  $(document).on('click', STAR, function () {
+    syncGroup($(this).closest('.bupr-criteria-content'));
+  });
+
+  // Keyboard operation.
+  $(document).on('keydown', STAR, function (e) {
+    var $star = $(this);
+    var $group = $star.closest('.bupr-criteria-content');
+    var $stars = $group.find(STAR);
+    var idx = $stars.index($star);
+    var key = e.key;
+    var move = null;
+
+    if (key === 'Enter' || key === ' ' || key === 'Spacebar') {
+      e.preventDefault();
+      $star.trigger('click');
+      syncGroup($group);
+      $star.attr('tabindex', '0').focus();
+      return;
+    }
+    if (key === 'ArrowRight' || key === 'ArrowUp') { move = Math.min($stars.length - 1, idx + 1); }
+    else if (key === 'ArrowLeft' || key === 'ArrowDown') { move = Math.max(0, idx - 1); }
+    else if (key === 'Home') { move = 0; }
+    else if (key === 'End') { move = $stars.length - 1; }
+    else { return; }
+
+    e.preventDefault();
+    var $next = $stars.eq(move);
+    $next.trigger('click');
+    syncGroup($group);
+    $next.attr('tabindex', '0').focus();
   });
 });
