@@ -4,8 +4,8 @@
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
  * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
  * Version: 3.8.0
- * Requires at least: 6.1
- * Requires PHP: 7.4
+ * Requires at least: 6.5
+ * Requires PHP: 8.0
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
@@ -88,7 +88,7 @@ function bupr_outdated_buddypress_notice() {
 	printf(
 		/* translators: %1$s: Plugin name, %2$s: Required version */
 		esc_html__( '%1$s requires BuddyPress version %2$s or higher.', 'bp-member-reviews' ),
-		'<strong>' . esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ) . '</strong>',
+		'<strong>' . 'BuddyPress Member Reviews' . '</strong>',
 		'6.0.0'
 	);
 	echo '</p></div>';
@@ -101,7 +101,7 @@ function bupr_outdated_buddyboss_notice() {
 	printf(
 		/* translators: %1$s: Plugin name, %2$s: Required version */
 		esc_html__( '%1$s requires BuddyBoss version %2$s or higher.', 'bp-member-reviews' ),
-		'<strong>' . esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ) . '</strong>',
+		'<strong>' . 'BuddyPress Member Reviews' . '</strong>',
 		'1.8.0'
 	);
 	echo '</p></div>';
@@ -115,7 +115,7 @@ function bupr_inactive_members_component_notice() {
 	printf(
 		/* translators: %1$s: Plugin name */
 		esc_html__( '%1$s requires the BuddyPress Members component to be active.', 'bp-member-reviews' ),
-		'<strong>' . esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' ) . '</strong>'
+		'<strong>' . 'BuddyPress Member Reviews' . '</strong>'
 	);
 	echo '</p></div>';
 }
@@ -308,7 +308,7 @@ function bupr_show_admin_notice( $admin_notice ) {
  * Admin notice to indicate BuddyPress is required.
  */
 function bupr_required_plugin_admin_notice() {
-	$plugin_name = esc_html__( 'BuddyPress Member Reviews', 'bp-member-reviews' );
+	$plugin_name = 'BuddyPress Member Reviews';
 	$bp_plugin   = esc_html__( 'BuddyPress or BuddyBoss', 'bp-member-reviews' );
 	echo '<div class="error"><p>';
 	printf(

@@ -268,7 +268,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 							<h3><?php esc_html_e( 'Are you enjoying BuddyPress Member Reviews?', 'bp-member-reviews' ); ?></h3>
 							<p>
 							<?php
-							$this->name = __( 'BuddyPress Member Reviews', 'bp-member-reviews' );
+							$this->name = 'BuddyPress Member Reviews';
 							/* translators: %s: Plugin name. */
 							printf( esc_html__( 'We hope you\'re enjoying %1$s! If you find it helpful, please consider giving us a 5-star rating on WordPress to help others discover the plugin.', 'bp-member-reviews' ), esc_html( $this->name ) );
 							?>

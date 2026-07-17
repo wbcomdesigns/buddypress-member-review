@@ -2,10 +2,10 @@
 Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members, reviews, ratings, community
-Requires at least: 6.1
+Requires at least: 6.5
 Tested up to: 7.0
 Stable tag: 3.8.0
-Requires PHP: 7.4
+Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: bp-member-reviews
@@ -86,8 +86,8 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 
 = Compatibility =
 
-* WordPress 6.1 and higher
-* PHP 7.4 and higher (8.0+ recommended)
+* WordPress 6.5 and higher
+* PHP 8.0 and higher
 * BuddyPress 6.0+ or BuddyBoss Platform 1.8+ required, with the Members component active
 * Works with the block editor and classic editor. The two widgets are classic WP_Widget classes, so on a block theme add them through the Legacy Widget block.
 * Tested with popular themes including BuddyX, Reign, BuddyBoss Theme and Youzify
@@ -143,8 +143,8 @@ After activating the plugin, we recommend:
 
 = Requirements =
 
-* WordPress 6.1 or higher
-* PHP 7.4 or higher
+* WordPress 6.5 or higher
+* PHP 8.0 or higher
 * BuddyPress 6.0+ or BuddyBoss Platform 1.8+, with the Members component active
 
 == Frequently Asked Questions ==

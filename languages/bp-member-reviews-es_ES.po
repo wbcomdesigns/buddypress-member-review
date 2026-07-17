@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Wbcom Designs - BuddyPress Member Reviews 3.8.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/buddypress-member-review\n"
-"POT-Creation-Date: 2026-07-16T13:55:54+00:00\n"
+"POT-Creation-Date: 2026-07-17T10:19:03+00:00\n"
 "PO-Revision-Date: 2026-07-16T11:32:27+00:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -133,25 +133,25 @@ msgstr "Nombre de la nueva categoría"
 msgid "Category"
 msgstr "Categoría"
 
-#: admin/bupr-admin.php:344 includes/bupr-ajax.php:216
+#: admin/bupr-admin.php:344 includes/bupr-ajax.php:228
 #: includes/bupr-filters.php:1062 includes/bupr-filters.php:1161
 #: includes/bupr-notification.php:65
 msgid "An anonymous user"
 msgstr "Un usuario anónimo"
 
-#: admin/bupr-admin.php:350 includes/bupr-ajax.php:222
-#: includes/bupr-ajax.php:399 includes/bupr-scripts.php:187
+#: admin/bupr-admin.php:350 includes/bupr-ajax.php:234
+#: includes/bupr-ajax.php:411 includes/bupr-scripts.php:191
 #. translators: 1: User display name, 2: Review tab name (singular).
 #. translators: 1: Reviewed member's display name. 2: Singular review label (e.g. "review").
 #, php-format
 msgid "%1$s received a %2$s"
 msgstr "%1$s recibió un %2$s"
 
-#: admin/bupr-admin.php:366 includes/bupr-ajax.php:408
+#: admin/bupr-admin.php:366 includes/bupr-ajax.php:420
 msgid "New Review on Your Profile at [site-name]"
 msgstr "Nueva reseña en tu perfil en [site-name]"
 
-#: admin/bupr-admin.php:377 includes/bupr-ajax.php:414
+#: admin/bupr-admin.php:377 includes/bupr-ajax.php:426
 #. translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim.
 msgid ""
 "Hello [user-name], <br><br>We are pleased to inform you that "
@@ -184,7 +184,7 @@ msgstr[0] "informe"
 msgstr[1] "informes"
 
 #: admin/bupr-admin.php:505 includes/admin/views/overview.php:105
-#: includes/bupr-scripts.php:192
+#: includes/bupr-scripts.php:196
 msgid "Reported"
 msgstr "Denunciado"
 
@@ -318,15 +318,6 @@ msgstr "un momento"
 msgid "Are you enjoying BuddyPress Member Reviews?"
 msgstr "¿Estás disfrutando de BuddyPress Member Reviews?"
 
-#: admin/class-bupr-admin-feedback.php:271
-#: admin/tab-templates/bupr-welcome-page.php:15 buddypress-member-review.php:91
-#: buddypress-member-review.php:104 buddypress-member-review.php:118
-#: buddypress-member-review.php:311
-#: includes/admin/class-bupr-admin-panel.php:157
-#: includes/admin/views/shell.php:28
-msgid "BuddyPress Member Reviews"
-msgstr "BuddyPress Member Reviews"
-
 #: admin/class-bupr-admin-feedback.php:273
 #. translators: %s: Plugin name.
 #, php-format
@@ -347,12 +338,10 @@ msgid "No thanks / I already have"
 msgstr "No, gracias / Ya lo hice"
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:28
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:238
 msgid "Testimonials"
 msgstr "Testimonios"
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:28
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:242
 msgid "Endorsements"
 msgstr "Recomendaciones"
 
@@ -366,7 +355,7 @@ msgid "Rating Criteria Not Available"
 msgstr "Criterios de calificación no disponibles"
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:43
-#. translators: 1: Current mode label, 2: Link to Pro Features tab
+#. translators: 1: Current mode label, 2: Link to Add-ons tab
 #, php-format
 msgid ""
 "Rating criteria are only used in Star Ratings mode. You are currently using "
@@ -377,10 +366,10 @@ msgstr ""
 "cambia al modo Calificaciones por estrellas en la pestaña %2$s."
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:45
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:26
-#: includes/admin/class-bupr-admin-panel.php:75
-msgid "Pro Features"
-msgstr "Características Pro"
+#: admin/tab-templates/bupr-setting-pro-features-tab.php:29
+#: includes/admin/class-bupr-admin-panel.php:78
+msgid "Add-ons"
+msgstr "Complementos"
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:87
 msgid "Multiple Criteria"
@@ -395,7 +384,7 @@ msgstr ""
 "Habilidades) en lugar de una calificación general única."
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:114
-#: includes/bupr-scripts.php:261
+#: includes/bupr-scripts.php:265
 msgid "Review criteria name"
 msgstr "Nombre del criterio de reseña"
 
@@ -538,7 +527,7 @@ msgid "You Have Received a New Review on [site-name]"
 msgstr "Has recibido una nueva reseña en [site-name]"
 
 #: admin/tab-templates/bupr-setting-general-tab.php:54
-#: includes/bupr-ajax.php:438
+#: includes/bupr-ajax.php:450
 #. translators: [site-name] is a token replaced at send time - keep it verbatim.
 msgid "A New Review Requires Your Approval on [site-name]"
 msgstr "Una nueva reseña requiere tu aprobación en [site-name]"
@@ -583,7 +572,6 @@ msgid "Display member ratings on the member directory page."
 msgstr "Mostrar calificaciones de miembros en la página del directorio de miembros."
 
 #: admin/tab-templates/bupr-setting-general-tab.php:143
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:128
 msgid "Email Notifications"
 msgstr "Notificaciones por correo electrónico"
 
@@ -680,7 +668,6 @@ msgid "Select user roles that can receive reviews."
 msgstr "Selecciona roles de usuario que puedan recibir reseñas."
 
 #: admin/tab-templates/bupr-setting-general-tab.php:351
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:120
 msgid "Anonymous Reviews"
 msgstr "Reseñas anónimas"
 
@@ -697,7 +684,6 @@ msgid "Post reviews to the BuddyPress activity stream."
 msgstr "Publicar reseñas en el flujo de actividad de BuddyPress."
 
 #: admin/tab-templates/bupr-setting-general-tab.php:381
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:104
 msgid "Owner Replies"
 msgstr "Respuestas del propietario"
 
@@ -727,446 +713,17 @@ msgstr ""
 "Ocultar automáticamente reseñas después de este número de informes. "
 "Establece en 0 para desactivar."
 
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:32
-msgid "Pro Addon is Active!"
-msgstr "¡El complemento Pro está activo!"
+#: admin/tab-templates/bupr-setting-pro-features-tab.php:49
+msgid "No add-ons are installed."
+msgstr "No hay complementos instalados."
 
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:55
-msgid "Free vs Pro Comparison"
-msgstr "Comparación gratuita vs Pro"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:64
-msgid "Pro Addon Installed - License Required"
-msgstr "Complemento Pro instalado - Se requiere licencia"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:67
-msgid "Please activate your license to unlock Pro features."
-msgstr "Activa tu licencia para desbloquear características Pro."
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:69
-msgid "Activate License"
-msgstr "Activar licencia"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:79
-msgid "Feature"
-msgstr "Característica"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:80
-msgid "Free"
-msgstr "Gratuito"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:81
-msgid "Pro"
-msgstr "Pro"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:88
-msgid "Star Ratings"
-msgstr "Calificaciones por estrellas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:89
-msgid "5-star ratings with multiple criteria"
-msgstr "Calificaciones de 5 estrellas con múltiples criterios"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:96
-msgid "Reviews Tab on Profile"
-msgstr "Pestaña de reseñas en el perfil"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:97
-msgid "Dedicated tab to display member reviews"
-msgstr "Pestaña dedicada para mostrar reseñas de miembros"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:105
-msgid "Profile owners can respond to reviews"
-msgstr "Los propietarios del perfil pueden responder a reseñas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:112
-msgid "Review Flagging"
-msgstr "Marcado de reseñas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:113
-msgid "Report inappropriate reviews"
-msgstr "Denunciar reseñas inapropiadas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:121
-msgid "Submit reviews without revealing identity"
-msgstr "Enviar reseñas sin revelar identidad"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:129
-msgid "Notify members when they receive reviews"
-msgstr "Notificar a los miembros cuando reciban reseñas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:136
-msgid "Moderation Controls"
-msgstr "Controles de moderación"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:137
-msgid "Approve/reject reviews before publishing"
-msgstr "Aprobar/rechazar reseñas antes de publicar"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:146
-msgid "Testimonial Mode"
-msgstr "Modo de testimonio"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:147
-msgid "Text-only reviews without star ratings"
-msgstr "Reseñas solo de texto sin calificaciones por estrellas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:154
-msgid "Endorsement Mode"
-msgstr "Modo de recomendación"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:155
-msgid "LinkedIn-style skill endorsements with request flow"
-msgstr "Recomendaciones de habilidades al estilo LinkedIn con flujo de solicitud"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:162
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:271
-msgid "Verified Badges"
-msgstr "Insignias verificadas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:163
-msgid "Trust signals for authentic reviews"
-msgstr "Señales de confianza para reseñas auténticas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:170
-msgid "Flexible Criteria Builder"
-msgstr "Constructor flexible de criterios"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:171
-msgid "Custom rating criteria with stars, thumbs, or text"
-msgstr "Criterios de calificación personalizados con estrellas, pulgares o texto"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:178
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:252
-msgid "REST API"
-msgstr "REST API"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:179
-msgid "Full CRUD API for headless/mobile integration"
-msgstr "API CRUD completa para integración sin encabezado/móvil"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:186
-msgid "Auto-Verify by Tenure"
-msgstr "Verificación automática por antigüedad"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:187
-msgid "Automatically verify reviews from long-time members"
-msgstr "Verificar automáticamente reseñas de miembros veteranos"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:194
-msgid "Custom Skills Management"
-msgstr "Gestión de habilidades personalizadas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:195
-msgid "Add/remove endorsement skills from admin"
-msgstr "Añadir/eliminar habilidades de recomendación desde el administrador"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:206
-msgid "Unlock All Pro Features"
-msgstr "Desbloquear todas las características Pro"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:207
+#: admin/tab-templates/bupr-setting-pro-features-tab.php:50
 msgid ""
-"Get testimonials, endorsements, verified badges, and more with the Pro "
-"addon."
+"Add-ons that extend Member Reviews will show their settings on this tab "
+"once installed and activated."
 msgstr ""
-"Obtén testimonios, recomendaciones, insignias verificadas y más con el "
-"complemento Pro."
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:209
-msgid "Get Pro Version"
-msgstr "Obtener versión Pro"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:214
-msgid "Pro Features Preview"
-msgstr "Vista previa de características Pro"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:215
-msgid "These settings become available when you upgrade to Pro."
-msgstr "Estas configuraciones están disponibles cuando actualices a Pro."
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:223
-msgid "Review Mode"
-msgstr "Modo de reseña"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:225
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:254
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:273
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:292
-msgid "PRO"
-msgstr "PRO"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:228
-msgid "Choose how members can review each other on your site."
-msgstr "Elige cómo pueden reseñarse mutuamente los miembros en tu sitio."
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:234
-msgid "Ratings"
-msgstr "Calificaciones"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:234
-msgid "Default - Star ratings with criteria"
-msgstr "Predeterminado - Calificaciones por estrellas con criterios"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:238
-msgid "Text-only reviews without stars"
-msgstr "Reseñas solo de texto sin estrellas"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:242
-msgid "LinkedIn-style skill endorsements"
-msgstr "Recomendaciones de habilidades al estilo LinkedIn"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:257
-msgid "Full CRUD REST API for reviews integration."
-msgstr "API REST CRUD completa para integración de reseñas."
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:276
-msgid "Trust signals for authentic reviews."
-msgstr "Señales de confianza para reseñas auténticas."
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:290
-msgid "Flexible Criteria"
-msgstr "Criterios flexibles"
-
-#: admin/tab-templates/bupr-setting-pro-features-tab.php:295
-msgid "Custom rating criteria with stars, thumbs, or text fields."
-msgstr ""
-"Criterios de calificación personalizados con estrellas, pulgares o campos "
-"de texto."
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:20
-msgid "Member Review Shortcode"
-msgstr "Código corto de reseña de miembro"
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:29
-msgid "Top Rated Members Shortcode"
-msgstr "Código corto de miembros mejor calificados"
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:31
-msgid "Use this shortcode to display top-rated BuddyPress members."
-msgstr "Usa este código corto para mostrar miembros de BuddyPress mejor calificados."
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:40
-msgid "Available Parameters"
-msgstr "Parámetros disponibles"
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:45
-msgid "title"
-msgstr "título"
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:47
-msgid "Add a title before the top-rated/reviewed members listing."
-msgstr "Añade un título antes del listado de miembros mejor calificados/reseñados."
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:56
-msgid "total_member"
-msgstr "total_member"
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:58
-msgid ""
-"Limit the number of members displayed in the top-rated/reviewed members "
-"list."
-msgstr ""
-"Limita el número de miembros mostrados en el listado de miembros mejor "
-"calificados/reseñados."
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:67
-msgid "type"
-msgstr "tipo"
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:69
-msgid ""
-"Display members based on either the maximum number of reviews or the "
-"highest ratings."
-msgstr ""
-"Mostrar miembros basados en el número máximo de reseñas o las "
-"calificaciones más altas."
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:80
-msgid "avatar"
-msgstr "avatar"
-
-#: admin/tab-templates/bupr-setting-shortcode-tab.php:82
-msgid "Hide or show the members’ avatars."
-msgstr "Oculta o muestra los avatares de los miembros."
-
-#: admin/tab-templates/bupr-setting-support-tab.php:15
-msgid "FAQ(s) "
-msgstr "Preguntas frecuentes "
-
-#: admin/tab-templates/bupr-setting-support-tab.php:24
-msgid "How can we submit a review to a member profile using this plugin?"
-msgstr "¿Cómo podemos enviar una reseña al perfil de un miembro usando este plugin?"
-
-#: admin/tab-templates/bupr-setting-support-tab.php:28
-msgid ""
-"When visiting the \"/members\" section on the site, go to the single "
-"profile view page. There you can see a menu named \"Reviews\" which will "
-"allow you to add a profile review only if you are a member."
-msgstr ""
-"Al visitar la sección \"/members\" en el sitio, ve a la página de vista de "
-"perfil único. Allí puedes ver un menú llamado \"Reseñas\" que te permitirá "
-"añadir una reseña de perfil solo si eres miembro."
-
-#: admin/tab-templates/bupr-setting-support-tab.php:36
-msgid "How can we add more rating criteria for the review form?"
-msgstr ""
-"¿Cómo podemos añadir más criterios de calificación para el formulario de "
-"reseña?"
-
-#: admin/tab-templates/bupr-setting-support-tab.php:40
-msgid ""
-"Just go to \"Dashboard->Review->BP member review settings page\" and click "
-"the \"Add Criteria\" button to add more fields. Then click the \"Save "
-"Settings\" button to update the review settings."
-msgstr ""
-"Solo ve a \"Panel de control->Reseña->Página de configuración de reseña de "
-"miembro BP\" y haz clic en el botón \"Añadir criterio\" para añadir más "
-"campos. Luego haz clic en el botón \"Guardar configuración\" para "
-"actualizar la configuración de reseña."
-
-#: admin/tab-templates/bupr-setting-support-tab.php:48
-msgid "What is the Top Members widget and how do I use it?"
-msgstr "¿Qué es el widget de miembros principales y cómo lo uso?"
-
-#: admin/tab-templates/bupr-setting-support-tab.php:52
-msgid ""
-"The Members Review widget displays a list of members on the site front-end. "
-"When you successfully activate the BP Member Profile Review plugin, you can "
-"see the Members Review widget in the widget section."
-msgstr ""
-"El widget Revisión de miembros muestra una lista de miembros en el "
-"front-end del sitio. Cuando actives exitosamente el plugin Revisión de "
-"perfil de miembro BP, puedes ver el widget Revisión de miembros en la "
-"sección de widgets."
-
-#: admin/tab-templates/bupr-setting-support-tab.php:60
-msgid "Can I use the review form on any other page?"
-msgstr "¿Puedo usar el formulario de reseña en cualquier otra página?"
-
-#: admin/tab-templates/bupr-setting-support-tab.php:63
-msgid ""
-"Yes, you can use the review form on another page. Just copy the shortcode "
-"from the review settings page and paste it on the other page."
-msgstr ""
-"Sí, puedes usar el formulario de reseña en otra página. Solo copia el "
-"código corto de la página de configuración de reseña y pégalo en la otra "
-"página."
-
-#: admin/tab-templates/bupr-setting-support-tab.php:70
-msgid ""
-"What should I do if I am unable to publish the shortcode page after "
-"updating to WordPress 5.0?"
-msgstr ""
-"¿Qué debo hacer si no puedo publicar la página de código corto después de "
-"actualizar a WordPress 5.0?"
-
-#: admin/tab-templates/bupr-setting-support-tab.php:73
-msgid ""
-"Install the Classic Editor plugin. Then, in the right sidebar, you’ll see a "
-"link for “use classic editor”."
-msgstr ""
-"Instala el plugin Classic Editor. Luego, en la barra lateral derecha, verás "
-"un enlace para \"usar editor clásico\"."
-
-#: admin/tab-templates/bupr-setting-support-tab.php:80
-msgid "Where do I ask for support?"
-msgstr "¿Dónde puedo pedir soporte?"
-
-#: admin/tab-templates/bupr-setting-support-tab.php:86
-#. translators: %s:
-#, php-format
-msgid "Please visit %1$s for any query related to the plugin and BuddyPress."
-msgstr "Visita %1$s para cualquier consulta relacionada con el plugin y BuddyPress."
-
-#: admin/tab-templates/bupr-welcome-page.php:16
-msgid ""
-"This plugin allows only site members to add reviews to the BuddyPress "
-"members on the site. If the visitor is not logged in, the visitor can only "
-"see the listing of the reviews but cannot review."
-msgstr ""
-"Este plugin permite que solo los miembros del sitio añadan reseñas a los "
-"miembros de BuddyPress en el sitio. Si el visitante no está conectado, solo "
-"puede ver el listado de reseñas pero no puede reseñar."
-
-#: admin/tab-templates/bupr-welcome-page.php:17
-msgid ""
-"The review form allows the members to rate the member’s profile out of 5 "
-"points with multiple review criteria. You can add multiple criteria for "
-"review. You can change the positions of those Criteria. The review form "
-"shows on the member’s profile, but you can show the review form on another "
-"page by using a shortcode."
-msgstr ""
-"El formulario de reseña permite que los miembros califiquen el perfil del "
-"miembro de 5 puntos con múltiples criterios de reseña. Puedes añadir "
-"múltiples criterios para la reseña. Puedes cambiar las posiciones de esos "
-"criterios. El formulario de reseña aparece en el perfil del miembro, pero "
-"puedes mostrar el formulario de reseña en otra página usando un código "
-"corto."
-
-#: admin/tab-templates/bupr-welcome-page.php:22
-msgid "Help & Support Resources"
-msgstr "Recursos de ayuda y soporte"
-
-#: admin/tab-templates/bupr-welcome-page.php:23
-msgid ""
-"If you need assistance, here are some helpful resources. Our documentation "
-"is a great place to start, and our support team is available if you require "
-"further help."
-msgstr ""
-"Si necesitas ayuda, aquí hay algunos recursos útiles. Nuestra documentación "
-"es un gran lugar para comenzar, y nuestro equipo de soporte está disponible "
-"si necesitas más ayuda."
-
-#: admin/tab-templates/bupr-welcome-page.php:28
-#: includes/admin/views/shell.php:89
-msgid "Documentation"
-msgstr "Documentación"
-
-#: admin/tab-templates/bupr-welcome-page.php:29
-msgid ""
-"Explore our detailed guide on BuddyPress Member Review to understand all "
-"the features and how to make the most of them."
-msgstr ""
-"Explora nuestra guía detallada sobre Revisión de miembros de BuddyPress "
-"para entender todas las características y cómo aprovecharlas al máximo."
-
-#: admin/tab-templates/bupr-welcome-page.php:30
-msgid "Read Documentation"
-msgstr "Leer documentación"
-
-#: admin/tab-templates/bupr-welcome-page.php:36
-msgid "Support Center"
-msgstr "Centro de soporte"
-
-#: admin/tab-templates/bupr-welcome-page.php:37
-msgid ""
-"Our support team is here to assist you with any questions or issues. Feel "
-"free to contact us anytime through our support center."
-msgstr ""
-"Nuestro equipo de soporte está aquí para ayudarte con cualquier pregunta o "
-"problema. Siéntete libre de contactarnos en cualquier momento a través de "
-"nuestro centro de soporte."
-
-#: admin/tab-templates/bupr-welcome-page.php:38
-msgid "Get Support"
-msgstr "Obtener soporte"
-
-#: admin/tab-templates/bupr-welcome-page.php:43
-msgid "Share Your Feedback"
-msgstr "Comparte tu comentario"
-
-#: admin/tab-templates/bupr-welcome-page.php:44
-msgid ""
-"We'd love to hear about your experience with the plugin. Your feedback and "
-"suggestions help us improve future updates."
-msgstr ""
-"Nos encantaría escuchar sobre tu experiencia con el plugin. Tus comentarios "
-"y sugerencias nos ayudan a mejorar futuras actualizaciones."
-
-#: admin/tab-templates/bupr-welcome-page.php:45
-msgid "Send Feedback"
-msgstr "Enviar comentario"
+"Los complementos que extienden Member Reviews mostrarán su configuración en "
+"esta pestaña una vez instalados y activados."
 
 #: buddypress-member-review.php:90
 #. translators: %1$s: Plugin name, %2$s: Required version
@@ -1208,60 +765,64 @@ msgstr "BuddyPress o BuddyBoss"
 msgid "%1$s requires %2$s to be installed and active."
 msgstr "%1$s requiere que %2$s esté instalado y activo."
 
-#: includes/admin/class-bupr-admin-panel.php:55
+#: includes/admin/class-bupr-admin-panel.php:58
 msgid "Overview"
 msgstr "Descripción general"
 
-#: includes/admin/class-bupr-admin-panel.php:60
+#: includes/admin/class-bupr-admin-panel.php:63
 msgid "General"
 msgstr "General"
 
-#: includes/admin/class-bupr-admin-panel.php:65
+#: includes/admin/class-bupr-admin-panel.php:68
 msgid "Criteria"
 msgstr "Criterios"
 
-#: includes/admin/class-bupr-admin-panel.php:70
+#: includes/admin/class-bupr-admin-panel.php:73
 msgid "Display"
 msgstr "Mostrar"
 
-#: includes/admin/class-bupr-admin-panel.php:108
+#: includes/admin/class-bupr-admin-panel.php:111
 msgid "Discover"
 msgstr "Descubrir"
 
-#: includes/admin/class-bupr-admin-panel.php:145
-#: includes/admin/class-bupr-admin-panel.php:146
+#: includes/admin/class-bupr-admin-panel.php:148
+#: includes/admin/class-bupr-admin-panel.php:149
 #: includes/admin/views/hub.php:55
 msgid "WB Plugins"
 msgstr "WB Plugins"
 
-#: includes/admin/class-bupr-admin-panel.php:158
+#: includes/admin/class-bupr-admin-panel.php:161
 #: includes/admin/views/shell.php:56
 msgid "Member Reviews"
 msgstr "Reseñas de miembros"
 
-#: includes/admin/class-bupr-admin-panel.php:342
+#: includes/admin/class-bupr-admin-panel.php:345
 msgid "Settings saved."
 msgstr "Configuración guardada."
 
-#: includes/admin/class-bupr-admin-panel.php:343
+#: includes/admin/class-bupr-admin-panel.php:346
 msgid "Are you sure? This cannot be undone."
 msgstr "¿Estás seguro? Esto no se puede deshacer."
 
-#: includes/admin/class-bupr-admin-panel.php:344
+#: includes/admin/class-bupr-admin-panel.php:347
 msgid "Continue"
 msgstr "Continuar"
 
-#: includes/admin/class-bupr-admin-panel.php:345
+#: includes/admin/class-bupr-admin-panel.php:348
 #: includes/templates/bupr-reviews-tab-template.php:343
 #: includes/templates/bupr-reviews-tab-template.php:452
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: includes/admin/views/discover.php:24
-msgid "BuddyNext"
-msgstr "BuddyNext"
+#: includes/admin/views/discover.php:27
+msgid ""
+"A free, fast community theme for BuddyPress, BuddyBoss and PeepSo with a "
+"modern layout and dark mode."
+msgstr ""
+"Un tema comunitario rápido y gratuito para BuddyPress, BuddyBoss y PeepSo "
+"con un diseño moderno y modo oscuro."
 
-#: includes/admin/views/discover.php:26
+#: includes/admin/views/discover.php:33
 msgid ""
 "Launch a full social network on WordPress with feeds, member spaces, "
 "profiles, and private messaging."
@@ -1269,11 +830,7 @@ msgstr ""
 "Lanza una red social completa en WordPress con feeds, espacios de miembros, "
 "perfiles y mensajería privada."
 
-#: includes/admin/views/discover.php:30
-msgid "Jetonomy"
-msgstr "Jetonomy"
-
-#: includes/admin/views/discover.php:32
+#: includes/admin/views/discover.php:39
 msgid ""
 "Run discussion forums and Q&A boards that police themselves with trust "
 "levels and scale to huge topic counts."
@@ -1281,11 +838,7 @@ msgstr ""
 "Ejecuta foros de discusión y tableros de preguntas y respuestas que se "
 "autorregulan con niveles de confianza y escalan a enormes conteos de temas."
 
-#: includes/admin/views/discover.php:36
-msgid "Mediaverse"
-msgstr "Mediaverse"
-
-#: includes/admin/views/discover.php:38
+#: includes/admin/views/discover.php:45
 msgid ""
 "Give members a place to share photos and video, react, follow each other, "
 "and chat one to one."
@@ -1293,11 +846,21 @@ msgstr ""
 "Dale a los miembros un lugar para compartir fotos y videos, reaccionar, "
 "seguirse entre sí y chatear uno a uno."
 
-#: includes/admin/views/discover.php:42
-msgid "Listora"
-msgstr "Listora"
+#: includes/admin/views/discover.php:52
+msgid "Run community events with RSVPs, calendars, and front-end submissions."
+msgstr ""
+"Gestiona eventos comunitarios con confirmaciones de asistencia, calendarios "
+"y envíos desde el front-end."
 
-#: includes/admin/views/discover.php:44
+#: includes/admin/views/discover.php:59
+msgid ""
+"Reward members with points, badges, and leaderboards to keep engagement "
+"high."
+msgstr ""
+"Recompensa a los miembros con puntos, insignias y tablas de clasificación "
+"para mantener el compromiso elevado."
+
+#: includes/admin/views/discover.php:65
 msgid ""
 "Build any kind of searchable directory with multiple listing types, "
 "ratings, maps, and self-serve submissions."
@@ -1305,11 +868,15 @@ msgstr ""
 "Crea cualquier tipo de directorio buscable con múltiples tipos de listados, "
 "calificaciones, mapas y envíos de autoservicio."
 
-#: includes/admin/views/discover.php:48
-msgid "Learnomy"
-msgstr "Learnomy"
+#: includes/admin/views/discover.php:72
+msgid ""
+"Add a job board with front-end listings, applications, and employer "
+"profiles."
+msgstr ""
+"Agrega un tablero de empleos con listados en el front-end, solicitudes y "
+"perfiles de empleadores."
 
-#: includes/admin/views/discover.php:50
+#: includes/admin/views/discover.php:78
 msgid ""
 "Publish and sell online courses, grade quizzes automatically, and hand "
 "learners a certificate at the end."
@@ -1317,25 +884,36 @@ msgstr ""
 "Publica y vende cursos en línea, califica cuestionarios automáticamente y "
 "entrega a los estudiantes un certificado al final."
 
-#: includes/admin/views/discover.php:58
+#: includes/admin/views/discover.php:85
+msgid ""
+"A free service marketplace with vendor dashboards, an 11-status order flow, "
+"and Stripe or PayPal built in."
+msgstr ""
+"Un mercado de servicios gratuito con paneles de vendedores, un flujo de "
+"pedidos de 11 estados y Stripe o PayPal integrados."
+
+#: includes/admin/views/discover.php:93
 msgid "More Free Tools from Wbcom Designs"
 msgstr "Más herramientas gratuitas de Wbcom Designs"
 
-#: includes/admin/views/discover.php:59
+#: includes/admin/views/discover.php:94
+#, fuzzy
 msgid ""
 "Member Reviews adds the reputation layer to your community. These free "
-"plugins from Wbcom Designs give you the rest of the stack: the network "
-"itself, forums, media, directories, and courses."
+"plugins from Wbcom Designs give you the rest of the stack: the theme and "
+"network itself, forums, media, events, gamification, directories, jobs, "
+"courses, and services."
 msgstr ""
-"Reseñas de miembros añade la capa de reputación a tu comunidad. Estos "
-"plugins gratuitos de Wbcom Designs te dan el resto de la pila: la red "
-"misma, foros, medios, directorios y cursos."
+"Member Reviews añade la capa de reputación a tu comunidad. Estos plugins "
+"gratuitos de Wbcom Designs te proporcionan el resto del stack: el tema y la "
+"red en sí, foros, medios, eventos, gamificación, directorios, trabajos, "
+"cursos y servicios."
 
-#: includes/admin/views/discover.php:71
+#: includes/admin/views/discover.php:106
 msgid "Get it free"
 msgstr "Obtenerlo gratis"
 
-#: includes/admin/views/discover.php:76
+#: includes/admin/views/discover.php:111
 #. translators: %s: product name.
 #, php-format
 msgid "%s (opens in a new tab)"
@@ -1507,6 +1085,42 @@ msgstr "Gestionar reseñas"
 msgid "Rating Criteria"
 msgstr "Criterios de calificación"
 
+#: includes/admin/views/settings-display.php:29
+msgid "Top Members Shortcode"
+msgstr "Shortcode de Miembros Principales"
+
+#: includes/admin/views/settings-display.php:30
+msgid ""
+"Paste this shortcode into any post, page, or block to list your "
+"highest-rated or most-reviewed members."
+msgstr ""
+"Pega este código corto en cualquier entrada, página o bloque para listar "
+"tus miembros mejor valorados o más reseñados."
+
+#: includes/admin/views/settings-display.php:34
+msgid "Shortcode"
+msgstr "Código corto"
+
+#: includes/admin/views/settings-display.php:41
+msgid "Heading shown above the list. Empty by default."
+msgstr "Encabezado mostrado encima de la lista. Vacío por defecto."
+
+#: includes/admin/views/settings-display.php:48
+msgid "How many members to list. Defaults to 5."
+msgstr "Cuántos miembros listar. Por defecto 5."
+
+#: includes/admin/views/settings-display.php:56
+msgid ""
+"Order by highest average rating (\"top rated\", the default) or by number "
+"of reviews received (\"top reviewed\")."
+msgstr ""
+"Ordena por la calificación promedio más alta (\"mejor valorados\", la "
+"predeterminada) o por la cantidad de reseñas recibidas (\"más reseñados\")."
+
+#: includes/admin/views/settings-display.php:63
+msgid "Show or hide member avatars. Defaults to show."
+msgstr "Mostrar u ocultar avatares de miembros. Por defecto mostrar."
+
 #: includes/admin/views/shell.php:29
 msgid ""
 "Let members review and rate each other on their BuddyPress profiles, with "
@@ -1532,13 +1146,17 @@ msgstr "Más herramientas"
 msgid "Resources"
 msgstr "Recursos"
 
+#: includes/admin/views/shell.php:89
+msgid "Documentation"
+msgstr "Documentación"
+
 #: includes/admin/views/shell.php:91
 msgid "(opens in a new tab)"
 msgstr "(se abre en una nueva pestaña)"
 
 #: includes/bupr-ajax.php:84 includes/bupr-ajax.php:159
-#: includes/bupr-ajax.php:505 includes/bupr-ajax.php:679
-#: includes/bupr-ajax.php:819 includes/bupr-ajax.php:952
+#: includes/bupr-ajax.php:517 includes/bupr-ajax.php:691
+#: includes/bupr-ajax.php:831 includes/bupr-ajax.php:964
 msgid "Security verification failed."
 msgstr "La verificación de seguridad falló."
 
@@ -1546,15 +1164,15 @@ msgstr "La verificación de seguridad falló."
 msgid "You do not have permission to approve reviews."
 msgstr "No tienes permiso para aprobar reseñas."
 
-#: includes/bupr-ajax.php:105 includes/bupr-ajax.php:528
-#: includes/bupr-ajax.php:701 includes/bupr-ajax.php:831
-#: includes/bupr-ajax.php:975
+#: includes/bupr-ajax.php:105 includes/bupr-ajax.php:540
+#: includes/bupr-ajax.php:713 includes/bupr-ajax.php:843
+#: includes/bupr-ajax.php:987
 msgid "Invalid review ID."
 msgstr "ID de reseña inválida."
 
-#: includes/bupr-ajax.php:116 includes/bupr-ajax.php:540
-#: includes/bupr-ajax.php:713 includes/bupr-ajax.php:843
-#: includes/bupr-ajax.php:987
+#: includes/bupr-ajax.php:116 includes/bupr-ajax.php:552
+#: includes/bupr-ajax.php:725 includes/bupr-ajax.php:855
+#: includes/bupr-ajax.php:999
 #: includes/templates/bupr-single-review-template.php:23
 msgid "Review not found."
 msgstr "Reseña no encontrada."
@@ -1563,28 +1181,32 @@ msgstr "Reseña no encontrada."
 msgid "Review approved successfully."
 msgstr "Reseña aprobada correctamente."
 
-#: includes/bupr-ajax.php:169 includes/bupr-ajax.php:516
-#: includes/bupr-ajax.php:689
+#: includes/bupr-ajax.php:169 includes/bupr-ajax.php:528
+#: includes/bupr-ajax.php:701
 msgid "Invalid request."
 msgstr "Solicitud inválida."
 
-#: includes/bupr-ajax.php:199
+#: includes/bupr-ajax.php:198
+msgid "You must be logged in to submit a review."
+msgstr "Debes estar conectado para enviar una reseña."
+
+#: includes/bupr-ajax.php:211
 msgid "Please select a member."
 msgstr "Selecciona un miembro."
 
-#: includes/bupr-ajax.php:205
+#: includes/bupr-ajax.php:217
 msgid "You cannot review your own profile."
 msgstr "No puedes reseñar tu propio perfil."
 
-#: includes/bupr-ajax.php:212
+#: includes/bupr-ajax.php:224
 msgid "Selected member does not exist."
 msgstr "El miembro seleccionado no existe."
 
-#: includes/bupr-ajax.php:290
+#: includes/bupr-ajax.php:302
 msgid "Error creating review. Please try again."
 msgstr "Error al crear la reseña. Por favor, inténtalo de nuevo."
 
-#: includes/bupr-ajax.php:336
+#: includes/bupr-ajax.php:348
 #. translators: %s: Review label (e.g., "Review").
 #, php-format
 msgid ""
@@ -1594,25 +1216,25 @@ msgstr ""
 "¡Gracias por compartir tu %s! Después de la aprobación del administrador, "
 "se mostrará en los perfiles de los miembros."
 
-#: includes/bupr-ajax.php:344
+#: includes/bupr-ajax.php:356
 #. translators: %s: Review label in lowercase (e.g., "review").
 #, php-format
 msgid "Thank you for sharing your thoughts in this %s!"
 msgstr "¡Gracias por compartir tus pensamientos en este %s!"
 
-#: includes/bupr-ajax.php:351 includes/bupr-shortcodes.php:314
+#: includes/bupr-ajax.php:363 includes/bupr-shortcodes.php:320
 #. translators: %s:
 #, php-format
 msgid "You already posted a %1$s for this member."
 msgstr "Ya publicaste un %1$s para este miembro."
 
-#: includes/bupr-ajax.php:450
+#: includes/bupr-ajax.php:462
 #. translators: %s: User name who submitted the review.
 #, php-format
 msgid "Review from %s"
 msgstr "Reseña de %s"
 
-#: includes/bupr-ajax.php:455
+#: includes/bupr-ajax.php:467
 #. translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim.
 msgid ""
 "Hello [site-admin],\n"
@@ -1646,108 +1268,108 @@ msgstr ""
 "\t\t\t\tSaludos cordiales,\n"
 "\t\t\t\tEl equipo de [site-name]"
 
-#: includes/bupr-ajax.php:551 includes/bupr-ajax.php:733
+#: includes/bupr-ajax.php:563 includes/bupr-ajax.php:745
 msgid "You do not have permission to edit this review."
 msgstr "No tienes permiso para editar esta reseña."
 
-#: includes/bupr-ajax.php:611 includes/bupr-shortcodes.php:454
+#: includes/bupr-ajax.php:623 includes/bupr-shortcodes.php:460
 msgid "Rating : "
 msgstr "Calificación : "
 
-#: includes/bupr-ajax.php:630 includes/bupr-shortcodes.php:411
-#: includes/bupr-shortcodes.php:440
+#: includes/bupr-ajax.php:642 includes/bupr-shortcodes.php:417
+#: includes/bupr-shortcodes.php:446
 msgid "This field is required."
 msgstr "Este campo es obligatorio."
 
-#: includes/bupr-ajax.php:651
+#: includes/bupr-ajax.php:663
 #. translators: %s:
 #, php-format
 msgid "Update %s"
 msgstr "Actualizar %s"
 
-#: includes/bupr-ajax.php:662
+#: includes/bupr-ajax.php:674
 msgid "Unable to load review form."
 msgstr "No se puede cargar el formulario de reseña."
 
-#: includes/bupr-ajax.php:788
+#: includes/bupr-ajax.php:800
 #. translators: %s: Review label (e.g., "Review").
 #, php-format
 msgid "%s updated successfully."
 msgstr "%s actualizado correctamente."
 
-#: includes/bupr-ajax.php:808
+#: includes/bupr-ajax.php:820
 msgid "Owner replies are disabled."
 msgstr "Las respuestas del propietario están desactivadas."
 
-#: includes/bupr-ajax.php:857
+#: includes/bupr-ajax.php:869
 msgid "You do not have permission to reply to this review."
 msgstr "No tienes permiso para responder a esta reseña."
 
-#: includes/bupr-ajax.php:869
+#: includes/bupr-ajax.php:881
 msgid "You have already replied to this review."
 msgstr "Ya has respondido a esta reseña."
 
-#: includes/bupr-ajax.php:881
+#: includes/bupr-ajax.php:893
 msgid "Reply content cannot be empty."
 msgstr "El contenido de la respuesta no puede estar vacío."
 
-#: includes/bupr-ajax.php:894
+#: includes/bupr-ajax.php:906
 #: includes/templates/bupr-reviews-tab-template.php:311
 msgid "Profile Owner"
 msgstr "Propietario del perfil"
 
-#: includes/bupr-ajax.php:908
+#: includes/bupr-ajax.php:920
 #: includes/templates/bupr-reviews-tab-template.php:324
 msgid "Owner Response"
 msgstr "Respuesta del propietario"
 
-#: includes/bupr-ajax.php:920
+#: includes/bupr-ajax.php:932
 msgid "Reply added successfully."
 msgstr "Respuesta añadida correctamente."
 
-#: includes/bupr-ajax.php:941
+#: includes/bupr-ajax.php:953
 msgid "Review flagging is disabled."
 msgstr "El marcado de reseñas está desactivado."
 
-#: includes/bupr-ajax.php:963
+#: includes/bupr-ajax.php:975
 msgid "You must be logged in to flag a review."
 msgstr "Debes estar conectado para marcar una reseña."
 
-#: includes/bupr-ajax.php:997
+#: includes/bupr-ajax.php:1009
 #: includes/templates/bupr-reviews-tab-template.php:433
 msgid "Spam or fake review"
 msgstr "Correo no deseado o reseña falsa"
 
-#: includes/bupr-ajax.php:998
+#: includes/bupr-ajax.php:1010
 #: includes/templates/bupr-reviews-tab-template.php:437
 msgid "Harassment or abuse"
 msgstr "Acoso o abuso"
 
-#: includes/bupr-ajax.php:999
+#: includes/bupr-ajax.php:1011
 #: includes/templates/bupr-reviews-tab-template.php:441
 msgid "Inappropriate content"
 msgstr "Contenido inapropiado"
 
-#: includes/bupr-ajax.php:1000
+#: includes/bupr-ajax.php:1012
 #: includes/templates/bupr-reviews-tab-template.php:445
 msgid "Conflict of interest"
 msgstr "Conflicto de intereses"
 
-#: includes/bupr-ajax.php:1006
+#: includes/bupr-ajax.php:1018
 msgid "Please select a valid reason for flagging."
 msgstr "Selecciona un motivo válido para marcar."
 
-#: includes/bupr-ajax.php:1025
+#: includes/bupr-ajax.php:1037
 msgid "You have already flagged this review."
 msgstr "Ya has marcado esta reseña."
 
-#: includes/bupr-ajax.php:1067
+#: includes/bupr-ajax.php:1079
 msgid "Thank you for reporting. This review has been hidden pending admin review."
 msgstr ""
 "Gracias por denunciar. Esta reseña ha sido ocultada en espera de revisión "
 "del administrador."
 
-#: includes/bupr-ajax.php:1068
+#: includes/bupr-ajax.php:1080
 msgid "Thank you for reporting. We will review this content."
 msgstr "Gracias por denunciar. Revisaremos este contenido."
 
@@ -1844,92 +1466,90 @@ msgstr "%1$s publicó un %2$s"
 msgid "( Pending Approval )  %1$s posted a %2$s"
 msgstr "( En espera de aprobación )  %1$s publicó un %2$s"
 
-#: includes/bupr-scripts.php:188
+#: includes/bupr-scripts.php:192
 msgid "Enter Keywords...."
 msgstr "Ingresa palabras clave...."
 
-#: includes/bupr-scripts.php:189
+#: includes/bupr-scripts.php:193
 msgid "Please enter a reply."
 msgstr "Por favor ingresa una respuesta."
 
-#: includes/bupr-scripts.php:190
+#: includes/bupr-scripts.php:194
 msgid "Failed to add reply."
 msgstr "Error al agregar la respuesta."
 
-#: includes/bupr-scripts.php:191
+#: includes/bupr-scripts.php:195
 msgid "Please select a reason."
 msgstr "Por favor selecciona una razón."
 
-#: includes/bupr-scripts.php:193
+#: includes/bupr-scripts.php:197
 msgid "An error occurred. Please try again."
 msgstr "Ocurrió un error. Por favor intenta de nuevo."
 
-#: includes/bupr-scripts.php:201
+#: includes/bupr-scripts.php:205
 #. translators: %d: star position (1-5) in the rating group.
 #, php-format
 msgid "Rate %d out of 5"
 msgstr "Califica %d de 5"
 
-#: includes/bupr-scripts.php:202
+#: includes/bupr-scripts.php:206
 msgid "Rating"
 msgstr "Calificación"
 
-#: includes/bupr-scripts.php:254
+#: includes/bupr-scripts.php:258
 msgid "Already Installed & Activated"
 msgstr "Ya instalado y activado"
 
-#: includes/bupr-scripts.php:255
+#: includes/bupr-scripts.php:259
 msgid "There was a problem performing the action."
 msgstr "Hubo un problema al realizar la acción."
 
-#: includes/bupr-scripts.php:256
+#: includes/bupr-scripts.php:260
 msgid "* Number input is not allowed *"
 msgstr "* La entrada de número no está permitida *"
 
-#: includes/bupr-scripts.php:257
+#: includes/bupr-scripts.php:261
 msgid "Approving…"
 msgstr "Aprobando…"
 
-#: includes/bupr-scripts.php:260
+#: includes/bupr-scripts.php:264
 msgid "Add Review criteria eg. Member Response. "
 msgstr "Agrega criterios de reseña p.ej. Respuesta del miembro. "
 
-#: includes/bupr-scripts.php:262
+#: includes/bupr-scripts.php:266
 msgid "Remove"
 msgstr "Eliminar"
 
-#: includes/bupr-scripts.php:263
+#: includes/bupr-scripts.php:267
 msgid "Remove this review criteria"
 msgstr "Elimina este criterio de reseña"
 
-#: includes/bupr-shortcodes.php:172 includes/widgets/display-review.php:146
+#: includes/bupr-shortcodes.php:176 includes/widgets/display-review.php:146
 msgid "reviews"
 msgstr "reseñas"
 
-#: includes/bupr-shortcodes.php:179
-#. translators: %1$s: rating; %2$s: review count; %3$s: item type label
+#: includes/bupr-shortcodes.php:184
 #, php-format
 msgid "Rating: %1$s/5 (%2$s %3$s)"
 msgstr "Calificación: %1$s/5 (%2$s %3$s)"
 
-#: includes/bupr-shortcodes.php:182 includes/widgets/display-review.php:172
-#. translators: %1$s: review count; %2$s: item type label
+#: includes/bupr-shortcodes.php:188 includes/widgets/display-review.php:172
 #. translators: %1$s: Review count; %2$s: item type label
 #, php-format
 msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
 
-#: includes/bupr-shortcodes.php:189 includes/widgets/display-review.php:181
+#: includes/bupr-shortcodes.php:195 includes/widgets/display-review.php:181
 msgid "No members have been reviewed yet."
 msgstr "Aún no se ha reseñado a ningún miembro."
 
-#: includes/bupr-shortcodes.php:317
+#: includes/bupr-shortcodes.php:323
 #. translators: %s:
 #, php-format
 msgid "Thank you for taking time to write this wonderful %1$s."
 msgstr "Gracias por tomarte el tiempo de escribir este maravilloso %1$s."
 
-#: includes/bupr-shortcodes.php:320
+#: includes/bupr-shortcodes.php:326
 #. translators: %s:
 #, php-format
 msgid ""
@@ -1939,47 +1559,47 @@ msgstr ""
 "Gracias por tomarte el tiempo de escribir este maravilloso %1$s. Tu %1$s se "
 "mostrará después de la aprobación del moderador."
 
-#: includes/bupr-shortcodes.php:384
+#: includes/bupr-shortcodes.php:390
 msgid "Sorry, You have not been given permission to review the user !!!"
 msgstr "Lo siento, no te han dado permiso para revisar al usuario !!!"
 
-#: includes/bupr-shortcodes.php:396
+#: includes/bupr-shortcodes.php:402
 #. translators: %s:
 #, php-format
 msgid "Fill in details to submit %s"
 msgstr "Rellena los detalles para enviar %s"
 
-#: includes/bupr-shortcodes.php:402
+#: includes/bupr-shortcodes.php:408
 msgid "--Select--"
 msgstr "--Selecciona--"
 
-#: includes/bupr-shortcodes.php:484 includes/bupr-shortcodes.php:485
+#: includes/bupr-shortcodes.php:490 includes/bupr-shortcodes.php:491
 msgid "Review Subject"
 msgstr "Asunto de la reseña"
 
-#: includes/bupr-shortcodes.php:490 includes/bupr-shortcodes.php:496
+#: includes/bupr-shortcodes.php:496 includes/bupr-shortcodes.php:502
 #. translators: %s: review label
 #, php-format
 msgid "Enter your %s"
 msgstr "Ingresa tu %s"
 
-#: includes/bupr-shortcodes.php:504
+#: includes/bupr-shortcodes.php:510
 #. translators: %s: review label;
 #, php-format
 msgid "Send %s anonymously."
 msgstr "Enviar %s anónimamente."
 
-#: includes/bupr-shortcodes.php:510
+#: includes/bupr-shortcodes.php:516
 msgid "Please either select a rating or write a review."
 msgstr "Por favor, selecciona una calificación o escribe una reseña."
 
-#: includes/bupr-shortcodes.php:516
+#: includes/bupr-shortcodes.php:522
 #. translators: %s:
 #, php-format
 msgid "Submit %s"
 msgstr "Enviar %s"
 
-#: includes/bupr-shortcodes.php:520
+#: includes/bupr-shortcodes.php:526
 msgid "Loading..."
 msgstr "Cargando..."
 
@@ -2161,6 +1781,395 @@ msgstr "Categoría de reseñas"
 msgctxt "taxonomy singular name"
 msgid "Review Category"
 msgstr "Categoría de reseña"
+
+#~ msgid "BuddyPress Member Reviews"
+#~ msgstr "BuddyPress Member Reviews"
+
+#~ msgid "BuddyX"
+#~ msgstr "BuddyX"
+
+#~ msgid "BuddyNext"
+#~ msgstr "BuddyNext"
+
+#~ msgid "Jetonomy"
+#~ msgstr "Jetonomy"
+
+#~ msgid "Mediaverse"
+#~ msgstr "Mediaverse"
+
+#~ msgid "Eventonomy"
+#~ msgstr "Eventonomy"
+
+#~ msgid "WB Gamification"
+#~ msgstr "WB Gamification"
+
+#~ msgid "Listora"
+#~ msgstr "Listora"
+
+#~ msgid "WP Career Board"
+#~ msgstr "WP Career Board"
+
+#~ msgid "Learnomy"
+#~ msgstr "Learnomy"
+
+#~ msgid "WP Sell Services"
+#~ msgstr "WP Sell Services"
+
+#~ msgid "Pro Features"
+#~ msgstr "Características Pro"
+
+#~ msgid "Pro Addon is Active!"
+#~ msgstr "¡El complemento Pro está activo!"
+
+#~ msgid "Free vs Pro Comparison"
+#~ msgstr "Comparación gratuita vs Pro"
+
+#~ msgid "Pro Addon Installed - License Required"
+#~ msgstr "Complemento Pro instalado - Se requiere licencia"
+
+#~ msgid "Please activate your license to unlock Pro features."
+#~ msgstr "Activa tu licencia para desbloquear características Pro."
+
+#~ msgid "Activate License"
+#~ msgstr "Activar licencia"
+
+#~ msgid "Feature"
+#~ msgstr "Característica"
+
+#~ msgid "Free"
+#~ msgstr "Gratuito"
+
+#~ msgid "Pro"
+#~ msgstr "Pro"
+
+#~ msgid "Star Ratings"
+#~ msgstr "Calificaciones por estrellas"
+
+#~ msgid "5-star ratings with multiple criteria"
+#~ msgstr "Calificaciones de 5 estrellas con múltiples criterios"
+
+#~ msgid "Reviews Tab on Profile"
+#~ msgstr "Pestaña de reseñas en el perfil"
+
+#~ msgid "Dedicated tab to display member reviews"
+#~ msgstr "Pestaña dedicada para mostrar reseñas de miembros"
+
+#~ msgid "Profile owners can respond to reviews"
+#~ msgstr "Los propietarios del perfil pueden responder a reseñas"
+
+#~ msgid "Review Flagging"
+#~ msgstr "Marcado de reseñas"
+
+#~ msgid "Report inappropriate reviews"
+#~ msgstr "Denunciar reseñas inapropiadas"
+
+#~ msgid "Submit reviews without revealing identity"
+#~ msgstr "Enviar reseñas sin revelar identidad"
+
+#~ msgid "Notify members when they receive reviews"
+#~ msgstr "Notificar a los miembros cuando reciban reseñas"
+
+#~ msgid "Moderation Controls"
+#~ msgstr "Controles de moderación"
+
+#~ msgid "Approve/reject reviews before publishing"
+#~ msgstr "Aprobar/rechazar reseñas antes de publicar"
+
+#~ msgid "Testimonial Mode"
+#~ msgstr "Modo de testimonio"
+
+#~ msgid "Text-only reviews without star ratings"
+#~ msgstr "Reseñas solo de texto sin calificaciones por estrellas"
+
+#~ msgid "Endorsement Mode"
+#~ msgstr "Modo de recomendación"
+
+#~ msgid "LinkedIn-style skill endorsements with request flow"
+#~ msgstr "Recomendaciones de habilidades al estilo LinkedIn con flujo de solicitud"
+
+#~ msgid "Verified Badges"
+#~ msgstr "Insignias verificadas"
+
+#~ msgid "Trust signals for authentic reviews"
+#~ msgstr "Señales de confianza para reseñas auténticas"
+
+#~ msgid "Flexible Criteria Builder"
+#~ msgstr "Constructor flexible de criterios"
+
+#~ msgid "Custom rating criteria with stars, thumbs, or text"
+#~ msgstr "Criterios de calificación personalizados con estrellas, pulgares o texto"
+
+#~ msgid "REST API"
+#~ msgstr "REST API"
+
+#~ msgid "Full CRUD API for headless/mobile integration"
+#~ msgstr "API CRUD completa para integración sin encabezado/móvil"
+
+#~ msgid "Auto-Verify by Tenure"
+#~ msgstr "Verificación automática por antigüedad"
+
+#~ msgid "Automatically verify reviews from long-time members"
+#~ msgstr "Verificar automáticamente reseñas de miembros veteranos"
+
+#~ msgid "Custom Skills Management"
+#~ msgstr "Gestión de habilidades personalizadas"
+
+#~ msgid "Add/remove endorsement skills from admin"
+#~ msgstr "Añadir/eliminar habilidades de recomendación desde el administrador"
+
+#~ msgid "Unlock All Pro Features"
+#~ msgstr "Desbloquear todas las características Pro"
+
+#~ msgid ""
+#~ "Get testimonials, endorsements, verified badges, and more with the Pro "
+#~ "addon."
+#~ msgstr ""
+#~ "Obtén testimonios, recomendaciones, insignias verificadas y más con el "
+#~ "complemento Pro."
+
+#~ msgid "Get Pro Version"
+#~ msgstr "Obtener versión Pro"
+
+#~ msgid "Pro Features Preview"
+#~ msgstr "Vista previa de características Pro"
+
+#~ msgid "These settings become available when you upgrade to Pro."
+#~ msgstr "Estas configuraciones están disponibles cuando actualices a Pro."
+
+#~ msgid "Review Mode"
+#~ msgstr "Modo de reseña"
+
+#~ msgid "PRO"
+#~ msgstr "PRO"
+
+#~ msgid "Choose how members can review each other on your site."
+#~ msgstr "Elige cómo pueden reseñarse mutuamente los miembros en tu sitio."
+
+#~ msgid "Ratings"
+#~ msgstr "Calificaciones"
+
+#~ msgid "Default - Star ratings with criteria"
+#~ msgstr "Predeterminado - Calificaciones por estrellas con criterios"
+
+#~ msgid "Text-only reviews without stars"
+#~ msgstr "Reseñas solo de texto sin estrellas"
+
+#~ msgid "LinkedIn-style skill endorsements"
+#~ msgstr "Recomendaciones de habilidades al estilo LinkedIn"
+
+#~ msgid "Full CRUD REST API for reviews integration."
+#~ msgstr "API REST CRUD completa para integración de reseñas."
+
+#~ msgid "Trust signals for authentic reviews."
+#~ msgstr "Señales de confianza para reseñas auténticas."
+
+#~ msgid "Flexible Criteria"
+#~ msgstr "Criterios flexibles"
+
+#~ msgid "Custom rating criteria with stars, thumbs, or text fields."
+#~ msgstr ""
+#~ "Criterios de calificación personalizados con estrellas, pulgares o campos "
+#~ "de texto."
+
+#~ msgid "Member Review Shortcode"
+#~ msgstr "Código corto de reseña de miembro"
+
+#~ msgid "Top Rated Members Shortcode"
+#~ msgstr "Código corto de miembros mejor calificados"
+
+#~ msgid "Use this shortcode to display top-rated BuddyPress members."
+#~ msgstr "Usa este código corto para mostrar miembros de BuddyPress mejor calificados."
+
+#~ msgid "Available Parameters"
+#~ msgstr "Parámetros disponibles"
+
+#~ msgid "title"
+#~ msgstr "título"
+
+#~ msgid "Add a title before the top-rated/reviewed members listing."
+#~ msgstr "Añade un título antes del listado de miembros mejor calificados/reseñados."
+
+#~ msgid "total_member"
+#~ msgstr "total_member"
+
+#~ msgid ""
+#~ "Limit the number of members displayed in the top-rated/reviewed members "
+#~ "list."
+#~ msgstr ""
+#~ "Limita el número de miembros mostrados en el listado de miembros mejor "
+#~ "calificados/reseñados."
+
+#~ msgid "type"
+#~ msgstr "tipo"
+
+#~ msgid ""
+#~ "Display members based on either the maximum number of reviews or the "
+#~ "highest ratings."
+#~ msgstr ""
+#~ "Mostrar miembros basados en el número máximo de reseñas o las "
+#~ "calificaciones más altas."
+
+#~ msgid "avatar"
+#~ msgstr "avatar"
+
+#~ msgid "Hide or show the members’ avatars."
+#~ msgstr "Oculta o muestra los avatares de los miembros."
+
+#~ msgid "FAQ(s) "
+#~ msgstr "Preguntas frecuentes "
+
+#~ msgid "How can we submit a review to a member profile using this plugin?"
+#~ msgstr "¿Cómo podemos enviar una reseña al perfil de un miembro usando este plugin?"
+
+#~ msgid ""
+#~ "When visiting the \"/members\" section on the site, go to the single "
+#~ "profile view page. There you can see a menu named \"Reviews\" which will "
+#~ "allow you to add a profile review only if you are a member."
+#~ msgstr ""
+#~ "Al visitar la sección \"/members\" en el sitio, ve a la página de vista de "
+#~ "perfil único. Allí puedes ver un menú llamado \"Reseñas\" que te permitirá "
+#~ "añadir una reseña de perfil solo si eres miembro."
+
+#~ msgid "How can we add more rating criteria for the review form?"
+#~ msgstr ""
+#~ "¿Cómo podemos añadir más criterios de calificación para el formulario de "
+#~ "reseña?"
+
+#~ msgid ""
+#~ "Just go to \"Dashboard->Review->BP member review settings page\" and click "
+#~ "the \"Add Criteria\" button to add more fields. Then click the \"Save "
+#~ "Settings\" button to update the review settings."
+#~ msgstr ""
+#~ "Solo ve a \"Panel de control->Reseña->Página de configuración de reseña de "
+#~ "miembro BP\" y haz clic en el botón \"Añadir criterio\" para añadir más "
+#~ "campos. Luego haz clic en el botón \"Guardar configuración\" para "
+#~ "actualizar la configuración de reseña."
+
+#~ msgid "What is the Top Members widget and how do I use it?"
+#~ msgstr "¿Qué es el widget de miembros principales y cómo lo uso?"
+
+#~ msgid ""
+#~ "The Members Review widget displays a list of members on the site front-end. "
+#~ "When you successfully activate the BP Member Profile Review plugin, you can "
+#~ "see the Members Review widget in the widget section."
+#~ msgstr ""
+#~ "El widget Revisión de miembros muestra una lista de miembros en el "
+#~ "front-end del sitio. Cuando actives exitosamente el plugin Revisión de "
+#~ "perfil de miembro BP, puedes ver el widget Revisión de miembros en la "
+#~ "sección de widgets."
+
+#~ msgid "Can I use the review form on any other page?"
+#~ msgstr "¿Puedo usar el formulario de reseña en cualquier otra página?"
+
+#~ msgid ""
+#~ "Yes, you can use the review form on another page. Just copy the shortcode "
+#~ "from the review settings page and paste it on the other page."
+#~ msgstr ""
+#~ "Sí, puedes usar el formulario de reseña en otra página. Solo copia el "
+#~ "código corto de la página de configuración de reseña y pégalo en la otra "
+#~ "página."
+
+#~ msgid ""
+#~ "What should I do if I am unable to publish the shortcode page after "
+#~ "updating to WordPress 5.0?"
+#~ msgstr ""
+#~ "¿Qué debo hacer si no puedo publicar la página de código corto después de "
+#~ "actualizar a WordPress 5.0?"
+
+#~ msgid ""
+#~ "Install the Classic Editor plugin. Then, in the right sidebar, you’ll see a "
+#~ "link for “use classic editor”."
+#~ msgstr ""
+#~ "Instala el plugin Classic Editor. Luego, en la barra lateral derecha, verás "
+#~ "un enlace para \"usar editor clásico\"."
+
+#~ msgid "Where do I ask for support?"
+#~ msgstr "¿Dónde puedo pedir soporte?"
+
+#, php-format
+#~ msgid "Please visit %1$s for any query related to the plugin and BuddyPress."
+#~ msgstr "Visita %1$s para cualquier consulta relacionada con el plugin y BuddyPress."
+
+#~ msgid ""
+#~ "This plugin allows only site members to add reviews to the BuddyPress "
+#~ "members on the site. If the visitor is not logged in, the visitor can only "
+#~ "see the listing of the reviews but cannot review."
+#~ msgstr ""
+#~ "Este plugin permite que solo los miembros del sitio añadan reseñas a los "
+#~ "miembros de BuddyPress en el sitio. Si el visitante no está conectado, solo "
+#~ "puede ver el listado de reseñas pero no puede reseñar."
+
+#~ msgid ""
+#~ "The review form allows the members to rate the member’s profile out of 5 "
+#~ "points with multiple review criteria. You can add multiple criteria for "
+#~ "review. You can change the positions of those Criteria. The review form "
+#~ "shows on the member’s profile, but you can show the review form on another "
+#~ "page by using a shortcode."
+#~ msgstr ""
+#~ "El formulario de reseña permite que los miembros califiquen el perfil del "
+#~ "miembro de 5 puntos con múltiples criterios de reseña. Puedes añadir "
+#~ "múltiples criterios para la reseña. Puedes cambiar las posiciones de esos "
+#~ "criterios. El formulario de reseña aparece en el perfil del miembro, pero "
+#~ "puedes mostrar el formulario de reseña en otra página usando un código "
+#~ "corto."
+
+#~ msgid "Help & Support Resources"
+#~ msgstr "Recursos de ayuda y soporte"
+
+#~ msgid ""
+#~ "If you need assistance, here are some helpful resources. Our documentation "
+#~ "is a great place to start, and our support team is available if you require "
+#~ "further help."
+#~ msgstr ""
+#~ "Si necesitas ayuda, aquí hay algunos recursos útiles. Nuestra documentación "
+#~ "es un gran lugar para comenzar, y nuestro equipo de soporte está disponible "
+#~ "si necesitas más ayuda."
+
+#~ msgid ""
+#~ "Explore our detailed guide on BuddyPress Member Review to understand all "
+#~ "the features and how to make the most of them."
+#~ msgstr ""
+#~ "Explora nuestra guía detallada sobre Revisión de miembros de BuddyPress "
+#~ "para entender todas las características y cómo aprovecharlas al máximo."
+
+#~ msgid "Read Documentation"
+#~ msgstr "Leer documentación"
+
+#~ msgid "Support Center"
+#~ msgstr "Centro de soporte"
+
+#~ msgid ""
+#~ "Our support team is here to assist you with any questions or issues. Feel "
+#~ "free to contact us anytime through our support center."
+#~ msgstr ""
+#~ "Nuestro equipo de soporte está aquí para ayudarte con cualquier pregunta o "
+#~ "problema. Siéntete libre de contactarnos en cualquier momento a través de "
+#~ "nuestro centro de soporte."
+
+#~ msgid "Get Support"
+#~ msgstr "Obtener soporte"
+
+#~ msgid "Share Your Feedback"
+#~ msgstr "Comparte tu comentario"
+
+#~ msgid ""
+#~ "We'd love to hear about your experience with the plugin. Your feedback and "
+#~ "suggestions help us improve future updates."
+#~ msgstr ""
+#~ "Nos encantaría escuchar sobre tu experiencia con el plugin. Tus comentarios "
+#~ "y sugerencias nos ayudan a mejorar futuras actualizaciones."
+
+#~ msgid "Send Feedback"
+#~ msgstr "Enviar comentario"
+
+#~ msgid ""
+#~ "Member Reviews adds the reputation layer to your community. These free "
+#~ "plugins from Wbcom Designs give you the rest of the stack: the network "
+#~ "itself, forums, media, directories, and courses."
+#~ msgstr ""
+#~ "Reseñas de miembros añade la capa de reputación a tu comunidad. Estos "
+#~ "plugins gratuitos de Wbcom Designs te dan el resto de la pila: la red "
+#~ "misma, foros, medios, directorios y cursos."
 
 #~ msgid " reviews )"
 #~ msgstr " reseñas )"
