@@ -31,12 +31,6 @@ parameters:
 			path: admin/bupr-admin.php
 
 		-
-			message: '#^Parameter \#5 \$media of function wp_enqueue_style expects string, false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: admin/bupr-admin.php
-
-		-
 			message: '#^Variable \$rating_fields in isset\(\) always exists and is not nullable\.$#'
 			identifier: isset.variable
 			count: 1
@@ -59,12 +53,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: admin/tab-templates/bupr-setting-criteria-tab.php
-
-		-
-			message: '#^Negated boolean expression is always true\.$#'
-			identifier: booleanNot.alwaysTrue
-			count: 1
-			path: admin/tab-templates/bupr-setting-pro-features-tab.php
 
 		-
 			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
@@ -101,12 +89,6 @@ parameters:
 			identifier: constant.notFound
 			count: 1
 			path: includes/admin/views/settings-general.php
-
-		-
-			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
-			identifier: constant.notFound
-			count: 1
-			path: includes/admin/views/settings-pro-features.php
 
 		-
 			message: '#^Call to function is_wp_error\(\) with int\<0, max\> will always evaluate to false\.$#'
@@ -153,7 +135,7 @@ parameters:
 		-
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
-			count: 31
+			count: 32
 			path: includes/bupr-ajax.php
 
 		-
@@ -199,21 +181,9 @@ parameters:
 			path: includes/bupr-filters.php
 
 		-
-			message: '#^Comparison operation "\>" between int\<min, 0\> and 1 is always false\.$#'
-			identifier: greater.alwaysFalse
-			count: 1
-			path: includes/bupr-filters.php
-
-		-
 			message: '#^Parameter \#1 \$text of function esc_attr expects string, int given\.$#'
 			identifier: argument.type
 			count: 2
-			path: includes/bupr-filters.php
-
-		-
-			message: '#^Parameter \#1 \$text of function esc_html expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
 			path: includes/bupr-filters.php
 
 		-
@@ -307,15 +277,15 @@ parameters:
 			path: includes/bupr-notification.php
 
 		-
-			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			message: '#^Constant BUPR_PLUGIN_PATH not found\.$#'
 			identifier: constant.notFound
-			count: 10
+			count: 2
 			path: includes/bupr-scripts.php
 
 		-
-			message: '#^Parameter \#5 \$media of function wp_enqueue_style expects string, false given\.$#'
-			identifier: argument.type
-			count: 5
+			message: '#^Constant BUPR_PLUGIN_URL not found\.$#'
+			identifier: constant.notFound
+			count: 10
 			path: includes/bupr-scripts.php
 
 		-

@@ -63,7 +63,6 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			$auto_approve_reviews  = $bupr_general_settings['bupr_auto_approve_reviews'] ?? 'yes';  // Default to 'yes'.
 			$reviews_per_page      = $bupr_general_settings['profile_reviews_per_page'] ?? 5;        // Default to 5.
 			$dir_view_ratings      = $bupr_general_settings['bupr_member_dir_reviews'] ?? 'yes';     // Default to 'yes'.
-			$dir_view_review_btn   = $bupr_general_settings['bupr_member_dir_add_reviews'] ?? 'yes'; // Default to 'yes'.
 			$allow_email           = $bupr_general_settings['bupr_allow_email'] ?? 'yes';            // Default to 'yes'.
 			$allow_notification    = $bupr_general_settings['bupr_allow_notification'] ?? 'yes';     // Default to 'yes'.
 			$allow_update          = $bupr_general_settings['bupr_allow_update'] ?? 'yes';           // Default to 'yes'.
@@ -99,7 +98,6 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 				'anonymous_reviews'      => $anonymous_reviews,
 				'auto_approve_reviews'   => $auto_approve_reviews,
 				'dir_view_ratings'       => $dir_view_ratings,
-				'dir_view_review_btn'    => $dir_view_review_btn,
 				'multi_reviews'          => $multi_reviews,
 				'hide_review_button'     => $hide_button,
 				'reviews_per_page'       => $reviews_per_page,

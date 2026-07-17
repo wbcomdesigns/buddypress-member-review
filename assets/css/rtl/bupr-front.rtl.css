@@ -558,10 +558,6 @@ button.bupr-edit-review-button {
     margin-bottom: 10px;
 }
 
-.bupr-hide-subject {
-    display: none;
-}
-
 .success_review_msg {
     color: #4F8A10;
     background-color: #DFF2BF;

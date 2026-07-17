@@ -84,7 +84,7 @@ $bupr_version = defined( 'BUPR_PLUGIN_VERSION' ) ? BUPR_PLUGIN_VERSION : '';
 
 				<div class="bupr-snav-divider" role="separator"></div>
 				<p class="bupr-snav-section-label"><?php esc_html_e( 'Resources', 'bp-member-reviews' ); ?></p>
-				<a href="https://docs.wbcomdesigns.com/doc_category/buddypress-member-review/" class="bupr-snav-link" target="_blank" rel="noopener noreferrer">
+				<a href="https://docs.wbcomdesigns.com/docs/buddypress-member-review/" class="bupr-snav-link" target="_blank" rel="noopener noreferrer">
 					<span class="dashicons dashicons-book" aria-hidden="true"></span>
 					<?php esc_html_e( 'Documentation', 'bp-member-reviews' ); ?>
 					<span class="dashicons dashicons-external bupr-snav-link__ext" aria-hidden="true"></span>

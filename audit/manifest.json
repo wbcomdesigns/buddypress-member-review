@@ -137,10 +137,9 @@
       "includes/admin/views/settings-general.php",
       "includes/admin/views/settings-criteria.php",
       "includes/admin/views/settings-display.php",
-      "includes/admin/views/settings-pro-features.php",
       "includes/admin/views/discover.php"
     ],
-    "tabs_registered_at": "includes/admin/class-bupr-admin-panel.php:52-121 (BUPR_Admin_Panel::get_tabs)",
+    "tabs_registered_at": "includes/admin/class-bupr-admin-panel.php (BUPR_Admin_Panel::get_tabs)",
     "tabs": [
       {
         "slug": "overview",
@@ -169,14 +168,6 @@
         "icon": "dashicons-admin-appearance",
         "group": "settings",
         "at": ":69-73"
-      },
-      {
-        "slug": "bupr-pro-features",
-        "label": "Add-ons",
-        "icon": "dashicons-admin-plugins",
-        "group": "settings",
-        "at": ":77-81",
-        "note": "Slug kept as bupr-pro-features (public contract: ?tab= URLs + the tab map the Pro addon filters); only the label was reframed to Add-ons. Owns no settings; pure mount point for bupr_admin_settings_pro_content."
       },
       {
         "slug": "discover",
@@ -1154,11 +1145,12 @@
       "type": "action",
       "args_count": 0,
       "args_signature": [],
-      "where": "admin/tab-templates/bupr-setting-pro-features-tab.php:42",
+      "where": null,
+      "status": "REMOVED_2026-07-17_NOT_FIRED",
       "consumed_by": [
         "buddypress-member-review-pro"
       ],
-      "note": "Mount point for the Add-ons tab, gated on has_action() so a neutral empty state shows when nothing is hooked. WRAPPER CONTRACT: the consumer renders form contents only and relies on free for the surrounding wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap markup. Do not change that structure without a paired Pro release."
+      "note": "NO LONGER FIRED IN FREE. This was the Pro addon's mount point, fired from admin/tab-templates/bupr-setting-pro-features-tab.php:42 on the Add-ons tab (slug bupr-pro-features). The tab and both of its files (that template + includes/admin/views/settings-pro-features.php) were removed 2026-07-17 on the owner's call, because Pro is unreleased so free users saw an empty tab. Pro hooks this action unconditionally, so when Pro ships this mount point MUST be restored or Pro's settings have nowhere to render. WRAPPER CONTRACT to restore with it: the consumer renders form contents only and relies on free for the surrounding wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap markup. The removal record with the full restore checklist lives at the removal site, in BUPR_Admin_Panel::get_tabs() (includes/admin/class-bupr-admin-panel.php)."
     },
     {
       "name": "bupr_before_member_review_list",

@@ -434,7 +434,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 											?>
 								<div class="multi-review">
 									<div class="bupr-col-4 bupr-criteria-label">
-												<?php echo esc_html( $bupr_rating_fields ); ?>
+												<?php echo esc_html( bupr_get_criteria_label( $bupr_rating_fields ) ); ?>
 									</div>
 									<div class="bupr-col-4 bupr-criteria-content" id="member_review<?php echo esc_attr( $field_counter ); ?>">
 										<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
@@ -486,10 +486,15 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							do_action( 'bupr_after_rating_fields' );
 							?>
 								<input type="hidden" id="bupr_member_review_id" value="<?php echo esc_attr( bp_displayed_user_id() ); ?>">
-								<p class="bupr-hide-subject">
-									<label for="review_subject" class="screen-reader-text"><?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?></label>
-									<input name="review-subject" id="review_subject" type="text" placeholder="<?php esc_html_e( 'Review Subject', 'bp-member-reviews' ); ?>" ><br/>
-								</p>
+								<?php
+								/*
+								 * No review-subject field by design: the post_title is
+								 * generated server-side in includes/bupr-ajax.php
+								 * ( "%1$s received a %2$s" ). A permanently hidden
+								 * "review-subject" input sat here until 2026-07-17; it
+								 * was removed because no PHP or JS ever read its value.
+								 */
+								?>
 								<label for="review_desc" class="screen-reader-text">
 								<?php
 								/* translators: %s: review label */

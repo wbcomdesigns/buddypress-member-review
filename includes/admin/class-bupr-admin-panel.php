@@ -43,40 +43,70 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 		/**
 		 * Sidebar tabs rendered inside the single admin page.
 		 *
-		 * The legacy tab keys (bupr-general, bupr-criteria, bupr-display,
-		 * bupr-pro-features) are preserved so the Pro addon's
-		 * `bupr_admin_settings_tabs` filter keeps matching. `bupr-pro-features`
-		 * keeps its slug even though it is now labelled "Add-ons": the slug is
-		 * a public contract (it appears in `?tab=` URLs and in the tab map the
-		 * Pro addon filters), so only the label changed.
+		 * The legacy tab keys (bupr-general, bupr-criteria, bupr-display) are
+		 * preserved so the Pro addon's `bupr_admin_settings_tabs` filter keeps
+		 * matching.
+		 *
+		 * ---------------------------------------------------------------------
+		 * REMOVED TAB: `bupr-pro-features` ("Add-ons") — removed 2026-07-17.
+		 * ---------------------------------------------------------------------
+		 * Removed because the Pro addon is not released, so on every free site
+		 * the tab rendered an empty surface with nothing in it. READ THIS BEFORE
+		 * SHIPPING PRO — restoring Pro's settings needs BOTH halves back:
+		 *
+		 * 1. This tab entry. The slug `bupr-pro-features` is a PUBLIC CONTRACT:
+		 *    it appears in `?tab=bupr-pro-features` URLs and in the legacy tab
+		 *    map the Pro addon filters via `bupr_admin_settings_tabs`. Restore
+		 *    the slug verbatim; do not rename it. Also restore its entry in the
+		 *    `$view_map` in render_page() or the tab falls back to Overview.
+		 *
+		 * 2. The view + template that carried Pro's MOUNT POINT, both deleted
+		 *    with this tab:
+		 *      - includes/admin/views/settings-pro-features.php
+		 *      - admin/tab-templates/bupr-setting-pro-features-tab.php
+		 *    The template fired `do_action( 'bupr_admin_settings_pro_content' )`
+		 *    — the action Pro hooks (unconditionally) to render its settings.
+		 *    Pro renders FORM CONTENTS ONLY and depends on free supplying the
+		 *    surrounding wrapper markup, so any replacement surface must nest
+		 *    the do_action() inside exactly this structure:
+		 *
+		 *      <div class="wbcom-tab-content">
+		 *        <div class="wbcom-admin-title-section"> <h3>...</h3> </div>
+		 *        <div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
+		 *          <?php do_action( 'bupr_admin_settings_pro_content' ); ?>
+		 *        </div>
+		 *      </div>
+		 *
+		 *    Restoring the do_action() without those wrappers renders Pro's
+		 *    fields unstyled and outside the card chrome.
+		 *
+		 * Git history: the deleted files are recoverable from the commit that
+		 * removed them. See CLAUDE.md "Recent changes" and audit/manifest.json
+		 * (`removed_contracts`) for the same record.
+		 * ---------------------------------------------------------------------
 		 *
 		 * @return array<string, array{label:string, icon:string, group:string}>
 		 */
 		public static function get_tabs() {
 			$tabs = array(
-				'overview'          => array(
+				'overview'      => array(
 					'label' => __( 'Overview', 'bp-member-reviews' ),
 					'icon'  => 'dashicons-chart-bar',
 					'group' => 'main',
 				),
-				'bupr-general'      => array(
+				'bupr-general'  => array(
 					'label' => __( 'General', 'bp-member-reviews' ),
 					'icon'  => 'dashicons-admin-generic',
 					'group' => 'settings',
 				),
-				'bupr-criteria'     => array(
+				'bupr-criteria' => array(
 					'label' => __( 'Criteria', 'bp-member-reviews' ),
 					'icon'  => 'dashicons-star-filled',
 					'group' => 'settings',
 				),
-				'bupr-display'      => array(
+				'bupr-display'  => array(
 					'label' => __( 'Display', 'bp-member-reviews' ),
 					'icon'  => 'dashicons-admin-appearance',
-					'group' => 'settings',
-				),
-				'bupr-pro-features' => array(
-					'label' => __( 'Add-ons', 'bp-member-reviews' ),
-					'icon'  => 'dashicons-admin-plugins',
 					'group' => 'settings',
 				),
 			);
@@ -403,29 +433,31 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 
 			$page_url = admin_url( 'admin.php?page=' . self::MENU_SLUG );
 
-			// Map tab slug -> view partial + the option group it submits.
+			/*
+			 * Map tab slug -> view partial + the option group it submits.
+			 *
+			 * The `bupr-pro-features` entry was removed with its tab on
+			 * 2026-07-17; see the removal record in get_tabs() above before
+			 * restoring a surface for the Pro addon.
+			 */
 			$view_map = array(
-				'overview'          => array(
+				'overview'      => array(
 					'view'  => 'overview',
 					'group' => '',
 				),
-				'bupr-general'      => array(
+				'bupr-general'  => array(
 					'view'  => 'settings-general',
 					'group' => self::OPTION_GENERAL,
 				),
-				'bupr-criteria'     => array(
+				'bupr-criteria' => array(
 					'view'  => 'settings-criteria',
 					'group' => self::OPTION_CRITERIA,
 				),
-				'bupr-display'      => array(
+				'bupr-display'  => array(
 					'view'  => 'settings-display',
 					'group' => self::OPTION_DISPLAY,
 				),
-				'bupr-pro-features' => array(
-					'view'  => 'settings-pro-features',
-					'group' => '',
-				),
-				'discover'          => array(
+				'discover'      => array(
 					'view'  => 'discover',
 					'group' => '',
 				),

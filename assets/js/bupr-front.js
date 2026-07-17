@@ -433,19 +433,6 @@ jQuery(document).ready(function () {
 });
 
 /*----------------------------------------
- * Display message after review submit
- *-----------------------------------------*/
-jQuery(function () {
-  if (jQuery.cookie("response") && jQuery.cookie("response") !== "") {
-    jQuery(".add_review_msg p").html(jQuery.cookie("response"));
-    jQuery(".add_review_msg").show();
-    jQuery.cookie("response", "", -1);
-    jQuery("#review_subject").val("");
-    jQuery("#review_desc").val("");
-  }
-});
-
-/*----------------------------------------
  * Owner Reply Functionality
  *-----------------------------------------*/
 

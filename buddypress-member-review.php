@@ -141,6 +141,64 @@ function bupr_is_plugin_active() {
 }
 
 /**
+ * The rating criteria shipped by default, as stable untranslated identifiers.
+ *
+ * These are IDENTIFIERS, not labels. They are stored as the array keys of
+ * `bupr_admin_settings['profile_rating_fields']` AND as the array keys of every
+ * review's `profile_star_rating` post meta, where they are matched back with
+ * array_key_exists() (see includes/templates/bupr-reviews-tab-template.php).
+ *
+ * They must therefore never be translated at rest. Running them through __()
+ * before storing - which is what activation did until 3.8.0 - freezes a site
+ * into whatever locale it happened to be installed under, so English installs
+ * never see a translation and German installs show German to everyone. Worse,
+ * it would orphan every rating ever submitted if the site changed language.
+ * Translate at render time with bupr_get_criteria_label() instead.
+ *
+ * Lives in the main plugin file, not includes/bupr-general-functions.php,
+ * because bupr_plugin_activation() needs it: the includes/ files are loaded on
+ * `plugins_loaded`, which has already fired (and is gated on the plugin being
+ * active) by the time the activation hook runs.
+ *
+ * @since   3.8.0
+ * @return  array<string, string> Untranslated criterion identifier => enabled flag.
+ */
+function bupr_get_default_rating_fields() {
+	return array(
+		'Member Response' => 'yes',
+		'Member Skills'   => 'yes',
+	);
+}
+
+/**
+ * Translate a rating criterion identifier for display.
+ *
+ * Render-time lookup only - the stored key is never rewritten. Only the shipped
+ * defaults have translations; a criterion the site owner typed in themselves is
+ * their own copy and is returned verbatim. That fall-through is also what keeps
+ * sites which already stored a translated default (activated before 3.8.0 under
+ * a non-English locale) rendering exactly as they do today - no migration runs
+ * and no stored data is rewritten.
+ *
+ * Do NOT use this anywhere the value is written back as an identifier: the
+ * criteria editor (admin/tab-templates/bupr-setting-criteria-tab.php) must keep
+ * emitting the raw key in its input value, or saving that form in a non-English
+ * locale would rewrite the stored keys and orphan existing ratings.
+ *
+ * @since   3.8.0
+ * @param   string $name Stored criterion identifier.
+ * @return  string Translated label, or $name when there is nothing to translate.
+ */
+function bupr_get_criteria_label( $name ) {
+	$labels = array(
+		'Member Response' => __( 'Member Response', 'bp-member-reviews' ),
+		'Member Skills'   => __( 'Member Skills', 'bp-member-reviews' ),
+	);
+
+	return isset( $labels[ $name ] ) ? $labels[ $name ] : $name;
+}
+
+/**
  * Plugin activation hook.
  */
 function bupr_plugin_activation() {
@@ -151,13 +209,17 @@ function bupr_plugin_activation() {
 		return false;
 	}
 
-	// Set default options.
+	/*
+	 * Set default options.
+	 *
+	 * The criteria keys are stored UNTRANSLATED on purpose - they are
+	 * identifiers, not labels, and __() here would freeze the site into its
+	 * activation-time locale. bupr_get_criteria_label() translates them at
+	 * render time instead. See bupr_get_default_rating_fields().
+	 */
 	$default_criteria = array(
 		'profile_multi_rating_allowed' => '1',
-		'profile_rating_fields'        => array(
-			__( 'Member Response', 'bp-member-reviews' ) => 'yes',
-			__( 'Member Skills', 'bp-member-reviews' )   => 'yes',
-		),
+		'profile_rating_fields'        => bupr_get_default_rating_fields(),
 	);
 
 	if ( ! get_option( 'bupr_admin_settings' ) ) {

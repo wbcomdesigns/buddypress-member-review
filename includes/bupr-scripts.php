@@ -48,10 +48,14 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 		 * never match and every wp.i18n string silently falls back to English in
 		 * production.
 		 *
+		 * Core documents `$relative` as `string|false` (false when the relative
+		 * path could not be determined - see wp-includes/l10n.php), so the
+		 * is_string() guard below is load-bearing, not defensive padding.
+		 *
 		 * @since   3.8.0
-		 * @param   string $relative Relative path core will hash.
-		 * @param   string $src      Full script URL.
-		 * @return  string
+		 * @param   string|false $relative Relative path core will hash, or false if undeterminable.
+		 * @param   string       $src      Full script URL.
+		 * @return  string|false
 		 */
 		public function bupr_filter_script_translation_relative_path( $relative, $src ) {
 			if ( ! is_string( $relative ) || false === strpos( $src, 'buddypress-member-review/' ) ) {

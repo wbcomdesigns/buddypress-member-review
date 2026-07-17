@@ -189,12 +189,17 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_set_default_rating_criteria() {
 			$bupr_admin_settings = get_option( 'bupr_admin_settings', true );
 			if ( empty( $bupr_admin_settings ) || ! is_array( $bupr_admin_settings ) ) {
+				/*
+				 * Untranslated keys on purpose - these are identifiers, not
+				 * labels. This runtime seeder is the one that actually fires on
+				 * most installs (the activation hook only covers a clean
+				 * activate), so translating here froze the option into the
+				 * locale of whichever request happened to seed it.
+				 * bupr_get_criteria_label() translates at render time instead.
+				 */
 				$default_admin_criteria = array(
 					'profile_multi_rating_allowed' => '1',
-					'profile_rating_fields'        => array(
-						esc_html__( 'Member Response', 'bp-member-reviews' ) => 'yes',
-						esc_html__( 'Member Skills', 'bp-member-reviews' ) => 'yes',
-					),
+					'profile_rating_fields'        => bupr_get_default_rating_fields(),
 				);
 				update_option( 'bupr_admin_settings', $default_admin_criteria );
 			}
@@ -1125,7 +1130,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					}
 					$review_start .= '<div class="multi-review">';
 					if ( ! empty( $rating_field_name ) ) {
-						$review_start .= '<div class="bupr-col-6">' . esc_html( $rating_field_name ) . '</div>';
+						$review_start .= '<div class="bupr-col-6">' . esc_html( bupr_get_criteria_label( $rating_field_name ) ) . '</div>';
 					}
 					$review_start .= '<div class="bupr-col-6">';
 
