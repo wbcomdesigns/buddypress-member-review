@@ -133,6 +133,27 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * constructor). Runs AFTER the panel's sanitize_criteria(), so the
 		 * raw rating_field_name[] rows are still present here.
 		 *
+		 * The stored shape is a map, `array( 'Member Response' => 'yes', ... )`.
+		 * Only the KEY carries meaning: it is the criterion identifier, it is
+		 * what every consumer reads, and bupr_get_criteria_label() translates it
+		 * at render time. Keep the map shape - existing sites have it.
+		 *
+		 * The VALUE is currently read nowhere. It was meant to drive a
+		 * per-criterion "show this one" checkbox in the criteria builder that
+		 * was never built: this method used to derive yes/no from a POST field
+		 * named `rating_field_name_display[]` that no template has ever
+		 * rendered. The field was therefore never submitted, the lookup never
+		 * matched, and EVERY save wrote 'no' to EVERY criterion - flipping a
+		 * fresh site's seeded 'yes' the first time anyone touched the tab.
+		 *
+		 * That was invisible because nothing reads the value, which is exactly
+		 * what made it dangerous: the first reader to treat 'no' as "hidden"
+		 * would have silently emptied the criteria list on every site that had
+		 * ever saved this screen. The dead lookup is gone and the value is
+		 * written as the seeded default. Do not resurrect a yes/no here without
+		 * ALSO rendering the checkbox and adding a reader - deriving state from
+		 * a field that does not exist is what caused this.
+		 *
 		 * @since    1.0.0
 		 * @access   public
 		 * @author   Wbcom Designs
@@ -143,18 +164,13 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 */
 		public function bupr_update_admin_settings( $new_value, $old_value ) {
 			if ( ! empty( $new_value ) && array_key_exists( 'rating_field_name', $new_value ) ) {
-				$rating_fields  = isset( $new_value['rating_field_name'] ) ? $new_value['rating_field_name'] : '';
-				$rating_display = isset( $new_value['rating_field_name_display'] ) ? $new_value['rating_field_name_display'] : array();
-				$criteria_arr   = array();
+				$rating_fields = isset( $new_value['rating_field_name'] ) ? $new_value['rating_field_name'] : '';
+				$criteria_arr  = array();
 				if ( ! empty( $rating_fields ) && isset( $rating_fields ) ) {
-					foreach ( $rating_fields as $key => $fname ) {
+					foreach ( $rating_fields as $fname ) {
 						// Check if $fname is not empty before adding it to the array.
 						if ( ! empty( trim( $fname ) ) ) {
-							if ( array_key_exists( $key, $rating_display ) ) {
-								$criteria_arr[ $fname ] = 'yes';
-							} else {
-								$criteria_arr[ $fname ] = 'no';
-							}
+							$criteria_arr[ $fname ] = 'yes';
 						}
 					}
 					unset( $new_value['rating_field_name'] );
