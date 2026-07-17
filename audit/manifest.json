@@ -22,176 +22,1289 @@
     "members_component": true,
     "loaded_on": "plugins_loaded -> bupr_plugins_files() (guarded by bupr_check_buddypress_compatibility + bupr_is_plugin_active)"
   },
-  "rest": { "namespace": null, "endpoints": [] },
+  "rest": {
+    "namespace": null,
+    "endpoints": []
+  },
   "ajax": [
-    { "action": "allow_bupr_member_review_update", "nopriv": true, "handler": "includes/bupr-ajax.php::BUPR_AJAX::wp_allow_bupr_my_member", "registered_at": "includes/bupr-ajax.php:40-41", "nonce": "review-nonce (field 'nonce', wp_verify_nonce at :156)", "capability": "none (public/guest review submission; self-review blocked by ID compare)", "purpose": "Submit a new review for a member; inserts 'review' CPT, sets star ratings, sends notifications/emails." },
-    { "action": "bupr_approve_review", "nopriv": true, "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_approve_review", "registered_at": "includes/bupr-ajax.php:37-38", "nonce": "bupr_member_review_ajax (check_ajax_referer at :81)", "capability": "edit_posts (current_user_can at :91)", "purpose": "Admin approves a draft review -> publish. Note: nopriv registered but cap check blocks guests." },
-    { "action": "bupr_edit_review", "nopriv": false, "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_edit_review", "registered_at": "includes/bupr-ajax.php:46", "nonce": "review-nonce (wp_verify_nonce at :492)", "capability": "post author OR edit_others_posts (ownership check at :538)", "purpose": "Return the edit-review form HTML (textarea + star inputs) for a review the user owns." },
-    { "action": "bupr_update_review", "nopriv": false, "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_update_review", "registered_at": "includes/bupr-ajax.php:47", "nonce": "review-nonce (wp_verify_nonce at :666)", "capability": "post author OR edit_others_posts (ownership check at :720)", "purpose": "Save edited review content + ratings, republish, recalc member aggregate. Ownership gate added in 3.8.0 (was nonce-only)." },
-    { "action": "bupr_add_owner_reply", "nopriv": false, "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_add_owner_reply", "registered_at": "includes/bupr-ajax.php:50", "nonce": "review-nonce (wp_verify_nonce at :806)", "capability": "linked profile owner OR manage_options (check at :844)", "purpose": "Profile owner posts a single reply to a review on their profile (gated by enable_owner_replies setting)." },
-    { "action": "bupr_flag_review", "nopriv": false, "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_flag_review", "registered_at": "includes/bupr-ajax.php:53", "nonce": "review-nonce (wp_verify_nonce at :939)", "capability": "is_user_logged_in; any logged-in member may flag once", "purpose": "Report a review; stores flag meta, auto-hides review to draft when flag_threshold reached (gated by enable_flagging)." }
+    {
+      "action": "allow_bupr_member_review_update",
+      "nopriv": true,
+      "handler": "includes/bupr-ajax.php::BUPR_AJAX::wp_allow_bupr_my_member",
+      "registered_at": "includes/bupr-ajax.php:40-41",
+      "nonce": "review-nonce (field 'nonce', wp_verify_nonce at :156)",
+      "capability": "none (public/guest review submission; self-review blocked by ID compare)",
+      "purpose": "Submit a new review for a member; inserts 'review' CPT, sets star ratings, sends notifications/emails."
+    },
+    {
+      "action": "bupr_approve_review",
+      "nopriv": true,
+      "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_approve_review",
+      "registered_at": "includes/bupr-ajax.php:37-38",
+      "nonce": "bupr_member_review_ajax (check_ajax_referer at :81)",
+      "capability": "edit_posts (current_user_can at :91)",
+      "purpose": "Admin approves a draft review -> publish. Note: nopriv registered but cap check blocks guests."
+    },
+    {
+      "action": "bupr_edit_review",
+      "nopriv": false,
+      "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_edit_review",
+      "registered_at": "includes/bupr-ajax.php:46",
+      "nonce": "review-nonce (wp_verify_nonce at :492)",
+      "capability": "post author OR edit_others_posts (ownership check at :538)",
+      "purpose": "Return the edit-review form HTML (textarea + star inputs) for a review the user owns."
+    },
+    {
+      "action": "bupr_update_review",
+      "nopriv": false,
+      "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_update_review",
+      "registered_at": "includes/bupr-ajax.php:47",
+      "nonce": "review-nonce (wp_verify_nonce at :666)",
+      "capability": "post author OR edit_others_posts (ownership check at :720)",
+      "purpose": "Save edited review content + ratings, republish, recalc member aggregate. Ownership gate added in 3.8.0 (was nonce-only)."
+    },
+    {
+      "action": "bupr_add_owner_reply",
+      "nopriv": false,
+      "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_add_owner_reply",
+      "registered_at": "includes/bupr-ajax.php:50",
+      "nonce": "review-nonce (wp_verify_nonce at :806)",
+      "capability": "linked profile owner OR manage_options (check at :844)",
+      "purpose": "Profile owner posts a single reply to a review on their profile (gated by enable_owner_replies setting)."
+    },
+    {
+      "action": "bupr_flag_review",
+      "nopriv": false,
+      "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_flag_review",
+      "registered_at": "includes/bupr-ajax.php:53",
+      "nonce": "review-nonce (wp_verify_nonce at :939)",
+      "capability": "is_user_logged_in; any logged-in member may flag once",
+      "purpose": "Report a review; stores flag meta, auto-hides review to draft when flag_threshold reached (gated by enable_flagging)."
+    }
   ],
   "admin_post": [
-    { "action": "bupr_dismiss_flag", "handler": "admin/bupr-admin.php::BUPR_Admin::bupr_handle_dismiss_flag", "registered_at": "admin/bupr-admin.php:63", "nonce": "bupr_dismiss_flag_{review_id} (wp_verify_nonce at :747)", "capability": "edit_post (per-post, :752)", "purpose": "Mark a review's report status 'dismissed' from the review edit screen." },
-    { "action": "bupr_resolve_flag", "handler": "admin/bupr-admin.php::BUPR_Admin::bupr_handle_resolve_flag", "registered_at": "admin/bupr-admin.php:64", "nonce": "bupr_resolve_flag_{review_id} (wp_verify_nonce at :788)", "capability": "edit_post (per-post, :793)", "purpose": "Mark a review's report status 'resolved' from the review edit screen." }
+    {
+      "action": "bupr_dismiss_flag",
+      "handler": "admin/bupr-admin.php::BUPR_Admin::bupr_handle_dismiss_flag",
+      "registered_at": "admin/bupr-admin.php:63",
+      "nonce": "bupr_dismiss_flag_{review_id} (wp_verify_nonce at :747)",
+      "capability": "edit_post (per-post, :752)",
+      "purpose": "Mark a review's report status 'dismissed' from the review edit screen."
+    },
+    {
+      "action": "bupr_resolve_flag",
+      "handler": "admin/bupr-admin.php::BUPR_Admin::bupr_handle_resolve_flag",
+      "registered_at": "admin/bupr-admin.php:64",
+      "nonce": "bupr_resolve_flag_{review_id} (wp_verify_nonce at :788)",
+      "capability": "edit_post (per-post, :793)",
+      "purpose": "Mark a review's report status 'resolved' from the review edit screen."
+    }
   ],
   "admin_pages": [
-    { "title": "WB Plugins", "menu_title": "WB Plugins", "slug": "wbcomplugins", "parent": "(top-level)", "capability": "manage_options", "registered_at": "includes/admin/class-bupr-admin-panel.php:144-152 (add_menu_page, only if 'wbcomplugins' not already registered by a sibling Wbcom plugin - guard at :143)", "hook": "admin_menu (BUPR_Admin_Panel::add_menu)", "callback": "BUPR_Admin_Panel::render_hub", "icon": "dashicons-lightbulb", "position": 59, "note": "Shared Wbcom hub. BUPR_Admin_Panel::takeover_hub_landing (:170-177, admin_menu priority 999) removes all toplevel_page_wbcomplugins actions and re-binds render_hub, so the card-panel dashboard wins even when a legacy wbcom-wrapper plugin registered the hub first." },
-    { "title": "BuddyPress Member Reviews", "menu_title": "Member Reviews", "slug": "bp-member-review-settings", "parent": "wbcomplugins", "capability": "manage_options", "registered_at": "includes/admin/class-bupr-admin-panel.php:155-162 (add_submenu_page)", "hook": "admin_menu (BUPR_Admin_Panel::add_menu)", "callback": "BUPR_Admin_Panel::render_page", "note": "PRIMARY plugin settings page (BUPR_Admin_Panel::MENU_SLUG, :34). Single page rendering the card-panel shell (includes/admin/views/shell.php) with sidebar tabs from BUPR_Admin_Panel::get_tabs()." }
+    {
+      "title": "WB Plugins",
+      "menu_title": "WB Plugins",
+      "slug": "wbcomplugins",
+      "parent": "(top-level)",
+      "capability": "manage_options",
+      "registered_at": "includes/admin/class-bupr-admin-panel.php:144-152 (add_menu_page, only if 'wbcomplugins' not already registered by a sibling Wbcom plugin - guard at :143)",
+      "hook": "admin_menu (BUPR_Admin_Panel::add_menu)",
+      "callback": "BUPR_Admin_Panel::render_hub",
+      "icon": "dashicons-lightbulb",
+      "position": 59,
+      "note": "Shared Wbcom hub. BUPR_Admin_Panel::takeover_hub_landing (:170-177, admin_menu priority 999) removes all toplevel_page_wbcomplugins actions and re-binds render_hub, so the card-panel dashboard wins even when a legacy wbcom-wrapper plugin registered the hub first."
+    },
+    {
+      "title": "BuddyPress Member Reviews",
+      "menu_title": "Member Reviews",
+      "slug": "bp-member-review-settings",
+      "parent": "wbcomplugins",
+      "capability": "manage_options",
+      "registered_at": "includes/admin/class-bupr-admin-panel.php:155-162 (add_submenu_page)",
+      "hook": "admin_menu (BUPR_Admin_Panel::add_menu)",
+      "callback": "BUPR_Admin_Panel::render_page",
+      "note": "PRIMARY plugin settings page (BUPR_Admin_Panel::MENU_SLUG, :34). Single page rendering the card-panel shell (includes/admin/views/shell.php) with sidebar tabs from BUPR_Admin_Panel::get_tabs()."
+    }
   ],
   "admin_ui_wrapper": {
     "classification": "NEW (card-panel shell)",
     "owner_class": "BUPR_Admin_Panel (includes/admin/class-bupr-admin-panel.php)",
     "shell_view": "includes/admin/views/shell.php",
-    "views": ["includes/admin/views/shell.php", "includes/admin/views/hub.php", "includes/admin/views/overview.php", "includes/admin/views/settings-general.php", "includes/admin/views/settings-criteria.php", "includes/admin/views/settings-display.php", "includes/admin/views/settings-pro-features.php", "includes/admin/views/discover.php"],
+    "views": [
+      "includes/admin/views/shell.php",
+      "includes/admin/views/hub.php",
+      "includes/admin/views/overview.php",
+      "includes/admin/views/settings-general.php",
+      "includes/admin/views/settings-criteria.php",
+      "includes/admin/views/settings-display.php",
+      "includes/admin/views/settings-pro-features.php",
+      "includes/admin/views/discover.php"
+    ],
     "tabs_registered_at": "includes/admin/class-bupr-admin-panel.php:52-121 (BUPR_Admin_Panel::get_tabs)",
     "tabs": [
-      { "slug": "overview", "label": "Overview", "icon": "dashicons-chart-bar", "group": "main", "at": ":54-58" },
-      { "slug": "bupr-general", "label": "General", "icon": "dashicons-admin-generic", "group": "settings", "at": ":59-63" },
-      { "slug": "bupr-criteria", "label": "Criteria", "icon": "dashicons-star-filled", "group": "settings", "at": ":64-68" },
-      { "slug": "bupr-display", "label": "Display", "icon": "dashicons-admin-appearance", "group": "settings", "at": ":69-73" },
-      { "slug": "bupr-pro-features", "label": "Add-ons", "icon": "dashicons-admin-plugins", "group": "settings", "at": ":77-81", "note": "Slug kept as bupr-pro-features (public contract: ?tab= URLs + the tab map the Pro addon filters); only the label was reframed to Add-ons. Owns no settings; pure mount point for bupr_admin_settings_pro_content." },
-      { "slug": "discover", "label": "Discover", "icon": "dashicons-products", "group": "discover", "at": ":107-111", "note": "Appended AFTER the legacy bupr_admin_settings_tabs round-trip so the Pro tab-removal filter cannot drop it." }
+      {
+        "slug": "overview",
+        "label": "Overview",
+        "icon": "dashicons-chart-bar",
+        "group": "main",
+        "at": ":54-58"
+      },
+      {
+        "slug": "bupr-general",
+        "label": "General",
+        "icon": "dashicons-admin-generic",
+        "group": "settings",
+        "at": ":59-63"
+      },
+      {
+        "slug": "bupr-criteria",
+        "label": "Criteria",
+        "icon": "dashicons-star-filled",
+        "group": "settings",
+        "at": ":64-68"
+      },
+      {
+        "slug": "bupr-display",
+        "label": "Display",
+        "icon": "dashicons-admin-appearance",
+        "group": "settings",
+        "at": ":69-73"
+      },
+      {
+        "slug": "bupr-pro-features",
+        "label": "Add-ons",
+        "icon": "dashicons-admin-plugins",
+        "group": "settings",
+        "at": ":77-81",
+        "note": "Slug kept as bupr-pro-features (public contract: ?tab= URLs + the tab map the Pro addon filters); only the label was reframed to Add-ons. Owns no settings; pure mount point for bupr_admin_settings_pro_content."
+      },
+      {
+        "slug": "discover",
+        "label": "Discover",
+        "icon": "dashicons-products",
+        "group": "discover",
+        "at": ":107-111",
+        "note": "Appended AFTER the legacy bupr_admin_settings_tabs round-trip so the Pro tab-removal filter cannot drop it."
+      }
     ],
     "legacy_wrapper": "REMOVED in 3.8.0 - the entire admin/wbcom/ directory (class Wbcom_Admin_Settings, its header shortcode, Our Plugins / Our Themes / Support submenus, and the wbcom_addons_cards AJAX) no longer exists. Only comments referencing the migration remain (buddypress-member-review.php:237, includes/admin/class-bupr-admin-panel.php:5).",
-    "assets": { "css": "assets/css/admin.css (handle bupr-admin-panel, :322-327)", "js": "assets/js/admin.js (handle bupr-admin-panel, :329-335; localized as buprAdminPanel, :337-348)", "screen_gated_by": "BUPR_Admin_Panel::is_our_screen (enqueue_assets :313-318)" },
+    "assets": {
+      "css": "assets/css/admin.css (handle bupr-admin-panel, :322-327)",
+      "js": "assets/js/admin.js (handle bupr-admin-panel, :329-335; localized as buprAdminPanel, :337-348)",
+      "screen_gated_by": "BUPR_Admin_Panel::is_our_screen (enqueue_assets :313-318)"
+    },
     "notice_suppression": "BUPR_Admin_Panel::suppress_foreign_notices on in_admin_header priority 1 (registered :133)"
   },
   "settings": [
-    { "key": "bupr_admin_general_options", "group": "bupr_admin_general_options", "type": "array", "registered_at": "includes/admin/class-bupr-admin-panel.php:189-196 (BUPR_Admin_Panel::OPTION_GENERAL, const at :39)", "sanitize_callback": "BUPR_Admin_Panel::sanitize_general (delegates to BUPR_Admin::bupr_sanitize_options via run_legacy_sanitizer :225)", "subkeys": ["bupr_auto_approve_reviews", "profile_reviews_per_page", "bupr_member_dir_reviews", "bupr_allow_email", "bupr_allow_notification", "bupr_allow_update", "bupr_exc_member[]", "bupr_add_member[]", "bupr_multi_reviews", "bupr_hide_review_button", "bupr_enable_anonymous_reviews", "bupr_enable_review_activity", "review_email_subject", "review_email_message", "review_approve_email_subject", "review_approve_email_message", "bupr_enable_owner_replies", "bupr_enable_flagging", "bupr_flag_threshold"], "conditional_keys": ["review_approve_email_subject", "review_approve_email_message"], "conditional_keys_note": "Sentinel-guarded merge at includes/admin/class-bupr-admin-panel.php:272 so conditionally-rendered approval-email fields are not wiped on save.", "read_in": "includes/class-buprglobals.php:56 (hydrates global $bupr), includes/bupr-ajax.php:194,369, includes/bupr-filters.php:759, includes/admin/views/overview.php:13, admin/bupr-admin.php:327, admin/tab-templates/bupr-setting-general-tab.php:40", "controls": "General behavior: approval mode, per-page count, directory display, email/notification toggles, reviewer/reviewee role gating, multi-review, anonymous, activity, owner-replies, flagging + threshold." },
-    { "key": "bupr_admin_settings", "group": "bupr_admin_settings", "type": "array", "registered_at": "includes/admin/class-bupr-admin-panel.php:197-204 (BUPR_Admin_Panel::OPTION_CRITERIA, const at :40)", "sanitize_callback": "BUPR_Admin_Panel::sanitize_criteria + pre_update_option_bupr_admin_settings filter (BUPR_Admin, transform at admin/bupr-admin.php:130-162)", "subkeys": ["profile_multi_rating_allowed", "profile_rating_fields", "rating_field_name (transient builder input)"], "default_seeded_at": "buddypress-member-review.php:163-164 (activation) + includes/bupr-filters.php:190-199 (bupr_set_default_rating_criteria)", "read_in": "includes/class-buprglobals.php:57, includes/bupr-filters.php:190,1098", "controls": "Rating criteria builder: multi-criteria toggle + the named rating fields (e.g. Member Response, Member Skills)." },
-    { "key": "bupr_admin_display_options", "group": "bupr_admin_display_options", "type": "array", "registered_at": "includes/admin/class-bupr-admin-panel.php:205-212 (BUPR_Admin_Panel::OPTION_DISPLAY, const at :41)", "sanitize_callback": "BUPR_Admin_Panel::sanitize_display", "subkeys": ["bupr_review_title", "bupr_review_title_plural", "bupr_star_color"], "read_in": "includes/class-buprglobals.php:58", "controls": "Display labels (singular/plural review label, used for tab slugs) and star color (inline CSS injected in bupr-scripts.php)." },
-    { "key": "bupr_plugin_version", "group": "(standalone option)", "type": "string", "written_at": "buddypress-member-review.php:168 (activation)", "controls": "Stores installed plugin version." },
-    { "key": "bupr_current_batch", "group": "(standalone option)", "type": "int", "read_write_at": "includes/bupr-general-functions.php:381,387,391; deleted on deactivation buddypress-member-review.php:373", "controls": "Cron pagination cursor for batch aggregate-rating recalculation." },
-    { "key": "bupr_top_members_cache_ver", "group": "(standalone option)", "type": "string", "read_at": "includes/bupr-shortcodes.php:82", "written_at": "includes/bupr-general-functions.php:632 (bupr_flush_top_members_cache, autoload=false)", "controls": "Cache salt for the [bupr_display_top_members] 15-minute transient; bumped on recalc / status transition / delete." },
-    { "key": "bupr_meta_repair_v1_done", "group": "(standalone option)", "type": "string ('yes')", "read_at": "includes/bupr-general-functions.php:473; buddypress-member-review.php:172", "written_at": "includes/bupr-general-functions.php:486,498; buddypress-member-review.php:173 (fresh installs skip the repair)", "controls": "One-time gate for the v1 count/aggregate meta-drift repair migration." },
-    { "key": "bupr_meta_repair_paged", "group": "(standalone option)", "type": "int", "read_write_at": "includes/bupr-general-functions.php:481,526,531; deleted at :535 on completion", "controls": "Pagination cursor for the one-time meta-repair batch chain." },
-    { "key": "_bupr_activation_redirect", "group": "(transient)", "type": "bool", "written_at": "buddypress-member-review.php:184 (activation, 30s TTL)", "read_at": "buddypress-member-review.php:343", "deleted_at": "buddypress-member-review.php:344 (after redirect), :372 (deactivation)", "controls": "One-shot transient to redirect to settings after activation." },
-    { "key": "bupr_drift_checked_{user_id}", "group": "(transient)", "type": "int", "read_at": "includes/bupr-filters.php:564", "written_at": "includes/bupr-filters.php:578 (DAY_IN_SECONDS)", "controls": "Per-user 24h throttle so the directory rating render checks aggregate-meta drift at most once a day." }
+    {
+      "key": "bupr_admin_general_options",
+      "group": "bupr_admin_general_options",
+      "type": "array",
+      "registered_at": "includes/admin/class-bupr-admin-panel.php:189-196 (BUPR_Admin_Panel::OPTION_GENERAL, const at :39)",
+      "sanitize_callback": "BUPR_Admin_Panel::sanitize_general (delegates to BUPR_Admin::bupr_sanitize_options via run_legacy_sanitizer :225)",
+      "subkeys": [
+        "bupr_auto_approve_reviews",
+        "profile_reviews_per_page",
+        "bupr_member_dir_reviews",
+        "bupr_allow_email",
+        "bupr_allow_notification",
+        "bupr_allow_update",
+        "bupr_exc_member[]",
+        "bupr_add_member[]",
+        "bupr_multi_reviews",
+        "bupr_hide_review_button",
+        "bupr_enable_anonymous_reviews",
+        "bupr_enable_review_activity",
+        "review_email_subject",
+        "review_email_message",
+        "review_approve_email_subject",
+        "review_approve_email_message",
+        "bupr_enable_owner_replies",
+        "bupr_enable_flagging",
+        "bupr_flag_threshold"
+      ],
+      "conditional_keys": [
+        "review_approve_email_subject",
+        "review_approve_email_message"
+      ],
+      "conditional_keys_note": "Sentinel-guarded merge at includes/admin/class-bupr-admin-panel.php:272 so conditionally-rendered approval-email fields are not wiped on save.",
+      "read_in": "includes/class-buprglobals.php:56 (hydrates global $bupr), includes/bupr-ajax.php:194,369, includes/bupr-filters.php:759, includes/admin/views/overview.php:13, admin/bupr-admin.php:327, admin/tab-templates/bupr-setting-general-tab.php:40",
+      "controls": "General behavior: approval mode, per-page count, directory display, email/notification toggles, reviewer/reviewee role gating, multi-review, anonymous, activity, owner-replies, flagging + threshold."
+    },
+    {
+      "key": "bupr_admin_settings",
+      "group": "bupr_admin_settings",
+      "type": "array",
+      "registered_at": "includes/admin/class-bupr-admin-panel.php:197-204 (BUPR_Admin_Panel::OPTION_CRITERIA, const at :40)",
+      "sanitize_callback": "BUPR_Admin_Panel::sanitize_criteria + pre_update_option_bupr_admin_settings filter (BUPR_Admin, transform at admin/bupr-admin.php:130-162)",
+      "subkeys": [
+        "profile_multi_rating_allowed",
+        "profile_rating_fields",
+        "rating_field_name (transient builder input)"
+      ],
+      "default_seeded_at": "buddypress-member-review.php:163-164 (activation) + includes/bupr-filters.php:190-199 (bupr_set_default_rating_criteria)",
+      "read_in": "includes/class-buprglobals.php:57, includes/bupr-filters.php:190,1098",
+      "controls": "Rating criteria builder: multi-criteria toggle + the named rating fields (e.g. Member Response, Member Skills)."
+    },
+    {
+      "key": "bupr_admin_display_options",
+      "group": "bupr_admin_display_options",
+      "type": "array",
+      "registered_at": "includes/admin/class-bupr-admin-panel.php:205-212 (BUPR_Admin_Panel::OPTION_DISPLAY, const at :41)",
+      "sanitize_callback": "BUPR_Admin_Panel::sanitize_display",
+      "subkeys": [
+        "bupr_review_title",
+        "bupr_review_title_plural",
+        "bupr_star_color"
+      ],
+      "read_in": "includes/class-buprglobals.php:58",
+      "controls": "Display labels (singular/plural review label, used for tab slugs) and star color (inline CSS injected in bupr-scripts.php)."
+    },
+    {
+      "key": "bupr_plugin_version",
+      "group": "(standalone option)",
+      "type": "string",
+      "written_at": "buddypress-member-review.php:168 (activation)",
+      "controls": "Stores installed plugin version."
+    },
+    {
+      "key": "bupr_current_batch",
+      "group": "(standalone option)",
+      "type": "int",
+      "read_write_at": "includes/bupr-general-functions.php:381,387,391; deleted on deactivation buddypress-member-review.php:373",
+      "controls": "Cron pagination cursor for batch aggregate-rating recalculation."
+    },
+    {
+      "key": "bupr_top_members_cache_ver",
+      "group": "(standalone option)",
+      "type": "string",
+      "read_at": "includes/bupr-shortcodes.php:82",
+      "written_at": "includes/bupr-general-functions.php:632 (bupr_flush_top_members_cache, autoload=false)",
+      "controls": "Cache salt for the [bupr_display_top_members] 15-minute transient; bumped on recalc / status transition / delete."
+    },
+    {
+      "key": "bupr_meta_repair_v1_done",
+      "group": "(standalone option)",
+      "type": "string ('yes')",
+      "read_at": "includes/bupr-general-functions.php:473; buddypress-member-review.php:172",
+      "written_at": "includes/bupr-general-functions.php:486,498; buddypress-member-review.php:173 (fresh installs skip the repair)",
+      "controls": "One-time gate for the v1 count/aggregate meta-drift repair migration."
+    },
+    {
+      "key": "bupr_meta_repair_paged",
+      "group": "(standalone option)",
+      "type": "int",
+      "read_write_at": "includes/bupr-general-functions.php:481,526,531; deleted at :535 on completion",
+      "controls": "Pagination cursor for the one-time meta-repair batch chain."
+    },
+    {
+      "key": "_bupr_activation_redirect",
+      "group": "(transient)",
+      "type": "bool",
+      "written_at": "buddypress-member-review.php:184 (activation, 30s TTL)",
+      "read_at": "buddypress-member-review.php:343",
+      "deleted_at": "buddypress-member-review.php:344 (after redirect), :372 (deactivation)",
+      "controls": "One-shot transient to redirect to settings after activation."
+    },
+    {
+      "key": "bupr_drift_checked_{user_id}",
+      "group": "(transient)",
+      "type": "int",
+      "read_at": "includes/bupr-filters.php:564",
+      "written_at": "includes/bupr-filters.php:578 (DAY_IN_SECONDS)",
+      "controls": "Per-user 24h throttle so the directory rating render checks aggregate-meta drift at most once a day."
+    }
   ],
   "shortcodes": [
-    { "tag": "bupr_display_top_members", "handler": "includes/bupr-shortcodes.php::BUPR_Shortcodes::bupr_display_top_members_display", "registered_at": "includes/bupr-shortcodes.php:30", "attrs": ["title", "total_member", "type (top rated|top reviewed)", "avatar (show|hide)"], "purpose": "Render a top-members leaderboard sorted by aggregate rating or review count (CAST-ordered usermeta SQL, cached in a 15-min transient salted by bupr_top_members_cache_ver)." }
+    {
+      "tag": "bupr_display_top_members",
+      "handler": "includes/bupr-shortcodes.php::BUPR_Shortcodes::bupr_display_top_members_display",
+      "registered_at": "includes/bupr-shortcodes.php:30",
+      "attrs": [
+        "title",
+        "total_member",
+        "type (top rated|top reviewed)",
+        "avatar (show|hide)"
+      ],
+      "purpose": "Render a top-members leaderboard sorted by aggregate rating or review count (CAST-ordered usermeta SQL, cached in a 15-min transient salted by bupr_top_members_cache_ver)."
+    }
   ],
   "blocks": [],
   "widgets": [
-    { "class": "bupr_members_review_setting", "id_base": "bupr_members_review_setting", "title": "BP Member Review Widget", "registered_at": "includes/widgets/display-review.php:21 (register_widget), :48 (id_base), :50 (parent::__construct)", "file": "includes/widgets/display-review.php", "purpose": "Display reviews / member ratings list widget." },
-    { "class": "bupr_single_member_rating_widget", "id_base": "bupr_single_member_rating_widget", "title": "BP Displayed Member Rating Widget", "registered_at": "includes/widgets/member-rating.php:21 (register_widget), :43 (id_base), :45 (parent::__construct)", "file": "includes/widgets/member-rating.php", "purpose": "Display a single member's average rating on their profile." }
+    {
+      "class": "bupr_members_review_setting",
+      "id_base": "bupr_members_review_setting",
+      "title": "BP Member Review Widget",
+      "registered_at": "includes/widgets/display-review.php:21 (register_widget), :48 (id_base), :50 (parent::__construct)",
+      "file": "includes/widgets/display-review.php",
+      "purpose": "Display reviews / member ratings list widget."
+    },
+    {
+      "class": "bupr_single_member_rating_widget",
+      "id_base": "bupr_single_member_rating_widget",
+      "title": "BP Displayed Member Rating Widget",
+      "registered_at": "includes/widgets/member-rating.php:21 (register_widget), :43 (id_base), :45 (parent::__construct)",
+      "file": "includes/widgets/member-rating.php",
+      "purpose": "Display a single member's average rating on their profile."
+    }
   ],
   "post_types": [
-    { "name": "review", "registered_at": "admin/bupr-admin.php:176-213 (BUPR_Admin::bupr_review_cpt, hooked init at :45 - only if 'review' not already registered)", "public": true, "publicly_queryable": true, "show_ui": true, "show_in_menu": true, "has_archive": true, "hierarchical": false, "capability_type": "post", "capabilities_override": { "create_posts": "do_not_allow" }, "map_meta_cap": true, "supports": ["title", "editor", "author"], "rewrite_slug": "review (with_front false)", "menu_icon": "dashicons-testimonial", "menu_name": "Reviews", "purpose": "Stores each member review/testimonial/endorsement as a post; author = reviewer, linked_bp_member meta = reviewed user." }
+    {
+      "name": "review",
+      "registered_at": "admin/bupr-admin.php:176-213 (BUPR_Admin::bupr_review_cpt, hooked init at :45 - only if 'review' not already registered)",
+      "public": true,
+      "publicly_queryable": true,
+      "show_ui": true,
+      "show_in_menu": true,
+      "has_archive": true,
+      "hierarchical": false,
+      "capability_type": "post",
+      "capabilities_override": {
+        "create_posts": "do_not_allow"
+      },
+      "map_meta_cap": true,
+      "supports": [
+        "title",
+        "editor",
+        "author"
+      ],
+      "rewrite_slug": "review (with_front false)",
+      "menu_icon": "dashicons-testimonial",
+      "menu_name": "Reviews",
+      "purpose": "Stores each member review/testimonial/endorsement as a post; author = reviewer, linked_bp_member meta = reviewed user."
+    }
   ],
   "taxonomies": [
-    { "name": "review_category", "post_type": "review", "registered_at": "admin/bupr-admin.php:290-305 (BUPR_Admin::bupr_review_taxonomy_cpt, hooked init at :46)", "hierarchical": true, "show_ui": false, "show_admin_column": true, "rewrite_slug": "review_category", "seeded_term": "BP Member (includes/bupr-filters.php:728-731 bupr_add_bp_member_reviews_taxonomy_term, hooked init at :61; assigned on submit at includes/bupr-ajax.php:300)", "purpose": "Categorize reviews; the 'BP Member' term marks profile reviews." }
+    {
+      "name": "review_category",
+      "post_type": "review",
+      "registered_at": "admin/bupr-admin.php:290-305 (BUPR_Admin::bupr_review_taxonomy_cpt, hooked init at :46)",
+      "hierarchical": true,
+      "show_ui": false,
+      "show_admin_column": true,
+      "rewrite_slug": "review_category",
+      "seeded_term": "BP Member (includes/bupr-filters.php:728-731 bupr_add_bp_member_reviews_taxonomy_term, hooked init at :61; assigned on submit at includes/bupr-ajax.php:300)",
+      "purpose": "Categorize reviews; the 'BP Member' term marks profile reviews."
+    }
   ],
   "meta_boxes": [
-    { "id": "custom_meta_box_ratings", "title": "Member Ratings", "screen": "review", "context": "side", "priority": "low", "registered_at": "admin/bupr-admin.php:72-80 (BUPR_Admin::bupr_review_add_meta_box_ratings, hooked add_meta_boxes at :47)", "callback": "BUPR_Admin::bupr_review_render_custom_meta_box_ratings", "purpose": "Show/edit the per-criterion star ratings on the review edit screen." },
-    { "id": "bupr_flag_details", "title": "Report Details", "screen": "review", "context": "side", "priority": "default", "registered_at": "admin/bupr-admin.php:567-575 (BUPR_Admin::bupr_add_flag_meta_box, hooked add_meta_boxes at :55)", "callback": "BUPR_Admin::bupr_render_flag_meta_box", "purpose": "Show flag records + Dismiss/Resolve admin-post action links." }
+    {
+      "id": "custom_meta_box_ratings",
+      "title": "Member Ratings",
+      "screen": "review",
+      "context": "side",
+      "priority": "low",
+      "registered_at": "admin/bupr-admin.php:72-80 (BUPR_Admin::bupr_review_add_meta_box_ratings, hooked add_meta_boxes at :47)",
+      "callback": "BUPR_Admin::bupr_review_render_custom_meta_box_ratings",
+      "purpose": "Show/edit the per-criterion star ratings on the review edit screen."
+    },
+    {
+      "id": "bupr_flag_details",
+      "title": "Report Details",
+      "screen": "review",
+      "context": "side",
+      "priority": "default",
+      "registered_at": "admin/bupr-admin.php:567-575 (BUPR_Admin::bupr_add_flag_meta_box, hooked add_meta_boxes at :55)",
+      "callback": "BUPR_Admin::bupr_render_flag_meta_box",
+      "purpose": "Show flag records + Dismiss/Resolve admin-post action links."
+    }
   ],
   "tables": [],
   "user_meta": [
-    { "key": "bupr_review_count", "purpose": "Cached number of published reviews received by a member.", "written_at": "includes/bupr-general-functions.php:308" },
-    { "key": "bupr_aggregate_rating", "purpose": "Cached average rating (0-5) for a member.", "read_at": "includes/bupr-shortcodes.php:114" },
-    { "key": "bupr_last_calculated", "purpose": "Timestamp marker (deleted on cache clear)." }
+    {
+      "key": "bupr_review_count",
+      "purpose": "Cached number of published reviews received by a member.",
+      "written_at": "includes/bupr-general-functions.php:308"
+    },
+    {
+      "key": "bupr_aggregate_rating",
+      "purpose": "Cached average rating (0-5) for a member.",
+      "read_at": "includes/bupr-shortcodes.php:114"
+    },
+    {
+      "key": "bupr_last_calculated",
+      "purpose": "Timestamp marker (deleted on cache clear)."
+    }
   ],
   "post_meta": [
-    { "key": "linked_bp_member", "purpose": "User ID of the member being reviewed." },
-    { "key": "profile_star_rating", "purpose": "Array of per-criterion star values (or flat array)." },
-    { "key": "bupr_anonymous_review_post", "purpose": "'yes' if the review was submitted anonymously." },
-    { "key": "bupr_owner_reply", "purpose": "Profile owner's reply text." },
-    { "key": "bupr_owner_reply_date", "purpose": "Owner reply timestamp." },
-    { "key": "bupr_flags", "purpose": "Array of flag records [{reporter_id, reason, reason_label, date}]." },
-    { "key": "bupr_flag_count", "purpose": "Number of flags on the review." },
-    { "key": "bupr_flag_status", "purpose": "none|flagged|resolved|dismissed." },
-    { "key": "bupr_auto_hidden", "purpose": "true if auto-hidden after reaching flag threshold." },
-    { "key": "bupr_auto_hidden_date", "purpose": "Auto-hide timestamp." }
+    {
+      "key": "linked_bp_member",
+      "purpose": "User ID of the member being reviewed."
+    },
+    {
+      "key": "profile_star_rating",
+      "purpose": "Array of per-criterion star values (or flat array)."
+    },
+    {
+      "key": "bupr_anonymous_review_post",
+      "purpose": "'yes' if the review was submitted anonymously."
+    },
+    {
+      "key": "bupr_owner_reply",
+      "purpose": "Profile owner's reply text."
+    },
+    {
+      "key": "bupr_owner_reply_date",
+      "purpose": "Owner reply timestamp."
+    },
+    {
+      "key": "bupr_flags",
+      "purpose": "Array of flag records [{reporter_id, reason, reason_label, date}]."
+    },
+    {
+      "key": "bupr_flag_count",
+      "purpose": "Number of flags on the review."
+    },
+    {
+      "key": "bupr_flag_status",
+      "purpose": "none|flagged|resolved|dismissed."
+    },
+    {
+      "key": "bupr_auto_hidden",
+      "purpose": "true if auto-hidden after reaching flag threshold."
+    },
+    {
+      "key": "bupr_auto_hidden_date",
+      "purpose": "Auto-hide timestamp."
+    }
   ],
   "capabilities": [
-    { "cap": "edit_posts", "default_roles": ["administrator", "editor"], "enforced_at": ["includes/bupr-ajax.php:91"], "enforcement_count": 1, "meta": false, "requires_context": "none", "note": "Gate for approving draft reviews." },
-    { "cap": "edit_others_posts", "default_roles": ["administrator", "editor"], "enforced_at": ["includes/bupr-ajax.php:538", "includes/bupr-ajax.php:720"], "enforcement_count": 2, "meta": false, "requires_context": "none", "note": "Allows editing/updating reviews authored by others (edit form + update handler)." },
-    { "cap": "manage_options", "default_roles": ["administrator"], "enforced_at": ["includes/bupr-ajax.php:844", "includes/admin/class-bupr-admin-panel.php:140 (applied at :147 add_menu_page and :159 add_submenu_page)", "admin/class-bupr-admin-feedback.php:291"], "enforcement_count": 4, "meta": false, "requires_context": "none", "note": "Admin menu pages, feedback-notice dismissal, and owner-reply admin override." },
-    { "cap": "edit_post", "default_roles": ["administrator", "editor", "author(own)"], "enforced_at": ["admin/bupr-admin.php:752", "admin/bupr-admin.php:793"], "enforcement_count": 2, "meta": true, "requires_context": "post", "note": "Per-post check for dismiss/resolve flag admin-post handlers." },
-    { "cap": "read", "default_roles": ["all logged-in"], "enforced_at": ["includes/bupr-filters.php:343"], "enforcement_count": 1, "meta": false, "requires_context": "none", "note": "Gate before rendering 'give review' button." }
+    {
+      "cap": "edit_posts",
+      "default_roles": [
+        "administrator",
+        "editor"
+      ],
+      "enforced_at": [
+        "includes/bupr-ajax.php:91"
+      ],
+      "enforcement_count": 1,
+      "meta": false,
+      "requires_context": "none",
+      "note": "Gate for approving draft reviews."
+    },
+    {
+      "cap": "edit_others_posts",
+      "default_roles": [
+        "administrator",
+        "editor"
+      ],
+      "enforced_at": [
+        "includes/bupr-ajax.php:538",
+        "includes/bupr-ajax.php:720"
+      ],
+      "enforcement_count": 2,
+      "meta": false,
+      "requires_context": "none",
+      "note": "Allows editing/updating reviews authored by others (edit form + update handler)."
+    },
+    {
+      "cap": "manage_options",
+      "default_roles": [
+        "administrator"
+      ],
+      "enforced_at": [
+        "includes/bupr-ajax.php:844",
+        "includes/admin/class-bupr-admin-panel.php:140 (applied at :147 add_menu_page and :159 add_submenu_page)",
+        "admin/class-bupr-admin-feedback.php:291"
+      ],
+      "enforcement_count": 4,
+      "meta": false,
+      "requires_context": "none",
+      "note": "Admin menu pages, feedback-notice dismissal, and owner-reply admin override."
+    },
+    {
+      "cap": "edit_post",
+      "default_roles": [
+        "administrator",
+        "editor",
+        "author(own)"
+      ],
+      "enforced_at": [
+        "admin/bupr-admin.php:752",
+        "admin/bupr-admin.php:793"
+      ],
+      "enforcement_count": 2,
+      "meta": true,
+      "requires_context": "post",
+      "note": "Per-post check for dismiss/resolve flag admin-post handlers."
+    },
+    {
+      "cap": "read",
+      "default_roles": [
+        "all logged-in"
+      ],
+      "enforced_at": [
+        "includes/bupr-filters.php:343"
+      ],
+      "enforcement_count": 1,
+      "meta": false,
+      "requires_context": "none",
+      "note": "Gate before rendering 'give review' button."
+    }
   ],
   "services": [],
   "classes": [
-    { "name": "BUPRGlobals", "file": "includes/class-buprglobals.php:20", "purpose": "Hydrates the global $bupr settings array on init; fires bupr_global_settings filter." },
-    { "name": "BUPR_Admin_Panel", "file": "includes/admin/class-bupr-admin-panel.php:28", "purpose": "NEW card-panel admin: menu + hub takeover, the three register_setting groups + sanitizers, panel asset enqueue, tab registry, page render." },
-    { "name": "BUPR_Admin", "file": "admin/bupr-admin.php:20", "purpose": "CPT/taxonomy registration, rating + report meta boxes, flag admin columns/filters/bulk actions, dismiss/resolve admin-post handlers, legacy sanitizer + criteria pre_update_option transform." },
-    { "name": "BUPRScriptsStyles", "file": "includes/bupr-scripts.php:21", "purpose": "Conditional front + admin asset enqueue (FontAwesome, select2, color-picker, bupr-front/admin)." },
-    { "name": "Bupr_Admin_Feedback", "file": "admin/class-bupr-admin-feedback.php:22", "purpose": "Deactivation feedback / review-request admin notice (installation-date based)." },
-    { "name": "BUPR_Custom_Hooks", "file": "includes/bupr-filters.php:21", "purpose": "BuddyPress profile tab + subnavs, directory rating display, activity integration, anonymous handling, screen functions, taxonomy term seeding." },
-    { "name": "BUPR_Shortcodes", "file": "includes/bupr-shortcodes.php:21", "purpose": "Top-members shortcode + front review form rendering (bupr_member_review_form action)." },
-    { "name": "BUPR_AJAX", "file": "includes/bupr-ajax.php:25", "purpose": "All front AJAX handlers (submit/edit/update/approve/owner-reply/flag) + post_date filter." },
-    { "name": "bupr_members_review_setting", "file": "includes/widgets/display-review.php:33", "purpose": "WP_Widget for review/rating list." },
-    { "name": "bupr_single_member_rating_widget", "file": "includes/widgets/member-rating.php:30", "purpose": "WP_Widget for single-member rating." }
+    {
+      "name": "BUPRGlobals",
+      "file": "includes/class-buprglobals.php:20",
+      "purpose": "Hydrates the global $bupr settings array on init; fires bupr_global_settings filter."
+    },
+    {
+      "name": "BUPR_Admin_Panel",
+      "file": "includes/admin/class-bupr-admin-panel.php:28",
+      "purpose": "NEW card-panel admin: menu + hub takeover, the three register_setting groups + sanitizers, panel asset enqueue, tab registry, page render."
+    },
+    {
+      "name": "BUPR_Admin",
+      "file": "admin/bupr-admin.php:20",
+      "purpose": "CPT/taxonomy registration, rating + report meta boxes, flag admin columns/filters/bulk actions, dismiss/resolve admin-post handlers, legacy sanitizer + criteria pre_update_option transform."
+    },
+    {
+      "name": "BUPRScriptsStyles",
+      "file": "includes/bupr-scripts.php:21",
+      "purpose": "Conditional front + admin asset enqueue (FontAwesome, select2, color-picker, bupr-front/admin)."
+    },
+    {
+      "name": "Bupr_Admin_Feedback",
+      "file": "admin/class-bupr-admin-feedback.php:22",
+      "purpose": "Deactivation feedback / review-request admin notice (installation-date based)."
+    },
+    {
+      "name": "BUPR_Custom_Hooks",
+      "file": "includes/bupr-filters.php:21",
+      "purpose": "BuddyPress profile tab + subnavs, directory rating display, activity integration, anonymous handling, screen functions, taxonomy term seeding."
+    },
+    {
+      "name": "BUPR_Shortcodes",
+      "file": "includes/bupr-shortcodes.php:21",
+      "purpose": "Top-members shortcode + front review form rendering (bupr_member_review_form action)."
+    },
+    {
+      "name": "BUPR_AJAX",
+      "file": "includes/bupr-ajax.php:25",
+      "purpose": "All front AJAX handlers (submit/edit/update/approve/owner-reply/flag) + post_date filter."
+    },
+    {
+      "name": "bupr_members_review_setting",
+      "file": "includes/widgets/display-review.php:33",
+      "purpose": "WP_Widget for review/rating list."
+    },
+    {
+      "name": "bupr_single_member_rating_widget",
+      "file": "includes/widgets/member-rating.php:30",
+      "purpose": "WP_Widget for single-member rating."
+    }
   ],
   "hooks_fired": [
-    { "name": "bupr_global_settings", "type": "filter", "args_count": 1, "args_signature": ["array $bupr"], "where": "includes/class-buprglobals.php:131", "consumed_by": ["buddypress-member-review-pro (review modes alter active_rating_fields)"] },
-    { "name": "bupr_member_review_after_review_insert", "type": "action", "args_count": 2, "args_signature": ["int $review_id", "int $member_id"], "where": "includes/bupr-ajax.php:325,771; admin/bupr-admin.php:324", "consumed_by": ["includes/bupr-filters.php:85 bupr_create_review_activity", "includes/bupr-general-functions.php:199 bupr_handle_review_submission"] },
-    { "name": "bupr_sent_review_notification", "type": "action", "args_count": 2, "args_signature": ["int $member_id", "int $review_id"], "where": "includes/bupr-ajax.php:385,480; admin/bupr-admin.php:325", "consumed_by": ["includes/bupr-notification.php:148 bupr_buddypress_add_notification"] },
-    { "name": "bupr_before_save_review", "type": "action", "args_count": 2, "args_signature": ["int $review_id", "array $add_review_args"], "where": "includes/bupr-ajax.php:321", "consumed_by": ["buddypress-member-review-pro (flexible criteria save)"] },
-    { "name": "bupr_owner_reply_added", "type": "action", "args_count": 3, "args_signature": ["int $review_id", "int $owner_id", "int $reviewer_id"], "where": "includes/bupr-ajax.php:906", "consumed_by": [] },
-    { "name": "bupr_review_flagged", "type": "action", "args_count": 3, "args_signature": ["int $review_id", "int $reporter_id", "string $reason"], "where": "includes/bupr-ajax.php:1054", "consumed_by": [] },
-    { "name": "bupr_edit_review_extra_fields", "type": "filter", "args_count": 2, "args_signature": ["string $extra_fields", "int $review_id"], "where": "includes/bupr-ajax.php:638", "consumed_by": ["buddypress-member-review-pro"] },
-    { "name": "bupr_after_rating_fields", "type": "action", "args_count": 0, "args_signature": [], "where": "includes/bupr-shortcodes.php:480", "consumed_by": ["buddypress-member-review-pro (flexible criteria fields)"] },
-    { "name": "bupr_member_review_form", "type": "action", "args_count": 0, "args_signature": [], "where": "includes/bupr-filters.php:942 (do_action); registered in includes/bupr-shortcodes.php:31", "consumed_by": ["includes/bupr-shortcodes.php:31 bupr_display_review_form"] },
-    { "name": "bupr_show_profile_review_tab", "type": "filter", "args_count": 1, "args_signature": ["bool $show"], "where": "includes/bupr-filters.php:799", "consumed_by": [] },
-    { "name": "bupr_allow_activity_posting", "type": "filter", "args_count": 3, "args_signature": ["bool $allow", "int $review_id", "int $reviewed_user_id"], "where": "includes/bupr-filters.php:1022", "consumed_by": [] },
-    { "name": "bupr_hide_username_in_activity", "type": "filter", "args_count": 1, "args_signature": ["string $action"], "where": "includes/bupr-filters.php:1165", "consumed_by": [] },
-    { "name": "bupr_change_user_link", "type": "filter", "args_count": 1, "args_signature": ["string $user_link_activity"], "where": "includes/bupr-filters.php:1185", "consumed_by": [] },
-    { "name": "bupr_default_avatar_size", "type": "filter", "args_count": 1, "args_signature": ["int $size"], "where": "includes/bupr-filters.php:1207", "consumed_by": [] },
-    { "name": "bupr_change_default_avatar", "type": "filter", "args_count": 1, "args_signature": ["string $default_avatar"], "where": "includes/bupr-filters.php:1208", "consumed_by": [] },
-    { "name": "bupr_change_avatar_image", "type": "filter", "args_count": 1, "args_signature": ["string $gravatar_image"], "where": "includes/bupr-filters.php:1215", "consumed_by": [] },
-    { "name": "bupr_locate_template", "type": "filter", "args_count": 4, "args_signature": ["string $template", "string $template_name", "string $template_path", "string $default_path"], "where": "includes/bupr-general-functions.php:64", "consumed_by": [] },
-    { "name": "bupr_profile_review_singular_tab_name", "type": "filter", "args_count": 1, "args_signature": ["string $tab_name"], "where": "includes/bupr-general-functions.php:116", "consumed_by": [] },
-    { "name": "bupr_review_tab_name", "type": "filter", "args_count": 1, "args_signature": ["string $tab_name"], "where": "includes/bupr-general-functions.php:129", "consumed_by": [] },
-    { "name": "bupr_review_tab_plural_slug", "type": "filter", "args_count": 1, "args_signature": ["string $tab_slug"], "where": "includes/bupr-general-functions.php:142", "consumed_by": [] },
-    { "name": "bupr_review_tab_singular_slug", "type": "filter", "args_count": 1, "args_signature": ["string $tab_slug"], "where": "includes/bupr-general-functions.php:155", "consumed_by": [] },
-    { "name": "bupr_aggregate_rating", "type": "filter", "args_count": 4, "args_signature": ["float $rating", "int $user_id", "array $review_ids", "int $rated_count"], "where": "includes/bupr-general-functions.php:305", "consumed_by": ["buddypress-member-review-pro (weighted averages)"] },
-    { "name": "bupr_recalculation_completed", "type": "action", "args_count": 0, "args_signature": [], "where": "includes/bupr-general-functions.php:388", "consumed_by": [] },
-    { "name": "bupr_default_subnav_slug", "type": "filter", "args_count": 1, "args_signature": ["string $default_slug"], "where": "includes/bupr-general-functions.php:681", "consumed_by": [] },
-    { "name": "bupr_add_review_notification_format", "type": "filter", "args_count": 3, "args_signature": ["array|string $return", "int $user_id", "string $format"], "where": "includes/bupr-notification.php:135", "consumed_by": [] },
-    { "name": "bupr_should_load_assets", "type": "filter", "args_count": 1, "args_signature": ["bool $load"], "where": "includes/bupr-scripts.php:78", "consumed_by": [] },
-    { "name": "bupr_shortcode_title", "type": "filter", "args_count": 1, "args_signature": ["string $title"], "where": "includes/bupr-shortcodes.php:62", "consumed_by": [] },
-    { "name": "bupr_shortcode_member_limit", "type": "filter", "args_count": 1, "args_signature": ["int $total_member"], "where": "includes/bupr-shortcodes.php:63", "consumed_by": [] },
-    { "name": "bupr_shortcode_type", "type": "filter", "args_count": 1, "args_signature": ["string $type"], "where": "includes/bupr-shortcodes.php:64", "consumed_by": [] },
-    { "name": "bupr_shortcode_avatar", "type": "filter", "args_count": 1, "args_signature": ["string $avatar"], "where": "includes/bupr-shortcodes.php:65", "consumed_by": [] },
-    { "name": "bupr_shortcode_meta_key", "type": "filter", "args_count": 2, "args_signature": ["string $meta_key", "string $top_member"], "where": "includes/bupr-shortcodes.php:71", "consumed_by": [] },
-    { "name": "bupr_shortcode_query_results", "type": "filter", "args_count": 2, "args_signature": ["array $bupr_user_data", "string $meta_key"], "where": "includes/bupr-shortcodes.php:102", "consumed_by": [] },
-    { "name": "bupr_shortcode_member_id", "type": "filter", "args_count": 1, "args_signature": ["int $user_id"], "where": "includes/bupr-shortcodes.php:111", "consumed_by": [] },
-    { "name": "bupr_shortcode_aggregate_rating", "type": "filter", "args_count": 2, "args_signature": ["float $aggregate_rating", "int $user_id"], "where": "includes/bupr-shortcodes.php:117", "consumed_by": [] },
-    { "name": "bupr_shortcode_review_count", "type": "filter", "args_count": 2, "args_signature": ["int $review_count", "int $user_id"], "where": "includes/bupr-shortcodes.php:118", "consumed_by": [] },
-    { "name": "bupr_shortcode_avatar_display", "type": "filter", "args_count": 2, "args_signature": ["string $html", "int $user_id"], "where": "includes/bupr-shortcodes.php:123", "consumed_by": [] },
-    { "name": "bupr_shortcode_show_stars", "type": "filter", "args_count": 2, "args_signature": ["bool $show", "int $user_id"], "where": "includes/bupr-shortcodes.php:144", "consumed_by": ["buddypress-member-review-pro (testimonial/endorsement modes)"] },
-    { "name": "bupr_shortcode_star_full", "type": "filter", "args_count": 3, "args_signature": ["string $html", "int $user_id", "int $i"], "where": "includes/bupr-shortcodes.php:154", "consumed_by": [] },
-    { "name": "bupr_shortcode_star_half", "type": "filter", "args_count": 2, "args_signature": ["string $html", "int $user_id"], "where": "includes/bupr-shortcodes.php:157", "consumed_by": [] },
-    { "name": "bupr_shortcode_star_empty", "type": "filter", "args_count": 2, "args_signature": ["string $html", "int $user_id"], "where": "includes/bupr-shortcodes.php:160", "consumed_by": [] },
-    { "name": "bupr_item_type_label", "type": "filter", "args_count": 1, "args_signature": ["string $label"], "where": "includes/bupr-shortcodes.php:172; includes/widgets/display-review.php:146", "consumed_by": ["buddypress-member-review-pro"] },
-    { "name": "bupr_shortcode_rating_text", "type": "filter", "args_count": 4, "args_signature": ["string $text", "int $user_id", "float $aggregate_rating", "int $review_count"], "where": "includes/bupr-shortcodes.php:179", "consumed_by": [] },
-    { "name": "bupr_shortcode_count_text", "type": "filter", "args_count": 3, "args_signature": ["string $text", "int $user_id", "int $review_count"], "where": "includes/bupr-shortcodes.php:182", "consumed_by": [] },
-    { "name": "bupr_shortcode_no_members_text", "type": "filter", "args_count": 1, "args_signature": ["string $html"], "where": "includes/bupr-shortcodes.php:189", "consumed_by": [] },
-    { "name": "bupr_shortcode_output", "type": "filter", "args_count": 1, "args_signature": ["string $html"], "where": "includes/bupr-shortcodes.php:195", "consumed_by": [] },
-    { "name": "bupr_member_query_args", "type": "filter", "args_count": 1, "args_signature": ["array $args"], "where": "includes/bupr-shortcodes.php:251", "consumed_by": [] },
-    { "name": "bupr_member_list", "type": "filter", "args_count": 1, "args_signature": ["array $bupr_member"], "where": "includes/bupr-shortcodes.php:267", "consumed_by": [] },
-    { "name": "bupr_admin_settings_tabs", "type": "filter", "args_count": 1, "args_signature": ["array $legacy_map (tab_slug => label)"], "where": "includes/admin/class-bupr-admin-panel.php:93", "consumed_by": ["buddypress-member-review-pro (removes free criteria tab)"], "note": "Legacy-shaped map passed through for Pro back-compat; tabs absent from the returned map are unset." },
-    { "name": "bupr_admin_panel_tabs", "type": "filter", "args_count": 1, "args_signature": ["array $tabs (rich descriptors)"], "where": "includes/admin/class-bupr-admin-panel.php:120", "consumed_by": [], "note": "New in 3.8.0 - card-panel tab descriptors (label/icon/group)." },
-    { "name": "bupr_admin_settings_criteria_content", "type": "action", "args_count": 0, "args_signature": [], "where": "admin/tab-templates/bupr-setting-criteria-tab.php:63", "consumed_by": ["buddypress-member-review-pro (flexible criteria builder)"] },
-    { "name": "bupr_admin_settings_pro_content", "type": "action", "args_count": 0, "args_signature": [], "where": "admin/tab-templates/bupr-setting-pro-features-tab.php:42", "consumed_by": ["buddypress-member-review-pro"], "note": "Mount point for the Add-ons tab, gated on has_action() so a neutral empty state shows when nothing is hooked. WRAPPER CONTRACT: the consumer renders form contents only and relies on free for the surrounding wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap markup. Do not change that structure without a paired Pro release." },
-    { "name": "bupr_before_member_review_list", "type": "action", "args_count": 0, "args_signature": [], "where": "includes/templates/bupr-reviews-tab-template.php:39", "consumed_by": [] },
-    { "name": "bupr_after_member_review_list", "type": "action", "args_count": 0, "args_signature": [], "where": "includes/templates/bupr-reviews-tab-template.php:418", "consumed_by": ["includes/bupr-filters.php:79 bupr_edit_review_form_modal"] },
-    { "name": "bupr_reviewer_name_html", "type": "filter", "args_count": 2, "args_signature": ["string $html", "int $review_id"], "where": "includes/templates/bupr-reviews-tab-template.php:130; includes/templates/bupr-single-review-template.php:103", "consumed_by": [] },
-    { "name": "bupr_after_review_date", "type": "action", "args_count": 1, "args_signature": ["int $review_id"], "where": "includes/templates/bupr-reviews-tab-template.php:202; includes/templates/bupr-single-review-template.php:171", "consumed_by": ["buddypress-member-review-pro"] },
-    { "name": "bupr_after_review_content", "type": "action", "args_count": 1, "args_signature": ["int $review_id"], "where": "includes/templates/bupr-reviews-tab-template.php:293; includes/templates/bupr-single-review-template.php:184", "consumed_by": ["buddypress-member-review-pro"] },
-    { "name": "bupr_widget_show_stars", "type": "filter", "args_count": 1, "args_signature": ["bool $show"], "where": "includes/widgets/display-review.php:137; includes/widgets/member-rating.php:142", "consumed_by": [] },
-    { "name": "gamipress_bp_member_review", "type": "action", "args_count": 1, "args_signature": ["int $author_id"], "where": "includes/bupr-ajax.php:138,296", "consumed_by": ["GamiPress (external; trigger label registered in includes/bupr-general-functions.php:166)"] },
-    { "name": "bp_notifications_get_registered_components", "type": "filter", "args_count": 1, "args_signature": ["array $component_names"], "where": "includes/bupr-notification.php:35 (hooks BP filter)", "consumed_by": ["BuddyPress core"] },
-    { "name": "bp_notifications_get_notifications_for_user", "type": "filter", "args_count": 7, "args_signature": ["string $action", "...6 more"], "where": "includes/bupr-notification.php:39 (hooks BP filter)", "consumed_by": ["BuddyPress core"] },
-    { "name": "gamipress_activity_triggers", "type": "filter", "args_count": 1, "args_signature": ["array $triggers"], "where": "includes/bupr-general-functions.php:171 (hooks GamiPress filter)", "consumed_by": ["GamiPress"] },
-    { "name": "gamipress_trigger_get_user_id", "type": "filter", "args_count": 3, "args_signature": ["int $user_id", "string $trigger", "array $args"], "where": "includes/bupr-general-functions.php:188 (hooks GamiPress filter)", "consumed_by": ["GamiPress"] }
+    {
+      "name": "bupr_global_settings",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "array $bupr"
+      ],
+      "where": "includes/class-buprglobals.php:131",
+      "consumed_by": [
+        "buddypress-member-review-pro (review modes alter active_rating_fields)"
+      ]
+    },
+    {
+      "name": "bupr_member_review_after_review_insert",
+      "type": "action",
+      "args_count": 2,
+      "args_signature": [
+        "int $review_id",
+        "int $member_id"
+      ],
+      "where": "includes/bupr-ajax.php:325,771; admin/bupr-admin.php:324",
+      "consumed_by": [
+        "includes/bupr-filters.php:85 bupr_create_review_activity",
+        "includes/bupr-general-functions.php:199 bupr_handle_review_submission"
+      ]
+    },
+    {
+      "name": "bupr_sent_review_notification",
+      "type": "action",
+      "args_count": 2,
+      "args_signature": [
+        "int $member_id",
+        "int $review_id"
+      ],
+      "where": "includes/bupr-ajax.php:385,480; admin/bupr-admin.php:325",
+      "consumed_by": [
+        "includes/bupr-notification.php:148 bupr_buddypress_add_notification"
+      ]
+    },
+    {
+      "name": "bupr_before_save_review",
+      "type": "action",
+      "args_count": 2,
+      "args_signature": [
+        "int $review_id",
+        "array $add_review_args"
+      ],
+      "where": "includes/bupr-ajax.php:321",
+      "consumed_by": [
+        "buddypress-member-review-pro (flexible criteria save)"
+      ]
+    },
+    {
+      "name": "bupr_owner_reply_added",
+      "type": "action",
+      "args_count": 3,
+      "args_signature": [
+        "int $review_id",
+        "int $owner_id",
+        "int $reviewer_id"
+      ],
+      "where": "includes/bupr-ajax.php:906",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_review_flagged",
+      "type": "action",
+      "args_count": 3,
+      "args_signature": [
+        "int $review_id",
+        "int $reporter_id",
+        "string $reason"
+      ],
+      "where": "includes/bupr-ajax.php:1054",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_edit_review_extra_fields",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "string $extra_fields",
+        "int $review_id"
+      ],
+      "where": "includes/bupr-ajax.php:638",
+      "consumed_by": [
+        "buddypress-member-review-pro"
+      ]
+    },
+    {
+      "name": "bupr_after_rating_fields",
+      "type": "action",
+      "args_count": 0,
+      "args_signature": [],
+      "where": "includes/bupr-shortcodes.php:480",
+      "consumed_by": [
+        "buddypress-member-review-pro (flexible criteria fields)"
+      ]
+    },
+    {
+      "name": "bupr_member_review_form",
+      "type": "action",
+      "args_count": 0,
+      "args_signature": [],
+      "where": "includes/bupr-filters.php:942 (do_action); registered in includes/bupr-shortcodes.php:31",
+      "consumed_by": [
+        "includes/bupr-shortcodes.php:31 bupr_display_review_form"
+      ]
+    },
+    {
+      "name": "bupr_show_profile_review_tab",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "bool $show"
+      ],
+      "where": "includes/bupr-filters.php:799",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_allow_activity_posting",
+      "type": "filter",
+      "args_count": 3,
+      "args_signature": [
+        "bool $allow",
+        "int $review_id",
+        "int $reviewed_user_id"
+      ],
+      "where": "includes/bupr-filters.php:1022",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_hide_username_in_activity",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $action"
+      ],
+      "where": "includes/bupr-filters.php:1165",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_change_user_link",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $user_link_activity"
+      ],
+      "where": "includes/bupr-filters.php:1185",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_default_avatar_size",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "int $size"
+      ],
+      "where": "includes/bupr-filters.php:1207",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_change_default_avatar",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $default_avatar"
+      ],
+      "where": "includes/bupr-filters.php:1208",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_change_avatar_image",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $gravatar_image"
+      ],
+      "where": "includes/bupr-filters.php:1215",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_locate_template",
+      "type": "filter",
+      "args_count": 4,
+      "args_signature": [
+        "string $template",
+        "string $template_name",
+        "string $template_path",
+        "string $default_path"
+      ],
+      "where": "includes/bupr-general-functions.php:64",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_profile_review_singular_tab_name",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $tab_name"
+      ],
+      "where": "includes/bupr-general-functions.php:116",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_review_tab_name",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $tab_name"
+      ],
+      "where": "includes/bupr-general-functions.php:129",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_review_tab_plural_slug",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $tab_slug"
+      ],
+      "where": "includes/bupr-general-functions.php:142",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_review_tab_singular_slug",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $tab_slug"
+      ],
+      "where": "includes/bupr-general-functions.php:155",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_aggregate_rating",
+      "type": "filter",
+      "args_count": 4,
+      "args_signature": [
+        "float $rating",
+        "int $user_id",
+        "array $review_ids",
+        "int $rated_count"
+      ],
+      "where": "includes/bupr-general-functions.php:305",
+      "consumed_by": [
+        "buddypress-member-review-pro (weighted averages)"
+      ]
+    },
+    {
+      "name": "bupr_recalculation_completed",
+      "type": "action",
+      "args_count": 0,
+      "args_signature": [],
+      "where": "includes/bupr-general-functions.php:388",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_default_subnav_slug",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $default_slug"
+      ],
+      "where": "includes/bupr-general-functions.php:681",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_add_review_notification_format",
+      "type": "filter",
+      "args_count": 3,
+      "args_signature": [
+        "array|string $return",
+        "int $user_id",
+        "string $format"
+      ],
+      "where": "includes/bupr-notification.php:135",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_should_load_assets",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "bool $load"
+      ],
+      "where": "includes/bupr-scripts.php:78",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_title",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $title"
+      ],
+      "where": "includes/bupr-shortcodes.php:62",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_member_limit",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "int $total_member"
+      ],
+      "where": "includes/bupr-shortcodes.php:63",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_type",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $type"
+      ],
+      "where": "includes/bupr-shortcodes.php:64",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_avatar",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $avatar"
+      ],
+      "where": "includes/bupr-shortcodes.php:65",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_meta_key",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "string $meta_key",
+        "string $top_member"
+      ],
+      "where": "includes/bupr-shortcodes.php:71",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_query_results",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "array $bupr_user_data",
+        "string $meta_key"
+      ],
+      "where": "includes/bupr-shortcodes.php:102",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_member_id",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "int $user_id"
+      ],
+      "where": "includes/bupr-shortcodes.php:111",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_aggregate_rating",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "float $aggregate_rating",
+        "int $user_id"
+      ],
+      "where": "includes/bupr-shortcodes.php:117",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_review_count",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "int $review_count",
+        "int $user_id"
+      ],
+      "where": "includes/bupr-shortcodes.php:118",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_avatar_display",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "string $html",
+        "int $user_id"
+      ],
+      "where": "includes/bupr-shortcodes.php:123",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_show_stars",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "bool $show",
+        "int $user_id"
+      ],
+      "where": "includes/bupr-shortcodes.php:144",
+      "consumed_by": [
+        "buddypress-member-review-pro (testimonial/endorsement modes)"
+      ]
+    },
+    {
+      "name": "bupr_shortcode_star_full",
+      "type": "filter",
+      "args_count": 3,
+      "args_signature": [
+        "string $html",
+        "int $user_id",
+        "int $i"
+      ],
+      "where": "includes/bupr-shortcodes.php:154",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_star_half",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "string $html",
+        "int $user_id"
+      ],
+      "where": "includes/bupr-shortcodes.php:157",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_star_empty",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "string $html",
+        "int $user_id"
+      ],
+      "where": "includes/bupr-shortcodes.php:160",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_item_type_label",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $label"
+      ],
+      "where": "includes/bupr-shortcodes.php:172; includes/widgets/display-review.php:146",
+      "consumed_by": [
+        "buddypress-member-review-pro"
+      ]
+    },
+    {
+      "name": "bupr_shortcode_rating_text",
+      "type": "filter",
+      "args_count": 4,
+      "args_signature": [
+        "string $text",
+        "int $user_id",
+        "float $aggregate_rating",
+        "int $review_count"
+      ],
+      "where": "includes/bupr-shortcodes.php:179",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_count_text",
+      "type": "filter",
+      "args_count": 3,
+      "args_signature": [
+        "string $text",
+        "int $user_id",
+        "int $review_count"
+      ],
+      "where": "includes/bupr-shortcodes.php:182",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_no_members_text",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $html"
+      ],
+      "where": "includes/bupr-shortcodes.php:189",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_shortcode_output",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "string $html"
+      ],
+      "where": "includes/bupr-shortcodes.php:195",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_member_query_args",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "array $args"
+      ],
+      "where": "includes/bupr-shortcodes.php:251",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_member_list",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "array $bupr_member"
+      ],
+      "where": "includes/bupr-shortcodes.php:267",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_admin_settings_tabs",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "array $legacy_map (tab_slug => label)"
+      ],
+      "where": "includes/admin/class-bupr-admin-panel.php:93",
+      "consumed_by": [
+        "buddypress-member-review-pro (removes free criteria tab)"
+      ],
+      "note": "Legacy-shaped map passed through for Pro back-compat; tabs absent from the returned map are unset."
+    },
+    {
+      "name": "bupr_admin_panel_tabs",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "array $tabs (rich descriptors)"
+      ],
+      "where": "includes/admin/class-bupr-admin-panel.php:120",
+      "consumed_by": [],
+      "note": "New in 3.8.0 - card-panel tab descriptors (label/icon/group)."
+    },
+    {
+      "name": "bupr_admin_settings_criteria_content",
+      "type": "action",
+      "args_count": 0,
+      "args_signature": [],
+      "where": "admin/tab-templates/bupr-setting-criteria-tab.php:63",
+      "consumed_by": [
+        "buddypress-member-review-pro (flexible criteria builder)"
+      ]
+    },
+    {
+      "name": "bupr_admin_settings_pro_content",
+      "type": "action",
+      "args_count": 0,
+      "args_signature": [],
+      "where": "admin/tab-templates/bupr-setting-pro-features-tab.php:42",
+      "consumed_by": [
+        "buddypress-member-review-pro"
+      ],
+      "note": "Mount point for the Add-ons tab, gated on has_action() so a neutral empty state shows when nothing is hooked. WRAPPER CONTRACT: the consumer renders form contents only and relies on free for the surrounding wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap markup. Do not change that structure without a paired Pro release."
+    },
+    {
+      "name": "bupr_before_member_review_list",
+      "type": "action",
+      "args_count": 0,
+      "args_signature": [],
+      "where": "includes/templates/bupr-reviews-tab-template.php:39",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_after_member_review_list",
+      "type": "action",
+      "args_count": 0,
+      "args_signature": [],
+      "where": "includes/templates/bupr-reviews-tab-template.php:418",
+      "consumed_by": [
+        "includes/bupr-filters.php:79 bupr_edit_review_form_modal"
+      ]
+    },
+    {
+      "name": "bupr_reviewer_name_html",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "string $html",
+        "int $review_id"
+      ],
+      "where": "includes/templates/bupr-reviews-tab-template.php:130; includes/templates/bupr-single-review-template.php:103",
+      "consumed_by": []
+    },
+    {
+      "name": "bupr_after_review_date",
+      "type": "action",
+      "args_count": 1,
+      "args_signature": [
+        "int $review_id"
+      ],
+      "where": "includes/templates/bupr-reviews-tab-template.php:202; includes/templates/bupr-single-review-template.php:171",
+      "consumed_by": [
+        "buddypress-member-review-pro"
+      ]
+    },
+    {
+      "name": "bupr_after_review_content",
+      "type": "action",
+      "args_count": 1,
+      "args_signature": [
+        "int $review_id"
+      ],
+      "where": "includes/templates/bupr-reviews-tab-template.php:293; includes/templates/bupr-single-review-template.php:184",
+      "consumed_by": [
+        "buddypress-member-review-pro"
+      ]
+    },
+    {
+      "name": "bupr_widget_show_stars",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "bool $show"
+      ],
+      "where": "includes/widgets/display-review.php:137; includes/widgets/member-rating.php:142",
+      "consumed_by": []
+    },
+    {
+      "name": "gamipress_bp_member_review",
+      "type": "action",
+      "args_count": 1,
+      "args_signature": [
+        "int $author_id"
+      ],
+      "where": "includes/bupr-ajax.php:138,296",
+      "consumed_by": [
+        "GamiPress (external; trigger label registered in includes/bupr-general-functions.php:166)"
+      ]
+    },
+    {
+      "name": "bp_notifications_get_registered_components",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "array $component_names"
+      ],
+      "where": "includes/bupr-notification.php:35 (hooks BP filter)",
+      "consumed_by": [
+        "BuddyPress core"
+      ]
+    },
+    {
+      "name": "bp_notifications_get_notifications_for_user",
+      "type": "filter",
+      "args_count": 7,
+      "args_signature": [
+        "string $action",
+        "...6 more"
+      ],
+      "where": "includes/bupr-notification.php:39 (hooks BP filter)",
+      "consumed_by": [
+        "BuddyPress core"
+      ]
+    },
+    {
+      "name": "gamipress_activity_triggers",
+      "type": "filter",
+      "args_count": 1,
+      "args_signature": [
+        "array $triggers"
+      ],
+      "where": "includes/bupr-general-functions.php:171 (hooks GamiPress filter)",
+      "consumed_by": [
+        "GamiPress"
+      ]
+    },
+    {
+      "name": "gamipress_trigger_get_user_id",
+      "type": "filter",
+      "args_count": 3,
+      "args_signature": [
+        "int $user_id",
+        "string $trigger",
+        "array $args"
+      ],
+      "where": "includes/bupr-general-functions.php:188 (hooks GamiPress filter)",
+      "consumed_by": [
+        "GamiPress"
+      ]
+    }
   ],
   "cron": [
-    { "hook": "bupr_cron_recalculate_user_reviews_batch", "interval": "daily", "registered_at": "includes/bupr-general-functions.php:370-371 (bupr_schedule_review_recalculation, guarded by wp_next_scheduled, hooked 'init' at :374)", "handler": "includes/bupr-general-functions.php:379 bupr_cron_recalculate_user_reviews_batch", "unscheduled_at": "buddypress-member-review.php:368-371 (deactivation)", "purpose": "Batch-recalculate per-member aggregate rating + review count (50 users/run, cursor in bupr_current_batch).", "note": "3.8.0: single source of truth. The activation-hook 'daily' schedule and the legacy 'wp'-hook 'hourly' schedule were both removed (the old conflicting double registration)." },
-    { "hook": "bupr_meta_repair_batch", "interval": "one-shot chain (self-rescheduling until complete)", "registered_at": "includes/bupr-general-functions.php:511 (as_enqueue_async_action via Action Scheduler when available) else :513 (wp_schedule_single_event, +1 minute)", "handler": "includes/bupr-general-functions.php:539 bupr_run_meta_repair_batch (add_action)", "purpose": "One-time v1 repair of drifted bupr_review_count / bupr_aggregate_rating user meta; 50 members per batch, cursor in bupr_meta_repair_paged, gated by bupr_meta_repair_v1_done.", "note": "AS-first with WP-Cron fallback, per the background-jobs standard. Skipped entirely on fresh installs (buddypress-member-review.php:172-174)." }
+    {
+      "hook": "bupr_cron_recalculate_user_reviews_batch",
+      "interval": "daily",
+      "registered_at": "includes/bupr-general-functions.php:370-371 (bupr_schedule_review_recalculation, guarded by wp_next_scheduled, hooked 'init' at :374)",
+      "handler": "includes/bupr-general-functions.php:379 bupr_cron_recalculate_user_reviews_batch",
+      "unscheduled_at": "buddypress-member-review.php:368-371 (deactivation)",
+      "purpose": "Batch-recalculate per-member aggregate rating + review count (50 users/run, cursor in bupr_current_batch).",
+      "note": "3.8.0: single source of truth. The activation-hook 'daily' schedule and the legacy 'wp'-hook 'hourly' schedule were both removed (the old conflicting double registration)."
+    },
+    {
+      "hook": "bupr_meta_repair_batch",
+      "interval": "one-shot chain (self-rescheduling until complete)",
+      "registered_at": "includes/bupr-general-functions.php:511 (as_enqueue_async_action via Action Scheduler when available) else :513 (wp_schedule_single_event, +1 minute)",
+      "handler": "includes/bupr-general-functions.php:539 bupr_run_meta_repair_batch (add_action)",
+      "purpose": "One-time v1 repair of drifted bupr_review_count / bupr_aggregate_rating user meta; 50 members per batch, cursor in bupr_meta_repair_paged, gated by bupr_meta_repair_v1_done.",
+      "note": "AS-first with WP-Cron fallback, per the background-jobs standard. Skipped entirely on fresh installs (buddypress-member-review.php:172-174)."
+    }
   ],
   "wp_cli": [],
   "frontend_assets": {
@@ -207,7 +1320,7 @@
       "assets/css/admin.css (handle bupr-admin-panel, card-panel shell; enqueued includes/admin/class-bupr-admin-panel.php:322-327)",
       "assets/css/fontawesome/all.min.css (handle font-awesome, includes/bupr-scripts.php:265; also bupr-font-awesome-2 at admin/bupr-admin.php:97)",
       "admin/assets/css/bupr-admin.css (handle bupr-css-admin, enqueued includes/bupr-scripts.php:270)",
-      "admin/assets/css/vendor/select2.min.css (handle wbcom-select2-css, enqueued includes/bupr-scripts.php:268)"
+      "admin/assets/css/vendor/select2.css (handle wbcom-select2-css, enqueued includes/bupr-scripts.php:309)"
     ],
     "build_variants": "min/ and rtl/ siblings generated by grunt for bupr-front, admin, bupr-reviews, bupr-admin, bupr-color-picker.",
     "note": "assets/css/bupr-reviews.css is a STUB (merged into bupr-front.css in the 3.7.1 UX pass) and is no longer enqueued anywhere. admin/wbcom/assets/* no longer exists (wrapper removed in 3.8.0)."
@@ -215,46 +1328,139 @@
   "buddypress_integration": {
     "enabled_when": "BuddyPress >=6.0.0 OR BuddyBoss >=1.8.0 active AND members component active",
     "manager": "includes/bupr-filters.php (BUPR_Custom_Hooks)",
-    "profile_tab": { "registered_via": "bp_core_new_nav_item (includes/bupr-filters.php:808) / bp_core_new_subnav_item (:814, :834, :862, :877)", "hooked_on": "bp_setup_nav priority 11 (includes/bupr-filters.php:50)", "slug": "{review_label_plural slug} (default 'reviews')", "subnavs": ["view", "add-{review singular}"], "screen_fns": ["bupr_reviews_tab_function_to_show_screen (:803)", "bupr_view_review_tab_function_to_show_screen (:820)", "bupr_reviews_form_tab_function_to_show_screen (:841, :869, :884)"], "gate": "bupr_show_profile_review_tab filter (:799)" },
+    "profile_tab": {
+      "registered_via": "bp_core_new_nav_item (includes/bupr-filters.php:808) / bp_core_new_subnav_item (:814, :834, :862, :877)",
+      "hooked_on": "bp_setup_nav priority 11 (includes/bupr-filters.php:50)",
+      "slug": "{review_label_plural slug} (default 'reviews')",
+      "subnavs": [
+        "view",
+        "add-{review singular}"
+      ],
+      "screen_fns": [
+        "bupr_reviews_tab_function_to_show_screen (:803)",
+        "bupr_view_review_tab_function_to_show_screen (:820)",
+        "bupr_reviews_form_tab_function_to_show_screen (:841, :869, :884)"
+      ],
+      "gate": "bupr_show_profile_review_tab filter (:799)"
+    },
     "member_header_rating": "bp_before_member_in_header_meta (:53) / bp_before_member_header_meta (:56) -> BUPR_Custom_Hooks::bupr_member_average_rating",
     "review_button": "bp_member_header_actions (:65) -> bupr_add_review_button_on_member_header (cap 'read' gate at :343)",
-    "directory_ratings": { "hooked_on": ["bp_member_members_list_item (:102)", "bp_directory_members_item_meta (:109)", "bp_directory_members_item (:112)"], "handler": "BUPR_Custom_Hooks::bupr_rating_directory (:208)", "drift_check": "throttled per user by the bupr_drift_checked_{user_id} transient (:564, :578)" },
-    "notifications": { "component": "buddypress_member_review (registered includes/bupr-notification.php:30, filter hooked :35)", "action": "bupr_add_review_action", "format_filter": "bp_notifications_get_notifications_for_user -> bupr_add_review_notification_format (:39, :56)", "add": "bupr_buddypress_add_notification (:148-189)", "delete": "bupr_delete_review_notifications (:208)", "mark_read": "bupr_buddypress_notification_marked_as_read (:235; nonce mark-as-read-notification-{user} at :243)" },
-    "activity": { "create": "BUPR_Custom_Hooks::bupr_create_review_activity (includes/bupr-filters.php:1014), hooked to bupr_member_review_after_review_insert at :85", "gate": "bupr_allow_activity_posting filter (:1022) + bupr_enable_review_activity setting", "meta": "bp_activity_after_save -> bupr_add_activity_meta (:67)", "star_rating_render": "bp_get_activity_content_body -> bupr_added_activity_star_rating (:87)", "anonymous_handling": "bp_get_activity_action (:68), bp_get_activity_user_link (:69), bp_get_activity_avatar (:70) rewrite author/link/avatar", "type": "member_review (or activity_status under Youzify)" },
+    "directory_ratings": {
+      "hooked_on": [
+        "bp_member_members_list_item (:102)",
+        "bp_directory_members_item_meta (:109)",
+        "bp_directory_members_item (:112)"
+      ],
+      "handler": "BUPR_Custom_Hooks::bupr_rating_directory (:208)",
+      "drift_check": "throttled per user by the bupr_drift_checked_{user_id} transient (:564, :578)"
+    },
+    "notifications": {
+      "component": "buddypress_member_review (registered includes/bupr-notification.php:30, filter hooked :35)",
+      "action": "bupr_add_review_action",
+      "format_filter": "bp_notifications_get_notifications_for_user -> bupr_add_review_notification_format (:39, :56)",
+      "add": "bupr_buddypress_add_notification (:148-189)",
+      "delete": "bupr_delete_review_notifications (:208)",
+      "mark_read": "bupr_buddypress_notification_marked_as_read (:235; nonce mark-as-read-notification-{user} at :243)"
+    },
+    "activity": {
+      "create": "BUPR_Custom_Hooks::bupr_create_review_activity (includes/bupr-filters.php:1014), hooked to bupr_member_review_after_review_insert at :85",
+      "gate": "bupr_allow_activity_posting filter (:1022) + bupr_enable_review_activity setting",
+      "meta": "bp_activity_after_save -> bupr_add_activity_meta (:67)",
+      "star_rating_render": "bp_get_activity_content_body -> bupr_added_activity_star_rating (:87)",
+      "anonymous_handling": "bp_get_activity_action (:68), bp_get_activity_user_link (:69), bp_get_activity_avatar (:70) rewrite author/link/avatar",
+      "type": "member_review (or activity_status under Youzify)"
+    },
     "admin_bar": "bp_setup_admin_bar -> bupr_setup_admin_bar (includes/bupr-filters.php:59)",
     "nouveau_fix": "bp_nouveau_get_nav_link -> bupr_nouveau_link_fix (includes/bupr-filters.php:82)",
-    "theme_compat": ["BuddyPress Legacy", "BuddyPress Nouveau", "BuddyBoss", "Youzify", "bp-rewrites", "bp-classic"]
+    "theme_compat": [
+      "BuddyPress Legacy",
+      "BuddyPress Nouveau",
+      "BuddyBoss",
+      "Youzify",
+      "bp-rewrites",
+      "bp-classic"
+    ]
   },
   "security": {
     "uploads_gate": "n/a (no file uploads)",
-    "nonces": ["review-nonce (front form: submit :156, edit :492, update :666, owner-reply :806, flag :939)", "bupr_member_review_ajax (admin approve, :81)", "bupr_dismiss_flag_{id} / bupr_resolve_flag_{id} (admin-post, admin/bupr-admin.php:747, :788)", "mark-as-read-notification-{user} (includes/bupr-notification.php:243)", "bp-member-reviews-feedback-nonce (admin/class-bupr-admin-feedback.php:291)"],
+    "nonces": [
+      "review-nonce (front form: submit :156, edit :492, update :666, owner-reply :806, flag :939)",
+      "bupr_member_review_ajax (admin approve, :81)",
+      "bupr_dismiss_flag_{id} / bupr_resolve_flag_{id} (admin-post, admin/bupr-admin.php:747, :788)",
+      "mark-as-read-notification-{user} (includes/bupr-notification.php:243)",
+      "bp-member-reviews-feedback-nonce (admin/class-bupr-admin-feedback.php:291)"
+    ],
     "rate_limit_middleware": "none",
     "notes": "3.8.0 closed the bupr_update_review auth hole: the handler now enforces the same author-or-edit_others_posts gate as bupr_edit_review (includes/bupr-ajax.php:720). The wbcom_addons_cards AJAX and the wbcom_admin_setting_nonce disappeared with the admin/wbcom/ wrapper."
   },
-  "ci_guards": { "script": null, "phpstan_level": "5 (phpstan.neon; baseline at phpstan-baseline.neon)" },
+  "ci_guards": {
+    "script": null,
+    "phpstan_level": "5 (phpstan.neon; baseline at phpstan-baseline.neon)"
+  },
   "coding_rules": [],
-  "build_commands": { "release": "grunt (gruntfile.js - JS/CSS min + RTL)", "ci_local": null },
+  "build_commands": {
+    "release": "grunt (gruntfile.js - JS/CSS min + RTL)",
+    "ci_local": null
+  },
   "category_sources": {
-    "ajax": ["includes/bupr-ajax.php"],
-    "admin_pages": ["includes/admin/class-bupr-admin-panel.php"],
-    "settings": ["includes/admin/class-bupr-admin-panel.php", "admin/tab-templates/*.php", "includes/admin/views/*.php", "includes/class-buprglobals.php"],
-    "shortcodes": ["includes/bupr-shortcodes.php"],
-    "blocks": ["(none - no register_block_type and no block.json anywhere in the repo)"],
-    "post_types": ["admin/bupr-admin.php"],
-    "taxonomies": ["admin/bupr-admin.php"],
-    "meta_boxes": ["admin/bupr-admin.php"],
-    "capabilities": ["includes/**/*.php", "admin/**/*.php"],
-    "hooks_fired": ["includes/**/*.php", "admin/**/*.php"],
-    "cron": ["buddypress-member-review.php", "includes/bupr-general-functions.php"],
-    "widgets": ["includes/widgets/*.php"],
-    "frontend_assets": ["assets/**/*.{js,css}", "admin/assets/**/*.{js,css}"]
+    "ajax": [
+      "includes/bupr-ajax.php"
+    ],
+    "admin_pages": [
+      "includes/admin/class-bupr-admin-panel.php"
+    ],
+    "settings": [
+      "includes/admin/class-bupr-admin-panel.php",
+      "admin/tab-templates/*.php",
+      "includes/admin/views/*.php",
+      "includes/class-buprglobals.php"
+    ],
+    "shortcodes": [
+      "includes/bupr-shortcodes.php"
+    ],
+    "blocks": [
+      "(none - no register_block_type and no block.json anywhere in the repo)"
+    ],
+    "post_types": [
+      "admin/bupr-admin.php"
+    ],
+    "taxonomies": [
+      "admin/bupr-admin.php"
+    ],
+    "meta_boxes": [
+      "admin/bupr-admin.php"
+    ],
+    "capabilities": [
+      "includes/**/*.php",
+      "admin/**/*.php"
+    ],
+    "hooks_fired": [
+      "includes/**/*.php",
+      "admin/**/*.php"
+    ],
+    "cron": [
+      "buddypress-member-review.php",
+      "includes/bupr-general-functions.php"
+    ],
+    "widgets": [
+      "includes/widgets/*.php"
+    ],
+    "frontend_assets": [
+      "assets/**/*.{js,css}",
+      "admin/assets/**/*.{js,css}"
+    ]
   },
   "static_analysis": {
     "dead_listeners": [],
     "cap_context_mismatches": [],
     "extensibility_gaps": [],
     "js_only_activation": [
-      { "selector": ".bupr-edit-review (edit/owner-reply/flag modals)", "default_hidden_by": "assets/css/bupr-front.css", "php_fallback": false, "note": "Edit/reply/flag flows are AJAX-only; degrade to no-op without JS." }
+      {
+        "selector": ".bupr-edit-review (edit/owner-reply/flag modals)",
+        "default_hidden_by": "assets/css/bupr-front.css",
+        "php_fallback": false,
+        "note": "Edit/reply/flag flows are AJAX-only; degrade to no-op without JS."
+      }
     ],
     "rest_hang_risks": [],
     "visual_required_no_enforcement": [],
@@ -271,7 +1477,11 @@
     ]
   },
   "wppqa_false_positives": [
-    { "check": "nonce-no-cap", "where": "includes/bupr-ajax.php:156", "reason": "Public/nopriv review submission endpoint (allow_bupr_member_review_update). Nonce-only is by design; self-review blocked by user-ID comparison. FALSE POSITIVE per nopriv-public-endpoint quirk." }
+    {
+      "check": "nonce-no-cap",
+      "where": "includes/bupr-ajax.php:156",
+      "reason": "Public/nopriv review submission endpoint (allow_bupr_member_review_update). Nonce-only is by design; self-review blocked by user-ID comparison. FALSE POSITIVE per nopriv-public-endpoint quirk."
+    }
   ],
   "generated": {
     "at": "2026-07-16T10:31:30+00:00",

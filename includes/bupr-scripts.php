@@ -306,7 +306,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					wp_enqueue_style( 'font-awesome', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), BUPR_PLUGIN_VERSION, 'all' );
 				}
 				if ( ! wp_style_is( 'wbcom-select2-css', 'enqueued' ) ) {
-					wp_enqueue_style( 'wbcom-select2-css', BUPR_PLUGIN_URL . 'admin/assets/css/vendor/select2.min.css', array(), BUPR_PLUGIN_VERSION, 'all' );
+					wp_enqueue_style( 'wbcom-select2-css', BUPR_PLUGIN_URL . 'admin/assets/css/vendor/select2.css', array(), BUPR_PLUGIN_VERSION, 'all' );
 				}
 				wp_enqueue_style( 'bupr-css-admin', BUPR_PLUGIN_URL . 'admin/assets/css' . $path . '/bupr-admin' . $extension, array(), BUPR_PLUGIN_VERSION, 'all' );
 				if ( ! wp_style_is( 'wp-color-picker', 'enqueued' ) && $is_settings_page ) {
