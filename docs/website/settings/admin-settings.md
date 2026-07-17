@@ -235,28 +235,13 @@ These settings appear when **Auto Approve Member Review** is set to No. They con
 
 Reference for all available shortcodes. See [Shortcodes](../shortcodes-widgets/shortcodes.md) for complete reference.
 
-## Pro Features Tab
+## Add-ons Tab
 
-![Admin Settings Pro Features](../images/admin-settings-pro-features.png)
+This tab is where installed add-ons put their settings. With no add-on installed it shows a short note saying so, and nothing else.
 
-Preview of Pro features available when you upgrade. See the [Pro Features Overview](pro-features.md) for complete details.
+If you install an add-on that extends Member Reviews, its settings appear here rather than in a menu of their own.
 
-**Pro Features Include:**
-- Review modes (Testimonials, Endorsements)
-- Verified reviewer badges
-- Flexible criteria management
-- Member skills tracking
-- REST API endpoints
-- Advanced admin dashboard
-- Priority support
-
-**Access Pro Settings:**
-
-After upgrading to Pro, additional settings tabs appear:
-- **Review Mode:** Switch between Review, Testimonial, and Endorsement modes
-- **Skills:** Configure member skills tracking
-- **API:** Enable and manage REST API access
-- **Dashboard:** Configure the admin review dashboard
+See the [Pro Features Overview](pro-features.md) for what the Pro add-on provides.
 
 ## Saving Settings
 

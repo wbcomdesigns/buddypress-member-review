@@ -450,7 +450,7 @@ Yes. Your existing reviews, ratings, and settings are preserved. The Pro addon w
 2. Download the Pro addon from your account
 3. Go to Plugins > Add New > Upload Plugin
 4. Install and activate the Pro addon
-5. Configure Pro features at Settings > Member Reviews > Pro Features tab
+5. Configure Pro features at WB Plugins > Member Reviews > Add-ons tab
 6. All existing data is preserved
 ```
 
