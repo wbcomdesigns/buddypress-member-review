@@ -80,6 +80,17 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 		 *    Restoring the do_action() without those wrappers renders Pro's
 		 *    fields unstyled and outside the card chrome.
 		 *
+		 * 3. A DANGLING LINK is left behind on purpose, and it points at this
+		 *    tab. admin/tab-templates/bupr-setting-criteria-tab.php builds a
+		 *    notice ending "...switch to Star Ratings mode in the [Add-ons]
+		 *    tab", linking to `?tab=bupr-pro-features`. It is unreachable in
+		 *    free - the whole block is gated on class_exists( 'BUPR_Pro_Features' ),
+		 *    a Pro class - so it costs a free site nothing today and was left
+		 *    rather than churn Pro-facing copy while Pro is unreleased. But the
+		 *    moment Pro ships, that link is live and lands on a tab that no
+		 *    longer exists. Restore this tab and it works again; decide not to,
+		 *    and that notice needs rewriting to point somewhere real.
+		 *
 		 * Git history: the deleted files are recoverable from the commit that
 		 * removed them. See CLAUDE.md "Recent changes" and audit/manifest.json
 		 * (`removed_contracts`) for the same record.
