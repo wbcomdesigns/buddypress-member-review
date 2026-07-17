@@ -349,6 +349,17 @@ jQuery(document).ready(
  *-----------------------------------------*/
 function GetDynamicTextBox(value) {
 	var rand_num = Math.random();
-	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + value + '" placeholder="Add Review criteria eg. Member Response. " aria-label="Review criteria name" /></div>' +
-		'<div class="bupr-admin-col-6"><input type="button" value="Remove" aria-label="Remove this review criteria" class="bupr-remove button button-secondary" /></div></div>'
+	var i18n = window.bupr_admin_ajax_object || {};
+	// English literals are fallbacks only; the translated values come from wp_localize_script.
+	var placeholder = i18n.criteria_placeholder || 'Add Review criteria eg. Member Response. ';
+	var ariaLabel = i18n.criteria_aria_label || 'Review criteria name';
+	var removeLabel = i18n.criteria_remove || 'Remove';
+	var removeAria = i18n.criteria_remove_aria || 'Remove this review criteria';
+
+	function attr(text) {
+		return jQuery('<div/>').text(text).html();
+	}
+
+	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + attr(value) + '" placeholder="' + attr(placeholder) + '" aria-label="' + attr(ariaLabel) + '" /></div>' +
+		'<div class="bupr-admin-col-6"><input type="button" value="' + attr(removeLabel) + '" aria-label="' + attr(removeAria) + '" class="bupr-remove button button-secondary" /></div></div>'
 }

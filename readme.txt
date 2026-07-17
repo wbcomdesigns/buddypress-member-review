@@ -250,6 +250,7 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 
 Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
 
+* New      - Added Spanish, Italian and Portuguese (Brazil) translations, and completed the existing German and French ones.
 * New      - Rebuilt the admin settings screen with the Wbcom card-panel UI: sidebar navigation, an overview dashboard, and a Discover tab. Same settings, clearer layout.
 * Improve  - Front-end review styles now run on one design-token system in both light and dark, so themes and site owners can recolor any surface from a single variable.
 * Improve  - Consolidated the review stylesheets into one file and removed the dead legacy modal system, duplicate rules, and unused selectors.
@@ -258,6 +259,9 @@ Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
 * Improve  - Dark mode is keyed only off the theme's explicit dark signal (BuddyX/Reign), never the OS setting, and the modal close button now follows the theme color instead of a hardcoded black icon.
 * Improve  - Converted directional CSS to logical properties for correct right-to-left rendering.
 * Improve  - Replaced native browser alerts on the review front end with accessible toast notifications.
+* Fix      - JavaScript translations could never load in production: the translation file lookup used the minified script path, which never matches the file the build produces.
+* Fix      - The review count and average-rating tooltip were assembled from separate fragments, which cannot be translated correctly in every language. Each is now a single translatable phrase, and a stray bracket in the zero-review case is gone.
+* Fix      - Several admin and front-end strings had no translatable source, including the criteria row builder and the reply and report messages.
 * Fix      - Localized the admin review-approval progress label ("Approving...") so it translates on non-English sites.
 * Fix      - The review-recalculation cron is scheduled once on a single daily interval (removed a conflicting double registration).
 * Security - The review update endpoint now enforces an ownership/capability check, so members can only edit their own reviews.

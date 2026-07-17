@@ -12,7 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* admin setting on dashboard */
 global $bupr;
 
-$message = 'Hello [user-name],
+/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
+$message = __(
+	'Hello [user-name],
 
 We hope this message finds you well.
 
@@ -22,10 +24,14 @@ We are pleased to inform you that [reviewer-name] has recently submitted a revie
 
 We appreciate your engagement in our community and value your contributions.
 
-Best regards,  
-The [site-name] Team';
+Best regards,
+The [site-name] Team',
+	'bp-member-reviews'
+);
 
-$approve_message    = 'Hello [site-admin],
+/* translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim. */
+$approve_message = __(
+	'Hello [site-admin],
 
 Greetings!
 
@@ -35,13 +41,17 @@ You have received a new review on [site-name] that is pending approval. To revie
 
 Thank you for helping us maintain a vibrant and engaged community.
 
-Best regards,  
-The [site-name] Team';
+Best regards,
+The [site-name] Team',
+	'bp-member-reviews'
+);
 $bupr_admin_general = get_option( 'bupr_admin_general_options' );
 
-$review_email_subject         = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : 'You Have Received a New Review on [site-name]';
+/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
+$review_email_subject         = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : __( 'You Have Received a New Review on [site-name]', 'bp-member-reviews' );
 $review_email_message         = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
-$review_approve_email_subject = ( ! empty( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : 'A New Review Requires Your Approval on [site-name]';
+/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
+$review_approve_email_subject = ( ! empty( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : __( 'A New Review Requires Your Approval on [site-name]', 'bp-member-reviews' );
 $review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_email_message'] ) ) ? $bupr_admin_general['review_approve_email_message'] : $approve_message;
 
 // get all user for exclude for review.
@@ -154,7 +164,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<p class="description"><?php esc_html_e( 'Enter the subject line for review notification emails.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
-							<input id="review_deny_email_subject" class="large-text" name="bupr_admin_general_options[review_email_subject]" value="<?php echo esc_attr( $review_email_subject ); ?>" type="text" placeholder="Please enter review email subject.">
+							<input id="review_deny_email_subject" class="large-text" name="bupr_admin_general_options[review_email_subject]" value="<?php echo esc_attr( $review_email_subject ); ?>" type="text" placeholder="<?php esc_attr_e( 'Please enter review email subject.', 'bp-member-reviews' ); ?>">
 						</div>
 					</div>
 					<div class="bgr-row wbcom-settings-section-wrap review-deny-email-section">
@@ -190,7 +200,7 @@ $user_roles = array_reverse( get_editable_roles() );
 								<p class="description"><?php esc_html_e( 'Enter the subject line for review approval notification emails.', 'bp-member-reviews' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
-								<input id="review_approve_email_subject" class="large-text" name="bupr_admin_general_options[review_approve_email_subject]" value="<?php echo esc_attr( $review_approve_email_subject ); ?>" type="text" placeholder="Please enter review email subject.">
+								<input id="review_approve_email_subject" class="large-text" name="bupr_admin_general_options[review_approve_email_subject]" value="<?php echo esc_attr( $review_approve_email_subject ); ?>" type="text" placeholder="<?php esc_attr_e( 'Please enter review approval email subject.', 'bp-member-reviews' ); ?>">
 							</div>
 						</div>
 						<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">

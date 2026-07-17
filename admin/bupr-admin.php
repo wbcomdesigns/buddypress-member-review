@@ -72,7 +72,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		public function bupr_review_add_meta_box_ratings() {
 			add_meta_box(
 				'custom_meta_box_ratings',
-				'Member Ratings',
+				__( 'Member Ratings', 'bp-member-reviews' ),
 				array( $this, 'bupr_review_render_custom_meta_box_ratings' ),
 				'review',
 				'side',
@@ -345,7 +345,12 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					} else {
 						$user_name = $bupr_sender_data->display_name;
 					}
-					$review_subject = $bupr_reciever_name . ' received a ' . bupr_profile_review_tab_singular_slug();
+					$review_subject = sprintf(
+						/* translators: 1: User display name, 2: Review tab name (singular). */
+						__( '%1$s received a %2$s', 'bp-member-reviews' ),
+						$bupr_reciever_name,
+						bupr_profile_review_tab_singular_slug()
+					);
 
 					// Check BuddyPress version and use the appropriate function.
 					// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
@@ -368,8 +373,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					// Replace '[site-name]' placeholder in the subject with the actual site name.
 					$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
-					$message = 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team';
-					/* translators: %s is replaced with the user name %2$s is replaced with the review singular lable of translations */
+					/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
+					$message = __( 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team', 'bp-member-reviews' );
 					if ( isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] ) ) {
 						$bupr_message = str_replace(
 							array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),

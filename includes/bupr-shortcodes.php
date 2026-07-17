@@ -381,7 +381,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							// User's role is NOT in the allowed reviewer roles list - block them.
 							?>
 						<div class="bupr_not_give_review">
-								<p><?php echo esc_html( 'Sorry, You have not been given permission to review the user !!!' ); ?></p>
+								<p><?php esc_html_e( 'Sorry, You have not been given permission to review the user !!!', 'bp-member-reviews' ); ?></p>
 						</div>
 							<?php
 						} else {

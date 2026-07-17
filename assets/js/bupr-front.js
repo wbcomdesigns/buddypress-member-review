@@ -43,7 +43,7 @@ jQuery(document).ready(function () {
    *-----------------------------------------*/
   jQuery('.dataTables_filter input[type="search"]').attr(
     "placeholder",
-    "Enter Keywords...."
+    mail_title.search_placeholder || "Enter Keywords...."
   );
 
   /*----------------------------------------
@@ -126,8 +126,12 @@ jQuery(document).ready(function () {
     var rating_exist = [];
     var bupr_member_id = jQuery("#bupr_member_review_id").val();
     var bupr_current_user = jQuery("#bupr_current_user_id").val();
-    var bupr_review_title =
-      mail_title.cur_username + " received a " + mail_title.review_title;
+    // Whole-phrase format string so translators control word order (no concatenation).
+    var bupr_review_title = (
+      mail_title.review_title_format || "%1$s received a %2$s"
+    )
+      .replace("%1$s", mail_title.cur_username)
+      .replace("%2$s", mail_title.review_title);
     var bupr_review_desc = jQuery("#review_desc").val();
     var bupr_review_count = jQuery("#member_rating_field_counter").val();
     var bupr_review_rating = {};
@@ -501,7 +505,9 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
         replySection.html(response.data.reply_html);
       } else {
         window.buprFrontToast(
-          (response.data && response.data.message) || "Failed to add reply.",
+          (response.data && response.data.message) ||
+            mail_title.reply_failed ||
+            "Failed to add reply.",
           "error"
         );
       }
@@ -509,7 +515,10 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
   ).fail(function () {
     button.prop("disabled", false);
     wrapper.find(".bupr-reply-spinner").hide();
-    window.buprFrontToast("An error occurred. Please try again.", "error");
+    window.buprFrontToast(
+      mail_title.generic_error || "An error occurred. Please try again.",
+      "error"
+    );
   });
 });
 
@@ -576,7 +585,8 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
         jQuery(".bupr-flag-modal").fadeOut();
         // Show inline success message instead of alert
         var $reportBtn = jQuery('.bupr-report-button[data-review="' + reviewId + '"], .bupr-flag-button[data-review="' + reviewId + '"]');
-        $reportBtn.replaceWith('<span class="bupr-report-success"><span class="dashicons dashicons-yes"></span> Reported</span>');
+        var reportedLabel = jQuery('<div/>').text(mail_title.reported || "Reported").html();
+        $reportBtn.replaceWith('<span class="bupr-report-success"><span class="dashicons dashicons-yes"></span> ' + reportedLabel + '</span>');
         // Auto-fade after 3 seconds
         setTimeout(function() {
           jQuery('.bupr-report-success').fadeOut();
@@ -588,7 +598,9 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
   ).fail(function () {
     jQuery(".bupr-flag-submit").prop("disabled", false);
     jQuery(".bupr-flag-spinner").hide();
-    jQuery(".bupr-flag-error").text("An error occurred. Please try again.").show();
+    jQuery(".bupr-flag-error")
+      .text(mail_title.generic_error || "An error occurred. Please try again.")
+      .show();
   });
 });
 
