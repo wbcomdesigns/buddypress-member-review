@@ -171,7 +171,7 @@ $reviews = new WP_Query( $args );
 													<?php
 												} elseif ( $aggregate - $i > 0 ) {
 													?>
-													<span class="fa fa-star-half-o bupr-star-rate"></span>
+													<span class="fas fa-star-half-alt bupr-star-rate"></span>
 													<?php
 												} else {
 													?>

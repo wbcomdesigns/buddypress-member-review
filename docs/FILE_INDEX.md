@@ -37,10 +37,7 @@
 | `bupr-setting-general-tab.php` | General settings (auto-approve, notifications, flagging) |
 | `bupr-setting-display-tab.php` | Display options (star colors, labels, positions) |
 | `bupr-setting-criteria-tab.php` | Rating criteria builder |
-| `bupr-setting-shortcode-tab.php` | Shortcode generator and reference |
-| `bupr-setting-support-tab.php` | Support links and resources |
 | `bupr-setting-pro-features-tab.php` | Pro version feature preview |
-| `bupr-welcome-page.php` | Welcome/activation page |
 
 ### Admin Assets
 

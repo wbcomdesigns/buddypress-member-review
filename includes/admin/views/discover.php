@@ -21,6 +21,13 @@ $bupr_ecosystem_img = BUPR_PLUGIN_URL . 'assets/images/ecosystem/';
  */
 $bupr_ecosystem = array(
 	array(
+		'name' => __( 'BuddyX', 'bp-member-reviews' ),
+		'logo' => 'buddyx.png',
+		'icon' => 'admin-appearance',
+		'desc' => __( 'A free, fast community theme for BuddyPress, BuddyBoss and PeepSo with a modern layout and dark mode.', 'bp-member-reviews' ),
+		'url'  => 'https://wbcomdesigns.com/downloads/buddyx-theme/',
+	),
+	array(
 		'name' => __( 'BuddyNext', 'bp-member-reviews' ),
 		'logo' => 'buddynext.svg',
 		'desc' => __( 'Launch a full social network on WordPress with feeds, member spaces, profiles, and private messaging.', 'bp-member-reviews' ),
@@ -39,10 +46,31 @@ $bupr_ecosystem = array(
 		'url'  => 'https://wbcomdesigns.com/downloads/mediaverse/',
 	),
 	array(
+		'name' => __( 'Eventonomy', 'bp-member-reviews' ),
+		'logo' => 'eventonomy.svg',
+		'icon' => 'calendar-alt',
+		'desc' => __( 'Run community events with RSVPs, calendars, and front-end submissions.', 'bp-member-reviews' ),
+		'url'  => 'https://wbcomdesigns.com/downloads/eventonomy/',
+	),
+	array(
+		'name' => __( 'WB Gamification', 'bp-member-reviews' ),
+		'logo' => 'wb-gamification.svg',
+		'icon' => 'awards',
+		'desc' => __( 'Reward members with points, badges, and leaderboards to keep engagement high.', 'bp-member-reviews' ),
+		'url'  => 'https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/',
+	),
+	array(
 		'name' => __( 'Listora', 'bp-member-reviews' ),
 		'logo' => 'listora.svg',
 		'desc' => __( 'Build any kind of searchable directory with multiple listing types, ratings, maps, and self-serve submissions.', 'bp-member-reviews' ),
 		'url'  => 'https://wbcomdesigns.com/downloads/listora/',
+	),
+	array(
+		'name' => __( 'WP Career Board', 'bp-member-reviews' ),
+		'logo' => 'wp-career-board.svg',
+		'icon' => 'businessman',
+		'desc' => __( 'Add a job board with front-end listings, applications, and employer profiles.', 'bp-member-reviews' ),
+		'url'  => 'https://wbcomdesigns.com/downloads/wp-career-board/',
 	),
 	array(
 		'name' => __( 'Learnomy', 'bp-member-reviews' ),
@@ -50,13 +78,20 @@ $bupr_ecosystem = array(
 		'desc' => __( 'Publish and sell online courses, grade quizzes automatically, and hand learners a certificate at the end.', 'bp-member-reviews' ),
 		'url'  => 'https://wbcomdesigns.com/downloads/learnomy/',
 	),
+	array(
+		'name' => __( 'WP Sell Services', 'bp-member-reviews' ),
+		'logo' => 'wp-sell-services.svg',
+		'icon' => 'cart',
+		'desc' => __( 'A free service marketplace with vendor dashboards, an 11-status order flow, and Stripe or PayPal built in.', 'bp-member-reviews' ),
+		'url'  => 'https://wbcomdesigns.com/downloads/wp-sell-services/',
+	),
 );
 ?>
 
 <div class="bupr-card">
 	<div class="bupr-card__head">
 		<p class="bupr-card__title"><?php esc_html_e( 'More Free Tools from Wbcom Designs', 'bp-member-reviews' ); ?></p>
-		<p class="bupr-card__desc"><?php esc_html_e( 'Member Reviews adds the reputation layer to your community. These free plugins from Wbcom Designs give you the rest of the stack: the network itself, forums, media, directories, and courses.', 'bp-member-reviews' ); ?></p>
+		<p class="bupr-card__desc"><?php esc_html_e( 'Member Reviews adds the reputation layer to your community. These free plugins from Wbcom Designs give you the rest of the stack: the theme and network itself, forums, media, events, gamification, directories, jobs, courses, and services.', 'bp-member-reviews' ); ?></p>
 	</div>
 	<div class="bupr-card__body">
 		<div class="bupr-discover-grid">

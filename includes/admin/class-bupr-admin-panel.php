@@ -45,7 +45,10 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 		 *
 		 * The legacy tab keys (bupr-general, bupr-criteria, bupr-display,
 		 * bupr-pro-features) are preserved so the Pro addon's
-		 * `bupr_admin_settings_tabs` filter keeps matching.
+		 * `bupr_admin_settings_tabs` filter keeps matching. `bupr-pro-features`
+		 * keeps its slug even though it is now labelled "Add-ons": the slug is
+		 * a public contract (it appears in `?tab=` URLs and in the tab map the
+		 * Pro addon filters), so only the label changed.
 		 *
 		 * @return array<string, array{label:string, icon:string, group:string}>
 		 */
@@ -72,8 +75,8 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 					'group' => 'settings',
 				),
 				'bupr-pro-features' => array(
-					'label' => __( 'Pro Features', 'bp-member-reviews' ),
-					'icon'  => 'dashicons-awards',
+					'label' => __( 'Add-ons', 'bp-member-reviews' ),
+					'icon'  => 'dashicons-admin-plugins',
 					'group' => 'settings',
 				),
 			);

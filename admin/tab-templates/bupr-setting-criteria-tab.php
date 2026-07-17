@@ -39,10 +39,10 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 				<p style="margin: 10px 0 0 0; color: #856404;">
 					<?php
 					printf(
-						/* translators: 1: Current mode label, 2: Link to Pro Features tab */
+						/* translators: 1: Current mode label, 2: Link to Add-ons tab */
 						esc_html__( 'Rating criteria are only used in Star Ratings mode. You are currently using %1$s mode. To manage criteria, switch to Star Ratings mode in the %2$s tab.', 'bp-member-reviews' ),
 						'<strong>' . esc_html( $mode_label ) . '</strong>',
-						'<a href="' . esc_url( admin_url( 'admin.php?page=bp-member-review-settings&tab=bupr-pro-features' ) ) . '">' . esc_html__( 'Pro Features', 'bp-member-reviews' ) . '</a>'
+						'<a href="' . esc_url( admin_url( 'admin.php?page=bp-member-review-settings&tab=bupr-pro-features' ) ) . '">' . esc_html__( 'Add-ons', 'bp-member-reviews' ) . '</a>'
 					);
 					?>
 				</p>

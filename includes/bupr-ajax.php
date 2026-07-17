@@ -183,9 +183,21 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			$bupr_reviews_status = 'yes' === $bupr['auto_approve_reviews'] ? 'publish' : 'draft';
 
-			$bupr_multi_reviews         = $bupr['multi_reviews'];
-			$bupr_current_user          = filter_input( INPUT_POST, 'bupr_current_user', FILTER_VALIDATE_INT );
-			$current_user               = wp_get_current_user();
+			/*
+			 * Reviewer identity is derived from the session, never from the request.
+			 * The `bupr_current_user` POST field (populated from the #bupr_current_user_id
+			 * hidden input) is client-controlled: trusting it let any visitor forge
+			 * `post_author`, bypass the self-review guard, and bypass the
+			 * single-review-per-reviewer gate by varying the value. The submission form is
+			 * login-gated (includes/bupr-shortcodes.php), so an authenticated session is
+			 * always available for legitimate submissions; the POST field is now ignored.
+			 */
+			$current_user      = wp_get_current_user();
+			$bupr_current_user = get_current_user_id();
+			if ( empty( $bupr_current_user ) ) {
+				wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'You must be logged in to submit a review.', 'bp-member-reviews' ) . '</p>' );
+				return;
+			}
 			$review_desc                = isset( $_POST['bupr_review_desc'] ) ? sanitize_textarea_field( wp_unslash( $_POST['bupr_review_desc'] ) ) : '';
 			$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id', FILTER_VALIDATE_INT );
 			$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_VALIDATE_INT );

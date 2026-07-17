@@ -1,9 +1,10 @@
 <?php
 /**
- * Settings tab: Pro Features (read-only Free vs Pro preview).
+ * Settings tab: Add-ons.
  *
- * Wraps the existing Pro Features tab template (ported 1:1). When the Pro
- * addon is active it delegates rendering via `bupr_admin_settings_pro_content`.
+ * Wraps the Add-ons tab template, which is the mount point add-ons render
+ * into via `bupr_admin_settings_pro_content`. Renders a neutral empty state
+ * when nothing is hooked.
  *
  * @package BuddyPress_Member_Reviews
  * @since   3.8.0

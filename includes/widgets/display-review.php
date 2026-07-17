@@ -230,12 +230,12 @@ class bupr_members_review_setting extends WP_Widget {
 			<p>
 				<span>
 					<input class="regular_text" id="<?php echo esc_attr( $this->get_field_id( 'top_rated' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'top_member' ) ); ?>" value="top-rated" type="radio" <?php checked( $topmembers, 'top-rated' ); ?> />
-					<label for="<?php echo esc_attr( $this->get_field_id( 'Top rated' ) ); ?>"><?php esc_html_e( 'Top Rated ', 'bp-member-reviews' ); ?>
+					<label for="<?php echo esc_attr( $this->get_field_id( 'top_rated' ) ); ?>"><?php esc_html_e( 'Top Rated ', 'bp-member-reviews' ); ?>
 					</label>
 				</span>
 				<span>
 					<input class="regular_text" id="<?php echo esc_attr( $this->get_field_id( 'top_viewed' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'top_member' ) ); ?>" value="top-viewed" type="radio" <?php checked( $topmembers, 'top-viewed' ); ?> />
-					<label for="<?php echo esc_attr( $this->get_field_id( 'Top Viewed' ) ); ?>"><?php esc_html_e( 'Most Reviewed', 'bp-member-reviews' ); ?>
+					<label for="<?php echo esc_attr( $this->get_field_id( 'top_viewed' ) ); ?>"><?php esc_html_e( 'Most Reviewed', 'bp-member-reviews' ); ?>
 					</label>
 				</span>
 			</p>

@@ -94,7 +94,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 			$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', true );
 
-			wp_enqueue_style( 'bupr-font-awesome-2', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), '5.5.0', false );
+			wp_enqueue_style( 'bupr-font-awesome-2', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), BUPR_PLUGIN_VERSION, 'all' );
 
 			if ( ! empty( $member_review_ratings ) && is_array( $member_review_ratings ) ) {
 

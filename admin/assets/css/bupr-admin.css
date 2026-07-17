@@ -1,9 +1,11 @@
 @CHARSET "ISO-8859-1";
 
-@font-face {
-    font-family: FontAwesome;
-    src: url('../fonts/FontAwesome.otf');
-}
+/*
+ * The FontAwesome 4 @font-face was removed in the 3.8.x cleanup: no rule in this
+ * plugin ever declared `font-family: FontAwesome`, so the face was never applied
+ * and its ../fonts/ payload was never downloaded. The bundled FA 5 stylesheet
+ * (assets/css/fontawesome/all.min.css) supplies the only icons we use (fa-star).
+ */
 
 .bupr-admin-settings-header p {
     font-size: 24px;
