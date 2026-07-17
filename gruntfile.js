@@ -109,7 +109,13 @@ module.exports = function (grunt) {
                     '!node_modules/**',
                     '!options/framework/**',
                     '!tests/**',
-                    '!dist/**'
+                    '!dist/**',
+                    // Dev dependency, never shipped. wordpress-stubs.php declares
+                    // WordPress core's own gettext calls against the "default"
+                    // domain, which this task correctly flags and which we must not
+                    // change. Scanning it made `grunt dist` fail with 14 false
+                    // positives, so the zip could not be built without --force.
+                    '!vendor/**'
                 ],
                 expand: true
             },
@@ -224,7 +230,10 @@ module.exports = function (grunt) {
         // Shell commands
         shell: {
             wpcli: {
-                command: 'wp i18n make-pot . languages/bp-member-reviews.pot',
+                // --domain is explicit rather than inferred from the plugin header, and
+                // the excludes keep dev-only trees (vendor stubs, audit, docs) out of
+                // the scan. Keep this in step with .wbcom-i18n.json.
+                command: 'wp i18n make-pot . languages/bp-member-reviews.pot --domain=bp-member-reviews --exclude=node_modules,vendor,dist,tests,audit,docs',
             }
         }
     });

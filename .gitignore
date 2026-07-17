@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
-vendor/
+# Root-anchored: only the Composer dev-tooling dir at the repo root.
+# Do NOT unanchor this - a bare `vendor/` also matches the bundled-library
+# dirs `admin/assets/js/vendor/` and `admin/assets/css/vendor/`, which are
+# shipped source and MUST stay tracked.
+/vendor/
 
 # Build artifacts
 dist/

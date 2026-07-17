@@ -746,6 +746,7 @@ body.admin-color-dark .bupr-admin {
 .bupr-discover-card__logo img {
 	width: 52px;
 	height: 52px;
+	object-fit: contain;
 	display: block;
 	border-radius: var(--bupr-admin-radius-sm);
 }
@@ -908,121 +909,6 @@ body.admin-color-dark .bupr-admin {
 	margin: 0;
 	border-top: 1px solid var(--bupr-admin-border);
 	background: var(--bupr-admin-surface-1);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Pro Features — Free vs Pro comparison table
-   (relocated from the inline <style> the legacy tab template carried,
-   per skill gate F1: no inline <style> in PHP).
-   ═══════════════════════════════════════════════════════════ */
-
-.bupr-admin .bupr-comparison-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin: 8px 0 24px;
-	background: var(--bupr-admin-white);
-	box-shadow: var(--bupr-admin-shadow);
-	border-radius: var(--bupr-admin-radius);
-	overflow: hidden;
-	border: 1px solid var(--bupr-admin-border);
-}
-
-.bupr-admin .bupr-comparison-table th,
-.bupr-admin .bupr-comparison-table td {
-	padding: 14px 20px;
-	text-align: right;
-	border-bottom: 1px solid var(--bupr-admin-surface-2);
-}
-
-.bupr-admin .bupr-comparison-table thead th {
-	background: var(--bupr-admin-accent);
-	color: #fff;
-	font-weight: 600;
-	text-transform: uppercase;
-	font-size: 12px;
-	letter-spacing: 0.04em;
-}
-
-.bupr-admin .bupr-comparison-table thead th:not(:first-child) {
-	text-align: center;
-	width: 120px;
-}
-
-.bupr-admin .bupr-comparison-table tbody td:not(:first-child) {
-	text-align: center;
-}
-
-.bupr-admin .bupr-comparison-table tbody tr:hover {
-	background: var(--bupr-admin-surface-1);
-}
-
-.bupr-admin .feature-name {
-	font-weight: 600;
-	color: var(--bupr-admin-text);
-}
-
-.bupr-admin .feature-desc {
-	font-size: 12px;
-	color: var(--bupr-admin-text-3);
-	margin-top: 4px;
-}
-
-.bupr-admin .bupr-check-yes {
-	color: var(--bupr-admin-success);
-	font-size: 18px;
-}
-
-.bupr-admin .bupr-check-no {
-	color: var(--bupr-admin-border-strong);
-	font-size: 18px;
-}
-
-.bupr-admin .bupr-version-badge {
-	display: inline-block;
-	padding: 4px 12px;
-	border-radius: 20px;
-	font-size: 11px;
-	font-weight: 600;
-	text-transform: uppercase;
-}
-
-.bupr-admin .bupr-version-free {
-	background: var(--bupr-admin-surface-2);
-	color: var(--bupr-admin-text);
-}
-
-.bupr-admin .bupr-version-pro {
-	background: var(--bupr-admin-accent);
-	color: #fff;
-}
-
-.bupr-admin .bupr-upgrade-cta {
-	text-align: center;
-	padding: 30px;
-	background: var(--bupr-admin-surface-1);
-	border-radius: var(--bupr-admin-radius);
-	margin-top: 20px;
-	border: 1px solid var(--bupr-admin-border);
-}
-
-.bupr-admin .bupr-upgrade-cta h3 {
-	margin: 0 0 10px;
-	color: var(--bupr-admin-text);
-}
-
-.bupr-admin .bupr-upgrade-cta p {
-	margin: 0 0 20px;
-	color: var(--bupr-admin-text-3);
-}
-
-.bupr-admin .bupr-pro-badge {
-	display: inline-block;
-	background: var(--bupr-admin-accent);
-	color: #fff;
-	font-size: 10px;
-	padding: 2px 6px;
-	border-radius: 3px;
-	margin-right: 5px;
 }
 
 /* ═══════════════════════════════════════════════════════════

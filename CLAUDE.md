@@ -114,9 +114,60 @@ public/nopriv submission endpoint, nonce-only by design.)
 ## Build
 `grunt` (gruntfile.js) — JS/CSS minification + RTL generation. `npm install` first.
 
+## Vendored libraries
+
+WordPress.org requires the human-readable source alongside any minified file we distribute.
+Owner rule: **drop what WP core already bundles; ship the unminified source for the rest.**
+WP core bundles jQuery/jQuery UI/underscore/backbone/lodash/react — it bundles **neither**
+select2 **nor** Font Awesome, so both must ship with source.
+
+**Never re-minify or reformat the `.min` files.** They are byte-frozen so customer caches and
+behaviour do not change. Verify with `md5` against git HEAD after any vendor work.
+
+| Lib | Exact version | Shipped files | Refresh URL |
+|-----|---------------|---------------|-------------|
+| Select2 (JS) | **4.1.0-beta.0** | `admin/assets/js/vendor/select2.min.js` + `select2.js` (source) | `https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/js/select2.js` |
+| Select2 (CSS) | **4.1.0-beta.0**, locally themed | `admin/assets/css/vendor/select2.min.css` (**already source — see caveat**) | `https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.0/css/select2.css` |
+| Font Awesome Free | **5.5.0** | `assets/css/fontawesome/all.min.css` + `all.css` (source) + `webfonts/` | `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.css` |
+
+### Caveat 1 — `select2.min.css` is NOT minified (misleading filename)
+Despite the `.min` name this file is **530 lines, 4-space indented, longest line 210 chars, and
+16866 B — larger than the official *minified* build (14966 B)**. It is the official
+**unminified** `select2.css` 4.1.0-beta.0, reformatted (closing brace on its own line), plus
+**local theme edits**:
+- added rule `span.select2.select2-container { width: 100% !important; }`
+- multiselect border `#aaa`→`#e3e2ec`, radius `4px`→`8px`; choice bg `#e4e4e4`→`#e8eaf2`,
+  border `#cdcdd1`, radius `8px`; focus border `solid black`→`solid #e3e2ec`
+- cosmetic colour shortening (`white`→`#fff`, `#eeeeee`→`#eee`)
+
+**It therefore already IS the human-readable source — no sibling `select2.css` is needed, and
+shipping the stock one would be actively wrong** (stock has different colours/radius, so it
+would not correspond to what we ship). Do **not** "fix" this by downloading `select2.css`.
+Renaming it to drop `.min` would change the enqueued URL
+(`includes/bupr-scripts.php:309`) and bust caches — left as-is deliberately.
+
+### Caveat 2 — bundled `all.min.css` is FA 5.5.0 **plus two local edits**
+`all.min.css` is byte-identical to upstream FA Free 5.5.0 `all.min.css` in **1310 of 1313
+rules**. Only the 3 `@font-face` blocks differ, by two deliberate local changes:
+1. `../webfonts/` → `webfonts/` — the fonts live *beside* the CSS (2026-07-17 bug-fix row below).
+2. `.eot`/`.ttf`/`.svg` sources dropped from each `src:` list — those files are not bundled
+   (2026-07-17 perf row); only `.woff2` + `.woff` ship.
+
+`all.css` is upstream `all.css` 5.5.0 with **exactly the same two edits applied to the same 3
+`@font-face` blocks** — verified by diffing both against upstream: each differs from its
+upstream counterpart only in those blocks. **When refreshing FA, re-apply both edits to
+`all.css` and `all.min.css` together, or the source stops corresponding to the min.**
+
+### Caveat 3 — `vendor/` in `.gitignore` must stay root-anchored (`/vendor/`)
+A bare `vendor/` also matches `admin/assets/js/vendor/` and `admin/assets/css/vendor/`, which
+silently ignores the shipped library sources — the commit looks fine and regresses on next
+clone. Keep the leading slash. `copy:dist`'s `!vendor/**` glob is already root-anchored by
+grunt's `expand: true` and does **not** drop the asset vendor dirs (verified against the zip).
+
 ## Recent changes
 | Date | Type | Description | Files |
 |------|------|-------------|-------|
+| 2026-07-17 | compliance | **Vendored library sources now ship (WP.org minified-source rule).** Added `admin/assets/js/vendor/select2.js` (stock Select2 4.1.0-beta.0) and `assets/css/fontawesome/all.css` (FA Free 5.5.0 + the same 2 local `@font-face` edits the min carries). Both `.min` files left byte-identical to HEAD (md5-verified) — neither new file is enqueued, so zero runtime impact. **`select2.min.css` deliberately gets no source: it is not minified** (530 indented lines, bigger than the official min) — it already IS the source, locally themed; shipping stock `select2.css` would be a non-corresponding source. Fixed `.gitignore` `vendor/` → `/vendor/`: unanchored it silently ignored both asset vendor dirs, so new sources would vanish on next clone. Verified every `.min.js`/`.min.css` in the built zip now has its source (10/11 paired, select2.min.css exempt as non-minified). Zip 1,407,651 → 1,462,274 B (+53 KB, +3.9%). Browser-verified: admin settings + member profile stars render, all 3 FA5 faces load, 0 console errors. See the new "Vendored libraries" section. | .gitignore, admin/assets/js/vendor/select2.js, assets/css/fontawesome/all.css, CLAUDE.md |
 | 2026-07-17 | ux | **"Pro Features" tab reframed as a neutral "Add-ons" surface** (owner decision: keep the mount, drop the upsell). Removed the Free-vs-Pro comparison table, the "Get Pro Version" CTA, the PRO badges, and the 4 disabled fake controls that did nothing. The `bupr_admin_settings_pro_content` mount point is preserved, still inside the `wbcom-tab-content` > `wbcom-admin-title-section` > `wbcom-admin-option-wrap` wrappers Pro depends on (Pro renders form contents only). Firing is now gated on `has_action()` instead of `class_exists( 'BuddyPress_Member_Review_Pro' )` + `BUPR_Pro_Features::is_pro_active()`; behaviourally identical for Pro (Pro hooks unconditionally and `is_pro_active()` is a hardcoded `return true` — licensing only gates updates via `is_license_valid()`), but it makes the tab a real add-on surface rather than Pro-coupled. When nothing is hooked, a neutral empty state renders ("No add-ons are installed."). Slug `bupr-pro-features` deliberately unchanged (public contract). Dropped the unreachable "Pro installed, not licensed" branch and ~110 lines of now-dead upsell CSS. Browser-verified 1280px + 390px, mount point proved via throwaway mu-plugin, zero PHP errors. | admin/tab-templates/bupr-setting-pro-features-tab.php, admin/tab-templates/bupr-setting-criteria-tab.php, includes/admin/views/settings-pro-features.php, includes/admin/class-bupr-admin-panel.php, assets/css/admin.css, audit/manifest.json |
 | 2026-07-17 | bug-fix | **Bundled Font Awesome never worked.** `assets/css/fontawesome/all.min.css` referenced `../webfonts/` → resolved to the non-existent `assets/css/webfonts/` (fonts actually live at `assets/css/fontawesome/webfonts/`), so every bundled face 404'd and the stars only rendered because BuddyX happens to ship its own FA6. Corrected to `webfonts/`; FA enqueues now versioned `BUPR_PLUGIN_VERSION` instead of a fixed `'5.5.0'` so updated sites don't keep the broken copy cached under an unchanged URL. Verified: `document.fonts.check('900 16px "Font Awesome 5 Free"') === true`, 0 console errors. | assets/css/fontawesome/all.min.css, includes/bupr-scripts.php, admin/bupr-admin.php |
 | 2026-07-17 | perf | **Dist zip 4.13 MB → ~1.32 MB (-68%).** Deleted 3 byte-identical FA4 font dirs (`admin/assets/fonts/`, `admin/assets/css/fonts/`, `admin/assets/css/min/fonts/`, 3.26 MB) + the never-enqueued `admin/assets/css/vendor/font-awesome.min.css`; all were unreachable (nothing declared `font-family: FontAwesome`). Dropped the FA4 `@font-face` from `bupr-admin.css`. Trimmed FA5 legacy `.eot/.svg/.ttf` (2.33 MB), keeping `.woff2`+`.woff`. Brands kept deliberately: unused by this plugin but our generic `font-awesome` handle may be reused by third parties. | assets/css/fontawesome/{all.min.css,webfonts/}, admin/assets/css/bupr-admin.css (+min/rtl), admin/assets/{fonts,css/fonts,css/min/fonts}/ |
