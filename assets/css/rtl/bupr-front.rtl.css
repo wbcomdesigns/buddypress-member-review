@@ -1004,7 +1004,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-owner-reply {
     background: linear-gradient(-135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-inline-start: 4px solid #007cba;
+    border-inline-start: 4px solid var(--bupr-accent, #007cba);
     padding: 15px;
     margin-top: 10px;
     border-start-end-radius: 8px;
@@ -1036,7 +1036,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-reply-badge {
-    background: #007cba;
+    background: var(--bupr-accent, #007cba);
     color: #fff;
     font-size: 11px;
     padding: 3px 8px;
@@ -1065,8 +1065,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-show-reply-form {
     background: transparent;
-    border: 1px dashed #007cba;
-    color: #007cba;
+    border: 1px dashed var(--bupr-accent, #007cba);
+    color: var(--bupr-accent, #007cba);
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 4px;
@@ -1091,8 +1091,10 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-reply-textarea:focus {
-    border-color: #007cba;
+    border-color: var(--bupr-accent, #007cba);
+    /* rgba() first as the fallback; color-mix tints the accent on browsers that support it. */
     box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--bupr-accent, #007cba) 15%, transparent);
 }
 
 .bupr-reply-textarea:focus:not(:focus-visible) {
@@ -1116,7 +1118,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 }
 
 .bupr-submit-reply {
-    background: #007cba;
+    background: var(--bupr-accent, #007cba);
     color: #fff;
     border: none;
     padding: 8px 16px;
@@ -1145,7 +1147,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     width: 20px;
     height: 20px;
     border: 2px solid #ddd;
-    border-top-color: #007cba;
+    border-top-color: var(--bupr-accent, #007cba);
     border-radius: 50%;
     -webkit-animation: bupr-spin 1s linear infinite;
     animation: bupr-spin 1s linear infinite;
@@ -1475,20 +1477,43 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 # Design tokens (light default)
 # Light mode reads these --bupr-* tokens the same way dark mode does, so a
 # theme/site can override any surface by setting --bupr-* (or the underlying
-# --bx-color-*). Values equal the historical light hex fallbacks, so this
-# block changes nothing visually on its own - it just makes light mode
-# themeable instead of hardcoded. The dark-mode block below re-points the
-# same tokens to the dark palette.
+# theme variable). The dark-mode block below re-points the same tokens to the
+# dark palette.
+#
+# THEME BRIDGE - the fallback order is deliberate, do not shorten it:
+#   1. --bx-color-*                 BuddyX / BuddyX Pro (5.1.4 verified).
+#   2. --reign-*                    Reign 8+ (8.0.4 verified).
+#   3. --wp--preset--color--*       Any other theme.json theme.
+#   4. a literal                    Themes that expose none of the above.
+#
+# Tiers 2-3 exist because Reign 8.0.0 REMOVED --bx-color-* emission - Reign
+# owns a separate token system and treats --reign-* as its single source of
+# truth. Measured live on Reign 8.0.4 master: every --bx-color-* is empty, so
+# before this chain every token on a Reign site collapsed to the hardcoded
+# literal and the plugin ignored the site palette completely.
+#
+# Reign is given its own tier rather than being left to tier 3 because its
+# names are semantically precise where the generic presets are silent: there
+# is no preset for a border colour, but --reign-form-border-color (#e3e3e3)
+# is exactly that. Tier 3 then catches every other block theme. On Reign the
+# two tiers agree for bg/text/accent anyway (Reign's theme.json bridge aliases
+# the presets to --reign-*: primary #1d76da == --reign-colors-theme).
+#
+# Only bg/field/border/text/accent get a mapping. --wp--preset--color--* has
+# NO concept of "muted" or "subtle", and Reign's nearest name (--reign-color-
+# gray #404855) equals its body text, so mapping muted to it would collapse
+# muted into --bupr-text. Those two keep their literal on purpose. Do not
+# "complete" the chain for them.
 --------------------------------------------------------------*/
 :root {
-    --bupr-card-bg: var(--bx-color-bg-elevated, #fff);
+    --bupr-card-bg: var(--bx-color-bg-elevated, var(--reign-site-sections-bg-color, var(--wp--preset--color--base, #fff)));
     --bupr-chip-bg: var(--bx-color-bg-muted, #f9f9f9);
     --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #f0f0f1);
-    --bupr-field-bg: var(--bx-color-bg, #fff);
-    --bupr-text: var(--bx-color-fg, #1d2327);
+    --bupr-field-bg: var(--bx-color-bg, var(--reign-form-background-color, var(--wp--preset--color--base, #fff)));
+    --bupr-text: var(--bx-color-fg, var(--wp--preset--color--contrast, #1d2327));
     --bupr-text-muted: var(--bx-color-fg-muted, #50575e);
     --bupr-text-subtle: var(--bx-color-fg-subtle, #666);
-    --bupr-border: var(--bx-color-border, rgba(0, 0, 0, 0.1));
+    --bupr-border: var(--bx-color-border, var(--reign-form-border-color, rgba(0, 0, 0, 0.1)));
     --bupr-reply-bg: var(--bx-color-bg-muted, #f8f9fa);
     --bupr-reply-hover-bg: #f0f7fc;
     --bupr-success-bg: #ecfdf5;
@@ -1497,7 +1522,8 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     --bupr-danger-bg: #fff0f0;
     --bupr-danger-fg: #dc3232;
     --bupr-danger-border: #f5c6cb;
-    --bupr-focus: #2271b1;
+    --bupr-accent: var(--bx-color-accent, var(--reign-colors-theme, var(--wp--preset--color--primary, #007cba)));
+    --bupr-focus: var(--bx-color-accent, var(--reign-colors-theme, var(--wp--preset--color--primary, #2271b1)));
 }
 
 /*--------------------------------------------------------------

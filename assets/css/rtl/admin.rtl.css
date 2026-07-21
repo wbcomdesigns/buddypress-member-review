@@ -32,10 +32,12 @@
 	--bupr-admin-text-muted: #94a3b8;
 
 	--bupr-admin-success: #16a34a;
+	--bupr-admin-success-hover: #15803d;
 	--bupr-admin-success-light: #dcfce7;
 	--bupr-admin-warn: #f59e0b;
 	--bupr-admin-warn-light: #fef9c3;
 	--bupr-admin-danger: #dc2626;
+	--bupr-admin-danger-hover: #b91c1c;
 	--bupr-admin-danger-light: #fee2e2;
 
 	--bupr-admin-radius: 8px;
@@ -73,8 +75,10 @@ body.admin-color-dark .bupr-admin {
 	--bupr-admin-text-4: #c8ccd8;
 	--bupr-admin-text-muted: #7f8496;
 	--bupr-admin-accent-light: #1e293b;
+	--bupr-admin-success-hover: #22c55e;
 	--bupr-admin-success-light: #14311f;
 	--bupr-admin-warn-light: #3a2f10;
+	--bupr-admin-danger-hover: #ef4444;
 	--bupr-admin-danger-light: #3a1518;
 	--bupr-admin-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
 	--bupr-admin-shadow-hover: 0 4px 6px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -170,6 +174,9 @@ body.admin-color-dark .bupr-admin {
 
 .bupr-settings-sidebar {
 	width: 240px;
+	/* border-box, because the responsive rules below set width:100% and the 1px border
+	   on each side would otherwise push the sidebar 2px past the viewport. */
+	box-sizing: border-box;
 	flex-shrink: 0;
 	background: var(--bupr-admin-white);
 	border: 1px solid var(--bupr-admin-border);
@@ -788,7 +795,8 @@ body.admin-color-dark .bupr-admin {
 	margin: 0 0 18px;
 	font-size: 14px;
 	line-height: 1.5;
-	border-width: 0 4px 0 0;
+	border-width: 0;
+	border-inline-start-width: 4px;
 	border-style: solid;
 }
 
