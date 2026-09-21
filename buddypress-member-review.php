@@ -5,7 +5,7 @@
  * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
  * Version: 3.8.0
  * Requires at least: 6.5
- * Requires PHP: 8.0
+ * Requires PHP: 8.1
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
