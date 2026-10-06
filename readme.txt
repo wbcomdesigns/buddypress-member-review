@@ -254,6 +254,11 @@ Moderation and settings-screen fixes.
 * New      - Reviews hidden by the report threshold now show an Auto-hidden badge with the hide date, an Auto-hidden filter in the Reviews list, and a count on the Overview screen.
 * Improve  - Settings toggles render as switches again, and the criteria Add and Remove buttons match the rest of the settings screen.
 * Improve  - Email editors use the full row width, subject fields are wider, and settings rows no longer leave large gaps on phones.
+* Improve  - Member review counts in the admin bar and profile tab read the cached total instead of loading every review on each page view.
+* Improve  - Approval email fields show and hide as soon as Auto Approve is switched, without saving first.
+* Improve  - Members who already reported a review see Reported instead of a Report button that fails.
+* Improve  - The top members widget and shortcode skip members with no reviews and say 1 review instead of 1 reviews.
+* Improve  - The logged-out Add Review prompt is translatable and returns visitors to the review form after logging in.
 * Fix      - A review hidden by the report threshold, unpublished or trashed is removed from the activity stream and the activity REST API.
 * Fix      - Re-approving or editing a review no longer posts a duplicate activity entry.
 * Fix      - Clearing the Auto-Hide Threshold field no longer switches auto-hide off; a blank or invalid value falls back to 5 reports.
@@ -266,8 +271,24 @@ Moderation and settings-screen fixes.
 * Fix      - Report, Edit Review and the report dialog close button stay readable on hover in dark mode.
 * Fix      - Unchecking Show Review Button is now saved explicitly.
 * Fix      - The WordPress Dark admin color scheme no longer makes the settings header text unreadable.
+* Fix      - Editing a review no longer publishes it; pending and report-hidden reviews stay hidden until approved.
+* Fix      - The Update Review setting is now enforced, not only by hiding the Edit button.
+* Fix      - A submitted review is stored with each rating on its own criterion, and an empty review is refused.
+* Fix      - A refused review submission keeps what the member typed, and the confirmation message stays on screen.
+* Fix      - Dismissed reports no longer count toward auto-hide.
+* Fix      - Deleting a review recalculates the member's rating and removes its activity entry.
+* Fix      - Notification email formatting is kept when saved, so emails are no longer one run-on paragraph.
+* Fix      - The Anonymous flag is ignored in emails when Anonymous Reviews is off.
+* Fix      - Owner replies are only accepted on published reviews.
+* Fix      - The review form and dialogs no longer overflow the screen on themes without a box-sizing reset, such as Twenty Twenty-Five.
+* Fix      - Report dialog Submit and Cancel buttons keep their own styles inside BuddyPress pages.
+* Fix      - Removed BuddyPress 12 deprecation notices from profile links.
 * Security - Approving a review from the Reviews list now requires the Editor capability; Contributors and Authors could previously approve any pending review.
 * Security - The Reviewer Roles and Reviewee Roles settings are now enforced when a review is submitted, not only by hiding the Add Review button.
+* Security - Pending and report-hidden reviews are no longer readable at their direct link, and a review only shows on the profile it belongs to.
+* Security - Anonymous reviews no longer reveal the reviewer in the avatar text on the single review page.
+* Security - The top members list shows display names instead of login usernames.
+* Security - Dismissing or resolving reports requires the Editor capability.
 
 = 3.8.0 - July 2026 =
 
@@ -350,7 +371,7 @@ Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
 == Upgrade Notice ==
 
 = 3.8.1 =
-Hidden or unpublished reviews are now removed from the activity stream, and auto-hide can no longer be switched off by a blank threshold. Recommended for all users.
+Security and moderation update: pending and report-hidden reviews stay private, review approval and report moderation need the Editor capability, and reviewer role settings are enforced. Recommended for all users.
 
 = 3.8.0 =
 Security update: the review update endpoint now enforces an ownership check, so members can only edit their own reviews. Also includes the rebuilt admin settings screen and a front-end accessibility, dark-mode and RTL pass. Recommended for all users.
