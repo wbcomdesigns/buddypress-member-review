@@ -96,6 +96,11 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				}
 			}
 
+			// The Member Review widget renders in any sidebar, not only on BuddyPress pages.
+			if ( is_active_widget( false, false, 'bupr_members_review_setting', true ) ) {
+				return true;
+			}
+
 			// Check for shortcodes in current post content.
 			global $post;
 			if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'bupr_display_top_members' ) ) {

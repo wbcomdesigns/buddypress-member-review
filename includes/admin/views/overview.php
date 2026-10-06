@@ -36,22 +36,11 @@ $bupr_reviewed_members = (int) $wpdb->get_var(
 	)
 );
 
-// Flagged reviews still pending moderation.
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-$bupr_flagged = (int) $wpdb->get_var(
-	$wpdb->prepare(
-		"SELECT COUNT(DISTINCT p.ID)
-		 FROM {$wpdb->posts} p
-		 INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-		 WHERE p.post_type = %s
-		 AND p.post_status IN ('publish', 'draft')
-		 AND pm.meta_key = %s
-		 AND pm.meta_value = %s",
-		'review',
-		'bupr_flag_status',
-		'flagged'
-	)
-);
+// Reviews still pending moderation. Auto-hidden drafts were pulled by reports,
+// not waiting for first approval, so they are counted apart from Pending.
+$bupr_flagged     = bupr_get_flagged_reviews_count();
+$bupr_auto_hidden = bupr_get_auto_hidden_reviews_count();
+$bupr_pending     = max( 0, $bupr_pending - $bupr_auto_hidden );
 
 // Feature flags (read from the hydrated global, falling back to option).
 $bupr_auto_approve   = isset( $bupr['auto_approve_reviews'] ) ? 'yes' === $bupr['auto_approve_reviews'] : true;
@@ -104,7 +93,33 @@ $bupr_reviews_url  = admin_url( 'edit.php?post_type=review' );
 	<div class="bupr-stat">
 		<p class="bupr-stat__label"><?php esc_html_e( 'Reported', 'bp-member-reviews' ); ?></p>
 		<p class="bupr-stat__value"><?php echo esc_html( number_format_i18n( $bupr_flagged ) ); ?></p>
-		<p class="bupr-stat__trend"><?php esc_html_e( 'Reviews flagged for moderation', 'bp-member-reviews' ); ?></p>
+		<p class="bupr-stat__trend">
+			<?php
+			if ( $bupr_auto_hidden > 0 ) {
+				printf(
+					'<a class="bupr-inline-hint" href="%s">%s</a>',
+					esc_url(
+						add_query_arg(
+							array(
+								'post_status'      => 'draft',
+								'bupr_auto_hidden' => '1',
+							),
+							$bupr_reviews_url
+						)
+					),
+					esc_html(
+						sprintf(
+							/* translators: %d: number of reviews hidden by the report threshold */
+							_n( '%d hidden automatically', '%d hidden automatically', $bupr_auto_hidden, 'bp-member-reviews' ),
+							$bupr_auto_hidden
+						)
+					)
+				);
+			} else {
+				esc_html_e( 'Reviews flagged for moderation', 'bp-member-reviews' );
+			}
+			?>
+		</p>
 	</div>
 </div>
 
@@ -153,6 +168,7 @@ $bupr_reviews_url  = admin_url( 'edit.php?post_type=review' );
 					<span class="bupr-status-on"><?php esc_html_e( 'On: members can review without revealing their identity', 'bp-member-reviews' ); ?></span>
 				<?php else : ?>
 					<span class="bupr-status-off"><?php esc_html_e( 'Off', 'bp-member-reviews' ); ?></span>
+					<a href="<?php echo esc_url( $bupr_general_url ); ?>" class="bupr-inline-hint"><?php esc_html_e( 'Turn on', 'bp-member-reviews' ); ?></a>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -163,6 +179,7 @@ $bupr_reviews_url  = admin_url( 'edit.php?post_type=review' );
 					<span class="bupr-status-on"><?php esc_html_e( 'On: profile owners can reply once to each review', 'bp-member-reviews' ); ?></span>
 				<?php else : ?>
 					<span class="bupr-status-off"><?php esc_html_e( 'Off', 'bp-member-reviews' ); ?></span>
+					<a href="<?php echo esc_url( $bupr_general_url ); ?>" class="bupr-inline-hint"><?php esc_html_e( 'Turn on', 'bp-member-reviews' ); ?></a>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -173,6 +190,7 @@ $bupr_reviews_url  = admin_url( 'edit.php?post_type=review' );
 					<span class="bupr-status-on"><?php esc_html_e( 'On: members can report inappropriate reviews', 'bp-member-reviews' ); ?></span>
 				<?php else : ?>
 					<span class="bupr-status-off"><?php esc_html_e( 'Off', 'bp-member-reviews' ); ?></span>
+					<a href="<?php echo esc_url( $bupr_general_url ); ?>" class="bupr-inline-hint"><?php esc_html_e( 'Turn on', 'bp-member-reviews' ); ?></a>
 				<?php endif; ?>
 			</td>
 		</tr>

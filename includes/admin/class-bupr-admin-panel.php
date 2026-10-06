@@ -320,6 +320,21 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 				}
 			}
 
+			// Numeric fields: a blank or junk value falls back to the documented default
+			// instead of being stored verbatim (a blank threshold silently disabled auto-hide).
+			// 0 stays meaningful for the threshold ("never auto-hide").
+			$numeric_defaults = array(
+				'bupr_flag_threshold'      => array( 5, 0 ),
+				'profile_reviews_per_page' => array( 5, 1 ),
+			);
+			foreach ( $numeric_defaults as $num_key => list( $default, $min ) ) {
+				if ( ! array_key_exists( $num_key, $sanitized ) ) {
+					continue;
+				}
+				$raw                   = $sanitized[ $num_key ];
+				$sanitized[ $num_key ] = is_numeric( $raw ) && (int) $raw >= $min ? (int) $raw : $default;
+			}
+
 			return $sanitized;
 		}
 
