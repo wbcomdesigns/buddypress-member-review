@@ -107,7 +107,7 @@ Member Reviews 3.7.0 (free)
 ```
 Showcase your highest-rated members anywhere:
 
-[bupr_display_top_members max="10" min_reviews="3"]
+[bupr_display_top_members total_member="10"]
 
 Homepage. Sidebar. Dedicated "Top Contributors" page.
 

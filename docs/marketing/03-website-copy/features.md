@@ -137,11 +137,11 @@ Homepage, sidebar, dedicated page — highlight contributors wherever it makes s
 
 **Why It Matters:**
 ```
-[bupr_display_top_members max="10" min_reviews="3" layout="grid"]
+[bupr_display_top_members total_member="10" type="top rated"]
 ```
-- Filter by member type
-- Set minimum review count
-- Multiple layout options
+- Top rated or most reviewed
+- Choose how many members to show
+- Show or hide avatars
 
 ---
 
@@ -156,7 +156,7 @@ Copy template files to your theme folder and modify the HTML/CSS.
 Reviews match your site design exactly — not stuck with plugin defaults.
 
 **Why It Matters:**
-- Copy to `your-theme/review/`
+- Copy to `your-theme/buddypress-member-review/`
 - Full control over markup
 - Updates don't overwrite your changes
 

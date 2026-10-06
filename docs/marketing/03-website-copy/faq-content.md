@@ -134,7 +134,7 @@ Minimal impact. Reviews load asynchronously on profiles. No extra database queri
 
 ### Can I customize the review templates?
 
-Yes. Copy templates from `plugin/includes/templates/` to `your-theme/review/` and modify. Your changes persist through updates.
+Yes. Copy templates from `plugin/includes/templates/` to `your-theme/buddypress-member-review/` and modify. Your changes persist through updates.
 
 ---
 
