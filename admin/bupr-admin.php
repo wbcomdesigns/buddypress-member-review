@@ -807,6 +807,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			$bupr_flags = get_post_meta( $review_id, 'bupr_flags', true );
 			update_post_meta( $review_id, 'bupr_flag_dismissed_at_count', is_array( $bupr_flags ) ? count( $bupr_flags ) : 0 );
 
+			// Dismissing means the reports were unfounded: a review they auto-hid comes back.
+			// The publish transition clears the auto-hidden marker and restores its activity.
+			if ( get_post_meta( $review_id, 'bupr_auto_hidden', true ) && 'draft' === get_post_status( $review_id ) ) {
+				wp_update_post(
+					array(
+						'ID'          => $review_id,
+						'post_status' => 'publish',
+					)
+				);
+			}
+
 			// Redirect back to the review edit page.
 			$redirect_url = add_query_arg(
 				array(

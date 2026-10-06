@@ -64,7 +64,7 @@ These were found by the full browser audit and are fixed on the same branch. Eac
 | A5 | Post an anonymous review; open its single view; inspect the avatar. | No reviewer username, no `user-<id>-avatar` class; alt reads "Profile Photo". |
 | A6 | Update Review OFF. Member B calls `bupr_update_review` / `bupr_edit_review`. | `update_disabled`. Admin can still edit. |
 | A7 | Author-role user who wrote a reported review opens the Dismiss / Resolve link from the Report Details box. | Refused. Admin can dismiss. |
-| A8 | Threshold 2: two reports, admin Dismisses, then one new report. | Review stays published (dismissed reports no longer count). |
+| A8 | Threshold 2: two reports auto-hide a review; admin clicks Dismiss in Report Details; then one new report. | Dismiss republishes the review (Auto-hidden badge gone, one activity entry back); the new report does not hide it again. |
 | A9 | Top members widget / `[bupr_display_top_members]`. | Display names, never usernames; no 0-review members; "1 review" singular. |
 
 Behaviour fixes from the same audit, checked through the normal UI:
@@ -90,6 +90,8 @@ Behaviour fixes from the same audit, checked through the normal UI:
 - **Reviews menu shows the pending count twice.** BP Group Reviews uses the same `review` post type and adds its own badge. Fix belongs in that plugin.
 - **Reign puts Add Review in the profile "…" menu.** That is Reign's header layout for extra actions, not ours.
 - **Reviewer is not notified of an owner reply.** Feature request; moving to Suggestions.
+- **Empty stars use Rating Color.** Outline (empty) and solid (filled) stars share the colour the owner picked; the shape tells them apart. By design.
+- **Twenty Twenty-Five at 390px** scrolls 7px sideways because of BuddyPress's own profile header avatar, not this plugin.
 - **RTL rating text order** ("7 ) 3.67/5 ( reviews") on a site with no Arabic translation. Deferred.
 - **Duplicate element IDs** (edit button, criteria rows). Deferred; renaming risks breaking Pro and theme selectors.
 - **Pro card 9562240497** (Pro should require the free plugin) is a Pro change, assigned to Varun.

@@ -1699,15 +1699,15 @@ body.dark-scheme {
     color: var(--bupr-danger-fg, #dc3232);
 }
 
-.buddypress-wrap .bupr-flag-modal-close.bupr-flag-modal-close {
+.bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close {
     background: transparent;
     border: none;
     box-shadow: none;
     color: var(--bupr-text-muted, #666);
 }
 
-.buddypress-wrap .bupr-flag-modal-close.bupr-flag-modal-close:hover,
-.buddypress-wrap .bupr-flag-modal-close.bupr-flag-modal-close:focus {
+.bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close:hover,
+.bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close:focus {
     background: transparent;
     color: var(--bupr-danger-fg, #dc3232);
 }
@@ -1729,31 +1729,32 @@ button.bupr-edit-review-button:focus,
     opacity: 0.88;
 }
 
-/* Report dialog actions and the reply Cancel, same BP-wrap reason as above: the
-   destructive Submit stays red, Cancel stays neutral instead of a second primary. */
-.buddypress-wrap .bupr-flag-submit.bupr-flag-submit {
+/* Report dialog actions and the reply Cancel: the destructive Submit stays red, Cancel
+   stays neutral instead of a second primary. BuddyX styles every button.button inside the
+   BP wrapper at (0,3,1) (.buddypress .buddypress-wrap button.button), so these sit at (0,4,1). */
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-submit.bupr-flag-submit {
     background: #dc3232;
     border: none;
     color: #fff;
 }
 
-.buddypress-wrap .bupr-flag-submit.bupr-flag-submit:hover,
-.buddypress-wrap .bupr-flag-submit.bupr-flag-submit:focus {
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-submit.bupr-flag-submit:hover,
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-submit.bupr-flag-submit:focus {
     background: #a00;
     color: #fff;
 }
 
-.buddypress-wrap .bupr-flag-cancel.bupr-flag-cancel,
-.buddypress-wrap .bupr-cancel-reply.bupr-cancel-reply {
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-cancel.bupr-flag-cancel,
+body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply {
     background: var(--bupr-chip-bg, #f0f0f1);
     border: 1px solid var(--bupr-border, #dcdcde);
     color: var(--bupr-text, #50575e);
 }
 
-.buddypress-wrap .bupr-flag-cancel.bupr-flag-cancel:hover,
-.buddypress-wrap .bupr-flag-cancel.bupr-flag-cancel:focus,
-.buddypress-wrap .bupr-cancel-reply.bupr-cancel-reply:hover,
-.buddypress-wrap .bupr-cancel-reply.bupr-cancel-reply:focus {
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-cancel.bupr-flag-cancel:hover,
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-cancel.bupr-flag-cancel:focus,
+body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:hover,
+body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:focus {
     background: var(--bupr-chip-bg-hover, #dcdcde);
     color: var(--bupr-text, #50575e);
 }
