@@ -295,12 +295,12 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 		 * from input — identical to the pre-migration behaviour (unchecked
 		 * toggles correctly persist as their "off"/default value).
 		 *
-		 * The ONE exception is the approval-email pair, which the General tab
-		 * renders only when auto-approve is OFF. To avoid wiping those keys
-		 * when the form is saved with auto-approve ON (they're absent from
-		 * the POST), we restore them from the stored option if missing. This
-		 * is the single sentinel-guarded carve-out (Playbook 7.1) this plugin
-		 * needs — everything else is a full per-group rebuild.
+		 * The ONE exception is the approval-email pair: if a save arrives
+		 * without them (the General tab has always posted them since 3.8.1,
+		 * but this sanitizer also runs for programmatic update_option()
+		 * calls), they are restored from the stored option instead of wiped.
+		 * This is the single sentinel-guarded carve-out (Playbook 7.1) this
+		 * plugin needs; everything else is a full per-group rebuild.
 		 *
 		 * @param mixed $input Raw input.
 		 * @return array
@@ -311,12 +311,20 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 			$stored = get_option( self::OPTION_GENERAL, array() );
 			$stored = is_array( $stored ) ? $stored : array();
 
-			// Conditionally-rendered keys: preserve only when this save did
-			// not include them (auto-approve was ON, so the fields were hidden).
+			// Approval-email keys: keep the stored value when a save omits them.
 			$conditional_keys = array( 'review_approve_email_subject', 'review_approve_email_message' );
 			foreach ( $conditional_keys as $cond_key ) {
 				if ( ! array_key_exists( $cond_key, $sanitized ) && array_key_exists( $cond_key, $stored ) ) {
 					$sanitized[ $cond_key ] = $stored[ $cond_key ];
+				}
+			}
+
+			// The two email bodies come from a rich-text editor: keep paragraphs and safe
+			// HTML. The generic sanitizer runs sanitize_text_field(), which flattened every
+			// saved message to one line with its formatting stripped.
+			foreach ( array( 'review_email_message', 'review_approve_email_message' ) as $message_key ) {
+				if ( is_array( $input ) && isset( $input[ $message_key ] ) && is_string( $input[ $message_key ] ) ) {
+					$sanitized[ $message_key ] = wp_kses_post( $input[ $message_key ] );
 				}
 			}
 

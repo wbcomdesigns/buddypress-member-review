@@ -189,11 +189,11 @@ $user_roles = array_reverse( get_editable_roles() );
 						</div>					
 					</div>
 					<?php
-					if ( ! empty( $bupr_admin_general ) ) {
-						if ( isset( $bupr_admin_general['bupr_auto_approve_reviews'] ) && 'no' === $bupr_admin_general['bupr_auto_approve_reviews'] ) {
-							?>
+					// Always rendered so the Auto Approve switch can show/hide them without a save.
+					$bupr_approval_hidden = ( isset( $bupr_admin_general['bupr_auto_approve_reviews'] ) && 'no' === $bupr_admin_general['bupr_auto_approve_reviews'] ) ? '' : ' bupr-show-if-allowed';
+					?>
 					<!-- admin email section -->
-					<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
+					<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section<?php echo esc_attr( $bupr_approval_hidden ); ?>">
 							<div class="wbcom-settings-section-options-heading">
 								<label for="review_approve_email_subject">
 									<?php esc_html_e( 'Approval Email Subject', 'bp-member-reviews' ); ?>
@@ -204,7 +204,7 @@ $user_roles = array_reverse( get_editable_roles() );
 								<input id="review_approve_email_subject" class="large-text" name="bupr_admin_general_options[review_approve_email_subject]" value="<?php echo esc_attr( $review_approve_email_subject ); ?>" type="text" placeholder="<?php esc_attr_e( 'Please enter review approval email subject.', 'bp-member-reviews' ); ?>">
 							</div>
 						</div>
-						<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section">
+						<div class="bgr-row wbcom-settings-section-wrap review-approve-email-section<?php echo esc_attr( $bupr_approval_hidden ); ?>">
 					<div class="wbcom-settings-section-options-heading">
 						<label for="review-approve-email-message">
 							<?php esc_html_e( 'Approval Email Message', 'bp-member-reviews' ); ?>
@@ -224,10 +224,6 @@ $user_roles = array_reverse( get_editable_roles() );
 							?>
 					</div>
 						</div>
-							<?php
-						}
-					}
-					?>
 					<!-- admin email section end -->
 					<div class="wbcom-settings-section-wrap">
 						<div class="wbcom-settings-section-options-heading">

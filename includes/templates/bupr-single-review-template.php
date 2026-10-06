@@ -19,13 +19,15 @@ if ( ! empty( $review_id ) ) {
 	$review = get_post( $review_id );
 
 	// Bail if review doesn't exist or is not a review post type.
-	if ( ! $review || 'review' !== $review->post_type ) {
+	// Pending and report-hidden reviews are visible only to their author and moderators,
+	// and a review is only shown on the profile of the member it was written about.
+	$bupr_can_see = $review && 'review' === $review->post_type
+		&& ( 'publish' === $review->post_status || get_current_user_id() === (int) $review->post_author || current_user_can( 'edit_others_posts' ) )
+		&& (int) get_post_meta( $review->ID, 'linked_bp_member', true ) === (int) bp_displayed_user_id();
+	if ( ! $bupr_can_see ) {
 		echo '<p>' . esc_html__( 'Review not found.', 'bp-member-reviews' ) . '</p>';
 		return;
 	}
-
-	$review_title = $review->post_title;
-	$review_url   = get_permalink( $review_id );
 
 	$author         = $review->post_author;
 	$author_details = get_userdata( $author );
@@ -36,10 +38,8 @@ if ( ! empty( $review_id ) ) {
 		return;
 	}
 
-	$review_author     = $author_details->data->user_login;
 	$author_id         = $author_details->data->ID;
 	$member_profile    = bp_core_get_userlink( $author_id );
-	$review_author_url = home_url() . '/author/' . $review_author;
 	$review_date_time  = $review->post_date;
 	$review_date       = date_i18n( 'M Y', $review_date_time );
 	// $review_date       = human_time_diff( strtotime( $review_date_time ), current_time( 'timestamp' ) ) . ' ago';
@@ -88,7 +88,11 @@ if ( ! empty( $review_id ) ) {
 				<div class="bupr-row">
 					<div class="bupr-members-profiles">
 						<div class="author">
-							<img src="<?php echo esc_url( $avatar ); ?>" class="avatar user-<?php echo esc_attr( $author ); ?>-avatar avatar-128 photo" alt="Profile photo of <?php echo esc_attr( $review_author ); ?>" width="50" height="50">
+							<?php if ( 'yes' === $anonymous_post_review ) : ?>
+							<img src="<?php echo esc_url( $avatar ); ?>" class="avatar avatar-128 photo" alt="<?php esc_attr_e( 'Profile Photo', 'bp-member-reviews' ); ?>" width="50" height="50">
+							<?php else : ?>
+							<img src="<?php echo esc_url( $avatar ); ?>" class="avatar user-<?php echo esc_attr( $author ); ?>-avatar avatar-128 photo" alt="<?php echo esc_attr( sprintf( /* translators: %s: reviewer display name. */ __( 'Profile photo of %s', 'bp-member-reviews' ), $author_details->display_name ) ); ?>" width="50" height="50">
+							<?php endif; ?>
 							<div class="reviewer">
 								<h4>
 									<?php

@@ -200,7 +200,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 			$review_desc                = isset( $_POST['bupr_review_desc'] ) ? sanitize_textarea_field( wp_unslash( $_POST['bupr_review_desc'] ) ) : '';
 			$bupr_member_id             = filter_input( INPUT_POST, 'bupr_member_id', FILTER_VALIDATE_INT );
-			$review_count               = filter_input( INPUT_POST, 'bupr_field_counter', FILTER_VALIDATE_INT );
 			$anonymous_review           = filter_input( INPUT_POST, 'bupr_anonymous_review' );
 			$profile_rated_field_values = isset( $_POST['bupr_review_rating'] ) ? array_map( 'absint', wp_unslash( $_POST['bupr_review_rating'] ) ) : array();
 			$bupr_admin_general         = get_option( 'bupr_admin_general_options' );
@@ -227,10 +226,11 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			// The profile UI hides Add Review from disallowed roles; the endpoint must refuse too.
 			if ( ! bupr_roles_allow_review( $bupr_current_user, $bupr_member_id ) ) {
 				wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'You are not allowed to review this member.', 'bp-member-reviews' ) . '</p>' );
-				return;
 			}
 
 			// Set user name (anonymous or actual).
+			// The anonymous flag only counts when the site allows anonymous reviews.
+			$anonymous_review = ( 'yes' === $anonymous_review && 'yes' === ( $bupr['anonymous_reviews'] ?? 'no' ) ) ? 'yes' : 'no';
 			$user_name = ( 'yes' === $anonymous_review ) ? __( 'An anonymous user', 'bp-member-reviews' ) : $current_user->display_name;
 
 			$bupr_reviewed_user_name = $bupr_reviewed_user->display_name;
@@ -242,13 +242,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				bupr_profile_review_tab_singular_slug()
 			);
 
-			// Process rating values.
-			$bupr_count       = 0;
-			$bupr_member_star = array();
-
 			$member_args  = array(
 				'post_type'      => 'review',
-				'posts_per_page' => -1,
+				// Only "has this author reviewed this member?" is needed.
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
 				'post_status'    => array(
 					'draft',
 					'publish',
@@ -273,25 +272,31 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			wp_reset_postdata();
 
 			if ( 0 === $user_post_count ) {
-				if ( ! empty( $profile_rated_field_values ) ) {
-					foreach ( $profile_rated_field_values as $bupr_stars_rate ) {
-						if ( $bupr_count === $review_count ) {
-							break;
+				/*
+				 * Ratings arrive positionally, one per criterion in form order. Keep each
+				 * rating on its own criterion: skipping an unrated (0) value used to shift
+				 * every later rating onto the wrong criterion, and a partial set was then
+				 * stored with numeric keys no reader could match to a criterion.
+				 */
+				$bupr_rated_stars = array();
+				foreach ( array_values( $profile_rated_field_values ) as $bupr_index => $bupr_stars_rate ) {
+					$bupr_stars_rate = (int) $bupr_stars_rate;
+					if ( $bupr_stars_rate < 1 || $bupr_stars_rate > 5 ) {
+						continue;
+					}
+					if ( $bupr['multi_criteria_allowed'] ) {
+						if ( isset( $bupr_rating_criteria[ $bupr_index ] ) ) {
+							$bupr_rated_stars[ $bupr_rating_criteria[ $bupr_index ] ] = $bupr_stars_rate;
 						}
-						$bupr_stars_rate = (int) $bupr_stars_rate;
-						// Validate rating is between 1-5, skip invalid ratings.
-						if ( $bupr_stars_rate >= 1 && $bupr_stars_rate <= 5 ) {
-							$bupr_member_star[] = $bupr_stars_rate;
-						}
-						++$bupr_count;
+					} elseif ( empty( $bupr_rated_stars ) ) {
+						$bupr_rated_stars[] = $bupr_stars_rate;
 					}
 				}
 
-				$bupr_rated_stars = array();
-				if ( $bupr['multi_criteria_allowed'] && ( count( $bupr_rating_criteria ) === count( $bupr_member_star ) ) ) {
-					$bupr_rated_stars = array_combine( $bupr_rating_criteria, $bupr_member_star );
-				} else {
-					$bupr_rated_stars = $bupr_member_star;
+				// Same rule as the form: every criterion rated, or a written review.
+				$bupr_needed_ratings = $bupr['multi_criteria_allowed'] ? count( $bupr_rating_criteria ) : 1;
+				if ( '' === trim( $review_desc ) && ( empty( $bupr_rated_stars ) || count( $bupr_rated_stars ) < $bupr_needed_ratings ) ) {
+					wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'Please rate every criterion or write a review.', 'bp-member-reviews' ) . '</p>' );
 				}
 
 				$add_review_args = array(
@@ -409,7 +414,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				if ( function_exists( 'bp_members_get_user_url' ) ) {
 					$bupr_review_url = bp_members_get_user_url( $member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $review_id;
 				} else {
-					$bupr_review_url = bp_core_get_user_domain( $member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $review_id;
+					$bupr_review_url = bupr_member_url( $member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $review_id;
 				}
 
 				$review_subject = sprintf(
@@ -442,7 +447,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 
 				$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
-				$mail_sent   = wp_mail( $bupr_reciever_email, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
+				$mail_sent   = wp_mail( $bupr_reciever_email, $bupr_subject, wpautop( $bupr_message ), $bupr_header );
 				if ( ! $mail_sent && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					error_log( 'BUPR: Failed to send review notification email to ' . $bupr_reciever_email );
 				}
@@ -497,7 +502,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 
 				$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
-				$mail_sent   = wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_approve_message ), $bupr_header );
+				$mail_sent   = wp_mail( $bupr_to, $bupr_subject, wpautop( $bupr_approve_message ), $bupr_header );
 				if ( ! $mail_sent && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					error_log( 'BUPR: Failed to send admin approval notification email to ' . $bupr_to );
 				}
@@ -563,6 +568,17 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 
 			// Check if current user can edit this review.
+			// Settings > General > Update Review off: members can no longer edit (moderators still can).
+			global $bupr;
+			if ( 'yes' !== ( $bupr['allow_update'] ?? 'yes' ) && ! current_user_can( 'edit_others_posts' ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Editing reviews is turned off on this site.', 'bp-member-reviews' ),
+						'code'    => 'update_disabled',
+					)
+				);
+			}
+
 			if ( get_current_user_id() !== (int) $review->post_author && ! current_user_can( 'edit_others_posts' ) ) {
 				wp_send_json_error(
 					array(
@@ -745,6 +761,17 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			 * enforces: the reviewer who authored it, or a user who can edit
 			 * others' posts (editor/admin).
 			 */
+			// Settings > General > Update Review off: members can no longer edit (moderators still can).
+			global $bupr;
+			if ( 'yes' !== ( $bupr['allow_update'] ?? 'yes' ) && ! current_user_can( 'edit_others_posts' ) ) {
+				wp_send_json_error(
+					array(
+						'message' => __( 'Editing reviews is turned off on this site.', 'bp-member-reviews' ),
+						'code'    => 'update_disabled',
+					)
+				);
+			}
+
 			if ( get_current_user_id() !== (int) $review->post_author && ! current_user_can( 'edit_others_posts' ) ) {
 				wp_send_json_error(
 					array(
@@ -764,9 +791,10 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			}
 
 			$review_args = array(
-				'ID'           => esc_sql( $review_id ),
+				'ID'           => (int) $review_id,
 				'post_content' => wp_kses_post( $review_content ),
-				'post_status'  => 'publish',
+				// No post_status: an edit keeps the review's status. Forcing 'publish' let an
+				// author re-publish a pending or report-hidden review without moderation.
 			);
 
 			$update_result = wp_update_post( $review_args, true );
@@ -855,7 +883,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			// Get the review.
 			$review = get_post( $review_id );
-			if ( ! $review || 'review' !== $review->post_type ) {
+			// Only published reviews can be replied to (the owner cannot see pending ones).
+			if ( ! $review || 'review' !== $review->post_type || 'publish' !== $review->post_status ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'Review not found.', 'bp-member-reviews' ),
@@ -1065,7 +1094,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			// Check auto-hide threshold.
 			$flag_threshold = isset( $bupr['flag_threshold'] ) ? absint( $bupr['flag_threshold'] ) : 5;
 			$auto_hidden    = false;
-			if ( $flag_threshold > 0 && $flag_count >= $flag_threshold ) {
+			// Reports an admin already dismissed do not count again.
+			$active_flags = $flag_count - (int) get_post_meta( $review_id, 'bupr_flag_dismissed_at_count', true );
+			if ( $flag_threshold > 0 && $active_flags >= $flag_threshold ) {
 				// Auto-hide the review by setting it to draft.
 				wp_update_post(
 					array(

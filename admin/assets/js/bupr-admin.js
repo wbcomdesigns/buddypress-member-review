@@ -78,6 +78,15 @@ jQuery(document).ready(
 			}
 		);
 
+		// Approval email fields only apply while reviews wait for approval.
+		jQuery(document).on(
+			'change',
+			'#bupr_review_auto_approval',
+			function () {
+				jQuery('.review-approve-email-section').toggleClass('bupr-show-if-allowed', this.checked);
+			}
+		);
+
 		/* Add extra criteria fields */
 		jQuery("#bupr-btnAdd").bind(
 			"click",

@@ -91,6 +91,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						"SELECT user_id, meta_value
 					FROM {$wpdb->usermeta}
 					WHERE meta_key = %s
+					AND CAST(meta_value AS DECIMAL(10,2)) > 0
 					ORDER BY CAST(meta_value AS DECIMAL(10,2)) DESC
 					LIMIT %d",
 						$meta_key,
@@ -117,10 +118,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					$aggregate_rating = apply_filters( 'bupr_shortcode_aggregate_rating', ( ! empty( $aggregate_rating ) ? round( $aggregate_rating, 2 ) : 0 ), $user_id );
 					$review_count     = apply_filters( 'bupr_shortcode_review_count', ( ! empty( $review_count ) ? $review_count : 0 ), $user_id );
 
-					// Get user profile link using bp_core_get_user_domain() which works across all BP versions.
-					$user_domain     = function_exists( 'bp_core_get_user_domain' ) ? bp_core_get_user_domain( $user_id ) : '';
-					$user_nicename  = get_the_author_meta( 'user_nicename', $user_id );
-					$profile_url    = ! empty( $user_domain ) ? $user_domain : home_url( '/members/' . $user_nicename . '/' );
+					$profile_url = bupr_member_url( $user_id );
 
 					// Get global settings for review tab URL.
 					global $bupr;
@@ -133,7 +131,8 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						$output .= apply_filters( 'bupr_shortcode_avatar_display', '<div class="bupr-img-widget"><a href="' . esc_url( $profile_url ) . '">' . get_avatar( $user_id, 50 ) . '</a></div>', $user_id );
 					}
 					$output .= '<div class="bupr-content-widget">';
-					$display_name   = bp_core_get_username( $user_id );
+					// Display name, never the login (a login is half of a member's credentials).
+					$display_name   = bp_core_get_user_displayname( $user_id );
 					$members_profile = '<a href="' . esc_url( $profile_url ) . '">' . esc_html( $display_name ) . '</a>';
 					$output .= '<div class="bupr-member-title">' . wp_kses_post( $members_profile ) . '</div>';
 
@@ -172,19 +171,20 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 					 *
 					 * @since 3.8.0
 					 * @param string $label The item type label. Default 'reviews'.
+					 * @param int    $count Review count, for choosing singular or plural (since 3.8.1).
 					 */
-					$item_label = apply_filters( 'bupr_item_type_label', __( 'reviews', 'bp-member-reviews' ) );
+					$item_label = apply_filters( 'bupr_item_type_label', _n( 'review', 'reviews', (int) $review_count, 'bp-member-reviews' ), (int) $review_count );
 
 					$aggregate_rating = round( $aggregate_rating, 2 );
 					$output          .= '<span class="bupr-meta">';
 
 					if ( $show_stars ) {
-						/* translators: %1$s: rating; %2$s: review count; %3$s: item type label */
 						$review_count_link = '<a href="' . esc_url( $reviews_url ) . '" class="bupr-review-count-link">' . esc_html( $review_count ) . '</a>';
+						/* translators: %1$s: rating; %2$s: review count; %3$s: item type label */
 						$output .= apply_filters( 'bupr_shortcode_rating_text', sprintf( esc_html__( 'Rating: %1$s/5 (%2$s %3$s)', 'bp-member-reviews' ), esc_html( $aggregate_rating ), $review_count_link, esc_html( $item_label ) ), $user_id, $aggregate_rating, $review_count );
 					} else {
-						/* translators: %1$s: review count; %2$s: item type label */
 						$review_count_link = '<a href="' . esc_url( $reviews_url ) . '" class="bupr-review-count-link">' . esc_html( $review_count ) . '</a>';
+						/* translators: %1$s: review count; %2$s: item type label */
 						$output .= apply_filters( 'bupr_shortcode_count_text', sprintf( esc_html__( '%1$s %2$s', 'bp-member-reviews' ), $review_count_link, esc_html( $item_label ) ), $user_id, $review_count );
 					}
 					$output .= '</span>';
@@ -274,7 +274,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			$member_args = array(
 				'post_type'      => 'review',
-				'posts_per_page' => -1,
+				// Only this author's own review of the member is needed.
+				'posts_per_page' => 1,
+				'no_found_rows'  => true,
 				'post_status'    => array(
 					'draft',
 					'publish',

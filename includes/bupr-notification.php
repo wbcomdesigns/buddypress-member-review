@@ -90,15 +90,8 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 		if ( $linked_user_info ) {
 			$linked_user_name = $linked_user_info->display_name;
 		}
-		// Check if bp_members_get_user_url() exists and use it; otherwise, fall back to bp_core_get_user_domain().
 		if ( is_array( $bupr ) ) {
-			if ( function_exists( 'bp_members_get_user_url' ) ) {
-				// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
-				$notification_link = bp_members_get_user_url( $linked_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $item_id;
-			} else {
-				// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
-				$notification_link = bp_core_get_user_domain( $linked_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $item_id;
-			}
+			$notification_link = bupr_member_url( $linked_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $item_id;
 
 			/* translators: %s: */
 			$notification_title = sprintf( esc_html__( 'A new %s posted.', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );

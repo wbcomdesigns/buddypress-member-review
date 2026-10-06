@@ -357,10 +357,19 @@ $reviews = new WP_Query( $args );
 							if ( 'yes' === $flagging_enabled && is_user_logged_in() && get_current_user_id() !== (int) $author_id ) :
 								?>
 								<div class="bupr-report-section">
+									<?php
+									// A member who already reported this review sees that, not a button that fails.
+									$bupr_flags         = get_post_meta( get_the_ID(), 'bupr_flags', true );
+									$bupr_reporter_ids  = is_array( $bupr_flags ) ? array_map( 'intval', wp_list_pluck( $bupr_flags, 'reporter_id' ) ) : array();
+									if ( in_array( get_current_user_id(), $bupr_reporter_ids, true ) ) :
+										?>
+									<span class="bupr-report-success"><span class="dashicons dashicons-yes" aria-hidden="true"></span> <?php esc_html_e( 'Reported', 'bp-member-reviews' ); ?></span>
+									<?php else : ?>
 									<button type="button" class="bupr-report-button" data-review="<?php echo esc_attr( get_the_ID() ); ?>" title="<?php esc_attr_e( 'Report this review', 'bp-member-reviews' ); ?>">
 										<span class="dashicons dashicons-warning"></span>
 										<span class="bupr-report-text"><?php esc_html_e( 'Report', 'bp-member-reviews' ); ?></span>
 									</button>
+									<?php endif; ?>
 								</div>
 							<?php endif; // End flagging enabled check. ?>
 						</div>

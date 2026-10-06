@@ -583,6 +583,22 @@ button.bupr-edit-review-button {
     padding: 10px;
 }
 
+/* Widths below are 100% / calc() plus padding: without border-box they overflow on themes
+   that do not reset box-sizing globally (Twenty Twenty-Five overflowed at every width). */
+#review_desc,
+.bupr-review-modal-content,
+.bupr-flag-modal-content,
+.bupr-review-modal-content textarea,
+.bupr-flag-modal-content textarea {
+    box-sizing: border-box;
+}
+
+#review_desc,
+.bupr-review-modal-content textarea,
+.bupr-flag-modal-content textarea {
+    max-width: 100%;
+}
+
 .bupr-bp-member-review-no-popup-add-block #bupr_save_review {
     width: 100%;
     margin: 0;
@@ -1711,6 +1727,35 @@ button.bupr-edit-review-button:focus,
     border-color: var(--bupr-accent, #007cba);
     color: var(--bx-color-accent-inverse, #fff);
     opacity: 0.88;
+}
+
+/* Report dialog actions and the reply Cancel, same BP-wrap reason as above: the
+   destructive Submit stays red, Cancel stays neutral instead of a second primary. */
+.buddypress-wrap .bupr-flag-submit.bupr-flag-submit {
+    background: #dc3232;
+    border: none;
+    color: #fff;
+}
+
+.buddypress-wrap .bupr-flag-submit.bupr-flag-submit:hover,
+.buddypress-wrap .bupr-flag-submit.bupr-flag-submit:focus {
+    background: #a00;
+    color: #fff;
+}
+
+.buddypress-wrap .bupr-flag-cancel.bupr-flag-cancel,
+.buddypress-wrap .bupr-cancel-reply.bupr-cancel-reply {
+    background: var(--bupr-chip-bg, #f0f0f1);
+    border: 1px solid var(--bupr-border, #dcdcde);
+    color: var(--bupr-text, #50575e);
+}
+
+.buddypress-wrap .bupr-flag-cancel.bupr-flag-cancel:hover,
+.buddypress-wrap .bupr-flag-cancel.bupr-flag-cancel:focus,
+.buddypress-wrap .bupr-cancel-reply.bupr-cancel-reply:hover,
+.buddypress-wrap .bupr-cancel-reply.bupr-cancel-reply:focus {
+    background: var(--bupr-chip-bg-hover, #dcdcde);
+    color: var(--bupr-text, #50575e);
 }
 
 /* Report success chip. */

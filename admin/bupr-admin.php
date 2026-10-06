@@ -369,15 +369,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						bupr_profile_review_tab_singular_slug()
 					);
 
-					// Check BuddyPress version and use the appropriate function.
-					// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
-					if ( function_exists( 'bp_members_get_user_url' ) ) {
-						// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
-						$bupr_review_url = bp_members_get_user_url( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
-					} else {
-						// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
-						$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
-					}
+					$bupr_review_url = bupr_member_url( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
 					$bupr_to = $bupr_reciever_email;
 					// Define a default value for $bupr_subject with translation support.
 					$bupr_subject = __( 'New Review on Your Profile at [site-name]', 'bp-member-reviews' );
@@ -406,7 +398,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						);
 					}
 					$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
-					wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
+					wp_mail( $bupr_to, $bupr_subject, wpautop( $bupr_message ), $bupr_header );
 				}
 			}
 		}
@@ -798,7 +790,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			}
 
 			// Check user capabilities.
-			if ( ! current_user_can( 'edit_post', $review_id ) ) {
+			// Moderating reports is an Editor task; edit_post let an Author dismiss reports on their own review.
+			if ( ! current_user_can( 'edit_others_posts' ) ) {
 				wp_die( esc_html__( 'You do not have permission to perform this action.', 'bp-member-reviews' ) );
 			}
 
@@ -810,6 +803,9 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 			// Update flag status to dismissed.
 			update_post_meta( $review_id, 'bupr_flag_status', 'dismissed' );
+			// Reports up to now were reviewed and rejected; only later ones count toward auto-hide.
+			$bupr_flags = get_post_meta( $review_id, 'bupr_flags', true );
+			update_post_meta( $review_id, 'bupr_flag_dismissed_at_count', is_array( $bupr_flags ) ? count( $bupr_flags ) : 0 );
 
 			// Redirect back to the review edit page.
 			$redirect_url = add_query_arg(
@@ -839,7 +835,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			}
 
 			// Check user capabilities.
-			if ( ! current_user_can( 'edit_post', $review_id ) ) {
+			// Moderating reports is an Editor task; edit_post let an Author dismiss reports on their own review.
+			if ( ! current_user_can( 'edit_others_posts' ) ) {
 				wp_die( esc_html__( 'You do not have permission to perform this action.', 'bp-member-reviews' ) );
 			}
 
