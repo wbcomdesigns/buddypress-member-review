@@ -29,20 +29,20 @@
   "ajax": [
     {
       "action": "allow_bupr_member_review_update",
-      "nopriv": true,
+      "nopriv": false,
       "handler": "includes/bupr-ajax.php::BUPR_AJAX::wp_allow_bupr_my_member",
-      "registered_at": "includes/bupr-ajax.php:40-41",
+      "registered_at": "includes/bupr-ajax.php:39",
       "nonce": "review-nonce (field 'nonce', wp_verify_nonce at :156)",
-      "capability": "none (public/guest review submission; self-review blocked by ID compare)",
+      "capability": "logged-in member; bupr_roles_allow_review() enforces Reviewer/Reviewee Roles; self-review and Multiple Reviews enforced server-side (3.8.1)",
       "purpose": "Submit a new review for a member; inserts 'review' CPT, sets star ratings, sends notifications/emails."
     },
     {
       "action": "bupr_approve_review",
-      "nopriv": true,
+      "nopriv": false,
       "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_approve_review",
-      "registered_at": "includes/bupr-ajax.php:37-38",
+      "registered_at": "includes/bupr-ajax.php:37",
       "nonce": "bupr_member_review_ajax (check_ajax_referer at :81)",
-      "capability": "edit_posts (current_user_can at :91)",
+      "capability": "edit_others_posts (3.8.1; was edit_posts, which let Contributors approve)",
       "purpose": "Admin approves a draft review -> publish. Note: nopriv registered but cap check blocks guests."
     },
     {
@@ -51,7 +51,7 @@
       "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_edit_review",
       "registered_at": "includes/bupr-ajax.php:46",
       "nonce": "review-nonce (wp_verify_nonce at :492)",
-      "capability": "post author OR edit_others_posts (ownership check at :538)",
+      "capability": "post author OR edit_others_posts (ownership check at :538); Update Review off -> update_disabled unless edit_others_posts (3.8.1)",
       "purpose": "Return the edit-review form HTML (textarea + star inputs) for a review the user owns."
     },
     {
@@ -60,7 +60,7 @@
       "handler": "includes/bupr-ajax.php::BUPR_AJAX::bupr_update_review",
       "registered_at": "includes/bupr-ajax.php:47",
       "nonce": "review-nonce (wp_verify_nonce at :666)",
-      "capability": "post author OR edit_others_posts (ownership check at :720)",
+      "capability": "post author OR edit_others_posts (ownership check at :720); Update Review off -> update_disabled unless edit_others_posts (3.8.1)",
       "purpose": "Save edited review content + ratings, republish, recalc member aggregate. Ownership gate added in 3.8.0 (was nonce-only)."
     },
     {
@@ -457,6 +457,10 @@
     {
       "key": "bupr_auto_hidden_date",
       "purpose": "Auto-hide timestamp (current_time('timestamp'), local). Shown in the Auto-hidden badge tooltip; cleared on re-publish (3.8.1)."
+    },
+    {
+      "key": "bupr_flag_dismissed_at_count",
+      "purpose": "Report count when an admin last dismissed reports; only later reports count toward auto-hide (3.8.1)."
     }
   ],
   "capabilities": [
@@ -1472,7 +1476,7 @@
     {
       "check": "nonce-no-cap",
       "where": "includes/bupr-ajax.php:156",
-      "reason": "Public/nopriv review submission endpoint (allow_bupr_member_review_update). Nonce-only is by design; self-review blocked by user-ID comparison. FALSE POSITIVE per nopriv-public-endpoint quirk."
+      "reason": "Public/nopriv review submission endpoint (allow_bupr_member_review_update). Nonce-only is by design; self-review blocked by user-ID comparison. FALSE POSITIVE per nopriv-public-endpoint quirk. [3.8.1: nopriv registration removed; logged-in only]"
     }
   ],
   "generated": {
@@ -1483,6 +1487,7 @@
     "php_file_count": 35,
     "php_file_count_note": "35 = all *.php excluding node_modules/ and vendor/; 33 excluding the 2 generated languages/*.l10n.php caches.",
     "schema_version": "v2.2",
-    "coverage_gate": "PASS (ajax 6/6 from 8 grep hits - 2 nopriv duplicates; admin_post 2/2; admin_pages 2/2; shortcodes 1/1; blocks 0/0 verified; settings 3 registered groups + 8 standalone/transient keys; post_types 1/1; taxonomies 1/1; meta_boxes 2/2; widgets 2/2; cron 2/2; rest 0/0; tables 0/0; wp_cli 0/0; hooks_fired 62 enumerated >= grep unique)"
+    "coverage_gate": "PASS (ajax 6/6 from 8 grep hits - 2 nopriv duplicates; admin_post 2/2; admin_pages 2/2; shortcodes 1/1; blocks 0/0 verified; settings 3 registered groups + 8 standalone/transient keys; post_types 1/1; taxonomies 1/1; meta_boxes 2/2; widgets 2/2; cron 2/2; rest 0/0; tables 0/0; wp_cli 0/0; hooks_fired 62 enumerated >= grep unique)",
+    "delta_3_8_1": "Targeted delta: nopriv approve/submit removed; approve + report moderation need edit_others_posts; helpers bupr_roles_allow_review, bupr_member_url, bupr_get_member_review_count, bupr_get_flagged_reviews_count, bupr_get_auto_hidden_reviews_count, bupr_review_activity_type, bupr_get_review_activity_id, bupr_delete_review_activity; Reviews list ?bupr_auto_hidden=1 view."
   }
 }

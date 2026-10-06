@@ -37,7 +37,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			add_action( 'wp_ajax_bupr_approve_review', array( $this, 'bupr_approve_review' ) );
 
 			add_action( 'wp_ajax_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
-			add_action( 'wp_ajax_nopriv_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
 
 			/*** Filter post_date_gmt for prevent update post date on update_post_data */
 			add_filter( 'wp_insert_post_data', array( $this, 'bupr_filter_review_post' ), 10, 1 );
