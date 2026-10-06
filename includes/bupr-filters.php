@@ -345,7 +345,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_add_review_button_on_member_header() {
 			global $bupr;
 			if ( ! empty( $bupr['hide_review_button'] ) && 'yes' === $bupr['hide_review_button'] ) {
-				if ( is_user_logged_in() ) {
+				// Only on a resolved profile: with no displayed member the take-review branch
+				// would link the viewer to a review of themselves.
+				if ( is_user_logged_in() && bp_displayed_user_id() ) {
 					if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
 						$this->bupr_members_right_to_review();
 					} else {
@@ -1087,13 +1089,20 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					// This prevents the real reviewer's ID from being exposed in database queries.
 					$activity_user_id = $is_anonymous ? $reviewed_user_id : $reviewer_user_id;
 
+					// One entry per review: an edit or re-approval updates the existing
+					// entry in place (keeping its date) instead of posting a duplicate.
+					$existing_id   = bupr_get_review_activity_id( $review_id );
+					$recorded_time = $existing_id ? ( new BP_Activity_Activity( $existing_id ) )->date_recorded : bp_core_current_time();
+
 					// Add activity to BuddyPress.
 					$activity_id = bp_activity_add(
 						array(
+							'id'                => $existing_id,
+							'recorded_time'     => $recorded_time,
 							'action'            => $action,
 							'content'           => ! empty( $escaped_content ) ? $escaped_content : 'Ratings',
 							'component'         => $bp->members->id,
-							'type'              => defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review',
+							'type'              => bupr_review_activity_type(),
 							'user_id'           => $activity_user_id,
 							'item_id'           => $review_id,
 							'secondary_item_id' => $reviewed_user_id,

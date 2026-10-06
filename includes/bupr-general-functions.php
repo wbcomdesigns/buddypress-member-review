@@ -634,6 +634,95 @@ function bupr_flush_top_members_cache() {
 add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
 
 /**
+ * Number of reviews whose reports are still open (published or hidden).
+ *
+ * @since 3.8.1
+ * @return int
+ */
+function bupr_get_flagged_reviews_count() {
+	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+	return (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			WHERE p.post_type = %s AND p.post_status IN ('publish', 'draft')
+			AND pm.meta_key = 'bupr_flag_status' AND pm.meta_value = 'flagged'",
+			'review'
+		)
+	);
+}
+
+/**
+ * Number of reviews currently hidden because they reached the report threshold.
+ *
+ * @since 3.8.1
+ * @return int
+ */
+function bupr_get_auto_hidden_reviews_count() {
+	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+	return (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			WHERE p.post_type = %s AND p.post_status = 'draft'
+			AND pm.meta_key = 'bupr_auto_hidden' AND pm.meta_value <> ''",
+			'review'
+		)
+	);
+}
+
+/**
+ * Activity type used for review entries. Youzify only renders its own status type.
+ *
+ * @since 3.8.1
+ * @return string
+ */
+function bupr_review_activity_type() {
+	return defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review';
+}
+
+/**
+ * ID of the activity entry recorded for a review, or 0 when there is none.
+ *
+ * @since 3.8.1
+ * @param int $review_id Review post ID.
+ * @return int
+ */
+function bupr_get_review_activity_id( $review_id ) {
+	if ( ! function_exists( 'bp_activity_get_activity_id' ) ) {
+		return 0;
+	}
+	return (int) bp_activity_get_activity_id(
+		array(
+			'component' => buddypress()->members->id,
+			'type'      => bupr_review_activity_type(),
+			'item_id'   => (int) $review_id,
+		)
+	);
+}
+
+/**
+ * Remove the activity entries recorded for a review.
+ *
+ * @since 3.8.1
+ * @param int $review_id Review post ID.
+ */
+function bupr_delete_review_activity( $review_id ) {
+	if ( ! function_exists( 'bp_activity_delete' ) ) {
+		return;
+	}
+	bp_activity_delete(
+		array(
+			'component' => buddypress()->members->id,
+			'type'      => bupr_review_activity_type(),
+			'item_id'   => (int) $review_id,
+		)
+	);
+}
+
+/**
  * Handle review status transitions to trigger cache invalidation.
  *
  * Fires when a review post status changes (draft->publish, pending->publish, etc.).
@@ -651,6 +740,18 @@ function bupr_handle_review_status_transition( $new_status, $old_status, $post )
 	// Skip if status hasn't changed.
 	if ( $new_status === $old_status ) {
 		return;
+	}
+
+	// A review that stops being public takes its activity entry with it. Re-publishing
+	// creates a fresh one through bupr_member_review_after_review_insert.
+	if ( 'publish' === $old_status ) {
+		bupr_delete_review_activity( $post->ID );
+	}
+
+	// An admin re-approving an auto-hidden review clears the auto-hidden marker.
+	if ( 'publish' === $new_status ) {
+		delete_post_meta( $post->ID, 'bupr_auto_hidden' );
+		delete_post_meta( $post->ID, 'bupr_auto_hidden_date' );
 	}
 
 	// Get the reviewed user ID.
