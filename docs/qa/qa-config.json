@@ -1,0 +1,44 @@
+{
+  "$schema": "https://wpmediaverse.com/schemas/wp-plugin-qa-config-v1.json",
+  "slug": "buddypress-member-review",
+  "name": "BuddyPress Member Reviews",
+  "version_constant": "BUPR_PLUGIN_VERSION",
+  "main_file": "buddypress-member-review.php",
+  "base_url": "https://wbcom-free.local",
+  "wp_path": null,
+  "autologin_param": "autologin",
+  "runbook_path": "docs/qa/AGENT_SMOKE_RUNBOOK.md",
+  "text_domain": "bp-member-reviews",
+  "known_issues": [
+    { "summary": "BP Group Reviews shares the review CPT and adds a second Reviews menu badge; fix belongs in that plugin", "until": "bgr-next" }
+  ],
+  "companion_stack": [ "buddypress" ],
+  "themes": [ "reign-theme", "buddyx", "buddyx-pro", "twentytwentyfive" ],
+  "promises": [
+    { "id": "PR-1", "claim": "Only registered members can add reviews; visitors can only read them", "source": "Basecamp project description" },
+    { "id": "PR-2", "claim": "Members cannot review themselves", "source": "readme.txt" },
+    { "id": "PR-3", "claim": "Members can only edit their own reviews", "source": "readme.txt 3.8.0 upgrade notice" },
+    { "id": "PR-4", "claim": "A review hidden by reports leaves every public surface, including the activity stream", "source": "3.8.1 changelog" }
+  ],
+  "personas": [
+    { "login": "varundubey", "role": "administrator", "ladder": "control" },
+    { "login": "reviewer1", "role": "subscriber", "ladder": "member-owner (reviewed member, can reply)" },
+    { "login": "bpjm-noname", "role": "subscriber", "ladder": "member-other (reviewer / reporter)" },
+    { "login": "bpjm-jobsonly", "role": "subscriber", "ladder": "member-other-2 (second reporter)" },
+    { "login": "qa_contrib", "role": "contributor", "ladder": "elevated-non-moderator" }
+  ],
+  "rest_namespace": null,
+  "front_routes": [ "/members/", "/members/reviewer1/reviews/", "/members/reviewer1/reviews/add-review/", "/activity/" ],
+  "pair": null,
+  "basecamp": {
+    "project_id": 37595471,
+    "bugs_column_id": 7416147548,
+    "ready_for_testing_column_id": 7416147566,
+    "suggestions_column_id": 7416147573,
+    "not_now_column_id": 7416147537,
+    "done_column_id": 7416147560
+  },
+  "modes": [ "single" ],
+  "report_path": "docs/qa/.last-smoke-pass.json",
+  "supplements_path": null
+}
