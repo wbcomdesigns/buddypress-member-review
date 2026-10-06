@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members, reviews, ratings, community
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 3.8.0
+Stable tag: 3.8.1
 Requires PHP: 8.1
 Tested with BuddyPress: 14.5.2
 License: GPLv2 or later
@@ -247,6 +247,26 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 
 == Changelog ==
 
+= 3.8.1 - October 2026 =
+
+Moderation and settings-screen fixes.
+
+* New      - Reviews hidden by the report threshold now show an Auto-hidden badge with the hide date, an Auto-hidden filter in the Reviews list, and a count on the Overview screen.
+* Improve  - Settings toggles render as switches again, and the criteria Add and Remove buttons match the rest of the settings screen.
+* Improve  - Email editors use the full row width, subject fields are wider, and settings rows no longer leave large gaps on phones.
+* Fix      - A review hidden by the report threshold, unpublished or trashed is removed from the activity stream and the activity REST API.
+* Fix      - Re-approving or editing a review no longer posts a duplicate activity entry.
+* Fix      - Clearing the Auto-Hide Threshold field no longer switches auto-hide off; a blank or invalid value falls back to 5 reports.
+* Fix      - Several General settings rows were nested inside the Approval Email section, which broke their alignment.
+* Fix      - Turning Multiple Criteria off now hides the criteria builder.
+* Fix      - The Overview screen shows a Turn on link for every disabled feature.
+* Fix      - Criteria rows use the same Remove label whether they were saved or just added.
+* Fix      - The Member Review widget now picks up the Rating Color setting on pages outside BuddyPress.
+* Fix      - Review cards in Reign dark mode now use Reign's own dark colors.
+* Fix      - Report, Edit Review and the report dialog close button stay readable on hover in dark mode.
+* Fix      - Unchecking Show Review Button is now saved explicitly.
+* Fix      - The WordPress Dark admin color scheme no longer makes the settings header text unreadable.
+
 = 3.8.0 - July 2026 =
 
 Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
@@ -326,6 +346,9 @@ Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
 * Updated: BuddyPress, BuddyBoss, Youzify integration
 
 == Upgrade Notice ==
+
+= 3.8.1 =
+Hidden or unpublished reviews are now removed from the activity stream, and auto-hide can no longer be switched off by a blank threshold. Recommended for all users.
 
 = 3.8.0 =
 Security update: the review update endpoint now enforces an ownership check, so members can only edit their own reviews. Also includes the rebuilt admin settings screen and a front-end accessibility, dark-mode and RTL pass. Recommended for all users.

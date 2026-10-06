@@ -3,7 +3,7 @@
   "plugin": {
     "slug": "buddypress-member-review",
     "name": "Wbcom Designs - BuddyPress Member Reviews",
-    "version": "3.8.0",
+    "version": "3.8.1",
     "namespace": "(none - procedural + prefixed classes BUPR_*)",
     "main_file": "buddypress-member-review.php",
     "text_domain": "bp-member-reviews",
@@ -452,11 +452,11 @@
     },
     {
       "key": "bupr_auto_hidden",
-      "purpose": "true if auto-hidden after reaching flag threshold."
+      "purpose": "true if auto-hidden after reaching flag threshold. Read by the Reviews list (Auto-hidden badge + ?bupr_auto_hidden=1 view) and Overview count via bupr_get_auto_hidden_reviews_count(); cleared when the review is re-published (3.8.1)."
     },
     {
       "key": "bupr_auto_hidden_date",
-      "purpose": "Auto-hide timestamp."
+      "purpose": "Auto-hide timestamp (current_time('timestamp'), local). Shown in the Auto-hidden badge tooltip; cleared on re-publish (3.8.1)."
     }
   ],
   "capabilities": [
