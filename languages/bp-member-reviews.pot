@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-06T10:38:59+00:00\n"
+"POT-Creation-Date: 2026-10-06T11:59:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -140,7 +140,7 @@ msgid "Category"
 msgstr ""
 
 #: admin/bupr-admin.php:361
-#: includes/bupr-ajax.php:235
+#: includes/bupr-ajax.php:233
 #: includes/bupr-filters.php:1032
 #: includes/bupr-filters.php:1138
 #: includes/bupr-notification.php:65
@@ -150,21 +150,21 @@ msgstr ""
 #. translators: 1: User display name, 2: Review tab name (singular).
 #. translators: 1: Reviewed member's display name. 2: Singular review label (e.g. "review").
 #: admin/bupr-admin.php:367
-#: includes/bupr-ajax.php:241
-#: includes/bupr-ajax.php:424
+#: includes/bupr-ajax.php:239
+#: includes/bupr-ajax.php:421
 #: includes/bupr-scripts.php:200
 #, php-format
 msgid "%1$s received a %2$s"
 msgstr ""
 
 #: admin/bupr-admin.php:375
-#: includes/bupr-ajax.php:433
+#: includes/bupr-ajax.php:430
 msgid "New Review on Your Profile at [site-name]"
 msgstr ""
 
 #. translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim.
 #: admin/bupr-admin.php:386
-#: includes/bupr-ajax.php:439
+#: includes/bupr-ajax.php:436
 msgid "Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team"
 msgstr ""
 
@@ -269,17 +269,17 @@ msgid "Review reports have been marked as resolved."
 msgstr ""
 
 #: admin/bupr-admin.php:789
-#: admin/bupr-admin.php:834
+#: admin/bupr-admin.php:845
 msgid "Security check failed."
 msgstr ""
 
 #: admin/bupr-admin.php:795
-#: admin/bupr-admin.php:840
+#: admin/bupr-admin.php:851
 msgid "You do not have permission to perform this action."
 msgstr ""
 
 #: admin/bupr-admin.php:801
-#: admin/bupr-admin.php:846
+#: admin/bupr-admin.php:857
 msgid "Invalid review."
 msgstr ""
 
@@ -498,7 +498,7 @@ msgstr ""
 
 #. translators: [site-name] is a token replaced at send time - keep it verbatim.
 #: admin/tab-templates/bupr-setting-general-tab.php:54
-#: includes/bupr-ajax.php:463
+#: includes/bupr-ajax.php:460
 msgid "A New Review Requires Your Approval on [site-name]"
 msgstr ""
 
@@ -1043,101 +1043,101 @@ msgstr ""
 msgid "(opens in a new tab)"
 msgstr ""
 
-#: includes/bupr-ajax.php:83
-#: includes/bupr-ajax.php:159
-#: includes/bupr-ajax.php:530
-#: includes/bupr-ajax.php:716
-#: includes/bupr-ajax.php:869
-#: includes/bupr-ajax.php:1003
+#: includes/bupr-ajax.php:82
+#: includes/bupr-ajax.php:158
+#: includes/bupr-ajax.php:527
+#: includes/bupr-ajax.php:712
+#: includes/bupr-ajax.php:864
+#: includes/bupr-ajax.php:998
 msgid "Security verification failed."
 msgstr ""
 
-#: includes/bupr-ajax.php:94
+#: includes/bupr-ajax.php:93
 msgid "You do not have permission to approve reviews."
 msgstr ""
 
-#: includes/bupr-ajax.php:105
-#: includes/bupr-ajax.php:553
-#: includes/bupr-ajax.php:738
-#: includes/bupr-ajax.php:881
-#: includes/bupr-ajax.php:1026
+#: includes/bupr-ajax.php:104
+#: includes/bupr-ajax.php:550
+#: includes/bupr-ajax.php:734
+#: includes/bupr-ajax.php:876
+#: includes/bupr-ajax.php:1021
 msgid "Invalid review ID."
 msgstr ""
 
-#: includes/bupr-ajax.php:116
-#: includes/bupr-ajax.php:565
-#: includes/bupr-ajax.php:750
-#: includes/bupr-ajax.php:894
-#: includes/bupr-ajax.php:1038
+#: includes/bupr-ajax.php:115
+#: includes/bupr-ajax.php:562
+#: includes/bupr-ajax.php:746
+#: includes/bupr-ajax.php:889
+#: includes/bupr-ajax.php:1033
 #: includes/templates/bupr-single-review-template.php:28
 msgid "Review not found."
 msgstr ""
 
-#: includes/bupr-ajax.php:143
+#: includes/bupr-ajax.php:142
 msgid "Review approved successfully."
 msgstr ""
 
-#: includes/bupr-ajax.php:169
-#: includes/bupr-ajax.php:541
-#: includes/bupr-ajax.php:726
+#: includes/bupr-ajax.php:168
+#: includes/bupr-ajax.php:538
+#: includes/bupr-ajax.php:722
 msgid "Invalid request."
 msgstr ""
 
-#: includes/bupr-ajax.php:198
+#: includes/bupr-ajax.php:197
 msgid "You must be logged in to submit a review."
 msgstr ""
 
-#: includes/bupr-ajax.php:210
+#: includes/bupr-ajax.php:209
 msgid "Please select a member."
 msgstr ""
 
-#: includes/bupr-ajax.php:216
+#: includes/bupr-ajax.php:215
 msgid "You cannot review your own profile."
 msgstr ""
 
-#: includes/bupr-ajax.php:223
+#: includes/bupr-ajax.php:222
 msgid "Selected member does not exist."
 msgstr ""
 
-#: includes/bupr-ajax.php:228
+#: includes/bupr-ajax.php:227
 msgid "You are not allowed to review this member."
 msgstr ""
 
-#: includes/bupr-ajax.php:300
+#: includes/bupr-ajax.php:298
 msgid "Please rate every criterion or write a review."
 msgstr ""
 
-#: includes/bupr-ajax.php:315
+#: includes/bupr-ajax.php:312
 msgid "Error creating review. Please try again."
 msgstr ""
 
 #. translators: %s: Review label (e.g., "Review").
-#: includes/bupr-ajax.php:361
+#: includes/bupr-ajax.php:358
 #, php-format
 msgid "Thank you for sharing your %s! After admin approval, it will be displayed on members' profiles."
 msgstr ""
 
 #. translators: %s: Review label in lowercase (e.g., "review").
-#: includes/bupr-ajax.php:369
+#: includes/bupr-ajax.php:366
 #, php-format
 msgid "Thank you for sharing your thoughts in this %s!"
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-ajax.php:376
+#: includes/bupr-ajax.php:373
 #: includes/bupr-shortcodes.php:322
 #, php-format
 msgid "You already posted a %1$s for this member."
 msgstr ""
 
 #. translators: %s: User name who submitted the review.
-#: includes/bupr-ajax.php:475
+#: includes/bupr-ajax.php:472
 #, php-format
 msgid "Review from %s"
 msgstr ""
 
 #. translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim.
-#: includes/bupr-ajax.php:480
+#: includes/bupr-ajax.php:477
 msgid ""
 "Hello [site-admin],\n"
 "\n"
@@ -1153,114 +1153,114 @@ msgid ""
 "\t\t\t\tThe [site-name] Team"
 msgstr ""
 
-#: includes/bupr-ajax.php:578
-#: includes/bupr-ajax.php:772
+#: includes/bupr-ajax.php:575
+#: includes/bupr-ajax.php:768
 msgid "Editing reviews is turned off on this site."
 msgstr ""
 
-#: includes/bupr-ajax.php:588
-#: includes/bupr-ajax.php:782
+#: includes/bupr-ajax.php:584
+#: includes/bupr-ajax.php:777
 msgid "You do not have permission to edit this review."
 msgstr ""
 
-#: includes/bupr-ajax.php:648
+#: includes/bupr-ajax.php:644
 #: includes/bupr-shortcodes.php:462
 msgid "Rating : "
 msgstr ""
 
-#: includes/bupr-ajax.php:667
+#: includes/bupr-ajax.php:663
 #: includes/bupr-shortcodes.php:419
 #: includes/bupr-shortcodes.php:448
 msgid "This field is required."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-ajax.php:688
+#: includes/bupr-ajax.php:684
 #, php-format
 msgid "Update %s"
 msgstr ""
 
-#: includes/bupr-ajax.php:699
+#: includes/bupr-ajax.php:695
 msgid "Unable to load review form."
 msgstr ""
 
 #. translators: %s: Review label (e.g., "Review").
-#: includes/bupr-ajax.php:838
+#: includes/bupr-ajax.php:833
 #, php-format
 msgid "%s updated successfully."
 msgstr ""
 
-#: includes/bupr-ajax.php:858
+#: includes/bupr-ajax.php:853
 msgid "Owner replies are disabled."
 msgstr ""
 
-#: includes/bupr-ajax.php:908
+#: includes/bupr-ajax.php:903
 msgid "You do not have permission to reply to this review."
 msgstr ""
 
-#: includes/bupr-ajax.php:920
+#: includes/bupr-ajax.php:915
 msgid "You have already replied to this review."
 msgstr ""
 
-#: includes/bupr-ajax.php:932
+#: includes/bupr-ajax.php:927
 msgid "Reply content cannot be empty."
 msgstr ""
 
-#: includes/bupr-ajax.php:945
+#: includes/bupr-ajax.php:940
 #: includes/templates/bupr-reviews-tab-template.php:311
 msgid "Profile Owner"
 msgstr ""
 
-#: includes/bupr-ajax.php:959
+#: includes/bupr-ajax.php:954
 #: includes/templates/bupr-reviews-tab-template.php:324
 msgid "Owner Response"
 msgstr ""
 
-#: includes/bupr-ajax.php:971
+#: includes/bupr-ajax.php:966
 msgid "Reply added successfully."
 msgstr ""
 
-#: includes/bupr-ajax.php:992
+#: includes/bupr-ajax.php:987
 msgid "Review flagging is disabled."
 msgstr ""
 
-#: includes/bupr-ajax.php:1014
+#: includes/bupr-ajax.php:1009
 msgid "You must be logged in to flag a review."
 msgstr ""
 
-#: includes/bupr-ajax.php:1048
+#: includes/bupr-ajax.php:1043
 #: includes/templates/bupr-reviews-tab-template.php:442
 msgid "Spam or fake review"
 msgstr ""
 
-#: includes/bupr-ajax.php:1049
+#: includes/bupr-ajax.php:1044
 #: includes/templates/bupr-reviews-tab-template.php:446
 msgid "Harassment or abuse"
 msgstr ""
 
-#: includes/bupr-ajax.php:1050
+#: includes/bupr-ajax.php:1045
 #: includes/templates/bupr-reviews-tab-template.php:450
 msgid "Inappropriate content"
 msgstr ""
 
-#: includes/bupr-ajax.php:1051
+#: includes/bupr-ajax.php:1046
 #: includes/templates/bupr-reviews-tab-template.php:454
 msgid "Conflict of interest"
 msgstr ""
 
-#: includes/bupr-ajax.php:1057
+#: includes/bupr-ajax.php:1052
 msgid "Please select a valid reason for flagging."
 msgstr ""
 
-#: includes/bupr-ajax.php:1076
+#: includes/bupr-ajax.php:1071
 msgid "You have already flagged this review."
 msgstr ""
 
-#: includes/bupr-ajax.php:1120
+#: includes/bupr-ajax.php:1115
 msgid "Thank you for reporting. This review has been hidden pending admin review."
 msgstr ""
 
-#: includes/bupr-ajax.php:1121
+#: includes/bupr-ajax.php:1116
 msgid "Thank you for reporting. We will review this content."
 msgstr ""
 
