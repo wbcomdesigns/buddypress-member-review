@@ -94,6 +94,7 @@ $user_roles = array_reverse( get_editable_roles() );
 						</div>
 						<div class="wbcom-settings-section-options">
 							<label class="bupr-switch">
+								<input type="hidden" name="bupr_admin_general_options[bupr_hide_review_button]" value="no">
 								<input name="bupr_admin_general_options[bupr_hide_review_button]" type="checkbox" id="bupr-hide-review-button" <?php checked( esc_attr( $bupr['hide_review_button'] ), 'yes' ); ?> value="yes">
 								<div class="bupr-slider bupr-round"></div>
 							</label>
@@ -222,6 +223,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							);
 							?>
 					</div>
+						</div>
 							<?php
 						}
 					}

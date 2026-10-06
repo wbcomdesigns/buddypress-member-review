@@ -95,7 +95,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 						</label>
 					</div>
 			</div>
-			<div class="wbcom-settings-section-wrap <?php echo esc_attr( $bupr_multi_rating_allowed_class ); ?>">
+			<div id="bupr-criteria-builder" class="wbcom-settings-section-wrap <?php echo esc_attr( $bupr_multi_rating_allowed_class ); ?>">
 				<div class="bupr-admin-settings-block">
 					<div id="bupr-settings-tbl" class="bupr-table bupr-criteria-settings-tbl">
 					<div id="buprTextBoxContainer">
@@ -116,7 +116,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 
 									<div class="bupr-admin-col-6 buprcriteria">
 										<p class="bupr-delete-tag">
-											<input type="button" value="<?php esc_attr_e( 'Delete', 'bp-member-reviews' ); ?>" aria-label="<?php esc_attr_e( 'Delete this review criteria', 'bp-member-reviews' ); ?>" class="bupr-criteria-remove-button bupr-remove button button-secondary" />
+											<input type="button" value="<?php esc_attr_e( 'Remove', 'bp-member-reviews' ); ?>" aria-label="<?php esc_attr_e( 'Remove this review criteria', 'bp-member-reviews' ); ?>" class="bupr-criteria-remove-button bupr-remove bupr-btn bupr-btn-danger" />
 											<!-- Removed description span. -->
 										</p>
 									</div>
@@ -130,7 +130,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 
 				<div id="bupr-add-criteria-action" class="bupr-admin-row border">
 					<div class="bupr-admin-col-12">
-						<input id="bupr-btnAdd" type="button" value="<?php esc_attr_e( 'Add Criteria', 'bp-member-reviews' ); ?>" aria-label="<?php esc_attr_e( 'Add a new review criteria', 'bp-member-reviews' ); ?>" class="button button-secondary"/>
+						<input id="bupr-btnAdd" type="button" value="<?php esc_attr_e( 'Add Criteria', 'bp-member-reviews' ); ?>" aria-label="<?php esc_attr_e( 'Add a new review criteria', 'bp-member-reviews' ); ?>" class="bupr-btn bupr-btn-secondary"/>
 						<p class="description"><?php esc_html_e( 'This option allows you to add multiple rating criteria. By default, no criteria are shown until you activate them.', 'bp-member-reviews' ); ?></p>
 					</div>
 				</div>

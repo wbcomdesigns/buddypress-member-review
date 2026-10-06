@@ -54,16 +54,17 @@
 /* ═══════════════════════════════════════════════════════════
    Dark mode (ADMIN-1)
    Full dark token scale for the admin panel. Gated behind an EXPLICIT
-   dark-admin signal (WP's is-dark-theme / the "Dark" admin color scheme
-   body.admin-color-dark) rather than prefers-color-scheme. Rationale: WP
+   dark-admin signal (body.is-dark-theme) rather than prefers-color-scheme.
+   body.admin-color-dark is deliberately NOT a trigger: WP's "Dark" admin
+   colour scheme restyles only the menu and toolbar, so the content area
+   stays light and the panel's header text became light-on-light. Rationale: WP
    admin core has no dark mode in 6.x/7.0, so keying off the OS preference
    alone flips this panel dark while the surrounding WP admin chrome (and,
    in testing, some card surfaces) stay light - a mixed, low-contrast
    result. The opt-in keeps a normal admin cohesively light today and
    adopts dark uniformly the moment a real dark admin context sets the class.
    ═══════════════════════════════════════════════════════════ */
-body.is-dark-theme .bupr-admin,
-body.admin-color-dark .bupr-admin {
+body.is-dark-theme .bupr-admin {
 	--bupr-admin-white: #1e1e2e;
 	--bupr-admin-surface-1: #181825;
 	--bupr-admin-surface-2: #11111b;
@@ -895,6 +896,80 @@ body.admin-color-dark .bupr-admin {
 	flex: 0 1 auto;
 }
 
+/* Row widths, desktop only (the <=640px layout stacks rows as columns):
+   text inputs get a real column instead of shrinking to the placeholder width,
+   and rich-text editors take the full row instead of the right half. */
+@media (min-width: 641px) {
+	.bupr-card--legacy .wbcom-settings-section-options:has(> input.large-text) {
+		flex: 0 1 480px;
+	}
+
+	.bupr-card--legacy .wbcom-settings-section-options:has(.wp-editor-wrap) {
+		flex: 1 1 100%;
+	}
+}
+
+/* Toggle switch. The tab templates render label.bupr-switch > checkbox + .bupr-slider;
+   its styles lived in the old wbcom wrapper sheet and were lost in the 3.8.0 shell
+   migration, which left a bare checkbox. */
+.bupr-admin .bupr-switch {
+	position: relative;
+	display: inline-block;
+	flex: 0 0 auto;
+	width: 40px;
+	height: 22px;
+	margin: 0;
+}
+
+.bupr-admin .bupr-switch input[type="checkbox"] {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.bupr-admin .bupr-slider {
+	position: absolute;
+	inset: 0;
+	border-radius: 999px;
+	background: var(--bupr-admin-border-strong);
+	transition: background 0.15s;
+}
+
+.bupr-admin .bupr-slider::before {
+	content: "";
+	position: absolute;
+	top: 2px;
+	inset-inline-start: 2px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	transition: transform 0.15s;
+}
+
+.bupr-admin .bupr-switch input:checked + .bupr-slider {
+	background: var(--bupr-admin-accent);
+}
+
+.bupr-admin .bupr-switch input:checked + .bupr-slider::before {
+	transform: translateX(18px);
+}
+
+[dir="rtl"] .bupr-admin .bupr-switch input:checked + .bupr-slider::before {
+	transform: translateX(-18px);
+}
+
+.bupr-admin .bupr-switch input:focus-visible + .bupr-slider {
+	outline: 2px solid var(--bupr-admin-accent);
+	outline-offset: 2px;
+}
+
 .bupr-card--legacy input[type="text"],
 .bupr-card--legacy input[type="number"],
 .bupr-card--legacy input[type="email"],
@@ -1060,6 +1135,12 @@ body.admin-color-dark .bupr-admin {
 
 	.bupr-card--legacy .wbcom-settings-section-wrap {
 		flex-direction: column;
+	}
+
+	/* In a column the desktop flex-basis (300px / 480px) becomes a HEIGHT. */
+	.bupr-card--legacy .wbcom-settings-section-options-heading,
+	.bupr-card--legacy .wbcom-settings-section-options {
+		flex-basis: auto;
 	}
 
 	.bupr-stats-grid,
