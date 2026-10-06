@@ -78,6 +78,13 @@ Enable `WP_DEBUG`, `WP_DEBUG_LOG`, `WP_DEBUG_DISPLAY=false`; baseline `wp-conten
 - **D4** Save General with Show Review Button unchecked: option key `bupr_hide_review_button` = `no`.
 - **D5** Report button hover under BuddyX dark: text colour differs from background colour.
 - **D6** WP "Dark" admin colour scheme (Users > Profile): settings header text readable (panel stays light).
+- **D7** Author POSTs `bupr_update_review` on their own draft and on an auto-hidden review: status stays `draft`, `bupr_auto_hidden` stays, no activity row appears.
+- **D8** Logged-out GET `/members/<m>/reviews/view/<draft id>/` shows "Review not found"; a published review requested under another member's URL also shows not found.
+- **D9** Anonymous review single view: no reviewer login or `user-<id>-avatar` class in the avatar markup.
+- **D10** Update Review OFF: `bupr_update_review` and `bupr_edit_review` return `update_disabled` for a member.
+- **D11** Submit with no text and no / partial stars is refused; partial stars + text stores `profile_star_rating` keyed by criterion name.
+- **D12** `qa_contrib` hitting the Dismiss / Resolve admin-post URLs is refused; dismissed reports do not count toward auto-hide.
+- **D13** No `bp_core_get_user_domain` / `bp_core_get_username` deprecation lines in debug.log after loading the shortcode page, profile tab and admin bar.
 
 ## Failure protocol
 
