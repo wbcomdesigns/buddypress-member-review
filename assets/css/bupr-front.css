@@ -1712,21 +1712,23 @@ body.dark-scheme {
     color: var(--bupr-danger-fg, #dc3232);
 }
 
+/* Edit Review is a secondary action: the same self-contained chip colours as Report, which
+   the dark token block also sets. White on the theme accent failed in dark mode, where
+   BuddyX's accent turns light (1.89:1). */
 button.bupr-edit-review-button,
 .buddypress-wrap .bupr-edit-review-button.bupr-edit-review-button {
-    background: var(--bupr-accent, #007cba);
-    border: 1px solid var(--bupr-accent, #007cba);
-    color: var(--bx-color-accent-inverse, #fff);
+    background: var(--bupr-chip-bg, #f8f9fa);
+    border: 1px solid var(--bupr-border, #ddd);
+    color: var(--bupr-text, #1d2327);
 }
 
 button.bupr-edit-review-button:hover,
 button.bupr-edit-review-button:focus,
 .buddypress-wrap .bupr-edit-review-button.bupr-edit-review-button:hover,
 .buddypress-wrap .bupr-edit-review-button.bupr-edit-review-button:focus {
-    background: var(--bupr-accent, #007cba);
-    border-color: var(--bupr-accent, #007cba);
-    color: var(--bx-color-accent-inverse, #fff);
-    opacity: 0.88;
+    background: var(--bupr-chip-bg-hover, #f0f0f1);
+    border-color: var(--bupr-border, #ddd);
+    color: var(--bupr-text, #1d2327);
 }
 
 /* Report dialog actions and the reply Cancel: the destructive Submit stays red, Cancel
