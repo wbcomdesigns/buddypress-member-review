@@ -284,6 +284,7 @@ Moderation and settings-screen fixes.
 * Fix      - The review form and dialogs no longer overflow the screen on themes without a box-sizing reset, such as Twenty Twenty-Five.
 * Fix      - Report dialog Submit and Cancel buttons keep their own styles inside BuddyPress pages.
 * Fix      - Removed BuddyPress 12 deprecation notices from profile links.
+* Fix      - Bulk-activating several plugins no longer stops after this one, and activating it from WP-CLI no longer exits early.
 * Security - Approving a review from the Reviews list now requires the Editor capability; Contributors and Authors could previously approve any pending review.
 * Security - The Reviewer Roles and Reviewee Roles settings are now enforced when a review is submitted, not only by hiding the Add Review button.
 * Security - Pending and report-hidden reviews are no longer readable at their direct link, and a review only shows on the profile it belongs to.

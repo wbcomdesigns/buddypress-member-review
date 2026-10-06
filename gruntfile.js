@@ -52,6 +52,8 @@ module.exports = function (grunt) {
                         '!tests/**',
                         '!bin/**',
                         '!docs/**',
+                        '!plan/**',
+                        '!CAPABILITIES.md',
                         '!marketing/**',
                         '!**/*.md',
                         '!*.md',
