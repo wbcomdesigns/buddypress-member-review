@@ -35,7 +35,6 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			/* add action for approving reviews */
 			add_action( 'wp_ajax_bupr_approve_review', array( $this, 'bupr_approve_review' ) );
-			add_action( 'wp_ajax_nopriv_bupr_approve_review', array( $this, 'bupr_approve_review' ) );
 
 			add_action( 'wp_ajax_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
 			add_action( 'wp_ajax_nopriv_allow_bupr_member_review_update', array( $this, 'wp_allow_bupr_my_member' ) );
@@ -87,8 +86,9 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 			}
 
-			// Check if user can approve reviews.
-			if ( ! current_user_can( 'edit_posts' ) ) {
+			// Approving publishes another member's review, which is moderation: Editor and up.
+			// edit_posts let a Contributor publish any pending review (including their own).
+			if ( ! current_user_can( 'edit_others_posts' ) ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'You do not have permission to approve reviews.', 'bp-member-reviews' ),
@@ -224,6 +224,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'Selected member does not exist.', 'bp-member-reviews' ) . '</p>' );
 				return;
 			}
+			// The profile UI hides Add Review from disallowed roles; the endpoint must refuse too.
+			if ( ! bupr_roles_allow_review( $bupr_current_user, $bupr_member_id ) ) {
+				wp_send_json_error( '<p class="bupr-error">' . esc_html__( 'You are not allowed to review this member.', 'bp-member-reviews' ) . '</p>' );
+				return;
+			}
+
 			// Set user name (anonymous or actual).
 			$user_name = ( 'yes' === $anonymous_review ) ? __( 'An anonymous user', 'bp-member-reviews' ) : $current_user->display_name;
 

@@ -634,6 +634,35 @@ function bupr_flush_top_members_cache() {
 add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
 
 /**
+ * Whether the Reviewer Roles / Reviewee Roles settings allow one member to review another.
+ *
+ * An empty list means "every role". A user passes when ANY of their roles is listed.
+ * The profile UI checks only the first role, so this never refuses a review the UI offered.
+ *
+ * @since 3.8.1
+ * @param int $reviewer_id User submitting the review.
+ * @param int $member_id   User being reviewed.
+ * @return bool
+ */
+function bupr_roles_allow_review( $reviewer_id, $member_id ) {
+	global $bupr;
+	$reviewer = get_userdata( (int) $reviewer_id );
+	$member   = get_userdata( (int) $member_id );
+	if ( ! $reviewer || ! $member ) {
+		return false;
+	}
+	$reviewer_roles = isset( $bupr['exclude_given_members'] ) && is_array( $bupr['exclude_given_members'] ) ? $bupr['exclude_given_members'] : array();
+	$reviewee_roles = isset( $bupr['add_taken_members'] ) && is_array( $bupr['add_taken_members'] ) ? $bupr['add_taken_members'] : array();
+	if ( $reviewer_roles && ! array_intersect( (array) $reviewer->roles, $reviewer_roles ) ) {
+		return false;
+	}
+	if ( $reviewee_roles && ! array_intersect( (array) $member->roles, $reviewee_roles ) ) {
+		return false;
+	}
+	return true;
+}
+
+/**
  * Number of reviews whose reports are still open (published or hidden).
  *
  * @since 3.8.1

@@ -266,6 +266,8 @@ Moderation and settings-screen fixes.
 * Fix      - Report, Edit Review and the report dialog close button stay readable on hover in dark mode.
 * Fix      - Unchecking Show Review Button is now saved explicitly.
 * Fix      - The WordPress Dark admin color scheme no longer makes the settings header text unreadable.
+* Security - Approving a review from the Reviews list now requires the Editor capability; Contributors and Authors could previously approve any pending review.
+* Security - The Reviewer Roles and Reviewee Roles settings are now enforced when a review is submitted, not only by hiding the Add Review button.
 
 = 3.8.0 - July 2026 =
 

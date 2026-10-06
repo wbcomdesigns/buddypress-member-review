@@ -736,7 +736,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
-					if ( 'draft' === $post->post_status ) {
+					if ( 'draft' === $post->post_status && current_user_can( 'edit_others_posts' ) ) {
 						$actions['approve_review'] = '<a href="javascript:void(0);" title="' . $review_title . '" class="bupr-approve-review" data-rid="' . $post->ID . '">' . esc_html__( 'Approve', 'bp-member-reviews' ) . '</a>';
 					}
 				}
