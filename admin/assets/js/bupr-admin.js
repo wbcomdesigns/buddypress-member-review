@@ -73,13 +73,17 @@ jQuery(document).ready(
 			'change',
 			'#bupr_allow_multiple_criteria',
 			function () {
-				if (jQuery(this).is(':checked')) {
-					jQuery('.bupr-criteria-settings-tbl #buprTextBoxContainer').removeClass('bupr-show-if-allowed');
-					jQuery('.bupr-criteria-settings-tbl #bupr-add-criteria-action').removeClass('bupr-show-if-allowed');
-				} else {
-					jQuery('.bupr-criteria-settings-tbl #buprTextBoxContainer').addClass('bupr-show-if-allowed');
-					jQuery('.bupr-criteria-settings-tbl #bupr-add-criteria-action').addClass('bupr-show-if-allowed');
-				}
+				// One wrapper holds the rows and the Add button; the server renders the same class on load.
+				jQuery('#bupr-criteria-builder').toggleClass('bupr-show-if-allowed', !this.checked);
+			}
+		);
+
+		// Approval email fields only apply while reviews wait for approval.
+		jQuery(document).on(
+			'change',
+			'#bupr_review_auto_approval',
+			function () {
+				jQuery('.review-approve-email-section').toggleClass('bupr-show-if-allowed', this.checked);
 			}
 		);
 
@@ -87,9 +91,7 @@ jQuery(document).ready(
 		jQuery("#bupr-btnAdd").bind(
 			"click",
 			function () {
-				var div = jQuery("<div />");
-				div.html(GetDynamicTextBox(""));
-				jQuery("#buprTextBoxContainer").append(div);
+				jQuery("#buprTextBoxContainer").append(GetDynamicTextBox(""));
 			}
 		);
 		/* Remove extra criteria fields */
@@ -184,6 +186,6 @@ function GetDynamicTextBox(value) {
 		return jQuery('<div/>').text(text).html();
 	}
 
-	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row border bupr-criteria"><div class="bupr-admin-col-6"><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + attr(value) + '" placeholder="' + attr(placeholder) + '" aria-label="' + attr(ariaLabel) + '" /></div>' +
-		'<div class="bupr-admin-col-6"><input type="button" value="' + attr(removeLabel) + '" aria-label="' + attr(removeAria) + '" class="bupr-remove button button-secondary" /></div></div>'
+	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable"><div class="bupr-admin-col-6"><span class="move-icons">&equiv;</span><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + attr(value) + '" placeholder="' + attr(placeholder) + '" aria-label="' + attr(ariaLabel) + '" /></div>' +
+		'<div class="bupr-admin-col-6 buprcriteria"><p class="bupr-delete-tag"><input type="button" value="' + attr(removeLabel) + '" aria-label="' + attr(removeAria) + '" class="bupr-criteria-remove-button bupr-remove bupr-btn bupr-btn-danger" /></p></div></div>'
 }

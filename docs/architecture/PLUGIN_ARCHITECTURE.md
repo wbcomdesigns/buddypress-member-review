@@ -155,7 +155,7 @@ register_post_type('review', array(
 
 ## Templates (Overridable)
 
-Copy to theme: `your-theme/review/`
+Copy to theme: `your-theme/buddypress-member-review/`
 
 | Template | Purpose |
 |----------|---------|

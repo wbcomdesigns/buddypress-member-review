@@ -68,7 +68,7 @@ Configure in: Settings > Member Reviews > General > Report Threshold
 Showcase your highest-rated members anywhere:
 
 ```
-[bupr_display_top_members max="10" min_reviews="3"]
+[bupr_display_top_members total_member="10"]
 ```
 
 Add this to your homepage, sidebar, or a dedicated "Top Contributors" page.

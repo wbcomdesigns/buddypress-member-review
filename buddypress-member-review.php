@@ -3,9 +3,9 @@
  * Plugin Name: Wbcom Designs - BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
  * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
- * Version: 3.8.0
+ * Version: 3.8.1
  * Requires at least: 6.5
- * Requires PHP: 8.0
+ * Requires PHP: 8.1
  * Author: Wbcom Designs
  * Author URI: https://wbcomdesigns.com
  * License: GPLv2+
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version and path constants.
  */
-define( 'BUPR_PLUGIN_VERSION', '3.8.0' );
+define( 'BUPR_PLUGIN_VERSION', '3.8.1' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BUPR_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -384,28 +384,23 @@ function bupr_required_plugin_admin_notice() {
 
 
 /**
- * Redirect to plugin settings page after activation.
- *
- * @param string $plugin The plugin basename.
- *
- * @return void
- */
-function bupr_activation_redirect_settings( $plugin ) {
-	if ( BUPR_PLUGIN_BASENAME === $plugin && class_exists( 'BuddyPress' ) && ! is_multisite() && bupr_check_buddypress_compatibility() ) {
-		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
-		exit;
-	}
-}
-add_action( 'activated_plugin', 'bupr_activation_redirect_settings' );
-
-/**
  * Perform plugin activation redirect.
  */
 function bupr_do_activation_redirect() {
-	if ( get_transient( '_bupr_activation_redirect' ) && ! is_multisite() && bupr_check_buddypress_compatibility() ) {
-		delete_transient( '_bupr_activation_redirect' );
-		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
+	if ( ! get_transient( '_bupr_activation_redirect' ) ) {
+		return;
 	}
+	delete_transient( '_bupr_activation_redirect' );
+
+	// The single redirect path (an exit inside activated_plugin used to cut bulk
+	// activations short and end WP-CLI runs early). Skip bulk activation and
+	// non-interactive requests; the transient is cleared either way.
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of core's bulk-activation flag.
+	if ( wp_doing_ajax() || is_network_admin() || isset( $_GET['activate-multi'] ) || is_multisite() || ! bupr_check_buddypress_compatibility() ) {
+		return;
+	}
+	wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
+	exit;
 }
 add_action( 'admin_init', 'bupr_do_activation_redirect' );
 

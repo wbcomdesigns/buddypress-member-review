@@ -606,6 +606,22 @@ function bupr_clear_review_caches( $post_id ) {
 			);
 		}
 
+		if ( 'before_delete_post' === current_action() ) {
+			// The row still exists here, so recalculating now would count it again.
+			// Drop its activity and recalculate once the delete has gone through.
+			bupr_delete_review_activity( $post_id );
+			add_action(
+				'deleted_post',
+				function ( $deleted_id ) use ( $post_id, $user_id ) {
+					if ( (int) $deleted_id === (int) $post_id ) {
+						bupr_recalculate_user_reviews_for_user( $user_id );
+						bupr_flush_top_members_cache();
+					}
+				}
+			);
+			return;
+		}
+
 		// Force recalculation.
 		bupr_recalculate_user_reviews_for_user( $user_id );
 
@@ -634,6 +650,162 @@ function bupr_flush_top_members_cache() {
 add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
 
 /**
+ * Published reviews a member has received, from the cached aggregate (recalculated once if missing).
+ *
+ * Replaces per-request get_posts( posts_per_page => -1 ) counts, which loaded every
+ * review a member has into memory on every page view.
+ *
+ * @since 3.8.1
+ * @param int $user_id Member ID.
+ * @return int
+ */
+function bupr_get_member_review_count( $user_id ) {
+	$user_id = (int) $user_id;
+	if ( ! $user_id ) {
+		return 0;
+	}
+	$count = get_user_meta( $user_id, 'bupr_review_count', true );
+	if ( '' === $count ) {
+		bupr_recalculate_user_reviews_for_user( $user_id );
+		$count = get_user_meta( $user_id, 'bupr_review_count', true );
+	}
+	return (int) $count;
+}
+
+/**
+ * A member's profile URL, with a trailing slash, on every supported BuddyPress.
+ *
+ * BuddyPress 12 deprecated bp_core_get_user_domain() (a notice on every call under
+ * WP_DEBUG), and bp_members_get_user_url() does not exist before 12.
+ *
+ * @since 3.8.1
+ * @param int $user_id User ID.
+ * @return string
+ */
+function bupr_member_url( $user_id ) {
+	$url = function_exists( 'bp_members_get_user_url' ) ? bp_members_get_user_url( (int) $user_id ) : bp_core_get_user_domain( (int) $user_id );
+	return trailingslashit( (string) $url );
+}
+
+/**
+ * Whether the Reviewer Roles / Reviewee Roles settings allow one member to review another.
+ *
+ * An empty list means "every role". A user passes when ANY of their roles is listed.
+ * The profile UI checks only the first role, so this never refuses a review the UI offered.
+ *
+ * @since 3.8.1
+ * @param int $reviewer_id User submitting the review.
+ * @param int $member_id   User being reviewed.
+ * @return bool
+ */
+function bupr_roles_allow_review( $reviewer_id, $member_id ) {
+	global $bupr;
+	$reviewer = get_userdata( (int) $reviewer_id );
+	$member   = get_userdata( (int) $member_id );
+	if ( ! $reviewer || ! $member ) {
+		return false;
+	}
+	$reviewer_roles = isset( $bupr['exclude_given_members'] ) && is_array( $bupr['exclude_given_members'] ) ? $bupr['exclude_given_members'] : array();
+	$reviewee_roles = isset( $bupr['add_taken_members'] ) && is_array( $bupr['add_taken_members'] ) ? $bupr['add_taken_members'] : array();
+	if ( $reviewer_roles && ! array_intersect( (array) $reviewer->roles, $reviewer_roles ) ) {
+		return false;
+	}
+	if ( $reviewee_roles && ! array_intersect( (array) $member->roles, $reviewee_roles ) ) {
+		return false;
+	}
+	return true;
+}
+
+/**
+ * Number of reviews whose reports are still open (published or hidden).
+ *
+ * @since 3.8.1
+ * @return int
+ */
+function bupr_get_flagged_reviews_count() {
+	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+	return (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			WHERE p.post_type = %s AND p.post_status IN ('publish', 'draft')
+			AND pm.meta_key = 'bupr_flag_status' AND pm.meta_value = 'flagged'",
+			'review'
+		)
+	);
+}
+
+/**
+ * Number of reviews currently hidden because they reached the report threshold.
+ *
+ * @since 3.8.1
+ * @return int
+ */
+function bupr_get_auto_hidden_reviews_count() {
+	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+	return (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			WHERE p.post_type = %s AND p.post_status = 'draft'
+			AND pm.meta_key = 'bupr_auto_hidden' AND pm.meta_value <> ''",
+			'review'
+		)
+	);
+}
+
+/**
+ * Activity type used for review entries. Youzify only renders its own status type.
+ *
+ * @since 3.8.1
+ * @return string
+ */
+function bupr_review_activity_type() {
+	return defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review';
+}
+
+/**
+ * ID of the activity entry recorded for a review, or 0 when there is none.
+ *
+ * @since 3.8.1
+ * @param int $review_id Review post ID.
+ * @return int
+ */
+function bupr_get_review_activity_id( $review_id ) {
+	if ( ! function_exists( 'bp_activity_get_activity_id' ) ) {
+		return 0;
+	}
+	return (int) bp_activity_get_activity_id(
+		array(
+			'component' => buddypress()->members->id,
+			'type'      => bupr_review_activity_type(),
+			'item_id'   => (int) $review_id,
+		)
+	);
+}
+
+/**
+ * Remove the activity entries recorded for a review.
+ *
+ * @since 3.8.1
+ * @param int $review_id Review post ID.
+ */
+function bupr_delete_review_activity( $review_id ) {
+	if ( ! function_exists( 'bp_activity_delete' ) ) {
+		return;
+	}
+	bp_activity_delete(
+		array(
+			'component' => buddypress()->members->id,
+			'type'      => bupr_review_activity_type(),
+			'item_id'   => (int) $review_id,
+		)
+	);
+}
+
+/**
  * Handle review status transitions to trigger cache invalidation.
  *
  * Fires when a review post status changes (draft->publish, pending->publish, etc.).
@@ -651,6 +823,18 @@ function bupr_handle_review_status_transition( $new_status, $old_status, $post )
 	// Skip if status hasn't changed.
 	if ( $new_status === $old_status ) {
 		return;
+	}
+
+	// A review that stops being public takes its activity entry with it. Re-publishing
+	// creates a fresh one through bupr_member_review_after_review_insert.
+	if ( 'publish' === $old_status ) {
+		bupr_delete_review_activity( $post->ID );
+	}
+
+	// An admin re-approving an auto-hidden review clears the auto-hidden marker.
+	if ( 'publish' === $new_status ) {
+		delete_post_meta( $post->ID, 'bupr_auto_hidden' );
+		delete_post_meta( $post->ID, 'bupr_auto_hidden_date' );
 	}
 
 	// Get the reviewed user ID.

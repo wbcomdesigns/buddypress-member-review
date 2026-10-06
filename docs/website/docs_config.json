@@ -1,244 +1,131 @@
 {
-  "plugin": {
-    "name": "BuddyPress Member Reviews",
-    "slug": "buddypress-member-review",
-    "short_id": "bpmr",
-    "parent_category_id": {
-      "local": 75,
-      "live": 126
-    }
-  },
-  "categories": [
+  "product": "BuddyPress Member Reviews",
+  "productType": "plugin",
+  "shortId": "bpmemberreview",
+  "sections": [
     {
-      "name": "Getting Started",
-      "slug": "getting-started-bpmr",
+      "title": "Getting Started",
+      "slug": "getting-started-bpmemberreview",
       "folder": "getting-started",
       "docs": [
         {
-          "file": "intro.md",
-          "title": "Installation & Setup",
-          "slug": "intro-bpmr",
-          "images": ["frontend-reviews-tab.png", "admin-settings-general.png", "admin-settings-criteria.png", "frontend-add-review-form.png", "admin-reviews-list.png"]
+          "file": "installation.md",
+          "title": "Installation and Setup",
+          "slug": "installation-bpmemberreview"
         }
       ]
     },
     {
-      "name": "Star Ratings & Criteria",
-      "slug": "star-ratings-bpmr",
-      "folder": "star-ratings",
+      "title": "Features",
+      "slug": "features-bpmemberreview",
+      "folder": "features",
       "docs": [
         {
-          "file": "star-ratings.md",
-          "title": "Star Ratings & Criteria",
-          "slug": "star-ratings-criteria-bpmr",
-          "images": ["frontend-profile-header.png", "admin-settings-criteria.png", "frontend-add-review-form.png"]
-        }
-      ]
-    },
-    {
-      "name": "Review Moderation",
-      "slug": "review-moderation-bpmr",
-      "folder": "review-moderation",
-      "docs": [
+          "file": "overview.md",
+          "title": "Features Overview",
+          "slug": "features-overview-bpmemberreview"
+        },
         {
-          "file": "review-moderation.md",
-          "title": "Review Reporting & Moderation",
-          "slug": "review-reporting-moderation-bpmr",
-          "images": ["admin-reviews-list.png"]
-        }
-      ]
-    },
-    {
-      "name": "Owner Replies",
-      "slug": "owner-replies-bpmr",
-      "folder": "owner-replies",
-      "docs": [
+          "file": "star-ratings-and-criteria.md",
+          "title": "Star Ratings and Criteria",
+          "slug": "star-ratings-and-criteria-bpmemberreview"
+        },
+        {
+          "file": "moderation-and-reporting.md",
+          "title": "Moderation and Reporting",
+          "slug": "moderation-and-reporting-bpmemberreview"
+        },
         {
           "file": "owner-replies.md",
           "title": "Owner Replies",
-          "slug": "owner-reply-feature-bpmr",
-          "images": []
+          "slug": "owner-replies-bpmemberreview"
         }
       ]
     },
     {
-      "name": "Testimonials Mode",
-      "slug": "testimonials-mode-bpmr",
-      "folder": "testimonials-mode",
+      "title": "Usage",
+      "slug": "usage-bpmemberreview",
+      "folder": "usage",
       "docs": [
         {
-          "file": "testimonials-mode.md",
-          "title": "Testimonials Mode",
-          "slug": "testimonials-guide-bpmr",
-          "images": ["pro-features-settings-updated.png"]
-        }
-      ]
-    },
-    {
-      "name": "Endorsements Mode",
-      "slug": "endorsements-mode-bpmr",
-      "folder": "endorsements-mode",
-      "docs": [
+          "file": "submitting-reviews.md",
+          "title": "Submitting and Editing Reviews",
+          "slug": "submitting-reviews-bpmemberreview"
+        },
         {
-          "file": "endorsements-mode.md",
-          "title": "Endorsements Mode",
-          "slug": "endorsements-guide-bpmr",
-          "images": ["endorsement-button-profile.png", "endorsement-modal-skills.png", "pro-features-toggles-skills.png"]
-        }
-      ]
-    },
-    {
-      "name": "Verified Badges",
-      "slug": "verified-badges-bpmr",
-      "folder": "verified-badges",
-      "docs": [
+          "file": "managing-reviews.md",
+          "title": "Managing Reviews in the Admin",
+          "slug": "managing-reviews-bpmemberreview"
+        },
         {
-          "file": "verified-badges.md",
-          "title": "Verified Badges",
-          "slug": "verified-badges-guide-bpmr",
-          "images": ["pro-verified-badge.png"]
+          "file": "settings-reference.md",
+          "title": "Settings Reference",
+          "slug": "settings-reference-bpmemberreview"
         }
       ]
     },
     {
-      "name": "Flexible Criteria",
-      "slug": "flexible-criteria-bpmr",
-      "folder": "flexible-criteria",
-      "docs": [
-        {
-          "file": "flexible-criteria.md",
-          "title": "Flexible Criteria Builder",
-          "slug": "flexible-criteria-guide-bpmr",
-          "images": ["pro-criteria-builder.png"]
-        }
-      ]
-    },
-    {
-      "name": "REST API",
-      "slug": "rest-api-bpmr",
-      "folder": "rest-api",
-      "docs": [
-        {
-          "file": "rest-api.md",
-          "title": "REST API Reference",
-          "slug": "rest-api-reference-bpmr",
-          "images": []
-        }
-      ]
-    },
-    {
-      "name": "Shortcodes & Widgets",
-      "slug": "shortcodes-widgets-bpmr",
-      "folder": "shortcodes-widgets",
+      "title": "Shortcodes",
+      "slug": "shortcodes-bpmemberreview",
+      "folder": "shortcodes",
       "docs": [
         {
           "file": "shortcodes.md",
-          "title": "Shortcodes",
-          "slug": "shortcodes-bpmr",
-          "images": []
+          "title": "Shortcode",
+          "slug": "shortcode-bpmemberreview"
         },
         {
           "file": "widgets.md",
           "title": "Widgets",
-          "slug": "widgets-bpmr",
-          "images": []
+          "slug": "widgets-bpmemberreview"
         }
       ]
     },
     {
-      "name": "Settings",
-      "slug": "settings-bpmr",
-      "folder": "settings",
-      "docs": [
-        {
-          "file": "admin-settings.md",
-          "title": "Admin Settings Reference",
-          "slug": "admin-settings-bpmr",
-          "images": ["admin-settings-general.png", "admin-settings-criteria.png", "admin-settings-display.png", "admin-settings-pro-features.png"]
-        },
-        {
-          "file": "managing-reviews.md",
-          "title": "Managing Reviews in Admin",
-          "slug": "managing-reviews-bpmr",
-          "images": ["admin-reviews-list.png"]
-        },
-        {
-          "file": "pro-features.md",
-          "title": "Pro Features Overview",
-          "slug": "pro-features-bpmr",
-          "images": ["pro-features-full-page.png", "pro-review-management.png"]
-        }
-      ]
-    },
-    {
-      "name": "Developer Guide",
-      "slug": "developer-guide-bpmr",
+      "title": "Developer Guide",
+      "slug": "developer-guide-bpmemberreview",
       "folder": "developer-guide",
       "docs": [
         {
           "file": "hooks-and-filters.md",
-          "title": "Hooks & Filters",
-          "slug": "hooks-and-filters-bpmr",
-          "images": []
+          "title": "Hooks and Filters",
+          "slug": "hooks-and-filters-bpmemberreview"
         },
         {
           "file": "templates.md",
           "title": "Template Overrides",
-          "slug": "template-overrides-bpmr",
-          "images": []
+          "slug": "template-overrides-bpmemberreview"
         },
         {
-          "file": "database.md",
-          "title": "Database Schema",
-          "slug": "database-schema-bpmr",
-          "images": []
+          "file": "data-model.md",
+          "title": "Data Model",
+          "slug": "data-model-bpmemberreview"
         }
       ]
     },
     {
-      "name": "FAQ",
-      "slug": "faq-bpmr",
+      "title": "FAQ",
+      "slug": "faq-bpmemberreview",
       "folder": "faq",
+      "docs": [
+        {
+          "file": "faqs.md",
+          "title": "Frequently Asked Questions",
+          "slug": "faqs-bpmemberreview"
+        }
+      ]
+    },
+    {
+      "title": "Troubleshooting",
+      "slug": "troubleshooting-bpmemberreview",
+      "folder": "troubleshooting",
       "docs": [
         {
           "file": "troubleshooting.md",
           "title": "Troubleshooting",
-          "slug": "troubleshooting-bpmr",
-          "images": []
-        },
-        {
-          "file": "faqs.md",
-          "title": "Frequently Asked Questions",
-          "slug": "faqs-bpmr",
-          "images": []
+          "slug": "troubleshooting-bpmemberreview"
         }
       ]
     }
-  ],
-  "images": {
-    "folder": "../images",
-    "files": [
-      "admin-reviews-list.png",
-      "admin-settings-criteria.png",
-      "admin-settings-display.png",
-      "admin-settings-general.png",
-      "admin-settings-pro-features.png",
-      "endorsement-button-profile.png",
-      "endorsement-modal-skills.png",
-      "frontend-add-review-form.png",
-      "frontend-profile-header.png",
-      "frontend-reviews-tab.png",
-      "pro-criteria-builder.png",
-      "pro-features-full-page.png",
-      "pro-features-settings-updated.png",
-      "pro-features-toggles-skills.png",
-      "pro-review-management.png",
-      "pro-verified-badge.png"
-    ],
-    "unused": [
-      "endorsement-button-luna-profile.png",
-      "free-banner.png",
-      "pro-banner.png"
-    ]
-  }
+  ]
 }

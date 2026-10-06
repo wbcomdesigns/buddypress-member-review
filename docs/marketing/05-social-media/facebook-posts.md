@@ -137,7 +137,7 @@ Feature spotlight: Top Members Shortcode
 
 Want to showcase your highest-rated members? Use this shortcode:
 
-[bupr_display_top_members max="10" min_reviews="3"]
+[bupr_display_top_members total_member="10"]
 
 It shows up to 10 members with at least 3 reviews, sorted by rating.
 

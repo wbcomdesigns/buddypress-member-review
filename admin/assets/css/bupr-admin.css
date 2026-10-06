@@ -76,15 +76,6 @@
 }
 
 
-/* Rounded sliders */
-.bupr-slider.bupr-round {
-    border-radius: 34px;
-}
-
-.bupr-slider.bupr-round:before {
-    border-radius: 50%;
-}
-
 .bupr_excluding_member {
     width: 70%;
 }
@@ -98,25 +89,6 @@
     font-weight: 600;
 }
 
-@media (min-width: 782px) {
-    .bupr-switch {
-        width: 30px;
-        height: 17px;
-    }
-
-    .bupr-slider:before {
-        height: 13px;
-        width: 13px;
-        left: 2px;
-        bottom: 2px;
-    }
-
-    input:checked+.bupr-slider:before {
-        -webkit-transform: translateX(13px);
-        -ms-transform: translateX(13px);
-        transform: translateX(13px);
-    }
-}
 
 /* Admin Switch Toggle : End */
 
@@ -128,7 +100,7 @@
     border-color: var(--bupr-admin-border, #e3e2ea);
     background-color: var(--bupr-admin-surface-1, #fafafa);
     /* Must travel with the background. Once the surface follows the token it
-       goes dark under body.admin-color-dark, while WP's default input colour
+       goes dark under body.is-dark-theme, while WP's default input colour
        stays near-black - dark text on a dark field. Verified in-browser. */
     color: var(--bupr-admin-text, #1e293b);
 }
@@ -143,41 +115,6 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-}
-
-.bupr-criteria .bupr-delete-tag input[type=button],
-#bupr-add-criteria-action input#bupr-btnAdd,
-#bupr-admin-row-criteria input.bupr-remove.button.button-secondary {
-    padding: 12px 30px;
-    font-size: 15px;
-    background: var(--bupr-admin-danger, #ee1313);
-    margin-inline-end: 35px;
-    text-shadow: none;
-    font-weight: 600;
-    width: auto;
-    color: #fff;
-    line-height: 1;
-    border: 0;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-    box-shadow: 0px 8px 20px rgba(32, 53, 85, 0.35);
-    border-radius: 12px;
-    height: auto;
-}
-
-.bupr-criteria .bupr-delete-tag input[type=button]:hover {
-    background: var(--bupr-admin-danger-hover, #272B41);
-}
-
-#bupr-add-criteria-action input#bupr-btnAdd:hover {
-    background: var(--bupr-admin-success-hover, #272B41);
-}
-
-#bupr-add-criteria-action input#bupr-btnAdd {
-    padding: 16px 30px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    background: var(--bupr-admin-success, #08c462);
 }
 
 /*** css classes for admin setting page ***/
@@ -326,40 +263,9 @@ button.bupr-accordion.active::after {
     color: white;
 }
 
-/* custom css for switch */
-.bupr-switch-custom {
-    margin: 0 10px;
-    margin-top: 6px;
-}
-
-.buprcriteria .bupr-switch {
-    margin-right: 40px;
-}
-
-@media(max-width: 781px) {
-    .buprcriteria input:checked+.bupr-slider::before {
-        -webkit-transform: translateX(35px);
-        -ms-transform: translateX(35px);
-        transform: translateX(35px);
-    }
-
-    .buprcriteria .bupr-switch {
-        width: 70px;
-        margin-right: 0;
-    }
-}
-
 .bupr-delete-tag {
     margin-top: 0px;
     margin-bottom: 10px;
-}
-
-.bupr-criteria-remove-button {
-    border-radius: 20px;
-    height: 34px;
-    margin: 0;
-    padding: 2px;
-    width: 70px;
 }
 
 .buprcriteria span.description {
@@ -379,7 +285,10 @@ span.move-icons {
     margin-left: 10px;
 }
 
-.bupr-show-if-allowed {
+/* The legacy card sets `.bupr-card--legacy .wbcom-settings-section-wrap { display: flex }`
+   (0,2,0); the gate must out-rank it or the criteria builder never hides. */
+.bupr-show-if-allowed,
+.bupr-card--legacy .wbcom-settings-section-wrap.bupr-show-if-allowed {
     display: none;
 }
 
@@ -436,8 +345,17 @@ span.move-icons {
  *
  * Do not reintroduce either. Style notices through `.bupr-admin .notice`.
  */
-
-.wbcom-settings-section-options input#profile_reviews_per_page {
-    width: 300px;
-    margin-inline-end: 10px;
+/* Reviews list: a review pulled by the report threshold, as opposed to one awaiting
+   first approval. This sheet also loads on edit.php?post_type=review, which has no
+   .bupr-admin wrapper, so every token keeps a literal fallback. */
+.bupr-status-auto-hidden {
+    display: inline-block;
+    margin-inline-start: 4px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+    background: var(--bupr-admin-danger-light, #fee2e2);
+    color: var(--bupr-admin-danger, #b91c1c);
 }

@@ -131,10 +131,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 
 			if ( 'personal' === $bp_nouveau->displayed_nav && ! empty( $nav_item->primary ) ) {
-				if ( bp_loggedin_user_domain() ) {
-					$link = str_replace( bp_loggedin_user_domain(), bp_displayed_user_domain(), $link );
+				if ( is_user_logged_in() ) {
+					$link = str_replace( bupr_member_url( bp_loggedin_user_id() ), bupr_member_url( bp_displayed_user_id() ), $link );
 				} else {
-					$link = trailingslashit( bp_displayed_user_domain() . $link );
+					$link = trailingslashit( bupr_member_url( bp_displayed_user_id() ) . $link );
 				}
 			}
 			return $link;
@@ -345,7 +345,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_add_review_button_on_member_header() {
 			global $bupr;
 			if ( ! empty( $bupr['hide_review_button'] ) && 'yes' === $bupr['hide_review_button'] ) {
-				if ( is_user_logged_in() ) {
+				// Only on a resolved profile: with no displayed member the take-review branch
+				// would link the viewer to a review of themselves.
+				if ( is_user_logged_in() && bp_displayed_user_id() ) {
 					if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
 						$this->bupr_members_right_to_review();
 					} else {
@@ -515,26 +517,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_setup_admin_bar( $wp_admin_nav = array() ) {
 			global $wp_admin_bar;
 			global $bupr;
-			$bupr_args = array(
-				'post_type'      => 'review',
-				'posts_per_page' => -1,
-				'post_status'    => 'publish',
-				'category'       => 'bp-member',
-				'meta_query'     => array(
-					array(
-						'key'     => 'linked_bp_member',
-						'value'   => get_current_user_id(),
-						'compare' => '=',
-					),
-				),
-			);
-
-			$reviews       = get_posts( $bupr_args );
-			$reviews_count = count( $reviews );
+			$reviews_count = bupr_get_member_review_count( get_current_user_id() );
 
 			$profile_menu_slug = isset( $bupr['review_label_plural'] ) ? sanitize_title( $bupr['review_label_plural'] ) : esc_html( 'reviews' );
 
-			$base_url = bp_loggedin_user_domain() . $profile_menu_slug;
+			$base_url = bupr_member_url( bp_loggedin_user_id() ) . $profile_menu_slug;
 			if ( is_user_logged_in() ) {
 				$wp_admin_bar->add_menu(
 					array(
@@ -734,7 +721,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					$actions['view_review'] = '<a href="' . $review_url . '" title="' . $review_title . '">' . sprintf( esc_html__( 'View %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</a>';
 
 					// Add Approve Link for draft reviews.
-					if ( 'draft' === $post->post_status ) {
+					if ( 'draft' === $post->post_status && current_user_can( 'edit_others_posts' ) ) {
 						$actions['approve_review'] = '<a href="javascript:void(0);" title="' . $review_title . '" class="bupr-approve-review" data-rid="' . $post->ID . '">' . esc_html__( 'Approve', 'bp-member-reviews' ) . '</a>';
 					}
 				}
@@ -789,34 +776,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			add_filter( 'site_url', 'bupr_site_url', 99 );
 			$member_slug = ( isset( $bp_pages->members ) && isset( $bp_pages->members->slug ) ) ? $bp_pages->members->slug : 'members';
 
-			// Count member's review.
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-			$bupr_args = array(
-				'post_type'      => 'review',
-				'posts_per_page' => -1,
-				'post_status'    => 'publish',
-				'category'       => 'bp-member',
-				'meta_query'     => array(
-					array(
-						'key'     => 'linked_bp_member',
-						'value'   => bp_displayed_user_id(),
-						'compare' => '=',
-					),
-				),
-			);
-
-			$bupr_reviews = new WP_Query( $bupr_args );
-			if ( ! empty( $bupr_reviews->posts ) ) {
-				$bupr_reviews = count( $bupr_reviews->posts );
-				if ( ! empty( $bupr_reviews ) ) {
-					$bupr_notification = '<span class="count">' . $bupr_reviews . '</span>';
-				} else {
-					$bupr_notification = '<span class="count">' . 0 . '</span>';
-				}
-			} else {
-				$bupr_notification = '<span class="count">' . 0 . '</span>';
-			}
-			wp_reset_postdata();
+			// Count member's reviews (cached aggregate, not a full query per page view).
+			$bupr_notification = '<span class="count">' . bupr_get_member_review_count( bp_displayed_user_id() ) . '</span>';
 
 			$name = bp_get_displayed_user_username();
 
@@ -976,10 +937,14 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 							<p>
 							<?php
 							printf(
-							/* translators: %1$s: Review user link; %2$s: review label; %3$s: reviewed user link. */
-								'You must <a href="%1$s">login</a> to add a %2$s.',
-								esc_url( wp_login_url( get_permalink() ) ),
-								esc_html( strtolower( $bupr['review_label'] ) ),
+								wp_kses(
+									/* translators: %1$s: login URL; %2$s: review label. */
+									__( 'You must <a href="%1$s">log in</a> to add a %2$s.', 'bp-member-reviews' ),
+									array( 'a' => array( 'href' => array() ) )
+								),
+								// Come back to this form after logging in.
+								esc_url( wp_login_url( bp_get_requested_url() ) ),
+								esc_html( strtolower( $bupr['review_label'] ) )
 							);
 							?>
 						</p></div>
@@ -1050,10 +1015,10 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				return;
 			}
 
-			// Check if the review activity should be created (based on settings).
-			// Get the review post data.
+			// Only a published review belongs in the activity stream (an edit to a pending
+			// or report-hidden review fires this same hook).
 			$review = get_post( $review_id );
-			if ( ! empty( $review ) ) {
+			if ( ! empty( $review ) && 'publish' === $review->post_status ) {
 				// Get the reviewer's (author's) and reviewed user's profile URLs.
 				$reviewer_user_id   = $review->post_author;
 				$reviewer_user_link = bp_core_get_userlink( $reviewer_user_id );
@@ -1087,13 +1052,20 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 					// This prevents the real reviewer's ID from being exposed in database queries.
 					$activity_user_id = $is_anonymous ? $reviewed_user_id : $reviewer_user_id;
 
+					// One entry per review: an edit or re-approval updates the existing
+					// entry in place (keeping its date) instead of posting a duplicate.
+					$existing_id   = bupr_get_review_activity_id( $review_id );
+					$recorded_time = $existing_id ? ( new BP_Activity_Activity( $existing_id ) )->date_recorded : bp_core_current_time();
+
 					// Add activity to BuddyPress.
 					$activity_id = bp_activity_add(
 						array(
+							'id'                => $existing_id,
+							'recorded_time'     => $recorded_time,
 							'action'            => $action,
 							'content'           => ! empty( $escaped_content ) ? $escaped_content : 'Ratings',
 							'component'         => $bp->members->id,
-							'type'              => defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review',
+							'type'              => bupr_review_activity_type(),
 							'user_id'           => $activity_user_id,
 							'item_id'           => $review_id,
 							'secondary_item_id' => $reviewed_user_id,

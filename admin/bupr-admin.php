@@ -247,7 +247,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 							$key = $this->bupr_recursive_array_search( 'edit.php?post_type=review', $menu );
 
-							if ( false === $key ) {
+							// BP Group Reviews shares the review post type and adds the same badge.
+							if ( false === $key || false !== strpos( $menu[ $key ][0], 'awaiting-mod' ) ) {
 								return;
 							}
 
@@ -368,15 +369,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						bupr_profile_review_tab_singular_slug()
 					);
 
-					// Check BuddyPress version and use the appropriate function.
-					// Check if the bp_members_get_user_url() function exists (introduced in BuddyPress 12.0.0).
-					if ( function_exists( 'bp_members_get_user_url' ) ) {
-						// Use bp_members_get_user_url() if it exists (for BuddyPress v12.0.0 and above).
-						$bupr_review_url = bp_members_get_user_url( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
-					} else {
-						// Fall back to bp_core_get_user_domain() for older versions of BuddyPress.
-						$bupr_review_url = bp_core_get_user_domain( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
-					}
+					$bupr_review_url = bupr_member_url( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
 					$bupr_to = $bupr_reciever_email;
 					// Define a default value for $bupr_subject with translation support.
 					$bupr_subject = __( 'New Review on Your Profile at [site-name]', 'bp-member-reviews' );
@@ -405,7 +398,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						);
 					}
 					$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
-					wp_mail( $bupr_to, $bupr_subject, nl2br( $bupr_message ), $bupr_header );
+					wp_mail( $bupr_to, $bupr_subject, wpautop( $bupr_message ), $bupr_header );
 				}
 			}
 		}
@@ -484,6 +477,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				$status_label = ' <span class="bupr-status-dismissed">(' . esc_html__( 'Dismissed', 'bp-member-reviews' ) . ')</span>';
 			}
 
+			// Pulled by the report threshold, not waiting for first approval.
+			if ( 'draft' === get_post_status( $post_id ) && get_post_meta( $post_id, 'bupr_auto_hidden', true ) ) {
+				$hidden_at     = (int) get_post_meta( $post_id, 'bupr_auto_hidden_date', true );
+				$status_label .= sprintf(
+					' <span class="bupr-status-auto-hidden" title="%s">%s</span>',
+					/* translators: %s: date and time the review was hidden. */
+					esc_attr( $hidden_at ? sprintf( __( 'Hidden on %s', 'bp-member-reviews' ), date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $hidden_at ) ) : '' ),
+					esc_html__( 'Auto-hidden', 'bp-member-reviews' )
+				);
+			}
+
 			printf(
 				'<span class="bupr-flag-count %s">%d %s</span>%s',
 				esc_attr( $status_class ),
@@ -501,7 +505,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @return array Modified views.
 		 */
 		public function bupr_add_flagged_filter_link( $views ) {
-			$flagged_count = $this->bupr_get_flagged_reviews_count();
+			$flagged_count = bupr_get_flagged_reviews_count();
 
 			if ( $flagged_count > 0 ) {
 				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Checking query param for view highlight only.
@@ -523,28 +527,29 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				);
 			}
 
-			return $views;
-		}
+			$auto_hidden_count = bupr_get_auto_hidden_reviews_count();
+			if ( $auto_hidden_count > 0 ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Checking query param for view highlight only.
+				$current              = isset( $_GET['bupr_auto_hidden'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bupr_auto_hidden'] ) ) ? 'current' : '';
+				$views['auto_hidden'] = sprintf(
+					'<a href="%s" class="%s">%s <span class="count">(%d)</span></a>',
+					esc_url(
+						add_query_arg(
+							array(
+								'post_type'        => 'review',
+								'post_status'      => 'draft',
+								'bupr_auto_hidden' => '1',
+							),
+							admin_url( 'edit.php' )
+						)
+					),
+					esc_attr( $current ),
+					esc_html__( 'Auto-hidden', 'bp-member-reviews' ),
+					(int) $auto_hidden_count
+				);
+			}
 
-		/**
-		 * Get count of flagged reviews.
-		 *
-		 * @since 3.8.0
-		 * @return int The count of flagged reviews.
-		 */
-		private function bupr_get_flagged_reviews_count() {
-			global $wpdb;
-			return (int) $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
-					INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-					WHERE p.post_type = %s
-					AND p.post_status IN ('publish', 'draft')
-					AND pm.meta_key = 'bupr_flag_status'
-					AND pm.meta_value = 'flagged'",
-					'review'
-				)
-			);
+			return $views;
 		}
 
 		/**
@@ -573,6 +578,21 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 							'key'     => 'bupr_flag_status',
 							'value'   => 'flagged',
 							'compare' => '=',
+						),
+					)
+				);
+			}
+
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Query filter based on URL param, no state change.
+			if ( isset( $_GET['bupr_auto_hidden'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bupr_auto_hidden'] ) ) ) {
+				$query->set( 'post_status', 'draft' );
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary for auto-hidden filter functionality.
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key'     => 'bupr_auto_hidden',
+							'compare' => 'EXISTS',
 						),
 					)
 				);
@@ -770,7 +790,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			}
 
 			// Check user capabilities.
-			if ( ! current_user_can( 'edit_post', $review_id ) ) {
+			// Moderating reports is an Editor task; edit_post let an Author dismiss reports on their own review.
+			if ( ! current_user_can( 'edit_others_posts' ) ) {
 				wp_die( esc_html__( 'You do not have permission to perform this action.', 'bp-member-reviews' ) );
 			}
 
@@ -782,6 +803,20 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 			// Update flag status to dismissed.
 			update_post_meta( $review_id, 'bupr_flag_status', 'dismissed' );
+			// Reports up to now were reviewed and rejected; only later ones count toward auto-hide.
+			$bupr_flags = get_post_meta( $review_id, 'bupr_flags', true );
+			update_post_meta( $review_id, 'bupr_flag_dismissed_at_count', is_array( $bupr_flags ) ? count( $bupr_flags ) : 0 );
+
+			// Dismissing means the reports were unfounded: a review they auto-hid comes back.
+			// The publish transition clears the auto-hidden marker and restores its activity.
+			if ( get_post_meta( $review_id, 'bupr_auto_hidden', true ) && 'draft' === get_post_status( $review_id ) ) {
+				wp_update_post(
+					array(
+						'ID'          => $review_id,
+						'post_status' => 'publish',
+					)
+				);
+			}
 
 			// Redirect back to the review edit page.
 			$redirect_url = add_query_arg(
@@ -811,7 +846,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			}
 
 			// Check user capabilities.
-			if ( ! current_user_can( 'edit_post', $review_id ) ) {
+			// Moderating reports is an Editor task; edit_post let an Author dismiss reports on their own review.
+			if ( ! current_user_can( 'edit_others_posts' ) ) {
 				wp_die( esc_html__( 'You do not have permission to perform this action.', 'bp-member-reviews' ) );
 			}
 

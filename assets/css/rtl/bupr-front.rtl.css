@@ -583,6 +583,22 @@ button.bupr-edit-review-button {
     padding: 10px;
 }
 
+/* Widths below are 100% / calc() plus padding: without border-box they overflow on themes
+   that do not reset box-sizing globally (Twenty Twenty-Five overflowed at every width). */
+#review_desc,
+.bupr-review-modal-content,
+.bupr-flag-modal-content,
+.bupr-review-modal-content textarea,
+.bupr-flag-modal-content textarea {
+    box-sizing: border-box;
+}
+
+#review_desc,
+.bupr-review-modal-content textarea,
+.bupr-flag-modal-content textarea {
+    max-width: 100%;
+}
+
 .bupr-bp-member-review-no-popup-add-block #bupr_save_review {
     width: 100%;
     margin: 0;
@@ -1536,20 +1552,23 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 # the theme, not the OS, owns the dark toggle). Each trigger only sets the
 # --bupr-* tokens below; the component rules that consume them are written
 # once and fall back to the exact light values, so light mode is unchanged.
-# Reign exposes no --bx-color-* vars, so every dark fallback is a dark literal.
+# Reign exposes no --bx-color-* vars but redefines its own --reign-* tokens
+# under the same [data-bx-mode="dark"] selector (reign-theme critical.css), so
+# the four it darkens are read before the dark literal. Only map a --reign-*
+# token Reign actually redefines in dark, or dark mode gets its LIGHT value.
 --------------------------------------------------------------*/
 html[data-bx-mode="dark"],
 body.buddyx-dark-theme,
 body.dark-mode,
 body.dark-scheme {
-    --bupr-card-bg: var(--bx-color-bg-elevated, #1e1e1e);
+    --bupr-card-bg: var(--bx-color-bg-elevated, var(--reign-site-sections-bg-color, #1e1e1e));
     --bupr-chip-bg: var(--bx-color-bg-muted, #272727);
     --bupr-chip-bg-hover: var(--bx-color-bg-subtle, #313131);
-    --bupr-field-bg: var(--bx-color-bg, #161616);
-    --bupr-text: var(--bx-color-fg, #e6e6e6);
+    --bupr-field-bg: var(--bx-color-bg, var(--reign-form-background-color, #161616));
+    --bupr-text: var(--bx-color-fg, var(--reign-site-body-text-color, #e6e6e6));
     --bupr-text-muted: var(--bx-color-fg-muted, #a6a6a6);
     --bupr-text-subtle: var(--bx-color-fg-subtle, #8a8a8a);
-    --bupr-border: var(--bx-color-border, rgba(255, 255, 255, 0.15));
+    --bupr-border: var(--bx-color-border, var(--reign-form-border-color, rgba(255, 255, 255, 0.15)));
     --bupr-reply-bg: var(--bx-color-bg-muted, #232323);
     --bupr-reply-hover-bg: rgba(0, 124, 186, 0.15);
     --bupr-success-bg: rgba(70, 180, 80, 0.15);
@@ -1660,6 +1679,86 @@ body.dark-scheme {
     background: var(--bupr-danger-bg, #fff0f0);
     border-color: #dc3232;
     color: var(--bupr-danger-fg, #dc3232);
+}
+
+/* BuddyPress styles every button inside .buddypress-wrap at (0,2,1), and its hover rule
+   (0,3,1) sets a light grey background with `color: inherit` - under a dark theme that is
+   light text on light grey, so Report / Edit / the modal close vanished on hover. These
+   buttons own their colours: the .buddypress-wrap ancestor plus a doubled class out-ranks
+   BP's rules, which load after ours. Theme rules marked !important (BuddyX Pro) still win. */
+.buddypress-wrap .bupr-report-button.bupr-report-button {
+    background: var(--bupr-chip-bg, #f8f9fa);
+    border: 1px solid var(--bupr-border, #ddd);
+    color: var(--bupr-text-muted, #666);
+}
+
+.buddypress-wrap .bupr-report-button.bupr-report-button:hover,
+.buddypress-wrap .bupr-report-button.bupr-report-button:focus {
+    background: var(--bupr-danger-bg, #fff0f0);
+    border-color: #dc3232;
+    color: var(--bupr-danger-fg, #dc3232);
+}
+
+.bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--bupr-text-muted, #666);
+}
+
+.bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close:hover,
+.bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close:focus {
+    background: transparent;
+    color: var(--bupr-danger-fg, #dc3232);
+}
+
+/* Edit Review is a secondary action: the same self-contained chip colours as Report, which
+   the dark token block also sets. White on the theme accent failed in dark mode, where
+   BuddyX's accent turns light (1.89:1). */
+button.bupr-edit-review-button,
+.buddypress-wrap .bupr-edit-review-button.bupr-edit-review-button {
+    background: var(--bupr-chip-bg, #f8f9fa);
+    border: 1px solid var(--bupr-border, #ddd);
+    color: var(--bupr-text, #1d2327);
+}
+
+button.bupr-edit-review-button:hover,
+button.bupr-edit-review-button:focus,
+.buddypress-wrap .bupr-edit-review-button.bupr-edit-review-button:hover,
+.buddypress-wrap .bupr-edit-review-button.bupr-edit-review-button:focus {
+    background: var(--bupr-chip-bg-hover, #f0f0f1);
+    border-color: var(--bupr-border, #ddd);
+    color: var(--bupr-text, #1d2327);
+}
+
+/* Report dialog actions and the reply Cancel: the destructive Submit stays red, Cancel
+   stays neutral instead of a second primary. BuddyX styles every button.button inside the
+   BP wrapper at (0,3,1) (.buddypress .buddypress-wrap button.button), so these sit at (0,4,1). */
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-submit.bupr-flag-submit {
+    background: #dc3232;
+    border: none;
+    color: #fff;
+}
+
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-submit.bupr-flag-submit:hover,
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-submit.bupr-flag-submit:focus {
+    background: #a00;
+    color: #fff;
+}
+
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-cancel.bupr-flag-cancel,
+body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply {
+    background: var(--bupr-chip-bg, #f0f0f1);
+    border: 1px solid var(--bupr-border, #dcdcde);
+    color: var(--bupr-text, #50575e);
+}
+
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-cancel.bupr-flag-cancel:hover,
+.bupr-flag-modal .bupr-flag-modal-content button.bupr-flag-cancel.bupr-flag-cancel:focus,
+body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:hover,
+body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:focus {
+    background: var(--bupr-chip-bg-hover, #dcdcde);
+    color: var(--bupr-text, #50575e);
 }
 
 /* Report success chip. */

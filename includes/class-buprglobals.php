@@ -79,6 +79,7 @@ if ( ! class_exists( 'BUPRGlobals' ) ) {
 			$enable_owner_replies = $bupr_general_settings['bupr_enable_owner_replies'] ?? 'yes';  // Default to 'yes'.
 			$enable_flagging      = $bupr_general_settings['bupr_enable_flagging'] ?? 'yes';       // Default to 'yes'.
 			$flag_threshold       = $bupr_general_settings['bupr_flag_threshold'] ?? 5;            // Default to 5.
+			$flag_threshold       = is_numeric( $flag_threshold ) ? $flag_threshold : 5;           // A blank save must not disable auto-hide.
 
 			/**
 			 * Global variables for display settings.

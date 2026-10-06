@@ -84,6 +84,7 @@ class bupr_members_review_setting extends WP_Widget {
                 JOIN $wpdb->usermeta AS um2 ON um1.user_id = um2.user_id
                 WHERE um1.meta_key = 'bupr_aggregate_rating'
                 AND um2.meta_key = 'bupr_review_count'
+                AND CAST(um2.meta_value AS UNSIGNED) > 0
                 ORDER BY CAST(um1.meta_value AS DECIMAL(10,2)) DESC
                 LIMIT %d
                 ",
@@ -100,6 +101,7 @@ class bupr_members_review_setting extends WP_Widget {
                 JOIN $wpdb->usermeta AS um2 ON um1.user_id = um2.user_id
                 WHERE um1.meta_key = 'bupr_aggregate_rating'
                 AND um2.meta_key = 'bupr_review_count'
+                AND CAST(um2.meta_value AS UNSIGNED) > 0
                 ORDER BY CAST(um2.meta_value AS UNSIGNED) DESC
                 LIMIT %d
                 ",
@@ -142,8 +144,9 @@ class bupr_members_review_setting extends WP_Widget {
 				 *
 				 * @since 3.8.0
 				 * @param string $label The item type label. Default 'reviews'.
+				 * @param int    $count Review count, for choosing singular or plural (since 3.8.1).
 				 */
-				$item_label = apply_filters( 'bupr_item_type_label', __( 'reviews', 'bp-member-reviews' ) );
+				$item_label = apply_filters( 'bupr_item_type_label', _n( 'review', 'reviews', (int) $review_count, 'bp-member-reviews' ), (int) $review_count );
 
 				if ( $show_stars ) {
 					echo '<div class="bupr-member-rating">';

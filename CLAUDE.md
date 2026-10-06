@@ -16,7 +16,7 @@
 
 ## Quick reference
 - **Main file**: `buddypress-member-review.php`
-- **Version**: `3.8.0`  | **Dev branch**: `3.7.1`
+- **Version**: `3.8.1`  | **Dev branch**: `3.8.1`
 - **Namespace**: none — procedural functions + prefixed classes (`BUPR_*`, `Wbcom_Admin_Settings`)
 - **Prefix**: `bupr_`  | **Text domain**: `bp-member-reviews`  | **WP.org slug**: `bp-user-profile-reviews`
 - **Extends**: null. **Extended by**: `buddypress-member-review-pro` (separate repo, hook-only coupling).
@@ -135,7 +135,7 @@ plugins' notices on every screen it loads on.
 
 **Dark mode is keyed only on explicit signals**, never `prefers-color-scheme` (standing owner
 decision: the theme owns the toggle, not the OS). Frontend uses `html[data-bx-mode="dark"]` +
-legacy body classes; admin uses `body.is-dark-theme` / `body.admin-color-dark`. These differ by
+legacy body classes; admin uses `body.is-dark-theme` only (`body.admin-color-dark` was dropped in 3.8.1: WP's "Dark" scheme leaves the content area light, so it produced light-on-light header text). These differ by
 necessity - frontend theme variables do not exist in wp-admin. When you tokenise an admin
 background, tokenise its **text colour in the same rule**, or it inherits WP's near-black default
 onto a now-dark surface.

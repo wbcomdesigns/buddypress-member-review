@@ -154,11 +154,10 @@ Detailed feature comparison for sales and decision support.
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `max` | Maximum members to display | 10 |
-| `min_reviews` | Minimum reviews required | 1 |
-| `member_type` | Filter by BP member type | (all) |
-| `orderby` | Sort order (rating, review_count) | rating |
-| `layout` | Display style (grid, list) | grid |
+| `title` | Heading above the list | (none) |
+| `total_member` | Number of members to list | 5 |
+| `type` | `top rated` or `top reviewed` | top rated |
+| `avatar` | `show` or `hide` avatars | show |
 
 ---
 
@@ -166,8 +165,7 @@ Detailed feature comparison for sales and decision support.
 
 | Template | Purpose | Override Path |
 |----------|---------|---------------|
-| `bupr-reviews-tab-template.php` | Reviews list on profile | `theme/review/` |
-| `bupr-single-review-template.php` | Individual review display | `theme/review/` |
-| `bupr-edit-review-form.php` | Review edit modal | `theme/review/` |
-| `bupr-add-review-form.php` | New review form | `theme/review/` |
+| `bupr-reviews-tab-template.php` | Reviews list on profile | `your-theme/buddypress-member-review/` |
+| `bupr-single-review-template.php` | Individual review display | `your-theme/buddypress-member-review/` |
+| `bupr-edit-review-form.php` | Review edit modal | `your-theme/buddypress-member-review/` |
 

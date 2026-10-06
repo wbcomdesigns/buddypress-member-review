@@ -1,0 +1,239 @@
+{
+  "mode": "single",
+  "release_version": "3.8.1",
+  "ran_at": "2026-10-06T11:05:00Z",
+  "walk": "re-walk after fixes",
+  "sections": {
+    "R_fix_verification": {
+      "pass": 15,
+      "fail": 2,
+      "skipped": 0
+    },
+    "D_regression_guards": {
+      "pass": 2,
+      "fail": 0,
+      "skipped": 0
+    },
+    "C_regression_spotcheck": {
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "rows": [
+    {
+      "id": "R1",
+      "result": "pass",
+      "evidence": "Draft 4082 and auto-hidden draft 4083 (bupr_auto_hidden=1): author bpjm-noname POST bupr_update_review returned success but post_status stayed draft on both, bupr_auto_hidden still 1 on 4083, bp_activity rows for both = [] (no member_review row)."
+    },
+    {
+      "id": "R2",
+      "result": "pass",
+      "evidence": "/members/reviewer1/reviews/view/4082/ (draft): logged-out, bpjm-jobsonly, and reviewee reviewer1 got '<p>Review not found.</p>' (text count 0); author bpjm-noname and admin saw 'QA-REWALK draft one EDIT'. Auto-hidden 4083 logged-out: not found. Published 4086 logged-out rendered text; same id under /members/bpjm-noname/reviews/view/4086/ and admin on draft under noname URL: not found."
+    },
+    {
+      "id": "R3",
+      "result": "pass",
+      "evidence": "Anonymous published review 4087 (Anonymous ON, bupr_anonymous_review_post=yes) single view logged-out and as bpjm-jobsonly: avatar img class 'avatar avatar-128 photo' alt='Profile Photo'; 0 matches for bpjm-noname / user-34-avatar / noname. (only user-6-avatar of the reviewee remains)"
+    },
+    {
+      "id": "R4",
+      "result": "pass",
+      "evidence": "bupr_allow_update=no: bpjm-noname bupr_edit_review and bupr_update_review both -> code update_disabled 'Editing reviews is turned off on this site.', content unchanged; admin bupr_update_review success and bupr_edit_review returned modal HTML. Option restored to yes."
+    },
+    {
+      "id": "R5",
+      "result": "pass",
+      "evidence": "Server: empty/no stars -> 'Please rate every criterion or write a review.' (post count 41 unchanged); partial star only -> same refusal; partial star + text accepted, profile_star_rating {\"Member Response\":4}; all stars no text accepted {\"Member Response\":5,\"Member Skills\":2} (name keys, no numeric). Browser (Reign, bpjm-candidate): partial star + whitespace text -> refusal shown at 1s and still visible at 7s, textarea value and stars (4,0) kept; valid submit -> 'Thank you for sharing your thoughts in this review!' visible at 0s and 6s, form reset."
+    },
+    {
+      "id": "R6",
+      "result": "pass",
+      "evidence": "Anonymous OFF + bupr_anonymous_review=yes, auto-approve ON: Mailpit 'You Have Received a New Review' to reviewer1@example.com says 'noname tester has recently submitted a review'; no 'An anonymous user'; meta not stored."
+    },
+    {
+      "id": "R7",
+      "result": "fail",
+      "evidence": "Twenty Twenty-Five: add-review and reviews tab scrollWidth == viewport at 1440 and 1024; at 390 scrollWidth=397 on both. Culprit is BuddyPress #item-header-avatar (right=397) - plain /members/reviewer1/ with no plugin tab also scrollWidth 397; no plugin element (#request-review-list, form, textarea 330px) exceeds the viewport. Edit modal content left 15/right 375, textarea 39-351; report modal content 20-371 at 390 (fit). So plugin-owned parts fixed, strict criterion fails for a BP/TT25 reason. Submit/Update buttons in TT25 still unstyled rgb(85,85,85) on white."
+    },
+    {
+      "id": "R8",
+      "result": "pass",
+      "evidence": "Force-deleted published 4087: reviewer1 stored count 4->3 and aggregate 4.25 == fresh recount 3 / 4.25; bp_activity rows for item 4087 = 0 (were id 427)."
+    },
+    {
+      "id": "R10",
+      "result": "pass",
+      "evidence": "Owner reply on draft 4085 as reviewer1 -> code not_found (refused); on published 4086 -> success reply_html, bupr_owner_reply saved; second reply on 4088 -> already_replied."
+    },
+    {
+      "id": "R11",
+      "result": "pass",
+      "evidence": "Threshold 2: bpjm-jobsonly + bpjm-empty reported 4086 -> auto_hidden true, draft. Admin clicked Dismiss Reports link in Report Details meta box (UI) -> bupr_flag_status=dismissed, bupr_flag_dismissed_at_count=2. After admin Approve, bpjm-candidate third report -> auto_hidden false, status publish (flag_count 3). Dismiss admin-post URL with a valid per-user nonce computed for qa_contrib and test-author (author role) -> 500 'You do not have permission to perform this action.'; status unchanged. (see failure R11-dismiss-leaves-hidden)"
+    },
+    {
+      "id": "R12",
+      "result": "pass",
+      "evidence": "As reporter bpjm-candidate, reload /members/reviewer1/reviews/: report section of 4086 = 'Reported' chip (.bupr-report-success), no .bupr-report-button; other two reviews still show Report buttons. Screenshot r12-reported-chip.png."
+    },
+    {
+      "id": "R14",
+      "result": "pass",
+      "evidence": "Logged out /members/reviewer1/reviews/add-review/: 'log in' link = /wp-login.php?redirect_to=https%3A%2F%2Fwbcom-free.local%2Fmembers%2Freviewer1%2Freviews%2Fadd-review%2F."
+    },
+    {
+      "id": "R16",
+      "result": "fail",
+      "evidence": "BuddyX and BuddyX Pro, report dialog: light Submit rgb(255,255,255)/rgb(201,42,43) but Cancel is identical rgb(255,255,255)/rgb(201,42,43); dark Submit rgb(10,10,10)/rgb(255,107,107) (salmon with dark text, not white) and Cancel identical. Winner is theme assets/css/bx-tokens-applied.css 'button.button,...{color:var(--bx-color-button-fg);background-color:var(--bx-color-button-bg)}' over plugin .bupr-flag-cancel (plugin's higher-specificity .buddypress-wrap .bupr-flag-cancel rules do not match: modal is outside .buddypress-wrap). Stars: empty .far.fa-star.bupr-star-rate = rgb(224,0,0) = filled .fas.fa-star in BuddyX, BuddyX Pro (light+dark) - empty stars DO follow Rating Color; winning rule is the plugin's inline <style> '.bupr-star-rate{color:rgb(224,0,0)!important}' (not the theme), so empty and filled differ only by glyph weight. Screenshot r16-buddyx-dark-report-modal.png."
+    },
+    {
+      "id": "R17",
+      "result": "pass",
+      "evidence": "/sample-page/ widget: reviewer1 4.33 (4 reviews), Test Customer 4.25 (2 reviews), Jo Jobs 3.5 (1 review); QA-REWALK page shortcode (most reviewed + top rated) same list; zero '0 reviews' entries; member with exactly 1 review (bpjm-jobsonly, fixture) shows '1 review'."
+    },
+    {
+      "id": "R18",
+      "result": "pass",
+      "evidence": "Email Message editor Code tab: 3 paragraphs separated by blank lines, Save; option value kept '\\r\\n\\r\\n' separators and the textarea after reload still showed them; new review email in Mailpit HTML body: '<p>Hello reviewer1, QA-REWALK paragraph one by noname tester.</p>\\r\\n<p>QA-REWALK paragraph two: see <a ...>' + '<p>Thanks, wbcom-free</p>'. Original message restored."
+    },
+    {
+      "id": "R19",
+      "result": "pass",
+      "evidence": "General tab, Auto Approve checkbox toggled by real label click without saving: ON->OFF both .review-approve-email-section rows went display none/0 -> flex/77 and flex/588 within 500ms; back ON -> none/0 again."
+    },
+    {
+      "id": "R20",
+      "result": "pass",
+      "evidence": "reviewer1 published reviews = 3 (4086, 4080, 446) at check time: profile tab 'Reviews 3' (DOM), bupr_get_member_review_count() used by the admin bar = 3, stored bupr_review_count=3. Admin bar not rendered for subscriber reviewer1 on Reign (no #wpadminbar; wp-admin redirects away), so the bar item itself was verified at function level only."
+    },
+    {
+      "id": "D1",
+      "result": "pass",
+      "evidence": "qa_contrib: nonce from bupr_admin_ajax_object on wp-admin/edit.php, POST bupr_approve_review review_id=4082 -> {code:'permission_error'}, 4082 stayed draft."
+    },
+    {
+      "id": "D2",
+      "result": "pass",
+      "evidence": "Reviewer Roles=[administrator]: bpjm-noname submit -> 'You are not allowed to review this member.', review count 47->47; admin (allowed) still created a published review. Roles restored."
+    },
+    {
+      "id": "C7",
+      "result": "pass",
+      "evidence": "Reign, bpjm-candidate: Add Review found in the '...' menu (#bupr-add-review-btn), all stars + text, auto-approve ON -> review 4088 published, profile_star_rating keyed by name, 1 activity row (id 429), aggregate 4.00->4.33 matches fresh recount, email 'You Have Received a New Review' in Mailpit, 1 BP notification."
+    },
+    {
+      "id": "C9",
+      "result": "pass",
+      "evidence": "Edit Review modal on own review 4088: text updated to '...EDITED', status publish, still 1 activity row with updated content."
+    },
+    {
+      "id": "C10",
+      "result": "pass",
+      "evidence": "reviewer1 replied once on 4088 (success), second -> already_replied."
+    },
+    {
+      "id": "C2",
+      "result": "pass",
+      "evidence": "Admin tabs Overview/General/Criteria/Display load at 1440 and 390 with scrollWidth == viewport; saved one field each (reviews per page 6, criterion rename, star color #e00001) and each persisted; all restored to original byte-identical."
+    }
+  ],
+  "hard_fails": [],
+  "failures": [
+    {
+      "id": "R7",
+      "origin": "for",
+      "severity": "low",
+      "expected": "Twenty Twenty-Five add-review page and reviews tab scrollWidth == viewport at 390.",
+      "actual": "scrollWidth 397 vs 390 on /members/reviewer1/reviews/add-review/ and /reviews/; same 397 on plain /members/reviewer1/ (BP Nouveau #item-header-avatar right edge 397). Plugin elements all fit; TT25 Submit/Update buttons remain unstyled (rgb(85,85,85) on white).",
+      "url": "https://wbcom-free.local/members/reviewer1/reviews/add-review/",
+      "role": "admin / member",
+      "theme": "twentytwentyfive",
+      "viewport": "390",
+      "file_line": "BuddyPress Nouveau header avatar under TT25 (not in plugin); button styling assets/css/bupr-front.css"
+    },
+    {
+      "id": "R16-cancel",
+      "origin": "from",
+      "severity": "medium",
+      "expected": "Report dialog Submit red/white, Cancel neutral and different from Submit under BuddyX and BuddyX Pro, light and dark.",
+      "actual": "Cancel computes identical to Submit: light rgb(255,255,255)/rgb(201,42,43), dark rgb(10,10,10)/rgb(255,107,107). Theme bx-tokens-applied.css 'button.button' rule beats .bupr-flag-cancel; modal sits outside .buddypress-wrap so the higher-specificity plugin override never matches. Dark Submit is salmon with dark text, not white.",
+      "url": "https://wbcom-free.local/members/reviewer1/reviews/ (Report on a review)",
+      "role": "bpjm-candidate",
+      "theme": "buddyx, buddyx-pro",
+      "viewport": "1440",
+      "file_line": "assets/css/bupr-front.css .bupr-flag-cancel / .buddypress-wrap .bupr-flag-cancel (and .bupr-flag-submit)"
+    },
+    {
+      "id": "R16-stars",
+      "origin": "from",
+      "severity": "low",
+      "expected": "Empty stars visibly distinct from filled stars.",
+      "actual": "Empty (.far.fa-star.bupr-star-rate) and filled (.fas.fa-star) both rgb(224,0,0) in BuddyX/BuddyX Pro light+dark; winning rule is plugin inline <style> '.bupr-star-rate{color:rgb(224,0,0)!important}', theme is not involved. Distinguished only by outline vs solid glyph.",
+      "url": "https://wbcom-free.local/members/reviewer1/reviews/",
+      "role": "any",
+      "theme": "buddyx, buddyx-pro",
+      "viewport": "1440",
+      "file_line": "dynamic inline style emitted from Rating Color (includes/bupr-scripts.php or bupr-filters.php)"
+    },
+    {
+      "id": "R11-dismiss-leaves-hidden",
+      "origin": "from",
+      "severity": "low",
+      "expected": "Dismissing reports on an auto-hidden review restores it, or the UI tells the admin it stays hidden until Approved.",
+      "actual": "After Dismiss Reports on auto-hidden 4086: bupr_flag_status=dismissed but post_status stays draft and bupr_auto_hidden=1; review stays off the profile until admin also clicks Approve.",
+      "url": "https://wbcom-free.local/wp-admin/post.php?post=4086&action=edit",
+      "role": "admin",
+      "theme": "reign-theme",
+      "viewport": "1440",
+      "file_line": "admin/bupr-admin.php bupr_handle_dismiss_flag (~line 740)"
+    }
+  ],
+  "untested": [
+    {
+      "id": "R20-adminbar-render",
+      "reason": "Admin bar not rendered for subscriber reviewer1 on Reign; verified via the same bupr_get_member_review_count() function and profile tab instead."
+    },
+    {
+      "id": "R7-dark-TT25",
+      "reason": "not requested"
+    }
+  ],
+  "coverage": {
+    "themes": [
+      "reign-theme",
+      "buddyx",
+      "buddyx-pro",
+      "twentytwentyfive"
+    ],
+    "viewports": [
+      1440,
+      1024,
+      390
+    ],
+    "personas": [
+      "admin",
+      "reviewer1",
+      "bpjm-noname",
+      "bpjm-jobsonly",
+      "bpjm-empty",
+      "bpjm-candidate",
+      "qa_contrib",
+      "test-author"
+    ]
+  },
+  "debug_log_issues": [
+    "No new lines mention buddypress-member-review/bupr, and no bp_core_get_user_domain / bp_core_get_username deprecations appeared (shortcode page, profile tab, admin tab pages loaded). debug.log grew 630044->1062349 bytes, php error.log 1827111->1878015, all other sources: WooCommerce wp_count_comments 'Unknown column wp_posts.post_type' (195, third-party job_application clause), phar 'null as array offset' deprecations (WP-CLI), bp_reset_query() nullable deprecation (BuddyPress)."
+  ],
+  "top3": [
+    "R16 Cancel button identical to Submit under BuddyX/BuddyX Pro (both modes)",
+    "R7 TT25 390px overflow remains (BP header, not plugin)",
+    "R11 Dismiss on auto-hidden review leaves it draft"
+  ],
+  "layer1_delta": [
+    "Opus re-verify: R16-cancel confirmed but cause differs: dialog IS inside .buddypress-wrap; BuddyX '.buddypress .buddypress-wrap button.button' (0,3,1) won. Fixed at (0,4,1); verified BuddyX + BuddyX Pro light/dark: Submit #dc3232/white, Cancel neutral.",
+    "Opus re-verify: R11 dismiss-leaves-hidden fixed: Dismiss now republishes an auto-hidden review (verified: draft -> publish, marker cleared).",
+    "Opus re-verify: R16-stars refuted: empty and filled stars sharing Rating Color is intended; shape distinguishes them.",
+    "Opus re-verify: R7 origin 'for': 7px overflow at 390 is BuddyPress #item-header-avatar on Twenty Twenty-Five, present without the plugin."
+  ],
+  "opus_verdict": "SHIP after re-verify: 0 hard fails; R16-cancel and R11 fixed and browser-verified; R16-stars by design; R7 not ours."
+}

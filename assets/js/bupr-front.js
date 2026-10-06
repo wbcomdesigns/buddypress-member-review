@@ -189,18 +189,13 @@ jQuery(document).ready(function () {
             function (response) {
               jQuery(".bupr-save-reivew-spinner").hide();
               sessionStorage.reloadAfterPageLoad = true;
-              var date = new Date();
-              date.setTime(date.getTime() + 20 * 1000);
-              // jQuery.cookie("response", response, {
-              //   expires: date,
-              // });
+              // The message stays until the next submit; only a saved review clears the form,
+              // so a refused submission keeps what the member typed.
               jQuery(".add_review_msg").show();
               jQuery(".add_review_msg p").html(response.data);
-              reset_review_form_data();
-              setTimeout(() => {
-                jQuery(".add_review_msg p").html('');
-                jQuery(".add_review_msg").hide();
-              }, 2000);
+              if (response && response.success) {
+                reset_review_form_data();
+              }
               // window.location.reload();
             }
           );
@@ -235,18 +230,13 @@ jQuery(document).ready(function () {
           function (response) {
             jQuery(".bupr-save-reivew-spinner").hide();
             sessionStorage.reloadAfterPageLoad = true;
-            var date = new Date();
-            date.setTime(date.getTime() + 20 * 1000);
-            // jQuery.cookie("response", response, {
-            //   expires: date,
-            // });
+            // The message stays until the next submit; only a saved review clears the form,
+            // so a refused submission keeps what the member typed.
             jQuery(".add_review_msg").show();
-            reset_review_form_data();
             jQuery(".add_review_msg p").html(response.data);
-            setTimeout(() => {
-              jQuery(".add_review_msg p").html('');
-              jQuery(".add_review_msg").hide();
-            }, 200);
+            if (response && response.success) {
+              reset_review_form_data();
+            }
           }
         );
       }
@@ -574,10 +564,7 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
         var $reportBtn = jQuery('.bupr-report-button[data-review="' + reviewId + '"], .bupr-flag-button[data-review="' + reviewId + '"]');
         var reportedLabel = jQuery('<div/>').text(mail_title.reported || "Reported").html();
         $reportBtn.replaceWith('<span class="bupr-report-success"><span class="dashicons dashicons-yes"></span> ' + reportedLabel + '</span>');
-        // Auto-fade after 3 seconds
-        setTimeout(function() {
-          jQuery('.bupr-report-success').fadeOut();
-        }, 3000);
+        // Stays put: the server renders the same Reported state on reload.
       } else {
         jQuery(".bupr-flag-error").text(response.data.message).show();
       }
