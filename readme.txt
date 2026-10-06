@@ -275,7 +275,7 @@ Moderation and settings-screen fixes.
 * Fix      - The Update Review setting is now enforced, not only by hiding the Edit button.
 * Fix      - A submitted review is stored with each rating on its own criterion, and an empty review is refused.
 * Fix      - A refused review submission keeps what the member typed, and the confirmation message stays on screen.
-* Fix      - Dismissed reports no longer count toward auto-hide.
+* Fix      - Dismissed reports no longer count toward auto-hide, and dismissing the reports on a review they hid publishes it again.
 * Fix      - Deleting a review recalculates the member's rating and removes its activity entry.
 * Fix      - Notification email formatting is kept when saved, so emails are no longer one run-on paragraph.
 * Fix      - The Anonymous flag is ignored in emails when Anonymous Reviews is off.
