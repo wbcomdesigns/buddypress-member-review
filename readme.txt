@@ -259,6 +259,7 @@ Moderation and settings-screen fixes.
 * Improve  - Members who already reported a review see Reported instead of a Report button that fails.
 * Improve  - The top members widget and shortcode skip members with no reviews and say 1 review instead of 1 reviews.
 * Improve  - The logged-out Add Review prompt is translatable and returns visitors to the review form after logging in.
+* Improve  - The Edit Review button uses the same readable style as Report in light and dark mode.
 * Fix      - A review hidden by the report threshold, unpublished or trashed is removed from the activity stream and the activity REST API.
 * Fix      - Re-approving or editing a review no longer posts a duplicate activity entry.
 * Fix      - Clearing the Auto-Hide Threshold field no longer switches auto-hide off; a blank or invalid value falls back to 5 reports.
@@ -289,6 +290,7 @@ Moderation and settings-screen fixes.
 * Security - Anonymous reviews no longer reveal the reviewer in the avatar text on the single review page.
 * Security - The top members list shows display names instead of login usernames.
 * Security - Dismissing or resolving reports requires the Editor capability.
+* Security - The review submit and approve actions no longer accept logged-out requests.
 
 = 3.8.0 - July 2026 =
 
