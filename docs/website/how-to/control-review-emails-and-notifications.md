@@ -44,7 +44,8 @@ It goes to the **Administration Email Address** under **Settings > General** in 
 - Keep the placeholders in square brackets exactly as written, or they will show up as plain text in the email.
 - Test with a second account, because emails depend on your hosting. A mail plugin (SMTP) makes delivery much more reliable.
 - Reported reviews and owner replies do not send any email. See [Notifications and Activity](../features/notifications-and-activity.md).
-- Approving a pending review sends the reviewed member their email and notification at that moment.
+- Approving a pending review sends the reviewed member their email and notification at that moment, if **Email Notifications** and **BuddyPress Notifications** are on.
+- When you dismiss the reports on a review that reports had hidden, the review comes back quietly. The member is not emailed again.
 
 ## If it does not work
 

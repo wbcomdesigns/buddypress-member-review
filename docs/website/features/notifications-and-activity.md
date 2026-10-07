@@ -9,6 +9,7 @@ The plugin can tell people when something happens to a review: by email, by a Bu
 | A review is published at once (Auto Approve on) | Email and BuddyPress notification | Nothing |
 | A review needs approval (Auto Approve off) | Nothing yet | Email, and a BuddyPress notification for the first administrator account |
 | You approve a pending review | Email and BuddyPress notification | Nothing |
+| You dismiss the reports on a review that reports had hidden | Nothing. The review comes back quietly. | Nothing |
 | Someone reports a review | Nothing | Nothing. Look at the Overview tab or the Reported list. |
 | The member replies to a review | Nothing | Nothing |
 
