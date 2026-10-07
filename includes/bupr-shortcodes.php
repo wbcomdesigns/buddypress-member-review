@@ -410,7 +410,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										<option value=""><?php esc_html_e( '--Select--', 'bp-member-reviews' ); ?></option>
 								<?php
 								foreach ( $bupr_member as $user ) {
-									if ( is_array( $bupr['add_taken_members'] ) && ! empty( $bupr['add_taken_members'] ) && isset( $user['member_roles'][0] ) && in_array( $user['member_roles'][0], $bupr['add_taken_members'], true ) ) {
+									if ( bupr_roles_allow_review( get_current_user_id(), $user['member_id'] ) ) {
 										echo '<option value="' . esc_attr( $user['member_id'] ) . '">' . esc_attr( $user['member_name'] ) . '</option>';
 									}
 								}

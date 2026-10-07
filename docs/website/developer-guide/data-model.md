@@ -6,7 +6,7 @@ The plugin creates no database tables. Reviews are posts of type `review`, each 
 
 | Property | Value |
 |---|---|
-| Public | Yes (`public`, `publicly_queryable` and `has_archive` are true, rewrite slug `review`). Only published reviews can be seen by the public. |
+| Public | No. `public` and `has_archive` are false, so reviews are left out of search, archives, feeds and sitemaps. A review's own URL (`/review/slug/`) redirects with a 301 to the review on the member's profile, and listing URLs return 404, so no page can show the author of an anonymous review. Reviews are read on member profiles. |
 | Admin menu | **Reviews**, with the speech bubble icon. |
 | Supports | Title, editor, author. |
 | Add New | Disabled (`create_posts` is `do_not_allow`). Reviews are only created from the front end. |
@@ -84,7 +84,7 @@ When **Activity Stream** is on, a published review adds an entry in the Members 
 
 ## BuddyPress notifications
 
-Component `buddypress_member_review`, action `bupr_add_review_action`, `item_id` = the review ID. One per review per recipient.
+Component `buddypress_member_review`, `item_id` = the review ID. Actions: `bupr_add_review_action` (new review, one per review per recipient), `bupr_review_flagged_action` (report, to the first administrator) and `bupr_owner_reply_action` (reply, to the reviewer); the last two add at most one unread notification per review per recipient. Trashing or deleting a review removes all of them.
 
 ## Cron
 

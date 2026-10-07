@@ -21,14 +21,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 	class BUPR_Custom_Hooks {
 
 		/**
-		 * Holds user role cache.
-		 *
-		 * @var array
-		 */
-		public $user_role_cache = array();
-
-
-		/**
 		 * Constructor.
 		 *
 		 * @since    1.0.0
@@ -138,45 +130,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				}
 			}
 			return $link;
-		}
-
-		/**
-		 * Get displayed user role.
-		 *
-		 * @since    2.3.0
-		 * @access   public
-		 * @author   Wbcom Designs
-		 *
-		 * @param int $user_id The user ID to get roles for.
-		 * @return array Array of user roles.
-		 */
-		public function bupr_get_current_user_roles( $user_id ) {
-			// Return empty array if not logged in.
-			if ( ! is_user_logged_in() || empty( $user_id ) ) {
-				return array();
-			}
-
-			$user_id = absint( $user_id );
-			// Check cache first.
-			if ( isset( $this->user_role_cache[ $user_id ] ) ) {
-				return $this->user_role_cache[ $user_id ];
-			}
-
-			if ( ! get_userdata( $user_id ) ) {
-				return array();
-			}
-			// Get user data.
-			$user  = get_userdata( $user_id );
-			$roles = array();
-
-			if ( is_object( $user ) && isset( $user->roles ) ) {
-				$roles = $user->roles;
-			}
-
-			// Cache the result.
-			$this->user_role_cache[ $user_id ] = $roles;
-
-			return $roles;
 		}
 
 		/**
@@ -344,166 +297,27 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_add_review_button_on_member_header() {
 			global $bupr;
-			if ( ! empty( $bupr['hide_review_button'] ) && 'yes' === $bupr['hide_review_button'] ) {
-				// Only on a resolved profile: with no displayed member the take-review branch
-				// would link the viewer to a review of themselves.
-				if ( is_user_logged_in() && bp_displayed_user_id() ) {
-					if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
-						$this->bupr_members_right_to_review();
-					} else {
-						$this->bupr_members_right_to_take_review();
-					}
-				}
-			}
-		}
-
-		/**
-		 * Map members who can give review by member role.
-		 */
-		public function bupr_members_right_to_review() {
-			// Add capability checks.
-			if ( ! current_user_can( 'read' ) || ! is_user_logged_in() ) {
+			if ( empty( $bupr['hide_review_button'] ) || 'yes' !== $bupr['hide_review_button'] || ! is_user_logged_in() ) {
 				return;
 			}
-			global $bp, $bupr;
-			$review_div = 'form';
-			$user_id    = bp_loggedin_user_id();
-
-			// Get user roles once for efficiency (avoid double function call).
-			$user_roles = $this->bupr_get_current_user_roles( $user_id );
-			$user_role  = ( is_array( $user_roles ) && ! empty( $user_roles ) ) ? $user_roles[0] : '';
-
-			// If user role is NOT in the allowed reviewer roles, exit early.
-			$allowed_reviewer_roles = isset( $bupr['exclude_given_members'] ) && is_array( $bupr['exclude_given_members'] ) ? $bupr['exclude_given_members'] : array();
-			if ( ! empty( $allowed_reviewer_roles ) && ! in_array( $user_role, $allowed_reviewer_roles, true ) ) {
+			$member_id = bp_displayed_user_id();
+			// Never on own profile (self-review is refused), and only when the roles
+			// settings allow it: the same check the Add Review tab and the submit use.
+			if ( ! $member_id || bp_loggedin_user_id() === $member_id || ! bupr_roles_allow_review( bp_loggedin_user_id(), $member_id ) ) {
 				return;
 			}
-
-			// Check if the displayed user is not the logged-in user.
-			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
-
-				// User passed the role check above, show the "Add Review" button.
-				$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
-				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-
-				// BuddyPress Nouveau template.
-				if ( 'nouveau' === $bp_template_option ) {
-					?>
-					<li id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review">
-							<?php
-							/* translators: %s: Review label. */
-							printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-							?>
-						</a>
-					</li>
+			$review_url = bupr_member_url( $member_id ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
+			$tag        = 'nouveau' === bp_get_option( '_bp_theme_package_id' ) ? 'li' : 'div';
+			?>
+			<<?php echo esc_html( $tag ); ?> id="bupr-add-review-btn" class="generic-button">
+				<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="form">
 					<?php
-				} else {
-					// BuddyPress legacy or other template.
+					/* translators: %s: Review label. */
+					printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
 					?>
-					<div id="bupr-add-review-btn" class="generic-button">
-						<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review">
-							<?php
-							/* translators: %s: review label. */
-							printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-							?>
-						</a>
-					</div>
-					<?php
-				}
-			}
-		}
-
-		/**
-		 * Members who can only take reviews.
-		 */
-		public function bupr_members_right_to_take_review() {
-			global $bp, $bupr;
-			$review_div = 'form';
-			$user_id    = bp_loggedin_user_id();
-			$user_role  = ( ! empty( $this->bupr_get_current_user_roles( $user_id ) ) ) ? $this->bupr_get_current_user_roles( $user_id )[0] : '';
-
-			// Exit early if the user's role is NOT in the allowed reviewer roles.
-			$allowed_reviewer_roles = isset( $bupr['exclude_given_members'] ) && is_array( $bupr['exclude_given_members'] ) ? $bupr['exclude_given_members'] : array();
-			if ( ! empty( $allowed_reviewer_roles ) && ! in_array( $user_role, $allowed_reviewer_roles, true ) ) {
-				return;
-			}
-
-			// Check if the displayed user is not the logged-in user.
-			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
-
-				// If add_taken_members is set, process the review logic.
-				if ( ! empty( $bupr['add_taken_members'] ) ) {
-					$user_id    = bp_displayed_user_id();
-					$user_roles = $this->bupr_get_current_user_roles( $user_id );
-					$user_role  = ! empty( $user_roles ) ? $user_roles[0] : '';
-					// Check if the displayed user has the role to take reviews.
-					if ( in_array( $user_role, $bupr['add_taken_members'], true ) ) {
-
-						// Construct the review URL.
-						$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
-						$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-
-						// BuddyPress Nouveau template.
-						if ( 'nouveau' === $bp_template_option ) {
-							?>
-							<li id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
-									<?php
-									/* translators: %s: review label. */
-									printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-									?>
-								</a>
-							</li>
-							<?php
-						} else {
-							// BuddyPress legacy or other template.
-							?>
-							<div id="bupr-add-review-btn" class="generic-button">
-								<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
-									<?php
-									/* translators: %s: review label. */
-									printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-									?>
-								</a>
-							</div>
-							<?php
-						}
-					}
-				} else {
-					// If add_taken_members is empty, allow reviews for all.
-
-					// Construct the review URL.
-					$review_url         = bp_core_get_userlink( $user_id, false, true ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
-					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-
-					// BuddyPress Nouveau template.
-					if ( 'nouveau' === $bp_template_option ) {
-						?>
-						<li id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
-								<?php
-								/* translators: %s: review label. */
-								printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-								?>
-							</a>
-						</li>
-						<?php
-					} else {
-						// BuddyPress legacy or other template.
-						?>
-						<div id="bupr-add-review-btn" class="generic-button">
-							<a href="<?php echo esc_url( $review_url ); ?>" class="button add-review" show="<?php echo esc_attr( $review_div ); ?>">
-								<?php
-								/* translators: %s: review label. */
-								printf( esc_html__( 'Add %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) );
-								?>
-							</a>
-						</div>
-						<?php
-					}
-				}
-			}
+				</a>
+			</<?php echo esc_html( $tag ); ?>>
+			<?php
 		}
 
 		/**
@@ -753,24 +567,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_member_profile_reviews_tab() {
 			global $bp, $bupr;
 
-			// Default from plugin settings.
-			$exclude_given_members = $bupr['exclude_given_members'] ?? array();
-			$add_taken_members     = $bupr['add_taken_members'] ?? array();
-
-			if ( bupr_bp_classic_activate() ) {
-				global $wp_roles;
-				// Ensure $wp_roles is set correctly.
-				if ( ! isset( $wp_roles ) || ! is_object( $wp_roles ) || ! isset( $wp_roles->roles ) ) {
-					// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Initializing WordPress global when not set.
-					$wp_roles = wp_roles();
-				}
-				// Get all available roles for pre-population.
-				$available_roles       = array_keys( $wp_roles->roles );
-				$bupr_general_settings = get_option( 'bupr_admin_general_options', array() );
-				$exclude_given_members = $bupr_general_settings['bupr_exc_member'] ?? $available_roles;
-				$add_taken_members     = $bupr_general_settings['bupr_add_member'] ?? $available_roles;
-			}
-
 			$bp_pages = bp_core_get_directory_pages();
 			add_filter( 'site_url', 'bupr_site_url', 99 );
 			$member_slug = ( isset( $bp_pages->members ) && isset( $bp_pages->members->slug ) ) ? $bp_pages->members->slug : 'members';
@@ -782,7 +578,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			if ( apply_filters( 'bupr_show_profile_review_tab', true ) ) {
 				$tab_args = array(
-					'name'                    => bupr_profile_review_tab_name() . 's' . $bupr_notification,
+					'name'                    => bupr_profile_review_tab_name() . ' ' . $bupr_notification, // BP cuts one char before the count span.
 					'slug'                    => bupr_profile_review_tab_plural_slug(),
 					'screen_function'         => array( $this, 'bupr_reviews_tab_function_to_show_screen' ),
 					'position'                => 75,
@@ -808,50 +604,23 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			);
 
 			// Add subnav to add a review.
-			// Never on own profile: the profile form has no member picker and self-review is refused (bupr-ajax.php), matching the header button.
-			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
-				// On another user's profile: check if logged-in user's role is allowed to give reviews.
-				$user_role     = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-				$allowed_roles = ! empty( $exclude_given_members ) && is_array( $exclude_given_members ) ? $exclude_given_members : array();
-
-				// If allowed roles are set and user's role is NOT in the list, block the subnav.
-				if ( ! empty( $allowed_roles ) && ! empty( $user_role ) && ! array_intersect( (array) $user_role, $allowed_roles ) ) {
-					return;
-				}
-
-				if ( ! empty( $add_taken_members ) && ! empty( $user_role ) ) {
-					$user_role = $this->bupr_get_current_user_roles( bp_displayed_user_id() );
-					$user_role = ! empty( $user_role ) ? $user_role : array();
-
-					if ( array_intersect( $user_role, $add_taken_members ) ) {
-						bp_core_new_subnav_item(
-							array(
-								/* translators: %1$s: Review label. */
-								'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
-								'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
-								'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
-								'parent_slug'     => $parent_slug,
-								'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
-								'position'        => 200,
-								'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_singular_slug(),
-							)
-						);
-					}
-				} else {
-
-					bp_core_new_subnav_item(
-						array(
-							/* translators: %1$s: Review label. */
-							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
-							'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
-							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
-							'parent_slug'     => $parent_slug,
-							'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
-							'position'        => 200,
-							'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_singular_slug(),
-						)
-					);
-				}
+			// Never on own profile: the profile form has no member picker and self-review is refused (bupr-ajax.php).
+			// Logged-in viewers get it only when the roles settings allow the review, the same check as the header
+			// button and the submit; logged-out visitors see it and the form asks them to log in.
+			$member_id = bp_displayed_user_id();
+			if ( bp_loggedin_user_id() !== $member_id && ( ! is_user_logged_in() || bupr_roles_allow_review( bp_loggedin_user_id(), $member_id ) ) ) {
+				bp_core_new_subnav_item(
+					array(
+						/* translators: %1$s: Review label. */
+						'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
+						'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
+						'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
+						'parent_slug'     => $parent_slug,
+						'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
+						'position'        => 200,
+						'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_singular_slug(),
+					)
+				);
 			}
 			remove_filter( 'site_url', 'bupr_site_url', 99 );
 		}

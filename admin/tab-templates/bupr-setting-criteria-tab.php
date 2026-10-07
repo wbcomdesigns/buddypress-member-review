@@ -39,10 +39,9 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 				<p style="margin: 10px 0 0 0; color: #856404;">
 					<?php
 					printf(
-						/* translators: 1: Current mode label, 2: Link to Add-ons tab */
-						esc_html__( 'Rating criteria are only used in Star Ratings mode. You are currently using %1$s mode. To manage criteria, switch to Star Ratings mode in the %2$s tab.', 'bp-member-reviews' ),
-						'<strong>' . esc_html( $mode_label ) . '</strong>',
-						'<a href="' . esc_url( admin_url( 'admin.php?page=bp-member-review-settings&tab=bupr-pro-features' ) ) . '">' . esc_html__( 'Add-ons', 'bp-member-reviews' ) . '</a>'
+						/* translators: %s: Current mode label */
+						esc_html__( 'Rating criteria are only used in Star Ratings mode. You are currently using %s mode. To manage criteria, switch to Star Ratings mode in the Member Reviews Pro settings.', 'bp-member-reviews' ),
+						'<strong>' . esc_html( $mode_label ) . '</strong>'
 					);
 					?>
 				</p>
@@ -131,7 +130,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 				<div id="bupr-add-criteria-action" class="bupr-admin-row border">
 					<div class="bupr-admin-col-12">
 						<input id="bupr-btnAdd" type="button" value="<?php esc_attr_e( 'Add Criteria', 'bp-member-reviews' ); ?>" aria-label="<?php esc_attr_e( 'Add a new review criteria', 'bp-member-reviews' ); ?>" class="bupr-btn bupr-btn-secondary"/>
-						<p class="description"><?php esc_html_e( 'This option allows you to add multiple rating criteria. By default, no criteria are shown until you activate them.', 'bp-member-reviews' ); ?></p>
+						<p class="description"><?php esc_html_e( 'This option allows you to add multiple rating criteria. By default, no criteria are shown until you activate them. With no criteria, reviews are text only and have no stars.', 'bp-member-reviews' ); ?></p>
 					</div>
 				</div>
 				</div>

@@ -53,7 +53,7 @@ You have two choices on a reported review. They do different things.
 | Action | What it means | Effect on the review |
 |---|---|---|
 | **Dismiss Reports** | "These reports were wrong." | If the plugin had hidden the review, it is published again. The reports so far stop counting toward the threshold, so only new reports can hide it again. |
-| **Mark Resolved** | "I have dealt with this." | The report is marked resolved. A hidden review stays hidden. If you want it live, publish it yourself. |
+| **Mark Resolved** | "I have dealt with this." | The report is marked resolved. A hidden review stays hidden. If you want it live, publish it yourself. The reports so far stop counting toward the threshold, the same as Dismiss. |
 
 If a review really is inappropriate, edit or trash it. See [Handle a reported review](../how-to/handle-a-reported-review.md).
 

@@ -32,7 +32,7 @@ In the list, the **Reports** column shows how many reports a review has. An auto
 | Wrong, and the review is fine | Click **Dismiss Reports**. A review that was hidden by reports is published again. |
 | Right, and the review should go | Click **Trash** (or edit the text first if you only want to remove part of it). Then click **Mark Resolved** if you want to keep a record. |
 | Right, but you want to keep the review hidden | Click **Mark Resolved**. The review stays hidden. |
-| Right, but you want it back on the profile | Click **Mark Resolved**, then publish the review. |
+| Right, but you want it back on the profile | Click **Mark Resolved**, then publish the review. The reports you resolved no longer count toward hiding it again. |
 
 After you click, the page shows "Review reports have been dismissed." or "Review reports have been marked as resolved."
 
@@ -44,18 +44,23 @@ Only Administrators and Editors can do this.
 2. Pick **Dismiss Reports** or **Resolve Reports** under **Bulk actions** and click **Apply**.
 3. The page shows how many reviews were updated.
 
-**Dismiss Reports** in bulk works exactly like on a single review: a review hidden by reports is published again and its report count is reset. **Resolve Reports** only marks the reports as resolved.
+**Dismiss Reports** in bulk works exactly like on a single review: a review hidden by reports is published again and its report count is reset. **Resolve Reports** marks the reports as resolved and leaves a hidden review hidden.
 
-## How Dismiss and Resolve differ for the next report
+## What happens with the next report
 
-- **Dismiss Reports** resets the count. If the threshold is 5, the review needs 5 new reports to be hidden again.
-- **Mark Resolved** does not reset the count. If a review had 5 reports and you publish it again, the next single report can hide it again, because it is now at 6.
+Both **Dismiss Reports** and **Mark Resolved** close the reports you have looked at. They no longer count toward the threshold. If the threshold is 5, the review needs 5 new reports to be hidden again.
+
+The difference is only what happens to a hidden review: Dismiss publishes it again, Mark Resolved leaves it hidden until you publish it.
 
 ## What members see
 
 - A member who reported a review sees "Reported" in place of the **Report** button.
 - A hidden review disappears from the profile, the member's rating, and the activity stream.
 - The member who reported is not told what you decided.
+
+## How you hear about reports
+
+When a member reports a review, the site administrator gets a BuddyPress notification: "A member reported a review. Check it and dismiss or resolve the report." Clicking it opens the review in the admin. It does not name the member who reported. It follows the **BuddyPress Notifications** switch, and there is one unread notification per review, however many reports arrive.
 
 ## Tips
 

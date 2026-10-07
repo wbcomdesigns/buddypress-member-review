@@ -6,8 +6,9 @@ You can override the front-end review templates from your theme, so your changes
 
 | Template | What it draws |
 |---|---|
-| `bupr-reviews-tab-template.php` | The **Reviews** tab list on a member profile, including the Report dialog and the owner reply form. |
+| `bupr-reviews-tab-template.php` | The **Reviews** tab list on a member profile, including the Report dialog. |
 | `bupr-single-review-template.php` | One full review (opened from "read more..." or a review link). |
+| `bupr-owner-reply.php` | The owner reply, or the reply form for the reviewed member. Loaded by both templates above with `$review_id`. |
 | `bupr-edit-review-form.php` | The pop-up shell for editing a review. |
 
 The defaults are in `includes/templates/` inside the plugin.
@@ -43,7 +44,7 @@ Edit the copy, then reload a member profile. Clear any page cache first.
 
 ## Keep these when you override
 
-- **`bupr-reviews-tab-template.php`**: keep the `do_action( 'bupr_after_member_review_list' )` line. The edit-review pop-up is added through it, so without it **Edit Review** stops working. Keep the Report dialog markup (`.bupr-flag-modal`) and the reply markup (`.bupr-reply-*`) if you want those features to keep working, because the plugin's JavaScript looks for those class names.
+- **`bupr-reviews-tab-template.php`**: keep the `do_action( 'bupr_after_member_review_list' )` line. The edit-review pop-up is added through it, so without it **Edit Review** stops working. Keep the Report dialog markup (`.bupr-flag-modal`) and the `bupr_get_template( 'bupr-owner-reply.php', ... )` line if you want those features to keep working. If you override `bupr-owner-reply.php`, keep the `.bupr-reply-*` class names, because the plugin's JavaScript looks for them.
 - **`bupr-single-review-template.php`**: it already hides pending and report-hidden reviews from everyone except the writer and moderators. Keep that check if you rewrite the file.
 - Anonymous reviews: the templates replace the reviewer's name and picture when the review is marked anonymous. Keep that logic when you copy them.
 

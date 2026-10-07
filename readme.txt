@@ -251,7 +251,9 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 
 Moderation and settings-screen fixes.
 
+* New      - The site administrator gets a BuddyPress notification when a review is reported, and the reviewer gets one when the member replies to their review.
 * New      - Reviews hidden by the report threshold now show an Auto-hidden badge with the hide date, an Auto-hidden filter in the Reviews list, and a count on the Overview screen.
+* Improve  - The single review page shows the owner's reply, and the reviewed member can reply from it.
 * Improve  - Settings toggles render as switches again, and the criteria Add and Remove buttons match the rest of the settings screen.
 * Improve  - Email editors use the full row width, subject fields are wider, and settings rows no longer leave large gaps on phones.
 * Improve  - Member review counts in the admin bar and profile tab read the cached total instead of loading every review on each page view.
@@ -285,6 +287,10 @@ Moderation and settings-screen fixes.
 * Fix      - The bulk Dismiss Reports action restores a review hidden by reports, the same as dismissing a single review.
 * Fix      - The Member Rating widget respects Number of Ratings to Show, and shows the default avatar for anonymous reviews.
 * Fix      - The Add Review tab no longer shows on your own profile, where a review could never be submitted.
+* Fix      - Mark Resolved now stops the resolved reports counting toward auto-hide, the same as Dismiss Reports.
+* Fix      - The Add Review button, the Add Review tab and the review form's member list accept a member with any allowed role, not only their first role.
+* Fix      - A custom plural review label shows as typed on the profile tab with BuddyPress Legacy templates.
+* Fix      - The Reviewer Roles, Reviewee Roles, Criteria and Display settings describe what they really do.
 * Fix      - The review form and dialogs no longer overflow the screen on themes without a box-sizing reset, such as Twenty Twenty-Five.
 * Fix      - Report dialog Submit and Cancel buttons keep their own styles inside BuddyPress pages.
 * Fix      - Removed BuddyPress 12 deprecation notices from profile links.
@@ -293,6 +299,7 @@ Moderation and settings-screen fixes.
 * Security - The Reviewer Roles and Reviewee Roles settings are now enforced when a review is submitted, not only by hiding the Add Review button.
 * Security - Pending and report-hidden reviews are no longer readable at their direct link, and a review only shows on the profile it belongs to.
 * Security - Anonymous reviews no longer reveal the reviewer in the avatar text on the single review page.
+* Security - Reviews no longer have public pages, archives, feeds or search results, which showed the author of an anonymous review; old review links redirect to the review on the member's profile.
 * Security - The top members list shows display names instead of login usernames.
 * Security - Dismissing or resolving reports requires the Editor capability.
 * Security - The review submit and approve actions no longer accept logged-out requests.
