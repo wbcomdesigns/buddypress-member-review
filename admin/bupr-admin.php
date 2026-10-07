@@ -339,7 +339,21 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				if ( ( 'publish' === $new_status && 'draft' === $old_status ) && 'review' === $post->post_type ) {
 
 					do_action( 'bupr_member_review_after_review_insert', $post->ID, $bupr_member_id );
-					do_action( 'bupr_sent_review_notification', $bupr_member_id, $post->ID );
+
+					// A review brought back after its reports were dismissed is not news to the
+					// member. This runs before bupr_handle_review_status_transition() clears the
+					// marker (same priority, registered first), so the marker still means "restore".
+					if ( get_post_meta( $post->ID, 'bupr_auto_hidden', true ) ) {
+						return;
+					}
+
+					// Honour the owner's switches, as the submit path in BUPR_AJAX does.
+					if ( isset( $bupr['allow_notification'] ) && 'yes' === $bupr['allow_notification'] ) {
+						do_action( 'bupr_sent_review_notification', $bupr_member_id, $post->ID );
+					}
+					if ( ! isset( $bupr['allow_email'] ) || 'yes' !== $bupr['allow_email'] ) {
+						return;
+					}
 
 					$bupr_admin_general = get_option( 'bupr_admin_general_options' );
 					$site_name          = get_bloginfo( 'name' );

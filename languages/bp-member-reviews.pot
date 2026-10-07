@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-07T10:55:09+00:00\n"
+"POT-Creation-Date: 2026-10-07T11:33:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -138,7 +138,7 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: admin/bupr-admin.php:361
+#: admin/bupr-admin.php:375
 #: includes/bupr-ajax.php:233
 #: includes/bupr-filters.php:1012
 #: includes/bupr-filters.php:1118
@@ -148,7 +148,7 @@ msgstr ""
 
 #. translators: 1: User display name, 2: Review tab name (singular).
 #. translators: 1: Reviewed member's display name. 2: Singular review label (e.g. "review").
-#: admin/bupr-admin.php:367
+#: admin/bupr-admin.php:381
 #: includes/bupr-ajax.php:239
 #: includes/bupr-ajax.php:421
 #: includes/bupr-scripts.php:200
@@ -156,129 +156,129 @@ msgstr ""
 msgid "%1$s received a %2$s"
 msgstr ""
 
-#: admin/bupr-admin.php:375
+#: admin/bupr-admin.php:389
 #: includes/bupr-ajax.php:430
 msgid "New Review on Your Profile at [site-name]"
 msgstr ""
 
 #. translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim.
-#: admin/bupr-admin.php:386
+#: admin/bupr-admin.php:400
 #: includes/bupr-ajax.php:436
 msgid "Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team"
 msgstr ""
 
-#: admin/bupr-admin.php:446
+#: admin/bupr-admin.php:460
 #: admin/tab-templates/bupr-setting-general-tab.php:418
 msgid "Reports"
 msgstr ""
 
-#: admin/bupr-admin.php:475
-#: admin/bupr-admin.php:641
+#: admin/bupr-admin.php:489
+#: admin/bupr-admin.php:655
 msgid "Resolved"
 msgstr ""
 
-#: admin/bupr-admin.php:477
-#: admin/bupr-admin.php:644
+#: admin/bupr-admin.php:491
+#: admin/bupr-admin.php:658
 msgid "Dismissed"
 msgstr ""
 
 #. translators: %s: date and time the review was hidden.
-#: admin/bupr-admin.php:486
+#: admin/bupr-admin.php:500
 #, php-format
 msgid "Hidden on %s"
 msgstr ""
 
-#: admin/bupr-admin.php:487
-#: admin/bupr-admin.php:547
+#: admin/bupr-admin.php:501
+#: admin/bupr-admin.php:561
 msgid "Auto-hidden"
 msgstr ""
 
-#: admin/bupr-admin.php:495
+#: admin/bupr-admin.php:509
 msgid "report"
 msgid_plural "reports"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/bupr-admin.php:525
+#: admin/bupr-admin.php:539
 #: includes/admin/views/overview.php:94
 #: includes/bupr-scripts.php:205
 #: includes/templates/bupr-reviews-tab-template.php:366
 msgid "Reported"
 msgstr ""
 
-#: admin/bupr-admin.php:610
+#: admin/bupr-admin.php:624
 msgid "Report Details"
 msgstr ""
 
-#: admin/bupr-admin.php:630
+#: admin/bupr-admin.php:644
 msgid "No reports for this review."
 msgstr ""
 
-#: admin/bupr-admin.php:635
+#: admin/bupr-admin.php:649
 msgid "Status:"
 msgstr ""
 
-#: admin/bupr-admin.php:638
+#: admin/bupr-admin.php:652
 msgid "Pending Review"
 msgstr ""
 
-#: admin/bupr-admin.php:647
+#: admin/bupr-admin.php:661
 msgid "None"
 msgstr ""
 
-#: admin/bupr-admin.php:651
+#: admin/bupr-admin.php:665
 msgid "Total Reports:"
 msgstr ""
 
-#: admin/bupr-admin.php:656
+#: admin/bupr-admin.php:670
 msgid "Unknown"
 msgstr ""
 
-#: admin/bupr-admin.php:661
+#: admin/bupr-admin.php:675
 msgid "By:"
 msgstr ""
 
-#: admin/bupr-admin.php:691
-#: admin/bupr-admin.php:707
+#: admin/bupr-admin.php:705
+#: admin/bupr-admin.php:721
 msgid "Dismiss Reports"
 msgstr ""
 
-#: admin/bupr-admin.php:692
+#: admin/bupr-admin.php:706
 msgid "Mark Resolved"
 msgstr ""
 
-#: admin/bupr-admin.php:708
+#: admin/bupr-admin.php:722
 msgid "Resolve Reports"
 msgstr ""
 
 #. translators: %d: Number of reviews updated
-#: admin/bupr-admin.php:762
+#: admin/bupr-admin.php:776
 #, php-format
 msgid "%d review report status updated."
 msgid_plural "%d reviews report statuses updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/bupr-admin.php:773
+#: admin/bupr-admin.php:787
 msgid "Review reports have been dismissed."
 msgstr ""
 
-#: admin/bupr-admin.php:782
+#: admin/bupr-admin.php:796
 msgid "Review reports have been marked as resolved."
 msgstr ""
 
-#: admin/bupr-admin.php:822
-#: admin/bupr-admin.php:863
+#: admin/bupr-admin.php:836
+#: admin/bupr-admin.php:877
 msgid "Security check failed."
 msgstr ""
 
-#: admin/bupr-admin.php:828
-#: admin/bupr-admin.php:869
+#: admin/bupr-admin.php:842
+#: admin/bupr-admin.php:883
 msgid "You do not have permission to perform this action."
 msgstr ""
 
-#: admin/bupr-admin.php:834
-#: admin/bupr-admin.php:875
+#: admin/bupr-admin.php:848
+#: admin/bupr-admin.php:889
 msgid "Invalid review."
 msgstr ""
 

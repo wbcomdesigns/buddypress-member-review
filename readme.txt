@@ -281,6 +281,7 @@ Moderation and settings-screen fixes.
 * Fix      - Notification email formatting is kept when saved, so emails are no longer one run-on paragraph.
 * Fix      - The Anonymous flag is ignored in emails when Anonymous Reviews is off.
 * Fix      - Owner replies are only accepted on published reviews.
+* Fix      - Approving a review respects the Email Notifications and BuddyPress Notifications switches, and a review restored by dismissing its reports no longer re-sends the "new review" email.
 * Fix      - The bulk Dismiss Reports action restores a review hidden by reports, the same as dismissing a single review.
 * Fix      - The Member Rating widget respects Number of Ratings to Show, and shows the default avatar for anonymous reviews.
 * Fix      - The Add Review tab no longer shows on your own profile, where a review could never be submitted.
