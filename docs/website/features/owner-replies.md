@@ -34,11 +34,11 @@ The reply appears at once. There is no approval step.
 | One reply per review | After a reply is posted, the button disappears. The reply cannot be edited or replaced from the front of the site. |
 | Profile owner only | Only the member who received the review sees the reply button. |
 | Published reviews only | A review that is pending approval or hidden cannot be replied to. |
-| Reviews tab only | The reply button is on the **Reviews** tab list, not on the single review page opened by "read more...". |
+| Reviews list and single review | The reply and the reply button show on the **Reviews** tab list and on the single review page opened by "read more..." or from a notification. |
 
 ## Good to know
 
-- The reviewer is not told about the reply. The plugin does not send an email or notification for it.
+- The reviewer gets a BuddyPress notification, "Alex replied to your review", that opens the review with the reply. It follows the **BuddyPress Notifications** switch. No email is sent.
 - There is no screen in the admin to edit or remove a reply. If you must remove one, ask a developer to delete the `bupr_owner_reply` custom field of that review.
 - If you trash a review, its reply goes with it.
 

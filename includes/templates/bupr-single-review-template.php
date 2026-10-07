@@ -248,6 +248,7 @@ if ( ! empty( $review_id ) ) {
 						?>
 					</div>
 				</div>
+				<?php bupr_get_template( 'bupr-owner-reply.php', array( 'review_id' => $review_id ) ); ?>
 		</article>
 	</div>
 

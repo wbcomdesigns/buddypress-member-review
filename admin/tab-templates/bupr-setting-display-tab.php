@@ -14,9 +14,6 @@ global $bupr;
 <div class="wbcom-tab-content">
 	<div class="wbcom-admin-title-section">
 		<h3><?php esc_html_e( 'Display Settings', 'bp-member-reviews' ); ?></h3>
-		<p class="wbcom-welcome-description">
-			<b><?php esc_html_e( 'Note', 'bp-member-reviews' ); ?>:</b>
-			<?php esc_html_e( 'This setting is applicable only if you have added a criterion for review.', 'bp-member-reviews' ); ?>		</p>
 	</div>
 	<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
 		<form method="post" action="options.php">

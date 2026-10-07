@@ -39,6 +39,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_action( 'admin_menu', array( $this, 'bupr_get_review_count' ) );
 			add_filter( 'pre_update_option_bupr_admin_settings', array( $this, 'bupr_update_admin_settings' ), 10, 2 );
 			add_action( 'transition_post_status', array( $this, 'bupr_generate_activity_review_status_change' ), 10, 3 );
+			add_action( 'template_redirect', array( $this, 'bupr_redirect_review_single' ) );
 			/* Register custom post type review */
 			$bupr_post_types = get_post_types();
 			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
@@ -206,7 +207,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			);
 			$args   = array(
 				'labels'             => $labels,
-				'public'             => true,
+				// Not public: a review's own page, archive, search result and sitemap entry
+				// would show the real author of an anonymous review. Reviews are read on the
+				// member's profile; old /review/ links redirect there (bupr_redirect_review_single).
+				'public'             => false,
 				'menu_icon'          => 'dashicons-testimonial',
 				'publicly_queryable' => true,
 				'show_ui'            => true,
@@ -221,12 +225,41 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					'create_posts' => 'do_not_allow',
 				),
 				'map_meta_cap'       => true,
-				'has_archive'        => true,
+				'has_archive'        => false,
 				'hierarchical'       => false,
 				'menu_position'      => null,
 				'supports'           => array( 'title', 'editor', 'author' ),
 			);
 			register_post_type( 'review', $args );
+		}
+
+		/**
+		 * Send a review's own URL (/review/slug/) to the review on the member's profile.
+		 * Listings (old archive rule, feed, ?post_type=review) and unpublished reviews
+		 * 404 so no page renders the author. Group reviews are left to Group Reviews.
+		 *
+		 * @since 3.8.1
+		 */
+		public function bupr_redirect_review_single() {
+			global $wp_query;
+			if ( ! is_singular( 'review' ) ) {
+				if ( in_array( 'review', (array) get_query_var( 'post_type' ), true ) && ! is_admin() ) {
+					$wp_query->set_404();
+					status_header( 404 );
+				}
+				return;
+			}
+			$review_id = get_queried_object_id();
+			$member_id = (int) get_post_meta( $review_id, 'linked_bp_member', true );
+			if ( ! $member_id ) {
+				return;
+			}
+			if ( 'publish' === get_post_status( $review_id ) ) {
+				wp_safe_redirect( bupr_member_url( $member_id ) . bupr_profile_review_tab_plural_slug() . '/view/' . $review_id, 301 );
+				exit;
+			}
+			$wp_query->set_404();
+			status_header( 404 );
 		}
 
 		/**
@@ -748,11 +781,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				if ( 'flagged' !== get_post_meta( $post_id, 'bupr_flag_status', true ) ) {
 					continue;
 				}
-				if ( 'bupr_dismiss_flags' === $doaction ) {
-					$this->bupr_dismiss_reports( (int) $post_id );
-				} else {
-					update_post_meta( $post_id, 'bupr_flag_status', 'resolved' );
-				}
+				$this->bupr_close_reports( (int) $post_id, 'bupr_dismiss_flags' === $doaction ? 'dismissed' : 'resolved' );
 				++$updated;
 			}
 
@@ -799,17 +828,22 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		}
 
 		/**
-		 * Dismiss the reports on one review. Shared by the single and bulk actions
-		 * so both restore an auto-hidden review the same way.
+		 * Close the reports on one review as dismissed or resolved. Shared by the
+		 * single and bulk actions so every path treats reports the same way.
 		 *
 		 * @since 3.8.1
-		 * @param int $review_id Review post ID.
+		 * @param int    $review_id Review post ID.
+		 * @param string $status    'dismissed' or 'resolved'.
 		 */
-		private function bupr_dismiss_reports( $review_id ) {
-			update_post_meta( $review_id, 'bupr_flag_status', 'dismissed' );
-			// Reports up to now were reviewed and rejected; only later ones count toward auto-hide.
+		private function bupr_close_reports( $review_id, $status ) {
+			update_post_meta( $review_id, 'bupr_flag_status', $status );
+			// Reports up to now were reviewed by an admin; only later ones count toward auto-hide.
 			$bupr_flags = get_post_meta( $review_id, 'bupr_flags', true );
 			update_post_meta( $review_id, 'bupr_flag_dismissed_at_count', is_array( $bupr_flags ) ? count( $bupr_flags ) : 0 );
+
+			if ( 'dismissed' !== $status ) {
+				return;
+			}
 
 			// Dismissing means the reports were unfounded: a review they auto-hid comes back.
 			// The publish transition clears the auto-hidden marker and restores its activity.
@@ -848,7 +882,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				wp_die( esc_html__( 'Invalid review.', 'bp-member-reviews' ) );
 			}
 
-			$this->bupr_dismiss_reports( $review_id );
+			$this->bupr_close_reports( $review_id, 'dismissed' );
 
 			// Redirect back to the review edit page.
 			$redirect_url = add_query_arg(
@@ -889,8 +923,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				wp_die( esc_html__( 'Invalid review.', 'bp-member-reviews' ) );
 			}
 
-			// Update flag status to resolved.
-			update_post_meta( $review_id, 'bupr_flag_status', 'resolved' );
+			$this->bupr_close_reports( $review_id, 'resolved' );
 
 			// Redirect back to the review edit page.
 			$redirect_url = add_query_arg(

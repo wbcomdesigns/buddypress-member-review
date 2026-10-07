@@ -10,15 +10,15 @@ The plugin can tell people when something happens to a review: by email, by a Bu
 | A review needs approval (Auto Approve off) | Nothing yet | Email, and a BuddyPress notification for the first administrator account |
 | You approve a pending review | Email and BuddyPress notification | Nothing |
 | You dismiss the reports on a review that reports had hidden | Nothing. The review comes back quietly. | Nothing |
-| Someone reports a review | Nothing | Nothing. Look at the Overview tab or the Reported list. |
-| The member replies to a review | Nothing | Nothing |
+| Someone reports a review | Nothing | BuddyPress notification for the first administrator account. It does not name who reported. |
+| The member replies to a review | Nothing. The reviewer (the member who wrote the review) gets a BuddyPress notification. | Nothing |
 
 ## The switches
 
 | Setting | What it controls |
 |---|---|
 | **Email Notifications** | The email to the reviewed member, and the "needs approval" email to you. |
-| **BuddyPress Notifications** | The notification bubble the reviewed member sees in BuddyPress. |
+| **BuddyPress Notifications** | The notification bubble the reviewed member sees in BuddyPress, plus the report notification to you and the reply notification to the reviewer. |
 | **Activity Stream** | Whether a published review is announced in the site-wide activity stream. Off by default. |
 
 Both notification switches are on by default. The BuddyPress notification to the administrator for a pending review is sent only while **Email Notifications** is on.

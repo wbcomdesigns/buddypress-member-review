@@ -280,7 +280,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<label for="bupr_exc_member">
 								<?php esc_html_e( 'Reviewer Roles', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Select user roles that can submit reviews.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Select user roles that can submit reviews. A member with any of the selected roles can. An empty list allows every role.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_exc_member][]" id="bupr_exc_member" class="bupr_excluding_member" multiple>
@@ -313,7 +313,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<label for="bupr_add_member">
 								<?php esc_html_e( 'Reviewee Roles', 'bp-member-reviews' ); ?>
 							</label>
-							<p class="description"><?php esc_html_e( 'Select user roles that can receive reviews.', 'bp-member-reviews' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Select user roles that can receive reviews. A member with any of the selected roles can. An empty list allows every role.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
 							<select name="bupr_admin_general_options[bupr_add_member][]" id="bupr_add_member" class="bupr_adding_member" multiple>

@@ -20,6 +20,8 @@ Both boxes list every role on your site, including roles added by other plugins 
 
 A member counts as allowed when any of their roles is on the list.
 
+A member with more than one role qualifies when any of their roles is in the box.
+
 By default every role is allowed in both boxes. If you remove every role from a box and save, the plugin treats it as "everyone" again, so that box can never lock all members out.
 
 ## Example

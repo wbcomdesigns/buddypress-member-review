@@ -23,7 +23,7 @@ Tell your members to:
 
 ## Tips
 
-- The reviewer is not notified of the reply.
+- The reviewer gets a BuddyPress notification about the reply (when **BuddyPress Notifications** is on). No email is sent.
 - A reply cannot be edited or removed from the plugin screens.
 - Replies are available only on published reviews, and only to the member who received the review. Other members, and administrators, do not get the reply button.
 - To stop replies, switch **Owner Replies** off. Existing replies are hidden but kept.

@@ -94,7 +94,7 @@ If emails work but notification bubbles do not, check **BuddyPress Notifications
 
 - **Report** needs **Review Reporting** on, a logged-in member, and a review written by someone else. After reporting, it changes to "Reported".
 - **Reply to this review** needs **Owner Replies** on, you must be the member who received the review, the review must be published, and you must not have replied yet.
-- Both buttons are on the **Reviews** tab list, not on a single review page.
+- **Report** is on the **Reviews** tab list. **Reply to this review** is on the list and on the single review page.
 
 ## Buttons do nothing
 

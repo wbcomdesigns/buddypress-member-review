@@ -691,7 +691,7 @@ function bupr_member_url( $user_id ) {
  * Whether the Reviewer Roles / Reviewee Roles settings allow one member to review another.
  *
  * An empty list means "every role". A user passes when ANY of their roles is listed.
- * The profile UI checks only the first role, so this never refuses a review the UI offered.
+ * The header button, the Add Review tab, the shortcode picker and the submit all use this check.
  *
  * @since 3.8.1
  * @param int $reviewer_id User submitting the review.
