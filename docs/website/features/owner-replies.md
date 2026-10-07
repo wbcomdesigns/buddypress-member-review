@@ -1,41 +1,45 @@
 # Owner Replies
 
-Owner replies let the member whose profile is being reviewed respond directly to a review. A reply appears beneath the original review on the Reviews tab, which turns one-way feedback into a short conversation and lets members address criticism professionally.
+Owner replies let the member who received a review answer it. The answer shows right under the review, so visitors see both sides. It is a good way for members to thank people or respond calmly to criticism.
 
-## How it works
+## What it looks like
 
-When someone reviews a member's profile, that profile owner can post one reply to the review. The reply shows below the review with the owner's avatar, a reply label, the reply text, and a timestamp, so visitors can tell the owner's response apart from other members' reviews.
+Under a review, the reply appears in its own box with the owner's picture, their name, a small "Owner Response" label, the date, and the text.
 
-## Enabling the feature
+## Turn it on or off
 
-Owner replies are on by default. To change this:
+Owner replies are on by default.
 
 1. Go to **WB Plugins > Member Reviews** and open the **General** tab.
-2. Find **Enable Review Owner Reply**.
-3. Turn it on or off and save.
+2. Find **Owner Replies** ("Allow profile owners to respond once to each review they receive.").
+3. Switch it on or off.
+4. Click **Save Changes**.
 
-When disabled, the reply button and any existing replies are hidden from profiles. Replies are not deleted from the database, so turning the feature back on restores them.
+When it is off, the reply button is gone and existing replies are hidden. Replies are not deleted, so switching it back on brings them back.
 
-## Posting a reply
+## How a member replies
 
-For the profile owner:
+1. Log in and open your own profile.
+2. Click the **Reviews** tab.
+3. Find the review you want to answer and click **Reply to this review**.
+4. Type your answer in the box that says "Write your response...".
+5. Click **Submit Reply**. Click **Cancel** to close the box without sending.
 
-1. Open your own profile and go to the Reviews tab.
-2. Find the review you want to answer.
-3. Click **Reply to this review** below the review content.
-4. Write your response and click **Submit Reply**.
-
-The reply appears immediately. There is no approval step.
+The reply appears at once. There is no approval step.
 
 ## Rules
 
-- **One reply per review.** Each review can carry a single owner reply, which keeps the exchange focused.
-- **Profile owner only.** Only the member whose profile holds the review can reply. Other members cannot reply to reviews on someone else's profile. An administrator can also post a reply on a member's behalf.
-- **No approval.** Replies post directly, so owners can respond quickly.
+| Rule | Detail |
+|---|---|
+| One reply per review | After a reply is posted, the button disappears. The reply cannot be edited or replaced from the front of the site. |
+| Profile owner only | Only the member who received the review sees the reply button. |
+| Published reviews only | A review that is pending approval or hidden cannot be replied to. |
+| Reviews tab only | The reply button is on the **Reviews** tab list, not on the single review page opened by "read more...". |
 
-## Tips for good replies
+## Good to know
 
-- Respond to negative reviews calmly and constructively; a professional reply often does more for your reputation than the review itself.
-- Reference the specific point raised rather than giving a generic answer.
-- Keep it brief. A few sentences read better than a long defense.
-- Reply while the review is still recent.
+- The reviewer is not told about the reply. The plugin does not send an email or notification for it.
+- There is no screen in the admin to edit or remove a reply. If you must remove one, ask a developer to delete the `bupr_owner_reply` custom field of that review.
+- If you trash a review, its reply goes with it.
+
+Step by step setup: [Let members reply to reviews](../how-to/let-members-reply-to-reviews.md).

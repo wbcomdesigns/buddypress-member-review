@@ -1,41 +1,61 @@
-# Submitting and Editing Reviews
+# Submitting and Editing Reviews (Member Guide)
 
-This page covers what members do: leaving a review, editing it, reporting a review, and how notifications reach the reviewed member.
+This page describes what your members do and see. You can share it with your community or copy parts into your own help pages.
 
-## Leaving a review
+## Write a review
 
-1. Open another member's profile.
-2. Click the **Reviews** tab, then **Add Review**. If directory ratings are enabled, an Add Review button also appears on the members directory so you can start without opening the profile.
-3. Rate each criterion using the star widget. The star input is keyboard operable: use the arrow keys to change the value and Enter or Space to set it.
-4. Write an optional text review.
-5. Submit.
+1. Log in and open the profile of the member you want to review.
+2. Click the **Reviews** tab, then **Add Review**. If the site owner turned on the header button, you can also click **Add Review** in the profile header.
+3. Click the stars for each criterion. Click the fifth star for the best score.
+4. Write a few words in the box that says "Enter your review".
+5. If you see "Send review anonymously.", tick it to hide your name and picture.
+6. Click **Submit Review**.
 
-Notes:
+You can rate with the keyboard too: use the arrow keys to change the stars and Enter or Space to confirm.
 
-- You cannot review your own profile. Self-reviews are blocked.
-- Whether you can review the same member more than once depends on the **Enable Multi Reviews** setting (on by default).
-- If **Auto Approve Reviews** is off, your review stays pending until an admin approves it.
-- "Reviews" is the default label. If the site owner renames the plural label under Display settings, the tab and its URL slug change to match.
+You must give a rating for every criterion or write some text. If you do neither, you see "Please either select a rating or write a review."
 
-## Anonymous reviews
+## What happens next
 
-If the site owner enables anonymous reviews, the form offers an anonymous option. An anonymous review hides the reviewer's name, avatar, and profile link from public view. Administrators can still see the real author in the admin.
+- If reviews are approved automatically, your review shows at once on that member's **Reviews** tab. You see "Thank you for sharing your thoughts in this review!"
+- If the site owner approves reviews first, you see "Thank you for sharing your Review! After admin approval, it will be displayed on members' profiles." The review appears after approval.
+- The member you reviewed gets an email and a notification, if the site owner kept those on.
 
-## Editing your review
+## Rules to know
 
-Editing is available when the **Allow update** setting is on (on by default). You can only edit reviews you wrote.
+| Rule | Detail |
+|---|---|
+| No self-reviews | There is no **Add Review** tab on your own profile. If you try anyway, you see "You cannot review your own profile." |
+| One or many | The site owner decides whether you can review the same member more than once. If only once, you see "You already posted a review for this member." |
+| Roles | The site owner can limit who may review and who may be reviewed. If you do not see **Add Review**, your role may not be allowed. |
+| Logged in | Visitors who are not logged in see "You must log in to add a review." After logging in, they come back to the review form. |
 
-1. Go to the profile where you left the review and open the Reviews tab.
-2. Find your review and click **Edit Review** (it appears only on your own reviews).
-3. A form opens with your existing rating and text.
-4. Adjust the stars or the text and save.
+## Edit your review
 
-Editing requires JavaScript. Members cannot delete their own reviews; only administrators can remove reviews.
+If the site owner allows it:
 
-## Reporting a review
+1. Open the profile of the member you reviewed and click the **Reviews** tab.
+2. Find your review and click **Edit Review**. The button shows only on your own reviews.
+3. Change the stars or the text and save.
 
-When reporting is enabled, click **Report** below any review, pick a reason (spam or fake review, harassment or abuse, inappropriate content, or conflict of interest), and submit. Reviews that pass the report threshold are hidden automatically pending admin review. See [Moderation and Reporting](../features/moderation-and-reporting.md).
+Changes show at once, and the member's average rating updates. Editing does not publish a review that is still waiting for approval.
 
-## Getting notified about reviews you receive
+You cannot delete a review from the front of the site. Ask the site owner if you need one removed.
 
-When someone reviews your profile you get a BuddyPress notification, and an email if email notifications are enabled. Both are controlled by the site owner on the General tab. As the profile owner you can reply once to each review; see [Owner Replies](../features/owner-replies.md).
+## Report a review
+
+If a review about someone breaks the rules, you can report it (if the site owner allows reporting).
+
+1. Click **Report** under the review.
+2. Choose a reason: "Spam or fake review", "Harassment or abuse", "Inappropriate content" or "Conflict of interest".
+3. Click **Submit Report**.
+
+You see "Reported" afterwards. You can report each review once. You cannot report your own review. See [Moderation and Reporting](../features/moderation-and-reporting.md).
+
+## Reply to a review you received
+
+Open your own profile, click **Reviews**, and click **Reply to this review**. See [Owner Replies](../features/owner-replies.md).
+
+## Your own Reviews tab
+
+On your own profile, the **Reviews** tab lists what others wrote about you. A small number next to the tab shows how many published reviews you have. Your average rating shows in your profile header.

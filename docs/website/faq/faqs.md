@@ -1,83 +1,133 @@
 # Frequently Asked Questions
 
-Common questions about BuddyPress Member Reviews. Settings referenced here live at **WB Plugins > Member Reviews**.
+Short answers to the questions site owners ask most. Settings are at **WB Plugins > Member Reviews**.
 
-## Is BuddyPress required?
+## Setup and basics
 
-Yes. The plugin needs BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher, with the Members component active. Reviews live on member profiles, so there is no standalone mode.
+### Do I need BuddyPress?
 
-## How do members submit reviews?
+Yes. You need BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher, with the **Members** component on. You also need WordPress 6.5 or higher and PHP 8.1 or higher.
 
-A member opens another member's profile, clicks the Reviews tab, then uses the Add Review button. If directory ratings are enabled, they can also start a review from the members directory. "Reviews" is just the default label; renaming the plural label under Display settings changes the tab and its URL slug.
+### Where are the settings?
 
-## Can members review themselves?
+At **WB Plugins > Member Reviews**. The list of reviews is a separate menu called **Reviews**. See [Admin Screen Tour](../getting-started/admin-screen-tour.md).
 
-No. Self-reviews are blocked so scores stay honest.
+### How do members write a review?
 
-## How do I add custom rating criteria?
+They open another member's profile, click the **Reviews** tab, then **Add Review**. If you switched on **Show Review Button**, there is also an **Add Review** button in the profile header. See [Submitting and Editing Reviews](../usage/submitting-reviews.md).
 
-Open the **Criteria** tab. Two criteria ship as defaults, "Member Response" and "Member Skills". Add, rename, or remove them freely, for example "Communication" or "Reliability".
+### Why can't I see the Add Review tab on my own profile?
 
-## Can I change the 5-star scale?
+By design. Members cannot review themselves, so version 3.8.1 hides the tab on your own profile. To review someone, open their profile. If you also cannot see it on other profiles, see "I cannot see Add Review" in [Troubleshooting](../troubleshooting/troubleshooting.md).
 
-No. The scale is fixed at 5 stars, which reviewers instantly understand. It cannot be changed by setting or filter.
+### Why is there no Add Review button in the profile header?
 
-## Can I require approval before reviews appear?
+**Show Review Button** is off by default. Switch it on at **WB Plugins > Member Reviews > General**. The **Add Review** tab under **Reviews** works either way.
 
-Yes, but the default is the other way round. **Auto Approve Reviews** is on by default, so reviews publish immediately. To review every submission first, turn Auto Approve off on the General tab. New reviews then stay as drafts until you approve them from the Reviews screen.
+### Can I rename "Review" to something else?
 
-## Can members edit a review after posting it?
+Yes, for example "Testimonial". Change **Review Label** and **Reviews Label (Plural)** on the **Display** tab. The plural word also changes the web address of the profile tab. See [Change the wording and star color](../how-to/change-labels-and-star-color.md).
 
-Yes, when the **Update Review** setting is on (on by default). Members can only edit their own reviews. Members cannot delete reviews; only administrators can.
+## Ratings
 
-## Can I control who reviews whom?
+### How is the average rating calculated?
 
-Yes. The General tab has two role selectors: **Reviewer Roles** for who may leave reviews, and **Reviewee Roles** for whose members can be reviewed.
+The stars in each review are averaged. Then the review scores are averaged. Every published review counts equally. Reviews with no stars are counted in the total but not in the average. Hidden, pending and trashed reviews are left out. See [Star Ratings and Criteria](../features/star-ratings-and-criteria.md).
 
-## Do reviews post to the activity stream?
+### Can I change the 5-star scale?
 
-They can. Enable **Activity Stream** on the General tab and each new review publishes to the BuddyPress activity stream. It is off by default.
+No. It is always 1 to 5 stars.
 
-## How do notifications work?
+### What happens to old reviews when I rename or remove a criterion?
 
-Members get a BuddyPress notification when they receive a review, and an email if email notifications are enabled. Admins get a pending-approval alert when moderation is on. The BuddyPress notification and the email are separate switches, so you can run one without the other.
+They keep their stars under the name they were written with. Nothing is lost, and they still count in the average. See [Set up rating criteria](../how-to/set-up-rating-criteria.md).
 
-## What happens when a review is reported?
+### Can I use one overall rating instead of several criteria?
 
-Reported reviews are flagged in the admin. Filter the Reviews list to the Reported view, open a review to read its Report Details meta box, then dismiss or resolve the report, individually or in bulk. Reviews auto-hide once they pass the report threshold you set (default 5).
+Yes. Switch **Multiple Criteria** off on the **Criteria** tab, and keep at least one row in the list.
 
-## Does it work with BuddyBoss?
+## Who can do what
 
-Yes. BuddyBoss Platform 1.8 and higher is supported, and the plugin is tested with the BuddyBoss Theme.
+### Can members edit their reviews?
 
-## Does it work with Multisite?
+Yes, when **Update Review** is on (the default). They click **Edit Review** under their own review. Editing does not publish a review that is still waiting for approval.
 
-Yes. Activate it network-wide or per site. Settings are stored per site.
+### Can members delete their reviews?
 
-## How do I display top-rated members?
+No. There is no delete button on the front end. Members can ask you to remove a review.
 
-Two ways. Add the **BP Member Review Widget** for a top-rated or most-reviewed list, or use the `[bupr_display_top_members]` shortcode on any page or post. There is also a **BP Displayed Member Rating Widget** that shows the rating of the member whose profile is being viewed. On a block theme, add either widget through the Legacy Widget block.
+### Who can delete a review?
 
-## What attributes does the shortcode accept?
+Administrators and Editors, from the **Reviews** list in the admin (**Trash**, then **Delete Permanently**). Deleting a review updates the member's average and count.
 
-`[bupr_display_top_members]` accepts four: `title` (heading, default empty), `total_member` (count, default 5), `type` (`top rated` by aggregate rating or `top reviewed` by review count, default `top rated`), and `avatar` (`show` or `hide`, default `show`). For example: `[bupr_display_top_members title="Most Reviewed" type="top reviewed" total_member="10" avatar="hide"]`.
+### Can I limit who reviews whom?
 
-## Can members reply to reviews about them?
+Yes. Use **Reviewer Roles** and **Reviewee Roles** on the **General** tab. See [Choose who can write and who can receive reviews](../how-to/choose-who-can-review-and-be-reviewed.md).
 
-Yes. Profile owners can reply once to each review. It is controlled by **Owner Replies** on the General tab and is on by default.
+### Can a member review the same person twice?
 
-## How do I change the Reviews tab name or star color?
+By default, yes (**Multiple Reviews** is on). Switch it off to allow one review per person.
 
-On the **Display** tab, set the singular and plural review labels and the star color. The plural label also drives the tab name and slug. You can also change the tab label in code with the `bupr_review_tab_name` filter.
+### Can I hold reviews for approval?
 
-## Is the plugin translation ready?
+Yes. Switch **Auto Approve Reviews** off. See [Require approval before reviews go live](../how-to/require-approval-for-reviews.md).
 
-Yes. German and French translations ship with the plugin, more locales are being added, and a POT file (`bp-member-reviews.pot`) is included so you can translate into any language. The plugin is WPML compatible and includes RTL support.
+### Can reviews be anonymous?
 
-## What are the requirements?
+Yes, if you switch on **Anonymous Reviews**. The name and picture are hidden from members, but you still see the writer in the admin. See [Turn on anonymous reviews](../how-to/turn-on-anonymous-reviews.md).
 
-WordPress 6.5 or higher, PHP 8.0 or higher, and BuddyPress 6.0+ or BuddyBoss Platform 1.8+ with the Members component active.
+## Moderation
 
-## Where can I get support?
+### What happens when a review is reported?
+
+The review gets a report count. When the count reaches **Auto-Hide Threshold** (5 by default) the review is hidden until you look at it. You can **Dismiss Reports** (the review comes back) or **Mark Resolved**. See [Handle a reported review](../how-to/handle-a-reported-review.md).
+
+### Do I get an email when a review is reported?
+
+No. Check the **Overview** tab or the **Reported** link above the **Reviews** list.
+
+### Can I stop a review from being hidden automatically?
+
+Yes. Set **Auto-Hide Threshold** to 0. Leaving the box blank does not do this. A blank box means 5.
+
+## Display and other plugins
+
+### Do reviews appear in the members directory?
+
+Yes, as stars beside each member who has reviews, when **Member Directory Ratings** is on (the default). The same setting controls the rating in the profile header.
+
+### How do I show top-rated members?
+
+Use the `[bupr_display_top_members]` shortcode, or the **BP Member Review Widget**. See [Show top-rated members on a page](../how-to/show-top-rated-members.md).
+
+### Do reviews show in the activity stream?
+
+Only if you switch on **Activity Stream**. It is off by default.
+
+### Does it work with BuddyBoss?
+
+Yes. The plugin has its own handling for BuddyBoss Platform 1.8 or higher, including the BuddyBoss members directory. It is also written for the BuddyPress Nouveau and Legacy templates and works with Youzify profile headers.
+
+### Does it work with the BuddyX and Reign themes?
+
+Yes. Dark mode in those themes is supported. The plugin follows the theme's own dark setting, not the visitor's device setting.
+
+### Can members reply to reviews about them?
+
+Yes. They can reply once to each review. See [Let members reply to reviews](../how-to/let-members-reply-to-reviews.md). The reviewer is not told about the reply.
+
+## Data and languages
+
+### What happens to reviews if I deactivate or delete the plugin?
+
+Nothing is deleted. Reviews, ratings and settings stay in your database, but the **Reviews** menu and the profile tab disappear. Activate the plugin again and everything returns. The daily background job is removed on deactivation and set up again on activation.
+
+### Which languages are included?
+
+German, French, Spanish, Italian and Portuguese (Brazil). The plugin is ready for other languages with the included translation template, and supports right-to-left languages.
+
+## Help
+
+### Where do I get support?
 
 See the [documentation](https://docs.wbcomdesigns.com/) and [Wbcom Designs support](https://wbcomdesigns.com/support/).

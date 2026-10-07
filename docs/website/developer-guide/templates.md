@@ -1,25 +1,29 @@
 # Template Overrides
 
-The front-end review templates can be overridden from your theme, so your customizations survive plugin updates. Do not edit files inside the plugin directory.
+You can override the front-end review templates from your theme, so your changes survive plugin updates. Never edit files inside the plugin folder.
 
 ## Templates you can override
 
-| Template | Purpose |
+| Template | What it draws |
 |---|---|
-| `bupr-reviews-tab-template.php` | The Reviews tab on a member profile (the review list). |
-| `bupr-single-review-template.php` | A single review's markup. |
-| `bupr-edit-review-form.php` | The edit-review form. |
+| `bupr-reviews-tab-template.php` | The **Reviews** tab list on a member profile, including the Report dialog and the owner reply form. |
+| `bupr-single-review-template.php` | One full review (opened from "read more..." or a review link). |
+| `bupr-edit-review-form.php` | The pop-up shell for editing a review. |
 
-The defaults ship in `includes/templates/` inside the plugin.
+The defaults are in `includes/templates/` inside the plugin.
 
-## How overriding works
+The review form itself (the stars and the **Submit Review** button) is built in PHP by the plugin, not in a template file. To change it, use the hooks below, such as `bupr_after_rating_fields`.
 
-The plugin loads templates through `bupr_get_template()`, which resolves the path with `bupr_locate_template()`. The lookup order is:
+## How the lookup works
 
-1. `wp-content/themes/your-theme/buddypress-member-review/<template>.php`
-2. the plugin default in `includes/templates/<template>.php`
+The plugin loads templates with `bupr_get_template()`, which asks `bupr_locate_template()` for the file. It checks, in this order:
 
-So to override a template, copy it into a `buddypress-member-review/` folder in your (child) theme and edit the copy.
+1. `your-child-theme/buddypress-member-review/<template>.php`
+2. `your-parent-theme/buddypress-member-review/<template>.php`
+3. `your-theme/<template>.php` (the theme root, with the same file name)
+4. The plugin default, `includes/templates/<template>.php`
+
+The first file that exists wins.
 
 ### Example
 
@@ -35,37 +39,46 @@ to:
 wp-content/themes/your-child-theme/buddypress-member-review/bupr-reviews-tab-template.php
 ```
 
-Clear any page cache and reload a member profile to see your version.
+Edit the copy, then reload a member profile. Clear any page cache first.
 
-## Filtering the resolved path
+## Keep these when you override
 
-If you need to relocate templates, filter the resolved path instead of copying:
+- **`bupr-reviews-tab-template.php`**: keep the `do_action( 'bupr_after_member_review_list' )` line. The edit-review pop-up is added through it, so without it **Edit Review** stops working. Keep the Report dialog markup (`.bupr-flag-modal`) and the reply markup (`.bupr-reply-*`) if you want those features to keep working, because the plugin's JavaScript looks for those class names.
+- **`bupr-single-review-template.php`**: it already hides pending and report-hidden reviews from everyone except the writer and moderators. Keep that check if you rewrite the file.
+- Anonymous reviews: the templates replace the reviewer's name and picture when the review is marked anonymous. Keep that logic when you copy them.
+
+## Filter the template path
+
+To move a template somewhere else without copying it:
 
 ```php
 add_filter( 'bupr_locate_template', function ( $template, $template_name, $template_path, $default_path ) {
-    // Return a different absolute path for a given $template_name.
-    return $template;
+	if ( 'bupr-single-review-template.php' === $template_name ) {
+		return WP_CONTENT_DIR . '/my-reviews/single.php';
+	}
+	return $template;
 }, 10, 4 );
 ```
 
-## Extending without overriding
+## Add markup without overriding
 
-Prefer the template hooks over copying a whole template when you only need to add markup:
+Hooks are safer than copying a whole file:
 
 ```php
 add_action( 'bupr_before_member_review_list', function () {
-    echo '<div class="my-notice">Community review guidelines apply.</div>';
+	echo '<p class="my-note">Be kind. Reviews follow our community rules.</p>';
 } );
 
 add_action( 'bupr_after_review_content', function ( $review_id ) {
-    // Append custom markup after a review's content.
+	// Append markup after each review's text.
 } );
 ```
 
-Available template hooks: `bupr_before_member_review_list`, `bupr_after_member_review_list`, `bupr_after_review_date` (`$review_id`), `bupr_after_review_content` (`$review_id`), `bupr_after_rating_fields`, and the `bupr_reviewer_name_html` filter (`$html`, `$review_id`). See [Hooks and Filters](hooks-and-filters.md).
+See [Hooks and Filters](hooks-and-filters.md) for the full list.
 
-## Notes
+## Good practice
 
-- Always escape output with `esc_html()`, `esc_attr()`, or `wp_kses_post()`.
-- Use a child theme so your overrides survive theme updates.
-- The edit, reply, and report flows are AJAX-driven and require JavaScript.
+- Escape everything you print: `esc_html()`, `esc_attr()`, `wp_kses_post()`.
+- Use a child theme so updates to your theme do not remove your overrides.
+- The edit, reply and report actions use AJAX, so they need JavaScript.
+- After a plugin update, compare your copy with the new default to pick up fixes.

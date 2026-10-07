@@ -1,58 +1,85 @@
 # Star Ratings and Criteria
 
-Star ratings give members a quick, visual way to evaluate each other. You can use a single overall rating or several named criteria that capture different aspects of a member's reputation.
+Star ratings give members a quick, visual way to judge each other. You choose whether members give one overall rating or rate several things separately.
 
-## How star ratings work
+## The 5-star scale
 
-Reviews use a fixed 5-star scale. Each review stores a star value per criterion, and the plugin calculates an aggregate rating for each member from all of their published reviews. The scale is not configurable.
+Every rating is 1 to 5 stars. The scale cannot be changed. A review with text only (no stars) is allowed, as long as the member writes something.
 
-## Single vs multiple criteria
+## One rating or several criteria
 
-By default the criteria set has two entries seeded on activation, "Member Response" and "Member Skills". You control this on the **Criteria** tab under **WB Plugins > Member Reviews**.
+You choose on **WB Plugins > Member Reviews > Criteria**, using the **Multiple Criteria** switch.
 
-- **Allow Multiple Criteria off**: reviewers rate a single overall value.
-- **Allow Multiple Criteria on**: reviewers rate each criterion you have defined separately.
+| Setting | What members see | Good for |
+|---|---|---|
+| **Multiple Criteria** on | One row of stars per criterion in your list, for example "Communication" and "Quality of Work". | Communities where different qualities matter. |
+| **Multiple Criteria** off | A single row of stars labeled "Rating". | Simple communities that want one score. |
 
-Example criteria sets you might build:
+To keep a single overall rating, switch **Multiple Criteria** off and leave at least one row in the criteria list. The name of that row is not shown to members. If you delete every row, the review form has no stars at all and members can only write text.
 
-- Freelancer marketplace: Communication, Quality of Work, Timeliness, Professionalism.
-- Tutoring community: Knowledge, Teaching Ability, Patience, Responsiveness.
+Two criteria are created for you when you activate the plugin: "Member Response" and "Member Skills".
+
+### Example criteria
+
+- Freelancer marketplace: Communication, Quality of Work, Timeliness.
+- Tutoring community: Knowledge, Patience, Responsiveness.
 - Professional network: Expertise, Reliability, Collaboration.
 
-Keep the set focused. Three to five criteria give useful detail without overwhelming reviewers.
+Three to five criteria give useful detail without making the form tiring to fill in.
 
-## Setting up criteria
+## What happens when you rename or remove a criterion
 
-1. Go to **WB Plugins > Member Reviews** and open the **Criteria** tab.
-2. Toggle **Allow Multiple Criteria** on if you want per-aspect ratings.
-3. Add, rename, or remove criteria rows.
-4. Save changes.
+Each review remembers the criterion name it was written under.
 
-Each active criterion appears as a separate star field in the review form and on each review.
+- **Renaming**: old reviews keep showing the old name. New reviews use the new name. Both still count toward the member's average.
+- **Removing**: old reviews that used it still show their stars under the old name. New reviews no longer ask for it.
 
-A criterion's stored key is an identifier, not a label. The plugin stores the untranslated name as the key and translates it only when rendering, so renaming a criterion in the admin keeps existing reviews intact.
+So changing criteria never deletes anyone's rating. If you want a clean slate, decide on your criteria before opening reviews to your members.
 
-## How the aggregate rating is calculated
+## What a member must fill in
 
-The aggregate uses a two-step average:
+A review can be submitted when the member either:
 
-1. **Per-review average**: all criterion values in a single review are averaged.
-2. **Member average**: all per-review averages are averaged together.
+- rates every criterion (or gives the single rating), or
+- writes review text.
+
+If they do neither, the form shows "Please either select a rating or write a review." and nothing is saved. A review with text but no stars is saved and shows no stars.
+
+## How a member's average rating is worked out
+
+The average is calculated in two steps from the member's **published** reviews:
+
+1. For each review, the stars are averaged. A review that rated "Communication" 5 and "Quality" 4 scores 4.5.
+2. The review scores are averaged together.
 
 Example:
 
-- Review 1: Communication 5, Quality 4, Timeliness 5, average 4.67.
-- Review 2: Communication 4, Quality 5, Timeliness 4, average 4.33.
-- Member aggregate: (4.67 + 4.33) / 2 = 4.5.
+- Review 1: Communication 5, Quality 4, Timeliness 5. Review score 4.67.
+- Review 2: Communication 4, Quality 5, Timeliness 4. Review score 4.33.
+- The member's average: (4.67 + 4.33) / 2 = 4.5.
 
-Each review contributes equally regardless of how many criteria it used. The aggregate and the review count are cached on the member and recalculated when reviews are approved, edited, trashed, or change status. A daily background job also reconciles the cached values.
+Notes:
 
-## Where ratings display
+- Every review counts equally, whatever the number of criteria.
+- Reviews with no stars (text only) count in the review total but not in the average.
+- Pending, hidden and trashed reviews do not count.
+- Deleting, trashing, approving or hiding a review updates the member's average and count straight away. A daily background job also double-checks the numbers.
 
-- **Profile header**: the member's aggregate rating and review count.
-- **Reviews tab**: each review with its per-criterion stars and overall score.
-- **Members directory**: a star rating beside each member, when directory ratings are enabled on the General tab.
+## Where ratings show
+
+| Where | What shows |
+|---|---|
+| Member profile header | The average rating and review count. Hover over the stars to see "Average rating". |
+| Reviews tab | Each review with its stars and the overall number. |
+| Members directory | The average rating beside each member who has reviews. |
+| Top members shortcode and widgets | See [Shortcodes](../shortcodes/shortcodes.md) and [Widgets](../shortcodes/widgets.md). |
+
+The profile header and directory ratings are both controlled by one switch, **Member Directory Ratings**, on the General tab. Turn it off and both disappear.
 
 ## Star color
 
-Set the filled-star color on the **Display** tab. The default is `#FFC400`. The color applies to profiles, the directory, widgets, and the shortcode output.
+Change the star color on the **Display** tab. See [Change the wording and star color](../how-to/change-labels-and-star-color.md).
+
+## Accessibility
+
+Members can fill in stars with the keyboard: use the arrow keys to change the value, and Enter or Space to set it.

@@ -1,56 +1,64 @@
 # Widgets
 
-The plugin ships two classic `WP_Widget` widgets. On a block theme, add them through the Legacy Widget block.
+The plugin adds two widgets. Both are classic widgets. On a block theme, add them with the **Legacy Widget** block.
+
+Find widgets at **Appearance > Widgets** (or in the Customizer under **Widgets**).
 
 ## BP Member Review Widget
 
-Lists top-rated or most-reviewed members in any widget area.
+Lists your top-rated or most-reviewed members. It can go in any widget area.
 
-| Setting | Values | Description |
+| Field | What it does | Default |
 |---|---|---|
-| Title | text | Heading above the list. |
-| Display | Top Rated (`top-rated`) or Most Reviewed (`top-viewed`) | Order by aggregate rating or by review count. |
-| Number of members | number | How many members to show. |
-| Show avatar | Show or Hide | Whether to display member avatars. |
+| **Enter Title** | Heading above the list. | "Top Members" |
+| **Display Members** | How many members to list. | 20 |
+| **Top Rated** or **Most Reviewed** | Order by average rating, or by number of reviews. | Top Rated |
+| **Display Avatar** | Show or hide member pictures. | Show |
 
-Add it under **Appearance > Widgets** (or the Customizer): find **BP Member Review**, place it in a widget area, configure the fields, and save.
+Each entry shows the picture, the member's name linked to their profile, stars and a line such as "4.5/5 (3 reviews)". Only members with at least one published review appear. If there are none, the widget shows "No members have been reviewed yet."
 
 ## BP Displayed Member Rating Widget
 
-Shows the reviews of the member whose profile is currently being viewed. It is contextual and only renders on a member profile.
+Shows the individual ratings that the member whose profile you are viewing has received. It only appears on a member profile page and stays hidden everywhere else, so put it in a sidebar that shows on profiles.
 
-| Setting | Values | Description |
+| Field | What it does | Default |
 |---|---|---|
-| Title | text | Heading above the list. If left empty, the member's name is used on the front end. |
-| Number of reviews | number | How many reviews to show. |
-| Sort by | Latest (`latest`), Highest (`highest`), or Lowest (`lowest`) | Order reviews by date or rating. |
+| **Enter Title:** | Heading above the list. | "Member Ratings" |
+| **Number of Ratings to Show:** | How many ratings are listed. Leave it empty or set 0 to list them all. | 5 |
+| **Default Sorting:** | **Latest**, **Highest** or **Lowest**. | Latest |
 
-Place it in a widget area that appears on member profiles. It hides itself anywhere that is not a member profile.
+Each entry shows the reviewer's picture, the reviewer's name (or "Anonymous") and the stars, with the score as "4/5".
 
-## Styling
+If the member has no rated reviews, the widget says "The member has not received a rating yet."
+
+Things to know:
+
+- It shows the reviewer's picture even for anonymous reviews. Only the name is hidden.
+- It lists stars only, not the written text of the reviews.
+
+## Styling (for designers)
 
 BP Member Review Widget:
 
 ```css
-.bupr-member-main   /* the <ul> list */
-.bupr-members       /* each <li> item */
-.bupr-img-widget    /* avatar wrapper */
-.bupr-content-widget/* content wrapper */
-.bupr-member-title  /* member name */
-.bupr-member-rating /* star rating area */
-.bupr-meta          /* rating text */
+.bupr-member-main      /* the list */
+.bupr-members          /* one member */
+.bupr-img-widget       /* picture */
+.bupr-content-widget   /* name, stars and text */
+.bupr-member-title     /* member name */
+.bupr-member-rating    /* stars */
+.bupr-meta             /* the score line */
 ```
 
 BP Displayed Member Rating Widget:
 
 ```css
-#bp-member-rating   /* the <ul> list */
-.vcard              /* each <li> item */
-.item-avatar        /* avatar wrapper */
-.item               /* content area */
-.item-title         /* reviewer name */
-.bupr-star-rate     /* star rating display */
-.bupr-meta          /* rating text */
+#bp-member-rating      /* the list */
+.vcard                 /* one rating */
+.item-avatar           /* picture */
+.item-title            /* reviewer name */
+.item-meta             /* stars and score */
+.bupr-star-rate        /* a star */
 ```
 
-Add custom rules under **Appearance > Customize > Additional CSS** or in your theme.
+Add your own rules under **Appearance > Customize > Additional CSS**.
