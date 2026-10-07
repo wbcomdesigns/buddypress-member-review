@@ -756,7 +756,6 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			// Default from plugin settings.
 			$exclude_given_members = $bupr['exclude_given_members'] ?? array();
 			$add_taken_members     = $bupr['add_taken_members'] ?? array();
-			$review_label          = $bupr['review_label'] ?? esc_html__( 'Review', 'bp-member-reviews' );
 
 			if ( bupr_bp_classic_activate() ) {
 				global $wp_roles;
@@ -809,27 +808,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			);
 
 			// Add subnav to add a review.
-			if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
-				// On own profile: show "Add Review" subnav if user's role is in the allowed reviewer roles.
-				$user_role     = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
-				$allowed_roles = ! empty( $exclude_given_members ) && is_array( $exclude_given_members ) ? $exclude_given_members : array();
-
-				// Show subnav if no role restrictions are set, or if user's role is in the allowed list.
-				if ( empty( $allowed_roles ) || ( ! empty( $user_role ) && array_intersect( (array) $user_role, $allowed_roles ) ) ) {
-					bp_core_new_subnav_item(
-						array(
-							/* translators: %1$s: Review Label. */
-							'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( $review_label ) ),
-							'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
-							'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
-							'parent_slug'     => $parent_slug,
-							'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
-							'position'        => 200,
-							'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_singular_slug(),
-						)
-					);
-				}
-			} else {
+			// Never on own profile: the profile form has no member picker and self-review is refused (bupr-ajax.php), matching the header button.
+			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
 				// On another user's profile: check if logged-in user's role is allowed to give reviews.
 				$user_role     = $this->bupr_get_current_user_roles( bp_loggedin_user_id() );
 				$allowed_roles = ! empty( $exclude_given_members ) && is_array( $exclude_given_members ) ? $exclude_given_members : array();

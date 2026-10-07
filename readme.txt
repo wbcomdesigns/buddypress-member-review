@@ -281,6 +281,7 @@ Moderation and settings-screen fixes.
 * Fix      - Notification email formatting is kept when saved, so emails are no longer one run-on paragraph.
 * Fix      - The Anonymous flag is ignored in emails when Anonymous Reviews is off.
 * Fix      - Owner replies are only accepted on published reviews.
+* Fix      - The Add Review tab no longer shows on your own profile, where a review could never be submitted.
 * Fix      - The review form and dialogs no longer overflow the screen on themes without a box-sizing reset, such as Twenty Twenty-Five.
 * Fix      - Report dialog Submit and Cancel buttons keep their own styles inside BuddyPress pages.
 * Fix      - Removed BuddyPress 12 deprecation notices from profile links.
