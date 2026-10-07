@@ -1,58 +1,81 @@
 # Managing Reviews in the Admin
 
-Every review is stored as a `review` custom post, so you manage reviews from a standard WordPress list screen with a few review-specific additions.
+Every review is saved in WordPress as an item of type "review". You manage them from the **Reviews** menu, which works like the list of posts, with a few extras for moderation.
 
-## Where reviews live
+Settings are separate: they live at **WB Plugins > Member Reviews**.
 
-Go to **Reviews > All Reviews** in the WordPress admin. This screen is separate from the settings screen at **WB Plugins > Member Reviews**.
+## Open the list
 
-## List columns
+Go to **Reviews > All Reviews** in the admin menu.
 
-- **Title**: the review title or the first line of its content.
-- **Reports**: flag count and status when a review has been reported.
-- **Author**: the member who wrote the review.
-- **Date**: when it was submitted.
+### Columns
 
-## Statuses
+| Column | What it shows |
+|---|---|
+| **Title** | A sentence such as "Sam received a review". The title is made by the plugin. |
+| **Reports** | A dash if no one reported it. Otherwise the number of reports, plus "Resolved", "Dismissed" or "Auto-hidden" when that applies. |
+| **Author** | The member who wrote the review. This shows the real writer, even for anonymous reviews. |
+| **Reviews Category** | The type of review. Profile reviews use "BP Member". |
+| **Date** | When it was written. |
 
-Reviews use standard WordPress post statuses:
+### Statuses
 
-- **Draft**: pending approval or auto-hidden. Not visible on profiles. This is the state new reviews land in when Auto Approve is off, and the state a review returns to when it passes the report threshold.
-- **Published**: approved and visible on the profile, counted in the aggregate rating, and posted to the activity stream if that is enabled.
-- **Trash**: removed from the site, recoverable until permanently deleted.
+| Status | Meaning |
+|---|---|
+| **Published** | Visible on the profile and counted in the member's rating. |
+| **Draft** | Not visible. Either waiting for your approval, or hidden because of reports (marked **Auto-hidden**). |
+| **Trash** | Removed from the site. You can restore it or delete it for good. |
 
-When Auto Approve is off, a count badge next to the Reviews menu shows how many drafts await approval.
+### Find the review you need
 
-## Filtering
+Above the list you see the status links (**All**, **Published**, **Draft**, **Trash**) and these extras:
 
-Use the status views above the list (All, Published, Draft, Trash) and the **Reported** view, which shows only flagged reviews with a count badge. You can also filter by month.
+| Link | Shows |
+|---|---|
+| **Reported** (with a count) | Reviews with open reports, whether or not they are hidden. Appears only when there are some. |
+| **Auto-hidden** (with a count) | Reviews hidden because they reached the report threshold. Appears only when there are some. |
 
-## Approving reviews
+You can also search, and filter by month.
 
-- Single: hover the review title and use the row action to approve, or open Quick Edit and set the status to Published.
-- Bulk: select several reviews, choose the bulk edit action, set status to Published, and apply.
+## What you can do to a review
 
-## Editing reviews
+Hover over a review's title to see its actions:
 
-Open a review to edit its content and its per-criterion star ratings. The star values are set in the **Member Ratings** meta box on the edit screen. You cannot change the review author.
+| Action | What it does |
+|---|---|
+| **View Review** | Opens the review on the member's profile. |
+| **Approve** | Publishes a draft review. Shown on drafts only. Needs the Editor role or higher. |
+| **Trash** | Moves it to the trash. |
 
-## Handling reports
+Quick Edit and Edit links are removed on purpose. To open a review, click its title.
 
-Open a reported review and use its **Report Details** meta box, which lists each report with the reporter, reason, and date. From there:
+When a review is trashed or deleted, the member's rating and review count update, and its activity stream entry and notifications are removed.
 
-- **Dismiss** clears the reports and keeps the review visible.
-- **Resolve** marks the reports resolved.
+## Open a single review
 
-Dismiss and Resolve are also available as bulk actions on the Reviews list. If a review is genuinely inappropriate, edit its content or move it to Trash.
+Click the title. You can:
 
-### Auto-hidden reviews
+- Edit the written text.
+- See the stars given, in the **Member Ratings** box. This box is for reading. It does not change the stars.
+- Read the reports in the **Report Details** box, then click **Dismiss Reports** or **Mark Resolved**. See [Handle a reported review](../how-to/handle-a-reported-review.md).
+- Use the normal **Publish**, **Move to Trash** and status controls.
 
-A review that reaches the **Review Flag Threshold** (set on the General tab, default 5) is set back to draft automatically and leaves the profile. To restore it, review the content and set the status back to Published, then dismiss the reports.
+## Bulk actions
 
-## Owner replies
+Tick one or more reviews and choose from **Bulk actions**:
 
-When **Enable Review Owner Reply** is on, profile owners can reply once to each review; replies show beneath the review on the front end. See [Owner Replies](../features/owner-replies.md).
+- **Move to Trash**
+- **Dismiss Reports**
+- **Resolve Reports**
 
-## Aggregate ratings
+The two report actions change the report status only. They do not publish a hidden review.
 
-A member's aggregate rating and review count recalculate automatically when a review is approved, edited, trashed, or changes status. A daily background job also reconciles the cached values, so no manual recalculation tool is needed.
+## The counts at the top of the settings screen
+
+**WB Plugins > Member Reviews > Overview** shows Published Reviews, Pending Approval, Members Reviewed and Reported. The numbers count reviews by status as described above.
+
+## Tips
+
+- You cannot add a review from the admin. Reviews are written by members from the front of your site.
+- If you also use BuddyPress Group Reviews, its reviews share this list. Use the **Reviews Category** column to tell them apart.
+- Who can do what: Administrators and Editors can approve, dismiss, resolve and delete. Contributors and Authors cannot approve or moderate reports.

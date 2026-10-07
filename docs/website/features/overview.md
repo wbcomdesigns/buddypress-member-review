@@ -1,52 +1,52 @@
 # Features Overview
 
-BuddyPress Member Reviews gives your community a reputation layer. This page summarizes what the free plugin does. Every capability here is controlled from **WB Plugins > Member Reviews**.
+BuddyPress Member Reviews gives your community a reputation system. Members review each other, give star ratings, and every member builds an average rating that others can see. This page lists what the plugin does. Each feature links to a page with the details.
 
-## Reviews and ratings on member profiles
+## Reviews and ratings on profiles
 
-- A Reviews tab on every member profile, with per-criteria star ratings and an aggregate score.
-- Rate members against criteria you define. Two are seeded on activation, "Member Response" and "Member Skills", and you can rename, remove, or add your own.
-- Members can edit their own reviews after posting when the **Allow update** setting is on (on by default).
-- Profile owners can reply to reviews left about them, once per review.
-- Self-reviews are blocked, so scores stay honest.
-- Optional anonymous reviews for members who want to give feedback privately.
+- Every member profile gets a **Reviews** tab with a count of the reviews received.
+- A review has a star rating (1 to 5 stars) and, optionally, written text.
+- You decide what is rated: one overall rating, or several named criteria such as "Communication" and "Quality". See [Star Ratings and Criteria](star-ratings-and-criteria.md).
+- Each member gets an average rating that shows in the profile header, so visitors see it at a glance.
+- Members cannot review themselves.
+- Members can edit their own reviews (you can turn this off), but they cannot delete them.
+- A member can be allowed to review the same person more than once, or only once. You choose.
 
-See [Star Ratings and Criteria](star-ratings-and-criteria.md).
+## Control over who reviews whom
 
-## Ratings on the members directory
-
-- Show each member's star rating on the members directory (on by default).
-- An Add Review button on directory entries so members can review without opening the profile first (on by default).
-- Both are individually switchable on the General tab.
+- Pick the member roles that are allowed to write reviews and the member roles that can receive them.
+- Optionally let reviewers post anonymously. The reviewer's name and picture are hidden from members. See [Turn on anonymous reviews](../how-to/turn-on-anonymous-reviews.md).
 
 ## Moderation you control
 
-- **Auto Approve Reviews** is on by default, so reviews go live immediately. Turn it off to hold every new review as a draft until an admin approves it.
-- Members can report inappropriate reviews.
-- Reviews auto-hide once they pass a report threshold you set (default 5).
-- A Report Details meta box on each review in the admin, with dismiss and resolve actions, plus a flagged-reviews filter and bulk actions on the Reviews list.
-- Reviewer and reviewee role gating: choose which roles may leave reviews and which roles may receive them.
+- Choose whether reviews go live immediately or wait for your approval.
+- Members can report a review they think is inappropriate.
+- A review that gets enough reports is hidden automatically until you look at it.
+- You see reported and auto-hidden reviews in one place and decide what happens to them.
 
 See [Moderation and Reporting](moderation-and-reporting.md).
 
-## Notifications
+## Replies from the reviewed member
 
-- BuddyPress notifications when a member receives a review.
-- Email notifications for new reviews, and pending-approval alerts for admins.
-- Both can be switched off independently on the General tab.
+The member who received a review can answer it once. The answer shows right under the review, labeled "Owner Response". See [Owner Replies](owner-replies.md).
 
-## Activity stream
+## Emails, notifications and the activity stream
 
-- Publish reviews to the BuddyPress activity stream so the community sees new feedback as it happens. Off by default; switch it on in General settings.
+- The reviewed member gets an email and a BuddyPress notification.
+- You get an email when a review needs approval.
+- Reviews can be posted to the BuddyPress activity stream.
 
-## Display anywhere
+See [Notifications and Activity](notifications-and-activity.md).
 
-- Two widgets: **BP Member Review Widget** (top rated or most reviewed members) and **BP Displayed Member Rating Widget** (the rating of the member whose profile is being viewed).
-- The `[bupr_display_top_members]` shortcode for a top-rated or top-reviewed list on any page or post.
-- Customize the review labels and star color, including the singular and plural label used for the profile tab.
+## Show ratings around your site
 
-See [Shortcode](../shortcodes/shortcodes.md) and [Widgets](../shortcodes/widgets.md).
+- Star ratings in the members directory (on by default).
+- An **Add Review** button in the profile header (off by default).
+- Two widgets and one shortcode to list top members. See [Shortcodes](../shortcodes/shortcodes.md) and [Widgets](../shortcodes/widgets.md).
+- Your own wording (for example "Testimonial" instead of "Review") and your own star color. See [Change the wording and star color](../how-to/change-labels-and-star-color.md).
 
-## Owner replies
+## Compatibility
 
-Profile owners can respond once to each review left about them. See [Owner Replies](owner-replies.md).
+- Works with BuddyPress 6.0 or higher and BuddyBoss Platform 1.8 or higher.
+- Includes support for the BuddyPress Nouveau and Legacy templates, the BuddyBoss members directory, and Youzify profile headers.
+- Translations included: German, French, Spanish, Italian and Brazilian Portuguese. Right-to-left languages are supported.

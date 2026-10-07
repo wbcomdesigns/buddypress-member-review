@@ -12,6 +12,11 @@
           "file": "installation.md",
           "title": "Installation and Setup",
           "slug": "installation-bpmemberreview"
+        },
+        {
+          "file": "admin-screen-tour.md",
+          "title": "Admin Screen Tour",
+          "slug": "admin-screen-tour-bpmemberreview"
         }
       ]
     },
@@ -39,17 +44,79 @@
           "file": "owner-replies.md",
           "title": "Owner Replies",
           "slug": "owner-replies-bpmemberreview"
+        },
+        {
+          "file": "notifications-and-activity.md",
+          "title": "Notifications and Activity",
+          "slug": "notifications-and-activity-bpmemberreview"
         }
       ]
     },
     {
-      "title": "Usage",
+      "title": "How-to Guides",
+      "slug": "how-to-bpmemberreview",
+      "folder": "how-to",
+      "docs": [
+        {
+          "file": "let-members-review-each-other.md",
+          "title": "Let Members Review Each Other",
+          "slug": "let-members-review-each-other-bpmemberreview"
+        },
+        {
+          "file": "require-approval-for-reviews.md",
+          "title": "Require Approval Before Reviews Go Live",
+          "slug": "require-approval-for-reviews-bpmemberreview"
+        },
+        {
+          "file": "set-up-rating-criteria.md",
+          "title": "Set Up Rating Criteria",
+          "slug": "set-up-rating-criteria-bpmemberreview"
+        },
+        {
+          "file": "choose-who-can-review-and-be-reviewed.md",
+          "title": "Choose Who Can Write and Who Can Receive Reviews",
+          "slug": "choose-who-can-review-and-be-reviewed-bpmemberreview"
+        },
+        {
+          "file": "handle-a-reported-review.md",
+          "title": "Handle a Reported Review",
+          "slug": "handle-a-reported-review-bpmemberreview"
+        },
+        {
+          "file": "turn-on-anonymous-reviews.md",
+          "title": "Turn On Anonymous Reviews",
+          "slug": "turn-on-anonymous-reviews-bpmemberreview"
+        },
+        {
+          "file": "let-members-reply-to-reviews.md",
+          "title": "Let Members Reply to Reviews",
+          "slug": "let-members-reply-to-reviews-bpmemberreview"
+        },
+        {
+          "file": "show-top-rated-members.md",
+          "title": "Show Top-Rated Members on a Page",
+          "slug": "show-top-rated-members-bpmemberreview"
+        },
+        {
+          "file": "change-labels-and-star-color.md",
+          "title": "Change the Wording and Star Color",
+          "slug": "change-labels-and-star-color-bpmemberreview"
+        },
+        {
+          "file": "control-review-emails-and-notifications.md",
+          "title": "Control Review Emails and Notifications",
+          "slug": "control-review-emails-and-notifications-bpmemberreview"
+        }
+      ]
+    },
+    {
+      "title": "Usage and Settings Reference",
       "slug": "usage-bpmemberreview",
       "folder": "usage",
       "docs": [
         {
           "file": "submitting-reviews.md",
-          "title": "Submitting and Editing Reviews",
+          "title": "Submitting and Editing Reviews (Member Guide)",
           "slug": "submitting-reviews-bpmemberreview"
         },
         {
@@ -65,7 +132,7 @@
       ]
     },
     {
-      "title": "Shortcodes",
+      "title": "Shortcodes and Widgets",
       "slug": "shortcodes-bpmemberreview",
       "folder": "shortcodes",
       "docs": [

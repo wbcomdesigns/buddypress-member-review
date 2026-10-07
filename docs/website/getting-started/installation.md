@@ -1,58 +1,63 @@
 # Installation and Setup
 
-BuddyPress Member Reviews adds a reputation layer to your community. Registered members post reviews on other members' profiles, rate them against criteria you define, and the plugin rolls those scores into an aggregate rating shown on the profile and on the members directory.
+BuddyPress Member Reviews lets the members of your community review and rate each other. Reviews appear on the reviewed member's profile, and each member gets an average star rating that shows on their profile and (optionally) in the members directory.
 
-## Requirements
+This page gets the plugin installed and working. For a quick path to a working review system, follow [Let members review each other](../how-to/let-members-review-each-other.md).
 
-- WordPress 6.5 or higher
-- PHP 8.0 or higher
-- BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher, with the Members component active
+## What you need first
 
-Reviews live on member profiles, so there is no standalone mode. One of BuddyPress or BuddyBoss must be active.
+| Requirement | Minimum |
+|---|---|
+| WordPress | 6.5 or higher |
+| PHP | 8.1 or higher |
+| Community plugin | BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher |
+| BuddyPress component | The **Members** component must be active |
+
+Reviews live on member profiles, so the plugin cannot work without BuddyPress or BuddyBoss. If BuddyPress is missing, the plugin deactivates itself and shows a red notice. If the Members component is switched off, you get the same kind of notice and the plugin deactivates.
 
 ## Install the plugin
 
 ### From the WordPress admin
 
 1. Go to **Plugins > Add New**.
-2. Search for "BuddyPress Member Reviews".
-3. Click **Install Now** on the Wbcom Designs listing, then **Activate**.
+2. Search for **BuddyPress Member Reviews**.
+3. Click **Install Now**, then **Activate**.
 
-### Manual upload
+### By uploading a ZIP file
 
-1. Download the plugin ZIP.
-2. Go to **Plugins > Add New > Upload Plugin**.
-3. Choose the ZIP file, click **Install Now**, then **Activate**.
+1. Go to **Plugins > Add New > Upload Plugin**.
+2. Choose the plugin ZIP file and click **Install Now**.
+3. Click **Activate Plugin**.
 
-After activation you are redirected to the settings screen. You can return any time at **WB Plugins > Member Reviews**.
+## What happens when you activate
 
-## First-run configuration
+- You are taken straight to the settings screen at **WB Plugins > Member Reviews**. This redirect does not happen on multisite, on bulk activation, or when you activate with WP-CLI.
+- Two rating criteria are created for you: "Member Response" and "Member Skills".
+- Reviews are published immediately (no approval step) until you change that setting.
+- A **Reviews** tab appears on every member profile.
 
-All settings live under **WB Plugins > Member Reviews**, which opens a card-panel screen with sidebar tabs: Overview, General, Criteria, Display, and Discover.
+You can come back to the settings at any time from **WB Plugins > Member Reviews**, or from the **Settings** link under the plugin name on the **Plugins** page.
 
-### Step 1: General
+## Find your way around the admin
 
-On the **General** tab:
+There are two places in the WordPress menu:
 
-- Reviews are auto-approved out of the box. If you want to read every review before it goes live, turn **Auto Approve Reviews** off. New reviews then stay as drafts until an admin approves them.
-- Choose which roles may leave reviews and which roles may receive them.
-- Switch email notifications and BuddyPress notifications on or off. Both default to on.
-- Directory ratings and the directory Add Review button are on by default here too.
+- **WB Plugins > Member Reviews** is where you change settings. See [Admin Screen Tour](admin-screen-tour.md).
+- **Reviews** (its own top-level menu, with a speech-bubble icon) is the list of every review. You approve, hide and delete reviews there. See [Managing Reviews in the Admin](../usage/managing-reviews.md).
 
-### Step 2: Criteria
+## Set it up
 
-On the **Criteria** tab, two criteria are seeded on activation: "Member Response" and "Member Skills". Rename them, remove them, or add your own to fit your community. Enable **Allow Multiple Criteria** to rate several aspects, or leave it off for a single overall rating.
+1. Open **WB Plugins > Member Reviews**.
+2. Open the **General** tab. Decide whether reviews go live straight away or wait for your approval, and who can review whom. Click **Save Changes**.
+3. Open the **Criteria** tab. Rename or add the things members rate (for example "Communication"). Click **Save Changes**.
+4. Open the **Display** tab. Choose the words and the star color. Click **Save Changes**.
+5. Test it with two accounts. See [Let members review each other](../how-to/let-members-review-each-other.md).
 
-### Step 3: Display
+Each tab has its own **Save Changes** button and saves on its own. Save a tab before you move to another one.
 
-On the **Display** tab, set the singular and plural review labels and the star color. The plural label also drives the profile tab and its URL slug, so pick it before members start sharing links.
+## Next steps
 
-### Step 4: Test it
-
-Visit any member profile, open the Reviews tab, and post a test review. Confirm it appears on the profile and, if directory ratings are on, on the members directory.
-
-## What next
-
+- [Admin Screen Tour](admin-screen-tour.md)
 - [Features Overview](../features/overview.md)
-- [Submitting and Editing Reviews](../usage/submitting-reviews.md)
+- [How-to guides](../how-to/let-members-review-each-other.md)
 - [Settings Reference](../usage/settings-reference.md)

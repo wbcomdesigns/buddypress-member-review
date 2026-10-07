@@ -1,82 +1,105 @@
 # Data Model
 
-The plugin adds no custom database tables. Reviews are stored as a WordPress custom post type with post meta, and each member's cached rating lives in user meta. Everything sits in the standard `wp_posts`, `wp_postmeta`, `wp_usermeta`, and `wp_options` tables.
+The plugin creates no database tables. Reviews are posts of type `review`, each member's cached rating is user meta, and settings are options.
 
-## Custom post type: `review`
+## Post type: `review`
 
-Each review is one `review` post.
+| Property | Value |
+|---|---|
+| Public | Yes (`public`, `publicly_queryable` and `has_archive` are true, rewrite slug `review`). Only published reviews can be seen by the public. |
+| Admin menu | **Reviews**, with the speech bubble icon. |
+| Supports | Title, editor, author. |
+| Add New | Disabled (`create_posts` is `do_not_allow`). Reviews are only created from the front end. |
+| REST API | Not registered for the REST API. |
 
 | Field | Meaning |
 |---|---|
-| `post_author` | The reviewer's user ID. |
-| `post_content` | The written review text. |
-| `post_status` | `publish` (approved) or `draft` (pending or auto-hidden). |
-| `post_date` | When the review was submitted. |
+| `post_author` | The reviewer. |
+| `post_title` | Generated: "{reviewed member name} received a {label}". |
+| `post_content` | The written review. |
+| `post_status` | `publish` (live) or `draft` (waiting for approval, or hidden by reports). Trash when removed. |
 
-The reviewed member is not the author; it is stored in the `linked_bp_member` post meta.
+The reviewed member is not the author. They are stored in `linked_bp_member`.
 
 ```php
 $reviews = get_posts( array(
-    'post_type'      => 'review',
-    'post_status'    => 'publish',
-    'posts_per_page' => 10,
-    'meta_key'       => 'linked_bp_member',
-    'meta_value'     => 123, // reviewed member ID
+	'post_type'      => 'review',
+	'post_status'    => 'publish',
+	'posts_per_page' => 10,
+	'meta_key'       => 'linked_bp_member',
+	'meta_value'     => 123, // reviewed member ID.
 ) );
 ```
 
 ## Taxonomy: `review_category`
 
-A hierarchical taxonomy on the `review` post type. Its UI is not surfaced to admins; a `BP Member` term is seeded and assigned to profile reviews. It is available to developers programmatically.
+Hierarchical, with no admin screen (`show_ui` is false) but shown as the **Reviews Category** column in the Reviews list. The plugin creates the term `BP Member` and gives it to every profile review. The BuddyPress Group Reviews plugin shares the same post type.
 
-## Post meta
+## Post meta on a review
 
 | Key | Type | Meaning |
 |---|---|---|
 | `linked_bp_member` | int | The reviewed member's user ID. |
-| `profile_star_rating` | array | Per-criterion star values, keyed by criterion identifier. |
-| `bupr_anonymous_review_post` | string | `yes` if submitted anonymously. |
-| `bupr_owner_reply` | string | The profile owner's reply text. |
-| `bupr_owner_reply_date` | int | Owner reply timestamp. |
-| `bupr_flags` | array | Report records, each with reporter ID, reason, reason label, and date. |
-| `bupr_flag_count` | int | Number of reports. |
-| `bupr_flag_status` | string | `none`, `flagged`, `resolved`, or `dismissed`. |
-| `bupr_auto_hidden` | bool | Whether the review was auto-hidden at the report threshold. |
-| `bupr_auto_hidden_date` | int | Auto-hide timestamp. |
+| `profile_star_rating` | array | Stars by criterion name, for example `array( 'Member Response' => 4 )`. With a single overall rating, a list with one number. |
+| `bupr_anonymous_review_post` | string | `yes` or `no`. Saved only while **Anonymous Reviews** is on. |
+| `bupr_owner_reply` | string | The owner reply text. |
+| `bupr_owner_reply_date` | int | Reply timestamp. |
+| `bupr_flags` | array | One entry per report: `reporter_id`, `reason`, `reason_label`, `date`. |
+| `bupr_flag_count` | int | Total reports. |
+| `bupr_flag_status` | string | `flagged`, `dismissed` or `resolved`. Absent if never reported. |
+| `bupr_flag_dismissed_at_count` | int | The report count at the last dismissal. Auto-hide counts only reports above this number. |
+| `bupr_auto_hidden` | bool | Set when the report threshold hid the review. Removed when the review is published again. |
+| `bupr_auto_hidden_date` | int | When it was hidden. |
 
-The keys in `profile_star_rating` are criterion identifiers, not display labels. They stay stable when a criterion is renamed in the admin, which is why renaming a criterion does not break existing reviews.
+The keys in `profile_star_rating` are the criterion names as they were when the review was written. Renaming a criterion later does not change old reviews.
 
-```php
-$ratings = get_post_meta( $review_id, 'profile_star_rating', true );
-// e.g. array( 'Member Response' => 4, 'Member Skills' => 5 )
-```
-
-## User meta
-
-Stored against the reviewed member and refreshed when reviews change or by the daily reconciliation job.
+## User meta (on the reviewed member)
 
 | Key | Type | Meaning |
 |---|---|---|
-| `bupr_review_count` | int | Cached count of published reviews received. |
-| `bupr_aggregate_rating` | float | Cached average rating, 0 to 5. |
-| `bupr_last_calculated` | int | Timestamp of the last recalculation. |
+| `bupr_review_count` | int | Published reviews received. |
+| `bupr_aggregate_rating` | float | Average rating, 0 to 5. |
+
+These are recalculated when a review is published, edited, hidden, trashed or deleted, by a daily cron event, and on demand when the value is missing.
 
 ## Options
 
-| Option | Meaning |
+| Option | Holds |
 |---|---|
-| `bupr_admin_general_options` | The General tab settings (array). |
-| `bupr_admin_settings` | The criteria settings (array). |
-| `bupr_admin_display_options` | The Display tab labels and star color (array). |
-| `bupr_plugin_version` | Installed plugin version. |
-| `bupr_current_batch` | Cursor for the daily recalculation cron. |
-| `bupr_top_members_cache_ver` | Cache salt for the top-members shortcode transient. |
-| `bupr_meta_repair_v1_done` / `bupr_meta_repair_paged` | One-time meta-repair migration gate and cursor. |
+| `bupr_admin_general_options` | **General** tab settings. |
+| `bupr_admin_settings` | **Criteria** tab settings: `profile_multi_rating_allowed` (`1` or `0`) and `profile_rating_fields` (criterion name => `yes`). |
+| `bupr_admin_display_options` | **Display** tab settings: `bupr_review_title`, `bupr_review_title_plural`, `bupr_star_color`. |
+| `bupr_plugin_version` | Installed version. |
+| `bupr_current_batch` | Cursor for the daily recalculation. |
+| `bupr_top_members_cache_ver` | Version stamp used to refresh the top-members cache. |
+| `bupr_meta_repair_v1_done`, `bupr_meta_repair_paged` | One-time repair of stale rating counts. |
 
-## How the aggregate is computed
+Settings you never saved have no entry in the option. The plugin then uses its built-in default (see the [Settings Reference](../usage/settings-reference.md)).
 
-For each published review, all its criterion values are averaged into a review score. All review scores are then averaged into the member's aggregate, so every review counts equally regardless of how many criteria it used. The result is written to `bupr_aggregate_rating` and the count to `bupr_review_count`, and can be adjusted via the `bupr_aggregate_rating` filter. See [Hooks and Filters](hooks-and-filters.md).
+Temporary values (transients): `bupr_top_members_*` (cached shortcode results, 15 minutes) and `bupr_drift_checked_{user_id}` (once a day per member).
+
+## Activity stream entries
+
+When **Activity Stream** is on, a published review adds an entry in the Members component with type `member_review` (type `activity_status` when Youzify is active), `item_id` = the review ID and `secondary_item_id` = the reviewed member.
+
+## BuddyPress notifications
+
+Component `buddypress_member_review`, action `bupr_add_review_action`, `item_id` = the review ID. One per review per recipient.
+
+## Cron
+
+`bupr_cron_recalculate_user_reviews_batch` runs daily and recalculates 50 members per run, continuing where the last run stopped. It is removed when the plugin is deactivated.
+
+## How the average is computed
+
+For each published review, the numeric stars are averaged into a review score. The review scores are then averaged into the member's rating. Reviews with no stars add to the count but not the average. The result goes through the `bupr_aggregate_rating` filter before it is saved.
 
 ## When a review is deleted
 
-Trashing or deleting a review recalculates the member's cached count and rating, removes the related BuddyPress notification, and removes the linked activity item if activity posting was enabled.
+- Trashing or deleting recalculates the member's count and rating.
+- Its BuddyPress notifications are removed.
+- Its activity entry is removed.
+
+## On uninstall
+
+Deleting the plugin does not remove reviews, ratings or settings. The `uninstall.php` file does nothing. The data stays in your database.

@@ -1,61 +1,70 @@
-# Shortcode
+# Shortcodes
 
-The free plugin provides one shortcode, `[bupr_display_top_members]`, which renders a list of your top-rated or most-reviewed members on any page or post.
+The plugin has one shortcode, `[bupr_display_top_members]`. It lists your best-rated or most-reviewed members on any page or post.
 
-## Basic usage
+For a step-by-step guide, see [Show top-rated members on a page](../how-to/show-top-rated-members.md).
+
+## Basic use
 
 ```
 [bupr_display_top_members]
 ```
 
-With no attributes this lists the top 5 members by aggregate rating, with avatars.
+With nothing added, it lists the top 5 members by average rating, with their pictures.
 
-## Attributes
+## Options
 
-| Attribute | Type | Default | Description |
+| Option | What it does | Default | Values |
 |---|---|---|---|
-| `title` | string | empty | Heading shown above the list. |
-| `total_member` | number | 5 | How many members to list. |
-| `type` | string | `top rated` | `top rated` orders by aggregate rating; `top reviewed` orders by review count. |
-| `avatar` | string | `show` | `show` or `hide` member avatars. |
+| `title` | Heading above the list. | none | Any text |
+| `total_member` | How many members to list. | 5 | A number |
+| `type` | How to order the list. | `top rated` | `top rated` (highest average rating first) or `top reviewed` (most reviews first) |
+| `avatar` | Show or hide member pictures. | `show` | `show` or `hide` |
 
 ## Examples
 
-Top 10 by rating:
+Top 10 by rating, with a heading:
 
 ```
-[bupr_display_top_members total_member="10" type="top rated"]
+[bupr_display_top_members title="Top Rated Members" total_member="10"]
 ```
 
-Most reviewed, no avatars, with a heading:
+Most reviewed, no pictures:
 
 ```
 [bupr_display_top_members title="Most Reviewed" type="top reviewed" total_member="8" avatar="hide"]
 ```
 
-## Where to use it
+## What visitors see
 
-- **Pages and posts**: paste the shortcode into the block editor (Shortcode block) or the classic editor.
-- **Widget areas**: use a Shortcode widget or block.
-- **Templates**: `<?php echo do_shortcode( '[bupr_display_top_members total_member="5"]' ); ?>`
-- **Page builders**: use the builder's shortcode or HTML element.
+For each member: picture (if shown), name linked to their profile, five stars, and a line such as "Rating: 4.5/5 (3 reviews)". The review count links to the member's **Reviews** tab. If no one has a published review yet, the list says "No members have been reviewed yet."
 
-## Styling
+Only members with a published review are listed. In `top rated` order, a member also needs at least one star rating.
 
-The output uses these classes:
+## Where to put it
+
+- **Pages and posts**: add a **Shortcode** block and type it in.
+- **Sidebars**: use a **Shortcode** block or a Text widget. (There is also a ready-made widget. See [Widgets](widgets.md).)
+- **Page builders**: use the builder's shortcode element.
+- **Theme files** (for developers): `<?php echo do_shortcode( '[bupr_display_top_members total_member="5"]' ); ?>`
+
+## Speed and freshness
+
+The list is saved for about 15 minutes to keep your site fast. It refreshes sooner when a review is approved, hidden, trashed or recalculated, but a new review may take a few minutes to show up.
+
+## Styling (for designers)
+
+The shortcode uses these CSS classes. Add your own rules under **Appearance > Customize > Additional CSS**.
 
 ```css
-.bupr-shortcode-top-members-contents /* outer wrapper */
-.bupr_members_review_setting         /* wrapper class */
-.bupr-member-main                    /* the <ul> list */
-.bupr-members                        /* each <li> item */
-.bupr-img-widget                     /* avatar wrapper */
-.bupr-content-widget                 /* content wrapper */
-.bupr-member-title                   /* member name link */
-.bupr-member-rating                  /* star rating area */
-.bupr-meta                           /* rating text */
+.bupr-shortcode-top-members-contents  /* outer wrapper */
+.bupr-member-main                     /* the list */
+.bupr-members                         /* one member */
+.bupr-img-widget                      /* picture */
+.bupr-content-widget                  /* name, stars and text */
+.bupr-member-title                    /* member name */
+.bupr-member-rating                   /* stars */
+.bupr-meta                            /* the "Rating: 4.5/5" line */
 ```
 
-Add custom rules under **Appearance > Customize > Additional CSS** or in your theme.
-
-The result is cached for about 15 minutes and refreshed automatically when ratings change, so a new review may take a few minutes to appear in the list.
+Star color is set at **WB Plugins > Member Reviews > Display > Rating Color**.
