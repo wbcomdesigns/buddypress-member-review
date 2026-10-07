@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-07T09:39:07+00:00\n"
+"POT-Creation-Date: 2026-10-07T10:55:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -40,7 +40,7 @@ msgid "https://wbcomdesigns.com"
 msgstr ""
 
 #: admin/bupr-admin.php:75
-#: includes/widgets/member-rating.php:208
+#: includes/widgets/member-rating.php:209
 msgid "Member Ratings"
 msgstr ""
 
@@ -252,33 +252,33 @@ msgid "Resolve Reports"
 msgstr ""
 
 #. translators: %d: Number of reviews updated
-#: admin/bupr-admin.php:754
+#: admin/bupr-admin.php:762
 #, php-format
 msgid "%d review report status updated."
 msgid_plural "%d reviews report statuses updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/bupr-admin.php:765
+#: admin/bupr-admin.php:773
 msgid "Review reports have been dismissed."
 msgstr ""
 
-#: admin/bupr-admin.php:774
+#: admin/bupr-admin.php:782
 msgid "Review reports have been marked as resolved."
 msgstr ""
 
-#: admin/bupr-admin.php:789
-#: admin/bupr-admin.php:845
+#: admin/bupr-admin.php:822
+#: admin/bupr-admin.php:863
 msgid "Security check failed."
 msgstr ""
 
-#: admin/bupr-admin.php:795
-#: admin/bupr-admin.php:851
+#: admin/bupr-admin.php:828
+#: admin/bupr-admin.php:869
 msgid "You do not have permission to perform this action."
 msgstr ""
 
-#: admin/bupr-admin.php:801
-#: admin/bupr-admin.php:857
+#: admin/bupr-admin.php:834
+#: admin/bupr-admin.php:875
 msgid "Invalid review."
 msgstr ""
 
@@ -1630,40 +1630,40 @@ msgstr ""
 msgid "%s's Ratings"
 msgstr ""
 
-#: includes/widgets/member-rating.php:132
+#: includes/widgets/member-rating.php:133
 msgid "Anonymous"
 msgstr ""
 
 #. translators: %1$s: average rating
-#: includes/widgets/member-rating.php:167
+#: includes/widgets/member-rating.php:168
 #, php-format
 msgid "%1$s/5"
 msgstr ""
 
-#: includes/widgets/member-rating.php:179
+#: includes/widgets/member-rating.php:180
 msgid "The member has not received a rating yet."
 msgstr ""
 
-#: includes/widgets/member-rating.php:218
+#: includes/widgets/member-rating.php:219
 msgid "Enter Title:"
 msgstr ""
 
-#: includes/widgets/member-rating.php:222
+#: includes/widgets/member-rating.php:223
 msgid "Number of Ratings to Show:"
 msgstr ""
 
-#: includes/widgets/member-rating.php:226
+#: includes/widgets/member-rating.php:227
 msgid "Default Sorting:"
 msgstr ""
 
-#: includes/widgets/member-rating.php:228
+#: includes/widgets/member-rating.php:229
 msgid "Latest"
 msgstr ""
 
-#: includes/widgets/member-rating.php:229
+#: includes/widgets/member-rating.php:230
 msgid "Highest"
 msgstr ""
 
-#: includes/widgets/member-rating.php:230
+#: includes/widgets/member-rating.php:231
 msgid "Lowest"
 msgstr ""

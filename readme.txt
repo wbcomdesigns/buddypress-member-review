@@ -73,7 +73,7 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 = Translations =
 
 * English (default)
-* German (de_DE) and French (fr_FR) translations included
+* German (de_DE), French (fr_FR), Spanish (es_ES), Italian (it_IT) and Portuguese Brazil (pt_BR) translations included
 * Ready for translation in your language with included POT file
 * WPML compatible (wpml-config.xml included)
 * RTL language support included
@@ -88,7 +88,7 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 = Compatibility =
 
 * WordPress 6.5 and higher
-* PHP 8.0 and higher
+* PHP 8.1 and higher
 * BuddyPress 6.0+ or BuddyBoss Platform 1.8+ required, with the Members component active
 * Works with the block editor and classic editor. The two widgets are classic WP_Widget classes, so on a block theme add them through the Legacy Widget block.
 * Tested with popular themes including BuddyX, Reign, BuddyBoss Theme and Youzify
@@ -145,7 +145,7 @@ After activating the plugin, we recommend:
 = Requirements =
 
 * WordPress 6.5 or higher
-* PHP 8.0 or higher
+* PHP 8.1 or higher
 * BuddyPress 6.0+ or BuddyBoss Platform 1.8+, with the Members component active
 
 == Frequently Asked Questions ==
@@ -219,7 +219,7 @@ Yes. Profile owners can reply to each review once. Enable this in General settin
 
 = Is the plugin translation ready? =
 
-Yes. German and French translations ship with the plugin, and a POT file is included so you can translate into any language. The plugin is WPML compatible and includes RTL support.
+Yes. German, French, Spanish, Italian and Portuguese (Brazil) translations ship with the plugin, and a POT file is included so you can translate into any language. The plugin is WPML compatible and includes RTL support.
 
 = Where can I get support? =
 
@@ -281,6 +281,8 @@ Moderation and settings-screen fixes.
 * Fix      - Notification email formatting is kept when saved, so emails are no longer one run-on paragraph.
 * Fix      - The Anonymous flag is ignored in emails when Anonymous Reviews is off.
 * Fix      - Owner replies are only accepted on published reviews.
+* Fix      - The bulk Dismiss Reports action restores a review hidden by reports, the same as dismissing a single review.
+* Fix      - The Member Rating widget respects Number of Ratings to Show, and shows the default avatar for anonymous reviews.
 * Fix      - The Add Review tab no longer shows on your own profile, where a review could never be submitted.
 * Fix      - The review form and dialogs no longer overflow the screen on themes without a box-sizing reset, such as Twenty Twenty-Five.
 * Fix      - Report dialog Submit and Cancel buttons keep their own styles inside BuddyPress pages.

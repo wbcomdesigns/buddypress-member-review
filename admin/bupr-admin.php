@@ -723,15 +723,23 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				return $redirect_to;
 			}
 
-			$new_status = 'bupr_dismiss_flags' === $doaction ? 'dismissed' : 'resolved';
-			$updated    = 0;
+			// Same Editor gate as the single Dismiss/Resolve actions.
+			if ( ! current_user_can( 'edit_others_posts' ) ) {
+				return $redirect_to;
+			}
+
+			$updated = 0;
 
 			foreach ( $post_ids as $post_id ) {
-				$current_status = get_post_meta( $post_id, 'bupr_flag_status', true );
-				if ( 'flagged' === $current_status ) {
-					update_post_meta( $post_id, 'bupr_flag_status', $new_status );
-					++$updated;
+				if ( 'flagged' !== get_post_meta( $post_id, 'bupr_flag_status', true ) ) {
+					continue;
 				}
+				if ( 'bupr_dismiss_flags' === $doaction ) {
+					$this->bupr_dismiss_reports( (int) $post_id );
+				} else {
+					update_post_meta( $post_id, 'bupr_flag_status', 'resolved' );
+				}
+				++$updated;
 			}
 
 			return add_query_arg( 'bupr_flags_updated', $updated, $redirect_to );
@@ -777,6 +785,31 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		}
 
 		/**
+		 * Dismiss the reports on one review. Shared by the single and bulk actions
+		 * so both restore an auto-hidden review the same way.
+		 *
+		 * @since 3.8.1
+		 * @param int $review_id Review post ID.
+		 */
+		private function bupr_dismiss_reports( $review_id ) {
+			update_post_meta( $review_id, 'bupr_flag_status', 'dismissed' );
+			// Reports up to now were reviewed and rejected; only later ones count toward auto-hide.
+			$bupr_flags = get_post_meta( $review_id, 'bupr_flags', true );
+			update_post_meta( $review_id, 'bupr_flag_dismissed_at_count', is_array( $bupr_flags ) ? count( $bupr_flags ) : 0 );
+
+			// Dismissing means the reports were unfounded: a review they auto-hid comes back.
+			// The publish transition clears the auto-hidden marker and restores its activity.
+			if ( get_post_meta( $review_id, 'bupr_auto_hidden', true ) && 'draft' === get_post_status( $review_id ) ) {
+				wp_update_post(
+					array(
+						'ID'          => $review_id,
+						'post_status' => 'publish',
+					)
+				);
+			}
+		}
+
+		/**
 		 * Handle dismiss flag action from admin-post.
 		 *
 		 * @since 3.8.0
@@ -801,22 +834,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				wp_die( esc_html__( 'Invalid review.', 'bp-member-reviews' ) );
 			}
 
-			// Update flag status to dismissed.
-			update_post_meta( $review_id, 'bupr_flag_status', 'dismissed' );
-			// Reports up to now were reviewed and rejected; only later ones count toward auto-hide.
-			$bupr_flags = get_post_meta( $review_id, 'bupr_flags', true );
-			update_post_meta( $review_id, 'bupr_flag_dismissed_at_count', is_array( $bupr_flags ) ? count( $bupr_flags ) : 0 );
-
-			// Dismissing means the reports were unfounded: a review they auto-hid comes back.
-			// The publish transition clears the auto-hidden marker and restores its activity.
-			if ( get_post_meta( $review_id, 'bupr_auto_hidden', true ) && 'draft' === get_post_status( $review_id ) ) {
-				wp_update_post(
-					array(
-						'ID'          => $review_id,
-						'post_status' => 'publish',
-					)
-				);
-			}
+			$this->bupr_dismiss_reports( $review_id );
 
 			// Redirect back to the review edit page.
 			$redirect_url = add_query_arg(
