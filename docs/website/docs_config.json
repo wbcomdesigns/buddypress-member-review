@@ -18,6 +18,17 @@
           "title": "Admin Screen Tour",
           "slug": "admin-screen-tour-bpmemberreview"
         }
+      ],
+      "name": "Getting Started",
+      "pages": [
+        {
+          "slug": "installation",
+          "title": "Installation and Setup"
+        },
+        {
+          "slug": "admin-screen-tour",
+          "title": "Admin Screen Tour"
+        }
       ]
     },
     {
@@ -49,6 +60,29 @@
           "file": "notifications-and-activity.md",
           "title": "Notifications and Activity",
           "slug": "notifications-and-activity-bpmemberreview"
+        }
+      ],
+      "name": "Features",
+      "pages": [
+        {
+          "slug": "overview",
+          "title": "Features Overview"
+        },
+        {
+          "slug": "star-ratings-and-criteria",
+          "title": "Star Ratings and Criteria"
+        },
+        {
+          "slug": "moderation-and-reporting",
+          "title": "Moderation and Reporting"
+        },
+        {
+          "slug": "owner-replies",
+          "title": "Owner Replies"
+        },
+        {
+          "slug": "notifications-and-activity",
+          "title": "Notifications and Activity"
         }
       ]
     },
@@ -107,6 +141,49 @@
           "title": "Control Review Emails and Notifications",
           "slug": "control-review-emails-and-notifications-bpmemberreview"
         }
+      ],
+      "name": "How-to Guides",
+      "pages": [
+        {
+          "slug": "let-members-review-each-other",
+          "title": "Let Members Review Each Other"
+        },
+        {
+          "slug": "require-approval-for-reviews",
+          "title": "Require Approval Before Reviews Go Live"
+        },
+        {
+          "slug": "set-up-rating-criteria",
+          "title": "Set Up Rating Criteria"
+        },
+        {
+          "slug": "choose-who-can-review-and-be-reviewed",
+          "title": "Choose Who Can Write and Who Can Receive Reviews"
+        },
+        {
+          "slug": "handle-a-reported-review",
+          "title": "Handle a Reported Review"
+        },
+        {
+          "slug": "turn-on-anonymous-reviews",
+          "title": "Turn On Anonymous Reviews"
+        },
+        {
+          "slug": "let-members-reply-to-reviews",
+          "title": "Let Members Reply to Reviews"
+        },
+        {
+          "slug": "show-top-rated-members",
+          "title": "Show Top-Rated Members on a Page"
+        },
+        {
+          "slug": "change-labels-and-star-color",
+          "title": "Change the Wording and Star Color"
+        },
+        {
+          "slug": "control-review-emails-and-notifications",
+          "title": "Control Review Emails and Notifications"
+        }
       ]
     },
     {
@@ -129,6 +206,21 @@
           "title": "Settings Reference",
           "slug": "settings-reference-bpmemberreview"
         }
+      ],
+      "name": "Usage and Settings Reference",
+      "pages": [
+        {
+          "slug": "submitting-reviews",
+          "title": "Submitting and Editing Reviews (Member Guide)"
+        },
+        {
+          "slug": "managing-reviews",
+          "title": "Managing Reviews in the Admin"
+        },
+        {
+          "slug": "settings-reference",
+          "title": "Settings Reference"
+        }
       ]
     },
     {
@@ -145,6 +237,17 @@
           "file": "widgets.md",
           "title": "Widgets",
           "slug": "widgets-bpmemberreview"
+        }
+      ],
+      "name": "Shortcodes and Widgets",
+      "pages": [
+        {
+          "slug": "shortcodes",
+          "title": "Shortcodes"
+        },
+        {
+          "slug": "widgets",
+          "title": "Widgets"
         }
       ]
     },
@@ -168,6 +271,21 @@
           "title": "Data Model",
           "slug": "data-model-bpmemberreview"
         }
+      ],
+      "name": "Developer Guide",
+      "pages": [
+        {
+          "slug": "hooks-and-filters",
+          "title": "Hooks and Filters"
+        },
+        {
+          "slug": "templates",
+          "title": "Template Overrides"
+        },
+        {
+          "slug": "data-model",
+          "title": "Data Model"
+        }
       ]
     },
     {
@@ -180,6 +298,13 @@
           "title": "Frequently Asked Questions",
           "slug": "faqs-bpmemberreview"
         }
+      ],
+      "name": "FAQ",
+      "pages": [
+        {
+          "slug": "faqs",
+          "title": "Frequently Asked Questions"
+        }
       ]
     },
     {
@@ -191,6 +316,13 @@
           "file": "troubleshooting.md",
           "title": "Troubleshooting",
           "slug": "troubleshooting-bpmemberreview"
+        }
+      ],
+      "name": "Troubleshooting",
+      "pages": [
+        {
+          "slug": "troubleshooting",
+          "title": "Troubleshooting"
         }
       ]
     }
