@@ -60,7 +60,10 @@ module.exports = function (grunt) {
                         '!CLAUDE.md',
                         '!BUILD.md',
                         '!CONTRIBUTING.md',
-                        '!**/*.map'
+                        '!**/*.map',
+                        '!.wordpress-org/**',
+                        '!screenshot-*.png',
+                        '!.contract-audit-baseline.json'
                     ],
                     dest: 'dist/buddypress-member-review/'
                 }]
