@@ -211,12 +211,12 @@ $reviews = new WP_Query( $args );
 										<?php
 										$trimcontent = get_the_content();
 										if ( ! empty( $trimcontent ) ) {
-											$len = strlen( $trimcontent );
-											if ( $len > 150 ) {
-												$shortexcerpt = substr( $trimcontent, 0, 150 );
+											// Word-aware trim: substr() cut words, multibyte characters and tags in half.
+											$shortexcerpt = wp_trim_words( $trimcontent, 25, '' );
+											if ( wp_trim_words( $trimcontent, 1000000, '' ) !== $shortexcerpt ) {
 												?>
 												<div class="description">
-													<?php echo wp_kses_post( wpautop( $shortexcerpt ) ); ?>
+													<?php echo wp_kses_post( wpautop( $shortexcerpt . '&hellip;' ) ); ?>
 													<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
 														<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
 													</a>

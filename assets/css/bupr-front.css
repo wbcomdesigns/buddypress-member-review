@@ -831,7 +831,8 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 }
 
 .bupr-full-description {
-    word-break: break-all;
+    /* Break only words that would overflow (long URLs), never ordinary words. */
+    overflow-wrap: anywhere;
 }
 
 .description {

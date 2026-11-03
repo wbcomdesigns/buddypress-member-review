@@ -1,10 +1,9 @@
 === Wbcom Designs - BuddyPress Member Reviews ===
 Contributors: wbcomdesigns, vapvarun
-Donate link: https://wbcomdesigns.com/donate/
 Tags: buddypress, members, reviews, ratings, community
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 3.8.1
+Stable tag: 3.8.2
 Requires PHP: 8.1
 Tested with BuddyPress: 14.5.2
 License: GPLv2 or later
@@ -68,7 +67,8 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 
 = Documentation =
 
-* **[Documentation and Support](https://docs.wbcomdesigns.com/)** - Setup walkthrough, settings reference, and usage guides
+* **[Member Reviews documentation](https://docs.wbcomdesigns.com/bp-family/buddypress-member-reviews/)** - Setup walkthrough, settings reference, and usage guides
+* **[Support forum](https://wordpress.org/support/plugin/bp-user-profile-reviews/)** - Ask a question or report a problem
 
 = Translations =
 
@@ -81,7 +81,7 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 = Links =
 
 * [Plugin Homepage](https://wbcomdesigns.com/downloads/buddypress-member-reviews/)
-* [Documentation](https://docs.wbcomdesigns.com/)
+* [Documentation](https://docs.wbcomdesigns.com/bp-family/buddypress-member-reviews/)
 * [Support](https://wbcomdesigns.com/support/)
 * [Request Features](https://wbcomdesigns.com/contact/)
 
@@ -93,23 +93,14 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 * Works with the block editor and classic editor. The two widgets are classic WP_Widget classes, so on a block theme add them through the Legacy Widget block.
 * Tested with popular themes including BuddyX, Reign, BuddyBoss Theme and Youzify
 
-= What's New in 3.8.0 =
+== More from Wbcom Designs ==
 
-The admin settings screen is rebuilt on the Wbcom card-panel UI with sidebar navigation, an overview dashboard, and a Discover tab. On the front end, the review styles now run on one design-token system across light and dark, the star rating input is a keyboard-operable ARIA radiogroup, and directional CSS has moved to logical properties for correct right-to-left rendering. This release also closes a security gap: the review update endpoint now enforces an ownership and capability check, so members can only edit their own reviews.
+Member Reviews adds the trust layer to a community. These free tools from the same team cover the rest of it:
 
-== More Free Tools from Wbcom Designs ==
-
-Member Reviews gives your community its reputation layer, the trust signals members earn from each other. These other free tools from Wbcom Designs give you the rest of the stack that reputation is built on, from the theme and the network itself to forums, media, events, gamification, directories, jobs, and courses.
-
-* **[BuddyX](https://wbcomdesigns.com/downloads/buddyx-theme/)** - A free, fast community theme for BuddyPress, BuddyBoss and PeepSo with a modern layout and dark mode.
-* **[BuddyNext](https://wbcomdesigns.com/downloads/buddynext/)** - Stand up a complete WordPress community with activity streams, member spaces, profiles, direct messaging, and built-in moderation.
-* **[Jetonomy](https://wbcomdesigns.com/downloads/jetonomy/)** - Add forums, question-and-answer boards, and idea spaces that stay tidy through trust-based auto-moderation even past 100,000 topics.
-* **[Mediaverse](https://wbcomdesigns.com/downloads/mediaverse/)** - Let members build photo and video albums, react, follow each other, and message privately while AI moderation keeps things clean.
-* **[Eventonomy](https://wbcomdesigns.com/downloads/eventonomy/)** - Run community events with RSVPs, calendars, and front-end submissions.
-* **[WB Gamification](https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/)** - Reward members with points, badges, and leaderboards to keep engagement high.
-* **[Listora](https://wbcomdesigns.com/downloads/listora/)** - Publish searchable directories across ten listing types with reviews, maps, and member-submitted entries from the front end.
-* **[WP Career Board](https://wbcomdesigns.com/downloads/wp-career-board/)** - Add a job board with front-end listings, applications, and employer profiles.
-* **[Learnomy](https://wbcomdesigns.com/downloads/learnomy/)** - Build and sell online courses, auto-grade quizzes, collect payments, and award certificates when learners finish.
+* **[BuddyX](https://wordpress.org/themes/buddyx/)** - A free, fast community theme for BuddyPress with dark mode and mobile-first member pages.
+* **[BuddyNext](https://buddynext.com/features/)** - A complete community platform with activity, member spaces, messaging and built-in moderation.
+* **[Jetonomy](https://jetonomy.org/features/)** - Forums, question-and-answer boards and idea spaces with trust-based auto-moderation.
+* **[WB Gamification](https://wbcomdesigns.com/downloads/wordpress-gamification-plugin/)** - Points, badges and leaderboards that reward the members others rate highly.
 
 == Installation ==
 
@@ -140,7 +131,7 @@ After activating the plugin, we recommend:
 3. Open the **Criteria** tab. Two criteria are seeded on activation, "Member Response" and "Member Skills". Rename them or add your own to fit your community.
 4. Open the **Display** tab to set the review labels and star color. The plural label also drives the profile tab and its URL slug, so pick it before members start sharing links.
 5. Visit any member profile and use the Reviews tab to post a test review, then check it appears on the members directory.
-6. See the [documentation](https://docs.wbcomdesigns.com/) for detailed instructions.
+6. See the [documentation](https://docs.wbcomdesigns.com/bp-family/buddypress-member-reviews/) for detailed instructions.
 
 = Requirements =
 
@@ -224,7 +215,8 @@ Yes. German, French, Spanish, Italian and Portuguese (Brazil) translations ship 
 = Where can I get support? =
 
 We offer comprehensive support through multiple channels:
-* [Documentation](https://docs.wbcomdesigns.com/) - Free guides for every Wbcom plugin
+* [Documentation](https://docs.wbcomdesigns.com/bp-family/buddypress-member-reviews/) - Setup, settings and how-to guides for this plugin
+* [Support forum](https://wordpress.org/support/plugin/bp-user-profile-reviews/) - Ask the community and our team
 * [Support](https://wbcomdesigns.com/support/) - Get help from our team
 * [Contact us](https://wbcomdesigns.com/contact/) - Report bugs and request features
 
@@ -238,14 +230,22 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 
 == Screenshots ==
 
-1. Member Reviews tab with per-criteria star ratings and the aggregate profile score
-2. Reviews tab in BuddyX dark mode
-3. Add Review form with the keyboard-operable star rating widget and criteria
-4. Reviews tab on mobile - rows, criteria, and buttons stack cleanly
-5. Admin General Settings - moderation, notifications, roles, and reporting
-6. Admin Discover tab - more free tools from Wbcom Designs
+1. A member's Reviews tab: every review shows its overall score and a star rating for each criterion you define.
+2. The same Reviews tab in dark mode on the Reign theme.
+3. The Add Review form, with a keyboard-friendly star rating for each criterion.
+4. Reviews on a phone, with the criteria stacked under each review.
+5. The admin Overview: review counts, items waiting for moderation, and how the plugin is set up right now.
+6. The Criteria tab, where you add, rename, reorder or remove rating criteria.
 
 == Changelog ==
+
+= 3.8.2 - November 2026 =
+
+Review text display fixes.
+
+* Fix      - Review text on the Reviews tab no longer splits words in the middle when a line wraps; long links still wrap.
+* Fix      - Shortened reviews now end on a whole word with an ellipsis, and can no longer cut a non-Latin character or an HTML tag in half.
+* Dev      - WordPress.org banners, icons and screenshots now live in the repository's .wordpress-org folder and are no longer packaged in the plugin zip.
 
 = 3.8.1 - October 2026 =
 
@@ -383,6 +383,9 @@ Admin redesign plus a full front-end UX, accessibility, and dark-mode pass.
 * Updated: BuddyPress, BuddyBoss, Youzify integration
 
 == Upgrade Notice ==
+
+= 3.8.2 =
+Fixes review text that split words in the middle on the Reviews tab. Recommended for all users.
 
 = 3.8.1 =
 Security and moderation update: pending and report-hidden reviews stay private, review approval and report moderation need the Editor capability, and reviewer role settings are enforced. Recommended for all users.
