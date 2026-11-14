@@ -47,54 +47,12 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 		 * preserved so the Pro addon's `bupr_admin_settings_tabs` filter keeps
 		 * matching.
 		 *
-		 * ---------------------------------------------------------------------
-		 * REMOVED TAB: `bupr-pro-features` ("Add-ons") — removed 2026-07-17.
-		 * ---------------------------------------------------------------------
-		 * Removed because the Pro addon is not released, so on every free site
-		 * the tab rendered an empty surface with nothing in it. READ THIS BEFORE
-		 * SHIPPING PRO — restoring Pro's settings needs BOTH halves back:
-		 *
-		 * 1. This tab entry. The slug `bupr-pro-features` is a PUBLIC CONTRACT:
-		 *    it appears in `?tab=bupr-pro-features` URLs and in the legacy tab
-		 *    map the Pro addon filters via `bupr_admin_settings_tabs`. Restore
-		 *    the slug verbatim; do not rename it. Also restore its entry in the
-		 *    `$view_map` in render_page() or the tab falls back to Overview.
-		 *
-		 * 2. The view + template that carried Pro's MOUNT POINT, both deleted
-		 *    with this tab:
-		 *      - includes/admin/views/settings-pro-features.php
-		 *      - admin/tab-templates/bupr-setting-pro-features-tab.php
-		 *    The template fired `do_action( 'bupr_admin_settings_pro_content' )`
-		 *    — the action Pro hooks (unconditionally) to render its settings.
-		 *    Pro renders FORM CONTENTS ONLY and depends on free supplying the
-		 *    surrounding wrapper markup, so any replacement surface must nest
-		 *    the do_action() inside exactly this structure:
-		 *
-		 *      <div class="wbcom-tab-content">
-		 *        <div class="wbcom-admin-title-section"> <h3>...</h3> </div>
-		 *        <div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
-		 *          <?php do_action( 'bupr_admin_settings_pro_content' ); ?>
-		 *        </div>
-		 *      </div>
-		 *
-		 *    Restoring the do_action() without those wrappers renders Pro's
-		 *    fields unstyled and outside the card chrome.
-		 *
-		 * 3. A DANGLING LINK is left behind on purpose, and it points at this
-		 *    tab. admin/tab-templates/bupr-setting-criteria-tab.php builds a
-		 *    notice ending "...switch to Star Ratings mode in the [Add-ons]
-		 *    tab", linking to `?tab=bupr-pro-features`. It is unreachable in
-		 *    free - the whole block is gated on class_exists( 'BUPR_Pro_Features' ),
-		 *    a Pro class - so it costs a free site nothing today and was left
-		 *    rather than churn Pro-facing copy while Pro is unreleased. But the
-		 *    moment Pro ships, that link is live and lands on a tab that no
-		 *    longer exists. Restore this tab and it works again; decide not to,
-		 *    and that notice needs rewriting to point somewhere real.
-		 *
-		 * Git history: the deleted files are recoverable from the commit that
-		 * removed them. See CLAUDE.md "Recent changes" and audit/manifest.json
-		 * (`removed_contracts`) for the same record.
-		 * ---------------------------------------------------------------------
+		 * ADD-ONS TAB: `bupr-pro-features` is registered only when an add-on
+		 * hooks `bupr_admin_settings_pro_content` (the Pro addon does), so a
+		 * free-only site never sees an empty tab. The slug is a public
+		 * contract (`?tab=bupr-pro-features` links, including the Criteria
+		 * tab's "switch to Star Ratings mode" notice); do not rename it. The
+		 * template supplies the wrapper markup Pro's form contents rely on.
 		 *
 		 * @return array<string, array{label:string, icon:string, group:string}>
 		 */
@@ -141,6 +99,15 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 						unset( $tabs[ $slug ] );
 					}
 				}
+			}
+
+			// Add-ons: only when an add-on has settings to render here.
+			if ( has_action( 'bupr_admin_settings_pro_content' ) ) {
+				$tabs['bupr-pro-features'] = array(
+					'label' => __( 'Add-ons', 'bp-member-reviews' ),
+					'icon'  => 'dashicons-admin-plugins',
+					'group' => 'settings',
+				);
 			}
 
 			/*
@@ -467,31 +434,30 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 
 			$page_url = admin_url( 'admin.php?page=' . self::MENU_SLUG );
 
-			/*
-			 * Map tab slug -> view partial + the option group it submits.
-			 *
-			 * The `bupr-pro-features` entry was removed with its tab on
-			 * 2026-07-17; see the removal record in get_tabs() above before
-			 * restoring a surface for the Pro addon.
-			 */
+			// Map tab slug -> view partial + the option group it submits.
+			// An unregistered tab never reaches here (it falls back above).
 			$view_map = array(
-				'overview'      => array(
+				'overview'          => array(
 					'view'  => 'overview',
 					'group' => '',
 				),
-				'bupr-general'  => array(
+				'bupr-general'      => array(
 					'view'  => 'settings-general',
 					'group' => self::OPTION_GENERAL,
 				),
-				'bupr-criteria' => array(
+				'bupr-criteria'     => array(
 					'view'  => 'settings-criteria',
 					'group' => self::OPTION_CRITERIA,
 				),
-				'bupr-display'  => array(
+				'bupr-display'      => array(
 					'view'  => 'settings-display',
 					'group' => self::OPTION_DISPLAY,
 				),
-				'discover'      => array(
+				'bupr-pro-features' => array(
+					'view'  => 'settings-pro-features',
+					'group' => '',
+				),
+				'discover'          => array(
 					'view'  => 'discover',
 					'group' => '',
 				),

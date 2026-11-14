@@ -1153,12 +1153,11 @@
       "type": "action",
       "args_count": 0,
       "args_signature": [],
-      "where": null,
-      "status": "REMOVED_2026-07-17_NOT_FIRED",
+      "where": "admin/tab-templates/bupr-setting-pro-features-tab.php:35",
       "consumed_by": [
         "buddypress-member-review-pro"
       ],
-      "note": "NO LONGER FIRED IN FREE. This was the Pro addon's mount point, fired from admin/tab-templates/bupr-setting-pro-features-tab.php:42 on the Add-ons tab (slug bupr-pro-features). The tab and both of its files (that template + includes/admin/views/settings-pro-features.php) were removed 2026-07-17 on the owner's call, because Pro is unreleased so free users saw an empty tab. Pro hooks this action unconditionally, so when Pro ships this mount point MUST be restored or Pro's settings have nowhere to render. WRAPPER CONTRACT to restore with it: the consumer renders form contents only and relies on free for the surrounding wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap markup. The removal record with the full restore checklist lives at the removal site, in BUPR_Admin_Panel::get_tabs() (includes/admin/class-bupr-admin-panel.php)."
+      "note": "Pro addon settings mount on the Add-ons tab (slug bupr-pro-features). The tab is registered only when this action has a callback, so free-only sites never see an empty tab. Consumers render form contents only; the template supplies the wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap wrappers."
     },
     {
       "name": "bupr_before_member_review_list",

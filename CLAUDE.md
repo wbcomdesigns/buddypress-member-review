@@ -37,26 +37,15 @@ cycle (commit `b4bcd2a`). Evidence:
 - **`bp-member-review-settings`** ("Member Reviews") — `add_submenu_page` of `wbcomplugins`,
   `manage_options`, `BUPR_Admin_Panel::render_page`
   (`includes/admin/class-bupr-admin-panel.php:155-162`). **PRIMARY settings page.**
-- Tabs (`BUPR_Admin_Panel::get_tabs`): Overview, General, Criteria, Display, Discover.
+- Tabs (`BUPR_Admin_Panel::get_tabs`): Overview, General, Criteria, Display, Add-ons (only with an add-on), Discover.
 
-### REMOVED: the `bupr-pro-features` ("Add-ons") tab - read before shipping Pro
-Removed 2026-07-17 (owner override of the 2026-07-17 "keep the mount" call: QA was right that an
-unreleased Pro means free users see an empty tab). **This tab carried Pro's mount point**, so
-restoring a surface for Pro needs BOTH halves back:
-1. The tab entry in `get_tabs()` + its `$view_map` entry in `render_page()`. Slug
-   `bupr-pro-features` is a **public contract** (`?tab=` URLs + the tab map Pro filters via
-   `bupr_admin_settings_tabs`) - restore it verbatim, do not rename.
-2. The deleted view + template that fired `do_action( 'bupr_admin_settings_pro_content' )`:
-   `includes/admin/views/settings-pro-features.php` + `admin/tab-templates/bupr-setting-pro-features-tab.php`.
-   Pro hooks that action **unconditionally** and renders **form contents only**, so the
-   do_action() must sit inside `wbcom-tab-content` > `wbcom-admin-title-section` >
-   `wbcom-admin-option-wrap` or Pro's fields render unstyled outside the card chrome.
-
-The full restore checklist lives as a comment at the removal site in `get_tabs()`; the hook entry
-in `audit/manifest.json` is flagged `REMOVED_2026-07-17_NOT_FIRED`. A stale
-`?tab=bupr-pro-features` URL now falls back to Overview (verified, no fatal). Nothing in free
-consumed the hook, and the `wbcom-*` wrapper CSS is shared with the 3 live settings tabs, so
-nothing was orphaned.
+### The `bupr-pro-features` ("Add-ons") tab - Pro's settings mount
+Registered in `get_tabs()` only when something hooks `bupr_admin_settings_pro_content` (the Pro
+addon does, from `BUPR_Pro_Admin`), so a free-only site never sees an empty tab and a stale
+`?tab=bupr-pro-features` URL falls back to Overview. The slug is a **public contract** (`?tab=`
+URLs, the Criteria tab's "switch to Star Ratings mode" link) - do not rename it. Pro renders
+**form contents only**; `admin/tab-templates/bupr-setting-pro-features-tab.php` supplies the
+`wbcom-tab-content` > `wbcom-admin-title-section` > `wbcom-admin-option-wrap` wrappers.
 
 ### Settings options read/written
 - `bupr_admin_general_options` (array, 19 subkeys) — `BUPR_Admin_Panel::OPTION_GENERAL`,
