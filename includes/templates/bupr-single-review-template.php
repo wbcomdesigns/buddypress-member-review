@@ -172,7 +172,7 @@ if ( ! empty( $review_id ) ) {
 						 * @since 3.7.0
 						 * @param int $review_id The review post ID.
 						 */
-						do_action( 'bupr_after_review_date', get_the_ID() );
+						do_action( 'bupr_after_review_date', $review_id );
 						echo '</div>';
 						$bupr_post_content = ( is_object( $review ) && ! empty( $review ) && isset( $review->post_content ) ) ? $review->post_content : '';
 						?>
