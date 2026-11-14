@@ -16,7 +16,7 @@
 
 ## Quick reference
 - **Main file**: `buddypress-member-review.php`
-- **Version**: `3.8.1`  | **Dev branch**: `3.8.1`
+- **Version**: `3.8.3`  | **Dev branch**: `3.8.3`
 - **Namespace**: none — procedural functions + prefixed classes (`BUPR_*`, `Wbcom_Admin_Settings`)
 - **Prefix**: `bupr_`  | **Text domain**: `bp-member-reviews`  | **WP.org slug**: `bp-user-profile-reviews`
 - **Extends**: null. **Extended by**: `buddypress-member-review-pro` (separate repo, hook-only coupling).

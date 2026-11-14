@@ -3,7 +3,7 @@ Contributors: wbcomdesigns, vapvarun
 Tags: buddypress, members, reviews, ratings, community
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 3.8.2
+Stable tag: 3.8.3
 Requires PHP: 8.1
 Tested with BuddyPress: 14.5.2
 License: GPLv2 or later
@@ -238,6 +238,11 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 6. The Criteria tab, where you add, rename, reorder or remove rating criteria.
 
 == Changelog ==
+
+= 3.8.3 - November 2026 =
+
+* Fix      - The average rating under a member's name in the profile header is readable again on dark cover images and in dark mode. It now uses the header's own text colour.
+* Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 
 = 3.8.2 - November 2026 =
 
