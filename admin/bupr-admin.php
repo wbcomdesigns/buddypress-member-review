@@ -241,15 +241,23 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @since 3.8.1
 		 */
 		public function bupr_redirect_review_single() {
-			global $wp_query;
-			if ( ! is_singular( 'review' ) ) {
+			global $wp_query, $wp;
+			$review_id = 0;
+			if ( is_singular( 'review' ) ) {
+				$review_id = get_queried_object_id();
+			} elseif ( is_404() && preg_match( '#^review/([^/]+)/?$#', (string) $wp->request, $matches ) ) {
+				// Sites activated before the review rule was saved have no /review/ rewrite
+				// rule, so the old link 404s before it is seen as a review. Find it by slug.
+				$review    = get_page_by_path( $matches[1], OBJECT, 'review' );
+				$review_id = $review ? $review->ID : 0;
+			}
+			if ( ! $review_id ) {
 				if ( in_array( 'review', (array) get_query_var( 'post_type' ), true ) && ! is_admin() ) {
 					$wp_query->set_404();
 					status_header( 404 );
 				}
 				return;
 			}
-			$review_id = get_queried_object_id();
 			$member_id = (int) get_post_meta( $review_id, 'linked_bp_member', true );
 			if ( ! $member_id ) {
 				return;
