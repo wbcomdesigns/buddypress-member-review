@@ -123,15 +123,15 @@
       "registered_at": "includes/admin/class-bupr-admin-panel.php:155-162 (add_submenu_page)",
       "hook": "admin_menu (BUPR_Admin_Panel::add_menu)",
       "callback": "BUPR_Admin_Panel::render_page",
-      "note": "PRIMARY plugin settings page (BUPR_Admin_Panel::MENU_SLUG, :34). Single page rendering the card-panel shell (includes/admin/views/shell.php) with sidebar tabs from BUPR_Admin_Panel::get_tabs()."
+      "note": "PRIMARY plugin settings page (BUPR_Admin_Panel::MENU_SLUG, :34). Single page rendering the card-panel shell (includes/admin/views/layout.php) with sidebar tabs from BUPR_Admin_Panel::get_tabs()."
     }
   ],
   "admin_ui_wrapper": {
     "classification": "NEW (card-panel shell)",
     "owner_class": "BUPR_Admin_Panel (includes/admin/class-bupr-admin-panel.php)",
-    "shell_view": "includes/admin/views/shell.php",
+    "shell_view": "includes/admin/views/layout.php",
     "views": [
-      "includes/admin/views/shell.php",
+      "includes/admin/views/layout.php",
       "includes/admin/views/hub.php",
       "includes/admin/views/overview.php",
       "includes/admin/views/settings-general.php",

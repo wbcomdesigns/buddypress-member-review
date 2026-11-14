@@ -1,6 +1,6 @@
 <?php
 /**
- * Overview dashboard partial: rendered inside shell.php.
+ * Overview dashboard partial: rendered inside layout.php.
  *
  * @package BuddyPress_Member_Reviews
  * @since   3.8.0

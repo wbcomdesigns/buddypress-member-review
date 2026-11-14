@@ -330,7 +330,7 @@ span.move-icons {
  *    plus `background:transparent; border:none; box-shadow:none`. No ancestor
  *    is positioned, so the notice resolved against the initial containing
  *    block and floated over the card header stripped of all notice chrome -
- *    while `<hr class="wp-header-end">` in views/shell.php exists precisely to
+ *    while `<hr class="wp-header-end">` in views/layout.php exists precisely to
  *    place it inline below the header. Being an ID (1,0,0) it always beat
  *    `.bupr-admin .notice` (0,2,0) regardless of load order, so the shell's
  *    styling could never take effect. A `@media (max-width:480px)` override

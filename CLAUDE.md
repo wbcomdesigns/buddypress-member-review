@@ -25,7 +25,7 @@
 ## Admin-UI wrapper classification: **NEW (card-panel shell)**
 Migrated from the OLD `Wbcom_Admin_Settings` wrapper to the card-panel shell in the 3.8.0
 cycle (commit `b4bcd2a`). Evidence:
-- `includes/admin/views/shell.php` present (NEW-pattern marker); `admin/wbcom/` removed.
+- `includes/admin/views/layout.php` present (NEW-pattern marker; never name a file `shell.php`: host WAFs block zips containing it); `admin/wbcom/` removed.
 - `includes/admin/class-bupr-admin-panel.php` (`BUPR_Admin_Panel`) owns menu, settings
   registration, asset enqueue (`assets/css/admin.css` + `assets/js/admin.js`), and page render.
 - Views: `includes/admin/views/{shell,hub,overview,settings-general,settings-criteria,settings-display,settings-pro-features}.php`;

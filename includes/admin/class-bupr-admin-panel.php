@@ -506,7 +506,7 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 			$settings_form_group = $entry['group'];
 
 			$view_path = BUPR_PLUGIN_PATH . 'includes/admin/views/' . $view . '.php';
-			$shell     = BUPR_PLUGIN_PATH . 'includes/admin/views/shell.php';
+			$shell     = BUPR_PLUGIN_PATH . 'includes/admin/views/layout.php';
 
 			include $shell;
 		}
