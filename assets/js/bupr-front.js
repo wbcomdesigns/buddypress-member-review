@@ -680,3 +680,38 @@ jQuery(function ($) {
     $next.attr('tabindex', '0').focus();
   });
 });
+
+/**
+ * Header rating colour: match the member's name.
+ *
+ * Themes paint the name (BuddyPress's .user-nicename) to suit their cover,
+ * often white with a shadow over the image, while the text around it stays
+ * dark. The rating sits beside the name, so it copies the name's colour and
+ * shadow rather than inheriting a colour that can vanish on the cover.
+ * Re-applied when the theme switches light/dark without a reload.
+ */
+(function () {
+  function syncHeaderRating() {
+    var name = document.querySelector("#item-header .user-nicename");
+    if (!name) {
+      return;
+    }
+    var style = window.getComputedStyle(name);
+    document
+      .querySelectorAll("#item-header .bupr-member-rating-text")
+      .forEach(function (el) {
+        el.style.color = style.color;
+        el.style.textShadow = style.textShadow;
+      });
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    syncHeaderRating();
+    var observer = new MutationObserver(function () {
+      // Let the theme's colour transition finish before reading the name.
+      window.setTimeout(syncHeaderRating, 400);
+    });
+    [document.documentElement, document.body].forEach(function (node) {
+      observer.observe(node, { attributes: true, attributeFilter: ["class", "data-bx-mode", "data-theme"] });
+    });
+  });
+})();

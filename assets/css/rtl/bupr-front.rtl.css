@@ -683,7 +683,7 @@ button.bupr-edit-review-button {
 
 .bupr-member-rating-text {
     font-size: 14px;
-    /* Follow the surrounding text: white on a dark profile cover, the theme's text colour elsewhere and in dark mode. */
+    /* Fallback only: bupr-front.js copies the member name colour onto the header rating. */
     color: inherit;
     margin-inline-start: 5px;
 }
