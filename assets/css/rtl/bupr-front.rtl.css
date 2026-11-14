@@ -1538,7 +1538,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     --bupr-success-fg: #46b450;
     --bupr-success-border: #d4edda;
     --bupr-danger-bg: #fff0f0;
-    --bupr-danger-fg: #dc3232;
+    --bupr-danger-fg: #b32d2e;
     --bupr-danger-border: #f5c6cb;
     --bupr-accent: var(--bx-color-accent, var(--reign-colors-theme, var(--wp--preset--color--primary, #007cba)));
     --bupr-focus: var(--bx-color-accent, var(--reign-colors-theme, var(--wp--preset--color--primary, #2271b1)));
@@ -1680,7 +1680,7 @@ body.dark-scheme {
 .bupr-report-button:hover {
     background: var(--bupr-danger-bg, #fff0f0);
     border-color: #dc3232;
-    color: var(--bupr-danger-fg, #dc3232);
+    color: var(--bupr-danger-fg, #b32d2e);
 }
 
 /* BuddyPress styles every button inside .buddypress-wrap at (0,2,1), and its hover rule
@@ -1698,7 +1698,7 @@ body.dark-scheme {
 .buddypress-wrap .bupr-report-button.bupr-report-button:focus {
     background: var(--bupr-danger-bg, #fff0f0);
     border-color: #dc3232;
-    color: var(--bupr-danger-fg, #dc3232);
+    color: var(--bupr-danger-fg, #b32d2e);
 }
 
 .bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close {
@@ -1711,7 +1711,7 @@ body.dark-scheme {
 .bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close:hover,
 .bupr-flag-modal .bupr-flag-modal-close.bupr-flag-modal-close:focus {
     background: transparent;
-    color: var(--bupr-danger-fg, #dc3232);
+    color: var(--bupr-danger-fg, #b32d2e);
 }
 
 /* Edit Review is a secondary action: the same self-contained chip colours as Report, which
