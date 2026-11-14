@@ -357,8 +357,8 @@ $reviews = new WP_Query( $args );
 					<?php } ?>
 						<p>
 							<?php
-							/* translators: %s: */
-							printf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+							/* translators: %s: plural review label, lowercase, e.g. "reviews". */
+							printf( esc_html__( 'No %s yet.', 'bp-member-reviews' ), esc_html( strtolower( bupr_profile_review_tab_name() ) ) );
 							?>
 
 						</p>

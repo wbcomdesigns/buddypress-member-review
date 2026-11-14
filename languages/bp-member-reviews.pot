@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Wbcom Designs - BuddyPress Member Reviews 3.8.3\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/buddypress-member-review\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-user-profile-reviews\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-14T17:30:55+00:00\n"
+"POT-Creation-Date: 2026-11-14T22:38:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -1540,10 +1540,10 @@ msgstr ""
 msgid "Report"
 msgstr ""
 
-#. translators: %s:
+#. translators: %s: plural review label, lowercase, e.g. "reviews".
 #: includes/templates/bupr-reviews-tab-template.php:361
 #, php-format
-msgid "Unfortunately, there are no %1$s found."
+msgid "No %s yet."
 msgstr ""
 
 #: includes/templates/bupr-reviews-tab-template.php:379
