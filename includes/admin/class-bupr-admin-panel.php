@@ -165,8 +165,8 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 
 			add_submenu_page(
 				'wbcomplugins',
-				'BuddyPress Member Reviews',
-				esc_html__( 'Member Reviews', 'bp-member-reviews' ),
+				defined( 'BUPR_PRO_VERSION' ) ? 'BuddyPress Member Reviews Pro' : 'BuddyPress Member Reviews',
+				defined( 'BUPR_PRO_VERSION' ) ? esc_html__( 'Member Reviews Pro', 'bp-member-reviews' ) : esc_html__( 'Member Reviews', 'bp-member-reviews' ),
 				$cap,
 				self::MENU_SLUG,
 				array( $this, 'render_page' )
