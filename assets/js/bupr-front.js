@@ -297,7 +297,7 @@ jQuery(document).ready(function () {
     }
   );
 
-  jQuery(window).click(function (e) {
+  jQuery(window).on("click", function (e) {
     var modal = document.querySelector(".bupr-review-modal");
     if (e.target === modal) {
       modal.classList.remove("bupr-show-modal");
