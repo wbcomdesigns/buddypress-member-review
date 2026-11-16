@@ -351,6 +351,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<p class="description"><?php esc_html_e( 'Allow users to submit reviews anonymously.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
+							<input type="hidden" name="bupr_admin_general_options[bupr_enable_anonymous_reviews]" value="no">
 							<label class="bupr-switch">
 								<input type="checkbox" id="bupr_enable_anonymous_reviews" value="yes" name="bupr_admin_general_options[bupr_enable_anonymous_reviews]" <?php checked( esc_attr( $bupr['anonymous_reviews'] ), 'yes' ); ?>>
 								<div class="bupr-slider bupr-round"></div>
@@ -365,6 +366,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<p class="description"><?php esc_html_e( 'Post reviews to the BuddyPress activity stream.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
+							<input type="hidden" name="bupr_admin_general_options[bupr_enable_review_activity]" value="no">
 							<label class="bupr-switch">
 								<input type="checkbox" id="bupr_enable_review_activity" value="yes" name="bupr_admin_general_options[bupr_enable_review_activity]" <?php checked( esc_attr( $bupr['review_activity'] ), 'yes' ); ?>>
 								<div class="bupr-slider bupr-round"></div>
