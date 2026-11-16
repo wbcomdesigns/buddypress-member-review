@@ -125,7 +125,7 @@ $user_roles = array_reverse( get_editable_roles() );
 								<?php esc_html_e( 'Member Directory Ratings', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description">
-								<?php esc_html_e( 'Display member ratings on the member directory page.', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Show member star ratings in the member directory and in each member\'s profile header.', 'bp-member-reviews' ); ?>
 							</p>
 						</div>
 						<div class="wbcom-settings-section-options">
