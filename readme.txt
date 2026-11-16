@@ -17,7 +17,7 @@ Let members review and rate each other on their profiles. Build trust with star 
 
 **BuddyPress Member Reviews** gives your community a reputation layer. Registered members post reviews on other members' profiles, rate them against criteria you define, and the plugin rolls those scores into an aggregate rating shown on the profile and on the members directory.
 
-It needs BuddyPress 6.0+ or BuddyBoss Platform 1.8+ with the Members component active. Everything is controlled from one settings screen: who can review whom, whether reviews are auto-approved or moderated, what the criteria are called, and how the whole thing is labelled.
+It needs BuddyPress 12.0+ or BuddyBoss Platform 1.8+ with the Members component active. Everything is controlled from one settings screen: who can review whom, whether reviews are auto-approved or moderated, what the criteria are called, and how the whole thing is labelled.
 
 = What you get =
 
@@ -89,7 +89,7 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 
 * WordPress 6.5 and higher
 * PHP 8.1 and higher
-* BuddyPress 6.0+ or BuddyBoss Platform 1.8+ required, with the Members component active
+* BuddyPress 12.0+ or BuddyBoss Platform 1.8+ required, with the Members component active
 * Works with the block editor and classic editor. The two widgets are classic WP_Widget classes, so on a block theme add them through the Legacy Widget block.
 * Tested with popular themes including BuddyX, Reign, BuddyBoss Theme and Youzify
 
@@ -137,13 +137,13 @@ After activating the plugin, we recommend:
 
 * WordPress 6.5 or higher
 * PHP 8.1 or higher
-* BuddyPress 6.0+ or BuddyBoss Platform 1.8+, with the Members component active
+* BuddyPress 12.0+ or BuddyBoss Platform 1.8+, with the Members component active
 
 == Frequently Asked Questions ==
 
 = Is BuddyPress required? =
 
-Yes. The plugin needs BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher, with the Members component active. Reviews live on member profiles, so there is no standalone mode.
+Yes. The plugin needs BuddyPress 12.0 or higher, or BuddyBoss Platform 1.8 or higher, with the Members component active. Reviews live on member profiles, so there is no standalone mode.
 
 = How do members submit reviews? =
 

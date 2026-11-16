@@ -166,11 +166,11 @@ Members buy, sell, or trade with each other. Seller ratings create transaction t
 
 **Requirements:**
 - WordPress 5.0 or higher
-- BuddyPress 6.0 or higher (OR BuddyBoss Platform 1.8.0+)
+- BuddyPress 12.0 or higher (OR BuddyBoss Platform 1.8.0+)
 - PHP 7.4 or higher
 
 **Compatible With:**
-- BuddyPress 6.0+
+- BuddyPress 12.0+
 - BuddyBoss Platform 1.8.0+ & Theme
 - WordPress Multisite
 - Most BuddyPress-compatible themes

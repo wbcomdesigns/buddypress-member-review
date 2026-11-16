@@ -10,7 +10,7 @@ This page gets the plugin installed and working. For a quick path to a working r
 |---|---|
 | WordPress | 6.5 or higher |
 | PHP | 8.1 or higher |
-| Community plugin | BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher |
+| Community plugin | BuddyPress 12.0 or higher, or BuddyBoss Platform 1.8 or higher |
 | BuddyPress component | The **Members** component must be active |
 
 Reviews live on member profiles, so the plugin cannot work without BuddyPress or BuddyBoss. If BuddyPress is missing, the plugin deactivates itself and shows a red notice. If the Members component is switched off, you get the same kind of notice and the plugin deactivates.

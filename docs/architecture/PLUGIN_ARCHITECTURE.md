@@ -8,7 +8,7 @@
 **WordPress.org Slug:** bp-user-profile-reviews
 **Minimum Requirements:**
 - WordPress 5.0+
-- BuddyPress 6.0+ or BuddyBoss 1.8+
+- BuddyPress 12.0+ or BuddyBoss 1.8+
 - PHP 7.4+
 
 ## Purpose

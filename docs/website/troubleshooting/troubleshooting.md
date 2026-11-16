@@ -5,7 +5,7 @@ Find the problem you see, then read the likely cause and the fix. Settings are a
 ## The plugin turned itself off
 
 - **Cause:** BuddyPress or BuddyBoss is not active, or the BuddyPress **Members** component is switched off. The plugin shows a red notice and deactivates.
-- **Fix:** Activate BuddyPress (or BuddyBoss), turn on the Members component at **Settings > BuddyPress > Components**, then activate this plugin again. You need BuddyPress 6.0+ or BuddyBoss 1.8+.
+- **Fix:** Activate BuddyPress (or BuddyBoss), turn on the Members component at **Settings > BuddyPress > Components**, then activate this plugin again. You need BuddyPress 12.0+ or BuddyBoss 1.8+.
 
 ## I cannot find the settings
 

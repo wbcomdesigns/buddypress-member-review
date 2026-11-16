@@ -6,7 +6,7 @@ Short answers to the questions site owners ask most. Settings are at **WB Plugin
 
 ### Do I need BuddyPress?
 
-Yes. You need BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher, with the **Members** component on. You also need WordPress 6.5 or higher and PHP 8.1 or higher.
+Yes. You need BuddyPress 12.0 or higher, or BuddyBoss Platform 1.8 or higher, with the **Members** component on. You also need WordPress 6.5 or higher and PHP 8.1 or higher.
 
 ### Where are the settings?
 
