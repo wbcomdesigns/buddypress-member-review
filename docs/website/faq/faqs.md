@@ -114,7 +114,7 @@ Yes. Dark mode in those themes is supported. The plugin follows the theme's own 
 
 ### Can members reply to reviews about them?
 
-Yes. They can reply once to each review. See [Let members reply to reviews](../how-to/let-members-reply-to-reviews.md). The reviewer is not told about the reply.
+Yes. They can reply once to each review. See [Let members reply to reviews](../how-to/let-members-reply-to-reviews.md). The reviewer gets a BuddyPress notification about the reply when **BuddyPress Notifications** is on.
 
 ## Data and languages
 

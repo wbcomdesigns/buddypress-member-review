@@ -31,7 +31,7 @@ It needs BuddyPress 12.0+ or BuddyBoss Platform 1.8+ with the Members component 
 
 **Ratings on the members directory**
 * Show each member's star rating right on the members directory, on by default.
-* An "Add Review" button on directory entries so members can review without opening the profile first, also on by default.
+* An optional "Add Review" button in the member profile header, so members can start a review without opening the Reviews tab. Off by default.
 * Both are individually switchable in General settings.
 
 **Moderation you control**
@@ -127,7 +127,7 @@ Member Reviews adds the trust layer to a community. These free tools from the sa
 After activating the plugin, we recommend:
 
 1. Visit **WB Plugins > Member Reviews > General**. Reviews are auto-approved out of the box: if you want to read every review before it goes live, turn **Auto Approve Reviews** off now.
-2. On the same tab, set who may leave reviews and who may receive them, and switch email and BuddyPress notifications on or off. Directory ratings and the directory "Add Review" button are on by default here too.
+2. On the same tab, set who may leave reviews and who may receive them, and switch email and BuddyPress notifications on or off. Directory ratings are on by default here too. Switch on Show Review Button to add an "Add Review" button to the profile header.
 3. Open the **Criteria** tab. Two criteria are seeded on activation, "Member Response" and "Member Skills". Rename them or add your own to fit your community.
 4. Open the **Display** tab to set the review labels and star color. The plural label also drives the profile tab and its URL slug, so pick it before members start sharing links.
 5. Visit any member profile and use the Reviews tab to post a test review, then check it appears on the members directory.
@@ -147,7 +147,7 @@ Yes. The plugin needs BuddyPress 12.0 or higher, or BuddyBoss Platform 1.8 or hi
 
 = How do members submit reviews? =
 
-Members open another member's profile and click the Reviews tab, then use the "Add Review" button. If directory ratings are enabled, they can also start a review straight from the members directory.
+Members open another member's profile and click the Reviews tab, then use the "Add Review" button. If you switched on Show Review Button, the same button also appears in the profile header.
 
 Note that "Reviews" is just the default label. If you rename the plural label under Display settings, the tab and its URL slug change to match.
 

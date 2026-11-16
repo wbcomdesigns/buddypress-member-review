@@ -44,29 +44,23 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 
 | Guide | Description |
 |-------|-------------|
-| [Getting Started](user-guide/getting-started.md) | Installation, requirements, and initial setup |
-| [Admin Settings](admin-guide/settings.md) | Complete settings reference |
-| [Managing Reviews](admin-guide/managing-reviews.md) | Approve, edit, and moderate reviews |
-| [Shortcodes](admin-guide/shortcodes.md) | Display top members anywhere |
-| [Widgets](admin-guide/widgets.md) | Sidebar widgets for reviews |
+| [Getting Started](website/getting-started/installation.md) | Installation, requirements, and initial setup |
+| [Admin Settings](website/usage/settings-reference.md) | Complete settings reference |
+| [Managing Reviews](website/usage/managing-reviews.md) | Approve, edit, and moderate reviews |
+| [Shortcodes](website/shortcodes/shortcodes.md) | Display top members anywhere |
+| [Widgets](website/shortcodes/widgets.md) | Sidebar widgets for reviews |
 
 ### For Developers
 
 | Guide | Description |
 |-------|-------------|
-| [Hooks Reference](developer-guide/hooks.md) | Actions and filters for customization |
-| [Template Overrides](developer-guide/templates.md) | Customize review display |
-| [REST API](developer-guide/rest-api.md) | API endpoints (Pro feature) |
-| [Database Schema](developer-guide/database.md) | Post meta and user meta reference |
+| [Hooks Reference](website/developer-guide/hooks-and-filters.md) | Actions and filters for customization |
+| [Template Overrides](website/developer-guide/templates.md) | Customize review display |
+| [Database Schema](website/developer-guide/data-model.md) | Post meta and user meta reference |
 
 ### Pro Feature Guides
 
-| Guide | What You'll Learn |
-|-------|-------------------|
-| [Testimonials Mode](user-guide/testimonials.md) | Skip stars, collect text feedback |
-| [Endorsements Mode](user-guide/endorsements.md) | LinkedIn-style skill endorsements |
-| [Verified Reviews](user-guide/verified-reviews.md) | Trust badges for authentic feedback |
-| [Pro Overview](user-guide/pro-features.md) | All Pro features at a glance |
+Testimonials, Endorsements, Verified badges, the criteria builder and the REST API are part of the Member Reviews Pro add-on. Their guides ship with the Pro add-on in its own `docs/website/` folder.
 
 ### Reference Files
 
@@ -74,7 +68,7 @@ Welcome to the official documentation for BuddyPress Member Reviews, a comprehen
 |------|-------------|
 | [FILE_INDEX.md](FILE_INDEX.md) | Complete file listing with purposes |
 | [PLUGIN_ARCHITECTURE.md](architecture/PLUGIN_ARCHITECTURE.md) | Technical architecture reference |
-| [FAQ](user-guide/faq.md) | Frequently asked questions |
+| [FAQ](website/faq/faqs.md) | Frequently asked questions |
 
 ---
 
@@ -199,7 +193,6 @@ Watch these short video tutorials to get started quickly.
 
 ### Pro Plugin Support
 - Priority email support at support@wbcomdesigns.com
-- [Pro Documentation](user-guide/pro-features.md)
 - [Online Docs](https://docs.wbcomdesigns.com/docs/buddypress-member-review/)
 
 ---

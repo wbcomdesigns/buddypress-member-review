@@ -31,7 +31,7 @@ Work down this list.
 | You already reviewed this member and **Multiple Reviews** is off. | The form shows "You already posted a review for this member." Switch **Multiple Reviews** on to allow more. |
 | You are logged out. | You see "You must log in to add a review." Log in and you come back to the form. |
 
-If a member has more than one role, the header button checks only the first role of each member. The tab under **Reviews** accepts any role.
+If a member has more than one role, any of their roles counts, for both the header button and the tab under **Reviews**.
 
 ## A review is refused when I press Submit
 

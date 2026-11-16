@@ -14,6 +14,7 @@ The screen has a sidebar on the left with these items:
 | **General** | Approval, emails, notifications, who can review whom, replies, reporting. This is the main settings tab. |
 | **Criteria** | Choose what members rate (for example "Communication") or use one overall rating. |
 | **Display** | Change the word "Review", the star color, and look up the shortcode. |
+| **Add-ons** | Settings for an add-on such as Member Reviews Pro. This tab only appears when an add-on is installed and active. |
 | **Discover** | A read-only list of other free Wbcom Designs plugins. No settings. |
 
 The sidebar also has a **Documentation** link under **Resources**. It opens the online documentation in a new tab.

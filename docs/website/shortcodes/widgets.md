@@ -27,13 +27,13 @@ Shows the individual ratings that the member whose profile you are viewing has r
 | **Number of Ratings to Show:** | How many ratings are listed. Leave it empty or set 0 to list them all. | 5 |
 | **Default Sorting:** | **Latest**, **Highest** or **Lowest**. | Latest |
 
-Each entry shows the reviewer's picture, the reviewer's name (or "Anonymous") and the stars, with the score as "4/5".
+Each entry shows the reviewer's picture and name (or the default picture and "Anonymous") and the stars, with the score as "4/5".
 
 If the member has no rated reviews, the widget says "The member has not received a rating yet."
 
 Things to know:
 
-- It shows the reviewer's picture even for anonymous reviews. Only the name is hidden.
+- An anonymous review shows the default picture and "Anonymous", never the reviewer's own picture or name.
 - It lists stars only, not the written text of the reviews.
 
 ## Styling (for designers)

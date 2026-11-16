@@ -1,6 +1,6 @@
 # Settings Reference
 
-Every setting is at **WB Plugins > Member Reviews**. Settings are on three tabs: **General**, **Criteria** and **Display**. The **Overview** and **Discover** tabs have nothing to save.
+Every setting is at **WB Plugins > Member Reviews**. Settings are on three tabs: **General**, **Criteria** and **Display**, plus an **Add-ons** tab when an add-on such as Member Reviews Pro is active. The **Overview** and **Discover** tabs have nothing to save.
 
 Each tab saves on its own with its **Save Changes** button. Save before you switch tabs.
 
@@ -57,6 +57,12 @@ See [Set up rating criteria](../how-to/set-up-rating-criteria.md) and [Star Rati
 | **Rating Color** | The color of the stars. Pick a color or enter a code. | #FFC400 (yellow) |
 
 Under these settings, the **Top Members Shortcode** box shows the shortcode and its options, for easy copying. See [Shortcodes](../shortcodes/shortcodes.md).
+
+## Add-ons tab
+
+This tab only appears when an add-on that adds its own settings is installed and active, such as Member Reviews Pro. On a site without an add-on you will not see it. The settings on it belong to the add-on, so see that add-on's documentation. It has its own **Save Changes** button.
+
+Member Reviews Pro also replaces what the **Criteria** tab shows with its own criteria builder.
 
 ## Overview and Discover tabs
 

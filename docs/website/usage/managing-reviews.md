@@ -68,7 +68,7 @@ Tick one or more reviews and choose from **Bulk actions**:
 - **Dismiss Reports**
 - **Resolve Reports**
 
-The two report actions change the report status only. They do not publish a hidden review.
+**Dismiss Reports** brings back a review that reports had hidden automatically (it is published again). **Resolve Reports** only marks the reports resolved, so a hidden review stays hidden until you publish it yourself.
 
 ## The counts at the top of the settings screen
 

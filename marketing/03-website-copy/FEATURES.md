@@ -127,7 +127,7 @@ Automated emails notify members about review activity.
 
 **Benefit:** Keep members engaged even when they're not on your site.
 
-**How it works:** Members receive emails when they get reviewed, when someone responds to their review, or when admins take action.
+**How it works:** Members receive an email when a review of them is published, including when an admin approves a pending review. Admins receive an email when a new review is waiting for approval. Owner replies are announced with a BuddyPress notification, not an email.
 
 **Icon:** 📧 (Email)
 
