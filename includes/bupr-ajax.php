@@ -622,13 +622,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$stars_off = 5 - $stars_on;
 						$count     = 0;
 						for ( $i = 1; $i <= $stars_on; $i++ ) {
-							$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star ' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
+							$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star member-star-' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
 							++$count;
 						}
 
 						for ( $i = 1; $i <= 5; $i++ ) {
 							if ( $i > $count ) {
-								$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="far fa-star stars bupr-star-rate member-edit-stars bupr-star ' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
+								$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="far fa-star stars bupr-star-rate member-edit-stars bupr-star member-star-' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
 							}
 						}
 						/*star rating end */
@@ -648,13 +648,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 									<input type="hidden" name="member_rated_stars[]" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" data-critaria="<?php echo esc_attr( $field ); ?>" value="0">
 											<?php
 											for ( $i = 1; $i <= $stars_on; $i++ ) {
-												echo '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star ' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
+												echo '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star member-star-' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
 												++$count;
 											}
 											for ( $i = 1; $i <= 5; $i++ ) {
 												if ( $i > $count ) {
 													?>
-										<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate member-edit-stars <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+										<span class="far member_stars member-star-<?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate member-edit-stars" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 													<?php
 												}
 											}

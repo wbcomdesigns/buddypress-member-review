@@ -442,7 +442,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
 										<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" value="0">
 												<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
-											<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+											<span class="far member_stars member-star-<?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 										<?php } ?>
 									</div>
 									<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
@@ -465,7 +465,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 											<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
 											<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" value="0">
 													<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
-												<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+												<span class="far member_stars member-star-<?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 											<?php } ?>
 										</div>
 									</div>

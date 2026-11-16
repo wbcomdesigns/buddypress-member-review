@@ -51,13 +51,13 @@ jQuery(document).ready(function () {
    *-----------------------------------------*/
   var reviews_pluginurl = jQuery("#reviews_pluginurl").val();
 
-  jQuery(".member_stars").mouseenter(function () {
+  jQuery(".member_stars").on("mouseenter", function () {
     jQuery(this).parent().children().eq(0).val("not_clicked");
     var id = jQuery(this).attr("data-attr");
     var parent_id = jQuery(this).parent().attr("id");
     for (i = 1; i <= id; i++) {
       jQuery("#" + parent_id)
-        .children("." + i)
+        .children(".member-star-" + i)
         .addClass("fas")
         .removeClass("far");
     }
@@ -66,7 +66,7 @@ jQuery(document).ready(function () {
   /*----------------------------------------
    * Remove Color on stars
    *-----------------------------------------*/
-  jQuery(".member_stars").mouseleave(function () {
+  jQuery(".member_stars").on("mouseleave", function () {
     var clicked_id = jQuery(this).parent().children().eq(1).val();
     var id = jQuery(this).attr("data-attr");
     var parent_id = jQuery(this).parent().attr("id");
@@ -74,7 +74,7 @@ jQuery(document).ready(function () {
       var j = parseInt(clicked_id) + 1;
       for (i = j; i <= 5; i++) {
         jQuery("#" + parent_id)
-          .children("." + i)
+          .children(".member-star-" + i)
           .addClass("far")
           .removeClass("fas");
       }
@@ -92,7 +92,7 @@ jQuery(document).ready(function () {
     jQuery(this).parent().children().eq(0).val("clicked");
     for (i = 1; i <= attr; i++) {
       jQuery("#" + parent_id)
-        .children("." + i)
+        .children(".member-star-" + i)
         .addClass("fas")
         .removeClass("far");
     }
@@ -100,7 +100,7 @@ jQuery(document).ready(function () {
     var k = parseInt(attr) + 1;
     for (j = k; j <= 5; j++) {
       jQuery("#" + parent_id)
-        .children("." + j)
+        .children(".member-star-" + j)
         .addClass("far")
         .removeClass("fas");
     }
@@ -319,7 +319,7 @@ jQuery(document).ready(function () {
     var parent_id = jQuery(this).parent().attr("id");
     for (i = 1; i <= id; i++) {
       jQuery("#" + parent_id)
-        .children("." + i)
+        .children(".member-star-" + i)
         .addClass("fas")
         .removeClass("far");
     }
@@ -333,7 +333,7 @@ jQuery(document).ready(function () {
       var j = parseInt(clicked_id) + 1;
       for (i = j; i <= 5; i++) {
         jQuery("#" + parent_id)
-          .children("." + i)
+          .children(".member-star-" + i)
           .addClass("far")
           .removeClass("fas");
       }
@@ -348,7 +348,7 @@ jQuery(document).ready(function () {
     jQuery(this).parent().children().eq(0).val("clicked");
     for (i = 1; i <= attr; i++) {
       jQuery("#" + parent_id)
-        .children("." + i)
+        .children(".member-star-" + i)
         .addClass("fas")
         .removeClass("far");
     }
@@ -356,7 +356,7 @@ jQuery(document).ready(function () {
     var k = parseInt(attr) + 1;
     for (j = k; j <= 5; j++) {
       jQuery("#" + parent_id)
-        .children("." + j)
+        .children(".member-star-" + j)
         .addClass("far")
         .removeClass("fas");
     }
@@ -413,7 +413,7 @@ jQuery(document).ready(function () {
         var parent_id = jQuery(this).parent().attr("id");
         for (i = 1; i <= id; i++) {
           jQuery("#" + parent_id)
-            .children("." + i)
+            .children(".member-star-" + i)
             .removeClass("fas")
             .addClass("far");
         }
