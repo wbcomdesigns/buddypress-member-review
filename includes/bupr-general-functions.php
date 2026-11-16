@@ -779,6 +779,17 @@ function bupr_is_member_review( $post ) {
 }
 
 /**
+ * Whether a review was posted anonymously.
+ *
+ * @since 3.8.3
+ * @param int|string $review_id Review post ID.
+ * @return bool
+ */
+function bupr_is_anonymous_review( $review_id ) {
+	return 'yes' === get_post_meta( (int) $review_id, 'bupr_anonymous_review_post', true );
+}
+
+/**
  * Whether an activity entry is the one recorded for a member review.
  *
  * Checks component, type and that item_id is a review of the member in

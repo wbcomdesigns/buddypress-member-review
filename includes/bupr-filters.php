@@ -776,7 +776,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				// Get the review content.
 				$review_content = $review->post_content;
 				// Check for anonymous review.
-				$is_anonymous = get_post_meta( $review_id, 'bupr_anonymous_review_post', true ) === 'yes';
+				$is_anonymous = bupr_is_anonymous_review( $review_id );
 				if ( $is_anonymous ) {
 					$reviewer_user_link = esc_html__( 'An anonymous user', 'bp-member-reviews' );
 				}
@@ -889,8 +889,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! bupr_is_review_activity( $activity ) ) {
 				return;
 			}
-			$is_anonymous   = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true );
-			$anonymous_user = ( 'yes' === $is_anonymous ) ? esc_html__( 'An anonymous user', 'bp-member-reviews' ) : '';
+			$is_anonymous   = bupr_is_anonymous_review( $activity->item_id );
+			$anonymous_user = ( $is_anonymous ) ? esc_html__( 'An anonymous user', 'bp-member-reviews' ) : '';
 			if ( isset( $activity->id ) && ! empty( $anonymous_user ) ) {
 				bp_activity_add_meta( $activity->id, 'bupr_user_string', $anonymous_user );
 			}
@@ -929,7 +929,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_change_user_link( $user_link_activity ) {
 			global $activities_template;
 			$activity = $activities_template->activity ?? null;
-			if ( $activity && bupr_is_review_activity( $activity ) && 'yes' === get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true ) ) {
+			if ( $activity && bupr_is_review_activity( $activity ) && bupr_is_anonymous_review( $activity->item_id ) ) {
 				$user_link_activity = '#';
 			}
 			return apply_filters( 'bupr_change_user_link', $user_link_activity );
@@ -950,9 +950,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 
 			if ( isset( $activities_template->activity ) && bupr_is_review_activity( $activities_template->activity ) ) {
 				$activity     = $activities_template->activity;
-				$is_anonymous = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true );
+				$is_anonymous = bupr_is_anonymous_review( $activity->item_id );
 
-				if ( 'yes' === $is_anonymous ) {
+				if ( $is_anonymous ) {
 
 					$size           = apply_filters( 'bupr_default_avatar_size', 150 );
 					$default_avatar = apply_filters( 'bupr_change_default_avatar', 'mystery' );  // Could also use identicon, monsterid, retro, etc.

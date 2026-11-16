@@ -50,7 +50,7 @@ $reviews = new WP_Query( $args );
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
+						$anonymous_post_review = bupr_is_anonymous_review( $post->ID );
 						$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 						$author_id             = get_post_field( 'post_author', get_the_ID() );
 
@@ -81,7 +81,7 @@ $reviews = new WP_Query( $args );
 								<div class="item-avatar">
 									<?php
 									$author = $reviews->post->post_author;
-									if ( 'yes' === $anonymous_post_review ) {
+									if ( $anonymous_post_review ) {
 										if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) {
 											// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- $type is used locally for avatar function.
 											$type       = 'local';
@@ -113,7 +113,7 @@ $reviews = new WP_Query( $args );
 								<div class="reviewer">
 									<h4>
 										<?php
-										if ( 'yes' === $anonymous_post_review ) {
+										if ( $anonymous_post_review ) {
 											$reviewer_name_html = esc_html__( 'anonymous', 'bp-member-reviews' );
 										} else {
 											$reviewer_name_html = wp_kses( bp_core_get_userlink( $author ), $allowedtags );

@@ -91,9 +91,9 @@ function bupr_add_review_notification_format( $action, $item_id, $secondary_item
 
 	if ( 'bupr_add_review_action' === $component_action_name ) {
 
-		$anonymous_review = get_post_meta( $item_id, 'bupr_anonymous_review_post', true );
+		$anonymous_review = bupr_is_anonymous_review( $item_id );
 		$user_name        = '';
-		if ( 'yes' === $anonymous_review ) {
+		if ( $anonymous_review ) {
 			$user_name = __( 'An anonymous user', 'bp-member-reviews' );
 		} else {
 			$post_author_id = get_post_field( 'post_author', $item_id );

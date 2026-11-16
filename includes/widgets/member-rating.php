@@ -124,13 +124,13 @@ class bupr_single_member_rating_widget extends WP_Widget {
 				} else {
 					$author_id             = $final_review_obj[ $bupr_key ]->post_author;
 					$members_profile       = bp_core_get_userlink( $author_id );
-					$user_anonymous_review = get_post_meta( $bupr_key, 'bupr_anonymous_review_post', true );
+					$user_anonymous_review = bupr_is_anonymous_review( $bupr_key );
 
 					echo '<li class="vcard"><div class="item-avatar">';
 					// An anonymous review gets the default avatar, never the reviewer's own.
-					echo get_avatar( 'yes' === $user_anonymous_review ? 0 : $author_id, 50 );
+					echo get_avatar( $user_anonymous_review ? 0 : $author_id, 50 );
 					echo '</div><div class="item"><div class="item-title">';
-					echo ( 'yes' !== $user_anonymous_review ) ? wp_kses_post( $members_profile ) : esc_html__( 'Anonymous', 'bp-member-reviews' );
+					echo ( ! $user_anonymous_review ) ? wp_kses_post( $members_profile ) : esc_html__( 'Anonymous', 'bp-member-reviews' );
 					echo '</div><div class="item-meta">';
 
 					/**
