@@ -670,6 +670,7 @@ button.bupr-edit-review-button {
     border-radius: 5px;
     font-size: 12px;
     white-space: nowrap;
+    z-index: 99;
     opacity: 0;
     visibility: hidden;
     -webkit-transition: opacity 0.3s ease-in-out;
