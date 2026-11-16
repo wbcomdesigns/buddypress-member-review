@@ -1056,7 +1056,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
 
 .bupr-reply-badge {
     background: var(--bupr-accent, #007cba);
-    color: #fff;
+    color: var(--bupr-on-accent, #fff);
     font-size: 11px;
     padding: 3px 8px;
     border-radius: 12px;
@@ -1543,6 +1543,7 @@ body[class*="youzify"] .bupr-member-tooltip .bupr-member-rating-text {
     --bupr-danger-border: #f5c6cb;
     --bupr-accent: var(--bx-color-accent, var(--reign-colors-theme, var(--wp--preset--color--primary, #007cba)));
     --bupr-focus: var(--bx-color-accent, var(--reign-colors-theme, var(--wp--preset--color--primary, #2271b1)));
+    --bupr-on-accent: #fff;
 }
 
 /*--------------------------------------------------------------
@@ -1580,6 +1581,8 @@ body.dark-scheme {
     --bupr-danger-bg: rgba(220, 50, 50, 0.15);
     --bupr-danger-fg: #ff8a8a;
     --bupr-danger-border: rgba(220, 50, 50, 0.4);
+    /* Dark-mode accents are light pastels: put dark text on them. */
+    --bupr-on-accent: var(--bupr-card-bg);
 }
 
 /* Review rows: dividers + inherited text. Fallbacks equal the light values. */
