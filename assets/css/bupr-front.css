@@ -485,75 +485,6 @@ button.bupr-edit-review-button {
 }
 
 
-/*--------------------------------------------------------------
-# Square Rating
---------------------------------------------------------------*/
-
-.br-theme-bars-square .bupr-rating-widget {
-    height: 15px;
-    white-space: nowrap;
-}
-
-.br-theme-bars-square .bupr-rating-widget a {
-    display: block;
-    width: 28px;
-    height: 28px;
-    float: inline-start;
-    border: 2px solid var(--bupr-square-border, #8a9bc4);
-    background-color: white;
-    margin: 2px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 2;
-    text-align: center;
-    color: var(--bupr-square-fg, #5a6b96);
-    font-weight: 600;
-}
-
-.br-theme-bars-square .bupr-rating-widget a:focus-visible {
-    outline: 2px solid var(--bupr-focus, #2271b1);
-    outline-offset: 2px;
-}
-
-.br-theme-bars-square .bupr-rating-widget a.bupr-square-selected {
-    border: 2px solid var(--bupr-square-selected, #1a56db);
-    color: var(--bupr-square-selected, #1a56db);
-}
-
-.br-theme-bars-square .br-readonly a {
-    cursor: default;
-}
-
-.br-theme-bars-square .br-readonly a.bupr-square-selected {
-    border: 2px solid var(--bupr-square-selected, #2c5fd0);
-    color: var(--bupr-square-selected, #2c5fd0);
-}
-
-@media print {
-    .br-theme-bars-square .bupr-rating-widget a {
-        border: 2px solid #b3b3b3;
-        color: #b3b3b3;
-    }
-}
-
-
-/*--------------------------------------------------------------
-# Square Half Rating Box
---------------------------------------------------------------*/
-
-.br-theme-bars-square .br-readonly a.bupr-square-half {
-    border-top: 2px solid #2c5fd0;
-    border-inline-start: 2px solid #2c5fd0;
-    color: #2c5fd0;
-}
-
-.br-theme-bars-square .bupr-rating-widget a.bupr-square-half {
-    border-top: 2px solid #1a56db;
-    border-inline-start: 2px solid #1a56db;
-    color: #1a56db;
-}
-
 .item-header-content .activity {
     margin-bottom: 10px;
 }
@@ -1584,10 +1515,6 @@ body.dark-scheme {
     /* Dark-mode accents are light pastels: put dark text on them. */
     --bupr-on-accent: var(--bupr-card-bg);
     --bupr-accent-hover: color-mix(in srgb, var(--bupr-accent) 85%, #fff);
-    /* Square rating boxes: light numbers on the dark chip, accent when selected. */
-    --bupr-square-fg: var(--bupr-text);
-    --bupr-square-border: var(--bupr-border);
-    --bupr-square-selected: var(--bupr-accent);
 }
 
 /* Review rows: dividers + inherited text. Fallbacks equal the light values. */
@@ -1789,11 +1716,6 @@ body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:focus {
     background-color: var(--bupr-danger-bg, hsl(0, 43%, 91%));
     border-color: var(--bupr-danger-border, hsl(350, 44%, 86%));
     color: var(--bupr-danger-fg, hsl(1, 44%, 46%));
-}
-
-/* Rating widget squares. */
-.br-theme-bars-square .bupr-rating-widget a {
-    background-color: var(--bupr-chip-bg, white);
 }
 
 /* Pagination chips. */
