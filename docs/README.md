@@ -2,8 +2,6 @@
 
 Welcome to the official documentation for BuddyPress Member Reviews, a comprehensive review and rating system for BuddyPress communities.
 
-![Member reviews on profile](images/frontend-reviews-tab.png)
-
 ## What You Can Do
 
 ### Build Trust in Your Community
@@ -125,8 +123,6 @@ Watch these short video tutorials to get started quickly.
 
 ### Pro Features
 
-![Pro settings page](images/pro-features-full-page.png)
-
 | Feature | Description |
 |---------|-------------|
 | **Review Modes** | |
@@ -201,7 +197,7 @@ Watch these short video tutorials to get started quickly.
 
 | Version | Plugin |
 |---------|--------|
-| Free | 3.7.0 |
-| Pro | 1.0.0 |
+| Free | 3.8.3 |
+| Pro | 1.0.1 |
 
-**Last Documentation Update:** 2026-01-26
+**Last Documentation Update:** 2026-11-16

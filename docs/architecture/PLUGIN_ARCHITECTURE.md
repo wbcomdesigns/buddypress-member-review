@@ -3,7 +3,7 @@
 ## Overview
 
 **Plugin Name:** Wbcom Designs - BuddyPress Member Reviews
-**Version:** 3.7.0
+**Version:** 3.8.3
 **Text Domain:** bp-member-reviews
 **WordPress.org Slug:** bp-user-profile-reviews
 **Minimum Requirements:**

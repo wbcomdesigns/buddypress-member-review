@@ -80,7 +80,7 @@ New reviews automatically appear in BuddyPress activity feeds, turning reviews i
 Display average ratings in member directories. Members' star ratings appear alongside their profiles for quick trust signals.
 
 **Email Notifications**
-Members receive email notifications when they get reviewed, when someone responds to their review, or when admins take action.
+Members receive an email when a review of them is published, including when an admin approves a pending review. Admins receive an email when a new review is waiting for approval. Owner replies send a BuddyPress notification, not an email.
 
 **BuddyPress Notifications**
 In-site notifications appear in the BuddyPress notification bell for real-time alerts.

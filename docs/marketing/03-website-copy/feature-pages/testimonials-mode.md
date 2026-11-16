@@ -138,4 +138,4 @@ Included in all Pro licenses:
 
 **Purchase Pro:** https://wbcomdesigns.com/downloads/buddypress-member-reviews-pro
 
-**Requires:** BuddyPress Member Reviews (free) v3.7.0+
+**Requires:** BuddyPress Member Reviews (free) v3.8.3+

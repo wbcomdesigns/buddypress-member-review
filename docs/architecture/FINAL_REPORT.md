@@ -1,7 +1,7 @@
 # BuddyPress Member Review - Comprehensive Audit Report
 
 **Generated:** 2026-01-23
-**Plugin Version:** 3.7.0
+**Plugin Version at audit time:** 3.7.0 (current release: 3.8.3)
 **Analysis Scope:** Full plugin audit with multiple specialized agents
 
 ---
