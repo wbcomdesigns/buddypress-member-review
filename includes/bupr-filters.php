@@ -520,7 +520,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_bp_member_reviews_row_actions( $actions, $post ) {
 			global $bp;
 			global $bupr;
-			if ( 'review' === $post->post_type ) {
+			if ( bupr_is_member_review( $post ) ) {
 				unset( $actions['edit'] );
 				unset( $actions['view'] );
 				unset( $actions['inline hide-if-no-js'] );
@@ -839,6 +839,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @return string Modified activity content.
 		 */
 		public function bupr_added_activity_star_rating( $activity_content, $activity ) {
+			if ( ! bupr_is_review_activity( $activity ) ) {
+				return $activity_content;
+			}
 			$post_id              = $activity->item_id;
 			$review_rating_fields = get_option( 'bupr_admin_settings', true );
 			$review_ratings       = get_post_meta( $post_id, 'profile_star_rating', false );
@@ -883,6 +886,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @param object $activity Activity object.
 		 */
 		public function bupr_add_activity_meta( $activity ) {
+			if ( ! bupr_is_review_activity( $activity ) ) {
+				return;
+			}
 			$is_anonymous   = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true );
 			$anonymous_user = ( 'yes' === $is_anonymous ) ? esc_html__( 'An anonymous user', 'bp-member-reviews' ) : '';
 			if ( isset( $activity->id ) && ! empty( $anonymous_user ) ) {
@@ -922,9 +928,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 */
 		public function bupr_change_user_link( $user_link_activity ) {
 			global $activities_template;
-			$activity     = $activities_template->activity;
-			$is_anonymous = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true );
-			if ( 'yes' === $is_anonymous ) {
+			$activity = $activities_template->activity ?? null;
+			if ( $activity && bupr_is_review_activity( $activity ) && 'yes' === get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true ) ) {
 				$user_link_activity = '#';
 			}
 			return apply_filters( 'bupr_change_user_link', $user_link_activity );
@@ -943,7 +948,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		public function bupr_change_avatar_image( $gravatar_image ) {
 			global $activities_template;
 
-			if ( isset( $activities_template->activity ) && isset( $activities_template->activity->item_id ) ) {
+			if ( isset( $activities_template->activity ) && bupr_is_review_activity( $activities_template->activity ) ) {
 				$activity     = $activities_template->activity;
 				$is_anonymous = get_post_meta( $activity->item_id, 'bupr_anonymous_review_post', true );
 

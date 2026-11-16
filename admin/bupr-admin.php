@@ -45,7 +45,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
 				add_action( 'init', array( $this, 'bupr_review_cpt' ) );
 				add_action( 'init', array( $this, 'bupr_review_taxonomy_cpt' ) );
-				add_action( 'add_meta_boxes', array( $this, 'bupr_review_add_meta_box_ratings' ) );
+				add_action( 'add_meta_boxes', array( $this, 'bupr_review_add_meta_box_ratings' ), 10, 2 );
 			}
 
 			// Flagged reviews admin columns and filters.
@@ -53,7 +53,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_action( 'manage_review_posts_custom_column', array( $this, 'bupr_flag_column_content' ), 10, 2 );
 			add_filter( 'views_edit-review', array( $this, 'bupr_add_flagged_filter_link' ) );
 			add_action( 'pre_get_posts', array( $this, 'bupr_filter_flagged_reviews' ) );
-			add_action( 'add_meta_boxes', array( $this, 'bupr_add_flag_meta_box' ) );
+			add_action( 'add_meta_boxes', array( $this, 'bupr_add_flag_meta_box' ), 10, 2 );
 
 			// Bulk action for flagged reviews.
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_add_flag_bulk_actions' ) );
@@ -70,7 +70,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 *
 		 *  @since 3.3.2
 		 */
-		public function bupr_review_add_meta_box_ratings() {
+		public function bupr_review_add_meta_box_ratings( $post_type = '', $post = null ) {
+			if ( ! bupr_is_member_review( $post ) ) {
+				return;
+			}
 			add_meta_box(
 				'custom_meta_box_ratings',
 				__( 'Member Ratings', 'bp-member-reviews' ),
@@ -659,7 +662,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 *
 		 * @since 3.8.0
 		 */
-		public function bupr_add_flag_meta_box() {
+		public function bupr_add_flag_meta_box( $post_type = '', $post = null ) {
+			if ( ! bupr_is_member_review( $post ) ) {
+				return;
+			}
 			add_meta_box(
 				'bupr_flag_details',
 				__( 'Report Details', 'bp-member-reviews' ),

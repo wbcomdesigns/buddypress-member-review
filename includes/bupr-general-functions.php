@@ -767,6 +767,62 @@ function bupr_review_activity_type() {
 }
 
 /**
+ * Whether a post is a member review (Group Reviews shares the review post type).
+ *
+ * @since 3.8.3
+ * @param int|WP_Post $post Post or post ID.
+ * @return bool
+ */
+function bupr_is_member_review( $post ) {
+	$post = get_post( $post );
+	return $post && 'review' === $post->post_type && (int) get_post_meta( $post->ID, 'linked_bp_member', true ) > 0;
+}
+
+/**
+ * Whether an activity entry is the one recorded for a member review.
+ *
+ * Checks component, type and that item_id is a review of the member in
+ * secondary_item_id, so unrelated activity whose IDs happen to match a
+ * review never gets review stars or anonymous masking.
+ *
+ * @since 3.8.3
+ * @param object $activity Activity object.
+ * @return bool
+ */
+function bupr_is_review_activity( $activity ) {
+	if ( empty( $activity->item_id ) || empty( $activity->secondary_item_id ) || ! isset( $activity->component, $activity->type ) ) {
+		return false;
+	}
+	if ( buddypress()->members->id !== $activity->component || bupr_review_activity_type() !== $activity->type ) {
+		return false;
+	}
+	return bupr_is_member_review( (int) $activity->item_id )
+		&& (int) get_post_meta( (int) $activity->item_id, 'linked_bp_member', true ) === (int) $activity->secondary_item_id;
+}
+
+/**
+ * Register the member review activity type so it appears in the activity filter.
+ *
+ * Youzify records reviews as its own status type, which BuddyPress already registers.
+ *
+ * @since 3.8.3
+ */
+function bupr_register_activity_actions() {
+	if ( defined( 'YOUZIFY_VERSION' ) ) {
+		return;
+	}
+	bp_activity_set_action(
+		buddypress()->members->id,
+		'member_review',
+		__( 'Posted a member review', 'bp-member-reviews' ),
+		false,
+		bupr_profile_review_tab_name(),
+		array( 'activity', 'member' )
+	);
+}
+add_action( 'bp_register_activity_actions', 'bupr_register_activity_actions' );
+
+/**
  * ID of the activity entry recorded for a review, or 0 when there is none.
  *
  * @since 3.8.1
