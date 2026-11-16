@@ -692,7 +692,11 @@ jQuery(function ($) {
  */
 (function () {
   function syncHeaderRating() {
-    var name = document.querySelector("#item-header .user-nicename");
+    // The member's display name: BuddyX prints it as .user-displayname and keeps
+    // .user-nicename for the @handle line; other themes use .user-nicename.
+    var name =
+      document.querySelector("#item-header .user-displayname") ||
+      document.querySelector("#item-header .user-nicename");
     if (!name) {
       return;
     }
