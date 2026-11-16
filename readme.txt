@@ -242,11 +242,18 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 = 3.8.3 - November 2026 =
 
 * Improve  - Member Reviews Pro settings appear on an Add-ons tab when Pro is active; free-only sites do not see the tab.
+* Improve  - The settings heading, sidebar and menu say Member Reviews Pro when Pro is active.
 * Fix      - The average rating under a member's name in the profile header matches the colour of the member's name, so it stays readable on any cover image and in dark mode.
 * Fix      - Old review links (/review/...) redirect to the review on the member's profile instead of a page not found.
 * Fix      - The verified badge shows on a single review page, not only in the list.
 * Fix      - The Report button hover is easier to read in light mode.
 * Fix      - The Overview and Display settings cards fit phone screens without sideways scrolling.
+* Fix      - The Owner Response badge text stays readable in BuddyX and Reign dark mode.
+* Fix      - The header rating takes the colour of the member's display name on BuddyX, not the @handle line.
+* Fix      - The header rating tooltip shows above the profile cover and buttons.
+* Fix      - The review text box placeholder sits flush instead of starting on a new indented line.
+* Fix      - Turning off Anonymous Reviews or Activity Stream is saved like the other switches.
+* Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 
 = 3.8.2 - November 2026 =
