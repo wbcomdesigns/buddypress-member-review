@@ -499,7 +499,7 @@ button.bupr-edit-review-button {
     width: 28px;
     height: 28px;
     float: inline-start;
-    border: 2px solid #8a9bc4;
+    border: 2px solid var(--bupr-square-border, #8a9bc4);
     background-color: white;
     margin: 2px;
     text-decoration: none;
@@ -507,7 +507,7 @@ button.bupr-edit-review-button {
     font-weight: 400;
     line-height: 2;
     text-align: center;
-    color: #5a6b96;
+    color: var(--bupr-square-fg, #5a6b96);
     font-weight: 600;
 }
 
@@ -517,8 +517,8 @@ button.bupr-edit-review-button {
 }
 
 .br-theme-bars-square .bupr-rating-widget a.bupr-square-selected {
-    border: 2px solid #1a56db;
-    color: #1a56db;
+    border: 2px solid var(--bupr-square-selected, #1a56db);
+    color: var(--bupr-square-selected, #1a56db);
 }
 
 .br-theme-bars-square .br-readonly a {
@@ -526,8 +526,8 @@ button.bupr-edit-review-button {
 }
 
 .br-theme-bars-square .br-readonly a.bupr-square-selected {
-    border: 2px solid #2c5fd0;
-    color: #2c5fd0;
+    border: 2px solid var(--bupr-square-selected, #2c5fd0);
+    color: var(--bupr-square-selected, #2c5fd0);
 }
 
 @media print {
@@ -1583,6 +1583,11 @@ body.dark-scheme {
     --bupr-danger-border: rgba(220, 50, 50, 0.4);
     /* Dark-mode accents are light pastels: put dark text on them. */
     --bupr-on-accent: var(--bupr-card-bg);
+    --bupr-accent-hover: color-mix(in srgb, var(--bupr-accent) 85%, #fff);
+    /* Square rating boxes: light numbers on the dark chip, accent when selected. */
+    --bupr-square-fg: var(--bupr-text);
+    --bupr-square-border: var(--bupr-border);
+    --bupr-square-selected: var(--bupr-accent);
 }
 
 /* Review rows: dividers + inherited text. Fallbacks equal the light values. */
