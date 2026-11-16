@@ -365,7 +365,7 @@ jQuery(document).ready(function () {
   /*----------------------------------------
    * Update review
    *-----------------------------------------*/
-  jQuery(document).on("click", "#bupr_upodate_review", function (event) {
+  jQuery(document).on("click", "#bupr_update_review", function (event) {
     event.preventDefault();
     var modal = document.querySelector(".bupr-review-modal");
     var review_id = jQuery("#bupr-edit-review-field-wrapper").data("review");

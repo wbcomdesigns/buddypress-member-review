@@ -681,7 +681,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			$review_output .= apply_filters( 'bupr_edit_review_extra_fields', '', $review_id );
 
 			/* translators: %s: */
-			$review_output .= '<button type="button" class="button btn btn-default" id="bupr_upodate_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
+			$review_output .= '<button type="button" class="button btn btn-default" id="bupr_update_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
 			$review_output .= '</div>';
 
 			if ( ! empty( $review ) ) {
