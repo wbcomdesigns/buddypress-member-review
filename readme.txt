@@ -253,6 +253,8 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 * Fix      - The header rating tooltip shows above the profile cover and buttons.
 * Fix      - The review text box placeholder sits flush instead of starting on a new indented line.
 * Fix      - Turning off Anonymous Reviews or Activity Stream is saved like the other switches.
+* Fix      - Square rating boxes are readable in dark mode.
+* Fix      - The Submit Reply button is readable in dark mode.
 * Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 
