@@ -46,65 +46,36 @@ jQuery(document).ready(function () {
     mail_title.search_placeholder || "Enter Keywords...."
   );
 
-  /*----------------------------------------
-   * Select star on mouse enter
-   *-----------------------------------------*/
-  var reviews_pluginurl = jQuery("#reviews_pluginurl").val();
+  /**
+   * Fill stars up to `upto` in the star group that holds $star.
+   * The group's first two children are hidden inputs: click state, chosen value.
+   */
+  function buprPaintStars($star, upto) {
+    $star.parent().children("[data-attr]").each(function () {
+      var on = parseInt(jQuery(this).attr("data-attr"), 10) <= upto;
+      jQuery(this).toggleClass("fas", on).toggleClass("far", !on);
+    });
+  }
 
-  jQuery(".member_stars").on("mouseenter", function () {
-    jQuery(this).parent().children().eq(0).val("not_clicked");
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    for (i = 1; i <= id; i++) {
-      jQuery("#" + parent_id)
-        .children(".member-star-" + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-  });
-
-  /*----------------------------------------
-   * Remove Color on stars
-   *-----------------------------------------*/
-  jQuery(".member_stars").on("mouseleave", function () {
-    var clicked_id = jQuery(this).parent().children().eq(1).val();
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    if (jQuery(this).parent().children().eq(0).val() !== "clicked") {
-      var j = parseInt(clicked_id) + 1;
-      for (i = j; i <= 5; i++) {
-        jQuery("#" + parent_id)
-          .children(".member-star-" + i)
-          .addClass("far")
-          .removeClass("fas");
+  // One set of handlers for the review form and the edit popup (loaded later).
+  var buprStars = ".member_stars, .member-edit-stars";
+  jQuery(document)
+    .on("mouseenter", buprStars, function () {
+      jQuery(this).parent().children().eq(0).val("not_clicked");
+      buprPaintStars(jQuery(this), parseInt(jQuery(this).attr("data-attr"), 10));
+    })
+    .on("mouseleave", buprStars, function () {
+      var $inputs = jQuery(this).parent().children();
+      if ($inputs.eq(0).val() !== "clicked") {
+        buprPaintStars(jQuery(this), parseInt($inputs.eq(1).val(), 10) || 0);
       }
-    }
-  });
-
-  /*----------------------------------------
-   * Color the stars on click
-   *-----------------------------------------*/
-  jQuery(".member_stars").on("click", function () {
-    var attr = jQuery(this).attr("data-attr");
-    var clicked_id = attr;
-    var parent_id = jQuery(this).parent().attr("id");
-    jQuery(this).parent().children().eq(1).val(attr);
-    jQuery(this).parent().children().eq(0).val("clicked");
-    for (i = 1; i <= attr; i++) {
-      jQuery("#" + parent_id)
-        .children(".member-star-" + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-
-    var k = parseInt(attr) + 1;
-    for (j = k; j <= 5; j++) {
-      jQuery("#" + parent_id)
-        .children(".member-star-" + j)
-        .addClass("far")
-        .removeClass("fas");
-    }
-  });
+    })
+    .on("click", buprStars, function () {
+      var attr = jQuery(this).attr("data-attr");
+      jQuery(this).parent().children().eq(1).val(attr);
+      jQuery(this).parent().children().eq(0).val("clicked");
+      buprPaintStars(jQuery(this), parseInt(attr, 10));
+    });
 
   jQuery("#bupr_member_review_id").on("change", function () {
     jQuery( '.bupr-review-error-fields' ).hide(); 
@@ -311,58 +282,6 @@ jQuery(document).ready(function () {
   });
 
   /*----------------------------------------
-   * Play with starts on review edit popup form
-   *-----------------------------------------*/
-  jQuery(document).on("mouseenter", ".member-edit-stars", function () {
-    jQuery(this).parent().children().eq(0).val("not_clicked");
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    for (i = 1; i <= id; i++) {
-      jQuery("#" + parent_id)
-        .children(".member-star-" + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-  });
-
-  jQuery(document).on("mouseleave", ".member-edit-stars", function () {
-    var clicked_id = jQuery(this).parent().children().eq(1).val();
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    if (jQuery(this).parent().children().eq(0).val() !== "clicked") {
-      var j = parseInt(clicked_id) + 1;
-      for (i = j; i <= 5; i++) {
-        jQuery("#" + parent_id)
-          .children(".member-star-" + i)
-          .addClass("far")
-          .removeClass("fas");
-      }
-    }
-  });
-
-  jQuery(document).on("click", ".member-edit-stars", function () {
-    var attr = jQuery(this).attr("data-attr");
-    var clicked_id = attr;
-    var parent_id = jQuery(this).parent().attr("id");
-    jQuery(this).parent().children().eq(1).val(attr);
-    jQuery(this).parent().children().eq(0).val("clicked");
-    for (i = 1; i <= attr; i++) {
-      jQuery("#" + parent_id)
-        .children(".member-star-" + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-
-    var k = parseInt(attr) + 1;
-    for (j = k; j <= 5; j++) {
-      jQuery("#" + parent_id)
-        .children(".member-star-" + j)
-        .addClass("far")
-        .removeClass("fas");
-    }
-  });
-
-  /*----------------------------------------
    * Update review
    *-----------------------------------------*/
   jQuery(document).on("click", "#bupr_update_review", function (event) {
@@ -407,16 +326,9 @@ jQuery(document).ready(function () {
     function reset_review_form_data(){
       jQuery("#bupr_review_form_public")[0].reset();
       jQuery("#bupr_review_form_public .member_rated_stars").val(0);
-      jQuery(".member_stars").each(function (index) {
+      jQuery("#bupr_review_form_public .member_stars").each(function () {
         jQuery(this).parent().children().eq(0).val("not_clicked");
-        var id = jQuery(this).attr("data-attr");
-        var parent_id = jQuery(this).parent().attr("id");
-        for (i = 1; i <= id; i++) {
-          jQuery("#" + parent_id)
-            .children(".member-star-" + i)
-            .removeClass("fas")
-            .addClass("far");
-        }
+        buprPaintStars(jQuery(this), 0);
       });
     }
 

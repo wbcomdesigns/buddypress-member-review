@@ -34,6 +34,15 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 		const MENU_SLUG = 'bp-member-review-settings';
 
 		/**
+		 * Product name for the admin header and menu (a name, so not translated).
+		 *
+		 * @return string
+		 */
+		public static function product_name() {
+			return defined( 'BUPR_PRO_VERSION' ) ? 'Member Reviews Pro' : 'Member Reviews';
+		}
+
+		/**
 		 * Settings option groups / names (unchanged from the legacy admin).
 		 */
 		const OPTION_GENERAL  = 'bupr_admin_general_options';
@@ -165,8 +174,8 @@ if ( ! class_exists( 'BUPR_Admin_Panel' ) ) {
 
 			add_submenu_page(
 				'wbcomplugins',
-				defined( 'BUPR_PRO_VERSION' ) ? 'BuddyPress Member Reviews Pro' : 'BuddyPress Member Reviews',
-				defined( 'BUPR_PRO_VERSION' ) ? esc_html__( 'Member Reviews Pro', 'bp-member-reviews' ) : esc_html__( 'Member Reviews', 'bp-member-reviews' ),
+				'BuddyPress ' . self::product_name(),
+				esc_html( self::product_name() ),
 				$cap,
 				self::MENU_SLUG,
 				array( $this, 'render_page' )
