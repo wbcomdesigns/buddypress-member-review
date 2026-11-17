@@ -181,8 +181,10 @@ ul.bupr-member-main li.bupr-members .bupr-img-widget {
     margin: 0;
 }
 
+/* Scoped under the widget wrapper so it outranks theme and BP Nouveau avatar
+   radius rules such as .bp-nouveau .buddypress-wrap .avatar, without !important. */
 .widget ul#bp-member-rating img.avatar,
-ul.bupr-member-main li.bupr-members img.avatar {
+.bupr_members_review_setting ul.bupr-member-main li.bupr-members .bupr-img-widget img.avatar {
     display: block;
     width: 50px;
     height: 50px;
@@ -196,6 +198,15 @@ ul.bupr-member-main li.bupr-members .bupr-content-widget {
     min-width: 0;
     margin: 0;
     font-size: 15px;
+}
+
+/* The member name is the row's link: a 40px tall target, 15px text. */
+.bupr_members_review_setting ul.bupr-member-main li.bupr-members .bupr-member-title a {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    font-size: 15px;
+    overflow-wrap: anywhere;
 }
 
 .widget ul#bp-member-rating .bupr-meta,
