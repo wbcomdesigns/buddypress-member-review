@@ -209,6 +209,7 @@ ul.bupr-member-main li.bupr-members .bupr-meta {
 
 .widget .bupr-widget-empty {
     margin: 0;
+    font-size: 15px;
     color: var(--bupr-text-muted);
 }
 
