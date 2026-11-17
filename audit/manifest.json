@@ -328,7 +328,8 @@
       "title": "BP Member Review Widget",
       "registered_at": "includes/widgets/display-review.php:21 (register_widget), :48 (id_base), :50 (parent::__construct)",
       "file": "includes/widgets/display-review.php",
-      "purpose": "Display reviews / member ratings list widget."
+      "instance_keys": "title (legacy bupr_title read as fallback), bupr_member, top_member, avatar",
+      "purpose": "Top-rated / most-reviewed members list widget (usermeta aggregates, 15-min transient salted by bupr_top_members_cache_ver)."
     },
     {
       "class": "bupr_single_member_rating_widget",
@@ -336,7 +337,8 @@
       "title": "BP Displayed Member Rating Widget",
       "registered_at": "includes/widgets/member-rating.php:21 (register_widget), :43 (id_base), :45 (parent::__construct)",
       "file": "includes/widgets/member-rating.php",
-      "purpose": "Display a single member's average rating on their profile."
+      "instance_keys": "title (legacy bupr_title read as fallback), rating_limit, rating_default",
+      "purpose": "Ratings received by the displayed member (review posts with linked_bp_member, newest 100), profile pages only."
     }
   ],
   "post_types": [

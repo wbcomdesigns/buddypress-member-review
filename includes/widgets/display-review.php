@@ -66,54 +66,50 @@ class bupr_members_review_setting extends WP_Widget {
 
 		global $wpdb;
 
-		// Widget instance settings.
-		$bupr_title   = isset( $instance['bupr_title'] ) ? apply_filters( 'widget_title', $instance['bupr_title'] ) : esc_html__( 'Top Rated Members', 'bp-member-reviews' );
+		// Widget instance settings. `title` is the standard key; `bupr_title` is read for widgets saved before 3.8.3.
+		$bupr_title   = apply_filters( 'widget_title', $instance['title'] ?? ( $instance['bupr_title'] ?? esc_html__( 'Top Rated Members', 'bp-member-reviews' ) ), $instance, $this->id_base );
 		$member_limit = isset( $instance['bupr_member'] ) ? (int) $instance['bupr_member'] : 20; // Limit to 20 members by default.
 		$top_member   = isset( $instance['top_member'] ) ? $instance['top_member'] : 'top-rated';
 		$avatar       = isset( $instance['avatar'] ) ? $instance['avatar'] : 'Show';
 
-		// Build the SQL query based on the sorting method.
-		$results = array();
-		if ( 'top-rated' === $top_member ) {
-			// Query for top-rated members (by aggregate rating).
-			$results = $wpdb->get_results(
-				$wpdb->prepare(
-					"
-                SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
-                FROM $wpdb->usermeta AS um1
-                JOIN $wpdb->usermeta AS um2 ON um1.user_id = um2.user_id
-                WHERE um1.meta_key = 'bupr_aggregate_rating'
-                AND um2.meta_key = 'bupr_review_count'
-                AND CAST(um2.meta_value AS UNSIGNED) > 0
-                ORDER BY CAST(um1.meta_value AS DECIMAL(10,2)) DESC
-                LIMIT %d
-                ",
-					$member_limit
-				)
+		// Same cache salt as [bupr_display_top_members]: bupr_flush_top_members_cache() bumps it whenever ratings change.
+		$cache_key = 'bupr_top_members_widget_' . md5( (string) get_option( 'bupr_top_members_cache_ver', '1' ) . '|' . $top_member . '|' . $member_limit );
+		$results   = get_transient( $cache_key );
+		if ( false === $results ) {
+			$results = array();
+			// Top Rated sorts by aggregate rating, Most Reviewed by review count (fixed SQL fragments, never user input).
+			$order_by = array(
+				'top-rated'  => 'CAST(um1.meta_value AS DECIMAL(10,2))',
+				'top-viewed' => 'CAST(um2.meta_value AS UNSIGNED)',
 			);
-		} elseif ( 'top-viewed' === $top_member ) {
-			// Query for most-reviewed members (by review count).
-			$results = $wpdb->get_results(
-				$wpdb->prepare(
-					"
-                SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
-                FROM $wpdb->usermeta AS um1
-                JOIN $wpdb->usermeta AS um2 ON um1.user_id = um2.user_id
-                WHERE um1.meta_key = 'bupr_aggregate_rating'
-                AND um2.meta_key = 'bupr_review_count'
-                AND CAST(um2.meta_value AS UNSIGNED) > 0
-                ORDER BY CAST(um2.meta_value AS UNSIGNED) DESC
-                LIMIT %d
-                ",
-					$member_limit
-				)
-			);
+			if ( isset( $order_by[ $top_member ] ) ) {
+				// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Cached in the transient above; ORDER BY is a whitelisted literal.
+				$results = $wpdb->get_results(
+					$wpdb->prepare(
+						"SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
+						FROM $wpdb->usermeta AS um1
+						JOIN $wpdb->usermeta AS um2 ON um1.user_id = um2.user_id
+						WHERE um1.meta_key = 'bupr_aggregate_rating'
+						AND um2.meta_key = 'bupr_review_count'
+						AND CAST(um2.meta_value AS UNSIGNED) > 0
+						ORDER BY {$order_by[ $top_member ]} DESC
+						LIMIT %d",
+						$member_limit
+					)
+				);
+				// phpcs:enable
+			}
+			set_transient( $cache_key, $results, 15 * MINUTE_IN_SECONDS );
+		}
+
+		echo $before_widget; // phpcs:ignore.
+		if ( '' !== (string) $bupr_title ) {
+			echo $before_title . esc_html( $bupr_title ) . $after_title; // phpcs:ignore.
 		}
 
 		// Check if any users were found.
 		if ( ! empty( $results ) ) {
-            echo $before_widget; // phpcs:ignore.
-            echo $before_title . esc_html( $bupr_title ) . $after_title; // phpcs:ignore.
+			cache_users( wp_list_pluck( $results, 'user_id' ) );
 			echo '<ul class="bupr-member-main">';
 
 			// Loop through the results and display them.
@@ -178,11 +174,10 @@ class bupr_members_review_setting extends WP_Widget {
 			}
 
 			echo '</ul>';
-            echo $after_widget; // phpcs:ignore.
 		} else {
-			// No users found.
-			echo '<p>' . esc_html__( 'No members have been reviewed yet.', 'bp-member-reviews' ) . '</p>';
+			echo '<p class="bupr-widget-empty">' . esc_html__( 'No members have been reviewed yet.', 'bp-member-reviews' ) . '</p>';
 		}
+		echo $after_widget; // phpcs:ignore.
 	}
 
 	/**
@@ -194,10 +189,11 @@ class bupr_members_review_setting extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance                = $old_instance;
-		$instance['bupr_title']  = wp_strip_all_tags( $new_instance['bupr_title'] );
+		$instance['title']       = wp_strip_all_tags( $new_instance['title'] ?? '' );
 		$instance['bupr_member'] = intval( $new_instance['bupr_member'] );
 		$instance['top_member']  = wp_strip_all_tags( $new_instance['top_member'] );
 		$instance['avatar']      = wp_strip_all_tags( $new_instance['avatar'] );
+		unset( $instance['bupr_title'] ); // Legacy key, replaced by `title`.
 		return $instance;
 	}
 
@@ -209,21 +205,21 @@ class bupr_members_review_setting extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$defaults   = array(
-			'bupr_title'  => esc_html__( 'Top Members', 'bp-member-reviews' ),
+			'title'       => $instance['bupr_title'] ?? esc_html__( 'Top Members', 'bp-member-reviews' ),
 			'bupr_member' => 20,
 			'top_member'  => 'top-rated',
 			'avatar'      => 'Show',
 		);
 		$instance   = wp_parse_args( (array) $instance, $defaults );
-		$title      = esc_attr( $instance['bupr_title'] );
+		$title      = esc_attr( $instance['title'] );
 		$member     = esc_attr( $instance['bupr_member'] );
 		$topmembers = esc_attr( $instance['top_member'] );
 		$avatar     = esc_attr( $instance['avatar'] );
 		?>
 		<div class="bupr-widget-class">
 			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'bupr_title' ) ); ?>"><?php esc_html_e( 'Enter Title', 'bp-member-reviews' ); ?>:</label>
-				<input class="regular_text" id="<?php echo esc_attr( $this->get_field_id( 'bupr_title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'bupr_title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+				<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Enter Title', 'bp-member-reviews' ); ?>:</label>
+				<input class="regular_text" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 			</p>
 			<p>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'bupr_member' ) ); ?>"><?php esc_html_e( 'Display Members', 'bp-member-reviews' ); ?>:</label>
