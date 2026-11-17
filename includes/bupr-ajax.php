@@ -1027,7 +1027,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			// Get the review.
 			$review = get_post( $review_id );
-			if ( ! $review || 'review' !== $review->post_type ) {
+			// Group Reviews shares the post type; only member reviews are reported here.
+			if ( ! bupr_is_member_review( $review ) ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'Review not found.', 'bp-member-reviews' ),

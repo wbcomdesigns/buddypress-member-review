@@ -77,5 +77,5 @@ Tick one or more reviews and choose from **Bulk actions**:
 ## Tips
 
 - You cannot add a review from the admin. Reviews are written by members from the front of your site.
-- If you also use BuddyPress Group Reviews, its reviews share this list. Use the **Reviews Category** column to tell them apart.
+- If you also use BuddyPress Group Reviews, its reviews share this list. Use the **Reviews Category** column to tell them apart. The **Reported** and **Auto-hidden** views and their counts include member reviews only.
 - Who can do what: Administrators and Editors can approve, dismiss, resolve and delete. Contributors and Authors cannot approve or moderate reports.

@@ -718,7 +718,7 @@ function bupr_roles_allow_review( $reviewer_id, $member_id ) {
 }
 
 /**
- * Number of reviews whose reports are still open (published or hidden).
+ * Number of member reviews whose reports are still open (published or hidden).
  *
  * @since 3.8.1
  * @return int
@@ -730,6 +730,7 @@ function bupr_get_flagged_reviews_count() {
 		$wpdb->prepare(
 			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
 			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			INNER JOIN {$wpdb->postmeta} mm ON p.ID = mm.post_id AND mm.meta_key = 'linked_bp_member' AND CAST(mm.meta_value AS UNSIGNED) > 0
 			WHERE p.post_type = %s AND p.post_status IN ('publish', 'draft')
 			AND pm.meta_key = 'bupr_flag_status' AND pm.meta_value = 'flagged'",
 			'review'
@@ -738,7 +739,7 @@ function bupr_get_flagged_reviews_count() {
 }
 
 /**
- * Number of reviews currently hidden because they reached the report threshold.
+ * Number of member reviews currently hidden because they reached the report threshold.
  *
  * @since 3.8.1
  * @return int
@@ -750,6 +751,7 @@ function bupr_get_auto_hidden_reviews_count() {
 		$wpdb->prepare(
 			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
 			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			INNER JOIN {$wpdb->postmeta} mm ON p.ID = mm.post_id AND mm.meta_key = 'linked_bp_member' AND CAST(mm.meta_value AS UNSIGNED) > 0
 			WHERE p.post_type = %s AND p.post_status = 'draft'
 			AND pm.meta_key = 'bupr_auto_hidden' AND pm.meta_value <> ''",
 			'review'
@@ -777,6 +779,22 @@ function bupr_review_activity_type() {
 function bupr_is_member_review( $post ) {
 	$post = get_post( $post );
 	return $post && 'review' === $post->post_type && (int) get_post_meta( $post->ID, 'linked_bp_member', true ) > 0;
+}
+
+/**
+ * Meta query clause that keeps a review query to member reviews, the query
+ * form of bupr_is_member_review(). Append it to a meta_query, never replace one.
+ *
+ * @since 3.8.3
+ * @return array
+ */
+function bupr_member_review_meta_clause() {
+	return array(
+		'key'     => 'linked_bp_member',
+		'value'   => 0,
+		'compare' => '>',
+		'type'    => 'NUMERIC',
+	);
 }
 
 /**

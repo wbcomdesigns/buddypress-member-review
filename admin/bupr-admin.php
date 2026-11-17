@@ -623,35 +623,37 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				return;
 			}
 
+			$clauses = array();
+
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Query filter based on URL param, no state change.
 			if ( isset( $_GET['bupr_flagged'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bupr_flagged'] ) ) ) {
-				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary for flagged filter functionality.
-				$query->set(
-					'meta_query',
-					array(
-						array(
-							'key'     => 'bupr_flag_status',
-							'value'   => 'flagged',
-							'compare' => '=',
-						),
-					)
+				$clauses[] = array(
+					'key'     => 'bupr_flag_status',
+					'value'   => 'flagged',
+					'compare' => '=',
 				);
 			}
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Query filter based on URL param, no state change.
 			if ( isset( $_GET['bupr_auto_hidden'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bupr_auto_hidden'] ) ) ) {
 				$query->set( 'post_status', 'draft' );
-				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary for auto-hidden filter functionality.
-				$query->set(
-					'meta_query',
-					array(
-						array(
-							'key'     => 'bupr_auto_hidden',
-							'compare' => 'EXISTS',
-						),
-					)
+				$clauses[] = array(
+					'key'     => 'bupr_auto_hidden',
+					'compare' => 'EXISTS',
 				);
 			}
+
+			if ( ! $clauses ) {
+				return;
+			}
+
+			// Add to filters other code already set (Pro verified/flagged) instead of
+			// replacing them, and keep Group Reviews out: reports are a member review state.
+			$meta_query   = $query->get( 'meta_query' );
+			$meta_query   = $meta_query ? (array) $meta_query : array();
+			$meta_query[] = bupr_member_review_meta_clause();
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary for the reported and auto-hidden views.
+			$query->set( 'meta_query', array_merge( $meta_query, $clauses ) );
 		}
 
 		/**
