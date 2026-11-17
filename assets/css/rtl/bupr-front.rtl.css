@@ -154,55 +154,61 @@
 # Widgets
 --------------------------------------------------------------*/
 
+/* The theme's widget card is the only card: no inner box, border or shadow. */
+.bupr_members_review_setting ul.bupr-member-main,
+.widget ul#bp-member-rating {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
 .bupr_members_review_setting ul.bupr-member-main li.bupr-members,
 .widget ul#bp-member-rating li {
-    /*border-bottom: 1px solid rgba(0, 0, 0, 0.1);*/
-    height: auto;
-    width: 100%;
-    position: relative;
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
     margin: 0;
-    padding: .5em 0;
-}
-
-ul.bupr-member-main {
-    margin: 0;
+    padding: 0;
     list-style: none;
-    padding: 0px;
-}
-
-.bupr_members_review_setting ul.bupr-member-main li:first-child,
-.widget ul#bp-member-rating li:first-child {
-    padding-top: 0;
-}
-
-.bupr_members_review_setting ul.bupr-member-main li:last-child,
-.widget ul#bp-member-rating li:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
 }
 
 .widget ul#bp-member-rating .item-avatar,
+ul.bupr-member-main li.bupr-members .bupr-img-widget {
+    flex: 0 0 50px;
+    margin: 0;
+}
+
+.widget ul#bp-member-rating img.avatar,
 ul.bupr-member-main li.bupr-members img.avatar {
+    display: block;
     width: 50px;
     height: 50px;
-    float: inline-start;
+    margin: 0;
+    border-radius: 8px;
 }
 
 .widget ul#bp-member-rating .item,
 ul.bupr-member-main li.bupr-members .bupr-content-widget {
-    margin-inline-start: 70px;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
 }
 
-ul.bupr-member-main li.bupr-members.bupr-hide .bupr-content-widget {
-    margin-inline-start: 0px;
-}
-
+.widget ul#bp-member-rating .bupr-meta,
 ul.bupr-member-main li.bupr-members .bupr-meta {
     display: block;
     font-size: 90%;
     line-height: normal;
-    margin-top: 5px;
+    margin-block-start: 5px;
+    color: var(--bupr-text-muted);
+}
+
+.widget .bupr-widget-empty {
+    margin: 0;
+    color: var(--bupr-text-muted);
 }
 
 .bupr-modal-msg {
@@ -707,10 +713,6 @@ body.bp-legacy:not([class*="youzify"]) .bupr-directory-review-parent-container {
 
 .kleo-masonry-item .member-review-stars {
     text-align: center;
-}
-
-.widget.bupr_members_review_setting {
-    overflow: hidden;
 }
 
 .posted-on.list {
