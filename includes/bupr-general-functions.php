@@ -648,6 +648,7 @@ function bupr_flush_top_members_cache() {
 	update_option( 'bupr_top_members_cache_ver', (string) microtime( true ), false );
 }
 add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
+add_action( 'deleted_user', 'bupr_flush_top_members_cache' );
 
 /**
  * Published reviews a member has received, from the cached aggregate (recalculated once if missing).
