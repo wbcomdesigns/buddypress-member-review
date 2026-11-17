@@ -195,12 +195,13 @@ ul.bupr-member-main li.bupr-members .bupr-content-widget {
     flex: 1 1 auto;
     min-width: 0;
     margin: 0;
+    font-size: 15px;
 }
 
 .widget ul#bp-member-rating .bupr-meta,
 ul.bupr-member-main li.bupr-members .bupr-meta {
     display: block;
-    font-size: 90%;
+    font-size: 15px;
     line-height: normal;
     margin-block-start: 5px;
     color: var(--bupr-text-muted);
