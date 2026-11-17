@@ -255,6 +255,9 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 * Fix      - Turning off Anonymous Reviews or Activity Stream is saved like the other switches.
 * Fix      - Square rating boxes are readable in dark mode.
 * Fix      - The Submit Reply button is readable in dark mode.
+* Fix      - Both Member Reviews widgets match the theme's sidebar widgets: rounded 50px pictures, no list bullets and theme colours in light and dark mode.
+* Fix      - The Member Review widget shows its "no members reviewed yet" message inside the widget box, and an empty widget title no longer leaves an empty heading.
+* Fix      - The Displayed Member Rating widget lists more than five ratings when set to, and Highest or Lowest sorting is no longer limited to the newest five.
 * Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
 
