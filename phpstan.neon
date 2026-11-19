@@ -24,6 +24,7 @@ parameters:
             - node_modules (?)
             - dist (?)
             - assets (?)
+            - audit (?)
             - languages (?)
     scanFiles:
         - vendor/gin0115/buddypress-stubs/buddypress-stubs.php
