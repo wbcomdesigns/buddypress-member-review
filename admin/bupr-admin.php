@@ -399,7 +399,6 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						return;
 					}
 
-					$bupr_admin_general = get_option( 'bupr_admin_general_options' );
 					$site_name          = get_bloginfo( 'name' );
 					$anonymous_review   = bupr_is_anonymous_review( $post->ID );
 					$bupr_sender_data   = get_userdata( $post->post_author );
@@ -411,7 +410,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					}
 
 					$bupr_reciever_email = $bupr_reciever_data->data->user_email;
-					$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
+					$bupr_reciever_name  = $bupr_reciever_data->display_name; // Same name the submit email uses.
 					if ( $anonymous_review ) {
 						$user_name = __( 'An anonymous user', 'bp-member-reviews' );
 					} else {
@@ -427,31 +426,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					$bupr_review_url = bupr_member_url( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
 					$bupr_to = $bupr_reciever_email;
 					// Define a default value for $bupr_subject with translation support.
-					$bupr_subject = __( 'New Review on Your Profile at [site-name]', 'bp-member-reviews' );
+					$bupr_subject = bupr_email_setting( 'review_email_subject' );
 					$review_link  = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 					// Check if a custom subject line is set in the settings and update $bupr_subject accordingly.
-					if ( isset( $bupr_admin_general['review_email_subject'] ) && ! empty( $bupr_admin_general['review_email_subject'] ) ) {
-						$bupr_subject = $bupr_admin_general['review_email_subject'];
-					}
-
 					// Replace '[site-name]' placeholder in the subject with the actual site name.
 					$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
-					/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
-					$message = __( 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team', 'bp-member-reviews' );
-					if ( isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] ) ) {
-						$bupr_message = str_replace(
-							array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
-							array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
-							$bupr_admin_general['review_email_message']
-						);
-					} else {
-						$bupr_message = str_replace(
-							array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
-							array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
-							$message
-						);
-					}
+					$bupr_message = str_replace(
+						array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
+						array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
+						bupr_email_setting( 'review_email_message' )
+					);
 					$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
 					wp_mail( $bupr_to, $bupr_subject, wpautop( $bupr_message ), $bupr_header );
 				}

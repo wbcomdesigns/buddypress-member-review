@@ -997,3 +997,158 @@ function bupr_enqueue_star_font() {
 	wp_enqueue_style( 'bupr-stars' );
 	wp_add_inline_style( 'bupr-stars', $css );
 }
+
+/**
+ * Convert a pre-3.8.3 stored stamp (site-local wall clock shifted into a Unix timestamp) to a real UTC timestamp.
+ *
+ * Before 3.8.3 the plugin stored current_time( 'timestamp' ), which is UTC plus the site offset. Reading it back
+ * as UTC (what bupr_date_label() does) would show the time shifted by that offset.
+ *
+ * @since 3.8.3
+ * @param int $stamp Local-shifted stamp.
+ * @return int UTC timestamp.
+ */
+function bupr_local_stamp_to_utc( $stamp ) {
+	$stamp = (int) $stamp;
+	if ( $stamp <= 0 ) {
+		return $stamp;
+	}
+	try {
+		return ( new DateTime( gmdate( 'Y-m-d H:i:s', $stamp ), wp_timezone() ) )->getTimestamp();
+	} catch ( Exception $e ) {
+		return $stamp;
+	}
+}
+
+/**
+ * One-time upgrade: store reply, report and auto-hide times as UTC.
+ *
+ * Keyed by the stored plugin version: a site still on a version below 3.8.3 holds local-shifted stamps in
+ * bupr_owner_reply_date, bupr_auto_hidden_date and the date of each entry in bupr_flags. Rows are walked by meta_id
+ * in batches of 500; when the time budget runs out the cursor is kept in bupr_utc_migration_cursor and the next
+ * batch is scheduled. The version moves forward only after the last batch, so the routine never runs twice over a
+ * row. Known limit: a reply made through the Pro REST API before this version already stored UTC and is shifted too.
+ *
+ * @since 3.8.3
+ */
+function bupr_maybe_run_utc_migration() {
+	if ( version_compare( (string) get_option( 'bupr_plugin_version', '0' ), '3.8.3', '>=' ) ) {
+		return;
+	}
+
+	global $wpdb;
+	$deadline = time() + 15;
+	$cursor   = (int) get_option( 'bupr_utc_migration_cursor', 0 );
+
+	do {
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time upgrade; meta_key is indexed and the walk is by meta_id.
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT meta_id, post_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE meta_key IN ('bupr_owner_reply_date','bupr_auto_hidden_date','bupr_flags') AND meta_id > %d ORDER BY meta_id ASC LIMIT 500",
+				$cursor
+			)
+		);
+		foreach ( $rows as $row ) {
+			$cursor = (int) $row->meta_id;
+			if ( 'bupr_flags' === $row->meta_key ) {
+				$flags = maybe_unserialize( $row->meta_value );
+				if ( ! is_array( $flags ) ) {
+					continue;
+				}
+				foreach ( $flags as $i => $flag ) {
+					if ( is_array( $flag ) && ! empty( $flag['date'] ) ) {
+						$flags[ $i ]['date'] = bupr_local_stamp_to_utc( $flag['date'] );
+					}
+				}
+				$new = maybe_serialize( $flags );
+			} else {
+				$new = (string) bupr_local_stamp_to_utc( $row->meta_value );
+			}
+			// By meta_id: one UPDATE per row, however many rows share the key. phpcs:ignore for the one-time upgrade.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->update( $wpdb->postmeta, array( 'meta_value' => $new ), array( 'meta_id' => (int) $row->meta_id ) );
+			wp_cache_delete( (int) $row->post_id, 'post_meta' );
+		}
+		if ( count( $rows ) < 500 ) {
+			delete_option( 'bupr_utc_migration_cursor' );
+			update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+			return;
+		}
+		update_option( 'bupr_utc_migration_cursor', $cursor, false );
+	} while ( time() < $deadline );
+
+	// Out of time: carry on in the background.
+	if ( ! wp_next_scheduled( 'bupr_utc_migration_batch' ) ) {
+		wp_schedule_single_event( time() + MINUTE_IN_SECONDS, 'bupr_utc_migration_batch' );
+	}
+}
+add_action( 'admin_init', 'bupr_maybe_run_utc_migration' );
+add_action( 'bupr_utc_migration_batch', 'bupr_maybe_run_utc_migration' );
+
+/**
+ * Default text of the four email fields on the General settings tab.
+ *
+ * The settings form, the review email, the approval email and the global settings all read their defaults from
+ * here, so what an owner sees in the form before saving is what is actually sent.
+ *
+ * @since 3.8.3
+ * @param string $key review_email_subject, review_email_message, review_approve_email_subject or review_approve_email_message.
+ * @return string
+ */
+function bupr_email_default( $key ) {
+	switch ( $key ) {
+		case 'review_email_subject':
+			/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
+			return __( 'You Have Received a New Review on [site-name]', 'bp-member-reviews' );
+		case 'review_email_message':
+			/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
+			return __(
+				'Hello [user-name],
+
+We hope this message finds you well.
+
+We are pleased to inform you that [reviewer-name] has recently submitted a review on your profile. To view the full review and respond, please click on the link below:
+
+[review-link]
+
+We appreciate your engagement in our community and value your contributions.
+
+Best regards,
+The [site-name] Team',
+				'bp-member-reviews'
+			);
+		case 'review_approve_email_subject':
+			/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
+			return __( 'A New Review Requires Your Approval on [site-name]', 'bp-member-reviews' );
+		case 'review_approve_email_message':
+			/* translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim. */
+			return __(
+				'Hello [site-admin],
+
+Greetings!
+
+You have received a new review on [site-name] that is pending approval. To review and approve the submission, please click on the link below:
+
+[review-aproval-link]
+
+Thank you for helping us maintain a vibrant and engaged community.
+
+Best regards,
+The [site-name] Team',
+				'bp-member-reviews'
+			);
+	}
+	return '';
+}
+
+/**
+ * An email field as the owner saved it, or its default when it is empty or never saved.
+ *
+ * @since 3.8.3
+ * @param string $key Same keys as bupr_email_default().
+ * @return string
+ */
+function bupr_email_setting( $key ) {
+	$saved = get_option( 'bupr_admin_general_options' );
+	return ( is_array( $saved ) && ! empty( $saved[ $key ] ) ) ? (string) $saved[ $key ] : bupr_email_default( $key );
+}

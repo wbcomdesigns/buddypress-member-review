@@ -101,7 +101,9 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			$top_members = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
 
 			$output .= '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting">';
-			$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
+			if ( '' !== (string) $bupr_title ) {
+				$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
+			}
 			$output .= '<ul class="bupr-member-main">';
 
 			// Display each top member.

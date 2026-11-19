@@ -226,8 +226,11 @@ function bupr_plugin_activation() {
 		update_option( 'bupr_admin_settings', $default_criteria );
 	}
 
-	// Set plugin version in options.
-	update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+	// Set plugin version in options. An existing value stays: bupr_maybe_run_utc_migration() reads it to know
+	// whether this site still holds pre-3.8.3 local-time stamps, and moves it forward when it is done.
+	if ( ! get_option( 'bupr_plugin_version' ) ) {
+		update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+	}
 
 	// Fresh installs have no reviews yet, so there is no drifted count/aggregate
 	// meta to repair. Mark the one-time repair migration done so it is skipped.

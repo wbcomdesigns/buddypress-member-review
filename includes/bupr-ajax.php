@@ -425,19 +425,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$review_link    = '<a href="' . esc_url( $bupr_review_url ) . '">' . esc_html( $review_subject ) . '</a>';
 
 				// Set email subject.
-				$bupr_subject = isset( $bupr_admin_general['review_email_subject'] ) && ! empty( $bupr_admin_general['review_email_subject'] )
-					? $bupr_admin_general['review_email_subject']
-					: __( 'New Review on Your Profile at [site-name]', 'bp-member-reviews' );
+				$bupr_subject = bupr_email_setting( 'review_email_subject' );
 
 				$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
 				// Set email message.
-				/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
-				$default_message = __( 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team', 'bp-member-reviews' );
-
-				$bupr_message = isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] )
-					? $bupr_admin_general['review_email_message']
-					: $default_message;
+				$bupr_message = bupr_email_setting( 'review_email_message' );
 
 				$bupr_message = str_replace(
 					array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
@@ -455,9 +448,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			// Admin notification for reviews needing approval.
 			if ( 'draft' === $review_status && 'yes' === $bupr['allow_email'] ) {
 				$bupr_to      = get_option( 'admin_email' );
-				$bupr_subject = isset( $bupr_admin_general['review_approve_email_subject'] )
-					? $bupr_admin_general['review_approve_email_subject']
-					: __( 'A New Review Requires Your Approval on [site-name]', 'bp-member-reviews' );
+				$bupr_subject = bupr_email_setting( 'review_approve_email_subject' );
 
 				$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
@@ -473,26 +464,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$user_name
 					) . '</a>';
 
-				/* translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim. */
-				$default_approve_message = __(
-					'Hello [site-admin],
-
-				Greetings!
-
-				You have received a new review on [site-name] that is pending approval. To review and approve the submission, please click on the link below:
-
-				[review-aproval-link]
-
-				Thank you for helping us maintain a vibrant and engaged community.
-
-				Best regards,
-				The [site-name] Team',
-					'bp-member-reviews'
-				);
-
-				$bupr_approve_message = isset( $bupr_admin_general['review_approve_email_message'] )
-					? $bupr_admin_general['review_approve_email_message']
-					: $default_approve_message;
+				$bupr_approve_message = bupr_email_setting( 'review_approve_email_message' );
 
 				$bupr_approve_message = str_replace(
 					array( '[review-aproval-link]', '[site-admin]', '[site-name]' ),
@@ -1106,7 +1078,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 				$auto_hidden = true;
 				update_post_meta( $review_id, 'bupr_auto_hidden', true );
-				update_post_meta( $review_id, 'bupr_auto_hidden_date', current_time( 'timestamp' ) );
+				update_post_meta( $review_id, 'bupr_auto_hidden_date', time() );
 			}
 
 			// Trigger action for admin notification.

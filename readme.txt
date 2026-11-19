@@ -270,6 +270,10 @@ Lockstep with Member Reviews Pro 1.0.1.
 * Fix      - The Member Review widget shows its "no members reviewed yet" message inside the widget box, and an empty widget title no longer leaves an empty heading.
 * Fix      - The Displayed Member Rating widget lists more than five ratings when set to, and Highest or Lowest sorting is no longer limited to the newest five.
 * Fix      - The Reported and Auto-hidden views and their counts list member reviews only, keep Member Reviews Pro's Verified and Flagged filters when combined, and Group Reviews can no longer be reported through Member Reviews.
+* Fix      - The review emails use the same default subject and text the settings page shows; before they were saved, a different built-in text was sent.
+* Fix      - The email sent when you approve a review addresses the member by display name, like the email sent on submit.
+* Fix      - Reply and report times, and the auto-hide time, saved before this version are converted to UTC once on upgrade so they keep showing the right time.
+* Fix      - The top members shortcode no longer prints an empty heading when no title is set.
 * Dev      - New bupr_date_label() and bupr_display_timezone() helpers and the bupr_display_timezone filter. The bupr_top_members_cache_ver option is no longer used.
 * Dev      - Adds bin/local-ci.sh, bin/build-release.sh and .distignore.
 * Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
