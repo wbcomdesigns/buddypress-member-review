@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build release-zip/buddypress-ads-<version>.zip from the committed tree (git archive) minus .distignore,
+# Build release-zip/buddypress-member-review-<version>.zip from the committed tree (git archive) minus .distignore,
 # so the zip always equals the repo. Runs the local CI first.
 set -euo pipefail
 cd "$(dirname "$0")/.."

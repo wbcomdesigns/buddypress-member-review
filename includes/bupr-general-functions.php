@@ -1036,8 +1036,8 @@ function bupr_local_stamp_to_utc( $stamp ) {
  * ponytail: a fatal mid-batch can leave that one batch half converted; the state still holds the previous `last`, so
  * the resume repeats it. Wrap the batch in a transaction if that ever matters.
  *
- * Known limit: a reply made through the Pro 1.0.0 REST API already stored UTC in the same two meta keys with the
- * same integer format and no marker, so it cannot be told apart from a local-shifted one and is shifted once more.
+ * Known limit: a time already stored as UTC before the upgrade starts carries no marker in the same two meta keys,
+ * so it cannot be told apart from a local-shifted one and is shifted once more.
  *
  * @since 3.8.3
  * @param int $after Last meta_id already converted.
