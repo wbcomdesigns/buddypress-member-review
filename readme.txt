@@ -280,6 +280,7 @@ Lockstep with Member Reviews Pro 1.0.1.
 * Fix      - Owner reply errors show inside the reply form in the theme's notice style, in light and dark mode, instead of a pop-up toast.
 * Fix      - Endorsements and testimonials no longer show as blank review cards or count as reviews in the profile list, header count, directory rating, widgets and shortcode once the site is back on Star Ratings.
 * Security - Only published reviews can be reported, so a member can no longer file a report against a pending or hidden review by its ID.
+* Security - A password-protected review no longer shows its text to everyone: the review page asks for the password, the Reviews tab shows a notice, and the activity stream gets no text.
 * Dev      - New bupr_date_label() and bupr_display_timezone() helpers and the bupr_display_timezone filter. The bupr_top_members_cache_ver option is no longer used.
 * Dev      - Adds bin/local-ci.sh, bin/build-release.sh and .distignore.
 * Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
