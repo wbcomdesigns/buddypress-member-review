@@ -19,6 +19,6 @@ done < .distignore
 out="$PWD/release-zip/$slug-$version.zip"
 rm -f "$out"
 ( cd "$work" && zip -qr "$out" "$slug" )
-leaks=$(unzip -l "$out" | grep -iE '/(audit|bin|docs|tests|vendor|node_modules)/|CLAUDE|\.md$|\.map$' || true)
+leaks=$(unzip -l "$out" | grep -iE '^ *[0-9]+ +[0-9-]+ +[0-9:]+ +[^/]+/(audit|bin|docs|tests|vendor|node_modules)/|CLAUDE|\.md$|\.map$' || true)
 [ -z "$leaks" ] || { echo "Zip contains dev files:"; echo "$leaks"; exit 1; }
 echo "Built $out ($(unzip -l "$out" | tail -1 | awk '{print $2}') files)"

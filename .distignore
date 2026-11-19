@@ -27,3 +27,4 @@
 /phpstan.neon
 /phpstan-baseline.neon
 /assets/css/rtl/*.map
+/admin/assets/css/rtl/*.map
