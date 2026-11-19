@@ -272,7 +272,7 @@ Lockstep with Member Reviews Pro 1.0.1.
 * Fix      - The Reported and Auto-hidden views and their counts list member reviews only, keep Member Reviews Pro's Verified and Flagged filters when combined, and Group Reviews can no longer be reported through Member Reviews.
 * Fix      - The review emails use the same default subject and text the settings page shows; before they were saved, a different built-in text was sent.
 * Fix      - The email sent when you approve a review addresses the member by display name, like the email sent on submit.
-* Fix      - Reply and report times, and the auto-hide time, saved before this version are converted to UTC once on upgrade (only rows that existed when the upgrade started) so they keep showing the right time (a reply written through the Pro 1.0.0 REST API was already UTC and cannot be told apart, so it may show shifted by the site's UTC offset).
+* Fix      - Reply and report times, and the auto-hide time, saved before this version are converted to UTC once on upgrade (only rows that existed when the upgrade started) so they keep showing the right time.
 * Fix      - The top members shortcode no longer prints an empty heading when no title is set.
 * Fix      - The rating stars in the Add Review and Edit Review forms are finger-sized on phones, and the stars in the Displayed Member Rating widget stay on one line in a narrow sidebar.
 * Fix      - The top members shortcode and widget use their default member count when the number is zero, negative or not a number, instead of a database error.
