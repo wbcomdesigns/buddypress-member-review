@@ -1,4 +1,73 @@
 /**
+ * buprDialog - keyboard and focus behaviour shared by the review front-end dialogs
+ * (edit review, report review). The dialog keeps its own show/hide code; this adds
+ * what a modal needs: focus moves in, Tab stays inside, Escape closes, and focus
+ * returns to the control that opened it.
+ *
+ *   buprDialog.open( $dialog, $opener, closeFn )   after showing it
+ *   buprDialog.release()                           from closeFn, after hiding it
+ */
+window.buprDialog = (function ($) {
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled])';
+  var $active = null;
+  var $opener = null;
+  var closeFn = null;
+
+  function items() {
+    return $active.find(FOCUSABLE).filter(":visible");
+  }
+
+  $(document).on("keydown", function (e) {
+    if (!$active) {
+      return;
+    }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      if (closeFn) {
+        closeFn();
+      }
+      return;
+    }
+    if (e.key !== "Tab") {
+      return;
+    }
+    var $list = items();
+    if (!$list.length) {
+      return;
+    }
+    var first = $list[0];
+    var last = $list[$list.length - 1];
+    var outside = !$active[0].contains(document.activeElement);
+    if (e.shiftKey && (document.activeElement === first || outside)) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && (document.activeElement === last || outside)) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+
+  return {
+    open: function ($dialog, $trigger, onClose) {
+      $active = $dialog;
+      $opener = $trigger;
+      closeFn = onClose;
+      $dialog.attr({ role: "dialog", "aria-modal": "true" });
+      var $first = items().not("[class*='close']").first();
+      ($first.length ? $first : items().first()).trigger("focus");
+    },
+    release: function () {
+      if ($opener && $opener.length && document.body.contains($opener[0])) {
+        $opener.trigger("focus");
+      }
+      $active = null;
+      $opener = null;
+      closeFn = null;
+    },
+  };
+})(jQuery);
+
+/**
  * buprFrontToast — lightweight, accessible toast for the review front end.
  *
  * Replaces the three native alert() calls (skill Part 6 rules 10 + 12: no
@@ -218,6 +287,20 @@ jQuery(document).ready(function () {
   /*----------------------------------------
    * Edit Review Pop form
    *-----------------------------------------*/
+  // Hides the edit modal (close button, overlay click, Escape) and hands focus back.
+  function closeReviewModal() {
+    var modal = document.querySelector(".bupr-review-modal");
+    if (modal) {
+      modal.classList.remove("bupr-show-modal");
+    }
+    // Remove "bupr-show-modal" class from 'youzify-content' when the modal closes.
+    var youzifyContent = document.querySelector(".youzify-content");
+    if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
+      youzifyContent.classList.remove("bupr-youzify-show-modal");
+    }
+    buprDialog.release();
+  }
+
   jQuery(document).on("click", "#bupr-review-edit-btn", function (event) {
     event.preventDefault();
     var reviewwrapper = document.getElementById("bupr-edit-review");
@@ -240,6 +323,7 @@ jQuery(document).ready(function () {
             let review = response.data.review;
             jQuery("#bupr-edit-review").append(review);
             modal.classList.add("bupr-show-modal");
+            buprDialog.open(jQuery(modal), button, closeReviewModal);
 
             // Add "bupr-show-modal" class to 'youzify-content' if not already present
             var youzifyContent = document.querySelector(".youzify-content");
@@ -257,27 +341,13 @@ jQuery(document).ready(function () {
     ".bupr-review-modal-close-button",
     function (event) {
       event.preventDefault();
-      var modal = document.querySelector(".bupr-review-modal");
-      modal.classList.remove("bupr-show-modal");
-
-      // Remove "bupr-show-modal" class from 'youzify-content' when modal is closed
-      var youzifyContent = document.querySelector(".youzify-content");
-      if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
-        youzifyContent.classList.remove("bupr-youzify-show-modal");
-      }
+      closeReviewModal();
     }
   );
 
   jQuery(window).on("click", function (e) {
-    var modal = document.querySelector(".bupr-review-modal");
-    if (e.target === modal) {
-      modal.classList.remove("bupr-show-modal");
-
-      // Remove "bupr-show-modal" class from 'youzify-content' when clicking outside of the modal
-      var youzifyContent = document.querySelector(".youzify-content");
-      if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
-        youzifyContent.classList.remove("bupr-youzify-show-modal");
-      }
+    if (e.target === document.querySelector(".bupr-review-modal")) {
+      closeReviewModal();
     }
   });
 
@@ -419,11 +489,19 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
 jQuery(document).on("click", ".bupr-report-button, .bupr-flag-button", function (e) {
   e.preventDefault();
   var reviewId = jQuery(this).data("review");
+  var reportTrigger = jQuery(this);
   jQuery("#bupr-flag-review-id").val(reviewId);
   jQuery('input[name="bupr_flag_reason"]').prop("checked", false);
   jQuery(".bupr-flag-error").hide().text("");
-  jQuery(".bupr-flag-modal").fadeIn();
+  jQuery(".bupr-flag-modal").fadeIn(150, function () {
+    buprDialog.open(jQuery(this), reportTrigger, closeFlagModal);
+  });
 });
+
+function closeFlagModal() {
+  jQuery(".bupr-flag-modal").fadeOut(150);
+  buprDialog.release();
+}
 
 // Close flag modal
 jQuery(document).on(
@@ -431,14 +509,14 @@ jQuery(document).on(
   ".bupr-flag-modal-close, .bupr-flag-cancel",
   function (e) {
     e.preventDefault();
-    jQuery(".bupr-flag-modal").fadeOut();
+    closeFlagModal();
   }
 );
 
 // Close modal on outside click
 jQuery(document).on("click", ".bupr-flag-modal", function (e) {
   if (jQuery(e.target).hasClass("bupr-flag-modal")) {
-    jQuery(".bupr-flag-modal").fadeOut();
+    closeFlagModal();
   }
 });
 
@@ -471,7 +549,7 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
       jQuery(".bupr-flag-spinner").hide();
 
       if (response.success) {
-        jQuery(".bupr-flag-modal").fadeOut();
+        closeFlagModal();
         // Show inline success message instead of alert
         var $reportBtn = jQuery('.bupr-report-button[data-review="' + reviewId + '"], .bupr-flag-button[data-review="' + reviewId + '"]');
         var reportedLabel = jQuery('<div/>').text(mail_title.reported || "Reported").html();

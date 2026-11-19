@@ -72,9 +72,9 @@ class bupr_members_review_setting extends WP_Widget {
 		$top_member   = isset( $instance['top_member'] ) ? $instance['top_member'] : 'top-rated';
 		$avatar       = isset( $instance['avatar'] ) ? $instance['avatar'] : 'Show';
 
-		// Same cache salt as [bupr_display_top_members]: bupr_flush_top_members_cache() bumps it whenever ratings change.
-		$cache_key = 'bupr_top_members_widget_' . md5( (string) get_option( 'bupr_top_members_cache_ver', '1' ) . '|' . $top_member . '|' . $member_limit );
-		$results   = get_transient( $cache_key );
+		// Same last-changed token as [bupr_display_top_members]: bupr_flush_top_members_cache() moves it whenever ratings change.
+		$cache_key = 'widget_' . md5( $top_member . '|' . $member_limit ) . ':' . wp_cache_get_last_changed( 'bupr_top_members' );
+		$results   = wp_cache_get( $cache_key, 'bupr_top_members' );
 		if ( false === $results ) {
 			$results = array();
 			// Top Rated sorts by aggregate rating, Most Reviewed by review count (fixed SQL fragments, never user input).
@@ -83,7 +83,7 @@ class bupr_members_review_setting extends WP_Widget {
 				'top-viewed' => 'CAST(um2.meta_value AS UNSIGNED)',
 			);
 			if ( isset( $order_by[ $top_member ] ) ) {
-				// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Cached in the transient above; ORDER BY is a whitelisted literal.
+				// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Cached in the object cache above; ORDER BY is a whitelisted literal.
 				$results = $wpdb->get_results(
 					$wpdb->prepare(
 						"SELECT um1.user_id, um1.meta_value AS aggregate_rating, um2.meta_value AS review_count
@@ -99,7 +99,7 @@ class bupr_members_review_setting extends WP_Widget {
 				);
 				// phpcs:enable
 			}
-			set_transient( $cache_key, $results, 15 * MINUTE_IN_SECONDS );
+			wp_cache_set( $cache_key, $results, 'bupr_top_members', 15 * MINUTE_IN_SECONDS );
 		}
 
 		echo $before_widget; // phpcs:ignore.

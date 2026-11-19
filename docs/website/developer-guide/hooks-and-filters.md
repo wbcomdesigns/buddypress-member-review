@@ -99,6 +99,8 @@ add_action( 'bupr_review_flagged', function ( $review_id, $reporter_id, $reason 
 | `bupr_shortcode_no_members_text` | `string $html` |
 | `bupr_shortcode_output` | `string $html` |
 
+The filter `bupr_display_timezone` (`DateTimeZone $tz`, `int $user_id`) sets the timezone every date the plugin shows is rendered in. The default is the site timezone.
+
 The widgets share two filters with the shortcode: `bupr_widget_show_stars` (`bool $show`) and `bupr_item_type_label` (`string $label`, `int $count`; also used by the shortcode).
 
 ### Admin and shared hub

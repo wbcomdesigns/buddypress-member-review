@@ -186,7 +186,7 @@ $reviews = new WP_Query( $args );
 								?>
 								<span class="posted-on list">
 									<time class="entry-date published updated">
-										<?php echo esc_html( date_i18n( 'M Y', strtotime( $reviews->post->post_date ) ) ); ?>
+										<?php echo esc_html( bupr_date_label( (int) get_post_time( 'U', true, $reviews->post ), 'M Y' ) ); ?>
 									</time>
 								</span>
 								<?php
@@ -371,12 +371,13 @@ $reviews = new WP_Query( $args );
 </div>
 					<?php do_action( 'bupr_after_member_review_list' ); ?>
 
+<?php if ( is_user_logged_in() && 'no' !== ( $bupr['enable_flagging'] ?? 'yes' ) ) : ?>
 <!-- Flag Review Modal -->
-<div class="bupr-flag-modal" style="display: none;">
+<div class="bupr-flag-modal" style="display: none;" aria-labelledby="bupr-flag-modal-title">
 	<div class="bupr-flag-modal-content">
 		<div class="bupr-flag-modal-header">
-			<h3><?php esc_html_e( 'Report Review', 'bp-member-reviews' ); ?></h3>
-			<button type="button" class="bupr-flag-modal-close">&times;</button>
+			<h3 id="bupr-flag-modal-title"><?php esc_html_e( 'Report Review', 'bp-member-reviews' ); ?></h3>
+			<button type="button" class="bupr-flag-modal-close" aria-label="<?php esc_attr_e( 'Close', 'bp-member-reviews' ); ?>">&times;</button>
 		</div>
 		<div class="bupr-flag-modal-body">
 			<p><?php esc_html_e( 'Please select a reason for reporting this review:', 'bp-member-reviews' ); ?></p>
@@ -399,7 +400,7 @@ $reviews = new WP_Query( $args );
 					<?php esc_html_e( 'Conflict of interest', 'bp-member-reviews' ); ?>
 				</label>
 			</div>
-			<div class="bupr-flag-error" style="display: none; color: red; margin-top: 10px;"></div>
+			<div class="bupr-flag-error" role="alert" style="display: none;"></div>
 		</div>
 		<div class="bupr-flag-modal-footer">
 			<button type="button" class="bupr-flag-submit button"><?php esc_html_e( 'Submit Report', 'bp-member-reviews' ); ?></button>
@@ -408,3 +409,4 @@ $reviews = new WP_Query( $args );
 		</div>
 	</div>
 </div>
+<?php endif; // Flag modal. ?>

@@ -241,8 +241,18 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 
 = 3.8.3 - November 2026 =
 
+Lockstep with Member Reviews Pro 1.0.1.
+
 * Improve  - Member Reviews Pro settings appear on an Add-ons tab when Pro is active; free-only sites do not see the tab.
 * Improve  - The settings heading, sidebar and menu say Member Reviews Pro when Pro is active.
+* Improve  - The top members shortcode and widget cache in the object cache instead of the options table.
+* Fix      - Filled rating stars show as filled on sites where another plugin loads its own Font Awesome, instead of looking like outlines.
+* Fix      - Profile tab links (Reviews and Add Review) work on sites installed in a subfolder or with a renamed members page.
+* Fix      - The Add Review button in the profile header now links with a trailing slash.
+* Fix      - The edit-review and report windows close with Escape, keep Tab inside the window and return focus to the button that opened them.
+* Fix      - The report window is no longer printed when Report Reviews is switched off.
+* Fix      - Dates (review month, owner reply, report log) use the site timezone, and new reply and report times are stored as UTC.
+* Fix      - Switching BuddyPress Activity off no longer risks a fatal error from review activity hooks.
 * Fix      - The average rating under a member's name in the profile header matches the colour of the member's name, so it stays readable on any cover image and in dark mode.
 * Fix      - Old review links (/review/...) redirect to the review on the member's profile instead of a page not found.
 * Fix      - The verified badge shows on a single review page, not only in the list.
@@ -259,8 +269,11 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 * Fix      - The Member Review widget shows its "no members reviewed yet" message inside the widget box, and an empty widget title no longer leaves an empty heading.
 * Fix      - The Displayed Member Rating widget lists more than five ratings when set to, and Highest or Lowest sorting is no longer limited to the newest five.
 * Fix      - The Reported and Auto-hidden views and their counts list member reviews only, keep Member Reviews Pro's Verified and Flagged filters when combined, and Group Reviews can no longer be reported through Member Reviews.
+* Dev      - New bupr_date_label() and bupr_display_timezone() helpers and the bupr_display_timezone filter. The bupr_top_members_cache_ver option is no longer used.
+* Dev      - Adds bin/local-ci.sh, bin/build-release.sh and .distignore.
 * Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
+* Compat   - Aligned with Member Reviews Pro 1.0.1. Install both updates together.
 
 = 3.8.2 - November 2026 =
 

@@ -933,7 +933,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			// Save the reply.
 			update_post_meta( $review_id, 'bupr_owner_reply', $reply_content );
-			update_post_meta( $review_id, 'bupr_owner_reply_date', current_time( 'timestamp' ) );
+			update_post_meta( $review_id, 'bupr_owner_reply_date', time() );
 
 			// Get owner info for the response.
 			$owner_data   = get_userdata( $current_user_id );
@@ -952,7 +952,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			$reply_html .= '<img src="' . esc_url( $owner_avatar ) . '" class="avatar avatar-32" alt="' . esc_attr( $owner_name ) . '" width="32" height="32">';
 			$reply_html .= '<span class="bupr-reply-author">' . esc_html( $owner_name ) . '</span>';
 			$reply_html .= '<span class="bupr-reply-badge">' . esc_html__( 'Owner Response', 'bp-member-reviews' ) . '</span>';
-			$reply_html .= '<span class="bupr-reply-date">' . esc_html( date_i18n( get_option( 'date_format' ), current_time( 'timestamp' ) ) ) . '</span>';
+			$reply_html .= '<span class="bupr-reply-date">' . esc_html( bupr_date_label( time() ) ) . '</span>';
 			$reply_html .= '</div>';
 			$reply_html .= '<div class="bupr-reply-content">' . wp_kses_post( wpautop( $reply_content ) ) . '</div>';
 			$reply_html .= '</div>';
@@ -1082,7 +1082,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				'reporter_id'  => $current_user_id,
 				'reason'       => $flag_reason,
 				'reason_label' => $valid_reasons[ $flag_reason ],
-				'date'         => current_time( 'timestamp' ),
+				'date'         => time(),
 			);
 			$existing_flags[] = $new_flag;
 

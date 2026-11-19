@@ -42,7 +42,7 @@ if ( 'yes' === $owner_replies_enabled ) :
 				<span class="bupr-reply-author"><?php echo esc_html( $owner_name ); ?></span>
 				<span class="bupr-reply-badge"><?php esc_html_e( 'Owner Response', 'bp-member-reviews' ); ?></span>
 				<?php if ( $owner_reply_date ) : ?>
-					<span class="bupr-reply-date"><?php echo esc_html( date_i18n( get_option( 'date_format' ), $owner_reply_date ) ); ?></span>
+					<span class="bupr-reply-date"><?php echo esc_html( bupr_date_label( (int) $owner_reply_date ) ); ?></span>
 				<?php endif; ?>
 			</div>
 			<div class="bupr-reply-content"><?php echo wp_kses_post( wpautop( $owner_reply ) ); ?></div>

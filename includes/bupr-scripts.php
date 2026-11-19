@@ -151,6 +151,15 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				if ( get_template() !== 'buddyboss-theme' ) {
 					wp_enqueue_style( 'bupr-font-awesome' );
 				}
+				// Stars draw from the bundled Font Awesome glyphs under their own family name. Another plugin or the theme
+				// registering "font-awesome" (Elementor ships 4.7) otherwise decides which font and weight .fas/.far get,
+				// and filled stars rendered as outlines.
+				$bupr_fa_url = BUPR_PLUGIN_URL . 'assets/css/fontawesome/webfonts/';
+				wp_add_inline_style(
+					'bupr-front-css',
+					'@font-face{font-family:"BUPR Star";font-style:normal;font-weight:900;font-display:swap;src:url("' . esc_url( $bupr_fa_url ) . 'fa-solid-900.woff2") format("woff2"),url("' . esc_url( $bupr_fa_url ) . 'fa-solid-900.woff") format("woff")}'
+					. '@font-face{font-family:"BUPR Star";font-style:normal;font-weight:400;font-display:swap;src:url("' . esc_url( $bupr_fa_url ) . 'fa-regular-400.woff2") format("woff2"),url("' . esc_url( $bupr_fa_url ) . 'fa-regular-400.woff") format("woff")}'
+				);
 				if ( isset( $bupr['rating_color'] ) && ! empty( $bupr['rating_color'] ) ) {
 					$bupr_star_color = $bupr['rating_color'];
 					$custom_css      = ".bupr-star-rate { color: {$bupr_star_color} !important; }";

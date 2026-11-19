@@ -72,20 +72,18 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			/*
 			 * The CAST() in ORDER BY defeats the usermeta meta_key index, forcing a
-			 * filesort of every row carrying the meta key. Cache the result set in a
-			 * short-lived transient so the query runs at most once per TTL per
-			 * attribute combination. The version salt is bumped by
+			 * filesort of every row carrying the meta key. Cache the result set in the
+			 * object cache, keyed on the group's last-changed token. The token moves in
 			 * bupr_flush_top_members_cache() whenever aggregate rating/review-count
 			 * meta changes (review status transition, trash/delete, batch recalc),
 			 * which invalidates all variations at once.
 			 */
-			$cache_salt = (string) get_option( 'bupr_top_members_cache_ver', '1' );
-			$cache_key  = 'bupr_top_members_' . md5( $cache_salt . '|' . $meta_key . '|' . (int) $member_limit );
+			$cache_key = md5( $meta_key . '|' . (int) $member_limit ) . ':' . wp_cache_get_last_changed( 'bupr_top_members' );
 
-			$bupr_user_data = get_transient( $cache_key );
+			$bupr_user_data = wp_cache_get( $cache_key, 'bupr_top_members' );
 			if ( false === $bupr_user_data ) {
 				// Query to fetch users based on their aggregate rating or review count.
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Result cached in the transient above.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Result cached in the object cache above.
 				$bupr_user_data = $wpdb->get_results(
 					$wpdb->prepare(
 						"SELECT user_id, meta_value
@@ -98,7 +96,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						$member_limit
 					)
 				);
-				set_transient( $cache_key, $bupr_user_data, 15 * MINUTE_IN_SECONDS );
+				wp_cache_set( $cache_key, $bupr_user_data, 'bupr_top_members', 15 * MINUTE_IN_SECONDS );
 			}
 			$top_members = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
 

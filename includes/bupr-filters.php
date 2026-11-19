@@ -306,7 +306,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( ! $member_id || bp_loggedin_user_id() === $member_id || ! bupr_roles_allow_review( bp_loggedin_user_id(), $member_id ) ) {
 				return;
 			}
-			$review_url = bupr_member_url( $member_id ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug();
+			$review_url = bupr_member_url( $member_id ) . bupr_profile_review_tab_plural_slug() . '/add-' . bupr_profile_review_tab_singular_slug() . '/';
 			$tag        = 'nouveau' === bp_get_option( '_bp_theme_package_id' ) ? 'li' : 'div';
 			?>
 			<<?php echo esc_html( $tag ); ?> id="bupr-add-review-btn" class="generic-button">
@@ -565,16 +565,13 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @author   Wbcom Designs
 		 */
 		public function bupr_member_profile_reviews_tab() {
-			global $bp, $bupr;
-
-			$bp_pages = bp_core_get_directory_pages();
-			add_filter( 'site_url', 'bupr_site_url', 99 );
-			$member_slug = ( isset( $bp_pages->members ) && isset( $bp_pages->members->slug ) ) ? $bp_pages->members->slug : 'members';
+			global $bupr;
 
 			// Count member's reviews (cached aggregate, not a full query per page view).
 			$bupr_notification = '<span class="count">' . bupr_get_member_review_count( bp_displayed_user_id() ) . '</span>';
 
-			$name = bp_get_displayed_user_username();
+			// Built from BuddyPress, never site_url() + slug: that 404s on subfolder installs and ignores a renamed members slug.
+			$profile_url = bupr_member_url( bp_displayed_user_id() );
 
 			if ( apply_filters( 'bupr_show_profile_review_tab', true ) ) {
 				$tab_args = array(
@@ -595,11 +592,11 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				array(
 					'name'            => bupr_profile_review_tab_name(),
 					'slug'            => bupr_default_review_view_slug(),
-					'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
+					'parent_url'      => $profile_url . $parent_slug . '/',
 					'parent_slug'     => $parent_slug,
 					'screen_function' => array( $this, 'bupr_view_review_tab_function_to_show_screen' ),
 					'position'        => 100,
-					'link'            => site_url() . "/$member_slug/$name/$parent_slug/",
+					'link'            => $profile_url . $parent_slug . '/',
 				)
 			);
 
@@ -614,15 +611,14 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 						/* translators: %1$s: Review label. */
 						'name'            => sprintf( esc_html__( 'Add %1$s', 'bp-member-reviews' ), esc_html( bupr_profile_review_singular_tab_name() ) ),
 						'slug'            => 'add-' . bupr_profile_review_tab_singular_slug(),
-						'parent_url'      => $bp->loggedin_user->domain . $parent_slug . '/',
+						'parent_url'      => $profile_url . $parent_slug . '/',
 						'parent_slug'     => $parent_slug,
 						'screen_function' => array( $this, 'bupr_reviews_form_tab_function_to_show_screen' ),
 						'position'        => 200,
-						'link'            => site_url() . "/$member_slug/$name/$parent_slug/" . 'add-' . bupr_profile_review_tab_singular_slug(),
+						'link'            => $profile_url . $parent_slug . '/add-' . bupr_profile_review_tab_singular_slug() . '/',
 					)
 				);
 			}
-			remove_filter( 'site_url', 'bupr_site_url', 99 );
 		}
 
 		/**
@@ -891,7 +887,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			}
 			$is_anonymous   = bupr_is_anonymous_review( $activity->item_id );
 			$anonymous_user = ( $is_anonymous ) ? esc_html__( 'An anonymous user', 'bp-member-reviews' ) : '';
-			if ( isset( $activity->id ) && ! empty( $anonymous_user ) ) {
+			if ( isset( $activity->id ) && ! empty( $anonymous_user ) && function_exists( 'bp_activity_add_meta' ) ) {
 				bp_activity_add_meta( $activity->id, 'bupr_user_string', $anonymous_user );
 			}
 		}
@@ -908,7 +904,7 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 		 * @return string Modified action text.
 		 */
 		public function bupr_hide_username_in_activity( $action, $activity ) {
-			$bupr_user_string = bp_activity_get_meta( $activity->id, 'bupr_user_string' );
+			$bupr_user_string = function_exists( 'bp_activity_get_meta' ) ? bp_activity_get_meta( $activity->id, 'bupr_user_string' ) : '';
 			$user_id          = $activity->user_id;
 			if ( ! empty( $bupr_user_string ) ) {
 				$action = str_replace( bp_core_get_userlink( $user_id ), $bupr_user_string, $action );

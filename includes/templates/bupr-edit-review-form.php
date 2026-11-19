@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $bupr;
 ?>
-<div id="bupr-edit-review-modal" class="bupr-review-modal">	
+<div id="bupr-edit-review-modal" class="bupr-review-modal" aria-label="<?php esc_attr_e( 'Edit review', 'bp-member-reviews' ); ?>">
 	<div class="bupr-review-modal-content">
 		<button type="button" class="bupr-review-modal-close-button" aria-label="<?php esc_attr_e( 'Close', 'bp-member-reviews' ); ?>">&times;</button>
 	<div class="bupr-edit-review-form-wrapper">

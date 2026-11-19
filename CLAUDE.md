@@ -52,7 +52,7 @@ URLs, the Criteria tab's "switch to Star Ratings mode" link) - do not rename it.
   registered `includes/admin/class-bupr-admin-panel.php:189-196`.
 - `bupr_admin_settings` (array — criteria) — `OPTION_CRITERIA`, registered `:197-204`.
 - `bupr_admin_display_options` (array — labels + star color) — `OPTION_DISPLAY`, registered `:205-212`.
-- Standalone: `bupr_plugin_version`, `bupr_current_batch`, `bupr_top_members_cache_ver`
+- Standalone: `bupr_plugin_version`, `bupr_current_batch`
   (cache salt for the top-members shortcode transient), `bupr_meta_repair_v1_done` +
   `bupr_meta_repair_paged` (one-time meta-drift repair gate + cursor),
   transients `_bupr_activation_redirect`

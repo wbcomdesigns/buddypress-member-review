@@ -41,7 +41,7 @@ if ( ! empty( $review_id ) ) {
 	$author_id         = $author_details->data->ID;
 	$member_profile    = bp_core_get_userlink( $author_id );
 	$review_date_time  = $review->post_date;
-	$review_date       = date_i18n( 'M Y', $review_date_time );
+	$review_date       = bupr_date_label( (int) get_post_time( 'U', true, $review ), 'M Y' );
 	// $review_date       = human_time_diff( strtotime( $review_date_time ), current_time( 'timestamp' ) ) . ' ago';
 
 	$anonymous_post_review = bupr_is_anonymous_review( $review_id );

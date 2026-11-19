@@ -538,7 +538,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				$status_label .= sprintf(
 					' <span class="bupr-status-auto-hidden" title="%s">%s</span>',
 					/* translators: %s: date and time the review was hidden. */
-					esc_attr( $hidden_at ? sprintf( __( 'Hidden on %s', 'bp-member-reviews' ), date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $hidden_at ) ) : '' ),
+					esc_attr( $hidden_at ? sprintf( __( 'Hidden on %s', 'bp-member-reviews' ), bupr_date_label( $hidden_at, get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) ) : '' ),
 					esc_html__( 'Auto-hidden', 'bp-member-reviews' )
 				);
 			}
@@ -714,7 +714,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			foreach ( $flags as $flag ) {
 				$reporter      = get_userdata( $flag['reporter_id'] );
 				$reporter_name = $reporter ? $reporter->display_name : __( 'Unknown', 'bp-member-reviews' );
-				$date          = isset( $flag['date'] ) ? date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $flag['date'] ) : '';
+				$date          = isset( $flag['date'] ) ? bupr_date_label( (int) $flag['date'], get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : '';
 
 				echo '<li style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #ddd;">';
 				echo '<strong>' . esc_html( $flag['reason_label'] ) . '</strong><br>';

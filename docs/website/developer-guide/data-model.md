@@ -71,12 +71,11 @@ These are recalculated when a review is published, edited, hidden, trashed or de
 | `bupr_admin_display_options` | **Display** tab settings: `bupr_review_title`, `bupr_review_title_plural`, `bupr_star_color`. |
 | `bupr_plugin_version` | Installed version. |
 | `bupr_current_batch` | Cursor for the daily recalculation. |
-| `bupr_top_members_cache_ver` | Version stamp used to refresh the top-members cache. |
 | `bupr_meta_repair_v1_done`, `bupr_meta_repair_paged` | One-time repair of stale rating counts. |
 
 Settings you never saved have no entry in the option. The plugin then uses its built-in default (see the [Settings Reference](../usage/settings-reference.md)).
 
-Temporary values (transients): `bupr_top_members_*` (cached shortcode results, 15 minutes) and `bupr_drift_checked_{user_id}` (once a day per member).
+Temporary values: the top-members shortcode and widget results sit in the object cache group `bupr_top_members` for 15 minutes (a persistent object cache keeps them; without one they last one request), and `bupr_drift_checked_{user_id}` is a transient (once a day per member). Dates are stored as UTC timestamps and shown in the site timezone; filter `bupr_display_timezone` to change it.
 
 ## Activity stream entries
 

@@ -637,15 +637,14 @@ add_action( 'untrashed_post', 'bupr_clear_review_caches' );
 /**
  * Flush the cached [bupr_display_top_members] shortcode results.
  *
- * The shortcode caches its CAST()-ordered usermeta query in transients keyed
- * by a version salt (see BUPR_Shortcodes::bupr_display_top_members_display()).
- * Bumping the salt invalidates every attribute variation in O(1); the stale
- * transients then expire naturally via their TTL.
+ * The shortcode and the widget cache their CAST()-ordered usermeta query in the
+ * object cache, keyed on wp_cache_get_last_changed( 'bupr_top_members' ). Moving
+ * that token invalidates every attribute variation in O(1).
  *
  * @since 3.8.0
  */
 function bupr_flush_top_members_cache() {
-	update_option( 'bupr_top_members_cache_ver', (string) microtime( true ), false );
+	wp_cache_set_last_changed( 'bupr_top_members' );
 }
 add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
 add_action( 'deleted_user', 'bupr_flush_top_members_cache' );
@@ -838,7 +837,7 @@ function bupr_is_review_activity( $activity ) {
  * @since 3.8.3
  */
 function bupr_register_activity_actions() {
-	if ( defined( 'YOUZIFY_VERSION' ) ) {
+	if ( defined( 'YOUZIFY_VERSION' ) || ! function_exists( 'bp_activity_set_action' ) ) {
 		return;
 	}
 	bp_activity_set_action(
@@ -950,4 +949,30 @@ function bupr_default_review_view_slug() {
 
 	$default_slug = apply_filters( 'bupr_default_subnav_slug', 'view' );
 	return $default_slug;
+}
+
+
+/**
+ * Timezone every date the plugin shows is rendered in: the site timezone, filterable per member.
+ *
+ * @since 3.8.3
+ * @param int $user_id Optional member whose timezone applies. Default: the current user.
+ * @return DateTimeZone
+ */
+function bupr_display_timezone( $user_id = 0 ) {
+	$tz = apply_filters( 'bupr_display_timezone', wp_timezone(), $user_id ? (int) $user_id : get_current_user_id() );
+	return $tz instanceof DateTimeZone ? $tz : wp_timezone();
+}
+
+/**
+ * The one date formatter. Times are stored as UTC timestamps; this is the only place they are formatted.
+ *
+ * @since 3.8.3
+ * @param int    $timestamp UTC Unix timestamp.
+ * @param string $format    PHP date format. Default: the site date format.
+ * @return string
+ */
+function bupr_date_label( $timestamp, $format = '' ) {
+	$format = '' === $format ? get_option( 'date_format' ) : $format;
+	return (string) wp_date( $format, (int) $timestamp, bupr_display_timezone() );
 }

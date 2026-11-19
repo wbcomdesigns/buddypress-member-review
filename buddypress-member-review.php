@@ -405,20 +405,6 @@ function bupr_do_activation_redirect() {
 add_action( 'admin_init', 'bupr_do_activation_redirect' );
 
 /**
- * Translate site URL using WPML for frontend use.
- *
- * @param string $url The URL to translate.
- *
- * @return string Translated URL.
- */
-function bupr_site_url( $url ) {
-	if ( ! is_admin() && false === strpos( $url, 'wp-admin' ) ) {
-		return untrailingslashit( apply_filters( 'wpml_home_url', $url ) );
-	}
-	return $url;
-}
-
-/**
  * Unschedule the cron event on plugin deactivation.
  */
 function bupr_unschedule_review_recalculation() {
