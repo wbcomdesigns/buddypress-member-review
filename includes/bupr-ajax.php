@@ -425,19 +425,12 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				$review_link    = '<a href="' . esc_url( $bupr_review_url ) . '">' . esc_html( $review_subject ) . '</a>';
 
 				// Set email subject.
-				$bupr_subject = isset( $bupr_admin_general['review_email_subject'] ) && ! empty( $bupr_admin_general['review_email_subject'] )
-					? $bupr_admin_general['review_email_subject']
-					: __( 'New Review on Your Profile at [site-name]', 'bp-member-reviews' );
+				$bupr_subject = bupr_email_setting( 'review_email_subject' );
 
 				$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
 				// Set email message.
-				/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
-				$default_message = __( 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team', 'bp-member-reviews' );
-
-				$bupr_message = isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] )
-					? $bupr_admin_general['review_email_message']
-					: $default_message;
+				$bupr_message = bupr_email_setting( 'review_email_message' );
 
 				$bupr_message = str_replace(
 					array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
@@ -455,9 +448,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			// Admin notification for reviews needing approval.
 			if ( 'draft' === $review_status && 'yes' === $bupr['allow_email'] ) {
 				$bupr_to      = get_option( 'admin_email' );
-				$bupr_subject = isset( $bupr_admin_general['review_approve_email_subject'] )
-					? $bupr_admin_general['review_approve_email_subject']
-					: __( 'A New Review Requires Your Approval on [site-name]', 'bp-member-reviews' );
+				$bupr_subject = bupr_email_setting( 'review_approve_email_subject' );
 
 				$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
@@ -473,26 +464,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$user_name
 					) . '</a>';
 
-				/* translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim. */
-				$default_approve_message = __(
-					'Hello [site-admin],
-
-				Greetings!
-
-				You have received a new review on [site-name] that is pending approval. To review and approve the submission, please click on the link below:
-
-				[review-aproval-link]
-
-				Thank you for helping us maintain a vibrant and engaged community.
-
-				Best regards,
-				The [site-name] Team',
-					'bp-member-reviews'
-				);
-
-				$bupr_approve_message = isset( $bupr_admin_general['review_approve_email_message'] )
-					? $bupr_admin_general['review_approve_email_message']
-					: $default_approve_message;
+				$bupr_approve_message = bupr_email_setting( 'review_approve_email_message' );
 
 				$bupr_approve_message = str_replace(
 					array( '[review-aproval-link]', '[site-admin]', '[site-name]' ),
@@ -622,13 +594,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 						$stars_off = 5 - $stars_on;
 						$count     = 0;
 						for ( $i = 1; $i <= $stars_on; $i++ ) {
-							$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star ' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
+							$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star member-star-' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
 							++$count;
 						}
 
 						for ( $i = 1; $i <= 5; $i++ ) {
 							if ( $i > $count ) {
-								$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="far fa-star stars bupr-star-rate member-edit-stars bupr-star ' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
+								$review_output .= '<span id="' . esc_attr( $field_counter . $i ) . '" class="far fa-star stars bupr-star-rate member-edit-stars bupr-star member-star-' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
 							}
 						}
 						/*star rating end */
@@ -648,13 +620,13 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 									<input type="hidden" name="member_rated_stars[]" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" data-critaria="<?php echo esc_attr( $field ); ?>" value="0">
 											<?php
 											for ( $i = 1; $i <= $stars_on; $i++ ) {
-												echo '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star ' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
+												echo '<span id="' . esc_attr( $field_counter . $i ) . '" class="fas fa-star bupr-star-rate member-edit-stars bupr-star member-star-' . esc_attr( $i ) . '" data-attr="' . esc_attr( $i ) . '"></span>';
 												++$count;
 											}
 											for ( $i = 1; $i <= 5; $i++ ) {
 												if ( $i > $count ) {
 													?>
-										<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate member-edit-stars <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+										<span class="far member_stars member-star-<?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate member-edit-stars" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 													<?php
 												}
 											}
@@ -681,7 +653,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			$review_output .= apply_filters( 'bupr_edit_review_extra_fields', '', $review_id );
 
 			/* translators: %s: */
-			$review_output .= '<button type="button" class="button btn btn-default" id="bupr_upodate_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
+			$review_output .= '<button type="button" class="button btn btn-default" id="bupr_update_review" name="update-review">' . sprintf( esc_html__( 'Update %s', 'bp-member-reviews' ), esc_html( $bupr['review_label'] ) ) . '</button>';
 			$review_output .= '</div>';
 
 			if ( ! empty( $review ) ) {
@@ -882,8 +854,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			// Get the review.
 			$review = get_post( $review_id );
-			// Only published reviews can be replied to (the owner cannot see pending ones).
-			if ( ! $review || 'review' !== $review->post_type || 'publish' !== $review->post_status ) {
+			// Only published reviews can be replied to (the owner cannot see pending ones), and a locked password-protected review cannot be replied to until its password is entered (administrators excepted).
+			if ( ! $review || 'review' !== $review->post_type || 'publish' !== $review->post_status || ( post_password_required( $review ) && ! current_user_can( 'manage_options' ) ) ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'Review not found.', 'bp-member-reviews' ),
@@ -933,7 +905,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			// Save the reply.
 			update_post_meta( $review_id, 'bupr_owner_reply', $reply_content );
-			update_post_meta( $review_id, 'bupr_owner_reply_date', current_time( 'timestamp' ) );
+			update_post_meta( $review_id, 'bupr_owner_reply_date', time() );
 
 			// Get owner info for the response.
 			$owner_data   = get_userdata( $current_user_id );
@@ -952,7 +924,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 			$reply_html .= '<img src="' . esc_url( $owner_avatar ) . '" class="avatar avatar-32" alt="' . esc_attr( $owner_name ) . '" width="32" height="32">';
 			$reply_html .= '<span class="bupr-reply-author">' . esc_html( $owner_name ) . '</span>';
 			$reply_html .= '<span class="bupr-reply-badge">' . esc_html__( 'Owner Response', 'bp-member-reviews' ) . '</span>';
-			$reply_html .= '<span class="bupr-reply-date">' . esc_html( date_i18n( get_option( 'date_format' ), current_time( 'timestamp' ) ) ) . '</span>';
+			$reply_html .= '<span class="bupr-reply-date">' . esc_html( bupr_date_label( time() ) ) . '</span>';
 			$reply_html .= '</div>';
 			$reply_html .= '<div class="bupr-reply-content">' . wp_kses_post( wpautop( $reply_content ) ) . '</div>';
 			$reply_html .= '</div>';
@@ -1027,7 +999,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			// Get the review.
 			$review = get_post( $review_id );
-			if ( ! $review || 'review' !== $review->post_type ) {
+			// Group Reviews shares the post type; only published member reviews are reported here (a pending or hidden review is not visible to the reporter).
+			if ( ! bupr_is_member_review( $review ) || 'publish' !== $review->post_status ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'Review not found.', 'bp-member-reviews' ),
@@ -1081,7 +1054,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				'reporter_id'  => $current_user_id,
 				'reason'       => $flag_reason,
 				'reason_label' => $valid_reasons[ $flag_reason ],
-				'date'         => current_time( 'timestamp' ),
+				'date'         => time(),
 			);
 			$existing_flags[] = $new_flag;
 
@@ -1105,7 +1078,7 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 				);
 				$auto_hidden = true;
 				update_post_meta( $review_id, 'bupr_auto_hidden', true );
-				update_post_meta( $review_id, 'bupr_auto_hidden_date', current_time( 'timestamp' ) );
+				update_post_meta( $review_id, 'bupr_auto_hidden_date', time() );
 			}
 
 			// Trigger action for admin notification.

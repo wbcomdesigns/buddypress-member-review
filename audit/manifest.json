@@ -123,15 +123,15 @@
       "registered_at": "includes/admin/class-bupr-admin-panel.php:155-162 (add_submenu_page)",
       "hook": "admin_menu (BUPR_Admin_Panel::add_menu)",
       "callback": "BUPR_Admin_Panel::render_page",
-      "note": "PRIMARY plugin settings page (BUPR_Admin_Panel::MENU_SLUG, :34). Single page rendering the card-panel shell (includes/admin/views/shell.php) with sidebar tabs from BUPR_Admin_Panel::get_tabs()."
+      "note": "PRIMARY plugin settings page (BUPR_Admin_Panel::MENU_SLUG, :34). Single page rendering the card-panel shell (includes/admin/views/layout.php) with sidebar tabs from BUPR_Admin_Panel::get_tabs()."
     }
   ],
   "admin_ui_wrapper": {
     "classification": "NEW (card-panel shell)",
     "owner_class": "BUPR_Admin_Panel (includes/admin/class-bupr-admin-panel.php)",
-    "shell_view": "includes/admin/views/shell.php",
+    "shell_view": "includes/admin/views/layout.php",
     "views": [
-      "includes/admin/views/shell.php",
+      "includes/admin/views/layout.php",
       "includes/admin/views/hub.php",
       "includes/admin/views/overview.php",
       "includes/admin/views/settings-general.php",
@@ -328,7 +328,8 @@
       "title": "BP Member Review Widget",
       "registered_at": "includes/widgets/display-review.php:21 (register_widget), :48 (id_base), :50 (parent::__construct)",
       "file": "includes/widgets/display-review.php",
-      "purpose": "Display reviews / member ratings list widget."
+      "instance_keys": "title (legacy bupr_title read as fallback), bupr_member, top_member, avatar",
+      "purpose": "Top-rated / most-reviewed members list widget (usermeta aggregates, 15-min transient salted by bupr_top_members_cache_ver)."
     },
     {
       "class": "bupr_single_member_rating_widget",
@@ -336,7 +337,8 @@
       "title": "BP Displayed Member Rating Widget",
       "registered_at": "includes/widgets/member-rating.php:21 (register_widget), :43 (id_base), :45 (parent::__construct)",
       "file": "includes/widgets/member-rating.php",
-      "purpose": "Display a single member's average rating on their profile."
+      "instance_keys": "title (legacy bupr_title read as fallback), rating_limit, rating_default",
+      "purpose": "Ratings received by the displayed member (review posts with linked_bp_member, newest 100), profile pages only."
     }
   ],
   "post_types": [
@@ -1153,12 +1155,11 @@
       "type": "action",
       "args_count": 0,
       "args_signature": [],
-      "where": null,
-      "status": "REMOVED_2026-07-17_NOT_FIRED",
+      "where": "admin/tab-templates/bupr-setting-pro-features-tab.php:35",
       "consumed_by": [
         "buddypress-member-review-pro"
       ],
-      "note": "NO LONGER FIRED IN FREE. This was the Pro addon's mount point, fired from admin/tab-templates/bupr-setting-pro-features-tab.php:42 on the Add-ons tab (slug bupr-pro-features). The tab and both of its files (that template + includes/admin/views/settings-pro-features.php) were removed 2026-07-17 on the owner's call, because Pro is unreleased so free users saw an empty tab. Pro hooks this action unconditionally, so when Pro ships this mount point MUST be restored or Pro's settings have nowhere to render. WRAPPER CONTRACT to restore with it: the consumer renders form contents only and relies on free for the surrounding wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap markup. The removal record with the full restore checklist lives at the removal site, in BUPR_Admin_Panel::get_tabs() (includes/admin/class-bupr-admin-panel.php)."
+      "note": "Pro addon settings mount on the Add-ons tab (slug bupr-pro-features). The tab is registered only when this action has a callback, so free-only sites never see an empty tab. Consumers render form contents only; the template supplies the wbcom-tab-content > wbcom-admin-title-section > wbcom-admin-option-wrap wrappers."
     },
     {
       "name": "bupr_before_member_review_list",
@@ -1285,6 +1286,17 @@
       "consumed_by": [
         "GamiPress"
       ]
+    },
+    {
+      "name": "bupr_display_timezone",
+      "type": "filter",
+      "args_count": 2,
+      "args_signature": [
+        "DateTimeZone $tz",
+        "int $user_id"
+      ],
+      "where": "includes/bupr-general-functions.php (bupr_display_timezone)",
+      "consumed_by": []
     }
   ],
   "cron": [
@@ -1313,14 +1325,16 @@
       "assets/js/admin.js (handle bupr-admin-panel, card-panel shell; enqueued includes/admin/class-bupr-admin-panel.php:329-335; localized 'buprAdminPanel' at :337)",
       "admin/assets/js/bupr-admin.js (handle bupr-js-admin, enqueued includes/bupr-scripts.php:215; localized at :217)",
       "admin/assets/js/bupr-color-picker.js (handle bupr-color-picker, enqueued includes/bupr-scripts.php:232, deps wp-color-picker)",
-      "admin/assets/js/vendor/select2.min.js (handle wbcom-select2-js, enqueued includes/bupr-scripts.php:212)"
+      "admin/assets/js/vendor/select2.min.js (handle wbcom-select2-js, enqueued includes/bupr-scripts.php:212)",
+      "assets/js/bupr-front.js also defines window.buprDialog (focus-in, Tab trap, Escape, focus return) used by the edit-review and report dialogs"
     ],
     "css": [
       "assets/css/bupr-front.css (handle bupr-front-css, enqueued includes/bupr-scripts.php:105 front and :278 admin)",
       "assets/css/admin.css (handle bupr-admin-panel, card-panel shell; enqueued includes/admin/class-bupr-admin-panel.php:322-327)",
       "assets/css/fontawesome/all.min.css (handle font-awesome, includes/bupr-scripts.php:265; also bupr-font-awesome-2 at admin/bupr-admin.php:97)",
       "admin/assets/css/bupr-admin.css (handle bupr-css-admin, enqueued includes/bupr-scripts.php:270)",
-      "admin/assets/css/vendor/select2.css (handle wbcom-select2-css, enqueued includes/bupr-scripts.php:309)"
+      "admin/assets/css/vendor/select2.css (handle wbcom-select2-css, enqueued includes/bupr-scripts.php:309)",
+      "assets/css/admin-feedback.css (handle bupr-admin-feedback, enqueued from Bupr_Admin_Feedback::display_admin_notice on the Plugins screen)"
     ],
     "build_variants": "min/ and rtl/ siblings generated by grunt for bupr-front, admin, bupr-reviews, bupr-admin, bupr-color-picker.",
     "note": "assets/css/bupr-reviews.css is a STUB (merged into bupr-front.css in the 3.7.1 UX pass) and is no longer enqueued anywhere. admin/wbcom/assets/* no longer exists (wrapper removed in 3.8.0)."
@@ -1492,6 +1506,7 @@
     "php_file_count_note": "35 = all *.php excluding node_modules/ and vendor/; 33 excluding the 2 generated languages/*.l10n.php caches.",
     "schema_version": "v2.2",
     "coverage_gate": "PASS (ajax 6/6 from 8 grep hits - 2 nopriv duplicates; admin_post 2/2; admin_pages 2/2; shortcodes 1/1; blocks 0/0 verified; settings 3 registered groups + 8 standalone/transient keys; post_types 1/1; taxonomies 1/1; meta_boxes 2/2; widgets 2/2; cron 2/2; rest 0/0; tables 0/0; wp_cli 0/0; hooks_fired 62 enumerated >= grep unique)",
-    "delta_3_8_1": "Targeted delta: nopriv approve/submit removed; approve + report moderation need edit_others_posts; helpers bupr_roles_allow_review, bupr_member_url, bupr_get_member_review_count, bupr_get_flagged_reviews_count, bupr_get_auto_hidden_reviews_count, bupr_review_activity_type, bupr_get_review_activity_id, bupr_delete_review_activity; Reviews list ?bupr_auto_hidden=1 view. Card sweep: review CPT public=false/has_archive=false + BUPR_Admin::bupr_redirect_review_single (301 single to profile view, 404 listings); BUPR_Admin::bupr_close_reports replaces bupr_dismiss_reports (Resolve also stores bupr_flag_dismissed_at_count); header button/Add tab/shortcode picker route through bupr_roles_allow_review (removed bupr_members_right_to_review, bupr_members_right_to_take_review, bupr_get_current_user_roles, user_role_cache); template part includes/templates/bupr-owner-reply.php used by list + single."
+    "delta_3_8_1": "Targeted delta: nopriv approve/submit removed; approve + report moderation need edit_others_posts; helpers bupr_roles_allow_review, bupr_member_url, bupr_get_member_review_count, bupr_get_flagged_reviews_count, bupr_get_auto_hidden_reviews_count, bupr_review_activity_type, bupr_get_review_activity_id, bupr_delete_review_activity; Reviews list ?bupr_auto_hidden=1 view. Card sweep: review CPT public=false/has_archive=false + BUPR_Admin::bupr_redirect_review_single (301 single to profile view, 404 listings); BUPR_Admin::bupr_close_reports replaces bupr_dismiss_reports (Resolve also stores bupr_flag_dismissed_at_count); header button/Add tab/shortcode picker route through bupr_roles_allow_review (removed bupr_members_right_to_review, bupr_members_right_to_take_review, bupr_get_current_user_roles, user_role_cache); template part includes/templates/bupr-owner-reply.php used by list + single.",
+    "delta_3_8_3": "Targeted delta: helpers bupr_is_member_review (post is a review with linked_bp_member > 0) and bupr_member_review_meta_clause (its meta_query form, appended never replacing). Group Reviews share the review CPT: Reported/Auto-hidden views (BUPR_Admin::bupr_filter_flagged_reviews) merge into the existing meta_query with the member clause; bupr_get_flagged_reviews_count / bupr_get_auto_hidden_reviews_count join linked_bp_member > 0; wp_ajax_bupr_flag_review refuses non-member reviews (not_found). Pro REST and Pro verified/flagged filters use the same clause."
   }
 }

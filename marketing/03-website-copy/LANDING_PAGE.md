@@ -118,7 +118,7 @@ New reviews appear in BuddyPress activity feeds. Reviews become social content t
 ---
 
 **Email + BP Notifications**
-Members receive notifications when they get reviewed, when someone responds, or when admins take action.
+Members get an email and a BuddyPress notification when a review of them is published or approved. Admins get an email when a review is waiting for approval. Owner replies send a BuddyPress notification.
 
 **What you get:** Real-time updates that keep members engaged.
 

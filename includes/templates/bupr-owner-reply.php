@@ -21,7 +21,8 @@ if ( 'yes' === $owner_replies_enabled ) :
 	$owner_reply_date = get_post_meta( $review_id, 'bupr_owner_reply_date', true );
 	$linked_member_id = get_post_meta( $review_id, 'linked_bp_member', true );
 	$current_user_id  = get_current_user_id();
-	$can_reply        = ( (int) $linked_member_id === $current_user_id ) && empty( $owner_reply );
+	// A locked password-protected review shows no reply form until the password is entered.
+	$can_reply        = ( (int) $linked_member_id === $current_user_id ) && empty( $owner_reply ) && ! post_password_required( $review_id );
 	?>
 <div class="bupr-reply-section" data-review="<?php echo esc_attr( $review_id ); ?>">
 	<?php if ( ! empty( $owner_reply ) ) : ?>
@@ -42,7 +43,7 @@ if ( 'yes' === $owner_replies_enabled ) :
 				<span class="bupr-reply-author"><?php echo esc_html( $owner_name ); ?></span>
 				<span class="bupr-reply-badge"><?php esc_html_e( 'Owner Response', 'bp-member-reviews' ); ?></span>
 				<?php if ( $owner_reply_date ) : ?>
-					<span class="bupr-reply-date"><?php echo esc_html( date_i18n( get_option( 'date_format' ), $owner_reply_date ) ); ?></span>
+					<span class="bupr-reply-date"><?php echo esc_html( bupr_date_label( (int) $owner_reply_date ) ); ?></span>
 				<?php endif; ?>
 			</div>
 			<div class="bupr-reply-content"><?php echo wp_kses_post( wpautop( $owner_reply ) ); ?></div>

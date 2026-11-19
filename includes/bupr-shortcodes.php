@@ -61,6 +61,11 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			$bupr_title     = apply_filters( 'bupr_shortcode_title', $atts['title'] );
 			$member_limit   = apply_filters( 'bupr_shortcode_member_limit', $atts['total_member'] );
+			// A number of members; zero, negative or not a number falls back to the default of 5.
+			$member_limit = (int) $member_limit;
+			if ( $member_limit < 1 ) {
+				$member_limit = 5;
+			}
 			$top_member     = apply_filters( 'bupr_shortcode_type', $atts['type'] );
 			$avatar_display = apply_filters( 'bupr_shortcode_avatar', $atts['avatar'] );
 
@@ -72,20 +77,18 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			/*
 			 * The CAST() in ORDER BY defeats the usermeta meta_key index, forcing a
-			 * filesort of every row carrying the meta key. Cache the result set in a
-			 * short-lived transient so the query runs at most once per TTL per
-			 * attribute combination. The version salt is bumped by
+			 * filesort of every row carrying the meta key. Cache the result set in the
+			 * object cache, keyed on the group's last-changed token. The token moves in
 			 * bupr_flush_top_members_cache() whenever aggregate rating/review-count
 			 * meta changes (review status transition, trash/delete, batch recalc),
 			 * which invalidates all variations at once.
 			 */
-			$cache_salt = (string) get_option( 'bupr_top_members_cache_ver', '1' );
-			$cache_key  = 'bupr_top_members_' . md5( $cache_salt . '|' . $meta_key . '|' . (int) $member_limit );
+			$cache_key = md5( $meta_key . '|' . (int) $member_limit ) . ':' . wp_cache_get_last_changed( 'bupr_top_members' );
 
-			$bupr_user_data = get_transient( $cache_key );
+			$bupr_user_data = wp_cache_get( $cache_key, 'bupr_top_members' );
 			if ( false === $bupr_user_data ) {
 				// Query to fetch users based on their aggregate rating or review count.
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Result cached in the transient above.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Result cached in the object cache above.
 				$bupr_user_data = $wpdb->get_results(
 					$wpdb->prepare(
 						"SELECT user_id, meta_value
@@ -98,12 +101,14 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 						$member_limit
 					)
 				);
-				set_transient( $cache_key, $bupr_user_data, 15 * MINUTE_IN_SECONDS );
+				wp_cache_set( $cache_key, $bupr_user_data, 'bupr_top_members', 15 * MINUTE_IN_SECONDS );
 			}
 			$top_members = apply_filters( 'bupr_shortcode_query_results', $bupr_user_data, $meta_key );
 
 			$output .= '<div class="bupr-shortcode-top-members-contents bupr_members_review_setting">';
-			$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
+			if ( '' !== (string) $bupr_title ) {
+				$output .= '<h2>' . esc_html( $bupr_title ) . '</h2>';
+			}
 			$output .= '<ul class="bupr-member-main">';
 
 			// Display each top member.
@@ -396,7 +401,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 							?>
 					<form action="" method="POST" id="bupr_review_form_public">
 						<input type="hidden" value="<?php echo esc_attr( $bupr['rating_color'] ); ?>" class="bupr-display-rating-color">
-						<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_url( BUPR_PLUGIN_URL ); ?>">
 						<div class="bp-member-add-form">
 							<p>
 							<?php
@@ -442,7 +446,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 										<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
 										<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" value="0">
 												<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
-											<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+											<span class="far member_stars member-star-<?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 										<?php } ?>
 									</div>
 									<div class="bupr-col-12 bupr-error-fields">*<?php esc_html_e( 'This field is required.', 'bp-member-reviews' ); ?></div>
@@ -465,7 +469,7 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 											<input type="hidden" id="<?php echo 'clicked' . esc_attr( $field_counter ); ?>" value="<?php echo esc_attr( 'not_clicked' ); ?>">
 											<input type="hidden" name="member_rated_stars[]" id="member_rated_stars" class="member_rated_stars bupr-star-member-rating" id="<?php echo 'member_rated_stars' . esc_attr( $field_counter ); ?>" value="0">
 													<?php	for ( $i = 1; $i <= 5; $i++ ) { ?>
-												<span class="far member_stars <?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate <?php echo esc_attr( $i ); ?>" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
+												<span class="far member_stars member-star-<?php echo esc_attr( $i ); ?> fa-star bupr-stars bupr-star-rate" id="<?php echo esc_attr( $field_counter ) . esc_attr( $i ); ?>" data-attr="<?php echo esc_attr( $i ); ?>" ></span>
 											<?php } ?>
 										</div>
 									</div>
@@ -503,12 +507,10 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 								printf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
 								?>
 								</label>
-								<textarea name="review-desc" id="review_desc" placeholder="
-								<?php
+								<textarea name="review-desc" id="review_desc" placeholder="<?php
 								/* translators: %s: review label */
-								printf( esc_html__( 'Enter your %s', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
-								?>
-								" rows="4" cols="50"></textarea><br/>
+								echo esc_attr( sprintf( __( 'Enter your %s', 'bp-member-reviews' ), strtolower( $bupr['review_label'] ) ) );
+								?>" rows="4" cols="50"></textarea><br/>
 							<?php if ( $flag ) { ?>
 									<p>
 										<label for="bupr_anonymous_review"><input style="width:auto !important" type="checkbox" id="bupr_anonymous_review" value="value">

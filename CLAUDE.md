@@ -16,7 +16,7 @@
 
 ## Quick reference
 - **Main file**: `buddypress-member-review.php`
-- **Version**: `3.8.1`  | **Dev branch**: `3.8.1`
+- **Version**: `3.8.3`  | **Dev branch**: `3.8.3`
 - **Namespace**: none — procedural functions + prefixed classes (`BUPR_*`, `Wbcom_Admin_Settings`)
 - **Prefix**: `bupr_`  | **Text domain**: `bp-member-reviews`  | **WP.org slug**: `bp-user-profile-reviews`
 - **Extends**: null. **Extended by**: `buddypress-member-review-pro` (separate repo, hook-only coupling).
@@ -25,7 +25,7 @@
 ## Admin-UI wrapper classification: **NEW (card-panel shell)**
 Migrated from the OLD `Wbcom_Admin_Settings` wrapper to the card-panel shell in the 3.8.0
 cycle (commit `b4bcd2a`). Evidence:
-- `includes/admin/views/shell.php` present (NEW-pattern marker); `admin/wbcom/` removed.
+- `includes/admin/views/layout.php` present (NEW-pattern marker; never name a file `shell.php`: host WAFs block zips containing it); `admin/wbcom/` removed.
 - `includes/admin/class-bupr-admin-panel.php` (`BUPR_Admin_Panel`) owns menu, settings
   registration, asset enqueue (`assets/css/admin.css` + `assets/js/admin.js`), and page render.
 - Views: `includes/admin/views/{shell,hub,overview,settings-general,settings-criteria,settings-display,settings-pro-features}.php`;
@@ -37,33 +37,22 @@ cycle (commit `b4bcd2a`). Evidence:
 - **`bp-member-review-settings`** ("Member Reviews") — `add_submenu_page` of `wbcomplugins`,
   `manage_options`, `BUPR_Admin_Panel::render_page`
   (`includes/admin/class-bupr-admin-panel.php:155-162`). **PRIMARY settings page.**
-- Tabs (`BUPR_Admin_Panel::get_tabs`): Overview, General, Criteria, Display, Discover.
+- Tabs (`BUPR_Admin_Panel::get_tabs`): Overview, General, Criteria, Display, Add-ons (only with an add-on), Discover.
 
-### REMOVED: the `bupr-pro-features` ("Add-ons") tab - read before shipping Pro
-Removed 2026-07-17 (owner override of the 2026-07-17 "keep the mount" call: QA was right that an
-unreleased Pro means free users see an empty tab). **This tab carried Pro's mount point**, so
-restoring a surface for Pro needs BOTH halves back:
-1. The tab entry in `get_tabs()` + its `$view_map` entry in `render_page()`. Slug
-   `bupr-pro-features` is a **public contract** (`?tab=` URLs + the tab map Pro filters via
-   `bupr_admin_settings_tabs`) - restore it verbatim, do not rename.
-2. The deleted view + template that fired `do_action( 'bupr_admin_settings_pro_content' )`:
-   `includes/admin/views/settings-pro-features.php` + `admin/tab-templates/bupr-setting-pro-features-tab.php`.
-   Pro hooks that action **unconditionally** and renders **form contents only**, so the
-   do_action() must sit inside `wbcom-tab-content` > `wbcom-admin-title-section` >
-   `wbcom-admin-option-wrap` or Pro's fields render unstyled outside the card chrome.
-
-The full restore checklist lives as a comment at the removal site in `get_tabs()`; the hook entry
-in `audit/manifest.json` is flagged `REMOVED_2026-07-17_NOT_FIRED`. A stale
-`?tab=bupr-pro-features` URL now falls back to Overview (verified, no fatal). Nothing in free
-consumed the hook, and the `wbcom-*` wrapper CSS is shared with the 3 live settings tabs, so
-nothing was orphaned.
+### The `bupr-pro-features` ("Add-ons") tab - Pro's settings mount
+Registered in `get_tabs()` only when something hooks `bupr_admin_settings_pro_content` (the Pro
+addon does, from `BUPR_Pro_Admin`), so a free-only site never sees an empty tab and a stale
+`?tab=bupr-pro-features` URL falls back to Overview. The slug is a **public contract** (`?tab=`
+URLs, the Criteria tab's "switch to Star Ratings mode" link) - do not rename it. Pro renders
+**form contents only**; `admin/tab-templates/bupr-setting-pro-features-tab.php` supplies the
+`wbcom-tab-content` > `wbcom-admin-title-section` > `wbcom-admin-option-wrap` wrappers.
 
 ### Settings options read/written
 - `bupr_admin_general_options` (array, 19 subkeys) — `BUPR_Admin_Panel::OPTION_GENERAL`,
   registered `includes/admin/class-bupr-admin-panel.php:189-196`.
 - `bupr_admin_settings` (array — criteria) — `OPTION_CRITERIA`, registered `:197-204`.
 - `bupr_admin_display_options` (array — labels + star color) — `OPTION_DISPLAY`, registered `:205-212`.
-- Standalone: `bupr_plugin_version`, `bupr_current_batch`, `bupr_top_members_cache_ver`
+- Standalone: `bupr_plugin_version`, `bupr_current_batch`
   (cache salt for the top-members shortcode transient), `bupr_meta_repair_v1_done` +
   `bupr_meta_repair_paged` (one-time meta-drift repair gate + cursor),
   transients `_bupr_activation_redirect`

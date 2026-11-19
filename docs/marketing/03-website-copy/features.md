@@ -113,7 +113,7 @@ No surprise inappropriate content — you review before it's live.
 Keep members informed automatically.
 
 **What It Does:**
-Send emails when someone receives a review, when their review is approved, or when someone replies.
+Send an email when a review of a member is published, including when an admin approves a pending review, and email the admin when a new review is waiting for approval. Owner replies are announced with a BuddyPress notification, not an email.
 
 **The Benefit:**
 Members don't have to check constantly — they're notified and can respond quickly.

@@ -1,8 +1,7 @@
 # BuddyPress Member Reviews - Complete File Index
 
-**Plugin Version:** 3.7.0
-**Last Updated:** 2026-01-26
-**Total Files:** 82 files (excluding node_modules, vendor)
+**Plugin Version:** 3.8.3
+**Last Updated:** 2026-11-16
 
 ---
 
@@ -27,7 +26,7 @@
 
 | File | Purpose |
 |------|---------|
-| `bupr-admin.php` | Admin settings, CPT registration, menu pages |
+| `bupr-admin.php` | Review post type, admin list columns, approve and report actions |
 | `class-bupr-admin-feedback.php` | Plugin deactivation feedback modal |
 
 ### Tab Templates (`admin/tab-templates/`)
@@ -37,30 +36,34 @@
 | `bupr-setting-general-tab.php` | General settings (auto-approve, notifications, flagging) |
 | `bupr-setting-display-tab.php` | Display options (star colors, labels, positions) |
 | `bupr-setting-criteria-tab.php` | Rating criteria builder |
-| `bupr-setting-pro-features-tab.php` | Pro version feature preview |
+| `bupr-setting-pro-features-tab.php` | Add-ons tab wrapper (shown only when an add-on such as Pro is active) |
 
 ### Admin Assets
 
 | File | Purpose |
 |------|---------|
-| `assets/css/bupr-admin.css` | Admin panel styling |
-| `assets/css/min/bupr-admin.min.css` | Minified admin CSS |
-| `assets/css/rtl/bupr-admin.rtl.css` | RTL support |
-| `assets/js/bupr-admin.js` | Admin JavaScript (criteria builder, settings) |
-| `assets/js/bupr-color-picker.js` | Color picker integration |
-| `assets/js/min/bupr-admin.min.js` | Minified admin JS |
-| `assets/js/min/bupr-color-picker.min.js` | Minified color picker |
+| `admin/assets/css/bupr-admin.css` | Review list and edit screen styling |
+| `admin/assets/js/bupr-admin.js` | Review list actions and criteria rows |
+| `admin/assets/js/bupr-color-picker.js` | Color picker integration |
+| `admin/assets/*/min/` | Minified copies |
+| `assets/css/admin.css` | Settings panel styling (card panel) |
+| `assets/js/admin.js` | Settings panel JavaScript |
 
-### Wbcom Wrapper (`admin/wbcom/`)
+### Settings Panel (`includes/admin/`)
+
+The settings screen at WB Plugins > Member Reviews (3.8.0+). The legacy `admin/wbcom/` wrapper was removed in 3.8.0.
 
 | File | Purpose |
 |------|---------|
-| `wbcom-admin-settings.php` | Wbcom SDK integration |
-| `templates/wbcom-license-page.php` | License activation page |
-| `templates/wbcom-plugins-page.php` | Wbcom plugins showcase |
-| `templates/wbcom-support-page.php` | Support page template |
-| `assets/css/wbcom-admin-setting.css` | Wbcom admin styling |
-| `assets/js/wbcom-admin-setting.js` | Wbcom admin JavaScript |
+| `class-bupr-admin-panel.php` | Registers the menu page and its tabs, saves each tab |
+| `views/layout.php` | Page shell with the sidebar |
+| `views/hub.php` | WB Plugins hub page |
+| `views/overview.php` | Overview tab |
+| `views/settings-general.php` | General tab |
+| `views/settings-criteria.php` | Criteria tab |
+| `views/settings-display.php` | Display tab |
+| `views/settings-pro-features.php` | Add-ons tab |
+| `views/discover.php` | Discover tab |
 
 ---
 
@@ -76,7 +79,7 @@
 | `bupr-general-functions.php` | Helper functions (rating calculation, display) |
 | `bupr-notification.php` | Email and BP notification handlers |
 | `bupr-scripts.php` | Frontend asset enqueuing |
-| `bupr-shortcodes.php` | `[bupr_review]`, `[bupr_display_top_members]` shortcodes |
+| `bupr-shortcodes.php` | `[bupr_display_top_members]` shortcode |
 
 ### Templates (`includes/templates/`)
 
@@ -85,6 +88,7 @@
 | `bupr-reviews-tab-template.php` | Review list display on profile |
 | `bupr-single-review-template.php` | Individual review card layout |
 | `bupr-edit-review-form.php` | Edit review modal form |
+| `bupr-owner-reply.php` | Profile owner reply box and reply |
 
 ### Widgets (`includes/widgets/`)
 
@@ -101,12 +105,9 @@
 
 | File | Purpose |
 |------|---------|
-| `css/bupr-front.css` | Main frontend styling |
-| `css/bupr-reviews.css` | Review display styling |
+| `css/bupr-front.css` | Frontend styling (review styles merged in 3.8.0) |
 | `css/min/bupr-front.min.css` | Minified frontend CSS |
-| `css/min/bupr-reviews.min.css` | Minified reviews CSS |
 | `css/rtl/bupr-front.rtl.css` | RTL frontend support |
-| `css/rtl/bupr-reviews.rtl.css` | RTL reviews support |
 | `css/fontawesome/all.min.css` | FontAwesome icons |
 
 ### JavaScript
@@ -122,48 +123,21 @@
 
 | File | Purpose |
 |------|---------|
-| `bp-member-reviews-de_DE.l10n.php` | German translation |
-| `bp-member-reviews-fr_FR.l10n.php` | French translation |
+| `bp-member-reviews-*.po` / `.mo` / `.l10n.php` | Translations (de_DE, es_ES, fr_FR, it_IT, pt_BR) and the `.pot` template |
 
 ---
 
 ## Documentation (`docs/`)
 
-### User Guides
-
-| File | Purpose |
+| Path | Purpose |
 |------|---------|
 | `README.md` | Documentation index |
-| `FILE_INDEX.md` | This file - complete file listing |
-| `user-guide/getting-started.md` | Installation and setup guide |
-| `user-guide/pro-features.md` | Pro addon feature documentation |
-| `user-guide/faq.md` | Frequently asked questions |
-
-### Admin Guides
-
-| File | Purpose |
-|------|---------|
-| `admin-guide/settings.md` | Settings reference |
-| `admin-guide/managing-reviews.md` | Review moderation guide |
-| `admin-guide/shortcodes.md` | Shortcode usage |
-| `admin-guide/widgets.md` | Widget configuration |
-
-### Developer Guides
-
-| File | Purpose |
-|------|---------|
-| `developer-guide/hooks.md` | Actions and filters reference |
-| `developer-guide/templates.md` | Template override guide |
-| `developer-guide/database.md` | Meta field reference |
-| `developer-guide/rest-api.md` | REST API documentation (Pro) |
-
-### Architecture
-
-| File | Purpose |
-|------|---------|
-| `architecture/PLUGIN_ARCHITECTURE.md` | Complete technical reference |
-| `architecture/FINAL_REPORT.md` | Documentation completeness report |
+| `FILE_INDEX.md` | This file |
+| `website/` | Customer documentation (getting started, how-to, features, shortcodes, FAQ, troubleshooting, developer guide), ordered by `website/docs_config.json` |
+| `architecture/PLUGIN_ARCHITECTURE.md` | Technical reference |
 | `architecture/manifest/*.txt` | Component indexes (classes, hooks, etc.) |
+| `marketing/` | Marketing copy |
+| `qa/` | QA notes |
 
 ---
 

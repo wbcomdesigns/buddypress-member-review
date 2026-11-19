@@ -45,7 +45,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			if ( ! in_array( 'review', $bupr_post_types, true ) ) {
 				add_action( 'init', array( $this, 'bupr_review_cpt' ) );
 				add_action( 'init', array( $this, 'bupr_review_taxonomy_cpt' ) );
-				add_action( 'add_meta_boxes', array( $this, 'bupr_review_add_meta_box_ratings' ) );
+				add_action( 'add_meta_boxes', array( $this, 'bupr_review_add_meta_box_ratings' ), 10, 2 );
 			}
 
 			// Flagged reviews admin columns and filters.
@@ -53,7 +53,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			add_action( 'manage_review_posts_custom_column', array( $this, 'bupr_flag_column_content' ), 10, 2 );
 			add_filter( 'views_edit-review', array( $this, 'bupr_add_flagged_filter_link' ) );
 			add_action( 'pre_get_posts', array( $this, 'bupr_filter_flagged_reviews' ) );
-			add_action( 'add_meta_boxes', array( $this, 'bupr_add_flag_meta_box' ) );
+			add_action( 'add_meta_boxes', array( $this, 'bupr_add_flag_meta_box' ), 10, 2 );
 
 			// Bulk action for flagged reviews.
 			add_filter( 'bulk_actions-edit-review', array( $this, 'bupr_add_flag_bulk_actions' ) );
@@ -70,7 +70,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 *
 		 *  @since 3.3.2
 		 */
-		public function bupr_review_add_meta_box_ratings() {
+		public function bupr_review_add_meta_box_ratings( $post_type = '', $post = null ) {
+			if ( ! bupr_is_member_review( $post ) ) {
+				return;
+			}
 			add_meta_box(
 				'custom_meta_box_ratings',
 				__( 'Member Ratings', 'bp-member-reviews' ),
@@ -95,7 +98,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 			$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', true );
 
-			wp_enqueue_style( 'bupr-font-awesome-2', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), BUPR_PLUGIN_VERSION, 'all' );
+			bupr_enqueue_star_font();
 
 			if ( ! empty( $member_review_ratings ) && is_array( $member_review_ratings ) ) {
 
@@ -241,15 +244,23 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 * @since 3.8.1
 		 */
 		public function bupr_redirect_review_single() {
-			global $wp_query;
-			if ( ! is_singular( 'review' ) ) {
+			global $wp_query, $wp;
+			$review_id = 0;
+			if ( is_singular( 'review' ) ) {
+				$review_id = get_queried_object_id();
+			} elseif ( is_404() && preg_match( '#^review/([^/]+)/?$#', (string) $wp->request, $matches ) ) {
+				// Sites activated before the review rule was saved have no /review/ rewrite
+				// rule, so the old link 404s before it is seen as a review. Find it by slug.
+				$review    = get_page_by_path( $matches[1], OBJECT, 'review' );
+				$review_id = $review ? $review->ID : 0;
+			}
+			if ( ! $review_id ) {
 				if ( in_array( 'review', (array) get_query_var( 'post_type' ), true ) && ! is_admin() ) {
 					$wp_query->set_404();
 					status_header( 404 );
 				}
 				return;
 			}
-			$review_id = get_queried_object_id();
 			$member_id = (int) get_post_meta( $review_id, 'linked_bp_member', true );
 			if ( ! $member_id ) {
 				return;
@@ -388,10 +399,8 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						return;
 					}
 
-					$bupr_admin_general = get_option( 'bupr_admin_general_options' );
 					$site_name          = get_bloginfo( 'name' );
-					$site_admins        = get_users( array( 'role' => 'administrator' ) );
-					$anonymous_review   = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
+					$anonymous_review   = bupr_is_anonymous_review( $post->ID );
 					$bupr_sender_data   = get_userdata( $post->post_author );
 					$bupr_reciever_data = get_userdata( $bupr_member_id );
 
@@ -400,11 +409,9 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 						return;
 					}
 
-					$bupr_sender_email   = $bupr_sender_data->data->user_email;
 					$bupr_reciever_email = $bupr_reciever_data->data->user_email;
-					$bupr_reciever_name  = $bupr_reciever_data->data->user_nicename;
-					$bupr_reciever_login = $bupr_reciever_data->data->user_login;
-					if ( isset( $anonymous_review ) && 'yes' === $anonymous_review ) {
+					$bupr_reciever_name  = $bupr_reciever_data->display_name; // Same name the submit email uses.
+					if ( $anonymous_review ) {
 						$user_name = __( 'An anonymous user', 'bp-member-reviews' );
 					} else {
 						$user_name = $bupr_sender_data->display_name;
@@ -419,31 +426,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 					$bupr_review_url = bupr_member_url( $bupr_member_id ) . sanitize_title( $bupr['review_label_plural'] ) . '/view/' . $post->ID;
 					$bupr_to = $bupr_reciever_email;
 					// Define a default value for $bupr_subject with translation support.
-					$bupr_subject = __( 'New Review on Your Profile at [site-name]', 'bp-member-reviews' );
+					$bupr_subject = bupr_email_setting( 'review_email_subject' );
 					$review_link  = '<a href="' . $bupr_review_url . '">' . $review_subject . '</a>';
 					// Check if a custom subject line is set in the settings and update $bupr_subject accordingly.
-					if ( isset( $bupr_admin_general['review_email_subject'] ) && ! empty( $bupr_admin_general['review_email_subject'] ) ) {
-						$bupr_subject = $bupr_admin_general['review_email_subject'];
-					}
-
 					// Replace '[site-name]' placeholder in the subject with the actual site name.
 					$bupr_subject = str_replace( '[site-name]', $site_name, $bupr_subject );
 
-					/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
-					$message = __( 'Hello [user-name], <br><br>We are pleased to inform you that [reviewer-name] has recently reviewed your profile.<br><br>To view the review, simply click on the link below:<br>[review-link]<br><br>Best regards,<br>The [site-name] Team', 'bp-member-reviews' );
-					if ( isset( $bupr_admin_general['review_email_message'] ) && ! empty( $bupr_admin_general['review_email_message'] ) ) {
-						$bupr_message = str_replace(
-							array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
-							array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
-							$bupr_admin_general['review_email_message']
-						);
-					} else {
-						$bupr_message = str_replace(
-							array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
-							array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
-							$message
-						);
-					}
+					$bupr_message = str_replace(
+						array( '[user-name]', '[reviewer-name]', '[review-link]', '[site-name]' ),
+						array( $bupr_reciever_name, $user_name, $review_link, $site_name ),
+						bupr_email_setting( 'review_email_message' )
+					);
 					$bupr_header = array( 'Content-Type: text/html; charset=UTF-8' );
 					wp_mail( $bupr_to, $bupr_subject, wpautop( $bupr_message ), $bupr_header );
 				}
@@ -463,8 +456,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 			$sanitized = array();
 			foreach ( $options as $key => $value ) {
-				$key = sanitize_key( $key );
-				if ( is_array( $value ) ) {
+				// The keys of profile_rating_fields are the criterion names themselves (they are matched against every
+				// review's stored ratings), so they are cleaned as text, never turned into slugs.
+				$is_criteria = 'profile_rating_fields' === $key;
+				$key         = sanitize_key( $key );
+				if ( $is_criteria && is_array( $value ) ) {
+					$labels = array();
+					foreach ( $value as $label => $enabled ) {
+						$labels[ sanitize_text_field( (string) $label ) ] = sanitize_text_field( (string) $enabled );
+					}
+					$sanitized[ $key ] = $labels;
+				} elseif ( is_array( $value ) ) {
 					$sanitized[ $key ] = $this->bupr_sanitize_options( $value );
 				} elseif ( is_bool( $value ) ) {
 					$sanitized[ $key ] = (bool) $value;
@@ -530,7 +532,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				$status_label .= sprintf(
 					' <span class="bupr-status-auto-hidden" title="%s">%s</span>',
 					/* translators: %s: date and time the review was hidden. */
-					esc_attr( $hidden_at ? sprintf( __( 'Hidden on %s', 'bp-member-reviews' ), date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $hidden_at ) ) : '' ),
+					esc_attr( $hidden_at ? sprintf( __( 'Hidden on %s', 'bp-member-reviews' ), bupr_date_label( $hidden_at, get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) ) : '' ),
 					esc_html__( 'Auto-hidden', 'bp-member-reviews' )
 				);
 			}
@@ -615,35 +617,37 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 				return;
 			}
 
+			$clauses = array();
+
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Query filter based on URL param, no state change.
 			if ( isset( $_GET['bupr_flagged'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bupr_flagged'] ) ) ) {
-				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary for flagged filter functionality.
-				$query->set(
-					'meta_query',
-					array(
-						array(
-							'key'     => 'bupr_flag_status',
-							'value'   => 'flagged',
-							'compare' => '=',
-						),
-					)
+				$clauses[] = array(
+					'key'     => 'bupr_flag_status',
+					'value'   => 'flagged',
+					'compare' => '=',
 				);
 			}
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Query filter based on URL param, no state change.
 			if ( isset( $_GET['bupr_auto_hidden'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bupr_auto_hidden'] ) ) ) {
 				$query->set( 'post_status', 'draft' );
-				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary for auto-hidden filter functionality.
-				$query->set(
-					'meta_query',
-					array(
-						array(
-							'key'     => 'bupr_auto_hidden',
-							'compare' => 'EXISTS',
-						),
-					)
+				$clauses[] = array(
+					'key'     => 'bupr_auto_hidden',
+					'compare' => 'EXISTS',
 				);
 			}
+
+			if ( ! $clauses ) {
+				return;
+			}
+
+			// Add to filters other code already set (Pro verified/flagged) instead of
+			// replacing them, and keep Group Reviews out: reports are a member review state.
+			$meta_query   = $query->get( 'meta_query' );
+			$meta_query   = $meta_query ? (array) $meta_query : array();
+			$meta_query[] = bupr_member_review_meta_clause();
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary for the reported and auto-hidden views.
+			$query->set( 'meta_query', array_merge( $meta_query, $clauses ) );
 		}
 
 		/**
@@ -651,7 +655,10 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 		 *
 		 * @since 3.8.0
 		 */
-		public function bupr_add_flag_meta_box() {
+		public function bupr_add_flag_meta_box( $post_type = '', $post = null ) {
+			if ( ! bupr_is_member_review( $post ) ) {
+				return;
+			}
 			add_meta_box(
 				'bupr_flag_details',
 				__( 'Report Details', 'bp-member-reviews' ),
@@ -701,7 +708,7 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 			foreach ( $flags as $flag ) {
 				$reporter      = get_userdata( $flag['reporter_id'] );
 				$reporter_name = $reporter ? $reporter->display_name : __( 'Unknown', 'bp-member-reviews' );
-				$date          = isset( $flag['date'] ) ? date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $flag['date'] ) : '';
+				$date          = isset( $flag['date'] ) ? bupr_date_label( (int) $flag['date'], get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : '';
 
 				echo '<li style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #ddd;">';
 				echo '<strong>' . esc_html( $flag['reason_label'] ) . '</strong><br>';

@@ -29,7 +29,8 @@
           "slug": "admin-screen-tour",
           "title": "Admin Screen Tour"
         }
-      ]
+      ],
+      "description": "Install the plugin and find your way around the settings."
     },
     {
       "title": "Features",
@@ -84,7 +85,8 @@
           "slug": "notifications-and-activity",
           "title": "Notifications and Activity"
         }
-      ]
+      ],
+      "description": "Star ratings, moderation, owner replies, notifications and activity."
     },
     {
       "title": "How-to Guides",
@@ -184,7 +186,8 @@
           "slug": "control-review-emails-and-notifications",
           "title": "Control Review Emails and Notifications"
         }
-      ]
+      ],
+      "description": "Step-by-step recipes for the most common setup tasks."
     },
     {
       "title": "Usage and Settings Reference",
@@ -221,7 +224,8 @@
           "slug": "settings-reference",
           "title": "Settings Reference"
         }
-      ]
+      ],
+      "description": "Every setting and how members write, edit and read reviews."
     },
     {
       "title": "Shortcodes and Widgets",
@@ -249,7 +253,8 @@
           "slug": "widgets",
           "title": "Widgets"
         }
-      ]
+      ],
+      "description": "Show top-rated members and a member's ratings anywhere on the site."
     },
     {
       "title": "Developer Guide",
@@ -286,7 +291,8 @@
           "slug": "data-model",
           "title": "Data Model"
         }
-      ]
+      ],
+      "description": "Hooks, filters, templates and the data model."
     },
     {
       "title": "FAQ",
@@ -305,7 +311,8 @@
           "slug": "faqs",
           "title": "Frequently Asked Questions"
         }
-      ]
+      ],
+      "description": "Short answers to common questions."
     },
     {
       "title": "Troubleshooting",
@@ -324,7 +331,8 @@
           "slug": "troubleshooting",
           "title": "Troubleshooting"
         }
-      ]
+      ],
+      "description": "Fixes for the problems site owners report most."
     }
   ]
 }

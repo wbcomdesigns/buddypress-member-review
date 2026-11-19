@@ -1,36 +1,83 @@
 /**
- * buprFrontToast — lightweight, accessible toast for the review front end.
+ * buprDialog - keyboard and focus behaviour shared by the review front-end dialogs
+ * (edit review, report review). The dialog keeps its own show/hide code; this adds
+ * what a modal needs: focus moves in, Tab stays inside, Escape closes, and focus
+ * returns to the control that opened it.
  *
- * Replaces the three native alert() calls (skill Part 6 rules 10 + 12: no
- * browser alert()/confirm()). Self-contained so it works in every BuddyPress
- * theme without a dependency. Tones: 'info' | 'success' | 'error'.
+ *   buprDialog.open( $dialog, $opener, closeFn )   after showing it
+ *   buprDialog.release()                           from closeFn, after hiding it
  */
-window.buprFrontToast = function (message, tone) {
-  tone = tone || "info";
-  var host = document.querySelector(".bupr-front-toast-host");
-  if (!host) {
-    host = document.createElement("div");
-    host.className = "bupr-front-toast-host";
-    document.body.appendChild(host);
+window.buprDialog = (function ($) {
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled])';
+  var $active = null;
+  var $opener = null;
+  var closeFn = null;
+
+  function items() {
+    return $active.find(FOCUSABLE).filter(":visible");
   }
-  var el = document.createElement("div");
-  el.className = "bupr-front-toast bupr-front-toast--" + tone;
-  el.setAttribute("role", "status");
-  el.setAttribute("aria-live", "polite");
-  el.textContent = String(message);
-  host.appendChild(el);
-  window.requestAnimationFrame(function () {
-    el.classList.add("bupr-front-toast--visible");
-  });
-  window.setTimeout(function () {
-    el.classList.remove("bupr-front-toast--visible");
-    window.setTimeout(function () {
-      if (el.parentNode) {
-        el.parentNode.removeChild(el);
+
+  $(document).on("keydown", function (e) {
+    if (!$active) {
+      return;
+    }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      if (closeFn) {
+        closeFn();
       }
-    }, 250);
-  }, 3600);
-};
+      return;
+    }
+    if (e.key !== "Tab") {
+      return;
+    }
+    var $list = items();
+    if (!$list.length) {
+      return;
+    }
+    var first = $list[0];
+    var last = $list[$list.length - 1];
+    var outside = !$active[0].contains(document.activeElement);
+    if (e.shiftKey && (document.activeElement === first || outside)) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && (document.activeElement === last || outside)) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+
+  return {
+    open: function ($dialog, $trigger, onClose) {
+      $active = $dialog;
+      $opener = $trigger;
+      closeFn = onClose;
+      $dialog.attr({ role: "dialog", "aria-modal": "true" });
+      var $first = items().not("[class*='close']").first();
+      ($first.length ? $first : items().first()).trigger("focus");
+    },
+    release: function () {
+      if ($opener && $opener.length && document.body.contains($opener[0])) {
+        $opener.trigger("focus");
+      }
+      $active = null;
+      $opener = null;
+      closeFn = null;
+    },
+  };
+})(jQuery);
+
+/**
+ * Show an error inside the owner reply form as a BuddyPress notice (.bp-feedback), so it takes the theme's colours
+ * and dark mode. Replaces the plugin's own toast; no browser alert() either.
+ */
+function buprReplyError($wrapper, message) {
+  $wrapper.find(".bupr-reply-error").remove();
+  jQuery('<div class="bupr-reply-error bp-feedback bp-messages error" role="alert"></div>')
+    .append('<span class="bp-icon" aria-hidden="true"></span>')
+    .append(jQuery("<p></p>").text(String(message)))
+    .insertBefore($wrapper.find(".bupr-reply-actions"));
+}
 
 jQuery(document).ready(function () {
   jQuery(".add_review_msg").hide();
@@ -46,65 +93,36 @@ jQuery(document).ready(function () {
     mail_title.search_placeholder || "Enter Keywords...."
   );
 
-  /*----------------------------------------
-   * Select star on mouse enter
-   *-----------------------------------------*/
-  var reviews_pluginurl = jQuery("#reviews_pluginurl").val();
+  /**
+   * Fill stars up to `upto` in the star group that holds $star.
+   * The group's first two children are hidden inputs: click state, chosen value.
+   */
+  function buprPaintStars($star, upto) {
+    $star.parent().children("[data-attr]").each(function () {
+      var on = parseInt(jQuery(this).attr("data-attr"), 10) <= upto;
+      jQuery(this).toggleClass("fas", on).toggleClass("far", !on);
+    });
+  }
 
-  jQuery(".member_stars").mouseenter(function () {
-    jQuery(this).parent().children().eq(0).val("not_clicked");
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    for (i = 1; i <= id; i++) {
-      jQuery("#" + parent_id)
-        .children("." + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-  });
-
-  /*----------------------------------------
-   * Remove Color on stars
-   *-----------------------------------------*/
-  jQuery(".member_stars").mouseleave(function () {
-    var clicked_id = jQuery(this).parent().children().eq(1).val();
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    if (jQuery(this).parent().children().eq(0).val() !== "clicked") {
-      var j = parseInt(clicked_id) + 1;
-      for (i = j; i <= 5; i++) {
-        jQuery("#" + parent_id)
-          .children("." + i)
-          .addClass("far")
-          .removeClass("fas");
+  // One set of handlers for the review form and the edit popup (loaded later).
+  var buprStars = ".member_stars, .member-edit-stars";
+  jQuery(document)
+    .on("mouseenter", buprStars, function () {
+      jQuery(this).parent().children().eq(0).val("not_clicked");
+      buprPaintStars(jQuery(this), parseInt(jQuery(this).attr("data-attr"), 10));
+    })
+    .on("mouseleave", buprStars, function () {
+      var $inputs = jQuery(this).parent().children();
+      if ($inputs.eq(0).val() !== "clicked") {
+        buprPaintStars(jQuery(this), parseInt($inputs.eq(1).val(), 10) || 0);
       }
-    }
-  });
-
-  /*----------------------------------------
-   * Color the stars on click
-   *-----------------------------------------*/
-  jQuery(".member_stars").on("click", function () {
-    var attr = jQuery(this).attr("data-attr");
-    var clicked_id = attr;
-    var parent_id = jQuery(this).parent().attr("id");
-    jQuery(this).parent().children().eq(1).val(attr);
-    jQuery(this).parent().children().eq(0).val("clicked");
-    for (i = 1; i <= attr; i++) {
-      jQuery("#" + parent_id)
-        .children("." + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-
-    var k = parseInt(attr) + 1;
-    for (j = k; j <= 5; j++) {
-      jQuery("#" + parent_id)
-        .children("." + j)
-        .addClass("far")
-        .removeClass("fas");
-    }
-  });
+    })
+    .on("click", buprStars, function () {
+      var attr = jQuery(this).attr("data-attr");
+      jQuery(this).parent().children().eq(1).val(attr);
+      jQuery(this).parent().children().eq(0).val("clicked");
+      buprPaintStars(jQuery(this), parseInt(attr, 10));
+    });
 
   jQuery("#bupr_member_review_id").on("change", function () {
     jQuery( '.bupr-review-error-fields' ).hide(); 
@@ -247,6 +265,20 @@ jQuery(document).ready(function () {
   /*----------------------------------------
    * Edit Review Pop form
    *-----------------------------------------*/
+  // Hides the edit modal (close button, overlay click, Escape) and hands focus back.
+  function closeReviewModal() {
+    var modal = document.querySelector(".bupr-review-modal");
+    if (modal) {
+      modal.classList.remove("bupr-show-modal");
+    }
+    // Remove "bupr-show-modal" class from 'youzify-content' when the modal closes.
+    var youzifyContent = document.querySelector(".youzify-content");
+    if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
+      youzifyContent.classList.remove("bupr-youzify-show-modal");
+    }
+    buprDialog.release();
+  }
+
   jQuery(document).on("click", "#bupr-review-edit-btn", function (event) {
     event.preventDefault();
     var reviewwrapper = document.getElementById("bupr-edit-review");
@@ -269,6 +301,7 @@ jQuery(document).ready(function () {
             let review = response.data.review;
             jQuery("#bupr-edit-review").append(review);
             modal.classList.add("bupr-show-modal");
+            buprDialog.open(jQuery(modal), button, closeReviewModal);
 
             // Add "bupr-show-modal" class to 'youzify-content' if not already present
             var youzifyContent = document.querySelector(".youzify-content");
@@ -286,86 +319,20 @@ jQuery(document).ready(function () {
     ".bupr-review-modal-close-button",
     function (event) {
       event.preventDefault();
-      var modal = document.querySelector(".bupr-review-modal");
-      modal.classList.remove("bupr-show-modal");
-
-      // Remove "bupr-show-modal" class from 'youzify-content' when modal is closed
-      var youzifyContent = document.querySelector(".youzify-content");
-      if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
-        youzifyContent.classList.remove("bupr-youzify-show-modal");
-      }
+      closeReviewModal();
     }
   );
 
-  jQuery(window).click(function (e) {
-    var modal = document.querySelector(".bupr-review-modal");
-    if (e.target === modal) {
-      modal.classList.remove("bupr-show-modal");
-
-      // Remove "bupr-show-modal" class from 'youzify-content' when clicking outside of the modal
-      var youzifyContent = document.querySelector(".youzify-content");
-      if (youzifyContent && youzifyContent.classList.contains("bupr-youzify-show-modal")) {
-        youzifyContent.classList.remove("bupr-youzify-show-modal");
-      }
-    }
-  });
-
-  /*----------------------------------------
-   * Play with starts on review edit popup form
-   *-----------------------------------------*/
-  jQuery(document).on("mouseenter", ".member-edit-stars", function () {
-    jQuery(this).parent().children().eq(0).val("not_clicked");
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    for (i = 1; i <= id; i++) {
-      jQuery("#" + parent_id)
-        .children("." + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-  });
-
-  jQuery(document).on("mouseleave", ".member-edit-stars", function () {
-    var clicked_id = jQuery(this).parent().children().eq(1).val();
-    var id = jQuery(this).attr("data-attr");
-    var parent_id = jQuery(this).parent().attr("id");
-    if (jQuery(this).parent().children().eq(0).val() !== "clicked") {
-      var j = parseInt(clicked_id) + 1;
-      for (i = j; i <= 5; i++) {
-        jQuery("#" + parent_id)
-          .children("." + i)
-          .addClass("far")
-          .removeClass("fas");
-      }
-    }
-  });
-
-  jQuery(document).on("click", ".member-edit-stars", function () {
-    var attr = jQuery(this).attr("data-attr");
-    var clicked_id = attr;
-    var parent_id = jQuery(this).parent().attr("id");
-    jQuery(this).parent().children().eq(1).val(attr);
-    jQuery(this).parent().children().eq(0).val("clicked");
-    for (i = 1; i <= attr; i++) {
-      jQuery("#" + parent_id)
-        .children("." + i)
-        .addClass("fas")
-        .removeClass("far");
-    }
-
-    var k = parseInt(attr) + 1;
-    for (j = k; j <= 5; j++) {
-      jQuery("#" + parent_id)
-        .children("." + j)
-        .addClass("far")
-        .removeClass("fas");
+  jQuery(window).on("click", function (e) {
+    if (e.target === document.querySelector(".bupr-review-modal")) {
+      closeReviewModal();
     }
   });
 
   /*----------------------------------------
    * Update review
    *-----------------------------------------*/
-  jQuery(document).on("click", "#bupr_upodate_review", function (event) {
+  jQuery(document).on("click", "#bupr_update_review", function (event) {
     event.preventDefault();
     var modal = document.querySelector(".bupr-review-modal");
     var review_id = jQuery("#bupr-edit-review-field-wrapper").data("review");
@@ -407,16 +374,9 @@ jQuery(document).ready(function () {
     function reset_review_form_data(){
       jQuery("#bupr_review_form_public")[0].reset();
       jQuery("#bupr_review_form_public .member_rated_stars").val(0);
-      jQuery(".member_stars").each(function (index) {
+      jQuery("#bupr_review_form_public .member_stars").each(function () {
         jQuery(this).parent().children().eq(0).val("not_clicked");
-        var id = jQuery(this).attr("data-attr");
-        var parent_id = jQuery(this).parent().attr("id");
-        for (i = 1; i <= id; i++) {
-          jQuery("#" + parent_id)
-            .children("." + i)
-            .removeClass("fas")
-            .addClass("far");
-        }
+        buprPaintStars(jQuery(this), 0);
       });
     }
 
@@ -454,13 +414,11 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
   var replyContent = wrapper.find(".bupr-reply-textarea").val().trim();
 
   if (!replyContent) {
-    window.buprFrontToast(
-      mail_title.reply_empty || "Please enter a reply.",
-      "error"
-    );
+    buprReplyError(wrapper, mail_title.reply_empty || "Please enter a reply.");
     return;
   }
 
+  wrapper.find(".bupr-reply-error").remove();
   button.prop("disabled", true);
   wrapper.find(".bupr-reply-spinner").show();
 
@@ -481,20 +439,20 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
         wrapper.remove();
         replySection.html(response.data.reply_html);
       } else {
-        window.buprFrontToast(
+        buprReplyError(
+          wrapper,
           (response.data && response.data.message) ||
             mail_title.reply_failed ||
-            "Failed to add reply.",
-          "error"
+            "Failed to add reply."
         );
       }
     }
   ).fail(function () {
     button.prop("disabled", false);
     wrapper.find(".bupr-reply-spinner").hide();
-    window.buprFrontToast(
-      mail_title.generic_error || "An error occurred. Please try again.",
-      "error"
+    buprReplyError(
+      wrapper,
+      mail_title.generic_error || "An error occurred. Please try again."
     );
   });
 });
@@ -507,11 +465,19 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
 jQuery(document).on("click", ".bupr-report-button, .bupr-flag-button", function (e) {
   e.preventDefault();
   var reviewId = jQuery(this).data("review");
+  var reportTrigger = jQuery(this);
   jQuery("#bupr-flag-review-id").val(reviewId);
   jQuery('input[name="bupr_flag_reason"]').prop("checked", false);
   jQuery(".bupr-flag-error").hide().text("");
-  jQuery(".bupr-flag-modal").fadeIn();
+  jQuery(".bupr-flag-modal").fadeIn(150, function () {
+    buprDialog.open(jQuery(this), reportTrigger, closeFlagModal);
+  });
 });
+
+function closeFlagModal() {
+  jQuery(".bupr-flag-modal").fadeOut(150);
+  buprDialog.release();
+}
 
 // Close flag modal
 jQuery(document).on(
@@ -519,14 +485,14 @@ jQuery(document).on(
   ".bupr-flag-modal-close, .bupr-flag-cancel",
   function (e) {
     e.preventDefault();
-    jQuery(".bupr-flag-modal").fadeOut();
+    closeFlagModal();
   }
 );
 
 // Close modal on outside click
 jQuery(document).on("click", ".bupr-flag-modal", function (e) {
   if (jQuery(e.target).hasClass("bupr-flag-modal")) {
-    jQuery(".bupr-flag-modal").fadeOut();
+    closeFlagModal();
   }
 });
 
@@ -559,7 +525,7 @@ jQuery(document).on("click", ".bupr-flag-submit", function (e) {
       jQuery(".bupr-flag-spinner").hide();
 
       if (response.success) {
-        jQuery(".bupr-flag-modal").fadeOut();
+        closeFlagModal();
         // Show inline success message instead of alert
         var $reportBtn = jQuery('.bupr-report-button[data-review="' + reviewId + '"], .bupr-flag-button[data-review="' + reviewId + '"]');
         var reportedLabel = jQuery('<div/>').text(mail_title.reported || "Reported").html();
@@ -680,3 +646,42 @@ jQuery(function ($) {
     $next.attr('tabindex', '0').focus();
   });
 });
+
+/**
+ * Header rating colour: match the member's name.
+ *
+ * Themes paint the name (BuddyPress's .user-nicename) to suit their cover,
+ * often white with a shadow over the image, while the text around it stays
+ * dark. The rating sits beside the name, so it copies the name's colour and
+ * shadow rather than inheriting a colour that can vanish on the cover.
+ * Re-applied when the theme switches light/dark without a reload.
+ */
+(function () {
+  function syncHeaderRating() {
+    // The member's display name: BuddyX prints it as .user-displayname and keeps
+    // .user-nicename for the @handle line; other themes use .user-nicename.
+    var name =
+      document.querySelector("#item-header .user-displayname") ||
+      document.querySelector("#item-header .user-nicename");
+    if (!name) {
+      return;
+    }
+    var style = window.getComputedStyle(name);
+    document
+      .querySelectorAll("#item-header .bupr-member-rating-text")
+      .forEach(function (el) {
+        el.style.color = style.color;
+        el.style.textShadow = style.textShadow;
+      });
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    syncHeaderRating();
+    var observer = new MutationObserver(function () {
+      // Let the theme's colour transition finish before reading the name.
+      window.setTimeout(syncHeaderRating, 400);
+    });
+    [document.documentElement, document.body].forEach(function (node) {
+      observer.observe(node, { attributes: true, attributeFilter: ["class", "data-bx-mode", "data-theme"] });
+    });
+  });
+})();

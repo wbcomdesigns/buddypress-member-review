@@ -200,7 +200,7 @@ No. Members can only review other members — the button doesn't appear on your 
 Data is preserved. Ratings hide in Testimonials mode but reappear if you switch back.
 
 **Do I need the free plugin to use Pro?**
-Yes. Pro is an addon that requires the free base plugin (v3.7.0+).
+Yes. Pro is an addon that requires the free base plugin (v3.8.3+).
 
 **Is there a trial?**
 No trial, but we offer a 14-day refund policy if Pro doesn't meet your needs.

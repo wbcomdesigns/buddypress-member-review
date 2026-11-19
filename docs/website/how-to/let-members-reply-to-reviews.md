@@ -30,5 +30,5 @@ Tell your members to:
 
 ## If it does not work
 
-- The reply button is missing: you must be logged in as the member who received the review, the review must be published, and you must not have replied already. Use the **Reviews** tab list. The button is not on a single review page.
+- The reply button is missing: you must be logged in as the member who received the review, the review must be published, and you must not have replied already. The button shows on the **Reviews** tab list and on the single review page.
 - See [Owner Replies](../features/owner-replies.md).

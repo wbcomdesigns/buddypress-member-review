@@ -25,7 +25,7 @@ $bupr_version = defined( 'BUPR_PLUGIN_VERSION' ) ? BUPR_PLUGIN_VERSION : '';
 		<div class="bupr-page-header__title">
 			<span class="dashicons dashicons-testimonial" aria-hidden="true"></span>
 			<div>
-				<h1><?php echo 'BuddyPress Member Reviews'; ?></h1>
+				<h1><?php echo esc_html( 'BuddyPress ' . BUPR_Admin_Panel::product_name() ); ?></h1>
 				<p class="bupr-page-header__subtitle"><?php esc_html_e( 'Let members review and rate each other on their BuddyPress profiles, with criteria, moderation, owner replies, and reporting.', 'bp-member-reviews' ); ?></p>
 			</div>
 		</div>
@@ -53,7 +53,7 @@ $bupr_version = defined( 'BUPR_PLUGIN_VERSION' ) ? BUPR_PLUGIN_VERSION : '';
 					<span class="dashicons dashicons-testimonial"></span>
 				</span>
 				<div class="bupr-settings-brand-text">
-					<p class="bupr-settings-brand-name"><?php esc_html_e( 'Member Reviews', 'bp-member-reviews' ); ?></p>
+					<p class="bupr-settings-brand-name"><?php echo esc_html( BUPR_Admin_Panel::product_name() ); ?></p>
 					<p class="bupr-settings-brand-sub"><?php esc_html_e( 'Plugin', 'bp-member-reviews' ); ?></p>
 				</div>
 			</div>

@@ -5,7 +5,7 @@ Find the problem you see, then read the likely cause and the fix. Settings are a
 ## The plugin turned itself off
 
 - **Cause:** BuddyPress or BuddyBoss is not active, or the BuddyPress **Members** component is switched off. The plugin shows a red notice and deactivates.
-- **Fix:** Activate BuddyPress (or BuddyBoss), turn on the Members component at **Settings > BuddyPress > Components**, then activate this plugin again. You need BuddyPress 6.0+ or BuddyBoss 1.8+.
+- **Fix:** Activate BuddyPress (or BuddyBoss), turn on the Members component at **Settings > BuddyPress > Components**, then activate this plugin again. You need BuddyPress 12.0+ or BuddyBoss 1.8+.
 
 ## I cannot find the settings
 
@@ -31,7 +31,7 @@ Work down this list.
 | You already reviewed this member and **Multiple Reviews** is off. | The form shows "You already posted a review for this member." Switch **Multiple Reviews** on to allow more. |
 | You are logged out. | You see "You must log in to add a review." Log in and you come back to the form. |
 
-If a member has more than one role, the header button checks only the first role of each member. The tab under **Reviews** accepts any role.
+If a member has more than one role, any of their roles counts, for both the header button and the tab under **Reviews**.
 
 ## A review is refused when I press Submit
 

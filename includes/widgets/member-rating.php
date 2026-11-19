@@ -65,16 +65,20 @@ class bupr_single_member_rating_widget extends WP_Widget {
 		}
 
 		$user_id = bp_displayed_user_id(); // Get the displayed user ID.
+		// `title` is the standard key; `bupr_title` is read for widgets saved before 3.8.3.
 		/* translators: %s: Review label; */
-		$bupr_title     = isset( $instance['bupr_title'] ) ? apply_filters( 'widget_title', $instance['bupr_title'] ) : sprintf( __( "%s's Ratings", 'bp-member-reviews' ), bp_get_displayed_user_fullname() );
+		$bupr_title     = apply_filters( 'widget_title', $instance['title'] ?? ( $instance['bupr_title'] ?? sprintf( __( "%s's Ratings", 'bp-member-reviews' ), bp_get_displayed_user_fullname() ) ), $instance, $this->id_base );
 		$rating_limit   = isset( $instance['rating_limit'] ) ? $instance['rating_limit'] : 5;
 		$rating_default = isset( $instance['rating_default'] ) ? $instance['rating_default'] : 'latest';
 
 		// Get the reviews for the displayed user.
 		$bupr_args = array(
-			'post_type'   => 'review',
-			'post_status' => 'publish',
-			'meta_query'  => array(
+			'post_type'      => 'review',
+			'post_status'    => 'publish',
+			// shortcut: newest 100 member ratings; Highest/Lowest sort within them (the rating is serialized meta, not SQL-sortable).
+			'posts_per_page' => 100,
+			'no_found_rows'  => true,
+			'meta_query'     => array(
 				array(
 					'key'     => 'linked_bp_member',
 					'value'   => $user_id,
@@ -83,7 +87,8 @@ class bupr_single_member_rating_widget extends WP_Widget {
 			),
 		);
 
-		$reviews            = get_posts( $bupr_args );
+		$bupr_args['meta_query'] = array_merge( array( 'relation' => 'AND' ), $bupr_args['meta_query'], bupr_mode_meta_query() ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+		$reviews                = get_posts( $bupr_args );
 		$final_review_arr   = array();
 		$final_review_obj   = array();
 		$bupr_reviews_count = count( $reviews );
@@ -105,8 +110,10 @@ class bupr_single_member_rating_widget extends WP_Widget {
 			}
 		}
 
-        echo $before_widget; // phpcs:ignore.
-        echo $before_title . esc_html( $bupr_title ) . $after_title; // phpcs:ignore.
+		echo $before_widget; // phpcs:ignore.
+		if ( '' !== (string) $bupr_title ) {
+			echo $before_title . esc_html( $bupr_title ) . $after_title; // phpcs:ignore.
+		}
 		// Sorting Logic for Reviews (highest, lowest, latest).
 		if ( ! empty( $final_review_arr ) ) {
 			if ( 'highest' === $rating_default ) {
@@ -114,6 +121,8 @@ class bupr_single_member_rating_widget extends WP_Widget {
 			} elseif ( 'lowest' === $rating_default ) {
 				asort( $final_review_arr );
 			}
+
+			cache_users( wp_list_pluck( $final_review_obj, 'post_author' ) );
 
 			// Display the sorted reviews.
 			echo '<ul class="item-list" id="bp-member-rating">';
@@ -124,13 +133,13 @@ class bupr_single_member_rating_widget extends WP_Widget {
 				} else {
 					$author_id             = $final_review_obj[ $bupr_key ]->post_author;
 					$members_profile       = bp_core_get_userlink( $author_id );
-					$user_anonymous_review = get_post_meta( $bupr_key, 'bupr_anonymous_review_post', true );
+					$user_anonymous_review = bupr_is_anonymous_review( $bupr_key );
 
 					echo '<li class="vcard"><div class="item-avatar">';
 					// An anonymous review gets the default avatar, never the reviewer's own.
-					echo get_avatar( 'yes' === $user_anonymous_review ? 0 : $author_id, 50 );
+					echo get_avatar( $user_anonymous_review ? 0 : $author_id, 50 );
 					echo '</div><div class="item"><div class="item-title">';
-					echo ( 'yes' !== $user_anonymous_review ) ? wp_kses_post( $members_profile ) : esc_html__( 'Anonymous', 'bp-member-reviews' );
+					echo ( ! $user_anonymous_review ) ? wp_kses_post( $members_profile ) : esc_html__( 'Anonymous', 'bp-member-reviews' );
 					echo '</div><div class="item-meta">';
 
 					/**
@@ -177,10 +186,10 @@ class bupr_single_member_rating_widget extends WP_Widget {
 			}
 			echo '</ul>';
 		} else {
-			echo '<p>' . esc_html__( 'The member has not received a rating yet.', 'bp-member-reviews' ) . '</p>';
+			echo '<p class="bupr-widget-empty">' . esc_html__( 'The member has not received a rating yet.', 'bp-member-reviews' ) . '</p>';
 		}
 
-        echo $after_widget; // phpcs:ignore.
+		echo $after_widget; // phpcs:ignore.
 	}
 
 	/**
@@ -192,9 +201,10 @@ class bupr_single_member_rating_widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance                   = $old_instance;
-		$instance['bupr_title']     = wp_strip_all_tags( $new_instance['bupr_title'] );
+		$instance['title']          = wp_strip_all_tags( $new_instance['title'] ?? '' );
 		$instance['rating_limit']   = $new_instance['rating_limit'];
 		$instance['rating_default'] = $new_instance['rating_default'];
+		unset( $instance['bupr_title'] ); // Legacy key, replaced by `title`.
 		return $instance;
 	}
 
@@ -206,18 +216,18 @@ class bupr_single_member_rating_widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$defaults       = array(
-			'bupr_title'     => esc_html__( 'Member Ratings', 'bp-member-reviews' ),
+			'title'          => $instance['bupr_title'] ?? esc_html__( 'Member Ratings', 'bp-member-reviews' ),
 			'rating_limit'   => 5,
 			'rating_default' => 'latest',
 		);
 		$instance       = wp_parse_args( (array) $instance, $defaults );
-		$title          = esc_attr( $instance['bupr_title'] );
+		$title          = esc_attr( $instance['title'] );
 		$rating_limit   = esc_attr( $instance['rating_limit'] );
 		$rating_default = esc_attr( $instance['rating_default'] );
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'bupr_title' ) ); ?>"><?php esc_html_e( 'Enter Title:', 'bp-member-reviews' ); ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'bupr_title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'bupr_title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Enter Title:', 'bp-member-reviews' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'rating_limit' ) ); ?>"><?php esc_html_e( 'Number of Ratings to Show:', 'bp-member-reviews' ); ?></label>

@@ -244,7 +244,7 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
         AND p.post_status = 'publish'
         AND pm.meta_key = 'linked_bp_member'
         AND pm.meta_value = %d
-        ",
+        " . bupr_mode_sql_exclusion( 'p' ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- A fixed fragment with no user input.
 			$user_id
 		)
 	);
@@ -637,17 +637,17 @@ add_action( 'untrashed_post', 'bupr_clear_review_caches' );
 /**
  * Flush the cached [bupr_display_top_members] shortcode results.
  *
- * The shortcode caches its CAST()-ordered usermeta query in transients keyed
- * by a version salt (see BUPR_Shortcodes::bupr_display_top_members_display()).
- * Bumping the salt invalidates every attribute variation in O(1); the stale
- * transients then expire naturally via their TTL.
+ * The shortcode and the widget cache their CAST()-ordered usermeta query in the
+ * object cache, keyed on wp_cache_get_last_changed( 'bupr_top_members' ). Moving
+ * that token invalidates every attribute variation in O(1).
  *
  * @since 3.8.0
  */
 function bupr_flush_top_members_cache() {
-	update_option( 'bupr_top_members_cache_ver', (string) microtime( true ), false );
+	wp_cache_set_last_changed( 'bupr_top_members' );
 }
 add_action( 'bupr_recalculation_completed', 'bupr_flush_top_members_cache' );
+add_action( 'deleted_user', 'bupr_flush_top_members_cache' );
 
 /**
  * Published reviews a member has received, from the cached aggregate (recalculated once if missing).
@@ -717,7 +717,7 @@ function bupr_roles_allow_review( $reviewer_id, $member_id ) {
 }
 
 /**
- * Number of reviews whose reports are still open (published or hidden).
+ * Number of member reviews whose reports are still open (published or hidden).
  *
  * @since 3.8.1
  * @return int
@@ -729,6 +729,7 @@ function bupr_get_flagged_reviews_count() {
 		$wpdb->prepare(
 			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
 			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			INNER JOIN {$wpdb->postmeta} mm ON p.ID = mm.post_id AND mm.meta_key = 'linked_bp_member' AND CAST(mm.meta_value AS UNSIGNED) > 0
 			WHERE p.post_type = %s AND p.post_status IN ('publish', 'draft')
 			AND pm.meta_key = 'bupr_flag_status' AND pm.meta_value = 'flagged'",
 			'review'
@@ -737,7 +738,7 @@ function bupr_get_flagged_reviews_count() {
 }
 
 /**
- * Number of reviews currently hidden because they reached the report threshold.
+ * Number of member reviews currently hidden because they reached the report threshold.
  *
  * @since 3.8.1
  * @return int
@@ -749,6 +750,7 @@ function bupr_get_auto_hidden_reviews_count() {
 		$wpdb->prepare(
 			"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
 			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+			INNER JOIN {$wpdb->postmeta} mm ON p.ID = mm.post_id AND mm.meta_key = 'linked_bp_member' AND CAST(mm.meta_value AS UNSIGNED) > 0
 			WHERE p.post_type = %s AND p.post_status = 'draft'
 			AND pm.meta_key = 'bupr_auto_hidden' AND pm.meta_value <> ''",
 			'review'
@@ -765,6 +767,89 @@ function bupr_get_auto_hidden_reviews_count() {
 function bupr_review_activity_type() {
 	return defined( 'YOUZIFY_VERSION' ) ? 'activity_status' : 'member_review';
 }
+
+/**
+ * Whether a post is a member review (Group Reviews shares the review post type).
+ *
+ * @since 3.8.3
+ * @param int|WP_Post $post Post or post ID.
+ * @return bool
+ */
+function bupr_is_member_review( $post ) {
+	$post = get_post( $post );
+	return $post && 'review' === $post->post_type && (int) get_post_meta( $post->ID, 'linked_bp_member', true ) > 0;
+}
+
+/**
+ * Meta query clause that keeps a review query to member reviews, the query
+ * form of bupr_is_member_review(). Append it to a meta_query, never replace one.
+ *
+ * @since 3.8.3
+ * @return array
+ */
+function bupr_member_review_meta_clause() {
+	return array(
+		'key'     => 'linked_bp_member',
+		'value'   => 0,
+		'compare' => '>',
+		'type'    => 'NUMERIC',
+	);
+}
+
+/**
+ * Whether a review was posted anonymously.
+ *
+ * @since 3.8.3
+ * @param int|string $review_id Review post ID.
+ * @return bool
+ */
+function bupr_is_anonymous_review( $review_id ) {
+	return 'yes' === get_post_meta( (int) $review_id, 'bupr_anonymous_review_post', true );
+}
+
+/**
+ * Whether an activity entry is the one recorded for a member review.
+ *
+ * Checks component, type and that item_id is a review of the member in
+ * secondary_item_id, so unrelated activity whose IDs happen to match a
+ * review never gets review stars or anonymous masking.
+ *
+ * @since 3.8.3
+ * @param object $activity Activity object.
+ * @return bool
+ */
+function bupr_is_review_activity( $activity ) {
+	if ( empty( $activity->item_id ) || empty( $activity->secondary_item_id ) || ! isset( $activity->component, $activity->type ) ) {
+		return false;
+	}
+	if ( buddypress()->members->id !== $activity->component || bupr_review_activity_type() !== $activity->type ) {
+		return false;
+	}
+	return bupr_is_member_review( (int) $activity->item_id )
+		&& (int) get_post_meta( (int) $activity->item_id, 'linked_bp_member', true ) === (int) $activity->secondary_item_id;
+}
+
+/**
+ * Register the member review activity type so it appears in the activity filter.
+ *
+ * Youzify records reviews as its own status type, which BuddyPress already registers.
+ *
+ * @since 3.8.3
+ */
+function bupr_register_activity_actions() {
+	if ( defined( 'YOUZIFY_VERSION' ) || ! function_exists( 'bp_activity_set_action' ) ) {
+		return;
+	}
+	bp_activity_set_action(
+		buddypress()->members->id,
+		'member_review',
+		__( 'Posted a member review', 'bp-member-reviews' ),
+		false,
+		bupr_profile_review_tab_name(),
+		array( 'activity', 'member' )
+	);
+}
+add_action( 'bp_register_activity_actions', 'bupr_register_activity_actions' );
 
 /**
  * ID of the activity entry recorded for a review, or 0 when there is none.
@@ -864,4 +949,440 @@ function bupr_default_review_view_slug() {
 
 	$default_slug = apply_filters( 'bupr_default_subnav_slug', 'view' );
 	return $default_slug;
+}
+
+
+/**
+ * Timezone every date the plugin shows is rendered in: the site timezone, filterable per member.
+ *
+ * @since 3.8.3
+ * @param int $user_id Optional member whose timezone applies. Default: the current user.
+ * @return DateTimeZone
+ */
+function bupr_display_timezone( $user_id = 0 ) {
+	$tz = apply_filters( 'bupr_display_timezone', wp_timezone(), $user_id ? (int) $user_id : get_current_user_id() );
+	return $tz instanceof DateTimeZone ? $tz : wp_timezone();
+}
+
+/**
+ * The one date formatter. Times are stored as UTC timestamps; this is the only place they are formatted.
+ *
+ * @since 3.8.3
+ * @param int    $timestamp UTC Unix timestamp.
+ * @param string $format    PHP date format. Default: the site date format.
+ * @return string
+ */
+function bupr_date_label( $timestamp, $format = '' ) {
+	$format = '' === $format ? get_option( 'date_format' ) : $format;
+	return (string) wp_date( $format, (int) $timestamp, bupr_display_timezone() );
+}
+
+/**
+ * Enqueue the star glyph font and the rules that use it.
+ *
+ * Stars are drawn from the bundled star glyph font files (subset of Font Awesome Free, SIL OFL 1.1) under their own family name ("BUPR Star"), so no
+ * icon stylesheet is loaded and another plugin or the theme registering "font-awesome" (Elementor ships 4.7)
+ * cannot change which font or weight the .fas / .far classes get. Inline, because the font URL must be absolute.
+ *
+ * @since 3.8.3
+ */
+function bupr_enqueue_star_font() {
+	$fonts = plugins_url( 'assets/fonts/', dirname( __DIR__ ) . '/buddypress-member-review.php' );
+	$css   = '@font-face{font-family:"BUPR Star";font-style:normal;font-weight:900;font-display:swap;src:url("' . esc_url( $fonts ) . 'bupr-star-solid.woff2") format("woff2"),url("' . esc_url( $fonts ) . 'bupr-star-solid.woff") format("woff")}'
+		. '@font-face{font-family:"BUPR Star";font-style:normal;font-weight:400;font-display:swap;src:url("' . esc_url( $fonts ) . 'bupr-star-regular.woff2") format("woff2"),url("' . esc_url( $fonts ) . 'bupr-star-regular.woff") format("woff")}'
+		. '.bupr-star-rate.bupr-star-rate,.bupr-star-rate.bupr-star-rate::before{font-family:"BUPR Star",sans-serif !important;font-style:normal;line-height:1}'
+		. '.bupr-star-rate.bupr-star-rate.fas{font-weight:900 !important}.bupr-star-rate.bupr-star-rate.far{font-weight:400 !important}'
+		. '.bupr-star-rate.fa-star::before{content:"\\f005"}.bupr-star-rate.fa-star-half-alt::before{content:"\\f5c0"}';
+	wp_register_style( 'bupr-stars', false, array(), '3.8.3' );
+	wp_enqueue_style( 'bupr-stars' );
+	wp_add_inline_style( 'bupr-stars', $css );
+}
+
+/**
+ * Convert a pre-3.8.3 stored stamp (site-local wall clock shifted into a Unix timestamp) to a real UTC timestamp.
+ *
+ * Before 3.8.3 the plugin stored current_time( 'timestamp' ), which is UTC plus the site offset. Reading it back
+ * as UTC (what bupr_date_label() does) would show the time shifted by that offset.
+ *
+ * @since 3.8.3
+ * @param int $stamp Local-shifted stamp.
+ * @return int UTC timestamp.
+ */
+function bupr_local_stamp_to_utc( $stamp ) {
+	$stamp = (int) $stamp;
+	if ( $stamp <= 0 ) {
+		return $stamp;
+	}
+	try {
+		return ( new DateTime( gmdate( 'Y-m-d H:i:s', $stamp ), wp_timezone() ) )->getTimestamp();
+	} catch ( Exception $e ) {
+		return $stamp;
+	}
+}
+
+/**
+ * One-time upgrade: store reply, report and auto-hide times as UTC.
+ *
+ * Starts from bupr_maybe_run_utc_migration(), which writes the new plugin version FIRST and passes the highest
+ * existing meta_id as $cap. Each run converts only rows with $after < meta_id <= $cap, ascending, 500 at a time,
+ * until its time budget is spent, then chains the next run with the last meta_id as an event argument. Rows written
+ * after the upgrade have a higher meta_id than $cap and are never touched.
+ *
+ * The temporary option bupr_utc_migration_state (autoload off, deleted when the chain finishes) holds
+ * array( last, cap, at ) so a lost cron event (a cron-clearing plugin, a host reset, a restore) is rescheduled from
+ * the last batch instead of leaving rows unconverted. A run that stopped for more than five minutes with no event
+ * queued counts as lost; a run in progress refreshes `at`, so admin_init never starts a second one beside it.
+ *
+ * ponytail: a fatal mid-batch can leave that one batch half converted; the state still holds the previous `last`, so
+ * the resume repeats it. Wrap the batch in a transaction if that ever matters.
+ *
+ * Known limit: a time already stored as UTC before the upgrade starts carries no marker in the same two meta keys,
+ * so it cannot be told apart from a local-shifted one and is shifted once more.
+ *
+ * @since 3.8.3
+ * @param int $after Last meta_id already converted.
+ * @param int $cap   Highest meta_id that existed when the upgrade started.
+ */
+function bupr_run_utc_migration( $after = 0, $cap = 0 ) {
+	global $wpdb;
+	$cursor = (int) $after;
+	$cap    = (int) $cap;
+
+	// No saved state means no upgrade is running (it finished, or this event is a late duplicate of one that did);
+	// a state that is further along means this event covers ground already done. Either way: do nothing.
+	$state = get_option( 'bupr_utc_migration_state' );
+	if ( ! is_array( $state ) || ! isset( $state['last'] ) || (int) $state['last'] > $cursor ) {
+		return;
+	}
+	// First thing, before any filter or query: a run that is alive must look fresh to admin_init, however long the
+	// state sat idle before WP-Cron picked the event up.
+	update_option(
+		'bupr_utc_migration_state',
+		array(
+			'last' => $cursor,
+			'cap'  => $cap,
+			'at'   => time(),
+		),
+		false
+	);
+	$deadline = time() + (int) apply_filters( 'bupr_utc_migration_budget', 15 );
+
+	do {
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time upgrade; meta_key is indexed and the walk is by meta_id.
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT meta_id, post_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE meta_key IN ('bupr_owner_reply_date','bupr_auto_hidden_date','bupr_flags') AND meta_id > %d AND meta_id <= %d ORDER BY meta_id ASC LIMIT 500",
+				$cursor,
+				$cap
+			)
+		);
+		foreach ( $rows as $row ) {
+			$cursor = (int) $row->meta_id;
+			if ( 'bupr_flags' === $row->meta_key ) {
+				$flags = maybe_unserialize( $row->meta_value );
+				if ( ! is_array( $flags ) ) {
+					continue;
+				}
+				foreach ( $flags as $i => $flag ) {
+					if ( is_array( $flag ) && ! empty( $flag['date'] ) ) {
+						$flags[ $i ]['date'] = bupr_local_stamp_to_utc( $flag['date'] );
+					}
+				}
+				$new = maybe_serialize( $flags );
+			} else {
+				$new = (string) bupr_local_stamp_to_utc( $row->meta_value );
+			}
+			// By meta_id: one UPDATE per row, however many rows share the key.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->update( $wpdb->postmeta, array( 'meta_value' => $new ), array( 'meta_id' => (int) $row->meta_id ) );
+			wp_cache_delete( (int) $row->post_id, 'post_meta' );
+		}
+		if ( count( $rows ) < 500 ) {
+			delete_option( 'bupr_utc_migration_state' );
+			return;
+		}
+		update_option(
+			'bupr_utc_migration_state',
+			array(
+				'last' => $cursor,
+				'cap'  => $cap,
+				'at'   => time(),
+			),
+			false
+		);
+	} while ( time() < $deadline );
+
+	// Out of time: the next run picks up after the last converted row, still capped.
+	wp_schedule_single_event( time(), 'bupr_utc_migration', array( $cursor, $cap ) );
+}
+add_action( 'bupr_utc_migration', 'bupr_run_utc_migration', 10, 2 );
+
+/**
+ * Start the upgrade above on a site that still holds pre-3.8.3 stamps.
+ *
+ * The version moves forward here, before any row is touched, so no later admin_init (or a second request racing
+ * this one) can start a second pass over the same rows.
+ *
+ * @since 3.8.3
+ */
+function bupr_maybe_run_utc_migration() {
+	global $wpdb;
+	if ( version_compare( (string) get_option( 'bupr_plugin_version', '0' ), '3.8.3', '>=' ) ) {
+		// A chain that lost its cron event: carry on from the last finished batch.
+		$state = get_option( 'bupr_utc_migration_state' );
+		if ( is_array( $state ) && isset( $state['last'], $state['cap'], $state['at'] ) && time() - (int) $state['at'] >= (int) apply_filters( 'bupr_utc_migration_stale', 300 ) ) {
+			foreach ( (array) _get_cron_array() as $events ) {
+				if ( isset( $events['bupr_utc_migration'] ) ) {
+					return;
+				}
+			}
+			wp_schedule_single_event( time(), 'bupr_utc_migration', array( (int) $state['last'], (int) $state['cap'] ) );
+		}
+		return;
+	}
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One read at upgrade time; meta_key is indexed.
+	$cap = (int) $wpdb->get_var( "SELECT MAX(meta_id) FROM {$wpdb->postmeta} WHERE meta_key IN ('bupr_owner_reply_date','bupr_auto_hidden_date','bupr_flags')" );
+	update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+	if ( $cap > 0 ) {
+		update_option(
+			'bupr_utc_migration_state',
+			array(
+				'last' => 0,
+				'cap'  => $cap,
+				'at'   => time(),
+			),
+			false
+		);
+		wp_schedule_single_event( time(), 'bupr_utc_migration', array( 0, $cap ) );
+	}
+}
+add_action( 'admin_init', 'bupr_maybe_run_utc_migration' );
+
+/**
+ * Default text of the four email fields on the General settings tab.
+ *
+ * The settings form, the review email, the approval email and the global settings all read their defaults from
+ * here, so what an owner sees in the form before saving is what is actually sent.
+ *
+ * @since 3.8.3
+ * @param string $key review_email_subject, review_email_message, review_approve_email_subject or review_approve_email_message.
+ * @return string
+ */
+function bupr_email_default( $key ) {
+	switch ( $key ) {
+		case 'review_email_subject':
+			/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
+			return __( 'You Have Received a New Review on [site-name]', 'bp-member-reviews' );
+		case 'review_email_message':
+			/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
+			return __(
+				'Hello [user-name],
+
+We hope this message finds you well.
+
+We are pleased to inform you that [reviewer-name] has recently submitted a review on your profile. To view the full review and respond, please click on the link below:
+
+[review-link]
+
+We appreciate your engagement in our community and value your contributions.
+
+Best regards,
+The [site-name] Team',
+				'bp-member-reviews'
+			);
+		case 'review_approve_email_subject':
+			/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
+			return __( 'A New Review Requires Your Approval on [site-name]', 'bp-member-reviews' );
+		case 'review_approve_email_message':
+			/* translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim. */
+			return __(
+				'Hello [site-admin],
+
+Greetings!
+
+You have received a new review on [site-name] that is pending approval. To review and approve the submission, please click on the link below:
+
+[review-aproval-link]
+
+Thank you for helping us maintain a vibrant and engaged community.
+
+Best regards,
+The [site-name] Team',
+				'bp-member-reviews'
+			);
+	}
+	return '';
+}
+
+/**
+ * An email field as the owner saved it, or its default when it is empty or never saved.
+ *
+ * @since 3.8.3
+ * @param string $key Same keys as bupr_email_default().
+ * @return string
+ */
+function bupr_email_setting( $key ) {
+	$saved = get_option( 'bupr_admin_general_options' );
+	return ( is_array( $saved ) && ! empty( $saved[ $key ] ) ) ? (string) $saved[ $key ] : bupr_email_default( $key );
+}
+
+/**
+ * Repair criterion names that were turned into slugs ("Member Response" became "memberresponse").
+ *
+ * Before 3.8.3 the settings sanitizer ran sanitize_key() on the criterion names when Member Reviews Pro synced its
+ * criteria to bupr_admin_settings. The real names are still in Pro's own list (bupr_pro_rating_criteria), so the
+ * slug keys are mapped back to them, in the settings and in the stored ratings of any review written meanwhile.
+ * Safe to repeat: it only touches a key that is exactly the slug of a known name, and it keeps no state of its own.
+ * The star-key pass is checked at most once a day (a transient), in batches of 200 reviews.
+ *
+ * @since 3.8.3
+ * @param array|string $map Optional slug => name map (cron continuation). Default: built from Pro's list.
+ */
+function bupr_repair_slug_criteria( $map = array() ) {
+	if ( ! $map ) {
+		$map = array(); // WordPress passes an empty string when admin_init has no arguments.
+		$pro = get_option( 'bupr_pro_rating_criteria' );
+		foreach ( is_array( $pro ) ? $pro : array() as $criterion ) {
+			$name = is_array( $criterion ) ? (string) ( $criterion['label'] ?? '' ) : '';
+			if ( '' !== $name && sanitize_key( $name ) !== $name ) {
+				$map[ sanitize_key( $name ) ] = $name;
+			}
+		}
+	}
+	if ( ! $map ) {
+		return;
+	}
+
+	// 1. The criteria list.
+	$settings = get_option( 'bupr_admin_settings' );
+	$fields   = is_array( $settings ) && isset( $settings['profile_rating_fields'] ) && is_array( $settings['profile_rating_fields'] ) ? $settings['profile_rating_fields'] : array();
+	$fixed    = array();
+	$changed  = false;
+	foreach ( $fields as $key => $enabled ) {
+		if ( isset( $map[ $key ] ) && ! isset( $fields[ $map[ $key ] ] ) ) {
+			$fixed[ $map[ $key ] ] = $enabled;
+			$changed               = true;
+		} else {
+			$fixed[ $key ] = $enabled;
+		}
+	}
+	if ( $changed ) {
+		$settings['profile_rating_fields'] = $fixed;
+		update_option( 'bupr_admin_settings', $settings );
+	}
+
+	// 2. Ratings stored under a slug key.
+	if ( ! $changed && false !== get_transient( 'bupr_star_keys_checked' ) ) {
+		return;
+	}
+	global $wpdb;
+	$deadline = time() + 10;
+	$cursor   = array_fill_keys( array_keys( $map ), 0 );
+	do {
+		$done = true;
+		foreach ( $map as $slug => $name ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Repair pass, at most daily; meta_key is indexed.
+			$rows = $wpdb->get_results( $wpdb->prepare( "SELECT meta_id, post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = 'profile_star_rating' AND meta_value LIKE %s AND meta_id > %d ORDER BY meta_id ASC LIMIT 200", '%"' . $wpdb->esc_like( $slug ) . '"%', $cursor[ $slug ] ) );
+			foreach ( $rows as $row ) {
+				$cursor[ $slug ] = (int) $row->meta_id;
+				$ratings         = maybe_unserialize( $row->meta_value );
+				// A review that somehow has both keys is left alone rather than losing a rating.
+				if ( ! is_array( $ratings ) || ! isset( $ratings[ $slug ] ) || isset( $ratings[ $name ] ) ) {
+					continue;
+				}
+				$rekeyed = array();
+				foreach ( $ratings as $k => $v ) {
+					$rekeyed[ $k === $slug ? $name : $k ] = $v;
+				}
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->update( $wpdb->postmeta, array( 'meta_value' => maybe_serialize( $rekeyed ) ), array( 'meta_id' => (int) $row->meta_id ) );
+				wp_cache_delete( (int) $row->post_id, 'post_meta' );
+			}
+			if ( 200 === count( $rows ) ) {
+				$done = false;
+			}
+		}
+	} while ( ! $done && time() < $deadline );
+
+	if ( ! $done ) {
+		wp_schedule_single_event( time() + MINUTE_IN_SECONDS, 'bupr_repair_slug_criteria', array( $map ) );
+		return;
+	}
+	set_transient( 'bupr_star_keys_checked', 1, DAY_IN_SECONDS );
+}
+add_action( 'admin_init', 'bupr_repair_slug_criteria' );
+add_action( 'bupr_repair_slug_criteria', 'bupr_repair_slug_criteria' );
+
+/**
+ * The active review mode: "ratings" unless an add-on (Member Reviews Pro) says otherwise.
+ *
+ * @since 3.8.3
+ * @return string ratings, testimonials or endorsements.
+ */
+function bupr_review_mode() {
+	return (string) apply_filters( 'bupr_review_mode', 'ratings' );
+}
+
+/**
+ * Meta query clauses that keep posts of another review mode out of a ratings list.
+ *
+ * Endorsement requests and given endorsements are review posts too (meta bupr_endorsement_type), and Pro marks
+ * testimonial and endorsement reviews with bupr_review_mode. After the site goes back to Star Ratings they must not
+ * appear as blank review cards or be counted. In Endorsements mode nothing is excluded.
+ *
+ * @since 3.8.3
+ * @return array Meta query clauses (empty when nothing is excluded).
+ */
+function bupr_mode_meta_query() {
+	$mode = bupr_review_mode();
+	if ( 'endorsements' === $mode ) {
+		return array();
+	}
+	$clauses = array(
+		array(
+			'key'     => 'bupr_endorsement_type',
+			'compare' => 'NOT EXISTS',
+		),
+	);
+	if ( 'ratings' === $mode ) {
+		$clauses[] = array(
+			'key'     => 'bupr_review_mode',
+			'compare' => 'NOT EXISTS',
+		);
+	}
+	return $clauses;
+}
+
+/**
+ * The same exclusion as bupr_mode_meta_query(), as SQL for the recalculation query.
+ *
+ * @since 3.8.3
+ * @param string $alias Alias of the posts table in the query.
+ * @return string An " AND NOT EXISTS ..." fragment, or an empty string.
+ */
+function bupr_mode_sql_exclusion( $alias = 'p' ) {
+	global $wpdb;
+	$mode = bupr_review_mode();
+	if ( 'endorsements' === $mode ) {
+		return '';
+	}
+	$keys = 'ratings' === $mode ? "'bupr_endorsement_type','bupr_review_mode'" : "'bupr_endorsement_type'";
+	return " AND NOT EXISTS ( SELECT 1 FROM {$wpdb->postmeta} ex WHERE ex.post_id = {$alias}.ID AND ex.meta_key IN ({$keys}) )";
+}
+
+/**
+ * Rebuild every member's cached review count and rating now (first 50 members) and in the background (the rest).
+ *
+ * Used when the review mode changes, because the cached numbers count only the posts of the active mode.
+ *
+ * @since 3.8.3
+ */
+function bupr_recalculate_all_members() {
+	$processed = bupr_meta_repair_process_batch( 50, 1 );
+	if ( $processed >= 50 ) {
+		update_option( 'bupr_meta_repair_paged', 2 );
+		bupr_schedule_meta_repair_batch();
+		return;
+	}
+	bupr_flush_top_members_cache();
 }

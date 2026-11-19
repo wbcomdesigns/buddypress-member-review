@@ -126,7 +126,7 @@ Full CRUD API for mobile apps and external integrations. Get reviews, post revie
 Stats dashboard, verified/reported filters, bulk actions, and detailed meta boxes.
 
 ### Requirements
-- BuddyPress Member Reviews (free) v3.7.0+
+- BuddyPress Member Reviews (free) v3.8.3+
 - Valid license for updates
 
 ### Pricing

@@ -64,7 +64,7 @@ Yes. Updates come through WordPress.org like any other plugin.
 
 ### Do I need the free plugin to use Pro?
 
-Yes. Pro is an addon that requires the free base plugin (v3.7.0+). Install free first, then install Pro.
+Yes. Pro is an addon that requires the free base plugin (v3.8.3+). Install free first, then install Pro.
 
 ---
 

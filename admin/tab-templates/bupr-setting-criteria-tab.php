@@ -107,7 +107,7 @@ $is_not_ratings_mode = $is_pro_active && method_exists( 'BUPR_Pro_Features', 'is
 									icl_register_string( 'bp-member-reviews', 'rating_field_name_' . ( $key++ ), $profile_rating_field );
 								}
 								?>
-								<div id="bupr-admin-row-criteria" class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
+								<div class="bupr-admin-row-criteria bupr-admin-row bupr-criteria bupr-criteria-fields border draggable">
 									<div class="bupr-admin-col-6">
 										<span class="move-icons">&equiv;</span>
 										<input name="bupr_admin_settings[rating_field_name][<?php echo esc_attr( $key_val ); ?>]" class="buprDynamicTextBox" type="text" value="<?php echo esc_attr( $profile_rating_field ); ?>" aria-label="<?php esc_attr_e( 'Review criteria name', 'bp-member-reviews' ); ?>" />

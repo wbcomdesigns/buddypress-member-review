@@ -3,7 +3,7 @@ Contributors: wbcomdesigns, vapvarun
 Tags: buddypress, members, reviews, ratings, community
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 3.8.2
+Stable tag: 3.8.3
 Requires PHP: 8.1
 Tested with BuddyPress: 14.5.2
 License: GPLv2 or later
@@ -17,7 +17,7 @@ Let members review and rate each other on their profiles. Build trust with star 
 
 **BuddyPress Member Reviews** gives your community a reputation layer. Registered members post reviews on other members' profiles, rate them against criteria you define, and the plugin rolls those scores into an aggregate rating shown on the profile and on the members directory.
 
-It needs BuddyPress 6.0+ or BuddyBoss Platform 1.8+ with the Members component active. Everything is controlled from one settings screen: who can review whom, whether reviews are auto-approved or moderated, what the criteria are called, and how the whole thing is labelled.
+It needs BuddyPress 12.0+ or BuddyBoss Platform 1.8+ with the Members component active. Everything is controlled from one settings screen: who can review whom, whether reviews are auto-approved or moderated, what the criteria are called, and how the whole thing is labelled.
 
 = What you get =
 
@@ -31,7 +31,7 @@ It needs BuddyPress 6.0+ or BuddyBoss Platform 1.8+ with the Members component a
 
 **Ratings on the members directory**
 * Show each member's star rating right on the members directory, on by default.
-* An "Add Review" button on directory entries so members can review without opening the profile first, also on by default.
+* An optional "Add Review" button in the member profile header, so members can start a review without opening the Reviews tab. Off by default.
 * Both are individually switchable in General settings.
 
 **Moderation you control**
@@ -89,7 +89,7 @@ Our dedicated support team is ready to help you get the most out of this plugin.
 
 * WordPress 6.5 and higher
 * PHP 8.1 and higher
-* BuddyPress 6.0+ or BuddyBoss Platform 1.8+ required, with the Members component active
+* BuddyPress 12.0+ or BuddyBoss Platform 1.8+ required, with the Members component active
 * Works with the block editor and classic editor. The two widgets are classic WP_Widget classes, so on a block theme add them through the Legacy Widget block.
 * Tested with popular themes including BuddyX, Reign, BuddyBoss Theme and Youzify
 
@@ -127,7 +127,7 @@ Member Reviews adds the trust layer to a community. These free tools from the sa
 After activating the plugin, we recommend:
 
 1. Visit **WB Plugins > Member Reviews > General**. Reviews are auto-approved out of the box: if you want to read every review before it goes live, turn **Auto Approve Reviews** off now.
-2. On the same tab, set who may leave reviews and who may receive them, and switch email and BuddyPress notifications on or off. Directory ratings and the directory "Add Review" button are on by default here too.
+2. On the same tab, set who may leave reviews and who may receive them, and switch email and BuddyPress notifications on or off. Directory ratings are on by default here too. Switch on Show Review Button to add an "Add Review" button to the profile header.
 3. Open the **Criteria** tab. Two criteria are seeded on activation, "Member Response" and "Member Skills". Rename them or add your own to fit your community.
 4. Open the **Display** tab to set the review labels and star color. The plural label also drives the profile tab and its URL slug, so pick it before members start sharing links.
 5. Visit any member profile and use the Reviews tab to post a test review, then check it appears on the members directory.
@@ -137,17 +137,17 @@ After activating the plugin, we recommend:
 
 * WordPress 6.5 or higher
 * PHP 8.1 or higher
-* BuddyPress 6.0+ or BuddyBoss Platform 1.8+, with the Members component active
+* BuddyPress 12.0+ or BuddyBoss Platform 1.8+, with the Members component active
 
 == Frequently Asked Questions ==
 
 = Is BuddyPress required? =
 
-Yes. The plugin needs BuddyPress 6.0 or higher, or BuddyBoss Platform 1.8 or higher, with the Members component active. Reviews live on member profiles, so there is no standalone mode.
+Yes. The plugin needs BuddyPress 12.0 or higher, or BuddyBoss Platform 1.8 or higher, with the Members component active. Reviews live on member profiles, so there is no standalone mode.
 
 = How do members submit reviews? =
 
-Members open another member's profile and click the Reviews tab, then use the "Add Review" button. If directory ratings are enabled, they can also start a review straight from the members directory.
+Members open another member's profile and click the Reviews tab, then use the "Add Review" button. If you switched on Show Review Button, the same button also appears in the profile header.
 
 Note that "Reviews" is just the default label. If you rename the plural label under Display settings, the tab and its URL slug change to match.
 
@@ -238,6 +238,54 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 6. The Criteria tab, where you add, rename, reorder or remove rating criteria.
 
 == Changelog ==
+
+= 3.8.3 - November 2026 =
+
+Lockstep with Member Reviews Pro 1.0.1.
+
+* Improve  - Member Reviews Pro settings appear on an Add-ons tab when Pro is active; free-only sites do not see the tab.
+* Improve  - The settings heading, sidebar and menu say Member Reviews Pro when Pro is active.
+* Improve  - The top members shortcode and widget cache in the object cache instead of the options table.
+* Improve  - The plugin no longer loads a Font Awesome stylesheet; stars use a small bundled font.
+* Fix      - Filled rating stars show as filled on sites where the theme or another plugin loads its own Font Awesome, instead of looking like outlines.
+* Fix      - Profile tab links (Reviews and Add Review) work on sites installed in a subfolder or with a renamed members page.
+* Fix      - The Add Review button in the profile header now links with a trailing slash.
+* Fix      - The edit-review and report windows close with Escape, keep Tab inside the window and return focus to the button that opened them.
+* Fix      - The report window is no longer printed when Report Reviews is switched off.
+* Fix      - Dates (review month, owner reply, report log) use the site timezone, and new reply and report times are stored as UTC.
+* Fix      - Switching BuddyPress Activity off no longer risks a fatal error from review activity hooks.
+* Fix      - The average rating under a member's name in the profile header matches the colour of the member's name, so it stays readable on any cover image and in dark mode.
+* Fix      - Old review links (/review/...) redirect to the review on the member's profile instead of a page not found.
+* Fix      - The verified badge shows on a single review page, not only in the list.
+* Fix      - The Report button hover is easier to read in light mode.
+* Fix      - The Overview and Display settings cards fit phone screens without sideways scrolling.
+* Fix      - The Owner Response badge text stays readable in BuddyX and Reign dark mode.
+* Fix      - The header rating takes the colour of the member's display name on BuddyX, not the @handle line.
+* Fix      - The header rating tooltip shows above the profile cover and buttons.
+* Fix      - The review text box placeholder sits flush instead of starting on a new indented line.
+* Fix      - Turning off Anonymous Reviews or Activity Stream is saved like the other switches.
+* Fix      - Square rating boxes are readable in dark mode.
+* Fix      - The Submit Reply button is readable in dark mode.
+* Fix      - Both Member Reviews widgets match the theme's sidebar widgets: rounded 50px pictures, no list bullets and theme colours in light and dark mode.
+* Fix      - The Member Review widget shows its "no members reviewed yet" message inside the widget box, and an empty widget title no longer leaves an empty heading.
+* Fix      - The Displayed Member Rating widget lists more than five ratings when set to, and Highest or Lowest sorting is no longer limited to the newest five.
+* Fix      - The Reported and Auto-hidden views and their counts list member reviews only, keep Member Reviews Pro's Verified and Flagged filters when combined, and Group Reviews can no longer be reported through Member Reviews.
+* Fix      - The review emails use the same default subject and text the settings page shows; before they were saved, a different built-in text was sent.
+* Fix      - The email sent when you approve a review addresses the member by display name, like the email sent on submit.
+* Fix      - Reply and report times, and the auto-hide time, saved before this version are converted to UTC once on upgrade (only rows that existed when the upgrade started) so they keep showing the right time.
+* Fix      - The top members shortcode no longer prints an empty heading when no title is set.
+* Fix      - The rating stars in the Add Review and Edit Review forms are finger-sized on phones, and the stars in the Displayed Member Rating widget stay on one line in a narrow sidebar.
+* Fix      - The top members shortcode and widget use their default member count when the number is zero, negative or not a number, instead of a database error.
+* Fix      - Saving the Criteria tab with Member Reviews Pro no longer turns criterion names like "Member Response" into "memberresponse"; sites already affected are repaired once on the next admin page load, including ratings saved meanwhile.
+* Fix      - Owner reply errors show inside the reply form in the theme's notice style, in light and dark mode, instead of a pop-up toast.
+* Fix      - Endorsements and testimonials no longer show as blank review cards or count as reviews in the profile list, header count, directory rating, widgets and shortcode once the site is back on Star Ratings.
+* Security - Only published reviews can be reported, so a member can no longer file a report against a pending or hidden review by its ID.
+* Security - A password-protected review no longer shows its text to everyone: the review page asks for the password, the Reviews tab shows a notice, and the activity stream gets no text.
+* Dev      - New bupr_date_label() and bupr_display_timezone() helpers and the bupr_display_timezone filter. The bupr_top_members_cache_ver option is no longer used.
+* Dev      - Adds bin/local-ci.sh, bin/build-release.sh and .distignore.
+* Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
+* Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
+* Compat   - Aligned with Member Reviews Pro 1.0.1. Install both updates together.
 
 = 3.8.2 - November 2026 =
 

@@ -68,7 +68,7 @@ Tick one or more reviews and choose from **Bulk actions**:
 - **Dismiss Reports**
 - **Resolve Reports**
 
-The two report actions change the report status only. They do not publish a hidden review.
+**Dismiss Reports** brings back a review that reports had hidden automatically (it is published again). **Resolve Reports** only marks the reports resolved, so a hidden review stays hidden until you publish it yourself.
 
 ## The counts at the top of the settings screen
 
@@ -77,5 +77,5 @@ The two report actions change the report status only. They do not publish a hidd
 ## Tips
 
 - You cannot add a review from the admin. Reviews are written by members from the front of your site.
-- If you also use BuddyPress Group Reviews, its reviews share this list. Use the **Reviews Category** column to tell them apart.
+- If you also use BuddyPress Group Reviews, its reviews share this list. Use the **Reviews Category** column to tell them apart. The **Reported** and **Auto-hidden** views and their counts include member reviews only.
 - Who can do what: Administrators and Editors can approve, dismiss, resolve and delete. Contributors and Authors cannot approve or moderate reports.

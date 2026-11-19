@@ -12,47 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* admin setting on dashboard */
 global $bupr;
 
-/* translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim. */
-$message = __(
-	'Hello [user-name],
-
-We hope this message finds you well.
-
-We are pleased to inform you that [reviewer-name] has recently submitted a review on your profile. To view the full review and respond, please click on the link below:
-
-[review-link]
-
-We appreciate your engagement in our community and value your contributions.
-
-Best regards,
-The [site-name] Team',
-	'bp-member-reviews'
-);
-
-/* translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim. */
-$approve_message = __(
-	'Hello [site-admin],
-
-Greetings!
-
-You have received a new review on [site-name] that is pending approval. To review and approve the submission, please click on the link below:
-
-[review-aproval-link]
-
-Thank you for helping us maintain a vibrant and engaged community.
-
-Best regards,
-The [site-name] Team',
-	'bp-member-reviews'
-);
 $bupr_admin_general = get_option( 'bupr_admin_general_options' );
 
-/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
-$review_email_subject         = ( ! empty( $bupr_admin_general['review_email_subject'] ) ) ? $bupr_admin_general['review_email_subject'] : __( 'You Have Received a New Review on [site-name]', 'bp-member-reviews' );
-$review_email_message         = ( ! empty( $bupr_admin_general['review_email_message'] ) ) ? $bupr_admin_general['review_email_message'] : $message;
-/* translators: [site-name] is a token replaced at send time - keep it verbatim. */
-$review_approve_email_subject = ( ! empty( $bupr_admin_general['review_approve_email_subject'] ) ) ? $bupr_admin_general['review_approve_email_subject'] : __( 'A New Review Requires Your Approval on [site-name]', 'bp-member-reviews' );
-$review_approve_email_message = ( ! empty( $bupr_admin_general['review_approve_email_message'] ) ) ? $bupr_admin_general['review_approve_email_message'] : $approve_message;
+$review_email_subject         = bupr_email_setting( 'review_email_subject' );
+$review_email_message         = bupr_email_setting( 'review_email_message' );
+$review_approve_email_subject = bupr_email_setting( 'review_approve_email_subject' );
+$review_approve_email_message = bupr_email_setting( 'review_approve_email_message' );
 
 // get all user for exclude for review.
 $user_roles = array_reverse( get_editable_roles() );
@@ -125,7 +90,7 @@ $user_roles = array_reverse( get_editable_roles() );
 								<?php esc_html_e( 'Member Directory Ratings', 'bp-member-reviews' ); ?>
 							</label>
 							<p class="description">
-								<?php esc_html_e( 'Display member ratings on the member directory page.', 'bp-member-reviews' ); ?>
+								<?php esc_html_e( 'Show member star ratings in the member directory and in each member\'s profile header.', 'bp-member-reviews' ); ?>
 							</p>
 						</div>
 						<div class="wbcom-settings-section-options">
@@ -351,6 +316,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<p class="description"><?php esc_html_e( 'Allow users to submit reviews anonymously.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
+							<input type="hidden" name="bupr_admin_general_options[bupr_enable_anonymous_reviews]" value="no">
 							<label class="bupr-switch">
 								<input type="checkbox" id="bupr_enable_anonymous_reviews" value="yes" name="bupr_admin_general_options[bupr_enable_anonymous_reviews]" <?php checked( esc_attr( $bupr['anonymous_reviews'] ), 'yes' ); ?>>
 								<div class="bupr-slider bupr-round"></div>
@@ -365,6 +331,7 @@ $user_roles = array_reverse( get_editable_roles() );
 							<p class="description"><?php esc_html_e( 'Post reviews to the BuddyPress activity stream.', 'bp-member-reviews' ); ?></p>
 						</div>
 						<div class="wbcom-settings-section-options">
+							<input type="hidden" name="bupr_admin_general_options[bupr_enable_review_activity]" value="no">
 							<label class="bupr-switch">
 								<input type="checkbox" id="bupr_enable_review_activity" value="yes" name="bupr_admin_general_options[bupr_enable_review_activity]" <?php checked( esc_attr( $bupr['review_activity'] ), 'yes' ); ?>>
 								<div class="bupr-slider bupr-round"></div>

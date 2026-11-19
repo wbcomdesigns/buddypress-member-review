@@ -186,6 +186,6 @@ function GetDynamicTextBox(value) {
 		return jQuery('<div/>').text(text).html();
 	}
 
-	return '<div id="bupr-admin-row-criteria" class="bupr-admin-row bupr-criteria bupr-criteria-fields border draggable"><div class="bupr-admin-col-6"><span class="move-icons">&equiv;</span><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + attr(value) + '" placeholder="' + attr(placeholder) + '" aria-label="' + attr(ariaLabel) + '" /></div>' +
+	return '<div class="bupr-admin-row-criteria bupr-admin-row bupr-criteria bupr-criteria-fields border draggable"><div class="bupr-admin-col-6"><span class="move-icons">&equiv;</span><input name="bupr_admin_settings[rating_field_name][' + rand_num + ']" class = "buprDynamicTextBox" type="text" value = "' + attr(value) + '" placeholder="' + attr(placeholder) + '" aria-label="' + attr(ariaLabel) + '" /></div>' +
 		'<div class="bupr-admin-col-6 buprcriteria"><p class="bupr-delete-tag"><input type="button" value="' + attr(removeLabel) + '" aria-label="' + attr(removeAria) + '" class="bupr-criteria-remove-button bupr-remove bupr-btn bupr-btn-danger" /></p></div></div>'
 }

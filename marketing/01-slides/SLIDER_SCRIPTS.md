@@ -465,7 +465,7 @@ Everything in free, plus featured testimonials shortcode, REST API for custom di
 **Headline:** Works with Your Stack
 **Subtext:** Built for BuddyPress and BuddyBoss. Integrates with notifications, activity, profiles, and member types.
 **Compatible With:**
-- BuddyPress 6.0+
+- BuddyPress 12.0+
 - BuddyBoss Platform
 - WordPress 5.0+
 - Most WordPress themes

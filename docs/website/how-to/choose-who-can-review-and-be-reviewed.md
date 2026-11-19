@@ -42,7 +42,7 @@ Alex (Customer) opens Sam's profile (Seller) and sees **Add Review**. Alex opens
 ## Tips
 
 - Administrators are not exempt. If **Administrator** is not in **Reviewer Roles**, an administrator cannot write reviews either.
-- The **Add Review** button in the profile header (if you switched on **Show Review Button**) looks only at the first role of each of the two members. If someone has several roles and the button is missing, put their main role on the lists, or use the **Add Review** tab under **Reviews**, which accepts any role.
+- A member with several roles passes if any one of their roles is on the list. The **Add Review** button in the profile header and the **Add Review** tab under **Reviews** check roles the same way.
 - Changing roles takes effect immediately. There is nothing to clear.
 
 ## If it does not work

@@ -222,4 +222,4 @@ Reference images in `../images/`:
 ## Last Updated
 
 **Date:** 2026-01-27
-**Version:** Free 3.7.0 / Pro 1.0.0
+**Version:** Free 3.8.3 / Pro 1.0.1

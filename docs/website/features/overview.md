@@ -47,6 +47,6 @@ See [Notifications and Activity](notifications-and-activity.md).
 
 ## Compatibility
 
-- Works with BuddyPress 6.0 or higher and BuddyBoss Platform 1.8 or higher.
+- Works with BuddyPress 12.0 or higher and BuddyBoss Platform 1.8 or higher.
 - Includes support for the BuddyPress Nouveau and Legacy templates, the BuddyBoss members directory, and Youzify profile headers.
 - Translations included: German, French, Spanish, Italian and Brazilian Portuguese. Right-to-left languages are supported.

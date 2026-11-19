@@ -41,13 +41,13 @@ if ( ! empty( $review_id ) ) {
 	$author_id         = $author_details->data->ID;
 	$member_profile    = bp_core_get_userlink( $author_id );
 	$review_date_time  = $review->post_date;
-	$review_date       = date_i18n( 'M Y', $review_date_time );
+	$review_date       = bupr_date_label( (int) get_post_time( 'U', true, $review ), 'M Y' );
 	// $review_date       = human_time_diff( strtotime( $review_date_time ), current_time( 'timestamp' ) ) . ' ago';
 
-	$anonymous_post_review = get_post_meta( $review_id, 'bupr_anonymous_review_post', true );
+	$anonymous_post_review = bupr_is_anonymous_review( $review_id );
 	$member_review_ratings = get_post_meta( $review->ID, 'profile_star_rating', false );
 	/* Hide user avatar and username if it was a anonymous review. */
-	if ( 'yes' === $anonymous_post_review ) {
+	if ( $anonymous_post_review ) {
 		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- $type is used locally for avatar function.
 		$type           = 'local';
 		$avatar         = bp_core_avatar_default(
@@ -88,7 +88,7 @@ if ( ! empty( $review_id ) ) {
 				<div class="bupr-row">
 					<div class="bupr-members-profiles">
 						<div class="author">
-							<?php if ( 'yes' === $anonymous_post_review ) : ?>
+							<?php if ( $anonymous_post_review ) : ?>
 							<img src="<?php echo esc_url( $avatar ); ?>" class="avatar avatar-128 photo" alt="<?php esc_attr_e( 'Profile Photo', 'bp-member-reviews' ); ?>" width="50" height="50">
 							<?php else : ?>
 							<img src="<?php echo esc_url( $avatar ); ?>" class="avatar user-<?php echo esc_attr( $author ); ?>-avatar avatar-128 photo" alt="<?php echo esc_attr( sprintf( /* translators: %s: reviewer display name. */ __( 'Profile photo of %s', 'bp-member-reviews' ), $author_details->display_name ) ); ?>" width="50" height="50">
@@ -172,11 +172,20 @@ if ( ! empty( $review_id ) ) {
 						 * @since 3.7.0
 						 * @param int $review_id The review post ID.
 						 */
-						do_action( 'bupr_after_review_date', get_the_ID() );
+						do_action( 'bupr_after_review_date', $review_id );
 						echo '</div>';
 						$bupr_post_content = ( is_object( $review ) && ! empty( $review ) && isset( $review->post_content ) ) ? $review->post_content : '';
 						?>
-						<div class="bupr-col-12 description"><?php echo wp_kses( $bupr_post_content, $allowedposttags ); ?></div>
+						<div class="bupr-col-12 description">
+							<?php
+							if ( post_password_required( $review ) ) {
+								// A password-protected review shows core's password form instead of its text; rating, author and date stay.
+								echo get_the_password_form( $review ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup built and filtered by WordPress core.
+							} else {
+								echo wp_kses( $bupr_post_content, $allowedposttags );
+							}
+							?>
+						</div>
 						<?php
 						/**
 						 * Fires after review content is displayed.

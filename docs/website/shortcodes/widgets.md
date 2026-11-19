@@ -10,12 +10,12 @@ Lists your top-rated or most-reviewed members. It can go in any widget area.
 
 | Field | What it does | Default |
 |---|---|---|
-| **Enter Title** | Heading above the list. | "Top Members" |
+| **Enter Title** | Heading above the list. Leave it empty for no heading. | "Top Members" |
 | **Display Members** | How many members to list. | 20 |
 | **Top Rated** or **Most Reviewed** | Order by average rating, or by number of reviews. | Top Rated |
 | **Display Avatar** | Show or hide member pictures. | Show |
 
-Each entry shows the picture, the member's name linked to their profile, stars and a line such as "4.5/5 (3 reviews)". Only members with at least one published review appear. If there are none, the widget shows "No members have been reviewed yet."
+Each entry shows the picture, the member's name linked to their profile, stars and a line such as "4.5/5 (3 reviews)". Only members with at least one published review appear. If there are none, the widget keeps its heading and shows "No members have been reviewed yet." inside the widget box.
 
 ## BP Displayed Member Rating Widget
 
@@ -23,18 +23,19 @@ Shows the individual ratings that the member whose profile you are viewing has r
 
 | Field | What it does | Default |
 |---|---|---|
-| **Enter Title:** | Heading above the list. | "Member Ratings" |
-| **Number of Ratings to Show:** | How many ratings are listed. Leave it empty or set 0 to list them all. | 5 |
+| **Enter Title:** | Heading above the list. Leave it empty for no heading. | "Member Ratings" |
+| **Number of Ratings to Show:** | How many ratings are listed. Leave it empty or set 0 to list them all (up to the 100 most recent). | 5 |
 | **Default Sorting:** | **Latest**, **Highest** or **Lowest**. | Latest |
 
-Each entry shows the reviewer's picture, the reviewer's name (or "Anonymous") and the stars, with the score as "4/5".
+Each entry shows the reviewer's picture and name (or the default picture and "Anonymous") and the stars, with the score as "4/5".
 
 If the member has no rated reviews, the widget says "The member has not received a rating yet."
 
 Things to know:
 
-- It shows the reviewer's picture even for anonymous reviews. Only the name is hidden.
+- An anonymous review shows the default picture and "Anonymous", never the reviewer's own picture or name.
 - It lists stars only, not the written text of the reviews.
+- **Highest** and **Lowest** sort the member's 100 most recent ratings.
 
 ## Styling (for designers)
 
@@ -60,5 +61,9 @@ BP Displayed Member Rating Widget:
 .item-meta             /* stars and score */
 .bupr-star-rate        /* a star */
 ```
+
+Both widgets: `.bupr-widget-empty` is the "no reviews yet" sentence.
+
+Both widgets follow your theme's widget box: the title comes from the theme, rows sit side by side with the picture (50px, rounded corners), and colours follow the theme, including dark mode.
 
 Add your own rules under **Appearance > Customize > Additional CSS**.

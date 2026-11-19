@@ -3,7 +3,7 @@
  * Plugin Name: Wbcom Designs - BuddyPress Member Reviews
  * Plugin URI: https://wbcomdesigns.com/downloads/buddypress-member-reviews/
  * Description: Enhances the BuddyPress community by allowing registered users to post reviews on other members' profiles. This feature is available exclusively to registered members and ensures unbiased feedback by preventing users from reviewing their own profiles.
- * Version: 3.8.2
+ * Version: 3.8.3
  * Requires at least: 6.5
  * Requires PHP: 8.1
  * Author: Wbcom Designs
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version and path constants.
  */
-define( 'BUPR_PLUGIN_VERSION', '3.8.2' );
+define( 'BUPR_PLUGIN_VERSION', '3.8.3' );
 define( 'BUPR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BUPR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'BUPR_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -226,8 +226,11 @@ function bupr_plugin_activation() {
 		update_option( 'bupr_admin_settings', $default_criteria );
 	}
 
-	// Set plugin version in options.
-	update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+	// Set plugin version in options. An existing value stays: bupr_maybe_run_utc_migration() reads it to know
+	// whether this site still holds pre-3.8.3 local-time stamps, and moves it forward when it is done.
+	if ( ! get_option( 'bupr_plugin_version' ) ) {
+		update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+	}
 
 	// Fresh installs have no reviews yet, so there is no drifted count/aggregate
 	// meta to repair. Mark the one-time repair migration done so it is skipped.
@@ -403,20 +406,6 @@ function bupr_do_activation_redirect() {
 	exit;
 }
 add_action( 'admin_init', 'bupr_do_activation_redirect' );
-
-/**
- * Translate site URL using WPML for frontend use.
- *
- * @param string $url The URL to translate.
- *
- * @return string Translated URL.
- */
-function bupr_site_url( $url ) {
-	if ( ! is_admin() && false === strpos( $url, 'wp-admin' ) ) {
-		return untrailingslashit( apply_filters( 'wpml_home_url', $url ) );
-	}
-	return $url;
-}
 
 /**
  * Unschedule the cron event on plugin deactivation.

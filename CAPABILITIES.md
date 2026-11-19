@@ -14,7 +14,7 @@ Buyer-level answer to "can it do X?", verified against code at 3.8.1. Status: `Y
 | Can the site limit who may review, and who may be reviewed, by role? | YES | Reviewer / Reviewee Roles, enforced server-side, `includes/bupr-general-functions.php:701` |
 | Can members edit their own reviews? | YES | Update Review setting + edit endpoints, `includes/bupr-ajax.php:708` |
 | Can the reviewed member reply? | YES | One owner reply per review, `includes/bupr-ajax.php:845` |
-| Is the reviewer notified of an owner reply? | NO | Not built (feature request on the board) |
+| Is the reviewer notified of an owner reply? | YES | BuddyPress notification when BuddyPress notifications are on, `includes/bupr-notification.php:289` (3.8.1+) |
 
 ## Moderation
 

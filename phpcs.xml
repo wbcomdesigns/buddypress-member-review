@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<ruleset name="BuddyPress Member Review">
+	<description>Coding standards for Wbcom Designs - BuddyPress Member Review.</description>
+
+	<file>.</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+	<arg name="parallel" value="8"/>
+
+	<!-- House rule: errors block the build, warnings are advisory. -->
+	<config name="ignore_warnings_on_exit" value="1"/>
+
+	<exclude-pattern>*/bin/*</exclude-pattern>
+	<exclude-pattern>*/audit/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+	<exclude-pattern>*/dist/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+	<exclude-pattern>*/marketing/*</exclude-pattern>
+
+	<rule ref="WordPress"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="bp-member-reviews"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="bupr"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Templates and views are include()d from a function or method, so their variables are local, not globals. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
+		<exclude-pattern>includes/templates/*</exclude-pattern>
+		<exclude-pattern>admin/tab-templates/*</exclude-pattern>
+	</rule>
+	<!-- Fires core, BuddyPress, WPML, GamiPress and Wbcom hub hooks on purpose (plugin_locale, bp_core_template_plugin, wpml_home_url, gamipress_bp_member_review, wbcom_hub_wrapper_helper_slugs). -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound">
+		<exclude-pattern>buddypress-member-review\.php$</exclude-pattern>
+		<exclude-pattern>includes/bupr-filters\.php$</exclude-pattern>
+		<exclude-pattern>includes/bupr-ajax\.php$</exclude-pattern>
+		<exclude-pattern>includes/admin/views/hub\.php$</exclude-pattern>
+	</rule>
+	<!-- Plugin name wrapped in strong tags in three dependency notices; style only. -->
+	<rule ref="Generic.Strings.UnnecessaryStringConcat.Found">
+		<exclude-pattern>buddypress-member-review\.php$</exclude-pattern>
+	</rule>
+	<!-- Inline PHP inside the textarea placeholder attribute in the review form; moving it changes markup. -->
+	<rule ref="Squiz.PHP.EmbeddedPhp">
+		<exclude-pattern>includes/bupr-shortcodes\.php$</exclude-pattern>
+	</rule>
+	<!-- Two legacy meta box docblocks lack @param tags; docs-only debt. -->
+	<rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
+		<exclude-pattern>admin/bupr-admin\.php$</exclude-pattern>
+	</rule>
+
+	<!-- PHP 8.1+ portfolio floor. -->
+	<config name="testVersion" value="8.1-"/>
+	<rule ref="PHPCompatibilityWP"/>
+</ruleset>

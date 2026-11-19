@@ -4,7 +4,7 @@
  * The FontAwesome 4 @font-face was removed in the 3.8.x cleanup: no rule in this
  * plugin ever declared `font-family: FontAwesome`, so the face was never applied
  * and its ../fonts/ payload was never downloaded. The bundled FA 5 stylesheet
- * (assets/css/fontawesome/all.min.css) supplies the only icons we use (fa-star).
+ * (bupr_enqueue_star_font()) supplies the only icons we use (the star glyphs).
  */
 
 .bupr-admin-settings-header p {
@@ -123,7 +123,7 @@
     padding: 10px 0;
 }
 
-div#bupr-admin-row-criteria.bupr-admin-row {
+div.bupr-admin-row-criteria.bupr-admin-row {
     overflow: hidden;
     border: 1px solid var(--bupr-admin-border, #e3e2ec);
     border-radius: 10px;
@@ -138,7 +138,7 @@ div#bupr-admin-row-criteria.bupr-admin-row {
     align-items: center;
 }
 
-.bupr-admin-row#bupr-admin-row-criteria .bupr-admin-col-6 {
+.bupr-admin-row.bupr-admin-row-criteria .bupr-admin-col-6 {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -200,7 +200,7 @@ div#bupr-admin-row-criteria.bupr-admin-row {
         width: 100%;
     }
 
-    div#bupr-admin-row-criteria.bupr-admin-row {
+    div.bupr-admin-row-criteria.bupr-admin-row {
         -ms-flex-flow: wrap;
         flex-flow: wrap;
     }
@@ -330,7 +330,7 @@ span.move-icons {
  *    plus `background:transparent; border:none; box-shadow:none`. No ancestor
  *    is positioned, so the notice resolved against the initial containing
  *    block and floated over the card header stripped of all notice chrome -
- *    while `<hr class="wp-header-end">` in views/shell.php exists precisely to
+ *    while `<hr class="wp-header-end">` in views/layout.php exists precisely to
  *    place it inline below the header. Being an ID (1,0,0) it always beat
  *    `.bupr-admin .notice` (0,2,0) regardless of load order, so the shell's
  *    styling could never take effect. A `@media (max-width:480px)` override

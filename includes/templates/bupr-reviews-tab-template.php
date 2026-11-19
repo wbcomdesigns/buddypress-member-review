@@ -33,6 +33,9 @@ $args = array(
 	),
 );
 
+// Posts of another review mode (endorsements, testimonials) are not ratings.
+$args['meta_query'] = array_merge( array( 'relation' => 'AND' ), $args['meta_query'], bupr_mode_meta_query() ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+
 $reviews = new WP_Query( $args );
 ?>
 
@@ -41,7 +44,6 @@ $reviews = new WP_Query( $args );
 <div class="bupr-bp-member-reviews-block">
 	
 	<!-- MODAL FOR USER LOGIN -->
-	<input type="hidden" id="reviews_pluginurl" value="<?php echo esc_attr( BUPR_PLUGIN_URL ); ?>">
 	<input type="hidden" class="member-rating-limit" value="<?php echo esc_attr( $bupr['reviews_per_page'] ); ?>">
 
 	<div class="bp-member-reviews">
@@ -51,7 +53,7 @@ $reviews = new WP_Query( $args );
 				if ( $reviews->have_posts() ) {
 					while ( $reviews->have_posts() ) :
 						$reviews->the_post();
-						$anonymous_post_review = get_post_meta( $post->ID, 'bupr_anonymous_review_post', true );
+						$anonymous_post_review = bupr_is_anonymous_review( $post->ID );
 						$member_review_ratings = get_post_meta( $post->ID, 'profile_star_rating', false );
 						$author_id             = get_post_field( 'post_author', get_the_ID() );
 
@@ -82,7 +84,7 @@ $reviews = new WP_Query( $args );
 								<div class="item-avatar">
 									<?php
 									$author = $reviews->post->post_author;
-									if ( 'yes' === $anonymous_post_review ) {
+									if ( $anonymous_post_review ) {
 										if ( function_exists( 'buddypress' ) && ! isset( buddypress()->buddyboss ) ) {
 											// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- $type is used locally for avatar function.
 											$type       = 'local';
@@ -114,7 +116,7 @@ $reviews = new WP_Query( $args );
 								<div class="reviewer">
 									<h4>
 										<?php
-										if ( 'yes' === $anonymous_post_review ) {
+										if ( $anonymous_post_review ) {
 											$reviewer_name_html = esc_html__( 'anonymous', 'bp-member-reviews' );
 										} else {
 											$reviewer_name_html = wp_kses( bp_core_get_userlink( $author ), $allowedtags );
@@ -187,7 +189,7 @@ $reviews = new WP_Query( $args );
 								?>
 								<span class="posted-on list">
 									<time class="entry-date published updated">
-										<?php echo esc_html( date_i18n( 'M Y', strtotime( $reviews->post->post_date ) ) ); ?>
+										<?php echo esc_html( bupr_date_label( (int) get_post_time( 'U', true, $reviews->post ), 'M Y' ) ); ?>
 									</time>
 								</span>
 								<?php
@@ -209,15 +211,26 @@ $reviews = new WP_Query( $args );
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">
 										<?php
-										$trimcontent = get_the_content();
-										if ( ! empty( $trimcontent ) ) {
+										$bupr_protected = post_password_required();
+										$trimcontent    = $bupr_protected ? '' : get_the_content();
+										if ( $bupr_protected ) {
+											// A password-protected review shows a notice in the list; its text and the password form are on the review page.
+											?>
+											<div class="description">
+												<?php echo esc_html__( 'This content is password protected.' ); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- Core string, translated by WordPress. ?>
+												<a href="<?php echo esc_url( $url ); ?>" class="bupr-read-more">
+													<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
+												</a>
+											</div>
+											<?php
+										} elseif ( ! empty( $trimcontent ) ) {
 											// Word-aware trim: substr() cut words, multibyte characters and tags in half.
 											$shortexcerpt = wp_trim_words( $trimcontent, 25, '' );
 											if ( wp_trim_words( $trimcontent, 1000000, '' ) !== $shortexcerpt ) {
 												?>
 												<div class="description">
 													<?php echo wp_kses_post( wpautop( $shortexcerpt . '&hellip;' ) ); ?>
-													<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
+													<a href="<?php echo esc_url( $url ); ?>" class="bupr-read-more">
 														<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
 													</a>
 												</div>
@@ -357,8 +370,8 @@ $reviews = new WP_Query( $args );
 					<?php } ?>
 						<p>
 							<?php
-							/* translators: %s: */
-							printf( esc_html__( 'Unfortunately, there are no %1$s found.', 'bp-member-reviews' ), esc_html( strtolower( $bupr['review_label'] ) ) );
+							/* translators: %s: plural review label, lowercase, e.g. "reviews". */
+							printf( esc_html__( 'No %s yet.', 'bp-member-reviews' ), esc_html( strtolower( bupr_profile_review_tab_name() ) ) );
 							?>
 
 						</p>
@@ -372,12 +385,13 @@ $reviews = new WP_Query( $args );
 </div>
 					<?php do_action( 'bupr_after_member_review_list' ); ?>
 
+<?php if ( is_user_logged_in() && 'no' !== ( $bupr['enable_flagging'] ?? 'yes' ) ) : ?>
 <!-- Flag Review Modal -->
-<div class="bupr-flag-modal" style="display: none;">
+<div class="bupr-flag-modal" style="display: none;" aria-labelledby="bupr-flag-modal-title">
 	<div class="bupr-flag-modal-content">
 		<div class="bupr-flag-modal-header">
-			<h3><?php esc_html_e( 'Report Review', 'bp-member-reviews' ); ?></h3>
-			<button type="button" class="bupr-flag-modal-close">&times;</button>
+			<h3 id="bupr-flag-modal-title"><?php esc_html_e( 'Report Review', 'bp-member-reviews' ); ?></h3>
+			<button type="button" class="bupr-flag-modal-close" aria-label="<?php esc_attr_e( 'Close', 'bp-member-reviews' ); ?>">&times;</button>
 		</div>
 		<div class="bupr-flag-modal-body">
 			<p><?php esc_html_e( 'Please select a reason for reporting this review:', 'bp-member-reviews' ); ?></p>
@@ -400,7 +414,7 @@ $reviews = new WP_Query( $args );
 					<?php esc_html_e( 'Conflict of interest', 'bp-member-reviews' ); ?>
 				</label>
 			</div>
-			<div class="bupr-flag-error" style="display: none; color: red; margin-top: 10px;"></div>
+			<div class="bupr-flag-error" role="alert" style="display: none;"></div>
 		</div>
 		<div class="bupr-flag-modal-footer">
 			<button type="button" class="bupr-flag-submit button"><?php esc_html_e( 'Submit Report', 'bp-member-reviews' ); ?></button>
@@ -409,3 +423,4 @@ $reviews = new WP_Query( $args );
 		</div>
 	</div>
 </div>
+<?php endif; // Flag modal. ?>
