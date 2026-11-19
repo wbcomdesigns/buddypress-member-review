@@ -166,6 +166,14 @@ foreach ( $read as $lab => $id ) {
 		rec( "REST GET review ($lab)", $a, $exp, st( $res ) . ( 'ok' === st( $res ) && false !== strpos( $body, 'secret' ) ? '+LEAK' : '' ) );
 	}
 }
+foreach ( array( 'guest', 'other', 'target' ) as $a ) { rec( 'REST GET review (draft) is exactly 404 for everyone else', $a, 'ok', 404 === rest( 'GET', "$ns/reviews/$R2", $a )->get_status() ? 'ok' : (string) rest( 'GET', "$ns/reviews/$R2", $a )->get_status() ); }
+foreach ( array( 'guest', 'other', 'target', 'author', 'admin' ) as $a ) {
+	$res = rest( 'GET', "$ns/reviews/$RP", $a ); $d = $res->get_data(); $c = $d['content'] ?? array();
+	$leak = ( 'ok' === st( $res ) ) && ( ! empty( $c['raw'] ) || ( ! empty( $c['rendered'] ) && false !== strpos( $c['rendered'], 'secret' ) ) );
+	$exp  = 'admin' === $a ? 'raw' : 'hidden';
+	$got  = ( 'ok' !== st( $res ) ) ? 'hidden' : ( $leak ? 'raw' : 'hidden' );
+	rec( 'REST GET password-protected review text', $a, 'ok', $got === $exp ? 'ok' : 'got-' . $got . '-expected-' . $exp );
+}
 foreach ( array( 'author' => 'ok', 'editor' => 'ok', 'admin' => 'ok' ) as $a => $exp ) { rec( 'REST GET review (own/mod draft)', $a, $exp, st( rest( 'GET', "$ns/reviews/$R2", $a ) ) ); }
 rec( 'REST GET review (group publish) by admin is told why, not served', 'admin', 'deny', st( rest( 'GET', "$ns/reviews/$RG", 'admin' ) ) );
 // Anonymous author hidden
