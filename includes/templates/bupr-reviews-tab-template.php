@@ -211,8 +211,19 @@ $reviews = new WP_Query( $args );
 								<div class="bupr-review-description">
 									<div class="bupr-full-description">
 										<?php
-										$trimcontent = get_the_content();
-										if ( ! empty( $trimcontent ) ) {
+										$bupr_protected = post_password_required();
+										$trimcontent    = $bupr_protected ? '' : get_the_content();
+										if ( $bupr_protected ) {
+											// A password-protected review shows a notice in the list; its text and the password form are on the review page.
+											?>
+											<div class="description">
+												<?php echo esc_html__( 'This content is password protected.' ); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- Core string, translated by WordPress. ?>
+												<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
+													<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
+												</a>
+											</div>
+											<?php
+										} elseif ( ! empty( $trimcontent ) ) {
 											// Word-aware trim: substr() cut words, multibyte characters and tags in half.
 											$shortexcerpt = wp_trim_words( $trimcontent, 25, '' );
 											if ( wp_trim_words( $trimcontent, 1000000, '' ) !== $shortexcerpt ) {

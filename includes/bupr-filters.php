@@ -769,8 +769,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 				$reviewer_user_link = bp_core_get_userlink( $reviewer_user_id );
 				$reviewed_user_link = bp_core_get_userlink( $reviewed_user_id );
 
-				// Get the review content.
-				$review_content = $review->post_content;
+				// Get the review content. A password-protected review puts no text in the activity stream.
+				$review_content = '' !== (string) $review->post_password ? '' : $review->post_content;
 				// Check for anonymous review.
 				$is_anonymous = bupr_is_anonymous_review( $review_id );
 				if ( $is_anonymous ) {

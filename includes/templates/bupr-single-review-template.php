@@ -176,7 +176,16 @@ if ( ! empty( $review_id ) ) {
 						echo '</div>';
 						$bupr_post_content = ( is_object( $review ) && ! empty( $review ) && isset( $review->post_content ) ) ? $review->post_content : '';
 						?>
-						<div class="bupr-col-12 description"><?php echo wp_kses( $bupr_post_content, $allowedposttags ); ?></div>
+						<div class="bupr-col-12 description">
+							<?php
+							if ( is_object( $review ) && post_password_required( $review ) ) {
+								// A password-protected review shows core's password form instead of its text; rating, author and date stay.
+								echo get_the_password_form( $review ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup built and filtered by WordPress core.
+							} else {
+								echo wp_kses( $bupr_post_content, $allowedposttags );
+							}
+							?>
+						</div>
 						<?php
 						/**
 						 * Fires after review content is displayed.
