@@ -7,6 +7,8 @@
  * Exits non-zero on failure. Cleans up after itself.
  */
 global $wpdb;
+wp_clear_scheduled_hook( 'bupr_utc_migration' ); // Leftovers from an earlier aborted run would be picked up as a lost chain.
+delete_option( 'bupr_utc_migration_state' );
 $fail  = array();
 $ids   = array();
 $stamp = strtotime( '2026-11-19 10:00:00 UTC' ); // Wall-clock 10:00 as 3.8.2 stored it.
@@ -48,7 +50,21 @@ while ( $runs < 10 && ( $e = $next() ) ) { // phpcs:ignore
 		$fail[] = 'admin_init queued a second chain';
 	}
 	do_action( 'bupr_utc_migration', $e[1][0], $e[1][1] );
+	if ( 0 === $runs && ( $lost = $next() ) ) { // phpcs:ignore
+		// The chain loses its event (cron-clearing plugin, host reset). Nothing is queued and the state is stale.
+		wp_unschedule_event( $lost[0], 'bupr_utc_migration', $lost[1] );
+		add_filter( 'bupr_utc_migration_stale', '__return_zero' );
+		do_action( 'admin_init' );
+		remove_filter( 'bupr_utc_migration_stale', '__return_zero' );
+		$resumed = $next();
+		if ( ! $resumed || $resumed[1] !== $lost[1] ) {
+			$fail[] = 'a lost chain event was not rescheduled from the saved state';
+		}
+	}
 	++$runs;
+}
+if ( false !== get_option( 'bupr_utc_migration_state' ) ) {
+	$fail[] = 'bupr_utc_migration_state still exists after the chain finished';
 }
 $count = function ( $value ) use ( $wpdb ) {
 	return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key='bupr_owner_reply_date' AND meta_value=%s AND meta_id<>%d", (string) $value, 0 ) ); // phpcs:ignore
@@ -68,5 +84,5 @@ if ( version_compare( get_option( 'bupr_plugin_version' ), '3.8.3', '<' ) ) {
 foreach ( $ids as $id ) {
 	wp_delete_post( $id, true );
 }
-echo $fail ? 'FAIL: ' . implode( '; ', $fail ) . "\n" : "PASS: {$runs} runs, 1300 rows shifted once, post-upgrade reply untouched, nothing requeued\n";
+echo $fail ? 'FAIL: ' . implode( '; ', $fail ) . "\n" : "PASS: {$runs} runs, 1300 rows shifted once, post-upgrade reply untouched, lost event resumed, state option gone\n";
 exit( $fail ? 1 : 0 );

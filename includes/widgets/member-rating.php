@@ -87,7 +87,8 @@ class bupr_single_member_rating_widget extends WP_Widget {
 			),
 		);
 
-		$reviews            = get_posts( $bupr_args );
+		$bupr_args['meta_query'] = array_merge( array( 'relation' => 'AND' ), $bupr_args['meta_query'], bupr_mode_meta_query() ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+		$reviews                = get_posts( $bupr_args );
 		$final_review_arr   = array();
 		$final_review_obj   = array();
 		$bupr_reviews_count = count( $reviews );

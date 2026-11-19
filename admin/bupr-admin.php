@@ -456,8 +456,17 @@ if ( ! class_exists( 'BUPR_Admin' ) ) {
 
 			$sanitized = array();
 			foreach ( $options as $key => $value ) {
-				$key = sanitize_key( $key );
-				if ( is_array( $value ) ) {
+				// The keys of profile_rating_fields are the criterion names themselves (they are matched against every
+				// review's stored ratings), so they are cleaned as text, never turned into slugs.
+				$is_criteria = 'profile_rating_fields' === $key;
+				$key         = sanitize_key( $key );
+				if ( $is_criteria && is_array( $value ) ) {
+					$labels = array();
+					foreach ( $value as $label => $enabled ) {
+						$labels[ sanitize_text_field( (string) $label ) ] = sanitize_text_field( (string) $enabled );
+					}
+					$sanitized[ $key ] = $labels;
+				} elseif ( is_array( $value ) ) {
 					$sanitized[ $key ] = $this->bupr_sanitize_options( $value );
 				} elseif ( is_bool( $value ) ) {
 					$sanitized[ $key ] = (bool) $value;

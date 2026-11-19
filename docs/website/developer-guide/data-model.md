@@ -71,6 +71,7 @@ These are recalculated when a review is published, edited, hidden, trashed or de
 | `bupr_admin_display_options` | **Display** tab settings: `bupr_review_title`, `bupr_review_title_plural`, `bupr_star_color`. |
 | `bupr_plugin_version` | Installed version. |
 | `bupr_current_batch` | Cursor for the daily recalculation. |
+| `bupr_utc_migration_state` | Exists only while the 3.8.3 time upgrade is running (last meta ID, highest meta ID, last activity); deleted when it finishes. |
 | `bupr_meta_repair_v1_done`, `bupr_meta_repair_paged` | One-time repair of stale rating counts. |
 
 Settings you never saved have no entry in the option. The plugin then uses its built-in default (see the [Settings Reference](../usage/settings-reference.md)).

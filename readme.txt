@@ -276,6 +276,9 @@ Lockstep with Member Reviews Pro 1.0.1.
 * Fix      - The top members shortcode no longer prints an empty heading when no title is set.
 * Fix      - The rating stars in the Add Review and Edit Review forms are finger-sized on phones, and the stars in the Displayed Member Rating widget stay on one line in a narrow sidebar.
 * Fix      - The top members shortcode and widget use their default member count when the number is zero, negative or not a number, instead of a database error.
+* Fix      - Saving the Criteria tab with Member Reviews Pro no longer turns criterion names like "Member Response" into "memberresponse"; sites already affected are repaired once on the next admin page load, including ratings saved meanwhile.
+* Fix      - Owner reply errors show inside the reply form in the theme's notice style, in light and dark mode, instead of a pop-up toast.
+* Fix      - Endorsements and testimonials no longer show as blank review cards or count as reviews in the profile list, header count, directory rating, widgets and shortcode once the site is back on Star Ratings.
 * Dev      - New bupr_date_label() and bupr_display_timezone() helpers and the bupr_display_timezone filter. The bupr_top_members_cache_ver option is no longer used.
 * Dev      - Adds bin/local-ci.sh, bin/build-release.sh and .distignore.
 * Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.

@@ -33,6 +33,9 @@ $args = array(
 	),
 );
 
+// Posts of another review mode (endorsements, testimonials) are not ratings.
+$args['meta_query'] = array_merge( array( 'relation' => 'AND' ), $args['meta_query'], bupr_mode_meta_query() ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+
 $reviews = new WP_Query( $args );
 ?>
 

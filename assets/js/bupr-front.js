@@ -68,38 +68,16 @@ window.buprDialog = (function ($) {
 })(jQuery);
 
 /**
- * buprFrontToast — lightweight, accessible toast for the review front end.
- *
- * Replaces the three native alert() calls (skill Part 6 rules 10 + 12: no
- * browser alert()/confirm()). Self-contained so it works in every BuddyPress
- * theme without a dependency. Tones: 'info' | 'success' | 'error'.
+ * Show an error inside the owner reply form as a BuddyPress notice (.bp-feedback), so it takes the theme's colours
+ * and dark mode. Replaces the plugin's own toast; no browser alert() either.
  */
-window.buprFrontToast = function (message, tone) {
-  tone = tone || "info";
-  var host = document.querySelector(".bupr-front-toast-host");
-  if (!host) {
-    host = document.createElement("div");
-    host.className = "bupr-front-toast-host";
-    document.body.appendChild(host);
-  }
-  var el = document.createElement("div");
-  el.className = "bupr-front-toast bupr-front-toast--" + tone;
-  el.setAttribute("role", "status");
-  el.setAttribute("aria-live", "polite");
-  el.textContent = String(message);
-  host.appendChild(el);
-  window.requestAnimationFrame(function () {
-    el.classList.add("bupr-front-toast--visible");
-  });
-  window.setTimeout(function () {
-    el.classList.remove("bupr-front-toast--visible");
-    window.setTimeout(function () {
-      if (el.parentNode) {
-        el.parentNode.removeChild(el);
-      }
-    }, 250);
-  }, 3600);
-};
+function buprReplyError($wrapper, message) {
+  $wrapper.find(".bupr-reply-error").remove();
+  jQuery('<div class="bupr-reply-error bp-feedback bp-messages error" role="alert"></div>')
+    .append('<span class="bp-icon" aria-hidden="true"></span>')
+    .append(jQuery("<p></p>").text(String(message)))
+    .insertBefore($wrapper.find(".bupr-reply-actions"));
+}
 
 jQuery(document).ready(function () {
   jQuery(".add_review_msg").hide();
@@ -436,13 +414,11 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
   var replyContent = wrapper.find(".bupr-reply-textarea").val().trim();
 
   if (!replyContent) {
-    window.buprFrontToast(
-      mail_title.reply_empty || "Please enter a reply.",
-      "error"
-    );
+    buprReplyError(wrapper, mail_title.reply_empty || "Please enter a reply.");
     return;
   }
 
+  wrapper.find(".bupr-reply-error").remove();
   button.prop("disabled", true);
   wrapper.find(".bupr-reply-spinner").show();
 
@@ -463,20 +439,20 @@ jQuery(document).on("click", ".bupr-submit-reply", function (e) {
         wrapper.remove();
         replySection.html(response.data.reply_html);
       } else {
-        window.buprFrontToast(
+        buprReplyError(
+          wrapper,
           (response.data && response.data.message) ||
             mail_title.reply_failed ||
-            "Failed to add reply.",
-          "error"
+            "Failed to add reply."
         );
       }
     }
   ).fail(function () {
     button.prop("disabled", false);
     wrapper.find(".bupr-reply-spinner").hide();
-    window.buprFrontToast(
-      mail_title.generic_error || "An error occurred. Please try again.",
-      "error"
+    buprReplyError(
+      wrapper,
+      mail_title.generic_error || "An error occurred. Please try again."
     );
   });
 });
