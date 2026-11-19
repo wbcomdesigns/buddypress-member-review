@@ -218,7 +218,7 @@ $reviews = new WP_Query( $args );
 											?>
 											<div class="description">
 												<?php echo esc_html__( 'This content is password protected.' ); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- Core string, translated by WordPress. ?>
-												<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
+												<a href="<?php echo esc_url( $url ); ?>" class="bupr-read-more">
 													<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
 												</a>
 											</div>
@@ -230,7 +230,7 @@ $reviews = new WP_Query( $args );
 												?>
 												<div class="description">
 													<?php echo wp_kses_post( wpautop( $shortexcerpt . '&hellip;' ) ); ?>
-													<a href="<?php echo esc_url( $url ); ?> " class="bupr-read-more">
+													<a href="<?php echo esc_url( $url ); ?>" class="bupr-read-more">
 														<i><?php esc_html_e( 'read more...', 'bp-member-reviews' ); ?></i>
 													</a>
 												</div>

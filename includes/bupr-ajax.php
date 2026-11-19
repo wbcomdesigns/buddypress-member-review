@@ -854,8 +854,8 @@ if ( ! class_exists( 'BUPR_AJAX' ) ) {
 
 			// Get the review.
 			$review = get_post( $review_id );
-			// Only published reviews can be replied to (the owner cannot see pending ones).
-			if ( ! $review || 'review' !== $review->post_type || 'publish' !== $review->post_status ) {
+			// Only published reviews can be replied to (the owner cannot see pending ones), and a locked password-protected review cannot be replied to until its password is entered (administrators excepted).
+			if ( ! $review || 'review' !== $review->post_type || 'publish' !== $review->post_status || ( post_password_required( $review ) && ! current_user_can( 'manage_options' ) ) ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'Review not found.', 'bp-member-reviews' ),
