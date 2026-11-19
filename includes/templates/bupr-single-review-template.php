@@ -178,7 +178,7 @@ if ( ! empty( $review_id ) ) {
 						?>
 						<div class="bupr-col-12 description">
 							<?php
-							if ( is_object( $review ) && post_password_required( $review ) ) {
+							if ( post_password_required( $review ) ) {
 								// A password-protected review shows core's password form instead of its text; rating, author and date stay.
 								echo get_the_password_form( $review ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup built and filtered by WordPress core.
 							} else {
