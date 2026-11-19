@@ -1921,3 +1921,21 @@ body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:focus {
     margin-top: 10px;
     color: var(--bupr-danger-fg, #b32d2e);
 }
+
+/* Touch: the rating stars in the Add Review and Edit Review forms are the controls, so give them a finger-sized target. */
+@media (max-width: 640px) {
+    #bupr_review_form_public .bupr-star-rate,
+    .bupr-review-modal .bupr-star-rate {
+        font-size: 28px;
+        min-width: 40px;
+        min-height: 40px;
+        line-height: 40px;
+        text-align: center;
+    }
+}
+
+/* Widgets: a row of five stars never breaks onto a second line in a narrow sidebar. */
+[id^="bupr_single_member_rating_widget"] .item-meta,
+[id^="bupr_members_review_setting"] .bupr-member-rating {
+    white-space: nowrap;
+}
