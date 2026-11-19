@@ -61,6 +61,11 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 
 			$bupr_title     = apply_filters( 'bupr_shortcode_title', $atts['title'] );
 			$member_limit   = apply_filters( 'bupr_shortcode_member_limit', $atts['total_member'] );
+			// A number of members; zero, negative or not a number falls back to the default of 5.
+			$member_limit = (int) $member_limit;
+			if ( $member_limit < 1 ) {
+				$member_limit = 5;
+			}
 			$top_member     = apply_filters( 'bupr_shortcode_type', $atts['type'] );
 			$avatar_display = apply_filters( 'bupr_shortcode_avatar', $atts['avatar'] );
 

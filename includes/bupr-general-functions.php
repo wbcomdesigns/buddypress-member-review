@@ -1023,33 +1023,35 @@ function bupr_local_stamp_to_utc( $stamp ) {
 /**
  * One-time upgrade: store reply, report and auto-hide times as UTC.
  *
- * Keyed by the stored plugin version: a site still on a version below 3.8.3 holds local-shifted stamps in
- * bupr_owner_reply_date, bupr_auto_hidden_date and the date of each entry in bupr_flags. admin_init only schedules
- * the first run. Each run walks rows by meta_id in batches of 500 until its time budget is spent, then schedules
- * the next run with the last meta_id as the event argument (no stored cursor). The version moves forward after the
- * last batch, so the routine never converts a row twice.
+ * Starts from bupr_maybe_run_utc_migration(), which writes the new plugin version FIRST and passes the highest
+ * existing meta_id as $cap. Each run converts only rows with $after < meta_id <= $cap, ascending, 500 at a time,
+ * until its time budget is spent, then chains the next run with the last meta_id as an event argument (no stored
+ * cursor). Rows written after the upgrade have a higher meta_id than $cap and are never touched; admin_init can
+ * never queue a second chain because the version is already current.
+ *
+ * ponytail: if the chain dies mid-way (a fatal), the remaining rows stay unconverted and are never redone. That is
+ * the safe failure direction (a time shown shifted, never shifted twice). Add a stored cursor only if that matters.
  *
  * Known limit: a reply made through the Pro 1.0.0 REST API already stored UTC in the same two meta keys with the
  * same integer format and no marker, so it cannot be told apart from a local-shifted one and is shifted once more.
  *
  * @since 3.8.3
- * @param int $after Last meta_id already converted (cron argument).
+ * @param int $after Last meta_id already converted.
+ * @param int $cap   Highest meta_id that existed when the upgrade started.
  */
-function bupr_run_utc_migration( $after = 0 ) {
-	if ( version_compare( (string) get_option( 'bupr_plugin_version', '0' ), '3.8.3', '>=' ) ) {
-		return;
-	}
-
+function bupr_run_utc_migration( $after = 0, $cap = 0 ) {
 	global $wpdb;
 	$deadline = time() + (int) apply_filters( 'bupr_utc_migration_budget', 15 );
 	$cursor   = (int) $after;
+	$cap      = (int) $cap;
 
 	do {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time upgrade; meta_key is indexed and the walk is by meta_id.
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT meta_id, post_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE meta_key IN ('bupr_owner_reply_date','bupr_auto_hidden_date','bupr_flags') AND meta_id > %d ORDER BY meta_id ASC LIMIT 500",
-				$cursor
+				"SELECT meta_id, post_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE meta_key IN ('bupr_owner_reply_date','bupr_auto_hidden_date','bupr_flags') AND meta_id > %d AND meta_id <= %d ORDER BY meta_id ASC LIMIT 500",
+				$cursor,
+				$cap
 			)
 		);
 		foreach ( $rows as $row ) {
@@ -1074,18 +1076,20 @@ function bupr_run_utc_migration( $after = 0 ) {
 			wp_cache_delete( (int) $row->post_id, 'post_meta' );
 		}
 		if ( count( $rows ) < 500 ) {
-			update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
 			return;
 		}
 	} while ( time() < $deadline );
 
-	// Out of time: the next run picks up after the last converted row.
-	wp_schedule_single_event( time(), 'bupr_utc_migration', array( $cursor ) );
+	// Out of time: the next run picks up after the last converted row, still capped.
+	wp_schedule_single_event( time(), 'bupr_utc_migration', array( $cursor, $cap ) );
 }
-add_action( 'bupr_utc_migration', 'bupr_run_utc_migration' );
+add_action( 'bupr_utc_migration', 'bupr_run_utc_migration', 10, 2 );
 
 /**
- * Start the upgrade above on a site that still holds pre-3.8.3 stamps, unless a run is already queued.
+ * Start the upgrade above on a site that still holds pre-3.8.3 stamps.
+ *
+ * The version moves forward here, before any row is touched, so no later admin_init (or a second request racing
+ * this one) can start a second pass over the same rows.
  *
  * @since 3.8.3
  */
@@ -1093,12 +1097,13 @@ function bupr_maybe_run_utc_migration() {
 	if ( version_compare( (string) get_option( 'bupr_plugin_version', '0' ), '3.8.3', '>=' ) ) {
 		return;
 	}
-	foreach ( (array) _get_cron_array() as $events ) {
-		if ( isset( $events['bupr_utc_migration'] ) ) {
-			return;
-		}
+	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One read at upgrade time; meta_key is indexed.
+	$cap = (int) $wpdb->get_var( "SELECT MAX(meta_id) FROM {$wpdb->postmeta} WHERE meta_key IN ('bupr_owner_reply_date','bupr_auto_hidden_date','bupr_flags')" );
+	update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+	if ( $cap > 0 ) {
+		wp_schedule_single_event( time(), 'bupr_utc_migration', array( 0, $cap ) );
 	}
-	wp_schedule_single_event( time(), 'bupr_utc_migration', array( 0 ) );
 }
 add_action( 'admin_init', 'bupr_maybe_run_utc_migration' );
 

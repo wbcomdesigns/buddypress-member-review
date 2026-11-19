@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-19T00:45:31+00:00\n"
+"POT-Creation-Date: 2026-11-19T01:25:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -1057,7 +1057,7 @@ msgstr ""
 
 #. translators: %s:
 #: includes/bupr-ajax.php:373
-#: includes/bupr-shortcodes.php:322
+#: includes/bupr-shortcodes.php:327
 #, php-format
 msgid "You already posted a %1$s for this member."
 msgstr ""
@@ -1079,13 +1079,13 @@ msgid "You do not have permission to edit this review."
 msgstr ""
 
 #: includes/bupr-ajax.php:616
-#: includes/bupr-shortcodes.php:461
+#: includes/bupr-shortcodes.php:466
 msgid "Rating : "
 msgstr ""
 
 #: includes/bupr-ajax.php:635
-#: includes/bupr-shortcodes.php:418
-#: includes/bupr-shortcodes.php:447
+#: includes/bupr-shortcodes.php:423
+#: includes/bupr-shortcodes.php:452
 msgid "This field is required."
 msgstr ""
 
@@ -1261,12 +1261,12 @@ msgid "Posted a member review"
 msgstr ""
 
 #. translators: [site-name] is a token replaced at send time - keep it verbatim.
-#: includes/bupr-general-functions.php:1119
+#: includes/bupr-general-functions.php:1124
 msgid "You Have Received a New Review on [site-name]"
 msgstr ""
 
 #. translators: [user-name], [reviewer-name], [review-link] and [site-name] are tokens replaced at send time - keep them verbatim.
-#: includes/bupr-general-functions.php:1122
+#: includes/bupr-general-functions.php:1127
 msgid ""
 "Hello [user-name],\n"
 "\n"
@@ -1283,12 +1283,12 @@ msgid ""
 msgstr ""
 
 #. translators: [site-name] is a token replaced at send time - keep it verbatim.
-#: includes/bupr-general-functions.php:1139
+#: includes/bupr-general-functions.php:1144
 msgid "A New Review Requires Your Approval on [site-name]"
 msgstr ""
 
 #. translators: [site-admin], [site-name] and [review-aproval-link] are tokens replaced at send time - keep them verbatim.
-#: includes/bupr-general-functions.php:1142
+#: includes/bupr-general-functions.php:1147
 msgid ""
 "Hello [site-admin],\n"
 "\n"
@@ -1384,82 +1384,82 @@ msgstr ""
 msgid "Add Review criteria eg. Member Response. "
 msgstr ""
 
-#: includes/bupr-shortcodes.php:176
-#: includes/widgets/display-review.php:145
+#: includes/bupr-shortcodes.php:181
+#: includes/widgets/display-review.php:148
 msgid "review"
 msgid_plural "reviews"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$s: rating; %2$s: review count; %3$s: item type label
-#: includes/bupr-shortcodes.php:184
+#: includes/bupr-shortcodes.php:189
 #, php-format
 msgid "Rating: %1$s/5 (%2$s %3$s)"
 msgstr ""
 
 #. translators: %1$s: review count; %2$s: item type label
 #. translators: %1$s: Review count; %2$s: item type label
-#: includes/bupr-shortcodes.php:188
-#: includes/widgets/display-review.php:171
+#: includes/bupr-shortcodes.php:193
+#: includes/widgets/display-review.php:174
 #, php-format
 msgid "%1$s %2$s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:195
-#: includes/widgets/display-review.php:178
+#: includes/bupr-shortcodes.php:200
+#: includes/widgets/display-review.php:181
 msgid "No members have been reviewed yet."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:325
+#: includes/bupr-shortcodes.php:330
 #, php-format
 msgid "Thank you for taking time to write this wonderful %1$s."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:328
+#: includes/bupr-shortcodes.php:333
 #, php-format
 msgid "Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator's approval."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:392
+#: includes/bupr-shortcodes.php:397
 msgid "Sorry, You have not been given permission to review the user !!!"
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:403
+#: includes/bupr-shortcodes.php:408
 #, php-format
 msgid "Fill in details to submit %s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:409
+#: includes/bupr-shortcodes.php:414
 msgid "--Select--"
 msgstr ""
 
 #. translators: %s: review label
-#: includes/bupr-shortcodes.php:502
 #: includes/bupr-shortcodes.php:507
+#: includes/bupr-shortcodes.php:512
 #, php-format
 msgid "Enter your %s"
 msgstr ""
 
 #. translators: %s: review label;
-#: includes/bupr-shortcodes.php:514
+#: includes/bupr-shortcodes.php:519
 #, php-format
 msgid "Send %s anonymously."
 msgstr ""
 
-#: includes/bupr-shortcodes.php:520
+#: includes/bupr-shortcodes.php:525
 msgid "Please either select a rating or write a review."
 msgstr ""
 
 #. translators: %s:
-#: includes/bupr-shortcodes.php:526
+#: includes/bupr-shortcodes.php:531
 #, php-format
 msgid "Submit %s"
 msgstr ""
 
-#: includes/bupr-shortcodes.php:530
+#: includes/bupr-shortcodes.php:535
 msgid "Loading..."
 msgstr ""
 
@@ -1553,32 +1553,32 @@ msgid "Top Rated Members"
 msgstr ""
 
 #. translators: %1$s: aggregate rating; %2$s: Review count; %3$s: item type label
-#: includes/widgets/display-review.php:168
+#: includes/widgets/display-review.php:171
 #, php-format
 msgid "%1$s/5 (%2$s %3$s)"
 msgstr ""
 
-#: includes/widgets/display-review.php:208
+#: includes/widgets/display-review.php:211
 msgid "Top Members"
 msgstr ""
 
-#: includes/widgets/display-review.php:221
+#: includes/widgets/display-review.php:224
 msgid "Enter Title"
 msgstr ""
 
-#: includes/widgets/display-review.php:225
+#: includes/widgets/display-review.php:228
 msgid "Display Members"
 msgstr ""
 
-#: includes/widgets/display-review.php:232
+#: includes/widgets/display-review.php:235
 msgid "Top Rated "
 msgstr ""
 
-#: includes/widgets/display-review.php:237
+#: includes/widgets/display-review.php:240
 msgid "Most Reviewed"
 msgstr ""
 
-#: includes/widgets/display-review.php:243
+#: includes/widgets/display-review.php:246
 msgid "Display Avatar "
 msgstr ""
 

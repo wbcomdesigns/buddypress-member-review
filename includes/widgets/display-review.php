@@ -68,7 +68,10 @@ class bupr_members_review_setting extends WP_Widget {
 
 		// Widget instance settings. `title` is the standard key; `bupr_title` is read for widgets saved before 3.8.3.
 		$bupr_title   = apply_filters( 'widget_title', $instance['title'] ?? ( $instance['bupr_title'] ?? esc_html__( 'Top Rated Members', 'bp-member-reviews' ) ), $instance, $this->id_base );
-		$member_limit = isset( $instance['bupr_member'] ) ? (int) $instance['bupr_member'] : 20; // Limit to 20 members by default.
+		$member_limit = isset( $instance['bupr_member'] ) ? (int) $instance['bupr_member'] : 20;
+		if ( $member_limit < 1 ) {
+			$member_limit = 20;
+		} // Limit to 20 members by default.
 		$top_member   = isset( $instance['top_member'] ) ? $instance['top_member'] : 'top-rated';
 		$avatar       = isset( $instance['avatar'] ) ? $instance['avatar'] : 'Show';
 
