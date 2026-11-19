@@ -241,8 +241,6 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 
 = 3.8.3 - November 2026 =
 
-Lockstep with Member Reviews Pro 1.0.1.
-
 * Improve  - Member Reviews Pro settings appear on an Add-ons tab when Pro is active; free-only sites do not see the tab.
 * Improve  - The settings heading, sidebar and menu say Member Reviews Pro when Pro is active.
 * Improve  - The top members shortcode and widget cache in the object cache instead of the options table.
@@ -285,7 +283,6 @@ Lockstep with Member Reviews Pro 1.0.1.
 * Dev      - Adds bin/local-ci.sh, bin/build-release.sh and .distignore.
 * Dev      - Rating stars use member-star-N classes, the edit button id is bupr_update_review, criteria rows no longer repeat an id, and star events no longer log jQuery deprecation warnings.
 * Dev      - The admin settings view file is renamed so hosting firewalls no longer block the plugin zip.
-* Compat   - Aligned with Member Reviews Pro 1.0.1. Install both updates together.
 
 = 3.8.2 - November 2026 =
 
