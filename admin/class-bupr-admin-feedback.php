@@ -158,7 +158,7 @@ if ( ! class_exists( 'Bupr_Admin_Feedback' ) ) :
 				$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'bp-member-reviews-feedback-nonce' );
 				$time       = $this->seconds_to_words( time() - get_site_option( $this->date_option ) );
 				?>
-				<?php wp_enqueue_style( 'bupr-admin-feedback', BUPR_PLUGIN_URL . 'assets/css/admin-feedback.css', array(), BUPR_PLUGIN_VERSION ); ?>
+				<?php wp_enqueue_style( 'bupr-admin-feedback', plugins_url( 'assets/css/admin-feedback.css', dirname( __DIR__ ) . '/buddypress-member-review.php' ), array(), constant( 'BUPR_PLUGIN_VERSION' ) ); ?>
 				<div class="notice updated bp-member-reviews-notice">
 					<div class="bp-member-reviews-notice-inner">
 						<div class="bp-member-reviews-notice-icon">

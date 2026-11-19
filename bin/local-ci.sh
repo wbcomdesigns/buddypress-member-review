@@ -25,7 +25,7 @@ if grep -q '—' readme.txt; then bad "readme.txt contains an em dash"; fi
 
 step "PHPStan"
 if [ -x vendor/bin/phpstan ]; then
-	vendor/bin/phpstan analyse --no-progress --memory-limit=1G >/dev/null || bad "phpstan"
+	vendor/bin/phpstan analyse --no-progress --memory-limit=4G >/dev/null || bad "phpstan"
 else
 	echo "skip: run composer install first"
 fi

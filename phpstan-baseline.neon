@@ -373,12 +373,6 @@ parameters:
 			path: includes/templates/bupr-single-review-template.php
 
 		-
-			message: '#^Parameter \#2 \$timestamp_with_offset of function date_i18n expects bool\|int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: includes/templates/bupr-single-review-template.php
-
-		-
 			message: '#^Property WP_Post\:\:\$post_content \(string\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1

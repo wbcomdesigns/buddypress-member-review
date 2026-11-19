@@ -154,7 +154,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				// Stars draw from the bundled Font Awesome glyphs under their own family name. Another plugin or the theme
 				// registering "font-awesome" (Elementor ships 4.7) otherwise decides which font and weight .fas/.far get,
 				// and filled stars rendered as outlines.
-				$bupr_fa_url = BUPR_PLUGIN_URL . 'assets/css/fontawesome/webfonts/';
+				$bupr_fa_url = plugins_url( 'assets/css/fontawesome/webfonts/', dirname( __DIR__ ) . '/buddypress-member-review.php' );
 				wp_add_inline_style(
 					'bupr-front-css',
 					'@font-face{font-family:"BUPR Star";font-style:normal;font-weight:900;font-display:swap;src:url("' . esc_url( $bupr_fa_url ) . 'fa-solid-900.woff2") format("woff2"),url("' . esc_url( $bupr_fa_url ) . 'fa-solid-900.woff") format("woff")}'
