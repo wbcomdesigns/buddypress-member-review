@@ -1922,24 +1922,4 @@ body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:focus {
     color: var(--bupr-danger-fg, #b32d2e);
 }
 
-/* Stars: glyphs from the bundled font (@font-face "BUPR Star" is added in bupr-scripts.php with absolute URLs). */
-.bupr-star-rate,
-.bupr-star-rate::before {
-    font-family: "BUPR Star", "Font Awesome 5 Free", sans-serif;
-    font-style: normal;
-    line-height: 1;
-}
-.bupr-star-rate.fas {
-    font-weight: 900;
-}
-.bupr-star-rate.far {
-    font-weight: 400;
-}
-.bupr-star-rate.fa-star::before {
-    content: "\f005";
-}
-.bupr-star-rate.fa-star-half-alt::before {
-    content: "\f5c0";
-}
-
 /*# sourceMappingURL=bupr-front.rtl.css.map */

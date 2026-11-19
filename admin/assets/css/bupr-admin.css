@@ -4,7 +4,7 @@
  * The FontAwesome 4 @font-face was removed in the 3.8.x cleanup: no rule in this
  * plugin ever declared `font-family: FontAwesome`, so the face was never applied
  * and its ../fonts/ payload was never downloaded. The bundled FA 5 stylesheet
- * (assets/css/fontawesome/all.min.css) supplies the only icons we use (fa-star).
+ * (bupr_enqueue_star_font()) supplies the only icons we use (the star glyphs).
  */
 
 .bupr-admin-settings-header p {

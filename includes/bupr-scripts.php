@@ -136,30 +136,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 				// Determine file paths based on debug mode and RTL support.
 				// Legacy bupr-reviews.css was merged into bupr-front.css in the 3.8.0 consolidation; no longer enqueued.
 				wp_enqueue_style( 'bupr-front-css', BUPR_PLUGIN_URL . 'assets/css' . $path . '/bupr-front' . $extension, array(), BUPR_PLUGIN_VERSION, 'all' );
-				// Load Font Awesome from registered WordPress source if available, otherwise use bundled version.
-				if ( ! wp_style_is( 'font-awesome', 'registered' ) ) {
-					// Versioned with the plugin, not the vendored Font Awesome release (5.5.0):
-					// the stylesheet's own contents change between plugin versions (the 3.8.x
-					// cleanup corrected its webfonts/ paths), and a fixed '5.5.0' would leave
-					// existing visitors on a cached, broken copy after they update.
-					wp_register_style( 'bupr-font-awesome', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), BUPR_PLUGIN_VERSION );
-				} else {
-					wp_register_style( 'bupr-font-awesome', '', array( 'font-awesome' ), null );
-				}
-
-				// If BuddyBoss theme is active, it has its own Font Awesome - skip our version.
-				if ( get_template() !== 'buddyboss-theme' ) {
-					wp_enqueue_style( 'bupr-font-awesome' );
-				}
-				// Stars draw from the bundled Font Awesome glyphs under their own family name. Another plugin or the theme
-				// registering "font-awesome" (Elementor ships 4.7) otherwise decides which font and weight .fas/.far get,
-				// and filled stars rendered as outlines.
-				$bupr_fa_url = plugins_url( 'assets/css/fontawesome/webfonts/', dirname( __DIR__ ) . '/buddypress-member-review.php' );
-				wp_add_inline_style(
-					'bupr-front-css',
-					'@font-face{font-family:"BUPR Star";font-style:normal;font-weight:900;font-display:swap;src:url("' . esc_url( $bupr_fa_url ) . 'fa-solid-900.woff2") format("woff2"),url("' . esc_url( $bupr_fa_url ) . 'fa-solid-900.woff") format("woff")}'
-					. '@font-face{font-family:"BUPR Star";font-style:normal;font-weight:400;font-display:swap;src:url("' . esc_url( $bupr_fa_url ) . 'fa-regular-400.woff2") format("woff2"),url("' . esc_url( $bupr_fa_url ) . 'fa-regular-400.woff") format("woff")}'
-				);
+				bupr_enqueue_star_font();
 				if ( isset( $bupr['rating_color'] ) && ! empty( $bupr['rating_color'] ) ) {
 					$bupr_star_color = $bupr['rating_color'];
 					$custom_css      = ".bupr-star-rate { color: {$bupr_star_color} !important; }";
@@ -320,9 +297,7 @@ if ( ! class_exists( 'BUPRScriptsStyles' ) ) {
 					$path      = is_rtl() ? '/rtl' : '/min';
 				}
 
-				if ( ! wp_style_is( 'font-awesome', 'enqueued' ) ) {
-					wp_enqueue_style( 'font-awesome', BUPR_PLUGIN_URL . 'assets/css/fontawesome/all.min.css', array(), BUPR_PLUGIN_VERSION, 'all' );
-				}
+				bupr_enqueue_star_font();
 				if ( ! wp_style_is( 'wbcom-select2-css', 'enqueued' ) ) {
 					wp_enqueue_style( 'wbcom-select2-css', BUPR_PLUGIN_URL . 'admin/assets/css/vendor/select2.css', array(), BUPR_PLUGIN_VERSION, 'all' );
 				}

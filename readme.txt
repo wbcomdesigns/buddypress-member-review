@@ -246,7 +246,8 @@ Lockstep with Member Reviews Pro 1.0.1.
 * Improve  - Member Reviews Pro settings appear on an Add-ons tab when Pro is active; free-only sites do not see the tab.
 * Improve  - The settings heading, sidebar and menu say Member Reviews Pro when Pro is active.
 * Improve  - The top members shortcode and widget cache in the object cache instead of the options table.
-* Fix      - Filled rating stars show as filled on sites where another plugin loads its own Font Awesome, instead of looking like outlines.
+* Improve  - The plugin no longer loads a Font Awesome stylesheet; stars use a small bundled font.
+* Fix      - Filled rating stars show as filled on sites where the theme or another plugin loads its own Font Awesome, instead of looking like outlines.
 * Fix      - Profile tab links (Reviews and Add Review) work on sites installed in a subfolder or with a renamed members page.
 * Fix      - The Add Review button in the profile header now links with a trailing slash.
 * Fix      - The edit-review and report windows close with Escape, keep Tab inside the window and return focus to the button that opened them.

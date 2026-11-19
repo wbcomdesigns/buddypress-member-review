@@ -976,3 +976,24 @@ function bupr_date_label( $timestamp, $format = '' ) {
 	$format = '' === $format ? get_option( 'date_format' ) : $format;
 	return (string) wp_date( $format, (int) $timestamp, bupr_display_timezone() );
 }
+
+/**
+ * Enqueue the star glyph font and the rules that use it.
+ *
+ * Stars are drawn from the bundled star glyph font files (subset of Font Awesome Free, SIL OFL 1.1) under their own family name ("BUPR Star"), so no
+ * icon stylesheet is loaded and another plugin or the theme registering "font-awesome" (Elementor ships 4.7)
+ * cannot change which font or weight the .fas / .far classes get. Inline, because the font URL must be absolute.
+ *
+ * @since 3.8.3
+ */
+function bupr_enqueue_star_font() {
+	$fonts = plugins_url( 'assets/fonts/', dirname( __DIR__ ) . '/buddypress-member-review.php' );
+	$css   = '@font-face{font-family:"BUPR Star";font-style:normal;font-weight:900;font-display:swap;src:url("' . esc_url( $fonts ) . 'bupr-star-solid.woff2") format("woff2"),url("' . esc_url( $fonts ) . 'bupr-star-solid.woff") format("woff")}'
+		. '@font-face{font-family:"BUPR Star";font-style:normal;font-weight:400;font-display:swap;src:url("' . esc_url( $fonts ) . 'bupr-star-regular.woff2") format("woff2"),url("' . esc_url( $fonts ) . 'bupr-star-regular.woff") format("woff")}'
+		. '.bupr-star-rate.bupr-star-rate,.bupr-star-rate.bupr-star-rate::before{font-family:"BUPR Star",sans-serif !important;font-style:normal;line-height:1}'
+		. '.bupr-star-rate.bupr-star-rate.fas{font-weight:900 !important}.bupr-star-rate.bupr-star-rate.far{font-weight:400 !important}'
+		. '.bupr-star-rate.fa-star::before{content:"\\f005"}.bupr-star-rate.fa-star-half-alt::before{content:"\\f5c0"}';
+	wp_register_style( 'bupr-stars', false, array(), '3.8.3' );
+	wp_enqueue_style( 'bupr-stars' );
+	wp_add_inline_style( 'bupr-stars', $css );
+}

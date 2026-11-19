@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-19T00:02:47+00:00\n"
+"POT-Creation-Date: 2026-11-19T00:10:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: bp-member-reviews\n"
@@ -152,7 +152,7 @@ msgstr ""
 #: admin/bupr-admin.php:422
 #: includes/bupr-ajax.php:239
 #: includes/bupr-ajax.php:421
-#: includes/bupr-scripts.php:209
+#: includes/bupr-scripts.php:186
 #, php-format
 msgid "%1$s received a %2$s"
 msgstr ""
@@ -202,7 +202,7 @@ msgstr[1] ""
 
 #: admin/bupr-admin.php:580
 #: includes/admin/views/overview.php:94
-#: includes/bupr-scripts.php:214
+#: includes/bupr-scripts.php:191
 #: includes/templates/bupr-reviews-tab-template.php:311
 msgid "Reported"
 msgstr ""
@@ -387,17 +387,17 @@ msgid "Rate members by multiple criteria (e.g., Communication, Skills) instead o
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:113
-#: includes/bupr-scripts.php:283
+#: includes/bupr-scripts.php:260
 msgid "Review criteria name"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:118
-#: includes/bupr-scripts.php:284
+#: includes/bupr-scripts.php:261
 msgid "Remove"
 msgstr ""
 
 #: admin/tab-templates/bupr-setting-criteria-tab.php:118
-#: includes/bupr-scripts.php:285
+#: includes/bupr-scripts.php:262
 msgid "Remove this review criteria"
 msgstr ""
 
@@ -1363,53 +1363,53 @@ msgstr ""
 msgid "( Pending Approval )  %1$s posted a %2$s"
 msgstr ""
 
-#: includes/bupr-scripts.php:210
+#: includes/bupr-scripts.php:187
 msgid "Enter Keywords...."
 msgstr ""
 
-#: includes/bupr-scripts.php:211
+#: includes/bupr-scripts.php:188
 msgid "Please enter a reply."
 msgstr ""
 
-#: includes/bupr-scripts.php:212
+#: includes/bupr-scripts.php:189
 msgid "Failed to add reply."
 msgstr ""
 
-#: includes/bupr-scripts.php:213
+#: includes/bupr-scripts.php:190
 msgid "Please select a reason."
 msgstr ""
 
-#: includes/bupr-scripts.php:215
+#: includes/bupr-scripts.php:192
 msgid "An error occurred. Please try again."
 msgstr ""
 
 #. translators: %d: star position (1-5) in the rating group.
-#: includes/bupr-scripts.php:223
+#: includes/bupr-scripts.php:200
 #, php-format
 msgid "Rate %d out of 5"
 msgstr ""
 
-#: includes/bupr-scripts.php:224
+#: includes/bupr-scripts.php:201
 msgid "Rating"
 msgstr ""
 
-#: includes/bupr-scripts.php:276
+#: includes/bupr-scripts.php:253
 msgid "Already Installed & Activated"
 msgstr ""
 
-#: includes/bupr-scripts.php:277
+#: includes/bupr-scripts.php:254
 msgid "There was a problem performing the action."
 msgstr ""
 
-#: includes/bupr-scripts.php:278
+#: includes/bupr-scripts.php:255
 msgid "* Number input is not allowed *"
 msgstr ""
 
-#: includes/bupr-scripts.php:279
+#: includes/bupr-scripts.php:256
 msgid "Approving…"
 msgstr ""
 
-#: includes/bupr-scripts.php:282
+#: includes/bupr-scripts.php:259
 msgid "Add Review criteria eg. Member Response. "
 msgstr ""
 
