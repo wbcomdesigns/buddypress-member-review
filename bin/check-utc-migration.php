@@ -7,7 +7,7 @@
  * Exits non-zero on failure. Cleans up after itself.
  */
 global $wpdb;
-wp_clear_scheduled_hook( 'bupr_utc_migration' ); // Leftovers from an earlier aborted run would be picked up as a lost chain.
+wp_unschedule_hook( 'bupr_utc_migration' ); // Leftovers from an earlier aborted run would be picked up as a lost chain.
 delete_option( 'bupr_utc_migration_state' );
 $fail  = array();
 $ids   = array();
@@ -81,7 +81,51 @@ if ( $new && (string) $stamp !== (string) $wpdb->get_var( $wpdb->prepare( "SELEC
 if ( version_compare( get_option( 'bupr_plugin_version' ), '3.8.3', '<' ) ) {
 	$fail[] = 'version not moved forward';
 }
-foreach ( $ids as $id ) {
+// Case 2: an aged state with admin_init fired while a batch starts (before its first query). Nothing may be requeued
+// or shifted twice. Case 3: a duplicate event with an old $after is a no-op.
+$ids2 = array();
+for ( $i = 0; $i < 2; $i++ ) {
+	$ids2[] = wp_insert_post( array( 'post_type' => 'review', 'post_title' => 'utc check 2', 'post_status' => 'publish' ) );
+}
+$rows2 = array();
+for ( $i = 0; $i < 900; $i++ ) {
+	$rows2[] = '(' . $ids2[ $i % 2 ] . ',"bupr_owner_reply_date","' . $stamp . '")';
+}
+$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id,meta_key,meta_value) VALUES " . implode( ',', $rows2 ) ); // phpcs:ignore
+$cap2 = (int) $wpdb->get_var( "SELECT MAX(meta_id) FROM {$wpdb->postmeta} WHERE meta_key='bupr_owner_reply_date'" ); // phpcs:ignore
+$low2 = (int) $wpdb->get_var( $wpdb->prepare( "SELECT MIN(meta_id) FROM {$wpdb->postmeta} WHERE post_id=%d AND meta_key='bupr_owner_reply_date'", $ids2[0] ) ); // phpcs:ignore
+wp_unschedule_hook( 'bupr_utc_migration' );
+update_option( 'bupr_utc_migration_state', array( 'last' => $low2 - 1, 'cap' => $cap2, 'at' => time() - 3600 ), false );
+$fired = false;
+add_filter(
+	'bupr_utc_migration_budget',
+	function ( $budget ) use ( &$fired ) {
+		if ( ! $fired ) {
+			$fired = true;
+			do_action( 'admin_init' ); // A visitor loads wp-admin as the batch starts, the state still an hour old.
+		}
+		return 0;
+	}
+);
+do_action( 'bupr_utc_migration', $low2 - 1, $cap2 );
+if ( $next() ) {
+	$q = $next();
+	if ( $q[1] === array( $low2 - 1, $cap2 ) ) {
+		$fail[] = 'admin_init requeued the batch that was starting (aged state)';
+	}
+	wp_unschedule_event( $q[0], 'bupr_utc_migration', $q[1] );
+	do_action( 'bupr_utc_migration', $q[1][0], $q[1][1] ); // The legitimate next event.
+}
+// Duplicate with the old $after: the saved state is further along, so this must change nothing.
+do_action( 'bupr_utc_migration', $low2 - 1, $cap2 );
+$twice2 = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key='bupr_owner_reply_date' AND meta_value=%s AND post_id IN (%d,%d)", (string) ( $stamp - 2 * $offset ), $ids2[0], $ids2[1] ) ); // phpcs:ignore
+$once2  = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key='bupr_owner_reply_date' AND meta_value=%s AND post_id IN (%d,%d)", (string) ( $stamp - $offset ), $ids2[0], $ids2[1] ) ); // phpcs:ignore
+if ( 900 !== $once2 || 0 !== $twice2 ) {
+	$fail[] = "aged-state or duplicate case: {$once2} shifted once, {$twice2} shifted twice (expected 900 and 0)";
+}
+wp_unschedule_hook( 'bupr_utc_migration' );
+delete_option( 'bupr_utc_migration_state' );
+foreach ( array_merge( $ids, $ids2 ) as $id ) {
 	wp_delete_post( $id, true );
 }
 echo $fail ? 'FAIL: ' . implode( '; ', $fail ) . "\n" : "PASS: {$runs} runs, 1300 rows shifted once, post-upgrade reply untouched, lost event resumed, state option gone\n";

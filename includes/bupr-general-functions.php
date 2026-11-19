@@ -1045,9 +1045,17 @@ function bupr_local_stamp_to_utc( $stamp ) {
  */
 function bupr_run_utc_migration( $after = 0, $cap = 0 ) {
 	global $wpdb;
-	$deadline = time() + (int) apply_filters( 'bupr_utc_migration_budget', 15 );
-	$cursor   = (int) $after;
-	$cap      = (int) $cap;
+	$cursor = (int) $after;
+	$cap    = (int) $cap;
+
+	// No saved state means no upgrade is running (it finished, or this event is a late duplicate of one that did);
+	// a state that is further along means this event covers ground already done. Either way: do nothing.
+	$state = get_option( 'bupr_utc_migration_state' );
+	if ( ! is_array( $state ) || ! isset( $state['last'] ) || (int) $state['last'] > $cursor ) {
+		return;
+	}
+	// First thing, before any filter or query: a run that is alive must look fresh to admin_init, however long the
+	// state sat idle before WP-Cron picked the event up.
 	update_option(
 		'bupr_utc_migration_state',
 		array(
@@ -1057,6 +1065,7 @@ function bupr_run_utc_migration( $after = 0, $cap = 0 ) {
 		),
 		false
 	);
+	$deadline = time() + (int) apply_filters( 'bupr_utc_migration_budget', 15 );
 
 	do {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time upgrade; meta_key is indexed and the walk is by meta_id.
