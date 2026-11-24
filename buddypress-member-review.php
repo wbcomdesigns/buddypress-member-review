@@ -19,6 +19,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+/*
+ * Update safety. Copies before 3.8.3 were installed in this folder and declare their functions without guards.
+ * Updating from that copy with a zip installs this one in the WordPress.org folder as a second plugin, and loading
+ * both is a fatal "Cannot redeclare". So while the old copy is active this file declares nothing: the old copy keeps
+ * the site running, and activating this copy deactivates the old one.
+ */
+if ( ! defined( 'BUPR_LEGACY_BASENAME' ) ) {
+	define( 'BUPR_LEGACY_BASENAME', 'buddypress-member-review/buddypress-member-review.php' );
+}
+if ( plugin_basename( __FILE__ ) !== BUPR_LEGACY_BASENAME ) {
+	register_activation_hook(
+		__FILE__,
+		static function () {
+			deactivate_plugins( BUPR_LEGACY_BASENAME, true );
+		}
+	);
+	$bupr_sitewide = is_multisite() ? (array) get_site_option( 'active_sitewide_plugins', array() ) : array();
+	if ( isset( $bupr_sitewide[ BUPR_LEGACY_BASENAME ] ) || in_array( BUPR_LEGACY_BASENAME, (array) get_option( 'active_plugins', array() ), true ) ) {
+		$bupr_legacy_notice = static function () {
+			if ( current_user_can( 'activate_plugins' ) ) {
+				echo '<div class="notice notice-warning"><p>';
+				/* translators: %s: plugin name. */
+				printf( esc_html__( 'An older copy of %s is still active. Deactivate and delete it to finish the update.', 'bp-member-reviews' ), 'BP Member Reviews' );
+				echo '</p></div>';
+			}
+		};
+		add_action( 'admin_notices', $bupr_legacy_notice );
+		add_action( 'network_admin_notices', $bupr_legacy_notice );
+		unset( $bupr_sitewide, $bupr_legacy_notice );
+		return;
+	}
+	unset( $bupr_sitewide );
+}
+
 // One copy only: stop if this plugin is already loaded from another folder.
 if ( defined( 'BP_USER_PROFILE_REVIEWS_LOADED' ) ) {
 	return;
