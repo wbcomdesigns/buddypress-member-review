@@ -6,86 +6,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        // Clean dist folder
-        clean: {
-            dist: ['dist'],
-            temp: ['dist/buddypress-member-review']
-        },
-
-        // Copy files to dist
-        copy: {
-            dist: {
-                files: [{
-                    expand: true,
-                    src: [
-                        '**',
-                        // Dev-only tooling (PHPStan + stubs). Never ship these.
-                        '!vendor/**',
-                        '!composer.json',
-                        '!composer.lock',
-                        '!phpstan.neon',
-                        '!phpstan-baseline.neon',
-                        '!node_modules/**',
-                        '!audit/**',
-                        '!dist/**',
-                        '!.git/**',
-                        '!.github/**',
-                        '!.gitignore',
-                        '!.gitattributes',
-                        '!.editorconfig',
-                        '!.eslintrc',
-                        '!.eslintrc.json',
-                        '!.prettierrc',
-                        '!.stylelintrc',
-                        '!package.json',
-                        '!package-lock.json',
-                        '!gruntfile.js',
-                        '!Gruntfile.js',
-                        '!composer.json',
-                        '!composer.lock',
-                        '!phpcs.xml',
-                        '!phpcs.xml.dist',
-                        '!phpunit.xml',
-                        '!phpunit.xml.dist',
-                        '!*.log',
-                        '!*.zip',
-                        '!tests/**',
-                        '!bin/**',
-                        '!docs/**',
-                        '!plan/**',
-                        '!CAPABILITIES.md',
-                        '!marketing/**',
-                        '!**/*.md',
-                        '!*.md',
-                        '!CLAUDE.md',
-                        '!BUILD.md',
-                        '!CONTRIBUTING.md',
-                        '!**/*.map',
-                        '!.wordpress-org/**',
-                        '!screenshot-*.png',
-                        '!.contract-audit-baseline.json'
-                    ],
-                    dest: 'dist/buddypress-member-review/'
-                }]
-            }
-        },
-
-        // Create zip file
-        compress: {
-            dist: {
-                options: {
-                    archive: 'dist/buddypress-member-review-<%= pkg.version %>.zip',
-                    mode: 'zip'
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'dist/',
-                    src: ['buddypress-member-review/**'],
-                    dest: ''
-                }]
-            }
-        },
-
         // Task for checking text domain
         checktextdomain: {
             options: {
@@ -252,14 +172,7 @@ module.exports = function (grunt) {
         'shell'
     ]);
 
-    // Register dist task (create distribution zip)
-    grunt.registerTask('dist', [
-        'build',
-        'clean:dist',
-        'copy:dist',
-        'compress:dist',
-        'clean:temp'
-    ]);
+    // The release zip is built by bin/build-release.sh only (folder = WordPress.org slug).
 
     // Register default task
     grunt.registerTask('default', ['build', 'watch']);

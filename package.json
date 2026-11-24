@@ -6,7 +6,7 @@
   "description": "Add reviews to your BuddyPress community members, we offer multiple criteria ratings with google rating schema",
   "scripts": {
     "build": "grunt build",
-    "dist": "grunt dist",
+    "dist": "bash bin/build-release.sh",
     "watch": "grunt watch"
   },
   "devDependencies": {
