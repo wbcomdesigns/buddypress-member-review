@@ -508,7 +508,8 @@ button.bupr-edit-review-button {
     margin-bottom: 10px;
 }
 
-.success_review_msg {
+/* Legacy template pack only: on Nouveau the notice is a core .bp-feedback and takes BuddyPress's colours. */
+.success_review_msg:not(.bp-feedback) {
     color: #4F8A10;
     background-color: #DFF2BF;
     font-weight: 700;
@@ -518,7 +519,7 @@ button.bupr-edit-review-button {
     border-radius: 5px;
 }
 
-.success_review_msg p {
+.success_review_msg:not(.bp-feedback) p {
     padding: 10px 15px;
     margin: 0;
 }
@@ -568,12 +569,21 @@ button.bupr-edit-review-button {
     margin: 0 0 0 5px;
 }
 
-.add_review_msg {
+/* The add-review result notice stays hidden until bupr-front.js writes a message into it.
+   The second selector outranks Nouveau's .buddypress-wrap .bp-feedback:not(.custom-homepage-info) { display: flex }. */
+.add_review_msg:has(> p:empty),
+.buddypress-wrap .bp-feedback.add_review_msg:has(> p:empty) {
     display: none;
 }
 
-.success_review_msg {
-    display: none;
+/* Inside a BuddyPress notice the error text takes the notice's own colours, not a second red box. */
+.bp-feedback .bupr-error {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
 }
 
 #bupr-view-review-btn {
@@ -1688,9 +1698,14 @@ body .buddypress-wrap button.bupr-cancel-reply.bupr-cancel-reply:focus {
 }
 
 /* Inline success / error notices (add-review form + submit confirmation). */
-.success_review_msg {
+.success_review_msg:not(.bp-feedback) {
     background-color: var(--bupr-success-bg, #DFF2BF);
     color: var(--bupr-success-fg, #4F8A10);
+}
+
+.success_review_msg.error:not(.bp-feedback) {
+    background-color: var(--bupr-danger-bg, hsl(0, 43%, 91%));
+    color: var(--bupr-danger-fg, hsl(1, 44%, 46%));
 }
 
 .bupr-error {
