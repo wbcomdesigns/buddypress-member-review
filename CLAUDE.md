@@ -186,5 +186,5 @@ upstream counterpart only in those blocks. **When refreshing FA, re-apply both e
 ### Caveat 3 — `vendor/` in `.gitignore` must stay root-anchored (`/vendor/`)
 A bare `vendor/` also matches `admin/assets/js/vendor/` and `admin/assets/css/vendor/`, which
 silently ignores the shipped library sources — the commit looks fine and regresses on next
-clone. Keep the leading slash. `copy:dist`'s `!vendor/**` glob is already root-anchored by
-grunt's `expand: true` and does **not** drop the asset vendor dirs (verified against the zip).
+clone. Keep the leading slash. `.distignore`'s `/vendor` rule is root-anchored and does **not** drop
+the asset vendor dirs.
