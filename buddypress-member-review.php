@@ -19,6 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// One copy only: stop if this plugin is already loaded from another folder.
+if ( defined( 'BP_USER_PROFILE_REVIEWS_LOADED' ) ) {
+	return;
+}
+define( 'BP_USER_PROFILE_REVIEWS_LOADED', __FILE__ ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Named after the WordPress.org slug (Wbcom one-copy guard).
+
 /**
  * Plugin version and path constants.
  */
@@ -45,211 +51,227 @@ if ( ! function_exists( 'bupr_load_textdomain' ) ) {
 }
 
 
-/**
- * Check if BuddyPress is active and meets minimum requirements.
- *
- * @return bool True if BuddyPress meets requirements, false otherwise.
- */
-function bupr_check_buddypress_compatibility() {
-	// Check if BuddyPress is active.
-	if ( ! class_exists( 'BuddyPress' ) ) {
-		return false;
-	}
-	if ( ! function_exists( 'bp_get_version' ) ) {
-		return false;
-	}
-
-	// Check BuddyPress version.
-	if ( defined( 'BP_PLATFORM_VERSION' ) ) {
-		// It's BuddyBoss - compare BuddyBoss version.
-		$min_bb_version = '1.8.0';
-		if ( version_compare( BP_PLATFORM_VERSION, $min_bb_version, '<' ) ) {
-			add_action( 'admin_notices', 'bupr_outdated_buddyboss_notice' );
-			return false;
-		}
-	} else {
-		// It's BuddyPress - compare BuddyPress version.
-		$min_bp_version = '6.0.0';
-		if ( version_compare( bp_get_version(), $min_bp_version, '<' ) ) {
-			add_action( 'admin_notices', 'bupr_outdated_buddypress_notice' );
-			return false;
-		}
-	}
-
-	return true;
-}
-
-
-/**
- * Admin notice for outdated BuddyPress version.
- */
-function bupr_outdated_buddypress_notice() {
-	echo '<div class="error"><p>';
-	printf(
-		/* translators: %1$s: Plugin name, %2$s: Required version */
-		esc_html__( '%1$s requires BuddyPress version %2$s or higher.', 'bp-member-reviews' ),
-		'<strong>' . 'BuddyPress Member Reviews' . '</strong>',
-		'6.0.0'
-	);
-	echo '</p></div>';
-}
-/**
- * Admin notice for outdated BuddyBoss version.
- */
-function bupr_outdated_buddyboss_notice() {
-	echo '<div class="error"><p>';
-	printf(
-		/* translators: %1$s: Plugin name, %2$s: Required version */
-		esc_html__( '%1$s requires BuddyBoss version %2$s or higher.', 'bp-member-reviews' ),
-		'<strong>' . 'BuddyPress Member Reviews' . '</strong>',
-		'1.8.0'
-	);
-	echo '</p></div>';
-}
-
-/**
- * Admin notice for inactive BuddyPress members component.
- */
-function bupr_inactive_members_component_notice() {
-	echo '<div class="error"><p>';
-	printf(
-		/* translators: %1$s: Plugin name */
-		esc_html__( '%1$s requires the BuddyPress Members component to be active.', 'bp-member-reviews' ),
-		'<strong>' . 'BuddyPress Member Reviews' . '</strong>'
-	);
-	echo '</p></div>';
-}
-/**
- * Check whether the plugin is active or not.
- *
- * @return boolean
- */
-function bupr_is_plugin_active() {
-	// Simplified check for plugin status.
-	if ( is_multisite() ) {
-		$active_plugins = get_site_option( 'active_sitewide_plugins' );
-		if ( isset( $active_plugins[ BUPR_PLUGIN_BASENAME ] ) ) {
-			return true;
-		}
-
-		$active_plugins = get_option( 'active_plugins' );
-		return in_array( BUPR_PLUGIN_BASENAME, (array) $active_plugins, true );
-	} else {
-		$active_plugins = get_option( 'active_plugins' );
-		return in_array( BUPR_PLUGIN_BASENAME, (array) $active_plugins, true );
-	}
-}
-
-/**
- * The rating criteria shipped by default, as stable untranslated identifiers.
- *
- * These are IDENTIFIERS, not labels. They are stored as the array keys of
- * `bupr_admin_settings['profile_rating_fields']` AND as the array keys of every
- * review's `profile_star_rating` post meta, where they are matched back with
- * array_key_exists() (see includes/templates/bupr-reviews-tab-template.php).
- *
- * They must therefore never be translated at rest. Running them through __()
- * before storing - which is what activation did until 3.8.0 - freezes a site
- * into whatever locale it happened to be installed under, so English installs
- * never see a translation and German installs show German to everyone. Worse,
- * it would orphan every rating ever submitted if the site changed language.
- * Translate at render time with bupr_get_criteria_label() instead.
- *
- * Lives in the main plugin file, not includes/bupr-general-functions.php,
- * because bupr_plugin_activation() needs it: the includes/ files are loaded on
- * `plugins_loaded`, which has already fired (and is gated on the plugin being
- * active) by the time the activation hook runs.
- *
- * @since   3.8.0
- * @return  array<string, string> Untranslated criterion identifier => enabled flag.
- */
-function bupr_get_default_rating_fields() {
-	return array(
-		'Member Response' => 'yes',
-		'Member Skills'   => 'yes',
-	);
-}
-
-/**
- * Translate a rating criterion identifier for display.
- *
- * Render-time lookup only - the stored key is never rewritten. Only the shipped
- * defaults have translations; a criterion the site owner typed in themselves is
- * their own copy and is returned verbatim. That fall-through is also what keeps
- * sites which already stored a translated default (activated before 3.8.0 under
- * a non-English locale) rendering exactly as they do today - no migration runs
- * and no stored data is rewritten.
- *
- * Do NOT use this anywhere the value is written back as an identifier: the
- * criteria editor (admin/tab-templates/bupr-setting-criteria-tab.php) must keep
- * emitting the raw key in its input value, or saving that form in a non-English
- * locale would rewrite the stored keys and orphan existing ratings.
- *
- * @since   3.8.0
- * @param   string $name Stored criterion identifier.
- * @return  string Translated label, or $name when there is nothing to translate.
- */
-function bupr_get_criteria_label( $name ) {
-	$labels = array(
-		'Member Response' => __( 'Member Response', 'bp-member-reviews' ),
-		'Member Skills'   => __( 'Member Skills', 'bp-member-reviews' ),
-	);
-
-	return isset( $labels[ $name ] ) ? $labels[ $name ] : $name;
-}
-
-/**
- * Plugin activation hook.
- */
-function bupr_plugin_activation() {
-	// Check if BuddyPress is active before proceeding.
-	if ( ! class_exists( 'BuddyPress' ) ) {
-		deactivate_plugins( BUPR_PLUGIN_BASENAME );
-		add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-		return false;
-	}
-
-	/*
-	 * Set default options.
+if ( ! function_exists( 'bupr_check_buddypress_compatibility' ) ) {
+	/**
+	 * Check if BuddyPress is active and meets minimum requirements.
 	 *
-	 * The criteria keys are stored UNTRANSLATED on purpose - they are
-	 * identifiers, not labels, and __() here would freeze the site into its
-	 * activation-time locale. bupr_get_criteria_label() translates them at
-	 * render time instead. See bupr_get_default_rating_fields().
+	 * @return bool True if BuddyPress meets requirements, false otherwise.
 	 */
-	$default_criteria = array(
-		'profile_multi_rating_allowed' => '1',
-		'profile_rating_fields'        => bupr_get_default_rating_fields(),
-	);
+	function bupr_check_buddypress_compatibility() {
+		// Check if BuddyPress is active.
+		if ( ! class_exists( 'BuddyPress' ) ) {
+			return false;
+		}
+		if ( ! function_exists( 'bp_get_version' ) ) {
+			return false;
+		}
 
-	if ( ! get_option( 'bupr_admin_settings' ) ) {
-		update_option( 'bupr_admin_settings', $default_criteria );
+		// Check BuddyPress version.
+		if ( defined( 'BP_PLATFORM_VERSION' ) ) {
+			// It's BuddyBoss - compare BuddyBoss version.
+			$min_bb_version = '1.8.0';
+			if ( version_compare( BP_PLATFORM_VERSION, $min_bb_version, '<' ) ) {
+				add_action( 'admin_notices', 'bupr_outdated_buddyboss_notice' );
+				return false;
+			}
+		} else {
+			// It's BuddyPress - compare BuddyPress version.
+			$min_bp_version = '6.0.0';
+			if ( version_compare( bp_get_version(), $min_bp_version, '<' ) ) {
+				add_action( 'admin_notices', 'bupr_outdated_buddypress_notice' );
+				return false;
+			}
+		}
+
+		return true;
 	}
+}
 
-	// Set plugin version in options. An existing value stays: bupr_maybe_run_utc_migration() reads it to know
-	// whether this site still holds pre-3.8.3 local-time stamps, and moves it forward when it is done.
-	if ( ! get_option( 'bupr_plugin_version' ) ) {
-		update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+
+if ( ! function_exists( 'bupr_outdated_buddypress_notice' ) ) {
+	/**
+	 * Admin notice for outdated BuddyPress version.
+	 */
+	function bupr_outdated_buddypress_notice() {
+		echo '<div class="error"><p>';
+		printf(
+			/* translators: %1$s: Plugin name, %2$s: Required version */
+			esc_html__( '%1$s requires BuddyPress version %2$s or higher.', 'bp-member-reviews' ),
+			'<strong>' . 'BuddyPress Member Reviews' . '</strong>',
+			'6.0.0'
+		);
+		echo '</p></div>';
 	}
-
-	// Fresh installs have no reviews yet, so there is no drifted count/aggregate
-	// meta to repair. Mark the one-time repair migration done so it is skipped.
-	if ( ! get_option( 'bupr_meta_repair_v1_done' ) ) {
-		update_option( 'bupr_meta_repair_v1_done', 'yes' );
+}
+if ( ! function_exists( 'bupr_outdated_buddyboss_notice' ) ) {
+	/**
+	 * Admin notice for outdated BuddyBoss version.
+	 */
+	function bupr_outdated_buddyboss_notice() {
+		echo '<div class="error"><p>';
+		printf(
+			/* translators: %1$s: Plugin name, %2$s: Required version */
+			esc_html__( '%1$s requires BuddyBoss version %2$s or higher.', 'bp-member-reviews' ),
+			'<strong>' . 'BuddyPress Member Reviews' . '</strong>',
+			'1.8.0'
+		);
+		echo '</p></div>';
 	}
+}
 
-	// The recalculation cron is scheduled in exactly one place — the
-	// guarded `bupr_schedule_review_recalculation()` on `init`
-	// (includes/bupr-general-functions.php). It runs on the next request
-	// after activation, so we do NOT also schedule it here (which used to
-	// register the same hook at a different interval — a conflicting
-	// double registration fixed in 3.8.0).
+if ( ! function_exists( 'bupr_inactive_members_component_notice' ) ) {
+	/**
+	 * Admin notice for inactive BuddyPress members component.
+	 */
+	function bupr_inactive_members_component_notice() {
+		echo '<div class="error"><p>';
+		printf(
+			/* translators: %1$s: Plugin name */
+			esc_html__( '%1$s requires the BuddyPress Members component to be active.', 'bp-member-reviews' ),
+			'<strong>' . 'BuddyPress Member Reviews' . '</strong>'
+		);
+		echo '</p></div>';
+	}
+}
+if ( ! function_exists( 'bupr_is_plugin_active' ) ) {
+	/**
+	 * Check whether the plugin is active or not.
+	 *
+	 * @return boolean
+	 */
+	function bupr_is_plugin_active() {
+		// Simplified check for plugin status.
+		if ( is_multisite() ) {
+			$active_plugins = get_site_option( 'active_sitewide_plugins' );
+			if ( isset( $active_plugins[ BUPR_PLUGIN_BASENAME ] ) ) {
+				return true;
+			}
 
-	// Set transient for redirect to settings page.
-	set_transient( '_bupr_activation_redirect', true, 30 );
+			$active_plugins = get_option( 'active_plugins' );
+			return in_array( BUPR_PLUGIN_BASENAME, (array) $active_plugins, true );
+		} else {
+			$active_plugins = get_option( 'active_plugins' );
+			return in_array( BUPR_PLUGIN_BASENAME, (array) $active_plugins, true );
+		}
+	}
+}
 
-	// Flush rewrite rules.
-	flush_rewrite_rules();
+if ( ! function_exists( 'bupr_get_default_rating_fields' ) ) {
+	/**
+	 * The rating criteria shipped by default, as stable untranslated identifiers.
+	 *
+	 * These are IDENTIFIERS, not labels. They are stored as the array keys of
+	 * `bupr_admin_settings['profile_rating_fields']` AND as the array keys of every
+	 * review's `profile_star_rating` post meta, where they are matched back with
+	 * array_key_exists() (see includes/templates/bupr-reviews-tab-template.php).
+	 *
+	 * They must therefore never be translated at rest. Running them through __()
+	 * before storing - which is what activation did until 3.8.0 - freezes a site
+	 * into whatever locale it happened to be installed under, so English installs
+	 * never see a translation and German installs show German to everyone. Worse,
+	 * it would orphan every rating ever submitted if the site changed language.
+	 * Translate at render time with bupr_get_criteria_label() instead.
+	 *
+	 * Lives in the main plugin file, not includes/bupr-general-functions.php,
+	 * because bupr_plugin_activation() needs it: the includes/ files are loaded on
+	 * `plugins_loaded`, which has already fired (and is gated on the plugin being
+	 * active) by the time the activation hook runs.
+	 *
+	 * @since   3.8.0
+	 * @return  array<string, string> Untranslated criterion identifier => enabled flag.
+	 */
+	function bupr_get_default_rating_fields() {
+		return array(
+			'Member Response' => 'yes',
+			'Member Skills'   => 'yes',
+		);
+	}
+}
+
+if ( ! function_exists( 'bupr_get_criteria_label' ) ) {
+	/**
+	 * Translate a rating criterion identifier for display.
+	 *
+	 * Render-time lookup only - the stored key is never rewritten. Only the shipped
+	 * defaults have translations; a criterion the site owner typed in themselves is
+	 * their own copy and is returned verbatim. That fall-through is also what keeps
+	 * sites which already stored a translated default (activated before 3.8.0 under
+	 * a non-English locale) rendering exactly as they do today - no migration runs
+	 * and no stored data is rewritten.
+	 *
+	 * Do NOT use this anywhere the value is written back as an identifier: the
+	 * criteria editor (admin/tab-templates/bupr-setting-criteria-tab.php) must keep
+	 * emitting the raw key in its input value, or saving that form in a non-English
+	 * locale would rewrite the stored keys and orphan existing ratings.
+	 *
+	 * @since   3.8.0
+	 * @param   string $name Stored criterion identifier.
+	 * @return  string Translated label, or $name when there is nothing to translate.
+	 */
+	function bupr_get_criteria_label( $name ) {
+		$labels = array(
+			'Member Response' => __( 'Member Response', 'bp-member-reviews' ),
+			'Member Skills'   => __( 'Member Skills', 'bp-member-reviews' ),
+		);
+
+		return isset( $labels[ $name ] ) ? $labels[ $name ] : $name;
+	}
+}
+
+if ( ! function_exists( 'bupr_plugin_activation' ) ) {
+	/**
+	 * Plugin activation hook.
+	 */
+	function bupr_plugin_activation() {
+		// Check if BuddyPress is active before proceeding.
+		if ( ! class_exists( 'BuddyPress' ) ) {
+			deactivate_plugins( BUPR_PLUGIN_BASENAME );
+			add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+			return false;
+		}
+
+		/*
+		 * Set default options.
+		 *
+		 * The criteria keys are stored UNTRANSLATED on purpose - they are
+		 * identifiers, not labels, and __() here would freeze the site into its
+		 * activation-time locale. bupr_get_criteria_label() translates them at
+		 * render time instead. See bupr_get_default_rating_fields().
+		 */
+		$default_criteria = array(
+			'profile_multi_rating_allowed' => '1',
+			'profile_rating_fields'        => bupr_get_default_rating_fields(),
+		);
+
+		if ( ! get_option( 'bupr_admin_settings' ) ) {
+			update_option( 'bupr_admin_settings', $default_criteria );
+		}
+
+		// Set plugin version in options. An existing value stays: bupr_maybe_run_utc_migration() reads it to know
+		// whether this site still holds pre-3.8.3 local-time stamps, and moves it forward when it is done.
+		if ( ! get_option( 'bupr_plugin_version' ) ) {
+			update_option( 'bupr_plugin_version', BUPR_PLUGIN_VERSION );
+		}
+
+		// Fresh installs have no reviews yet, so there is no drifted count/aggregate
+		// meta to repair. Mark the one-time repair migration done so it is skipped.
+		if ( ! get_option( 'bupr_meta_repair_v1_done' ) ) {
+			update_option( 'bupr_meta_repair_v1_done', 'yes' );
+		}
+
+		// The recalculation cron is scheduled in exactly one place — the
+		// guarded `bupr_schedule_review_recalculation()` on `init`
+		// (includes/bupr-general-functions.php). It runs on the next request
+		// after activation, so we do NOT also schedule it here (which used to
+		// register the same hook at a different interval — a conflicting
+		// double registration fixed in 3.8.0).
+
+		// Set transient for redirect to settings page.
+		set_transient( '_bupr_activation_redirect', true, 30 );
+
+		// Flush rewrite rules.
+		flush_rewrite_rules();
+	}
 }
 
 register_activation_hook( __FILE__, 'bupr_plugin_activation' );
@@ -307,116 +329,128 @@ if ( ! function_exists( 'bupr_plugins_files' ) ) {
 }
 
 
-/**
- * Add settings link to plugin action links.
- *
- * @param array $links The plugin setting links array.
- *
- * @return array
- */
-function bupr_admin_page_link( $links ) {
-	$settings_link = array(
-		'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">' . esc_html__( 'Settings', 'bp-member-reviews' ) . '</a>',
-	);
-	return array_merge( $links, $settings_link );
+if ( ! function_exists( 'bupr_admin_page_link' ) ) {
+	/**
+	 * Add settings link to plugin action links.
+	 *
+	 * @param array $links The plugin setting links array.
+	 *
+	 * @return array
+	 */
+	function bupr_admin_page_link( $links ) {
+		$settings_link = array(
+			'<a href="' . admin_url( 'admin.php?page=bp-member-review-settings' ) . '">' . esc_html__( 'Settings', 'bp-member-reviews' ) . '</a>',
+		);
+		return array_merge( $links, $settings_link );
+	}
 }
 
-/**
- * Deactivate the plugin if BuddyPress is not active.
- */
-function bupr_requires_buddypress() {
-		$network_active_plugins = get_site_option( 'active_sitewide_plugins' );
-	if ( empty( $network_active_plugins ) ) {
-		$network_active_plugins = get_option( 'active_plugins' );
-		$network_active_plugins = array_flip( $network_active_plugins );
-	}
-	if ( ! class_exists( 'BuddyPress' ) ) {
-		deactivate_plugins( BUPR_PLUGIN_BASENAME );
-		add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
-	} elseif ( is_multisite() ) {
-		if ( ! is_network_admin() ) {
-			global $current_blog;
-			$current_blog_id = (int) $current_blog->blog_id;
-			switch_to_blog( $current_blog_id );
-			if ( ! array_key_exists( BUPR_PLUGIN_BASENAME, $network_active_plugins ) ) {
-				deactivate_plugins( BUPR_PLUGIN_BASENAME );
-			}
-			restore_current_blog();
-		} elseif ( ! array_key_exists( 'buddypress/bp-loader.php', $network_active_plugins ) ) {
-				deactivate_plugins( BUPR_PLUGIN_BASENAME );
-				add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+if ( ! function_exists( 'bupr_requires_buddypress' ) ) {
+	/**
+	 * Deactivate the plugin if BuddyPress is not active.
+	 */
+	function bupr_requires_buddypress() {
+			$network_active_plugins = get_site_option( 'active_sitewide_plugins' );
+		if ( empty( $network_active_plugins ) ) {
+			$network_active_plugins = get_option( 'active_plugins' );
+			$network_active_plugins = array_flip( $network_active_plugins );
 		}
-	}
-		// Check if members component is active.
-	if ( function_exists( 'bp_is_active' ) && ! bp_is_active( 'members' ) ) {
-		deactivate_plugins( BUPR_PLUGIN_BASENAME );
-		add_action( 'admin_notices', 'bupr_inactive_members_component_notice' );
+		if ( ! class_exists( 'BuddyPress' ) ) {
+			deactivate_plugins( BUPR_PLUGIN_BASENAME );
+			add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+		} elseif ( is_multisite() ) {
+			if ( ! is_network_admin() ) {
+				global $current_blog;
+				$current_blog_id = (int) $current_blog->blog_id;
+				switch_to_blog( $current_blog_id );
+				if ( ! array_key_exists( BUPR_PLUGIN_BASENAME, $network_active_plugins ) ) {
+					deactivate_plugins( BUPR_PLUGIN_BASENAME );
+				}
+				restore_current_blog();
+			} elseif ( ! array_key_exists( 'buddypress/bp-loader.php', $network_active_plugins ) ) {
+					deactivate_plugins( BUPR_PLUGIN_BASENAME );
+					add_action( 'admin_notices', 'bupr_required_plugin_admin_notice' );
+			}
+		}
+			// Check if members component is active.
+		if ( function_exists( 'bp_is_active' ) && ! bp_is_active( 'members' ) ) {
+			deactivate_plugins( BUPR_PLUGIN_BASENAME );
+			add_action( 'admin_notices', 'bupr_inactive_members_component_notice' );
+		}
 	}
 }
 add_action( 'admin_init', 'bupr_requires_buddypress' );
 
 
 
-/**
- * Show admin notice for plugin when active action is performed.
- *
- * @param string $admin_notice The admin notice callback function name.
- */
-function bupr_show_admin_notice( $admin_notice ) {
-	if ( isset( $_GET['activate'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		add_action( 'admin_notices', $admin_notice );
-		unset( $_GET['activate'] );
+if ( ! function_exists( 'bupr_show_admin_notice' ) ) {
+	/**
+	 * Show admin notice for plugin when active action is performed.
+	 *
+	 * @param string $admin_notice The admin notice callback function name.
+	 */
+	function bupr_show_admin_notice( $admin_notice ) {
+		if ( isset( $_GET['activate'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			add_action( 'admin_notices', $admin_notice );
+			unset( $_GET['activate'] );
+		}
 	}
 }
 
-/**
- * Admin notice to indicate BuddyPress is required.
- */
-function bupr_required_plugin_admin_notice() {
-	$plugin_name = 'BuddyPress Member Reviews';
-	$bp_plugin   = esc_html__( 'BuddyPress or BuddyBoss', 'bp-member-reviews' );
-	echo '<div class="error"><p>';
-	printf(
-		/* translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress. */
-		esc_html__( '%1$s requires %2$s to be installed and active.', 'bp-member-reviews' ),
-		'<strong>' . esc_html( $plugin_name ) . '</strong>',
-		'<strong>' . esc_html( $bp_plugin ) . '</strong>'
-	);
-	echo '</p></div>';
+if ( ! function_exists( 'bupr_required_plugin_admin_notice' ) ) {
+	/**
+	 * Admin notice to indicate BuddyPress is required.
+	 */
+	function bupr_required_plugin_admin_notice() {
+		$plugin_name = 'BuddyPress Member Reviews';
+		$bp_plugin   = esc_html__( 'BuddyPress or BuddyBoss', 'bp-member-reviews' );
+		echo '<div class="error"><p>';
+		printf(
+			/* translators: %1$s: BuddyPress Member Reviews; %2$s: BuddyPress. */
+			esc_html__( '%1$s requires %2$s to be installed and active.', 'bp-member-reviews' ),
+			'<strong>' . esc_html( $plugin_name ) . '</strong>',
+			'<strong>' . esc_html( $bp_plugin ) . '</strong>'
+		);
+		echo '</p></div>';
+	}
 }
 
 
-/**
- * Perform plugin activation redirect.
- */
-function bupr_do_activation_redirect() {
-	if ( ! get_transient( '_bupr_activation_redirect' ) ) {
-		return;
-	}
-	delete_transient( '_bupr_activation_redirect' );
+if ( ! function_exists( 'bupr_do_activation_redirect' ) ) {
+	/**
+	 * Perform plugin activation redirect.
+	 */
+	function bupr_do_activation_redirect() {
+		if ( ! get_transient( '_bupr_activation_redirect' ) ) {
+			return;
+		}
+		delete_transient( '_bupr_activation_redirect' );
 
-	// The single redirect path (an exit inside activated_plugin used to cut bulk
-	// activations short and end WP-CLI runs early). Skip bulk activation and
-	// non-interactive requests; the transient is cleared either way.
-	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of core's bulk-activation flag.
-	if ( wp_doing_ajax() || is_network_admin() || isset( $_GET['activate-multi'] ) || is_multisite() || ! bupr_check_buddypress_compatibility() ) {
-		return;
+		// The single redirect path (an exit inside activated_plugin used to cut bulk
+		// activations short and end WP-CLI runs early). Skip bulk activation and
+		// non-interactive requests; the transient is cleared either way.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of core's bulk-activation flag.
+		if ( wp_doing_ajax() || is_network_admin() || isset( $_GET['activate-multi'] ) || is_multisite() || ! bupr_check_buddypress_compatibility() ) {
+			return;
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
+		exit;
 	}
-	wp_safe_redirect( admin_url( 'admin.php?page=bp-member-review-settings' ) );
-	exit;
 }
 add_action( 'admin_init', 'bupr_do_activation_redirect' );
 
-/**
- * Unschedule the cron event on plugin deactivation.
- */
-function bupr_unschedule_review_recalculation() {
-	$timestamp = wp_next_scheduled( 'bupr_cron_recalculate_user_reviews_batch' );
-	if ( $timestamp ) {
-		wp_unschedule_event( $timestamp, 'bupr_cron_recalculate_user_reviews_batch' );
+if ( ! function_exists( 'bupr_unschedule_review_recalculation' ) ) {
+	/**
+	 * Unschedule the cron event on plugin deactivation.
+	 */
+	function bupr_unschedule_review_recalculation() {
+		$timestamp = wp_next_scheduled( 'bupr_cron_recalculate_user_reviews_batch' );
+		if ( $timestamp ) {
+			wp_unschedule_event( $timestamp, 'bupr_cron_recalculate_user_reviews_batch' );
+		}
+		delete_transient( '_bupr_activation_redirect' );
+		delete_option( 'bupr_current_batch' ); // Clean up the stored batch number.
+		flush_rewrite_rules();
 	}
-	delete_transient( '_bupr_activation_redirect' );
-	delete_option( 'bupr_current_batch' ); // Clean up the stored batch number.
-	flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, 'bupr_unschedule_review_recalculation' );
