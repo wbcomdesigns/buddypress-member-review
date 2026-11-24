@@ -27,12 +27,15 @@ with zipfile.ZipFile(out,"w",zipfile.ZIP_DEFLATED,compresslevel=9) as z:
         d.sort()
         for n in sorted(f): z.write(os.path.join(r,n))' "$out" "$slug" )
 zip="$out"
+# pipefail off for the lock block: unzip piped into head / grep -q exits 141 (SIGPIPE) on larger zips.
+set +o pipefail
 # --- WordPress.org folder lock (Wbcom standard - do not edit) ----------------------
 top=$(unzip -Z1 "$zip" | head -1 | cut -d/ -f1)
 [ "$top" = "$slug" ] || { echo "Zip folder '$top' is not the WordPress.org slug '$slug'"; exit 1; }
 unzip -Z1 "$zip" | grep -qx "$slug/$main" || { echo "Main file $slug/$main missing from zip"; exit 1; }
 [ "$(LC_ALL=C grep -a -c '<?php' "$zip" || true)" = 0 ] || { echo "Zip has plain-text PHP (upload firewall)"; exit 1; }
 # -----------------------------------------------------------------------------------
+set -o pipefail
 leaks=$(unzip -l "$out" | grep -iE '^ *[0-9]+ +[0-9-]+ +[0-9:]+ +[^/]+/(audit|bin|docs|tests|vendor|node_modules)/|CLAUDE|\.md$|\.map$' || true)
 [ -z "$leaks" ] || { echo "Zip contains dev files:"; echo "$leaks"; exit 1; }
 echo "Built $out ($(unzip -l "$out" | tail -1 | awk '{print $2}') files)"
