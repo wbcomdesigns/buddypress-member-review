@@ -671,14 +671,8 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 			if ( is_user_logged_in() ) {
 				do_action( 'bupr_member_review_form' );
 			} else {
-				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-				if ( 'nouveau' === $bp_template_option ) {
-					?>
-						<div id="message" class="info bp-feedback bp-messages bp-template-notice">
-							<span class="bp-icon" aria-hidden="true"></span>
-				<?php } else { ?>
-							<div id="message" class="info">
-							<?php } ?>
+				bupr_notice_open( 'info' );
+				?>
 							<p>
 							<?php
 							printf(
@@ -692,8 +686,9 @@ if ( ! class_exists( 'BUPR_Custom_Hooks' ) ) {
 								esc_html( strtolower( $bupr['review_label'] ) )
 							);
 							?>
-						</p></div>
+						</p>
 						<?php
+						bupr_notice_close();
 			}
 			?>
 					</div>

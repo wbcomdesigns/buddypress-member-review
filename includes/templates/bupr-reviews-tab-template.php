@@ -360,23 +360,16 @@ $reviews = new WP_Query( $args );
 					}
 						wp_reset_postdata();
 				} else {
-					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-					if ( 'nouveau' === $bp_template_option ) {
-						?>
-					<div id="message" class="info bp-feedback bp-messages bp-template-notice">
-						<span class="bp-icon" aria-hidden="true"></span>
-					<?php } else { ?>
-						<div id="message" class="info">
-					<?php } ?>
+					bupr_notice_open( 'info' );
+					?>
 						<p>
 							<?php
 							/* translators: %s: plural review label, lowercase, e.g. "reviews". */
 							printf( esc_html__( 'No %s yet.', 'bp-member-reviews' ), esc_html( strtolower( bupr_profile_review_tab_name() ) ) );
 							?>
-
 						</p>
-					</div>
-							<?php
+					<?php
+					bupr_notice_close();
 				}
 				?>
 			</div>

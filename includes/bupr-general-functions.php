@@ -1386,3 +1386,33 @@ function bupr_recalculate_all_members() {
 	}
 	bupr_flush_top_members_cache();
 }
+
+/**
+ * Open a member-facing notice in the markup of the active BuddyPress template pack, so it looks like the
+ * BuddyPress notice on the same page and every theme draws exactly one icon.
+ *
+ * Nouveau matches core's common/notices/template-notices.php: an <aside class="bp-feedback ..."> with a .bp-icon
+ * span and no id. An id="message" there made themes that style div#message (Reign 8.1.0 and earlier) draw a
+ * second icon. Legacy keeps the <div id="message"> it styles. Close with bupr_notice_close().
+ *
+ * @since 3.8.3
+ * @param string $type        Notice type: info, success, error or warning.
+ * @param string $extra_class Optional extra classes for the wrapper.
+ */
+function bupr_notice_open( $type, $extra_class = '' ) {
+	$classes = trim( $type . ' ' . $extra_class );
+	if ( 'nouveau' === bp_get_theme_package_id() ) {
+		printf( '<aside class="%s bp-feedback bp-messages bp-template-notice"><span class="bp-icon" aria-hidden="true"></span>', esc_attr( $classes ) );
+		return;
+	}
+	printf( '<div id="message" class="%s">', esc_attr( $classes ) );
+}
+
+/**
+ * Close a notice opened with bupr_notice_open().
+ *
+ * @since 3.8.3
+ */
+function bupr_notice_close() {
+	echo 'nouveau' === bp_get_theme_package_id() ? '</aside>' : '</div>';
+}

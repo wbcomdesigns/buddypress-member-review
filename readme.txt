@@ -276,6 +276,7 @@ We regularly update the plugin to ensure compatibility with the latest versions 
 * Fix      - The top members shortcode and widget use their default member count when the number is zero, negative or not a number, instead of a database error.
 * Fix      - Saving the Criteria tab with Member Reviews Pro no longer turns criterion names like "Member Response" into "memberresponse"; sites already affected are repaired once on the next admin page load, including ratings saved meanwhile.
 * Fix      - Owner reply errors show inside the reply form in the theme's notice style, in light and dark mode, instead of a pop-up toast.
+* Fix      - Review notices (no reviews yet, log in to add a review, already reviewed, and the add-review result) use the BuddyPress notice markup, so they show one icon on every theme, and a refused review now shows as an error instead of a green success message.
 * Fix      - Endorsements and testimonials no longer show as blank review cards or count as reviews in the profile list, header count, directory rating, widgets and shortcode once the site is back on Star Ratings.
 * Security - Only published reviews can be reported, so a member can no longer file a report against a pending or hidden review by its ID.
 * Security - A password-protected review no longer shows its text to everyone: the review page asks for the password, the Reviews tab shows a notice, and the activity stream gets no text.

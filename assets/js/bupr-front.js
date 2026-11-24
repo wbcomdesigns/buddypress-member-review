@@ -79,8 +79,22 @@ function buprReplyError($wrapper, message) {
     .insertBefore($wrapper.find(".bupr-reply-actions"));
 }
 
+/**
+ * Show the add-review result in the form's notice: the success or error type follows the response, so the
+ * notice takes BuddyPress's own colours and icon. CSS hides the notice while its <p> is empty, so no inline
+ * display is set and the theme's notice layout (icon beside the text) applies.
+ */
+function buprShowSubmitResult(response) {
+  var ok = !!(response && response.success);
+  jQuery(".add_review_msg")
+    .toggleClass("success", ok)
+    .toggleClass("error", !ok)
+    .find("p")
+    .first()
+    .html(response && response.data ? response.data : "");
+}
+
 jQuery(document).ready(function () {
-  jQuery(".add_review_msg").hide();
   jQuery(document).on("click", "#bupr-add-review-btn a", function (e) {
     var show_content = jQuery(this).attr("show");
     localStorage.setItem("bupr_show_form", show_content);
@@ -209,8 +223,7 @@ jQuery(document).ready(function () {
               sessionStorage.reloadAfterPageLoad = true;
               // The message stays until the next submit; only a saved review clears the form,
               // so a refused submission keeps what the member typed.
-              jQuery(".add_review_msg").show();
-              jQuery(".add_review_msg p").html(response.data);
+              buprShowSubmitResult(response);
               if (response && response.success) {
                 reset_review_form_data();
               }
@@ -250,8 +263,7 @@ jQuery(document).ready(function () {
             sessionStorage.reloadAfterPageLoad = true;
             // The message stays until the next submit; only a saved review clears the form,
             // so a refused submission keeps what the member typed.
-            jQuery(".add_review_msg").show();
-            jQuery(".add_review_msg p").html(response.data);
+            buprShowSubmitResult(response);
             if (response && response.success) {
               reset_review_form_data();
             }

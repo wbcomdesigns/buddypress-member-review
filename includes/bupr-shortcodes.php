@@ -298,10 +298,6 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			);
 
 			$reviews_args = new WP_Query( $member_args );
-			if ( ! bp_is_members_component() && ! bp_is_user() ) {
-				$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-			}
-
 			if ( 0 === bp_displayed_user_id() ) {
 				$this->bupr_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member );
 			} else {
@@ -313,29 +309,22 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 				if ( 0 === $user_post_count ) {
 					$this->bupr_review_form( $login_user, $bupr_spinner_src, $bupr_review_succes, $bupr_flag, $bupr_member );
 				} else {
-					$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-					if ( 'nouveau' === $bp_template_option ) {
-						?>
-							<div id="message" class="success bp-feedback bp-messages bp-template-notice">
-								<span class="bp-icon" aria-hidden="true"></span>
-					<?php } else { ?>
-								<div id="message" class="info">
-										<?php } ?>
-								<?php
-								if ( 'publish' === $reviews_args->posts[0]->post_status ) {
-									/* translators: %s: */
-									$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
-								} elseif ( 'yes' === $auto_approve_reviews ) {
-										/* translators: %s: */
-										$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
-								} else {
-									/* translators: %s: */
-									$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
-								}
-								?>
-										<p><?php echo esc_html( $message ); ?> </p>
-								</div> <!-- Close div for success/info message -->
-							<?php
+					$already_published = 'publish' === $reviews_args->posts[0]->post_status;
+					bupr_notice_open( $already_published ? 'info' : 'success' );
+					if ( $already_published ) {
+						/* translators: %s: review label. */
+						$message = sprintf( __( 'You already posted a %1$s for this member.', 'bp-member-reviews' ), $review_label );
+					} elseif ( 'yes' === $auto_approve_reviews ) {
+						/* translators: %s: review label. */
+						$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s.', 'bp-member-reviews' ), $review_label );
+					} else {
+						/* translators: %s: review label. */
+						$message = sprintf( esc_html__( 'Thank you for taking time to write this wonderful %1$s. Your %1$s will display after moderator\'s approval.', 'bp-member-reviews' ), $review_label );
+					}
+					?>
+					<p><?php echo esc_html( $message ); ?></p>
+					<?php
+					bupr_notice_close();
 				}
 			}
 			wp_reset_postdata();
@@ -375,17 +364,12 @@ if ( ! class_exists( 'BUPR_Shortcodes' ) ) {
 			if ( 'yes' === $bupr['anonymous_reviews'] ) {
 				$flag = true;
 			}
-			$bp_template_option = bp_get_option( '_bp_theme_package_id' );
-			if ( 'nouveau' === $bp_template_option ) {
-				?>
-				<div id="message" class="success add_review_msg success_review_msg bp-feedback bp-messages bp-template-notice">
-					<span class="bp-icon" aria-hidden="true"></span>
-				<?php } else { ?>
-					<div id="message" class="success add_review_msg success_review_msg">
-						<?php } ?>
+			// Submit result: empty (hidden by CSS) until bupr-front.js fills the <p> and sets success or error.
+			bupr_notice_open( 'success', 'add_review_msg success_review_msg' );
+			?>
 						<p></p>
-					</div>
 					<?php
+					bupr_notice_close();
 					if ( is_user_logged_in() ) {
 						$user          = wp_get_current_user();
 						$roles         = ( isset( $user->roles ) && ! empty( $user->roles ) ) ? $user->roles : array();
