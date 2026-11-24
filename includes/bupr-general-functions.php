@@ -326,11 +326,13 @@ function bupr_recalculate_user_reviews_for_user( $user_id ) {
  *
  * @param int $batch_size The number of users to process in each batch.
  * @param int $paged      The current batch number (for pagination).
+ * @return int Rows this page read. Fewer than $batch_size means it was the last page; counting only the valid
+ *             IDs instead would end the cycle early whenever a page held a bad member ID.
  */
 function bupr_recalculate_user_reviews_batch( $batch_size = 50, $paged = 1 ) {
 	global $wpdb;
 
-	$processed_count = 0;
+	$paged = max( 1, (int) $paged );
 	// Get users who have reviews (more efficient than getting all users).
 	$user_ids = $wpdb->get_col(
 		$wpdb->prepare(
@@ -350,11 +352,10 @@ function bupr_recalculate_user_reviews_batch( $batch_size = 50, $paged = 1 ) {
 	foreach ( $user_ids as $user_id ) {
 		if ( ! empty( $user_id ) && is_numeric( $user_id ) ) {
 			bupr_recalculate_user_reviews_for_user( $user_id );
-			++$processed_count;
 		}
 	}
 
-	return $processed_count;
+	return count( $user_ids );
 }
 
 /**
@@ -372,6 +373,7 @@ function bupr_schedule_review_recalculation() {
 	}
 }
 add_action( 'init', 'bupr_schedule_review_recalculation' );
+add_action( 'bupr_cron_recalculate_user_reviews_batch', 'bupr_cron_recalculate_user_reviews_batch' );
 
 /**
  * Perform batch recalculation via cron job.
